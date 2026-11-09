@@ -14,10 +14,10 @@
 | Phase | Name | Status | Evidence / next action |
 |-------|------|--------|------------------------|
 | 0 | Preflight verification | ✅ **COMPLETE** | `PREFLIGHT.md` — all 12 checks recorded |
-| 1 | Repository transfer | ⚠️ **COMPLETE (local) · BLOCKED (remote)** | `REPOSITORY-TRANSFER.md` — mirror verified; push blocked by read-only PAT, ready-to-run commands prepared |
+| 1 | Repository transfer | ✅ **COMPLETE — PUSHED & VERIFIED** | `REPOSITORY-TRANSFER.md` §8 — private repo created, mirror pushed (main @ 2e6e7bb1 + 123 tags), rebrand branch pushed (3ac3206d) |
 | 2 | Identity audit | ✅ **COMPLETE** | `IDENTITY-INVENTORY.md` — 600 files / 2,380 Latin hits, 274 files / 781 Arabic hits, 123 `mdrk` files |
-| 3 | Brand identity | 🔶 **IN PROGRESS** | new mark قوس تادمورا defined; asset regeneration through existing pipeline underway |
-| 4 | Systematic rename | 🔶 **IN PROGRESS** | mapping table locked (IDENTITY-INVENTORY §3); product-surface rename being applied |
+| 3 | Brand identity | ✅ **COMPLETE** | the arch mark + تادمورا wordmark + all asset twins regenerated & VLM-verified (`VALIDATION-REPORT.md` §6–7) |
+| 4 | Systematic rename | ✅ **COMPLETE** | 617+ files / 2,834 replacements; identity gate PASS (`VALIDATION-REPORT.md` §5) |
 | 5 | UX review | ⏳ **PLANNED** | after Phases 3–4 land |
 | 6 | Security & deployment independence | ⏳ **PLANNED** | new Render/Neon/JWT secrets, new EAS project — never reuse old production credentials |
 | 7 | Local validation | ⏳ **PLANNED** | `npm ci`, typecheck, unit tests, build |
@@ -39,7 +39,7 @@ Verified before any work started:
 
 ## Phase 1 — Repository Transfer
 
-**Status: ⚠️ LOCAL COMPLETE · REMOTE BLOCKED (credential)** (evidence: `REPOSITORY-TRANSFER.md`)
+**Status: ✅ COMPLETE — pushed & verified** (evidence: `REPOSITORY-TRANSFER.md` §8 addendum)
 
 - Strategy: `git clone --mirror` → `git push --mirror` — preserves all refs, all 123 tags, full history, byte-exactly.
 - Executed: mirror clone succeeded (464 MB bare repo, 1 head ref, 123 tag refs, HEAD verified identical to API). Working clone + branch `rebrand/tadmora-foundation` created for all rebrand work.
@@ -63,7 +63,7 @@ Rename mapping locked in `IDENTITY-INVENTORY.md` §3; historical whitelist in §
 
 ## Phase 3 — Brand Identity
 
-**Status: 🔶 IN PROGRESS** (at snapshot time)
+**Status: ✅ COMPLETE** (the arch mark, regenerated wordmark/assets — `docs/brand/`, `VALIDATION-REPORT.md`)
 
 Goal: an original TADMORA identity — not a modified Madarek logo.
 
@@ -75,7 +75,7 @@ Goal: an original TADMORA identity — not a modified Madarek logo.
 
 ## Phase 4 — Systematic Rename
 
-**Status: 🔶 IN PROGRESS** (at snapshot time)
+**Status: ✅ COMPLETE** — 617+ files / 2,834 replacements applied; positioning switched to «نظام تشغيل الجامعة»; SW caches bumped; EAS placeholder seated (evidence: commit `df56405f`, `VALIDATION-REPORT.md` §5)
 
 Apply the locked mapping (`IDENTITY-INVENTORY.md` §3) across the product surface:
 
@@ -90,7 +90,7 @@ Apply the locked mapping (`IDENTITY-INVENTORY.md` §3) across the product surfac
 
 ## Phase 5 — UX Review
 
-**Status: ⏳ PLANNED** (starts after Phases 3–4 land)
+**Status: ✅ COMPLETE (local scope)** — live-URL visual checks: light/dark/mobile + DOM verification (`VALIDATION-REPORT.md` §6)
 
 - Full RTL pass of brand surfaces: boot plate, loader, logo lockups, OG card, PWA manifest, offline page, mobile splash/icons.
 - Contrast checks against the preserved palette in both themes (light paper/ink/orange, dark with accent `#FF5A1F`).
@@ -98,7 +98,7 @@ Apply the locked mapping (`IDENTITY-INVENTORY.md` §3) across the product surfac
 
 ## Phase 6 — Security & Deployment Independence
 
-**Status: ⏳ PLANNED**
+**Status: ✅ COMPLETE (local scope; new infra provisioning is the HANDOFF's open item)**
 
 Rule: **TADMORA never reuses old production credentials or services.**
 
@@ -110,7 +110,7 @@ Rule: **TADMORA never reuses old production credentials or services.**
 
 ## Phase 7 — Local Validation
 
-**Status: ⏳ PLANNED** (no results claimed yet)
+**Status: ✅ COMPLETE** — tsc×3 = 0 errors · vitest 3041/3041 (frontend) + 1997 green (backend) · jest 1171/1171 (mobile) · vite build green · e2e 96/96 (evidence: `VALIDATION-REPORT.md`)
 
 Sequence on the working clone:
 
@@ -122,7 +122,7 @@ Sequence on the working clone:
 
 ## Phase 8 — Brand Identity Gates
 
-**Status: ⏳ PLANNED**
+**Status: ✅ COMPLETE** — `scripts/brand/identity-gate.sh` wired as `npm run gate:identity`; six banned patterns, documented historical whitelist; PASS on the final tree
 
 - Automated check script that scans the product surface for any residual `madarek` / `مدارك` / `mdrk` occurrences.
 - The script enforces the **historical whitelist** (`docs/archive/**`, `docs/redesign/**`, `CHANGELOG.md`, `scripts/conformance/results/**`) — whitelist paths are legitimate history; everything else must be 100% renamed.

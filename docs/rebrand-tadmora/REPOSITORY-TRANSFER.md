@@ -1,6 +1,6 @@
 # TADMORA Rebrand — Phase 1: Repository Transfer Report
 
-![phase](https://img.shields.io/badge/phase-1-repository--transfer-blue) ![status](https://img.shields.io/badge/status-LOCAL%20COMPLETE%20%C2%B7%20REMOTE%20BLOCKED%20(credential)-critical) ![date](https://img.shields.io/badge/date-2026--11--09-informational)
+![phase](https://img.shields.io/badge/phase-1-repository--transfer-blue) ![status](https://img.shields.io/badge/status-COMPLETE%20%C2%B7%20PUSHED%20%26%20VERIFIED-brightgreen) ![date](https://img.shields.io/badge/date-2026--11--09-informational)
 
 **Transfer:** `ahmadmedo1012/madarek` → `ahmadmedo1012/Tadmora` (new private repo)
 **Implementation branch:** `rebrand/tadmora-foundation`
@@ -127,3 +127,25 @@ If any check fails: **do not force anything.** Re-run the mirror comparison (`gi
 | Post-push verification (V1–V7) | ⏳ pending push |
 
 Owner actions required: §5.1 (create empty private repo `Tadmora`; upgrade/replace PAT). Everything else is prepared.
+
+
+---
+
+## 8. ADDENDUM (2026-11-09, later the same day) — ✅ TRANSFER COMPLETE
+
+The owner supplied a full-permission PAT. Every previously-blocked step
+was executed and verified:
+
+| Step | Result |
+|---|---|
+| Permission probe (repo-creation scope) | ✅ HTTP 201 (`administration=write; repository_creation=write`); probe repo deleted (204) |
+| `POST /user/repos` → `ahmadmedo1012/Tadmora` | ✅ created **private** (id verified via API) |
+| `git push --mirror` (464 MB bare mirror) | ✅ all branches + tags pushed (`refs/pull/*` rejects are GitHub-hidden-ref behaviour — expected, harmless) |
+| `main` HEAD on target | ✅ `2e6e7bb158622753a15915403fa58390c587527d` — **byte-identical to source** |
+| Tags on target | ✅ 123/123 (2 API pages × 100/23) |
+| `git push -u origin rebrand/tadmora-foundation` | ✅ HEAD `3ac3206d01d502b15619eb93009f715be4da7865` (4 commits on top of base) |
+| Source repo `ahmadmedo1012/madarek` | ✅ untouched (read-only throughout; never pushed to) |
+| Token hygiene | ✅ removed from `origin` URL after push (clean remote in `.git/config`); rotation recommended (RISK-10) |
+
+**Status: the §5 remediation and §6 checklist are EXECUTED. Phase 1 is
+CLOSED.**
