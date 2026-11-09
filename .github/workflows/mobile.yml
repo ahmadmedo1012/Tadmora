@@ -121,7 +121,12 @@ jobs:
   eas-ota:
     name: EAS Update (OTA to production + preview)
     needs: mobile-gates
-    if: github.event_name == 'push'
+    # The OTA publish rides the EAS project, which needs the EXPO_TOKEN
+    # repository secret AND the provisioned project id in app.config.ts.
+    # Without the credential the job skips WITH THIS NOTICE — the mobile
+    # quality gates (typecheck/lint/contract/export) run unconditionally
+    # above and remain the merge-relevant signal.
+    if: github.event_name == 'push' && secrets.EXPO_TOKEN != ''
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     defaults:
@@ -146,8 +151,9 @@ jobs:
     name: EAS Build (preview — native change detected)
     needs: mobile-gates
     # push: only native-affecting changes; manual dispatch: always (the
-    # human pressed the button — that IS the intent).
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push')
+    # human pressed the button — that IS the intent). Requires the
+    # EXPO_TOKEN repository secret — skipped with a notice without it.
+    if: (github.event_name == 'workflow_dispatch' || github.event_name == 'push') && secrets.EXPO_TOKEN != ''
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     defaults:

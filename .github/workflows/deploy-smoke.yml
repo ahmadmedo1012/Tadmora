@@ -66,11 +66,15 @@ jobs:
       - name: Health
         run: curl -sf --max-time 30 "$BASE/health" | tee /dev/stderr | grep -q '"ok":true'
       - name: Login ×3 test accounts (student · teacher · registrar)
+        # The production hardening retired the published shared demo
+        # password — the smoke accounts carry unique rotated credentials
+        # held as repository secrets (rotate on the DB side, then here).
         run: |
+          declare -A PW=( [student]="${{ secrets.SMOKE_PW_STUDENT }}" [teacher]="${{ secrets.SMOKE_PW_TEACHER }}" [registrar]="${{ secrets.SMOKE_PW_REGISTRAR }}" )
           for who in student teacher registrar; do
             TOK=$(curl -sf --max-time 30 -X POST "$BASE/auth/login" \
               -H 'Content-Type: application/json' \
-              -d "{\"email\":\"$who@test.ly\",\"password\":\"12345678\"}" \
+              -d "{\"email\":\"$who@test.ly\",\"password\":\"${PW[$who]}\"}" \
               | python3 -c 'import json,sys; print(json.load(sys.stdin)["data"]["accessToken"])')
             echo "$who: token ${TOK:0:16}…"
             [ -n "$TOK" ] || exit 1
@@ -78,7 +82,7 @@ jobs:
       - name: One app-critical endpoint (student dashboard)
         run: |
           TOK=$(curl -sf -X POST "$BASE/auth/login" -H 'Content-Type: application/json' \
-            -d '{"email":"student@test.ly","password":"12345678"}' \
+            -d "{\"email\":\"student@test.ly\",\"password\":\"${{ secrets.SMOKE_PW_STUDENT }}\"}" \
             | python3 -c 'import json,sys; print(json.load(sys.stdin)["data"]["accessToken"])')
           CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
             -H "Authorization: Bearer $TOK" "$BASE/me/dashboard")
