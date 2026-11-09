@@ -1,6 +1,14 @@
 import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  // Backend tests never process CSS. Pinning an EMPTY inline PostCSS
+  // config stops vite's config search from walking UP the filesystem
+  // (an ancestor workspace's postcss.config — e.g. a monorepo parent
+  // or a CI checkout embedded in another project — otherwise breaks
+  // the run with "Invalid PostCSS Plugin" before a single test boots).
+  css: {
+    postcss: { plugins: [] },
+  },
   test: {
     environment: 'node',
     // Collect both the top-level test tree and the co-located `__tests__`

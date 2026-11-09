@@ -16,7 +16,7 @@ import { logger } from '../../logger.js';
 
 const router = Router();
 
-const BUILD_ID = buildIdFromEnv(env.RENDER_GIT_COMMIT ?? env.GIT_SHA);
+const BUILD_ID = buildIdFromEnv(env.RENDER_GIT_COMMIT ?? env.VERCEL_GIT_COMMIT_SHA ?? env.GIT_SHA);
 
 router.get('/status', async (_req, res) => {
   const start = Date.now();

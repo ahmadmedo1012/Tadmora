@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm --prefix backend run prisma:generate && npm run build -w frontend && npm run build -w backend && node -e \"if(!require('fs').existsSync('backend/dist/app.js')){process.exit(1)}\"",
+  "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/index.ts": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" }
+  ],
+  "crons": [
+    { "path": "/api/v1/jobs/daily", "schedule": "0 3 * * *" }
+  ]
+}
