@@ -5,7 +5,7 @@
  * method as pages-teacher.mjs, which this file is patterned on
  * byte-for-byte in its probe): pages.mjs's exact probe axes/score/
  * floor + the REAL e2e fixture transport (mock-transport.ts +
- * api-fixtures.ts, esbuild-bundled the r319 way) with the `mdrk-auth`
+ * api-fixtures.ts, esbuild-bundled the r319 way) with the `tdmr-auth`
  * persist key seeded ADMIN before first paint, so the app boots
  * signed-in reload-style. Distinct filename so concurrent worker
  * branches merge without conflict (the D8/D10/D11 precedent).
@@ -37,8 +37,8 @@ try {
   ({ chromium } = require('./../../frontend/node_modules/playwright'));
   esbuild = require.esbuild ?? require('./../../frontend/node_modules/esbuild');
 } catch {
-  ({ chromium } = createRequire('/home/z/madarek/frontend/package.json')('playwright'));
-  esbuild = createRequire('/home/z/madarek/frontend/package.json')('esbuild');
+  ({ chromium } = createRequire('/home/z/tadmora/frontend/package.json')('playwright'));
+  esbuild = createRequire('/home/z/tadmora/frontend/package.json')('esbuild');
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

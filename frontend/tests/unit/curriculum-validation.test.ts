@@ -90,7 +90,7 @@ describe('withinDuration — mirror of the server guard', () => {
 const VALID_LECTURE = {
   title: 'المحاضرة الأولى: مدخل إلى الشبكات',
   description: 'نظرة عامة على طبقات النموذج OSI',
-  videoUrl: 'https://cdn.madarek.example/lec1.mp4',
+  videoUrl: 'https://cdn.tadmora.example/lec1.mp4',
   duration: '55:00',
   ordinal: '1',
 };
@@ -148,7 +148,7 @@ describe('lecture form → API payloads', () => {
       id: 'lec-1',
       title: 'المحاضرة الأولى: مدخل إلى الشبكات',
       description: 'نظرة عامة على طبقات النموذج OSI',
-      videoUrl: 'https://cdn.madarek.example/lec1.mp4',
+      videoUrl: 'https://cdn.tadmora.example/lec1.mp4',
       durationSec: 3300,
       ordinal: 1,
     };

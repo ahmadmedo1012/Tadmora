@@ -23,7 +23,7 @@
  *
  * Auth: guarded routes are reached with a real /auth/login per role
  * (AUDIT_<ROLE>_EMAIL/PASSWORD envs; defaults the seeded @test.ly
- * table) seeded into localStorage `mdrk-auth` exactly like the audit
+ * table) seeded into localStorage `tdmr-auth` exactly like the audit
  * harness. Param routes ride the harness's PARAM_DEFAULTS (error/
  * empty states still render their headings — the census's subject).
  *
@@ -294,11 +294,11 @@ async function worker() {
     // a FRESH context per capture — closed in the finally below
     const ctx = await b.newContext({ viewport: { width: bp, height: 900 } });
     await ctx.addInitScript(([session]) => {
-      try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* hermetic opt-out */ }
+      try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* hermetic opt-out */ }
       if (session) {
         try {
-          localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: Date.now() }, version: 2 }));
-          localStorage.setItem('mdrk-auth', JSON.stringify({ state: { user: session.user, accessToken: session.accessToken }, version: 0 }));
+          localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: Date.now() }, version: 2 }));
+          localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user: session.user, accessToken: session.accessToken }, version: 0 }));
         } catch { /* storage unavailable */ }
       }
     }, [sessions[role] ?? null]);

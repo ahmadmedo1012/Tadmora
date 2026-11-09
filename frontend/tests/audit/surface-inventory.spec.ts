@@ -40,8 +40,8 @@
  *   # slug 'intro', filename 'sample.pdf'):
  *   export AUDIT_ROUTE_PARAMS='{"offeringId":"<cuid>","slug":"<track>"}'
  *   # optional — where the app/API live:
- *   export MADAREK_E2E_BASE_URL=http://localhost:5173
- *   export MADAREK_API_BASE_URL=http://localhost:4000/api/v1
+ *   export TADMORA_E2E_BASE_URL=http://localhost:5173
+ *   export TADMORA_API_BASE_URL=http://localhost:4000/api/v1
  *   # 3. produce the inventory (~1–2 s per capture; 96 routes × 3
  *   #    viewports × 2 themes ≈ 576 captures → plan for ~30 min):
  *   npm run test:audit
@@ -81,7 +81,7 @@
  *     switched per capture via page.setViewportSize. Login happens
  *     exactly once per role through the real /auth/login API (or is
  *     fixture-seeded in AUDIT_API_MOCK mode) and the session is
- *     seeded into localStorage (mdrk-auth / madarek-theme).
+ *     seeded into localStorage (tdmr-auth / tadmora-theme).
  *   - Overlays are captured only when they are mounted in the DOM —
  *     most routes render none closed; the sweep does not interact to
  *     open them.
@@ -129,8 +129,8 @@ test.skip(
   'needs AUDIT_BASELINE=1 + running app + seeded DB (see file header)',
 );
 
-const APP_BASE_URL = process.env.MADAREK_E2E_BASE_URL ?? 'http://localhost:5173';
-const API_BASE_URL = process.env.MADAREK_API_BASE_URL ?? 'http://localhost:4000/api/v1';
+const APP_BASE_URL = process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173';
+const API_BASE_URL = process.env.TADMORA_API_BASE_URL ?? 'http://localhost:4000/api/v1';
 
 /** DB-less mode (see header): the e2e mock transport serves the app. */
 const MOCK_API = !!process.env.AUDIT_API_MOCK;
@@ -699,7 +699,7 @@ test('sweep AUDIT_ROUTES × viewports × themes × dirs → surface-inventory.js
       ([session, themeMode]) => {
         try {
           localStorage.setItem(
-            'madarek-theme',
+            'tadmora-theme',
             JSON.stringify({ state: { mode: themeMode, modeUpdatedAt: Date.now() }, version: 2 }),
           );
         } catch { /* storage unavailable — the sweep asserts the theme below */ }
@@ -709,12 +709,12 @@ test('sweep AUDIT_ROUTES × viewports × themes × dirs → surface-inventory.js
         // itself has dedicated coverage in r308-landing-instruments).
         try {
           /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
-          sessionStorage.setItem('madarek-intro-skip', '1');
+          sessionStorage.setItem('tadmora-intro-skip', '1');
         } catch { /* ditto */ }
         if (session) {
           try {
             localStorage.setItem(
-              'mdrk-auth',
+              'tdmr-auth',
               JSON.stringify({ state: { user: session.user, accessToken: session.accessToken }, version: 0 }),
             );
           } catch { /* ditto */ }

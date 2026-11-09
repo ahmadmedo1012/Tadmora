@@ -54,7 +54,7 @@ export function usePostsFeed() {
    * miss (5-C5 / A12 P3-3). The KEY is shared by every surface that
    * renders this feed, so a user active on both keeps ONE draft, never
    * two diverging copies. */
-  const draftKey = `mdrk:social-draft:${user?.id ?? 'me'}`;
+  const draftKey = `tdmr:social-draft:${user?.id ?? 'me'}`;
   const [draft, setDraft] = useState<string>(() => {
     try {
       return sessionStorage.getItem(draftKey) ?? '';

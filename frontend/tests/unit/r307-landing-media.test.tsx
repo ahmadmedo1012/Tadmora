@@ -1,7 +1,7 @@
 /**
  * r307 — the landing media layer contract.
  *
- * The r306 sheet («لوحة مدارك») gained its documentary media layer in
+ * The r306 sheet («لوحة تادمورا») gained its documentary media layer in
  * R307 (DESIGN.md §6a-6c): Commons-licensed university photography,
  * official-channel documentaries behind click-to-load facades, and
  * real product captures. This sheet pins what interaction tests

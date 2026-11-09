@@ -23,10 +23,11 @@ import {
   visualGap,
 } from '../../../../scripts/r318/gate-lib.mjs';
 
-/* مدارك in Arabic presentation forms (what OCR often emits):
- * م initial \uFEE3 · د final \uFEAA · ا isolated \uFE8D ·
- * ر isolated \uFEAE · ك isolated \uFED9 — NFKC folds all to base letters. */
-const WORDMARK_PF = '\uFEE3\uFEAA\uFE8D\uFEAE\uFED9';
+/* تادمورا in Arabic presentation forms (what OCR often emits):
+ * ت initial \uFE97 · ا final \uFE8E · د isolated \u062F ·
+ * م initial \uFEE3 · و final \uFEEE · ر isolated \u0631 ·
+ * ا isolated \u0627 — NFKC folds all to base letters. */
+const WORDMARK_PF = '\uFE97\uFE8E\u062F\uFEE3\uFEEE\u0631\u0627';
 
 describe('parseColor — Chrome computed-value formats', () => {
   it('parses rgb()/rgba() and transparent', () => {
@@ -152,24 +153,24 @@ describe('RTL-aware word-gap geometry', () => {
 
 describe('Arabic OCR normalization', () => {
   it('folds presentation forms onto base letters (NFKC) so OCR glyphs compare', () => {
-    expect(normalizeArabic(WORDMARK_PF)).toBe('مدارك');
+    expect(normalizeArabic(WORDMARK_PF)).toBe('تادمورا');
   });
 
   it('strips spaces, diacritics and tatweel before comparing', () => {
-    expect(normalizeArabic('مـ دَ ا رَ كـ')).toBe('مدارك');
-    expect(normalizeArabic('م\u064Bدارك')).toBe('مدارك'); // fathan on م
+    expect(normalizeArabic('تـ ا دَ مـ و رَ ا')).toBe('تادمورا');
+    expect(normalizeArabic('ت\u064Bادمورا')).toBe('تادمورا'); // fathan on ت
   });
 
   it('drops latin/punctuation noise and keeps only Arabic letters', () => {
-    expect(normalizeArabic('MADAREK مدارك — 2026')).toBe('مدارك');
+    expect(normalizeArabic('TADMORA تادمورا — 2026')).toBe('تادمورا');
   });
 
   it('containsWordmark accepts spaced/presentation OCR output and rejects misses', () => {
-    expect(containsWordmark('م د ا ر ك')).toBe(true);
+    expect(containsWordmark('ت ا د م و ر ا')).toBe(true);
     expect(containsWordmark(WORDMARK_PF)).toBe(true);
-    expect(containsWordmark('المدارك')).toBe(true); // containment — prefixes survive
-    expect(containsWordmark('مراك')).toBe(false);
-    expect(containsWordmark('مدراك')).toBe(false); // wrong letter order is a real miss
+    expect(containsWordmark('التادمورا')).toBe(true); // containment — prefixes survive
+    expect(containsWordmark('تادمر')).toBe(false);
+    expect(containsWordmark('تادومرا')).toBe(false); // wrong letter order is a real miss
     expect(containsWordmark('')).toBe(false);
   });
 });

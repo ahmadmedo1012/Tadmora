@@ -162,7 +162,7 @@ describe('r168a — destructive row actions are danger-tinted ghosts', () => {
 describe('r168a — student dashboard leads its outline with its identity', () => {
   it('R189 re-pin: the visible masthead h1 leads every header state (identity first)', () => {
     const page = stripJsx(read('src/pages/student/DashboardPage.tsx'));
-    /* R189 «سجلّ مدارك»: the identity is now the VISIBLE masthead h1 —
+    /* R189 «سجلّ تادمورا»: the identity is now the VISIBLE masthead h1 —
        the r168a sr-only + welcome-hero form died with the hero banner
        (the r189 VLM trial: the greeting hero was dead weight). The h1
        must still equal resolveTitle('/student/dashboard')'s nav label

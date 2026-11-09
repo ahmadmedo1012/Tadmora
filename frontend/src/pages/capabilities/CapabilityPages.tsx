@@ -44,9 +44,9 @@ export function CapabilitiesPage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="cu-header-brand" aria-label="مدارك — الصفحة الرئيسية">
+          <Link to="/" className="cu-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            مدارك
+            تادمورا
           </Link>
         </div>
       </header>
@@ -126,7 +126,7 @@ export function CapabilitiesPage() {
             <dl className="cu-meta" aria-label="بيانات السجلّ">
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">السجلّ</dt>
-                <dd className="fo-meta-v">جامعة مدارك التجريبية</dd>
+                <dd className="fo-meta-v">جامعة تادمورا التجريبية</dd>
               </div>
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">الكليات</dt>
@@ -146,8 +146,8 @@ export function CapabilitiesPage() {
           </RevealCssClass>
 
           <p className="cu-foot">
-            بيانات العرض تخصّ «جامعة مدارك التجريبية» — مؤسّسة اصطناعية بالكامل لأغراض العرض،
-            ومدارك منصّة مستقلّة لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها.
+            بيانات العرض تخصّ «جامعة تادمورا التجريبية» — مؤسّسة اصطناعية بالكامل لأغراض العرض،
+            وتادمورا منصّة مستقلّة لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها.
           </p>
         </section>
       </main>

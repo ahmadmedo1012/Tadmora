@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * wordmark-build.mjs — the footer wordmark «مدارك» — R318 §A6 built it,
+ * wordmark-build.mjs — the footer wordmark «تادمورا» — R318 §A6 built it,
  * R319 §D1 (the owner's top complaint) RE-SEATS it: CONNECTED + OUTLINED
  * + FULL-CELL-WIDTH, from the site's OWN display font (Alexandria 700 —
  * the arabic-subset woff2 fonts.css self-hosts).
@@ -10,7 +10,7 @@
  *   1. decompress frontend/public/fonts/alexandria-700-normal-arabic.woff2
  *      → ttf (python3 fontTools woff2; a hash-keyed tmp cache keeps the
  *      run deterministic and the repo clean),
- *   2. SHAPE «مدارك» with harfbuzzjs — REAL contextual joining: م initial
+ *   2. SHAPE «تادمورا» with harfbuzzjs — REAL contextual joining: م initial
  *      (uniFEE3) connected into د final (uniFEAA); ا/ر/ك isolated. The
  *      output arrives in visual left-to-right order (clusters 4..0) with
  *      per-glyph advances,
@@ -30,7 +30,7 @@
  *      1440/1024/768/390/360: the svg is width:100% of the .fo-wordmark
  *      cell and the viewBox carries the sheet (width-driven viewBox
  *      scaling — never font-size hacks). The text alternative (svg
- *      role="img" + aria-label + <title> «مدارك») carries the reading
+ *      role="img" + aria-label + <title> «تادمورا») carries the reading
  *      for assistive tech.
  *
  * INK MODE — the R318 filled decision, REVERSED BY MEASUREMENT at the
@@ -38,7 +38,7 @@
  *   R318 measured stroke-only at the OLD 101.9px ink height @1440 and it
  *   failed the OCR gate at every weight (audits/evidence/r318/c3-foot/
  *   ocr-matrix.md); the R319 full-cell-width cut renders the ink 5×
- *   taller @1440 and tesseract ara+eng reads «مدارك» at the ~1.7px
+ *   taller @1440 and tesseract ara+eng reads «تادمورا» at the ~1.7px
  *   stroke (the §D1 acceptance), so the reference's own stroke-only
  *   technique is restored at the scale where it reads.
  *
@@ -69,7 +69,7 @@ import ClipperLib from 'clipper-lib';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');
 const FONT_WOFF2 = path.join(ROOT, 'frontend/public/fonts/alexandria-700-normal-arabic.woff2');
 const OUT_TS = path.join(ROOT, 'frontend/src/components/landing/footer/wordmark-art.generated.ts');
-const WORD = 'مدارك';
+const WORD = 'تادمورا';
 /* R319 §D1 (kashida seat): the word is elongated with TATWEEL
  * (U+0640) INSIDE the م→د join — the brief's explicit prescription
  * («connected shaping with kashida as needed»). Each tatweel adds
@@ -125,7 +125,7 @@ if (!fs.existsSync(ttfPath)) {
   fs.rmSync(tmpIn);
 }
 
-/* ── 2. shape «مدارك» (harfbuzz — real Arabic joining) ──────────────── */
+/* ── 2. shape «تادمورا» (harfbuzz — real Arabic joining) ──────────────── */
 const hbFontBytes = fs.readFileSync(ttfPath);
 const blob = new Blob(new Uint8Array(hbFontBytes));
 const face = new Face(blob, 0);
@@ -201,7 +201,7 @@ const envelope = (trackWidth) => {
   }
 };
 /* the openable tracking boundaries: the non-joining letter pairs of
- * «مدارك» are د→ا · ا→ر · ر→ك (م→د stays CONNECTED). In the visual LTR
+ * «تادمورا» are د→ا · ا→ر · ر→ك (م→د stays CONNECTED). In the visual LTR
  * glyph stream [ك][ر][ا][د][م] the boundaries ride AFTER glyph index 0,
  * 1, 2. R319 §D1 sets TRACK_UNITS = 0 — the mechanism (and this map)
  * stays so the track can be re-measured deliberately, never by drift. */
@@ -327,7 +327,7 @@ const ts = `/* ═════════════════════�
  * commit both together; the generator is deterministic: same font +
  * same word ⇒ same bytes).
  *
- * The footer wordmark «مدارك» — Madarek's own name drawn in OUR display
+ * The footer wordmark «تادمورا» — Tadmora's own name drawn in OUR display
  * font (Alexandria 700, the arabic subset fonts.css self-hosts), shaped
  * with harfbuzz (م initial CONNECTED into د final; ا/ر/ك isolated) and
  * emitted as ONE composed path for ONE full-cell-width sheet.
@@ -340,7 +340,7 @@ const ts = `/* ═════════════════════�
  * construction track REMOVED (the owner read the tracked word as
  * letter-spaced disconnected letters — real Arabic shaping only). The
  * reading is carried by the svg's own text alternative
- * (role="img" + aria-label + <title> «مدارك») AND by OCR: tesseract
+ * (role="img" + aria-label + <title> «تادمورا») AND by OCR: tesseract
  * ara+eng reads the outlined word at the full-width scale (the R318
  * stroke-only failure was measured at the old 101.9px ink; the sweep:
  * audits/evidence/r319/landing/ocr-d1-matrix.md).

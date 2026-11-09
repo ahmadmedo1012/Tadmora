@@ -1,6 +1,6 @@
 /**
  * chartTheme — shared Chart.js styling, plugins and repaint plumbing
- * for Madarek.
+ * for Tadmora.
  *
  * Chart.js renders to <canvas> and CANNOT read CSS variables, so passing
  * strings like 'var(--chart-grid)' silently falls back to defaults
@@ -15,16 +15,16 @@
  * at module init, so every chart — including the inline-option holdouts
  * (Skills radar, student dash doughnut) — reads as designed:
  *
- *   madarekTooltipPlugin      designed DOM tooltip (surface ground, 1px
+ *   tadmoraTooltipPlugin      designed DOM tooltip (surface ground, 1px
  *                             border, --shadow-pop, --r-sm, --font-sans,
  *                             rtl) replacing the canvas default.
- *   madarekFadingAxisPlugin   gridlines fade to transparent at the chart
+ *   tadmoraFadingAxisPlugin   gridlines fade to transparent at the chart
  *                             edges (8%; 2% under prefers-contrast: more).
- *   madarekGradientFillPlugin area fills under line datasets become
+ *   tadmoraGradientFillPlugin area fills under line datasets become
  *                             accent-fading gradients — opt-in per chart
  *                             via cartesianOptions({ gradientFill: true })
- *                             or options.plugins.madarekGradientFill.
- *   madarekCenterLabelPlugin  doughnut center text drawn with
+ *                             or options.plugins.tadmoraGradientFill.
+ *   tadmoraCenterLabelPlugin  doughnut center text drawn with
  *                             --type-metric tokens — opt-in via
  *                             radialOptions({ centerLabel: {value,label} }).
  *
@@ -55,12 +55,12 @@ import { useSyncExternalStore } from 'react';
 
 /* ─── Opt-in plugin option types (augment Chart.js plugin options) ─── */
 
-export type MadarekGradientFillOptions = {
+export type TadmoraGradientFillOptions = {
   /** Fill line-dataset areas with accent-fading canvas gradients. */
   enabled: boolean;
 };
 
-export type MadarekCenterLabelOptions = {
+export type TadmoraCenterLabelOptions = {
   /** Big value rendered with --type-metric tokens. */
   value: string;
   /** Optional caption under the value (--type-label tokens). */
@@ -75,10 +75,10 @@ declare module 'chart.js' {
   // readability.)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface PluginOptionsByType<TType extends ChartType> {
-    /** Consumed by madarekGradientFillPlugin (globally registered). */
-    madarekGradientFill?: Partial<MadarekGradientFillOptions>;
-    /** Consumed by madarekCenterLabelPlugin (globally registered). */
-    madarekCenterLabel?: Partial<MadarekCenterLabelOptions>;
+    /** Consumed by tadmoraGradientFillPlugin (globally registered). */
+    tadmoraGradientFill?: Partial<TadmoraGradientFillOptions>;
+    /** Consumed by tadmoraCenterLabelPlugin (globally registered). */
+    tadmoraCenterLabel?: Partial<TadmoraCenterLabelOptions>;
   }
 }
 
@@ -363,7 +363,7 @@ export function chartAnimation(): false | ChartAnimationProfile {
   return { duration: readTokenNumber('--t-slow', 380), easing: 'easeOutQuart' };
 }
 
-/* ─── Fading-axis treatment (contract §madarekFadingAxisPlugin) ────── */
+/* ─── Fading-axis treatment (contract §tadmoraFadingAxisPlugin) ────── */
 
 /** Edge fade extent as a fraction of the axis span. */
 const GRID_FADE_EXTENT = 0.08;
@@ -405,9 +405,9 @@ function fadingGridColor(scaleId: 'x' | 'y', base: string): FadingGridColor {
   return fade;
 }
 
-/* ─── Designed DOM tooltip (contract §madarekTooltipPlugin) ────────── */
+/* ─── Designed DOM tooltip (contract §tadmoraTooltipPlugin) ────────── */
 
-const TOOLTIP_CLASS = 'madarek-chart-tooltip';
+const TOOLTIP_CLASS = 'tadmora-chart-tooltip';
 
 let tooltipEl: HTMLDivElement | null = null;
 let tooltipOwner: Chart | null = null;
@@ -436,7 +436,7 @@ function ensureTooltipEl(): HTMLDivElement | null {
   el.style.border = '1px solid var(--border-strong)';
   el.style.borderRadius = 'var(--r-sm)';
   el.style.boxShadow = 'none';
-  // chart-treatment.md §madarekTooltipPlugin pins 12px 14px padding.
+  // chart-treatment.md §tadmoraTooltipPlugin pins 12px 14px padding.
   el.style.padding = '12px 14px';
   el.style.fontFamily = 'var(--font-sans)';
   el.style.fontSize = 'var(--fs-xs, 12px)';
@@ -515,7 +515,7 @@ function buildTooltipContent(el: HTMLDivElement, tooltip: TooltipModel<ChartType
  * External tooltip handler — replaces Chart.js's canvas tooltip with the
  * designed DOM surface. Installed by the tooltip() options factory (so
  * every cartesianOptions/radialOptions chart gets it for free) and by
- * madarekTooltipPlugin for inline-option charts.
+ * tadmoraTooltipPlugin for inline-option charts.
  *
  * Chart.js calls this on every active-element/position change (i.e. every
  * mousemove — pointer-following with ≤16 ms response); the CSS transform
@@ -523,7 +523,7 @@ function buildTooltipContent(el: HTMLDivElement, tooltip: TooltipModel<ChartType
  * enter/leave fade (the model itself jumps 0↔1 because `enabled: false`
  * disables its internal animation).
  */
-function drawMadarekTooltip(args: { chart: Chart; tooltip: TooltipModel<ChartType> }): void {
+function drawTadmoraTooltip(args: { chart: Chart; tooltip: TooltipModel<ChartType> }): void {
   const { chart, tooltip } = args;
   const el = ensureTooltipEl();
   if (!el || !chart.canvas) return;
@@ -587,7 +587,7 @@ function tooltip() {
     // still receives the full model (title/body/caret), while
     // `enabled: false` keeps the canvas default from double-rendering.
     enabled: false,
-    external: drawMadarekTooltip,
+    external: drawTadmoraTooltip,
   };
 }
 
@@ -598,7 +598,7 @@ export function cartesianOptions(opts?: {
   horizontal?: boolean;
   legend?: boolean;
   /** Opt-in: fill line-dataset areas with accent-fading gradients
-   *  (madarekGradientFillPlugin — registered globally, disabled by default). */
+   *  (tadmoraGradientFillPlugin — registered globally, disabled by default). */
   gradientFill?: boolean;
 }): ChartOptions<'line' | 'bar'> {
   const c = chartColors();
@@ -683,7 +683,7 @@ export function cartesianOptions(opts?: {
           }
         : { display: false },
       tooltip: tooltip(),
-      ...(opts?.gradientFill ? { madarekGradientFill: { enabled: true } } : {}),
+      ...(opts?.gradientFill ? { tadmoraGradientFill: { enabled: true } } : {}),
     },
     scales: {
       // Vertical charts: categories on x, numbers on y — horizontal swaps.
@@ -698,7 +698,7 @@ export function radialOptions(opts?: {
   legend?: boolean;
   cutout?: string;
   /** Opt-in: doughnut center text drawn with --type-metric tokens
-   *  (madarekCenterLabelPlugin — registered globally). */
+   *  (tadmoraCenterLabelPlugin — registered globally). */
   centerLabel?: { value: string; label?: string };
 }): ChartOptions<'doughnut'> {
   const c = chartColors();
@@ -757,7 +757,7 @@ export function radialOptions(opts?: {
               },
             },
       tooltip: tooltip(),
-      ...(opts?.centerLabel ? { madarekCenterLabel: opts.centerLabel } : {}),
+      ...(opts?.centerLabel ? { tadmoraCenterLabel: opts.centerLabel } : {}),
     },
   } as ChartOptions<'doughnut'>;
 }
@@ -799,7 +799,7 @@ export const valueLabels = {
 /* ─── Chart.js plugins (contract plugin set) ───────────────────────── */
 
 /**
- * madarekTooltip — installs the designed DOM tooltip on charts whose
+ * tadmoraTooltip — installs the designed DOM tooltip on charts whose
  * options don't already carry it (the inline-option holdouts). Charts
  * built through cartesianOptions()/radialOptions() already embed the
  * external handler in their tooltip options, so this hook skips them;
@@ -807,8 +807,8 @@ export const valueLabels = {
  * doughnut) keeps tooltips fully disabled. Also owns the hide-on-destroy
  * cleanup for the shared tooltip element.
  */
-const madarekTooltipPlugin: Plugin = {
-  id: 'madarekTooltip',
+const tadmoraTooltipPlugin: Plugin = {
+  id: 'tadmoraTooltip',
   beforeInit(chart) {
     const options = chart.config.options;
     if (!options) return;
@@ -817,7 +817,7 @@ const madarekTooltipPlugin: Plugin = {
     if (typeof tooltipOpts.external === 'function') return;
     if (tooltipOpts.enabled === false) return;
     tooltipOpts.enabled = false;
-    tooltipOpts.external = drawMadarekTooltip;
+    tooltipOpts.external = drawTadmoraTooltip;
   },
   afterDestroy(chart) {
     if (tooltipOwner === chart && tooltipEl) {
@@ -828,15 +828,15 @@ const madarekTooltipPlugin: Plugin = {
 };
 
 /**
- * madarekFadingAxis — decorates a chart's raw x/y scale config with the
+ * tadmoraFadingAxis — decorates a chart's raw x/y scale config with the
  * fading grid color. Charts built through cartesianOptions() already
  * carry it (marker-guarded, idempotent); this hook covers charts with
  * hand-written scales that did NOT set an explicit grid.color — an
  * explicit custom color is respected and left untouched (use the
  * exported fadingGridColor() helper to fade a custom base color).
  */
-const madarekFadingAxisPlugin: Plugin = {
-  id: 'madarekFadingAxis',
+const tadmoraFadingAxisPlugin: Plugin = {
+  id: 'tadmoraFadingAxis',
   beforeInit(chart) {
     const options = chart.config.options;
     const scales = options?.scales;
@@ -853,25 +853,25 @@ const madarekFadingAxisPlugin: Plugin = {
 };
 
 /**
- * madarekGradientFill — converts filled line-dataset areas into vertical
+ * tadmoraGradientFill — converts filled line-dataset areas into vertical
  * accent-fading gradients (the previously zero-consumer lineFillGradient,
  * now automatic). Opt in per chart:
  *
  *   options={cartesianOptions({ gradientFill: true })}
- *   // or: options={{ ..., plugins: { madarekGradientFill: { enabled: true } } }}
+ *   // or: options={{ ..., plugins: { tadmoraGradientFill: { enabled: true } } }}
  *
  * Runs in beforeDatasetsDraw — before the Filler plugin paints areas —
  * and rebuilds the gradient every draw, so resizes and theme remounts
  * re-resolve the accent automatically.
  */
-const madarekGradientFillPlugin: Plugin = {
-  id: 'madarekGradientFill',
+const tadmoraGradientFillPlugin: Plugin = {
+  id: 'tadmoraGradientFill',
   defaults: { enabled: false },
   /* R313 (WP-D · charts): no chart gradients — opted-in line datasets
      get the FLAT 12% alpha band instead of the retired gradient sweep
      (the plugin stays registered so legacy `gradientFill: true`
      options, e.g. AdminPages, resolve harmlessly). */
-  beforeDatasetsDraw(chart: Chart, _args: unknown, options: Partial<MadarekGradientFillOptions>) {
+  beforeDatasetsDraw(chart: Chart, _args: unknown, options: Partial<TadmoraGradientFillOptions>) {
     if (!options.enabled) return;
     const area = chart.chartArea;
     if (!area) return;
@@ -896,17 +896,17 @@ const madarekGradientFillPlugin: Plugin = {
 };
 
 /**
- * madarekCenterLabel — draws a value (+ optional caption) in the center
+ * tadmoraCenterLabel — draws a value (+ optional caption) in the center
  * of a doughnut/pie using --type-metric / --type-label tokens. Opt in:
  *
  *   options={radialOptions({ cutout: '78%', centerLabel: { value: '85%', label: 'التقدّم' } })}
  *
  * Pair it with a cutout ≥ 60% so the text clears the arcs.
  */
-export const madarekCenterLabelPlugin: Plugin = {
-  id: 'madarekCenterLabel',
+export const tadmoraCenterLabelPlugin: Plugin = {
+  id: 'tadmoraCenterLabel',
   defaults: {},
-  afterDraw(chart: Chart, _args: unknown, options: Partial<MadarekCenterLabelOptions>) {
+  afterDraw(chart: Chart, _args: unknown, options: Partial<TadmoraCenterLabelOptions>) {
     const value = options.value;
     if (!value) return;
     const area = chart.chartArea;
@@ -941,14 +941,14 @@ export const madarekCenterLabelPlugin: Plugin = {
 };
 
 /* Registered once at module init so every chart — including the
-   inline-option holdouts — runs the Madarek treatment. The gradient-fill
+   inline-option holdouts — runs the Tadmora treatment. The gradient-fill
    and center-label plugins stay inert until a chart opts in via their
    options flags (defaults keep them disabled). */
 Chart.register(
-  madarekTooltipPlugin,
-  madarekFadingAxisPlugin,
-  madarekGradientFillPlugin,
-  madarekCenterLabelPlugin,
+  tadmoraTooltipPlugin,
+  tadmoraFadingAxisPlugin,
+  tadmoraGradientFillPlugin,
+  tadmoraCenterLabelPlugin,
 );
 
 /* ─── 012-design-graphics-uplift — theme-change observer ──────────────

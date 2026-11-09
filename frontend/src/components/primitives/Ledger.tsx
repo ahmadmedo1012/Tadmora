@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { CSSProperties, ReactNode } from 'react';
 
-/* ─── R189 «سجلّ مدارك» — the ledger product language ──────────────
+/* ─── R189 «سجلّ تادمورا» — the ledger product language ──────────────
  *
  * The R189 design direction (VLM-compared two-direction trial,
  * /home/z/probes/preview/): the authenticated product speaks an

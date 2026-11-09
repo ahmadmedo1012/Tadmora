@@ -81,7 +81,7 @@ export default function CampusMapPage() {
         eyebrow="خدمات الجامعة"
         title="دليل الحرم الجامعيّ"
         description={
-          'كلّيّات جامعة مدارك التجريبية بحسب الحرم، مع روابط لصفحاتها التفصيليّة — بيانات عرض اصطناعية.'
+          'كلّيّات جامعة تادمورا التجريبية بحسب الحرم، مع روابط لصفحاتها التفصيليّة — بيانات عرض اصطناعية.'
         }
         /* R342-08 — the header CTA pair (the D11/D8 measured seat;
            the phone band hides the topbar «اسأل AI» ≤920, D6):
@@ -253,8 +253,8 @@ export default function CampusMapPage() {
           <div className="ml-fact">
             <span className="ml-fact-label">البريد الإلكتروني</span>
             <span className="ml-fact-values">
-              <bdi dir="ltr" className="font-mono text-sm">info@demo.madarek.ly</bdi>
-              <bdi dir="ltr" className="font-mono text-sm">ico@demo.madarek.ly</bdi>
+              <bdi dir="ltr" className="font-mono text-sm">info@demo.tadmora.ly</bdi>
+              <bdi dir="ltr" className="font-mono text-sm">ico@demo.tadmora.ly</bdi>
             </span>
           </div>
         </div>
@@ -264,8 +264,8 @@ export default function CampusMapPage() {
           <span>
             خريطة الحرم التفاعليّة قيد التطوير. حاليّاً يمكنك الاطّلاع على المواقع الفعليّة عبر الموقع
             الرسميّ:{' '}
-            <a href="https://demo.madarek.ly" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
-              demo.madarek.ly <Icon icon={ExternalLink} size={11} />
+            <a href="https://demo.tadmora.ly" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
+              demo.tadmora.ly <Icon icon={ExternalLink} size={11} />
             </a>
           </span>
         </div>

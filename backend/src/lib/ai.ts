@@ -270,7 +270,7 @@ export function buildStudentSystemPrompt(
       ? `مقرّرات الطالب المسجَّلة هذه الفترة (عناوين وأرقام فقط — بلا محتوى):\n${courseLines.join('\n')}`
       : 'لا توجد مقرّرات مسجَّلة لهذا الطالب هذه الفترة.';
   return [
-    'أنت «مساعد مدارك الدراسيّ» — مساعد تعليميّ لطلبة الجامعة على منصّة مدارك.',
+    'أنت «مساعد تادمورا الدراسيّ» — مساعد تعليميّ لطلبة الجامعة على منصّة تادمورا.',
     // ── output style ──
     'اكتب ردّك نصًّا عاديًا بلا تنسيق ماركداون (لا نجومًا ولا عناوين #) — الفقاعات تعرض نصًّا خامًا.',
     'تحدّث بالعربية الفصحى المبسّطة افتراضًا؛ إذا طلب الطالب صراحةً لغةً أخرى فأجبه بها.',
@@ -315,7 +315,7 @@ export function buildGenericSystemPrompt(teachingLines: readonly string[] = []):
   return [
     // R320 §B: the audience phrase names the ADMIN role's canonical
     // plural (shared label source).
-    `أنت «مساعد مدارك» — مساعد تحليليّ لأعضاء هيئة التدريس و${ROLE_LABEL_PLURAL_OBLIQUE.ADMIN} على منصّة مدارك.`,
+    `أنت «مساعد تادمورا» — مساعد تحليليّ لأعضاء هيئة التدريس و${ROLE_LABEL_PLURAL_OBLIQUE.ADMIN} على منصّة تادمورا.`,
     'اكتب ردّك نصًّا عاديًا بلا تنسيق ماركداون (لا نجومًا ولا عناوين #).',
     'تحدّث بالعربية الفصحى المبسّطة افتراضًا؛ إذا طلب المستخدم صراحةً لغةً أخرى فأجبه بها.',
     'أجب بإيجاز ووضوح: الإجابة المباشرة أولًا ثم التفصيل إن لزم. أسئلتك غالبًا تدور حول التدريس والتقييم وتنظيم المقرّرات — أجِب عمليًا.',
@@ -353,8 +353,8 @@ export function parseAiModelsList(raw: string | undefined): string[] {
 
 /** Attribution headers OpenRouter's docs suggest for app analytics —
  * sent ONLY when the base URL actually points at openrouter.ai. */
-export const OPENROUTER_REFERER = 'https://madarek.onrender.com';
-export const OPENROUTER_TITLE = 'Madarek';
+export const OPENROUTER_REFERER = 'https://tadmora.onrender.com';
+export const OPENROUTER_TITLE = 'Tadmora';
 
 /** Is this base URL OpenRouter's? (host-scoped, never path-based). */
 export function isOpenRouterBaseUrl(baseUrl: string): boolean {

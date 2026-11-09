@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Madarek Mobile — API contract drift check.
+ * Tadmora Mobile — API contract drift check.
  *
  * Purpose (Phase 13 of the mobile mission): the smallest practical mechanism
  * that catches *meaningful* drift between what the app consumes and what the
@@ -30,7 +30,7 @@ const REPO = join(MOBILE, "..", "..");
 const API_DIR = join(MOBILE, "src", "api");
 const APP_TS = join(REPO, "backend", "src", "app.ts");
 const ROUTES_DIR = join(REPO, "backend", "src", "http", "routes");
-const HEALTH_URL = "https://madarek.onrender.com/api/v1/health";
+const HEALTH_URL = "https://tadmora.onrender.com/api/v1/health";
 
 /* ---------------------------------- helpers --------------------------------- */
 
@@ -101,7 +101,7 @@ function fail(...msgs) {
 }
 
 if (!existsSync(APP_TS) || !existsSync(ROUTES_DIR)) {
-  fail("backend source tree not found (expected at ../../backend) — run from apps/mobile inside the madarek repo.");
+  fail("backend source tree not found (expected at ../../backend) — run from apps/mobile inside the tadmora repo.");
 }
 
 // 1 — consumed (mobile)

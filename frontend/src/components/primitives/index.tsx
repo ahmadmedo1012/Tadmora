@@ -34,7 +34,7 @@ export type ThemeColor = 'green' | 'amber' | 'red' | 'purple' | 'gold' | 'brand'
 export { Button, Input, FormField } from './Form';
 export type { ButtonVariant, ButtonSize } from './Form';
 export { PageHeader } from './PageHeader';
-/* R189 «سجلّ مدارك» — the ledger product language (see Ledger.tsx). */
+/* R189 «سجلّ تادمورا» — the ledger product language (see Ledger.tsx). */
 export {
   StatStrip, Sparkline, ProgressRing, LedgerPanel, LedgerRow,
 } from './Ledger';

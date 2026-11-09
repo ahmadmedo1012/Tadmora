@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   SHARED DESIGN SYSTEM — structural skeleton (madarek parity, r127-F1)
+   SHARED DESIGN SYSTEM — structural skeleton (tadmora parity, r127-F1)
    ─────────────────────────────────────────────────────────────────────
    Companion to unified-parity.css. This file is the STRUCTURAL
    (non-color) skeleton: spacing, radius, type scale, motion ladder,
@@ -24,7 +24,7 @@
    (shadcn-style): --foreground, --muted-foreground, --card,
    --card-muted, --ring. Everything else resolves from the pair.
 
-   NOT imported by madarek's own app (main.tsx) — export artifacts
+   NOT imported by tadmora's own app (main.tsx) — export artifacts
    gated by scripts/verify-parity-export.mjs.
 
    Architecture:

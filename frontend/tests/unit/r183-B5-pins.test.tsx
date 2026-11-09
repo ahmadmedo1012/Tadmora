@@ -12,7 +12,7 @@
  *  · [fix 5, A9 P2] OwnerContentPage resolves its brand swatches at
  *    runtime from the live design tokens — the reference university's
  *    ZU palette (#003461…) can never come back while the copy says
- *    «ألوان علامة مدارك الرسميّة»;
+ *    «ألوان علامة تادمورا الرسميّة»;
  *  · [fix 6, A10 P2] the owner institution-detail pagination follows
  *    the MessagesInbox RTL convention («السابق» rightward = ChevronRight,
  *    «التالي» leftward = ChevronLeft) — no per-instance scaleX(-1)
@@ -72,7 +72,7 @@ describe('r183-B5 [A9 P2] — OwnerContentPage swatches resolve from the live de
   // history — the pin guards executable code, not tombstone prose.
   const page = stripComments(read('src/pages/owner/OwnerContentPage.tsx'));
 
-  it('the reference university palette is gone (the copy says مدارك, the chips must too)', () => {
+  it('the reference university palette is gone (the copy says تادمورا, the chips must too)', () => {
     expect(page).not.toContain('#003461');
     expect(page).not.toContain('#fed65b');
     expect(page).not.toContain('#a3c9ff');

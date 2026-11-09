@@ -42,4 +42,4 @@ div.resource-hero-item.w-dyn-item.active (0,281.28 356.67×392.95)
 - Grid: **1 column**, cards 374.13 wide × ~530 tall, same anatomy (mat inset 15.88, art 342.38 wide, plus marks at corners), rules between rows full-bleed.
 - Shared mobile cta + footer bands.
 
-**Notes:** this is the only "archive/index" pattern on Heron — reusable as the Madarek resources/insights template. The filter bar is a row of transparent mono cells inside a 41.3px ruled band — not pills, not buttons. Dates are mono 10px right-aligned in the content row (cell grammar again).
+**Notes:** this is the only "archive/index" pattern on Heron — reusable as the Tadmora resources/insights template. The filter bar is a row of transparent mono cells inside a 41.3px ruled band — not pills, not buttons. Dates are mono 10px right-aligned in the content row (cell grammar again).

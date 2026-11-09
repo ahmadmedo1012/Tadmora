@@ -156,7 +156,7 @@ describe('setSession institution context (r178)', () => {
 describe('persist migrate v0 → v1 (r178)', () => {
   it('folds a legacy {user, accessToken} payload into the new defaults', async () => {
     localStorage.setItem(
-      'mdrk-auth',
+      'tdmr-auth',
       JSON.stringify({ state: { user: USER_A, accessToken: 'tok-0' }, version: 0 }),
     );
     const { useAuthStore } = await importAuthStore();
@@ -177,7 +177,7 @@ describe('persist migrate v0 → v1 (r178)', () => {
 
   it('rehydrates a v1 payload with context as-is (no migration path)', async () => {
     localStorage.setItem(
-      'mdrk-auth',
+      'tdmr-auth',
       JSON.stringify({
         state: {
           user: USER_A,

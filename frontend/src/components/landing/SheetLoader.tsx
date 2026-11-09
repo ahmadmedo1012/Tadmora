@@ -17,7 +17,7 @@ import { PREFERS_REDUCED_MOTION } from '../../lib/motion-media';
  * on client-side navigations, never under reduced motion / in
  * non-visual environments (lib/motion/introGate owns the decision).
  *
- * Madarek keeps the honest layer the reference cannot have: every log
+ * Tadmora keeps the honest layer the reference cannot have: every log
  * line describes work the page is actually doing, the counter never
  * waits past the fallback curve's 100% at ~5.65s (Promise.race timeout
  * on the asset gate), and a visible «تخطّي» (Esc/Enter/Space) always
@@ -98,7 +98,7 @@ export interface SheetLoaderProps {
 }
 
 /* ── The drawing — the platform's own educational linework (the
- * «مخطط مدارك» geometry, composed for the loader window), staged by
+ * «مخطط تادمورا» geometry, composed for the loader window), staged by
  * the [data-ink] groups against the counter's ramp (landing.css .sl). */
 function SlDraw() {
   return (
@@ -114,7 +114,7 @@ function SlDraw() {
  * each a thing the page is actually doing while the loader runs;
  * `at` is the counter checkpoint that reveals the line. */
 const LOG_LINES: Array<{ at: number; code: string; text: string }> = [
-  { at: 0, code: '001', text: 'تهيئة لوحة مدارك' },
+  { at: 0, code: '001', text: 'تهيئة لوحة تادمورا' },
   { at: 7, code: '002', text: 'تحميل عائلات الخطوط' },
   { at: 20, code: '003', text: 'تجهيز المخطط المرسوم' },
   { at: 33, code: '004', text: 'بناء شبكة الإطار والمسطرة' },
@@ -503,7 +503,7 @@ export function SheetLoader({ onDone, onExitStart }: SheetLoaderProps) {
       data-fullscreen-layer="sheet-loader"
       role="status"
       aria-busy={!exiting}
-      aria-label="تحضير صفحة مدارك"
+      aria-label="تحضير صفحة تادمورا"
       onPointerMove={onPointerMove}
     >
       <div ref={mainRef} className="sl-main">
@@ -546,10 +546,10 @@ export function SheetLoader({ onDone, onExitStart }: SheetLoaderProps) {
         <div className="sl-meta" aria-hidden="true">
           <span className="sl-brand">
             <Logo variant="mark" size={22} animated className="sl-brand-logo" />
-            <span className="sl-meta-title">مدارك — منصّة التعليم الذكي</span>
+            <span className="sl-meta-title">تادمورا — نظام تشغيل الجامعة</span>
           </span>
           <span className="sl-meta-row fo-mono" dir="ltr">
-            MADAREK · LEARNING PLATFORM
+            TADMORA · LEARNING PLATFORM
           </span>
           <span className="sl-meta-row fo-mono" dir="ltr">
             TYPE : ARABIC-FIRST LEARNING PLATFORM

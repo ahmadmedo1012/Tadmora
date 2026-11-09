@@ -295,7 +295,7 @@ describe('masteryContextLines (worst gaps first)', () => {
 describe('buildStudentSystemPrompt', () => {
   it('carries the persona, the gap-first focus, and the anti-fabrication guardrails', () => {
     const p = buildStudentSystemPrompt(['- مفهوم (مقرر): 40% — فجوة']);
-    expect(p).toContain('مساعد مدارك الدراسيّ');
+    expect(p).toContain('مساعد تادمورا الدراسيّ');
     expect(p).toContain('لا تختلق');
     expect(p).toContain('ركّز على فجوات الطالب');
     expect(p).toContain('- مفهوم (مقرر): 40% — فجوة');
@@ -487,8 +487,8 @@ describe('callOpenAiCompatible — request shape', () => {
     const init = calls[0]!.init as { headers: Record<string, string> };
     expect(init.headers['HTTP-Referer']).toBe(OPENROUTER_REFERER);
     expect(init.headers['X-Title']).toBe(OPENROUTER_TITLE);
-    expect(OPENROUTER_REFERER).toBe('https://madarek.onrender.com');
-    expect(OPENROUTER_TITLE).toBe('Madarek');
+    expect(OPENROUTER_REFERER).toBe('https://tadmora.onrender.com');
+    expect(OPENROUTER_TITLE).toBe('Tadmora');
   });
 
   it('r176i: a configured models list rides the wire as the `models` array — and `model` is ABSENT (OpenRouter ignores the array when model rides along)', async () => {

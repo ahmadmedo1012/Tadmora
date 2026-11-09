@@ -11,7 +11,7 @@
 The existing JWT auth contract is preserved unchanged at the operational layer:
 
 1. Access token: 15-minute lifetime, sent as `Authorization: Bearer`.
-2. Refresh token: http-only cookie `mdrk_refresh`, scoped to `/api/v1/auth`, rotated on every refresh, `SameSite=Lax`.
+2. Refresh token: http-only cookie `tdmr_refresh`, scoped to `/api/v1/auth`, rotated on every refresh, `SameSite=Lax`.
 3. Argon2id password hashing.
 4. Account lockout after 5 failed logins for 15 minutes.
 
@@ -54,7 +54,7 @@ Spec 011 changes only:
 **Cookies set**:
 
 ```
-Set-Cookie: mdrk_refresh=<token>;
+Set-Cookie: tdmr_refresh=<token>;
             HttpOnly; Secure; SameSite=Lax;
             Path=/api/v1/auth;
             Max-Age=604800   ← if rememberMe=false
@@ -106,7 +106,7 @@ New endpoint. Re-verify the user's password and re-issue auth tokens with a fres
 }
 ```
 
-`Set-Cookie: mdrk_refresh=...` is also rotated.
+`Set-Cookie: tdmr_refresh=...` is also rotated.
 
 **Errors**:
 
@@ -129,7 +129,7 @@ Existing endpoint, augmented:
 
 1. Sets `User.rememberMeUntil = null`.
 2. Bumps `User.tokenVersion` (existing behavior — invalidates all refresh tokens for this user).
-3. Clears the `mdrk_refresh` cookie.
+3. Clears the `tdmr_refresh` cookie.
 
 ---
 
@@ -202,7 +202,7 @@ The user-perceived behavior:
 5. Sensitive route within 30 minutes of login → succeeds.
 6. `POST /auth/step-up` with correct password → sensitive route now succeeds for 30 more minutes.
 7. `POST /auth/step-up` with wrong password 5 times in 15 minutes → `ACCOUNT_LOCKED`.
-8. Logout → `rememberMeUntil = null`, `tokenVersion` bumped, `mdrk_refresh` cleared.
+8. Logout → `rememberMeUntil = null`, `tokenVersion` bumped, `tdmr_refresh` cleared.
 9. Step-up modal flow (frontend integration test): triggering a sensitive route opens the modal, password entry resolves the route's original promise.
 
 ---

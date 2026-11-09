@@ -41,7 +41,7 @@ export function ReportProblemSheet({ open, onClose }: { open: boolean; onClose: 
       post("/feedback", { kind, note: note.trim(), route: pathname, role: user?.role ?? undefined }),
     onSuccess: () => {
       haptics.notify("success");
-      toast.success("وصلتنا ملاحظتك — شكرًا لمساعدتك في تحسين مدارك.", "ملاحظة الطيار");
+      toast.success("وصلتنا ملاحظتك — شكرًا لمساعدتك في تحسين تادمورا.", "ملاحظة الطيار");
       setNote("");
       setError(null);
       onClose();

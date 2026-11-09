@@ -1,6 +1,6 @@
 ---
 name: "✨ طلب ميزة | Feature request"
-about: "اقترح ميزة لإحدى تطبيقات منظومة مدارك | Propose a feature for one of the Madarek ecosystem apps"
+about: "اقترح ميزة لإحدى تطبيقات منظومة تادمورا | Propose a feature for one of the Tadmora ecosystem apps"
 title: ""
 labels: ["enhancement"]
 assignees: []

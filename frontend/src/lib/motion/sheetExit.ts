@@ -6,7 +6,7 @@
  * --mask-percent opens 50→100% by ≈1.6s total, an architectural
  * line-width spike at the midpoint, never a fade — reference digest
  * `routeTransition`, re-measured live in R313). Barba itself is
- * rejected for Madarek (it fights the React Router lifecycle); this
+ * rejected for Tadmora (it fights the React Router lifecycle); this
  * reproduces the observable COVER phase of the sweep with hard safety
  * rules:
  *

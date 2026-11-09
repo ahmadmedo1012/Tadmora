@@ -18,7 +18,7 @@ import { apiBaseURL } from '../lib/api';
 import '../styles/app.css';
 
 /**
- * /app — «تطبيق مدارك: التنزيل والتحديث» (R327 D1 · M0.8).
+ * /app — «تطبيق تادمورا: التنزيل والتحديث» (R327 D1 · M0.8).
  *
  * The distribution sheet in the public grammar (hairline cells · [nn]
  * bars · paper/ink). EVERY claim is honest:
@@ -42,7 +42,7 @@ import '../styles/app.css';
 const ANDROID_APK_URL =
   'https://expo.dev/artifacts/eas/5XTynelLCXq0ihxCSSNxbl-r-iNDdEpfEFA4MCXj390.tar.gz';
 const BUILDS_PAGE_URL =
-  'https://expo.dev/accounts/rh2011/projects/madarek-mobile/builds';
+  'https://expo.dev/accounts/rh2011/projects/tadmora-mobile/builds';
 const APP_VERSION = '1.0.0';
 
 interface StatusShape {
@@ -61,10 +61,10 @@ function AppPendingTag() {
 export function AppDownloadPage() {
   useThemeSync();
   useLegalMeta({
-    title: 'تطبيق مدارك — التنزيل والتحديث',
+    title: 'تطبيق تادمورا — التنزيل والتحديث',
     path: '/app',
     description:
-      'تنزيل تطبيق مدارك لأندرويد، حالة iOS، قنوات التحديث التلقائي، والحد الأدنى للإصدار — مباشرة وبدون وسيط.',
+      'تنزيل تطبيق تادمورا لأندرويد، حالة iOS، قنوات التحديث التلقائي، والحد الأدنى للإصدار — مباشرة وبدون وسيط.',
   });
 
   // The live floor — the same status the app's version gate reads (M0.7).
@@ -94,9 +94,9 @@ export function AppDownloadPage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="ap-header-brand" aria-label="مدارك — الصفحة الرئيسية">
+          <Link to="/" className="ap-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            مدارك
+            تادمورا
           </Link>
         </div>
       </header>
@@ -106,7 +106,7 @@ export function AppDownloadPage() {
           <div className="pf-page-header">
             <div className="pf-page-header-text">
               <p className="pf-eyebrow">وثيقة التوزيع</p>
-              <h1 className="pf-page-title">تطبيق مدارك — التنزيل والتحديث</h1>
+              <h1 className="pf-page-title">تطبيق تادمورا — التنزيل والتحديث</h1>
               <p className="pf-page-desc">
                 صفحة واحدة لكل ما يخصّ تطبيق الجوال: تنزيل أندرويد المباشر، حالة iOS، كيف تصل
                 التحديثات إلى هاتفك، والحد الأدنى للإصدار الذي تفرضه المنصّة الآن — قراءة حيّة من الخادم.
@@ -180,7 +180,7 @@ export function AppDownloadPage() {
               <div className="ap-qr">
                 <img
                   src="/media/app/qr-app-page.svg"
-                  alt="رمز QR يؤدي إلى صفحة تنزيل تطبيق مدارك"
+                  alt="رمز QR يؤدي إلى صفحة تنزيل تطبيق تادمورا"
                   width={168}
                   height={168}
                   loading="lazy"

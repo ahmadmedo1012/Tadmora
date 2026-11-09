@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """capture.py — Heron Twin frame capture.
 
-ONE browser instance, TWO pages (heron live + madarek local). For each section
+ONE browser instance, TWO pages (heron live + tadmora local). For each section
 × side: find the section's absolute document range (top, height) at scroll 0,
 then walk progress p ∈ {0,2,…,100}% of the section's scrollable span
 (target y = top + p/100·(height − vh), clamped to [0, maxScroll]), seek EXACTLY,
@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent
 CFG = json.loads((ROOT / "config.json").read_text())
 
 CONSENT_SEED = """
-try { window.localStorage.setItem('madarek.consent', 'accepted'); } catch (e) {}
+try { window.localStorage.setItem('tadmora.consent', 'accepted'); } catch (e) {}
 """
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
@@ -45,7 +45,7 @@ def parse_args():
     ap.add_argument("--vp", required=True)
     ap.add_argument("--sections", default=",".join(s["section"] for s in CFG["sectionMap"]))
     ap.add_argument("--out", default=CFG["paths"]["defaultRun"])
-    ap.add_argument("--sides", default="heron,madarek")
+    ap.add_argument("--sides", default="heron,tadmora")
     ap.add_argument("--step", type=int, default=None,
                     help="override progress step pct (e.g. 10 for a smoke run)")
     ap.add_argument("--engine", default="chromium", choices=["chromium", "webkit"],
@@ -98,13 +98,13 @@ def capture_side(page, side: str, url: str, vp: dict, sections: list, outdir: Pa
 
     # R332 blind-panel policy (QA-3R finding): BOTH sides' consent/cookie
     # chrome and badge overlays are masked — heron's `.cookie-banner` +
-    # `.awwwards` badge unblind every pair (present 9/9) while madarek's
+    # `.awwwards` badge unblind every pair (present 9/9) while tadmora's
     # consent is seeded away (0/9). Consent UI is out of structure scope.
     page.add_style_tag(content=(
         " .cookie-banner, .awwwards, [class*='cookie'], [class*='awwwards'] "
         " { display: none !important; }"))
 
-    # R332 blind-panel policy (QA-1R/QA-3R finding): madarek's reveal
+    # R332 blind-panel policy (QA-1R/QA-3R finding): tadmora's reveal
     # system did not settle within the capture budget in 6/9 pairs —
     # prime every intersection observer by sweeping the section range
     # once before the capture loop (the observers fire on intersection;

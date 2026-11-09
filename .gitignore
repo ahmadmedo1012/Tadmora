@@ -73,7 +73,7 @@ agentdb.rvf.lock
 **/agentdb.rvf.lock
 
 # Stray nested copy of the repo (created by some tooling)
-/madarek/
+/tadmora/
 
 # Secrets (contains credentials, never committed)
 secrets.txt

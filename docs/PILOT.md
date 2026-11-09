@@ -1,4 +1,4 @@
-# PILOT — تشغيل أول فصل دراسي حقيقي على مدارك
+# PILOT — تشغيل أول فصل دراسي حقيقي على تادمورا
 
 > English summary below. This is the 10-step checklist from «أنشئ الكلية»
 > to «أول محاضرة», the env-var table, and the rollback steps. Everything
@@ -49,13 +49,13 @@
 | `AI_DAILY_LIMIT_DEFAULT` | 25 (الافتراضي) | حماية التكلفة |
 | `MAIL_PROVIDER` / `MAIL_API_KEY` / `MAIL_FROM` | `resend` أو `brevo` | البريد الحقيقي |
 | `STT_API_URL` / `STT_API_KEY` / `STT_MODEL` | Groq: `https://api.groq.com/openai/v1` + `whisper-large-v3` (مجاني) | توليد النصوص تلقائيًا |
-| `APP_ORIGIN` | `https://madarek.onrender.com` | روابط البريد |
-| `MADAREK_TEST_ACCOUNTS` | أزِلها عند الإطلاق | إطلاق فقط |
+| `APP_ORIGIN` | `https://tadmora.onrender.com` | روابط البريد |
+| `TADMORA_TEST_ACCOUNTS` | أزِلها عند الإطلاق | إطلاق فقط |
 
 ## الحسابات التجريبية
 
 10 حسابات `*@test.ly` بكلمة `12345678` (طالب/أستاذ/مسجل/جودة/مالك…).
-**عند الإطلاق:** أزِل `MADAREK_TEST_ACCOUNTS` من بيئة Render ثم أعد النشر،
+**عند الإطلاق:** أزِل `TADMORA_TEST_ACCOUNTS` من بيئة Render ثم أعد النشر،
 وغيّر كلمات مرور المالك والمسجل من الإعدادات.
 
 ## حدود معروفة (صادقة)

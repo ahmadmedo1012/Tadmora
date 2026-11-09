@@ -57,7 +57,7 @@ export function GuestSheetChrome({ portal = false }: { portal?: boolean }) {
   return portal ? createPortal(chrome, document.body) : chrome;
 }
 
-/* r324 X10 — the former GuestSheetLabel component (the `[MDRK-…] ·
+/* r324 X10 — the former GuestSheetLabel component (the `[TDMR-…] ·
  * SHEET NN/NN` mono identity line) is RETIRED: coordinates/revision
  * tags are not content. Its last callers (the colleges registry
  * sheets, the auth doors, register) dropped the lines with this

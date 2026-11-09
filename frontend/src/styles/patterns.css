@@ -1,5 +1,5 @@
 /* Agent S shell family — shared page patterns (contract v1, r210).
- * Everything a Madarek page composes from: frame, headers, rows,
+ * Everything a Tadmora page composes from: frame, headers, rows,
  * split, stats, filters, today. Tokens only; logical properties only;
  * 44px interaction floor. CONTRACT.md is the normative doc. */
 
@@ -1261,7 +1261,7 @@ a.pf-row-link {
     border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
     border-block-start-color: currentColor;
     border-radius: 50%;
-    animation: madarek-spin var(--motion-duration-stat) var(--ease-linear) infinite;
+    animation: tadmora-spin var(--motion-duration-stat) var(--ease-linear) infinite;
   }
 
   /* Demo-account hint (dev-only): a quiet, dismissible ruled block —
@@ -1872,9 +1872,9 @@ a.pf-row-link {
   /* ONE authored moment: the sheet column rises in (calm distance, no
      bounce). R315: same keyframe, new seat — the dissolved card. */
   .auth-card {
-    animation: madarek-auth-card-in var(--t-slow) var(--ease-out) both;
+    animation: tadmora-auth-card-in var(--t-slow) var(--ease-out) both;
   }
-  @keyframes madarek-auth-card-in {
+  @keyframes tadmora-auth-card-in {
     from { opacity: 0; transform: translateY(var(--motion-distance-small)); }
     to   { opacity: 1; transform: none; }
   }

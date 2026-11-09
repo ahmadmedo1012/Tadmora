@@ -69,7 +69,7 @@ export default function Contact() {
           onPress={() => router.push("/auth/register" as never)}
         />
         <Button
-          label="عن مدارك"
+          label="عن تادمورا"
           kind="ghost"
           small
           icon={<Info size={16} color={p.text} />}

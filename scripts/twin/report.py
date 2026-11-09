@@ -5,7 +5,7 @@ For every viewport dir in the run:
   · per side/section: medians across progress steps
       - heading font-size (first heading element)
       - vertical rhythm: median inter-child gutter
-  · section height Δ% (heron vs madarek), trigger-start Δpx (top − vh)
+  · section height Δ% (heron vs tadmora), trigger-start Δpx (top − vh)
   · side-by-side strips @ p=0/50/100 and diff heatmaps (PIL ImageChops +
     numpy — no odiff)
   · verdict PASS / FAIL / PARTIAL per config thresholds:
@@ -135,7 +135,7 @@ def strip_and_heat(vdir: Path, repdir: Path, section: str, recs: dict, vp: dict)
     cells, heat_stats = [], []
     for p in steps:
         imgs = {}
-        for side in ("heron", "madarek"):
+        for side in ("heron", "tadmora"):
             rec = recs[side].get(p) or recs[side].get(p + 1) or recs[side].get(p - 1)
             if rec is None:
                 continue
@@ -144,7 +144,7 @@ def strip_and_heat(vdir: Path, repdir: Path, section: str, recs: dict, vp: dict)
                 imgs[side] = (Image.open(fp).convert("RGB"), rec["p"])
         if len(imgs) < 2:
             continue
-        h_img, m_img = imgs["heron"], imgs["madarek"]
+        h_img, m_img = imgs["heron"], imgs["tadmora"]
         hm = h_img[0].resize((m_img[0].width, m_img[0].height))
         diff = ImageChops.difference(hm, m_img[0])
         gray = diff.convert("L")
@@ -213,7 +213,7 @@ def process_vp(run: Path, vp: str) -> dict:
         ranges = json.loads(rfp.read_text())
     vh = None
     # viewport height from any record
-    for side in ("heron", "madarek"):
+    for side in ("heron", "tadmora"):
         recs = load_records(vdir / f"{side}-records.jsonl")
         for s in recs.values():
             for r in s.values():
@@ -228,7 +228,7 @@ def process_vp(run: Path, vp: str) -> dict:
     vph = vh or 900
 
     recs_h = load_records(vdir / "heron-records.jsonl")
-    recs_m = load_records(vdir / "madarek-records.jsonl")
+    recs_m = load_records(vdir / "tadmora-records.jsonl")
     sections = sorted(set(recs_h) | set(recs_m))
     out = {"vp": vp, "viewportHeight": vph, "sections": {}}
 
@@ -238,7 +238,7 @@ def process_vp(run: Path, vp: str) -> dict:
         heron_sel = next((s["heron"] for s in CFG["sectionMap"] if s["section"] == sec), "")
         stw = heron_wrap_trigger(recs_h.get(sec, {}), heron_sel)
         vh_h = (ranges.get("heron", {}).get(sec, {}) or {})
-        vh_m = (ranges.get("madarek", {}).get(sec, {}) or {})
+        vh_m = (ranges.get("tadmora", {}).get(sec, {}) or {})
         h_h = mh["height"] if mh["height"] is not None else vh_h.get("height")
         h_m = mm["height"] if mm["height"] is not None else vh_m.get("height")
         deltas = {
@@ -257,16 +257,16 @@ def process_vp(run: Path, vp: str) -> dict:
         v, over = verdict(deltas)
         missing = [k for k, dv in deltas.items() if dv is None]
         vis = strip_and_heat(vdir, repdir, sec, {"heron": recs_h.get(sec, {}),
-                                                 "madarek": recs_m.get(sec, {})},
+                                                 "tadmora": recs_m.get(sec, {})},
                              {"width": 0, "height": vph})
         out["sections"][sec] = {
-            "heron": mh, "madarek": mm,
+            "heron": mh, "tadmora": mm,
             "heronWrapTrigger": stw,
             "triggerStart": {"heronPx": round(tsh, 1) if tsh is not None else None,
-                             "madarekPx": round(tsm, 1) if tsm is not None else None},
+                             "tadmoraPx": round(tsm, 1) if tsm is not None else None},
             "deltas": deltas, "verdict": v, "overThreshold": over,
             "missingMetrics": missing,
-            "frames": {"heron": len(recs_h.get(sec, {})), "madarek": len(recs_m.get(sec, {}))},
+            "frames": {"heron": len(recs_h.get(sec, {})), "tadmora": len(recs_m.get(sec, {}))},
             "visual": vis,
         }
         print(f"[{vp}] {sec:10s} {v:8s} hΔ%={deltas['sectionHeightPct'] and deltas['sectionHeightPct']['delta']} "
@@ -274,7 +274,7 @@ def process_vp(run: Path, vp: str) -> dict:
               f"rhythmΔ={deltas['rhythmGapPx'] and deltas['rhythmGapPx']['delta']}px "
               f"trigΔ={deltas['triggerStartPx'] and deltas['triggerStartPx']['delta']}px "
               f"frames H:{out['sections'][sec]['frames']['heron']} "
-              f"M:{out['sections'][sec]['frames']['madarek']}"
+              f"M:{out['sections'][sec]['frames']['tadmora']}"
               + (f" n/a:{','.join(missing)}" if missing else ""), flush=True)
     return out
 
@@ -299,7 +299,7 @@ def write_markdown(run: Path, report: dict):
             p50 = next((h for h in (s.get("visual") or {}).get("heat", []) if h["p"] == 50), None)
             md.append(f"| {sec} | **{s['verdict']}** | {cell(d['sectionHeightPct'])} "
                       f"| {cell(d['headingFontSizePct'])} | {cell(d['rhythmGapPx'])} "
-                      f"| {cell(d['triggerStartPx'])} | {s['frames']['heron']}/{s['frames']['madarek']} "
+                      f"| {cell(d['triggerStartPx'])} | {s['frames']['heron']}/{s['frames']['tadmora']} "
                       f"| {'—' if p50 is None else p50['meanDiff']} |")
         md.append("")
         for sec, s in vpdata["sections"].items():
@@ -307,12 +307,12 @@ def write_markdown(run: Path, report: dict):
             md.append(f"- heron: height={s['heron']['height']} heading={s['heron']['headingFontSize']} "
                       f"rhythm={s['heron']['rhythmGap']} (gaps +{s['heron'].get('rhythmGapsPositive', 0)}/-{s['heron'].get('rhythmGapsNegative', 0)}) "
                       f"top={s['heron']['top']}")
-            md.append(f"- madarek: height={s['madarek']['height']} heading={s['madarek']['headingFontSize']} "
-                      f"rhythm={s['madarek']['rhythmGap']} (gaps +{s['madarek'].get('rhythmGapsPositive', 0)}/-{s['madarek'].get('rhythmGapsNegative', 0)}) "
-                      f"top={s['madarek']['top']}")
+            md.append(f"- tadmora: height={s['tadmora']['height']} heading={s['tadmora']['headingFontSize']} "
+                      f"rhythm={s['tadmora']['rhythmGap']} (gaps +{s['tadmora'].get('rhythmGapsPositive', 0)}/-{s['tadmora'].get('rhythmGapsNegative', 0)}) "
+                      f"top={s['tadmora']['top']}")
             md.append(f"- triggerStart: heron={s['triggerStart']['heronPx']}px "
-                      f"madarek={s['triggerStart']['madarekPx']}px  "
-                      f"(geometric top−vh both sides; madarek exposes no ST handle)")
+                      f"tadmora={s['triggerStart']['tadmoraPx']}px  "
+                      f"(geometric top−vh both sides; tadmora exposes no ST handle)")
             if s.get("heronWrapTrigger"):
                 hw = s["heronWrapTrigger"]
                 md.append(f"- heron own ScrollTrigger for wrap: start={hw['start']} "

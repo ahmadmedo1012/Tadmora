@@ -10,7 +10,7 @@
 
 ## Plugin set
 
-### 1. `madarekTooltipPlugin`
+### 1. `tadmoraTooltipPlugin`
 
 Replaces Chart.js's default tooltip with a designed surface.
 
@@ -21,9 +21,9 @@ Replaces Chart.js's default tooltip with a designed surface.
 - Pointer-following: tracks the cursor smoothly (≤ 16 ms response).
 - Multi-series: shows colour swatches matching the dataset palette tokens.
 
-**Hook**: `Chart.register({ id: 'madarekTooltip', beforeInit, afterDraw })`.
+**Hook**: `Chart.register({ id: 'tadmoraTooltip', beforeInit, afterDraw })`.
 
-### 2. `madarekFadingAxisPlugin`
+### 2. `tadmoraFadingAxisPlugin`
 
 Paints axis labels and gridlines with a fade towards chart edges.
 
@@ -33,7 +33,7 @@ Paints axis labels and gridlines with a fade towards chart edges.
 - Axis labels at ≥ 60 % alpha in centre, ≤ 5 % alpha at the edge.
 - Gridlines use a similar fade; major lines remain at full alpha to preserve readability.
 
-### 3. `madarekGradientFillPlugin`
+### 3. `tadmoraGradientFillPlugin`
 
 Converts area fills under line charts into vertical gradients.
 

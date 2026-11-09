@@ -341,7 +341,7 @@ export function LearningPlanDrawing() {
       className="bp-svg jt-plan"
       viewBox={`0 0 ${PLAN_VB.w} ${PLAN_VB.h}`}
       role="img"
-      aria-label="مسطح معماري لطابق التعلّم في مدارك: قاعة محاضرات بصفوف مدرّجة ومنصة، قاعة اختبارات بمصافّ منظمة، غرفة إتقان مدرّجة، كشك نقطة فحص، مكتبة بأرفف وطاولة قراءة، واستقبال — حول ممر مركزي يمتد من المدخل يمينًا إلى غرفة الإتقان يسارًا، مع شبكة أعمدة وسلاسل أبعاد ومسار متقطّع بأسهم عند كل باب"
+      aria-label="مسطح معماري لطابق التعلّم في تادمورا: قاعة محاضرات بصفوف مدرّجة ومنصة، قاعة اختبارات بمصافّ منظمة، غرفة إتقان مدرّجة، كشك نقطة فحص، مكتبة بأرفف وطاولة قراءة، واستقبال — حول ممر مركزي يمتد من المدخل يمينًا إلى غرفة الإتقان يسارًا، مع شبكة أعمدة وسلاسل أبعاد ومسار متقطّع بأسهم عند كل باب"
       preserveAspectRatio="xMidYMid meet"
     >
       {/* the poché pigment sheet — scoped .jt .jt-plan, after landing.css */}
@@ -380,9 +380,9 @@ export function LearningPlanDrawing() {
           </g>
         ))}
         {/* R322 V1 kill: the sheet's title-block mono labels
-            (MDRK · LEARNING FLOOR · PLAN / SCALE 1:150 · UNITS M) are
+            (TDMR · LEARNING FLOOR · PLAN / SCALE 1:150 · UNITS M) are
             deleted — the long label also clipped mid-word at real
-            sizes (the owner's «MDRK · LI»); scale notes are debug
+            sizes (the owner's «TDMR · LI»); scale notes are debug
             text, not content. */}
       </g>
 

@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — Polish Bundle (consolidated v6 → v21)
+   TADMORA — Polish Bundle (consolidated v6 → v21)
    ─────────────────────────────────────────────────────────────────────
    Loaded LAST. Sequence preserved exactly as the historical v6..v21
    ordering. Each section retains its original @layer banner. The
@@ -13,7 +13,7 @@
    ▶ Section: polish-v6.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — Visual Polish v6
+   TADMORA — Visual Polish v6
    ─────────────────────────────────────────────────────────────────────
    Loaded LAST. Refines the existing system; does not redefine it.
    No `!important`. All transitions respect prefers-reduced-motion.
@@ -278,9 +278,9 @@
 
   /* ── Loading shimmer for async content containers ──────────────── */
   /* (Wave 9-b dead-selector sweep: .loading-pane + its .spinner and
-     the madarek-spin keyframes deleted — zero TSX consumers; loading
+     the tadmora-spin keyframes deleted — zero TSX consumers; loading
      surfaces render the States/Skeleton primitives. auth.css and
-     components.css each define their own identical madarek-spin
+     components.css each define their own identical tadmora-spin
      keyframes, so their spinners are unaffected.) */
   @media (prefers-reduced-motion: reduce) {
     /* (Wave 1-a: the 1500ms "slow spinner" accommodation deleted — it
@@ -813,7 +813,7 @@
    ▶ Section: polish-v11.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v11
+   TADMORA — polish v11
    ─────────────────────────────────────────────────────────────────────
    Focused improvements that build on v6–v10:
    · Loading/empty/error state variants (inline/page/card)
@@ -1020,8 +1020,8 @@
    ═══════════════════════════════════════════════════════════════════
    The landing-motion wave — every rule was already dead:
    - CTA breathe: the .landing-cta-stack consumers were swept in wave
-     9-b (zero TSX consumers since the «سماء مدارك» rebuild); the
-     @keyframes madarek-breathe had zero animation references and
+     9-b (zero TSX consumers since the «سماء تادمورا» rebuild); the
+     @keyframes tadmora-breathe had zero animation references and
      sat inside an unterminated Wave-9-b comment.
    - MOCKUP HOVER LIFT / feature magnetic glow: zero consumers since
      the landing redesign (r151c).
@@ -1037,7 +1037,7 @@
    ▶ Section: polish-v13.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v13 · site-wide vitality
+   TADMORA — polish v13 · site-wide vitality
    ─────────────────────────────────────────────────────────────────────
    Calm, Notion-style motion across every page. The goal is "alive but
    not noisy" — every interactive surface has a little micro-interaction,
@@ -1088,7 +1088,7 @@
   }
 
 
-  /* (5-C1 entrance diet, A2 P1-1): v16's `.page { madarek-page-in }`
+  /* (5-C1 entrance diet, A2 P1-1): v16's `.page { tadmora-page-in }`
      is GONE. It double-faded the route — .content-inner already
      plays `page-enter` (160ms) on the keyed PageTransition remount,
      and this second container fade (380ms, `both` fill) compounded
@@ -1115,7 +1115,7 @@
      moment keep it (e.g. CoursesPage's filter re-stagger opts out
      via student.css). `backwards` fill stays — the wave-5 fix that
      keeps hover-lifts alive after the entrance. */
-  @keyframes madarek-stagger-up {
+  @keyframes tadmora-stagger-up {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: none; }
   }
@@ -1128,7 +1128,7 @@
      into components.css METRIC — the overrides-layer winners, with
      the v8 touch-path hover kept beside them. The .metric-value
      pop-in below still lives here until the v13 section folds.) */
-  @keyframes madarek-pop-in {
+  @keyframes tadmora-pop-in {
     from { opacity: 0; transform: scale(0.92); }
     to   { opacity: 1; transform: none; }
   }
@@ -1197,9 +1197,9 @@
      ║  TOPBAR — slides down on first paint                           ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   .topbar {
-    animation: madarek-topbar-in var(--motion-duration-long) var(--ease-out) both;
+    animation: tadmora-topbar-in var(--motion-duration-long) var(--ease-out) both;
   }
-  @keyframes madarek-topbar-in {
+  @keyframes tadmora-topbar-in {
     from { opacity: 0; transform: translateY(calc(var(--motion-distance-small) * -1)); } /* r153h: -6px → --motion-distance-small */
     to   { opacity: 1; transform: none; }
   }
@@ -1293,7 +1293,7 @@
      ║  DOUGHNUT / CHARTS — fade up so they don't pop in cold         ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   
-  @keyframes madarek-chart-in {
+  @keyframes tadmora-chart-in {
     from { opacity: 0; transform: scale(0.96); }
     to   { opacity: 1; transform: none; }
   }
@@ -1318,7 +1318,7 @@
    ▶ Section: polish-v14.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v14 · foundation
+   TADMORA — polish v14 · foundation
    ─────────────────────────────────────────────────────────────────────
    First phase of the comprehensive design polish plan. Adds:
    · Token system (elevation, spring eases, focus rings, glass blur)
@@ -1482,7 +1482,7 @@
    ▶ Section: polish-v15.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v15 · primitives refinement
+   TADMORA — polish v15 · primitives refinement
    ─────────────────────────────────────────────────────────────────────
    Phase 1: lift every reusable primitive — Card, Button, MetricCard,
    Pill, Badge, Tabs, Input, Select, Skeleton, Tooltip — without
@@ -1593,10 +1593,10 @@
      ║  BADGE — pop-in on first paint                                 ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   .badge {
-    animation: madarek-badge-in var(--motion-duration-medium) var(--ease-spring-bounce) both;
+    animation: tadmora-badge-in var(--motion-duration-medium) var(--ease-spring-bounce) both;
     transition: transform var(--motion-duration-short) var(--ease);
   }
-  @keyframes madarek-badge-in {
+  @keyframes tadmora-badge-in {
     from { opacity: 0; transform: scale(0.85); }
     to   { opacity: 1; transform: none; }
   }
@@ -1688,7 +1688,7 @@
    ▶ Section: polish-v16.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v16 · layout shell
+   TADMORA — polish v16 · layout shell
    ─────────────────────────────────────────────────────────────────────
    Phase 2: lift the layout chrome — sidebar drawer, topbar, bottom nav,
    user menu, search dropdown. Each shell surface gets calmer motion,
@@ -1701,7 +1701,7 @@
      ║  SIDEBAR — desktop active rail + dot indicator                 ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   /* R329 (gate:clean): the rail-dot block (.nav-item.on::after + its
-     RTL companions + @keyframes madarek-rail-dot-in) is DELETED —
+     RTL companions + @keyframes tadmora-rail-dot-in) is DELETED —
      r305-shell.css:151's unlayered `content: none` retired the dot
      (it leaked v6's collapsed-rail tooltip attr()); every declaration
      here was inert under it. The rail signal is the ::before bar
@@ -1735,7 +1735,7 @@
     .sidebar {
       transition: transform var(--motion-duration-long) var(--ease-spring-soft);
     }
-    @keyframes madarek-drawer-item-in {
+    @keyframes tadmora-drawer-item-in {
       from {
         opacity: 0;
         transform: translateY(8px);
@@ -1796,7 +1796,7 @@
      ║  USER MENU ITEMS — stagger entrance                            ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   /* (WS-D2 orphan sweep: the .topbar-user-menu(-item) stagger + hover
-     rules and madarek-menu-item-in(-rtl) keyframes were dead — Topbar's
+     rules and tadmora-menu-item-in(-rtl) keyframes were dead — Topbar's
      Dropdown primitive renders its own menu items.) */
 
 
@@ -1811,7 +1811,7 @@
   }
 
   /* (5-C1 entrance diet, A2 P1-1): the title-block spring is GONE.
-     `madarek-page-title-in` (520ms + 80ms delay, off-token spring)
+     `tadmora-page-title-in` (520ms + 80ms delay, off-token spring)
      was the FOURTH stacked entrance on every route — the title
      re-faded on top of the page fade on top of the content fade.
      The title now arrives with the page-enter fade like every other
@@ -1847,7 +1847,7 @@
    ▶ Section: polish-v17.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v17 · pages
+   TADMORA — polish v17 · pages
    ─────────────────────────────────────────────────────────────────────
    Phase 3 of the design polish plan: page-specific motion + visual
    richness across landing sections, dashboards, list rows, table rows,
@@ -1888,13 +1888,13 @@
   
   
   
-  @keyframes madarek-agenda-in {
+  @keyframes tadmora-agenda-in {
     from { opacity: 0; transform: translateX(-8px); }
     to   { opacity: 1; transform: none; }
   }
   /* RTL variant as a separate name (a selector cannot prefix @keyframes —
      that syntax is invalid CSS and gets dropped by the minifier) */
-  @keyframes madarek-agenda-in-rtl {
+  @keyframes tadmora-agenda-in-rtl {
     from { opacity: 0; transform: translateX(8px); }
     to   { opacity: 1; transform: none; }
   }
@@ -1910,9 +1910,9 @@
   /* ╔═══════════════════════════════════════════════════════════════╗
      ║  TEACHER FEED — items glide in from the start side             ║
      ╚═══════════════════════════════════════════════════════════════╝ */
-  @keyframes madarek-feed-in {
+  @keyframes tadmora-feed-in {
     /* (r151f: the direction merge — components.css's wave-5
-       madarek-feed-slide keyframes + its animation-name !important
+       tadmora-feed-slide keyframes + its animation-name !important
        flip were merged verbatim into this owner. Rows glide in from
        inline-start, direction-aware via --motion-direction.) */
     from { opacity: 0; transform: translateX(calc(var(--motion-direction) * -12px)); }
@@ -1932,8 +1932,8 @@
 
 
   /* (r153e: the v17 OWNER REALTIME heartbeat family — .owner-live-pulse +
-     .owner-health-dot.green, their ::after rings and the madarek-heartbeat /
-     madarek-pulse-ring keyframes — moved home to owner.css (the Live Pulse
+     .owner-health-dot.green, their ::after rings and the tadmora-heartbeat /
+     tadmora-pulse-ring keyframes — moved home to owner.css (the Live Pulse
      + health-dot sections). Pure move for the normal state (probe-verified),
      plus the documented bug fix it unlocks: owner.css's is-pending /
      is-degraded `animation: none` freezes were dead under this
@@ -1945,7 +1945,7 @@
      as before.) */
 
   /* (r153e: the v17 ALERT TILE glow — .owner-live-status.has-alerts
-     box-shadow pulse + madarek-alert-glow keyframes — moved home to
+     box-shadow pulse + tadmora-alert-glow keyframes — moved home to
      owner.css beside its border/background siblings. RM belt entry
      stays here.) */
 
@@ -1956,7 +1956,7 @@
      ║  fades the canvas in so it doesn't pop cold.                   ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   
-  @keyframes madarek-canvas-in {
+  @keyframes tadmora-canvas-in {
     from { opacity: 0; }
     to   { opacity: 1; }
   }
@@ -1970,7 +1970,7 @@
      families — the canonical .table hover is the quiet zebra the canon
      documents; the leaderboard keeps its own dot identity.) */
   @media (hover: hover) {
-    @keyframes madarek-row-bar-in {
+    @keyframes tadmora-row-bar-in {
       from { transform: scaleY(0); }
       to   { transform: scaleY(1); }
     }
@@ -1985,7 +1985,7 @@
 
 
   /* (r153e: the v17 DETAIL HEADERS bar-draw — .college-hero/.comp-hero
-     positioning + ::before gradient rails + madarek-hero-bar-draw —
+     positioning + ::before gradient rails + tadmora-hero-bar-draw —
      moved home to colleges.css (hero section). The v22 2px stroke pin
      (the wave 7-b sweep below) and the RM belt entries stay here on
      purpose: they must keep beating the pages-layer family by layer
@@ -2033,7 +2033,7 @@
    ▶ Section: polish-v19.css
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v19 · states, auth, thumbnails, micro-fixes
+   TADMORA — polish v19 · states, auth, thumbnails, micro-fixes
    ─────────────────────────────────────────────────────────────────────
    Phase 6 of the design polish plan. Empty/error/loading state polish,
    auth pages, thumb-card hover refinement, and a final pass over
@@ -2061,10 +2061,10 @@
      ║  EMPTY STATE — idle wiggle on the icon every 6s                ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   .state.state-empty .state-icon {
-    animation: madarek-empty-wiggle var(--motion-duration-ambient-drift) var(--motion-ease-standard) infinite;
+    animation: tadmora-empty-wiggle var(--motion-duration-ambient-drift) var(--motion-ease-standard) infinite;
     transform-origin: center;
   }
-  @keyframes madarek-empty-wiggle {
+  @keyframes tadmora-empty-wiggle {
     0%, 92%, 100% { transform: rotate(0deg); }
     94%   { transform: rotate(-6deg); }
     96%   { transform: rotate(6deg); }
@@ -2075,14 +2075,14 @@
   /* ╔═══════════════════════════════════════════════════════════════╗
      ║  ERROR STATE — icon throbs gently, retry button bounces in     ║
      ╚═══════════════════════════════════════════════════════════════╝ */
-  @keyframes madarek-error-throb {
+  @keyframes tadmora-error-throb {
     0%, 100% { transform: scale(1); }
     50%      { transform: scale(1.05); }
   }
   .state.state-error .btn {
-    animation: madarek-retry-pop var(--motion-duration-reveal) var(--ease-spring-bounce) both 200ms;
+    animation: tadmora-retry-pop var(--motion-duration-reveal) var(--ease-spring-bounce) both 200ms;
   }
-  @keyframes madarek-retry-pop {
+  @keyframes tadmora-retry-pop {
     from { opacity: 0; transform: scale(0.85); }
     to   { opacity: 1; transform: none; }
   }
@@ -2093,7 +2093,7 @@
   /* r297 hazard fix: a stray `/` preceded this selector — esbuild
      preserved it verbatim and browsers dropped the rule as invalid.
      Beyond the hazard it was DOUBLY dead: .landing-footer has zero
-     TSX consumers since the «سماء مدارك» rebuild (the rendered footer
+     TSX consumers since the «سماء تادمورا» rebuild (the rendered footer
      is .fo-footer — its top hairline is landing.css's own border-block
      recipe). Deleted, not moved. */
 
@@ -2252,7 +2252,7 @@
    ▶ Section: polish-v22.css — foundation consolidation (wave 1-a)
    ═══════════════════════════════════════════════════════════════════ */
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — polish v22 · foundation consolidation (wave 1-a)
+   TADMORA — polish v22 · foundation consolidation (wave 1-a)
    ─────────────────────────────────────────────────────────────────────
    Implements audits/0-a-foundation.md inside polish.css only:
    · A  ONE focus-ring system — visible, AA-safe, token-driven
@@ -2717,7 +2717,7 @@
       missed — .card-title (-0.216px @18px), .section-title +
       .thumb-card-title (same --ls-snug family, div-rendered so the
       h1–h6 list never matched), .sidebar-brand-name (-0.156px @13px
-      «مدارك»), .avatar (-0.12px Arabic initials), .btn (-0.06px on
+      «تادمورا»), .avatar (-0.12px Arabic initials), .btn (-0.06px on
       every Arabic button label — source also fixed at
       components.css:324) and .settings-label (colleges.css +0.55px,
       admin settings, swept). (.landing-role-name was in this list

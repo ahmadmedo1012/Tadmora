@@ -30,7 +30,7 @@ vi.mock('../../src/hooks/useAuth', () => {
       lastName: 'البوسيفي',
       role: 'TEACHER',
       themePreference: 'SYSTEM',
-      currentInstitution: { id: 'inst-1', name: 'جامعة مدارك التجريبية' },
+      currentInstitution: { id: 'inst-1', name: 'جامعة تادمورا التجريبية' },
     },
     isPending: false,
   };
@@ -178,7 +178,7 @@ describe('R320 cycle-3 — SettingsPage (any-authed)', () => {
     expect(screen.getByText('سالم البوسيفي')).toBeInTheDocument();
     expect(screen.getByText('teacher@test.ly')).toBeInTheDocument();
     expect(screen.getByText('أستاذ')).toBeInTheDocument(); // roleLabel(TEACHER)
-    expect(screen.getByText('جامعة مدارك التجريبية')).toBeInTheDocument();
+    expect(screen.getByText('جامعة تادمورا التجريبية')).toBeInTheDocument();
     // The verification story is honest (no fake verified badge).
     expect(screen.getByText(/التحقق بالبريد قيد الإطلاق/)).toBeInTheDocument();
   });
@@ -256,7 +256,7 @@ describe('R320 cycle-3 — the routed error sheets (P2-3/4/5)', () => {
 
   it('/maintenance ships with its honest disabled-by-default story', () => {
     mount(<MaintenancePage />);
-    expect(screen.getByRole('heading', { level: 1, name: 'مدارك في صيانة قصيرة' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'تادمورا في صيانة قصيرة' })).toBeInTheDocument();
     // r324 X10: the `MM [01]` code eyebrow is retired with the sweep
     expect(screen.queryByText('MM [01]')).toBeNull();
     expect(screen.getByText(/لا تُفتح تلقائيًا في الوضع الحالي/)).toBeInTheDocument();

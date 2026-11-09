@@ -525,8 +525,8 @@ const COLLECT_MATERIAL = () => {
     frame = { cls: String(el.className), position: cs.position, inset, ok: cs.position === 'fixed' && inset.every((v) => Math.abs(v - 7) <= 1) };
     break;
   }
-  const grainEl = document.querySelector('body.mdrk-grain, [class*="grain"]');
-  const grain = grainEl ? (grainEl === document.body ? 'body.mdrk-grain' : String(grainEl.className || grainEl.tagName)) : null;
+  const grainEl = document.querySelector('body.tdmr-grain, [class*="grain"]');
+  const grain = grainEl ? (grainEl === document.body ? 'body.tdmr-grain' : String(grainEl.className || grainEl.tagName)) : null;
   let monoCount = 0;
   let monoSample = null;
   for (const el of [...document.querySelectorAll('[class*="mono"], [class*="index"], [class*="kicker"], .nav-section-label, .r305s-eyebrow')].slice(0, 200)) {
@@ -870,7 +870,7 @@ async function checkMaterial(page, radiusAllow) {
     status: m.grain ? 'PASS' : 'FAIL',
     metric: m.grain ? 0 : 1,
     count: m.grain ? 1 : 0,
-    sample: m.grain ? `${m.grain}` : 'no grain layer (no body.mdrk-grain / [class*=grain])',
+    sample: m.grain ? `${m.grain}` : 'no grain layer (no body.tdmr-grain / [class*=grain])',
   };
   rows['mono-index'] = {
     status: m.monoCount > 0 ? 'PASS' : 'FAIL',
@@ -940,13 +940,13 @@ async function runCell(browser, transport, opt, leakAllow, radiusAllow, { routeN
     reducedMotion: 'reduce', // deterministic state forcing (transitions instant)
     locale: 'ar',
   });
-  await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* storage off */ } });
+  await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* storage off */ } });
   const user = routeDef.role ? transport[`${routeDef.role}_USER`] : null;
   if (user) {
     await transport.seedSession(ctx, user, { theme });
   } else if (theme) {
     await ctx.addInitScript(([t]) => {
-      try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 })); } catch { /* storage off */ }
+      try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 })); } catch { /* storage off */ }
     }, [theme]);
   }
   // belt & braces (the r318 recipe): <html data-theme> right from frame 0
@@ -968,12 +968,12 @@ async function runCell(browser, transport, opt, leakAllow, radiusAllow, { routeN
     /* E10 leaks — natural state FIRST (before any drawer/state forcing) */
     if (opt.only.has('leaks')) {
       if (cell.authed) {
-        /* Self-test mode (MADAREK_GATE_SELFTEST=1): inject render-level
+        /* Self-test mode (TADMORA_GATE_SELFTEST=1): inject render-level
          * leak canaries BEFORE the scan — the detector must FAIL every
          * family it owns (positive control; the display-layer sanitizer
          * cannot clean a node the harness itself rendered). Run against
          * a SCRATCH --baseline/--out so the real ratchet stays clean. */
-        if (process.env.MADAREK_GATE_SELFTEST === '1') {
+        if (process.env.TADMORA_GATE_SELFTEST === '1') {
           await page.evaluate(() => {
             const d = document.createElement('div');
             d.setAttribute('data-gate-selftest', '1');

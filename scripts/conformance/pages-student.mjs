@@ -39,8 +39,8 @@ try {
   ({ chromium } = require('./../../frontend/node_modules/playwright'));
   esbuild = require.esbuild ?? require('./../../frontend/node_modules/esbuild');
 } catch {
-  ({ chromium } = createRequire('/home/z/madarek/frontend/package.json')('playwright'));
-  esbuild = createRequire('/home/z/madarek/frontend/package.json')('esbuild');
+  ({ chromium } = createRequire('/home/z/tadmora/frontend/package.json')('playwright'));
+  esbuild = createRequire('/home/z/tadmora/frontend/package.json')('esbuild');
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -395,8 +395,8 @@ const MY_RESEARCH = [
 
 /* GET /research/published — published papers (the library's shelf). */
 const PUBLISHED_RESEARCH = [
-  { ...MY_RESEARCH[0], id: 'pap_e2e_pub1', status: 'PUBLISHED', publishedAt: daysAgo(7), title: 'تحسين استعلامات الانضمام في قواعد البيانات العلائقية', student: { id: 'usr_e2e_s2', firstName: 'سالم', lastName: 'القاسم', avatarInitials: 'سق', avatarColor: '#0e7490', email: 's2@e2e.madarek.io' } },
-  { ...MY_RESEARCH[1], id: 'pap_e2e_pub2', status: 'PUBLISHED', publishedAt: daysAgo(15), title: 'نمذجة الحمل الحراري للحواسيب المحمولة', student: { id: 'usr_e2e_s3', firstName: 'ريم', lastName: 'الفيتوري', avatarInitials: 'رف', avatarColor: '#7c3aed', email: 's3@e2e.madarek.io' } },
+  { ...MY_RESEARCH[0], id: 'pap_e2e_pub1', status: 'PUBLISHED', publishedAt: daysAgo(7), title: 'تحسين استعلامات الانضمام في قواعد البيانات العلائقية', student: { id: 'usr_e2e_s2', firstName: 'سالم', lastName: 'القاسم', avatarInitials: 'سق', avatarColor: '#0e7490', email: 's2@e2e.tadmora.io' } },
+  { ...MY_RESEARCH[1], id: 'pap_e2e_pub2', status: 'PUBLISHED', publishedAt: daysAgo(15), title: 'نمذجة الحمل الحراري للحواسيب المحمولة', student: { id: 'usr_e2e_s3', firstName: 'ريم', lastName: 'الفيتوري', avatarInitials: 'رف', avatarColor: '#7c3aed', email: 's3@e2e.tadmora.io' } },
 ];
 
 /* GET /live/sessions — LiveSessionRow[]. */

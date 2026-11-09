@@ -377,7 +377,7 @@ for (const bp of BPS) {
 }
 await browser.close();
 
-// ── the section ledger across bps (gap vs Madarek filled by the foreman) ──
-const ledgerOut = { generatedAt: new Date().toISOString(), note: 'Heron section ledger — ordered docY/h per bp. Madarek counterpart + gap columns are maintained by hand in section-ledger.md.', runs };
+// ── the section ledger across bps (gap vs Tadmora filled by the foreman) ──
+const ledgerOut = { generatedAt: new Date().toISOString(), note: 'Heron section ledger — ordered docY/h per bp. Tadmora counterpart + gap columns are maintained by hand in section-ledger.md.', runs };
 fs.writeFileSync(path.join(OUT_DIR, 'section-ledger.json'), JSON.stringify(ledgerOut, null, 1));
 console.log(`\nsection-ledger.json written (${runs.length} breakpoints)`);

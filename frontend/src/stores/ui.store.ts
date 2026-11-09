@@ -48,7 +48,7 @@ export const useUiStore = create<UiState>()(
         })),
     }),
     {
-      name: 'mdrk-ui',
+      name: 'tdmr-ui',
       storage: createJSONStorage(() => localStorage),
       // Persist the desktop state + the palette recents — the mobile
       // drawer is session-scoped.

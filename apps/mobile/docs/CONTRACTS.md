@@ -1,6 +1,6 @@
 # Mobile implementation contracts (READ FIRST — for implementation agents)
 
-This app is Arabic-first RTL, Heron-designed, wired to `https://madarek.onrender.com/api/v1`.
+This app is Arabic-first RTL, Heron-designed, wired to `https://tadmora.onrender.com/api/v1`.
 You own ONLY the files listed for you. Shared files are FROZEN — never edit anything under
 `src/components/ui/**`, `src/components/shell/**`, `src/design/**`, `src/api/client.ts`,
 `src/api/types.ts`, `src/auth/session.ts`, `src/lib/**`, `src/hooks/useNotifications.ts`,
@@ -111,6 +111,6 @@ const m = useMutation({
 
 ## Verification before you finish
 
-Run `cd /home/z/madarek/apps/mobile && npx tsc --noEmit` — your work must typecheck clean.
+Run `cd /home/z/tadmora/apps/mobile && npx tsc --noEmit` — your work must typecheck clean.
 Do NOT run expo start/export (the coordinator owns build verification). Do NOT commit — the
 coordinator integrates and commits. Report which files you created and any contract mismatches you found.

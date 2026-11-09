@@ -515,16 +515,16 @@ function useReveal<T extends HTMLElement = HTMLElement>(options?: {
  * layout event (theme flip, resize, late media) actually invalidated
  * cached geometry (r332 twin gap: "no introspection seam"). Read-only
  * getters, DEV builds only — production ships nothing. Same family as
- * window.__sheetConductor / window.__mdrkLenis. */
+ * window.__sheetConductor / window.__tdmrLenis. */
 if (import.meta.env.DEV && typeof window !== 'undefined') {
   const w = window as unknown as {
-    __mdrkRevealBelt?: {
+    __tdmrRevealBelt?: {
       readonly epoch: number;
       readonly registry: number;
       readonly observers: number;
     };
   };
-  w.__mdrkRevealBelt = {
+  w.__tdmrRevealBelt = {
     get epoch() {
       return layoutEpoch;
     },

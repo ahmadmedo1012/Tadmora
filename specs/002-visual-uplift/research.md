@@ -112,7 +112,7 @@ items via CSS. Position is computed from the active `<NavLink>`'s
 inline `style`. Updates on `useLocation()` change.
 
 **Rationale**:
-1. The current per-item `madarek-nav-pop` keyframe is calm but a
+1. The current per-item `tadmora-nav-pop` keyframe is calm but a
    true sliding indicator is the premium signature for this kind of
    chrome (Linear, Notion, Stripe sidebars).
 2. The current pop-in still fires on the new active item, even with

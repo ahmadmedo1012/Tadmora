@@ -23,7 +23,7 @@
  *    wipe — inset(0 0 100%) → inset(0), 0.4s ease, hairline L/R rules —
  *    with the row labels mask-revealing at delay 0.25 (CTA row 0.2) on
  *    the mask-line register (0.8s easeOutCubic), and the page scroll
- *    locked while open (the app's ref-counted body lock — Madarek's
+ *    locked while open (the app's ref-counted body lock — Tadmora's
  *    lenis.stop() twin: the reference freezes its smooth scroller, we
  *    freeze the window scroller);
  *  · the burger is the reference's own instrument: three 1.5rem hair
@@ -357,7 +357,7 @@ export function SheetNav() {
           <div className="fo-header-rule" data-spec="nav.rule" aria-hidden="true" />
 
           {/* the brand zone — her left cluster (the flex-grow logo seat):
-              mark + «مدارك» wordmark (the guest-landing e2e reads the
+              mark + «تادمورا» wordmark (the guest-landing e2e reads the
               wordmark; the display voice seats it). The mark span carries
               the measured 32×36 logo seat; our 26px mark centers in it. */}
           <div className="fo-brand-zone" data-spec="nav.zone.brand">
@@ -365,7 +365,7 @@ export function SheetNav() {
               <span className="fo-brand-mark" data-spec="nav.brand.mark">
                 <Logo variant="mark" size={26} />
               </span>
-              <span className="fo-brand-name" data-spec="nav.brand.name">مدارك</span>
+              <span className="fo-brand-name" data-spec="nav.brand.name">تادمورا</span>
             </Link>
           </div>
 

@@ -1,6 +1,6 @@
-# Madarek Design System — the Heron canon (R306)
+# Tadmora Design System — the Heron canon (R306)
 
-> **مدارك** — منصّة تعليم ذكي مستقلّة عربية-أولًا · the design canon as it ships in code.
+> **تادمورا** — منصّة تعليم ذكي مستقلّة عربية-أولًا · the design canon as it ships in code.
 >
 > **The single active authority.** One visual system across the whole product — the public
 > landing sheet, the authenticated shell, and every role page family. The reference grammar
@@ -57,7 +57,7 @@ basis: `audits/evidence/r313/` (live Heron census + production baseline; 3 match
   re-pinned).
 - **D13** scrub/plateau choreography re-based onto the new 9-section set.
 - **D14** footer → **3 columns + inspection lens** (r 99.09 / pulse 104.04).
-- **D15** cookie banner — **intentionally omitted** (Madarek sets no tracking
+- **D15** cookie banner — **intentionally omitted** (Tadmora sets no tracking
   cookies; a consent banner would be dishonest copy — see
   [`docs/redesign/r313/NOTES-D15.md`](docs/redesign/r313/NOTES-D15.md)).
 - **D16** all authenticated app surfaces re-skinned to the Heron grammar (square
@@ -72,7 +72,7 @@ basis: `audits/evidence/r313/` (live Heron census + production baseline; 3 match
    Arabic-correct); Geist Mono (OFL) is adopted.
 2. **Arabic glyph metrics** — there is no uppercase; hierarchy transfers through
    weight + size, never letter-spacing (joins).
-3. **Honest-copy rules unchanged** — «جامعة مدارك التجريبية» disclosure, banned
+3. **Honest-copy rules unchanged** — «جامعة تادمورا التجريبية» disclosure, banned
    marketing wording, real numbers only.
 4. **Funnel pins unchanged** — 5 register CTAs + 5 login affordances + the pinned
    section ids (`statement/chapters/live/roles/colleges/vision`), exactly as r306
@@ -160,7 +160,7 @@ awake frames — and every continuous instrument is a whitelisted `@keyframes` t
 RM belt collapses (`tests/unit/r306-landing-sheet.test.ts` pins the whitelist). The
 authenticated app keeps the native cursor and no transitions on task routes.
 
-## 5. The landing sheet — «لوحة مدارك» (r306 → r307)
+## 5. The landing sheet — «لوحة تادمورا» (r306 → r307)
 
 `LandingPage.tsx` + `landing.css` compose the drawing sheet: the fixed corner registration
 marks (desktop, decorative) → the 56px hairline header (nav cells wash to charcoal on
@@ -220,7 +220,7 @@ never presented as a product demo. CSP: `frame-src` admits exactly the two embed
 
 `components/landing/ProductFrame.tsx` + `.prf-*`: a flat frame around an authentic
 capture of the running application (seeded demo environment — fully synthetic «جامعة
-مدارك التجريبية» data). Every frame carries the mono `real-ui` tag + the demo-data
+تادمورا التجريبية» data). Every frame carries the mono `real-ui` tag + the demo-data
 disclosure; the CTA scrolls to the conversion row (never an extra funnel link — the
 5+5 counts stay exact). Captures are re-derivable from the committed
 `.r308-capture-archive/` via the pipeline script — never re-fabricated.
@@ -261,7 +261,7 @@ contract is enforced by `r170*`/`r305a7-a11y` test belts + axe in dev.
    the §6c real product capture) — every one of them flat, hairline-framed, honestly
    labelled, and rights-verified in the media manifest. Generic stock imagery, unlicensed
    rehosts, and decorative raster remain banned.
-7. Honest copy is permanent («جامعة مدارك التجريبية» synthetic-data disclosure, banned
+7. Honest copy is permanent («جامعة تادمورا التجريبية» synthetic-data disclosure, banned
    marketing wording — r168b/r177/r188 gates).
 
 ## 9. Architecture (as it ships)
@@ -292,7 +292,7 @@ R305 copy), `CHANGELOG.md`, the release reports in `docs/releases/`.
    `manifest.json → renders[]`، ShareAlike محفوظ). مسار إعادة الإنتاج:
    `scripts/r314/ink-render.mjs`.
 2. **لافتة الموافقة**: مبنية (عكس تعطيل r313) — بوابة تخزين محلي
-   صادقة، `window.MadarekConsent`.
+   صادقة، `window.TadmoraConsent`.
 3. **min-block-size للأقسام**: مُقاعد على ≤760px (الأقسام محتوى-القياس
    كالمرجع).
 4. **STAGES/bp-panel**: أُقعدا مع الرسم الخطّي؛ النسخة الصادقة في
@@ -663,9 +663,9 @@ fails `npm test`, and P2.2's gallery mounts every state primitive at
 > Measured 2026-10-31 on the running stack by
 > `scripts/r327/scroll-rules-probe.mjs` (22 hard rules, 0 failed, 6 soft
 > rows recorded honestly) and `scripts/r327/scroll-screencast.mjs` (the
-> Heron↔Madarek screencast + glide curves). Evidence:
+> Heron↔Tadmora screencast + glide curves). Evidence:
 > `audits/evidence/r327/p3/` — `scroll-rules.json` · `scroll-curve.json` ·
-> `{heron,madarek-landing}-1440x900.webm`. The rules below quote their own
+> `{heron,tadmora-landing}-1440x900.webm`. The rules below quote their own
 > probe IDs; a rule without a passing probe is not a rule.
 
 ### §R327.a Who scrolls — the D6 boundary, route by route
@@ -744,13 +744,13 @@ pause, up to 35%), both sites recorded on the same machine:
 | Glide, one 720px impulse | first motion | t63 | t98.6 | settle |
 |---|---|---|---|---|
 | **heronaiapp.com** (wrapper-Lenis + gsap ticker) | 179 ms | 562 ms | 806 ms | **887 ms** |
-| **Madarek landing** (window-Lenis, lerp 0.1) | 107 ms | 278 ms | 810 ms | **868 ms** |
+| **Tadmora landing** (window-Lenis, lerp 0.1) | 107 ms | 278 ms | 810 ms | **868 ms** |
 
 Same exponential ease-out family, settle within **19 ms (2.2%)** on the
 same machine; both videos sit in the evidence folder for the eyeball
 verdict. Honest differences, recorded not hidden: Heron replays its
 entrance loader on every full load and scrolls an inner
-`.main-inner.lenis` wrapper (`window.scrollY` stays 0); Madarek's intro
+`.main-inner.lenis` wrapper (`window.scrollY` stays 0); Tadmora's intro
 is hermetically skipped for the recording (the subject is scroll feel,
 not the entrance) and the window itself scrolls (the D6 owner
 decision). No scrolljacking anywhere: RM collapses everything to

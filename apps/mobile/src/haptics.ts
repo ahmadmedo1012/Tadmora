@@ -7,7 +7,7 @@
  * exam submit, grading) never has to think:
  *
  *  1. ENABLED GATE — a persisted user kill-switch. Non-secret settings
- *     ride AsyncStorage in this app (the `mdrk-mobile-*` family — see
+ *     ride AsyncStorage in this app (the `tdmr-mobile-*` family — see
  *     auth/session.ts; SecureStore is for secrets only, per
  *     lib/tokenStorage.ts / lib/biometric.tsx). Default ON; a missing or
  *     unreadable value never disables feedback.
@@ -33,8 +33,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export type HapticImpact = "light" | "medium" | "heavy";
 export type HapticNotification = "success" | "warning" | "error";
 
-/** Non-secret preference — the `mdrk-mobile-*` AsyncStorage family. */
-const STORAGE_KEY = "mdrk-mobile-haptics-enabled";
+/** Non-secret preference — the `tdmr-mobile-*` AsyncStorage family. */
+const STORAGE_KEY = "tdmr-mobile-haptics-enabled";
 
 /** Global floor: minimum ms between ANY two emitted feedbacks. */
 const MIN_GAP_MS = 60;

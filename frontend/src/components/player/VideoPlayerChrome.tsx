@@ -1,5 +1,5 @@
 /**
- * VideoPlayerChrome (`.vpc`) — the branded madarek player skin (R2-B).
+ * VideoPlayerChrome (`.vpc`) — the branded tadmora player skin (R2-B).
  *
  * A PRESENTATIONAL wrapper: it renders its own controls over/around a
  * `<video>` it does NOT own. All playback logic — watch-time reporting,

@@ -160,7 +160,7 @@ export function rectsIntersectArea(a, b) {
 /* ── Arabic OCR normalization ─────────────────────────────────────────
  * Tesseract on the drafted wordmark returns presentation forms,
  * diacritics, tatweels and stray joins. Before comparing against
- * «مدارك»: NFKC (folds ﻣ ﻤ … presentation forms onto the base
+ * «تادمورا»: NFKC (folds ﻣ ﻤ … presentation forms onto the base
  * letters), then strip EVERYTHING that is not an Arabic letter. */
 
 const AR_LETTER = /[\u0621-\u063A\u0641-\u064A\u0671-\u06D3]/;
@@ -180,9 +180,9 @@ export function normalizeArabic(text) {
   return out;
 }
 
-/** Does OCR output contain the wordmark «مدارك» after normalization? */
+/** Does OCR output contain the wordmark «تادمورا» after normalization? */
 export function containsWordmark(ocrText) {
-  return normalizeArabic(ocrText).includes(normalizeArabic('مدارك'));
+  return normalizeArabic(ocrText).includes(normalizeArabic('تادمورا'));
 }
 
 /** Whitespace-normalize for aria/text comparisons (any lang). */

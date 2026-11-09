@@ -7,7 +7,7 @@
 
 | الطبقة | الملفات | المضمون |
 |---|---|---|
-| خلفية | `backend/src/modules/auth/*`، `http/routes/auth.routes.ts`، `lib/jwt.ts`، `lib/password.ts` | argon2id، JWT HS256 مثبت، كوكي `mdrk_refresh`، lockout 5/15د، مساواة زمنية، سياسة كلمات 8–72 + قائمة شائعة |
+| خلفية | `backend/src/modules/auth/*`، `http/routes/auth.routes.ts`، `lib/jwt.ts`، `lib/password.ts` | argon2id، JWT HS256 مثبت، كوكي `tdmr_refresh`، lockout 5/15د، مساواة زمنية، سياسة كلمات 8–72 + قائمة شائعة |
 | واجهة | `frontend/src/stores/auth.store.ts`، `lib/api.ts`، `hooks/useAuth.ts` | persist sessionStorage آمن (probe+fallback)، اعتراض 401→`/auth/refresh` (axios خام 15s)→إعادة إرسال، `queryClient.clear()` عند حدود الجلسة |
 | صفحات | `pages/AuthPage.tsx`، `pages/RegisterPage.tsx` | دخول بريد/رقم جامعي، تسجيل طالب/أستاذ متعدد الخطوات، عرض حالة 429 |
 
@@ -32,7 +32,7 @@
 - `fonts.css`: IBM Plex Sans Arabic 400–700 مستضاف ذاتيًا (12 woff2،
   أول رسم ≈86KB عبر preloads في `index.html`) + Plex Serif italic
   (لاتيني فقط بأعراف 21-c) + Plex Mono.
-- bootstrap السمة: سكربت داخلي في `index.html` يقرأ `madarek-theme`
+- bootstrap السمة: سكربت داخلي في `index.html` يقرأ `tadmora-theme`
   قبل أول رسم ويثبت `data-theme` + `theme-color` — **بصمته في CSP**
   (`backend/src/app.ts`)، والبوابة `check-csp-hash` تفرض التزامن.
 - الأيقونات: Lucide فقط عبر `components/Icon.tsx` (استثناءات موثقة:

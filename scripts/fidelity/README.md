@@ -1,6 +1,6 @@
-# scripts/fidelity — the Madarek⇄Heron fidelity metric (R329 M1)
+# scripts/fidelity — the Tadmora⇄Heron fidelity metric (R329 M1)
 
-`run.mjs` scores Madarek's public pages against the **live Heron reference**
+`run.mjs` scores Tadmora's public pages against the **live Heron reference**
 captured by `heron-extract.mjs` into `docs/redesign/r329/heron-live/`
 (10 pages × 4 viewports — geometry, computed styles, motion facts; **zero
 content copied**, see that script's IP policy). `heronaiapp.com` is never
@@ -32,18 +32,18 @@ Flags:
 The script **boots vite itself** on `:5175` (frontend dir) if nothing is
 listening there, and reuses a running server otherwise — the public pages
 render without a backend. Raw full-page screenshots go to
-`/tmp/mdrk-fidelity/` (ephemeral, never committed); only downscaled
+`/tmp/tdmr-fidelity/` (ephemeral, never committed); only downscaled
 artifacts land in the repo.
 
 ## Measurement hygiene (project rules, enforced in code)
 
 - fresh browser context per page×viewport×theme, `serviceWorkers:'block'`
 - theme forced **before load** via `addInitScript`:
-  `madarek-theme = {"state":{"mode":<light|dark>,"modeUpdatedAt":…},"version":2}`
-  and `mdrk-theme-profile = <light|dark>`; consent banner pre-accepted
-  (`madarek.consent = "accepted"`)
+  `tadmora-theme = {"state":{"mode":<light|dark>,"modeUpdatedAt":…},"version":2}`
+  and `tdmr-theme-profile = <light|dark>`; consent banner pre-accepted
+  (`tadmora.consent = "accepted"`)
 - the page is **traversed once** (stepwise to bottom, back to top) via
-  `window.__mdrkLenis?.scrollTo(y, {immediate:true})` (+50ms/step) so
+  `window.__tdmrLenis?.scrollTo(y, {immediate:true})` (+50ms/step) so
   content-visibility and reveal-in-view states settle before measuring
 - scroll feel = trusted `mouse.wheel(0, 800)` at viewport centre, 16ms
   scrollTop samples for ~1.15s, least-squares exponential-decay fit → τ
@@ -56,10 +56,10 @@ artifacts land in the repo.
 
 ## Page → reference mapping (documented decision)
 
-The reference is a marketing site; Madarek's measured set is its public
+The reference is a marketing site; Tadmora's measured set is its public
 product surface. Mapping is by **page role**, not URL:
 
-| Madarek | Heron reference | why |
+| Tadmora | Heron reference | why |
 |---|---|---|
 | `/` | `home` | homepage ↔ homepage |
 | `/login` (redirects to `/auth`) | `contact-us` | the reference has no auth page; contact-us is its only form-centric page |
@@ -69,11 +69,11 @@ product surface. Mapping is by **page role**, not URL:
 
 ## Section capture + matching rule
 
-**Sections (Madarek)** = direct sizable children of `<main>`, plus the page
+**Sections (Tadmora)** = direct sizable children of `<main>`, plus the page
 `<footer>` when it lives outside `<main>` — mirroring the reference's
 content-container children (which include `footer-wrap`).
 
-**Matching = ORDER + ROLE** (Heron has no shared classnames with Madarek,
+**Matching = ORDER + ROLE** (Heron has no shared classnames with Tadmora,
 and text is not copied, so identity is structural): a Needleman–Wunsch
 alignment over the two ordered section lists maximizing
 
@@ -81,11 +81,11 @@ alignment over the two ordered section lists maximizing
   mismatch), `+0.4` both sides heading-less
 - `+2` both identities match `/footer/i` (`−0.75` one-sided)
 - `+1` both identities match `/hero/i`
-- `+1·(1−|rankRef−rankMdrk|)` normalized document position
+- `+1·(1−|rankRef−rankTdmr|)` normalized document position
 
 with skip cost `0.35`. Consecutive matched pairs must preserve order.
 
-**Unmatched-section penalty:** `coverage = 2·matched / (nRef + nMdrk)`
+**Unmatched-section penalty:** `coverage = 2·matched / (nRef + nTdmr)`
 multiplies the **spacing** and **geometry** axes (structure that a missing
 section really breaks); type/color/motion are page-global facts and are not
 coverage-scaled. Coverage is reported per combo.
@@ -98,8 +98,8 @@ worse” — tolerances are stated so the number is auditable, not flattering.
 
 | axis | formula | tolerance |
 |---|---|---|
-| **أ type-scale ladder** | 70% matched-pair **title rung** (largest rendered text size per section, tag-agnostic — Heron carries several titles as styled divs, Madarek as semantic h2) + 30% page heading ladder (each reference rung scored against the nearest Madarek rung, weighted by reference counts; extra Madarek rungs are visible in the JSON ladder and neutral here) | `ln 1.75` (a rung 75% off = 0) |
-| **ب spacing/rhythm** | 45% inter-section gaps (`|gapM−gapH|` absolute, floor 48px = one rhythm unit @1440) + 35% top content inset (first text vs section top — nesting-independent breathing: Heron pads inner containers, Madarek the section itself) + 20% section paddings (DOM-level, low weight by design) — all × coverage | 48px / `ln 2.5` / `ln 2.5` |
+| **أ type-scale ladder** | 70% matched-pair **title rung** (largest rendered text size per section, tag-agnostic — Heron carries several titles as styled divs, Tadmora as semantic h2) + 30% page heading ladder (each reference rung scored against the nearest Tadmora rung, weighted by reference counts; extra Tadmora rungs are visible in the JSON ladder and neutral here) | `ln 1.75` (a rung 75% off = 0) |
+| **ب spacing/rhythm** | 45% inter-section gaps (`|gapM−gapH|` absolute, floor 48px = one rhythm unit @1440) + 35% top content inset (first text vs section top — nesting-independent breathing: Heron pads inner containers, Tadmora the section itself) + 20% section paddings (DOM-level, low weight by design) — all × coverage | 48px / `ln 2.5` / `ln 2.5` |
 | **ج color/contrast** | weighted: paper `ΔE(bodyBg)` 0.25 · heading ink `ΔE` 0.30 · matched-pair heading WCAG contrast (`|ln(cM/cH)|`) 0.30 · accent (most saturated non-ink/non-paper text color) `ΔE` 0.15 — Lab (D65) ΔE76, renormalized when a factor is absent | `ΔE 60` / `ln 1.8` |
 | **د geometry** | per matched pair: 0.45 section-height ratio (`|ln(hM/hH)|`) + 0.20 hairline share (1px-borders / all borders) + 0.20 radius-0 share + 0.15 edge discipline (distinct child grid edges, count distance) — × coverage | `ln 2.5` / shares are absolute |
 | **هـ motion** | 0.40 scroll-feel τ (`|ln(τM/τH)|`) · 0.30 CSS transition durations (70% median + 30% spread) · 0.15 smooth-scroll engine presence (Lenis) · 0.15 scroll-triggered reveal system presence | `ln 2` / `ln 2.5` |
@@ -116,11 +116,11 @@ look*, which is exactly the honest question for a redesign baseline.
 
 - `<page>.json` — per viewport×theme: the 5 axis scores, matched pairs
   (identities + per-pair contributions), coverage, color/motion factor
-  breakdowns, the slim Madarek capture (sections/rects/styles/headings/
+  breakdowns, the slim Tadmora capture (sections/rects/styles/headings/
   censuses/rhythm/ladder/fonts/motion census/scroll-feel fit), pixel-diff
   ratio
 - `summary.md` — aggregate tables (regenerated every run)
-- `contact/<page>-<vp>-<theme>.jpg` — Heron|Madarek side-by-side sheets
+- `contact/<page>-<vp>-<theme>.jpg` — Heron|Tadmora side-by-side sheets
   (JPEG q80, same policy as the reference's own contact shots)
 - `diff/<page>-<vp>.png` — **pixelmatch** diff images (light theme).
   Full-resolution for the reference's PNG pairs (home@1440, home@390),

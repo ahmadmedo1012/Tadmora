@@ -18,7 +18,7 @@
  * (r175a) — absent creds exit 2 without any request.
  */
 import { chromium } from '@playwright/test';
-const BASE = process.env.BASE_URL ?? 'https://madarek.onrender.com';
+const BASE = process.env.BASE_URL ?? 'https://tadmora.onrender.com';
 const EMAIL = process.env.SMOKE_EMAIL;
 const PASSWORD = process.env.SMOKE_PASSWORD;
 const CAPTURE_DIR = process.env.CAPTURE_DIR ?? '/tmp/r176-captures';
@@ -43,13 +43,13 @@ await page.locator('#auth-email').fill(EMAIL);
 await page.locator('#auth-password').fill(PASSWORD);
 await page.locator('button[type="submit"]').click();
 await page.waitForFunction(() => {
-  try { return !!JSON.parse(localStorage.getItem('mdrk-auth') ?? '{}').state?.accessToken; } catch { return false; }
+  try { return !!JSON.parse(localStorage.getItem('tdmr-auth') ?? '{}').state?.accessToken; } catch { return false; }
 }, { timeout: 20_000 });
 
 // r176h: identity verification — the token must satisfy /auth/me
 // (role echo STUDENT; localStorage alone is not proof of a session).
 const meRes = await page.request.get(`${BASE}/api/v1/auth/me`, {
-  headers: { authorization: `Bearer ${JSON.parse(await page.evaluate(() => localStorage.getItem('mdrk-auth') ?? '{}')).state?.accessToken ?? ''}` },
+  headers: { authorization: `Bearer ${JSON.parse(await page.evaluate(() => localStorage.getItem('tdmr-auth') ?? '{}')).state?.accessToken ?? ''}` },
 });
 if (meRes.status() !== 200) {
   fail(`identity: GET /auth/me → HTTP ${meRes.status()} (expected 200)`);

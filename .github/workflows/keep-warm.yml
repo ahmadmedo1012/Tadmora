@@ -26,7 +26,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  HEALTH_URL: https://madarek.onrender.com/api/v1/health
+  HEALTH_URL: https://tadmora.onrender.com/api/v1/health
 
 jobs:
   ping:

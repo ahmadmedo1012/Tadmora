@@ -31,8 +31,8 @@ try {
       });
       await ctx.addInitScript(([t]) => {
         try {
-          localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 }));
-          sessionStorage.setItem('madarek-intro-skip', '1');
+          localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 }));
+          sessionStorage.setItem('tadmora-intro-skip', '1');
           document.documentElement.dataset.theme = t;
         } catch { /* storage off */ }
       }, [theme]);

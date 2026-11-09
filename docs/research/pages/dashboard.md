@@ -15,5 +15,5 @@
 | faq h2 (26.66,7152.56 359.16×120) | «Got questions? …» 3 lines | same grammar |
 
 - Both pages carry `div.product-hero-logo-cms-wrap` (0,753.33 1426.69×133.33) — the Swiper logo strip — and identical `a.product-hero-btn` (497.44,667.5 216.73×86.66) «Discover more» cells.
-- **Builder note:** one template, two content fills — geometry is content-driven (heading line counts), never re-authored. Madarek's dashboard/auth surfaces should reuse the same cell seats with their own copy and let heights breathe.
+- **Builder note:** one template, two content fills — geometry is content-driven (heading line counts), never re-authored. Tadmora's dashboard/auth surfaces should reuse the same cell seats with their own copy and let heights breathe.
 - @390: identical stacking behavior to chat-widget (h1 4 lines → ~5 lines @31.76px; mockup centered ≈276 wide; steps 1-col).

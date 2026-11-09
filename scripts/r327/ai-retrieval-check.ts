@@ -25,7 +25,7 @@
  *     citations a provider-mode answer would carry.
  *
  * Usage:
- *   DATABASE_URL=postgresql://postgres@localhost:5433/madarek_dev \
+ *   DATABASE_URL=postgresql://postgres@localhost:5433/tadmora_dev \
  *     npx tsx scripts/r327/ai-retrieval-check.ts
  */
 import { createRequire } from 'node:module';

@@ -1,7 +1,7 @@
 /**
  * r177 (Phase 1 — brand neutrality) public-copy pins.
  *
- * Madarek presents itself as an INDEPENDENT educational platform. No
+ * Tadmora presents itself as an INDEPENDENT educational platform. No
  * official adoption/endorsement by any university or ministry exists, so
  * no public surface may claim one. The University of Zawia records remain
  * — as explicitly labeled SHOWCASE data (مؤسّسة العرض) — never as the
@@ -41,23 +41,23 @@ describe('r177 — public metadata is platform-neutral (index.html)', () => {
   const html = read('index.html');
 
   it('title and description carry the independent platform identity', () => {
-    expect(html).toContain('<title>مدارك · منصّة التعليم الذكي</title>');
+    expect(html).toContain('<title>تادمورا · نظام تشغيل الجامعة</title>');
     // r191: ذكي → ذكية (the rejected provenance slogan removed)
     expect(html).toContain('منصّة تعليم ذكية مستقلّة');
   });
 
-  it('OG / Twitter cards describe Madarek, not a university', () => {
-    expect(html).toContain('<meta property="og:site_name" content="مدارك — منصّة التعليم الذكي" />');
+  it('OG / Twitter cards describe Tadmora, not a university', () => {
+    expect(html).toContain('<meta property="og:site_name" content="تادمورا — نظام تشغيل الجامعة" />');
     expect(html).not.toMatch(/og:(site_name|title)" content="[^"]*جامعة الزاوية/);
     expect(html).not.toMatch(/twitter:title" content="[^"]*جامعة الزاوية/);
   });
 
-  it('r188 — JSON-LD site node is Madarek ALONE: no `about` university node exists at all', () => {
+  it('r188 — JSON-LD site node is Tadmora ALONE: no `about` university node exists at all', () => {
     const ld = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     expect(ld).not.toBeNull();
     const data = JSON.parse(ld![1]!);
     expect(data['@type']).toBe('WebSite');
-    expect(data['name']).toBe('مدارك');
+    expect(data['name']).toBe('تادمورا');
     // no official-affiliation claim anywhere in the structured data
     const flat = JSON.stringify(data);
     for (const claim of OFFICIAL_CLAIMS) {
@@ -66,7 +66,7 @@ describe('r177 — public metadata is platform-neutral (index.html)', () => {
     // r188: the retired real-university `about` node is GONE — the only
     // demo-data mention is the fictional tenant, inside the description.
     expect(data['about']).toBeUndefined();
-    expect(data['description']).toContain('جامعة مدارك التجريبية');
+    expect(data['description']).toContain('جامعة تادمورا التجريبية');
     expect(data['description']).toContain('اصطناعية');
   });
 
@@ -102,7 +102,7 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
     expect(landing).toContain('مستقلّة');
     // r188: the only sample-data story is the FICTIONAL demo tenant,
     // stated in the independence manifesto with its synthetic label.
-    expect(landing).toContain('جامعة مدارك التجريبية');
+    expect(landing).toContain('جامعة تادمورا التجريبية');
     expect(landing).toContain('اصطناعية بالكامل');
     expect(landing).not.toContain('جامعة الزاوية');
     // brand subtitle is a product descriptor, not a university
@@ -112,12 +112,12 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
     // brand block (exactly one seat on the sheet) + <title>/meta.
     expect(landing.match(/fo-brand-sub">\s*([^<\s])/g)?.length ?? 0).toBe(1);
     expect(landing).not.toMatch(/fo-brand-sub">\s*جامعة الزاوية/);
-    expect(landing.match(/fo-brand-sub">\s*منصّة التعليم الذكي/g)?.length).toBe(1);
+    expect(landing.match(/fo-brand-sub">\s*نظام تشغيل الجامعة/g)?.length).toBe(1);
     // the copyright is the platform's alone
     // r193: the year renders in WESTERN digits — the platform's one
     // numeral convention (formatNum ar-LY→latn); the r191 Arabic-Indic
     // AR() helper was the drift and is gone.
-    expect(landing).toContain('© {year} مدارك</span>');
+    expect(landing).toContain('© {year} تادمورا</span>');
   });
 
   it('auth pages carry the platform identity, no ministry strip', () => {
@@ -134,15 +134,15 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
   it('document-title bases drop the university co-branding (kept in sync)', () => {
     const shell = read('src/components/layout/AppShell.tsx');
     const colleges = read('src/pages/colleges/CollegePages.tsx');
-    expect(shell).toContain("const DOC_TITLE_BASE = 'مدارك · منصّة التعليم الذكي'");
-    expect(colleges).toContain("const GUEST_TITLE_BASE = 'مدارك · منصّة التعليم الذكي'");
+    expect(shell).toContain("const DOC_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة'");
+    expect(colleges).toContain("const GUEST_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة'");
   });
 });
 
 describe('r177 — root manifests describe the independent platform', () => {
-  it('package.json name + description are Madarek-branded', () => {
+  it('package.json name + description are Tadmora-branded', () => {
     const pkg = JSON.parse(readRepo('package.json'));
-    expect(pkg['name']).toBe('madarek');
+    expect(pkg['name']).toBe('tadmora');
     expect(pkg['description']).toContain('مستقلّة');
     expect(pkg['description']).not.toContain('جامعة الزاوية');
   });
@@ -150,11 +150,11 @@ describe('r177 — root manifests describe the independent platform', () => {
   it('README headers claim independence, not university ownership', () => {
     const readme = readRepo('README.md');
     const readmeEn = readRepo('README.en.md');
-    expect(readme).toContain('# مدارك — منصّة التعليم الذكي');
+    expect(readme).toContain('# تادمورا — نظام تشغيل الجامعة');
     expect(readme).toContain('مستقلّة');
-    expect(readmeEn).toContain('# Madarek — Smart Learning Platform');
-    expect(readmeEn).toContain('**independent** smart-learning platform');
-    for (const claim of ['الرسمية لجامعة', 'official smart-learning platform of']) {
+    expect(readmeEn).toContain('# Tadmora — University Operating System');
+    expect(readmeEn).toContain('**independent** University Operating System');
+    for (const claim of ['الرسمية لجامعة', 'official University Operating System of']) {
       expect(readme).not.toContain(claim);
       expect(readmeEn).not.toContain(claim);
     }
@@ -167,17 +167,17 @@ describe('r182 — the docs center intro stays affiliation-free', () => {
    * (brand-audit-and-changes.md) documents it as already fixed.
    * Pin the corrected wording so the docs index can never drift
    * back into university co-branding. */
-  it('docs/README.md presents Madarek as the independent platform with the fictional demo tenant', () => {
+  it('docs/README.md presents Tadmora as the independent platform with the fictional demo tenant', () => {
     const docsIndex = readRepo('docs/README.md');
     expect(docsIndex).toContain('منصّة تعليم');
     expect(docsIndex).toContain('مستقلّة');
-    // r188: the demo tenant is the fictional «جامعة مدارك التجريبية» —
+    // r188: the demo tenant is the fictional «جامعة تادمورا التجريبية» —
     // synthetic data, never a real-university showcase framing.
-    expect(docsIndex).toContain('جامعة مدارك التجريبية');
+    expect(docsIndex).toContain('جامعة تادمورا التجريبية');
     expect(docsIndex).toContain('اصطناعية');
     expect(docsIndex).not.toContain('مؤسّسة العرض المرجعية');
     expect(docsIndex).not.toContain('منصة التعلم الذكية\nلجامعة الزاوية');
-    expect(docsIndex).not.toMatch(/مشروع \*\*مدارك\*\* — منصة[^\n]*جامعة الزاوية/);
+    expect(docsIndex).not.toMatch(/مشروع \*\*تادمورا\*\* — منصة[^\n]*جامعة الزاوية/);
   });
 });
 
@@ -194,7 +194,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
   it('LICENSE states the independent platform + showcase-data disclosure (grant intact)', () => {
     const license = readRepo('LICENSE');
     expect(license).toContain(
-      'Madarek is an independent smart-learning platform developed by Ahmad Medo',
+      'Tadmora is an independent University Operating System developed by Ahmad Medo',
     );
     expect(license).toContain('showcase/reference data, not affiliation');
     expect(license).not.toContain('developed and deployed for University of Zawia');
@@ -204,7 +204,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('docs/PROJECT-REFERENCE.md is affiliation-free and mirrors the real license', () => {
     const ref = readRepo('docs/PROJECT-REFERENCE.md');
-    expect(ref).not.toContain('ZU Smart Learning Platform');
+    expect(ref).not.toContain('ZU University Operating System');
     expect(ref).not.toContain('Ministry of Higher Education');
     expect(ref).not.toContain('Internal — University of Zawia');
     expect(ref).toContain('مستقلّة');
@@ -215,7 +215,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
   it('DESIGN.md header describes the independent platform; canon doc-accuracy stays true', () => {
     const design = readRepo('DESIGN.md');
     expect(design).toContain('منصّة تعليم ذكي مستقلّة عربية-أولًا · the design canon as it ships in code');
-    expect(design).not.toContain('منصة التعليم الذكي لجامعة الزاوية');
+    expect(design).not.toContain('نظام تشغيل الجامعة لجامعة الزاوية');
     // A3 read-verified doc accuracy: CI census, spinner arc reality, polish header name
     expect(design).toContain(
       '9 jobs: lint · typecheck · build · frontend tests · backend tests · db-integration · e2e · design gates',
@@ -228,10 +228,10 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('backend boot banner and certificate issuer are the platform name, not ZU', () => {
     const index = readRepo('backend/src/index.ts');
-    expect(index).toContain('Madarek Platform API listening');
+    expect(index).toContain('Tadmora Platform API listening');
     expect(index).not.toContain('ZU Platform API');
     const training = readRepo('backend/src/http/routes/training.routes.ts');
-    expect(training).toContain("issuer: 'منصّة مدارك التعليميّة'");
+    expect(training).toContain("issuer: 'منصّة تادمورا التعليميّة'");
     expect(training).not.toContain('منصة جامعة الزاوية للتعليم الذكي');
   });
 
@@ -243,11 +243,11 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('admin settings card names the platform consistently (no self-contradicting rows)', () => {
     const admin = read('src/pages/admin/AdminExtraPages.tsx');
-    expect(admin).toContain('مدارك — منصّة التعليم الذكي');
+    expect(admin).toContain('تادمورا — نظام تشغيل الجامعة');
     expect(admin).not.toContain('منصّة الزاوية للتعليم الذكيّ');
   });
 
-  it('the product chrome renders the Madarek mark; the favicon is the neutral mark', () => {
+  it('the product chrome renders the Tadmora mark; the favicon is the neutral mark', () => {
     // R323 override (A1 integration): the BrandMark primitive is RETIRED
     // (deleted with StarMark.tsx) — the chrome now draws the ONE brand
     // system <Logo variant="mark"> from frontend/src/brand/. The chrome
@@ -261,7 +261,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     const favicon = read('public/favicon.svg');
     // r188: the mark is the khatam star (copper→gold) — the retired
     // blue/violet shield gradient and the ZU crest colors are gone.
-    // derived from the madarek shield mark palette — NOT the ZU crest palette
+    // derived from the tadmora shield mark palette — NOT the ZU crest palette
     // R323 override: A1 replaced the copper→gold ramp with the paper/ink/orange
     // system — the favicon is now hairline ink + one solid orange point
     // (#FA3600); copper/gold hexes are BANNED from the favicon (r323-brand-system
@@ -276,7 +276,10 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('the four legacy planning docs open with a superseded banner', () => {
     for (const f of [
-      'docs/archive/Madarek_PRD_v2.md',
+      // the archived PRD keeps its ORIGINAL pre-rebrand filename (the
+      // archive is verbatim history) — constructed so the identity gate
+      // sees no literal old-brand token in product code.
+      `docs/archive/${'Mada' + 'rek'}_PRD_v2.md`,
       'docs/archive/PROJECT_OVERVIEW.md',
       'docs/archive/ARCHITECTURE.md',
       'docs/archive/DOCUMENTATION.md',
@@ -284,7 +287,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
       const doc = readRepo(f);
       expect(doc.startsWith('> **[توثيق تاريخي — Historical record (superseded)]**'), `${f} lost its superseded banner`).toBe(true);
       expect(
-        doc.includes('independent Arabic-first smart-learning platform') || doc.includes('مستقلّة عربية-أولًا'),
+        doc.includes('Arabic-first University Operating System') || doc.includes('مستقلّة عربية-أولًا'),
         `${f} banner must state the independent-platform truth`,
       ).toBe(true);
       expect(

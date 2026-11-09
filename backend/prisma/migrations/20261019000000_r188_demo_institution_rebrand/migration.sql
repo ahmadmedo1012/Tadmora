@@ -2,8 +2,8 @@
 --
 -- Replaces the retired real-university showcase identity (جامعة الزاوية /
 -- zawia-showcase / zu.edu.ly demo emails) with the explicitly-FICTIONAL
--- demonstration tenant «جامعة مدارك التجريبية» (slug madarek-demo, demo
--- emails on demo.madarek.ly). Every statement is guarded by a WHERE on
+-- demonstration tenant «جامعة تادمورا التجريبية» (slug tadmora-demo, demo
+-- emails on demo.tadmora.ly). Every statement is guarded by a WHERE on
 -- the OLD value, so:
 --   · an ESTABLISHED database is rebranded in place (stable row ids and
 --     every FK/relationship preserved — rows are UPDATED, never deleted
@@ -20,9 +20,9 @@
 
 -- ── 1. Institution rename (slug is UNIQUE; guarded by the old slug) ──
 UPDATE "Institution"
-SET "name" = 'جامعة مدارك التجريبية',
-    "nameEn" = 'Madarek Demo University',
-    "slug" = 'madarek-demo'
+SET "name" = 'جامعة تادمورا التجريبية',
+    "nameEn" = 'Tadmora Demo University',
+    "slug" = 'tadmora-demo'
 WHERE "slug" = 'zawia-showcase' AND "id" = 'inst-zawia-showcase';
 
 -- ── 2. Faculty campus/name re-map (25 rows, guarded by old (name, city)) ──
@@ -40,11 +40,11 @@ WHERE "institutionId" = 'inst-zawia-showcase' AND "name" = 'كلية الترب�
 UPDATE "Faculty" SET "city" = 'حرم البيان' WHERE "institutionId" = 'inst-zawia-showcase' AND "city" = 'مناطق أخرى';
 
 -- ── 3. Demo-account email domain (5 accounts, guarded by old email) ──
-UPDATE "User" SET "email" = 'student@demo.madarek.ly' WHERE "email" = 'student@zu.edu.ly';
-UPDATE "User" SET "email" = 'teacher@demo.madarek.ly' WHERE "email" = 'teacher@zu.edu.ly';
-UPDATE "User" SET "email" = 'admin@demo.madarek.ly'   WHERE "email" = 'admin@zu.edu.ly';
-UPDATE "User" SET "email" = 'quality@demo.madarek.ly' WHERE "email" = 'quality@zu.edu.ly';
-UPDATE "User" SET "email" = 'owner@demo.madarek.ly'   WHERE "email" = 'owner@zu.edu.ly';
+UPDATE "User" SET "email" = 'student@demo.tadmora.ly' WHERE "email" = 'student@zu.edu.ly';
+UPDATE "User" SET "email" = 'teacher@demo.tadmora.ly' WHERE "email" = 'teacher@zu.edu.ly';
+UPDATE "User" SET "email" = 'admin@demo.tadmora.ly'   WHERE "email" = 'admin@zu.edu.ly';
+UPDATE "User" SET "email" = 'quality@demo.tadmora.ly' WHERE "email" = 'quality@zu.edu.ly';
+UPDATE "User" SET "email" = 'owner@demo.tadmora.ly'   WHERE "email" = 'owner@zu.edu.ly';
 
 -- ── 4. Seeded demo content carrying the retired identity (guarded) ──
 UPDATE "Badge"
@@ -52,7 +52,7 @@ SET "slug" = 'badge-demo-pioneer', "title" = 'رائد المسارات'
 WHERE "slug" = 'badge-zu-pioneer' AND "title" = 'رائد جامعة الزاوية';
 
 UPDATE "ResearchPaper"
-SET "title" = 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في جامعة مدارك التجريبية'
+SET "title" = 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في جامعة تادمورا التجريبية'
 WHERE "title" = 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في جامعة الزاوية';
 
 UPDATE "Job"
@@ -74,7 +74,7 @@ SET "contentMarkdown" = replace("contentMarkdown",
 WHERE "contentMarkdown" LIKE '%جامعة الزاوية%';
 
 UPDATE "TrainingLesson"
-SET "quizAnswer" = replace("quizAnswer", 'zu.edu.ly', 'demo.madarek.ly')
+SET "quizAnswer" = replace("quizAnswer", 'zu.edu.ly', 'demo.tadmora.ly')
 WHERE "quizAnswer" LIKE '%zu.edu.ly%';
 
 -- ── 5. Retired fact sheet: delete, the next sync re-creates the

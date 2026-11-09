@@ -34,7 +34,7 @@ export type MailProviderName = 'none' | 'resend' | 'brevo';
 export interface MailConfig {
   provider: MailProviderName;
   apiKey?: string;
-  from: string; // «مدارك <no-reply@domain>» or a bare address
+  from: string; // «تادمورا <no-reply@domain>» or a bare address
   baseUrl?: string; // the app origin for footer links (optional)
 }
 
@@ -57,7 +57,7 @@ export function resolveMailConfig(source: {
   return {
     provider: valid.includes(provider) ? provider : 'none',
     apiKey: source.MAIL_API_KEY,
-    from: source.MAIL_FROM ?? 'مدارك <no-reply@madarek.example>',
+    from: source.MAIL_FROM ?? 'تادمورا <no-reply@tadmora.example>',
     baseUrl: source.APP_ORIGIN,
   };
 }
@@ -129,7 +129,7 @@ export function renderEmailShell(opts: { title: string; bodyHtml: string; ctaLab
       : '';
   const footer = `<tr><td style="padding:0 32px 28px;font-size:12px;color:#8A887C;line-height:1.8;">${
     opts.footerNote ?? 'إذا لم تكن من طلب هذه الرسالة فتجاهلها — لن يتغير شيء في حسابك.'
-  }${opts.baseUrl ? `<br>مدارك — <a href="${opts.baseUrl}" style="color:#8A887C;">${opts.baseUrl.replace(/^https?:\/\//, '')}</a>` : ''}</td></tr>`;
+  }${opts.baseUrl ? `<br>تادمورا — <a href="${opts.baseUrl}" style="color:#8A887C;">${opts.baseUrl.replace(/^https?:\/\//, '')}</a>` : ''}</td></tr>`;
 
   return `<!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -138,7 +138,7 @@ export function renderEmailShell(opts: { title: string; bodyHtml: string; ctaLab
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F1EFE7;padding:24px 12px;">
 <tr><td align="center">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#F6F6EE;border:${SHELL_BORDER};">
-<tr><td style="padding:28px 32px 4px;font-weight:700;font-size:18px;color:#282828;">مدارك</td></tr>
+<tr><td style="padding:28px 32px 4px;font-weight:700;font-size:18px;color:#282828;">تادمورا</td></tr>
 <tr><td style="padding:4px 32px 8px;font-size:20px;font-weight:600;color:#282828;">${opts.title}</td></tr>
 <tr><td style="padding:0 32px 20px;font-size:14px;color:#4A4A44;line-height:2;">${opts.bodyHtml}</td></tr>
 ${cta}
@@ -153,9 +153,9 @@ ${footer}
 /** The reset email: one calm paragraph, ONE button, the plain link as fallback. */
 export function renderResetEmail(resetUrl: string, minutes = 30): { subject: string; html: string; text: string } {
   const title = 'إعادة تعيين كلمة المرور';
-  const body = `وصلك هذا الطلب لأن أحدهم طلب رابطًا جديدًا لكلمة مرور حسابه في مدارك. الرابط يعمل مرة واحدة ولمدة ${minutes} دقيقة فقط.`;
+  const body = `وصلك هذا الطلب لأن أحدهم طلب رابطًا جديدًا لكلمة مرور حسابه في تادمورا. الرابط يعمل مرة واحدة ولمدة ${minutes} دقيقة فقط.`;
   return {
-    subject: 'مدارك — رابط إعادة تعيين كلمة المرور',
+    subject: 'تادمورا — رابط إعادة تعيين كلمة المرور',
     html: renderEmailShell({
       title,
       bodyHtml: `<p style="margin:0;">${body}</p><p style="margin:12px 0 0;">إن لم تطلب الرابط فتجاهل هذه الرسالة وكلمة مرورك الحالية كما هي.</p>`,
@@ -168,14 +168,14 @@ export function renderResetEmail(resetUrl: string, minutes = 30): { subject: str
 
 /** The bulk-import invite: the account exists, this is how you get in. */
 export function renderInviteEmail(name: string, loginUrl: string, tempPassword: string): { subject: string; html: string; text: string } {
-  const title = `مرحبًا ${name} — حسابك في مدارك جاهز`;
-  const body = `أنشأ فريق جامعتك حسابًا لك في منصة مدارك. سجّل الدخول بكلمة المرور المؤقتة أدناه، ثم غيّرها من إعداداتك عند أول دخول.`;
+  const title = `مرحبًا ${name} — حسابك في تادمورا جاهز`;
+  const body = `أنشأ فريق جامعتك حسابًا لك في منصة تادمورا. سجّل الدخول بكلمة المرور المؤقتة أدناه، ثم غيّرها من إعداداتك عند أول دخول.`;
   return {
-    subject: 'مدارك — حسابك الجاهز وكلمة المرور المؤقتة',
+    subject: 'تادمورا — حسابك الجاهز وكلمة المرور المؤقتة',
     html: renderEmailShell({
       title,
       bodyHtml: `<p style="margin:0;">${body}</p><table role="presentation" cellpadding="0" cellspacing="0" style="margin:16px 0;border:${SHELL_BORDER};"><tr><td style="padding:10px 16px;font-size:13px;color:#4A4A44;">كلمة المرور المؤقتة: <strong style="font-family:monospace;font-size:15px;letter-spacing:1px;">${tempPassword}</strong></td></tr></table>`,
-      ctaLabel: 'الدخول إلى مدارك',
+      ctaLabel: 'الدخول إلى تادمورا',
       ctaUrl: loginUrl,
       footerNote: 'احتفظ بكلمة المرور في مكان آمن ولا تشاركها مع أحد.',
     }),

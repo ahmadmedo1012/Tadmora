@@ -37,20 +37,20 @@
 تاريخ التنفيذ (UTC):       2026-10-15 09:18
 الأدوات:                   pg_dump 17.11 · pg_restore 17.11 · node 24.21.0
 أمر النسخ الذي شُغّل:       npm run db:backup -- --label local-exercise
-أمر الاستعادة الذي شُغّل:   npm run db:restore -- --url-env STAGE_DIRECT --file backups/madarek-20261015T091803Z-local-exercise.dump
+أمر الاستعادة الذي شُغّل:   npm run db:restore -- --url-env STAGE_DIRECT --file backups/tadmora-20261015T091803Z-local-exercise.dump
 
 # ── النسخة (خطوة 1) ───────────────────────────────────────────
-ملف النسخة:                madarek-20261015T091803Z-local-exercise.dump
+ملف النسخة:                tadmora-20261015T091803Z-local-exercise.dump
 الحجم:                     226 KB (231305 bytes)
 sha256:                    4b5ede93ab5d487006333979ee956f317861ab313f27376a100cf935fd03904c
 نُقل خارج جهاز الخدمة إلى:  لا — ملف محليّ للتجربة فقط (بيانات بذرة تطوير،
                             بلا بيانات إنتاج حقيقية)
-المصدر (مقنّع):             postgresql://***@127.0.0.1:5433/madarek
+المصدر (مقنّع):             postgresql://***@127.0.0.1:5433/tadmora
                             (PostgreSQL 17 محليّ مهيَّأ من prisma/seed.ts)
 
 # ── الهدف (خطوة 2) ────────────────────────────────────────────
-فرع/قاعدة التجربة:         madarek-restore-exercise (قاعدة محلية جديدة فارغة)
-الهدف (مقنّع):              postgresql://***@127.0.0.1:5433/madarek-restore-exercise
+فرع/قاعدة التجربة:         tadmora-restore-exercise (قاعدة محلية جديدة فارغة)
+الهدف (مقنّع):              postgresql://***@127.0.0.1:5433/tadmora-restore-exercise
 حارس الاستعادة الحيّة:      نعم — رفض الهدف المتطابق مع DATABASE_URL بخروج 1
                             (اختُبر بـ --dry-run على هدف مطابق قبل الاستعادة)
 
@@ -105,24 +105,24 @@ sha256:                    4b5ede93ab5d487006333979ee956f317861ab313f27376a100cf
 المشغّل / operator:        "وكيل r169-D (تحقّق التشغيل/التخزين) — بيئة تطوير معزولة"
 تاريخ التنفيذ (UTC):       2026-10-15 16:06
 الأدوات:                   pg_dump 17.11 · pg_restore 17.11 · node 24.21.0
-أمر النسخ الذي شُغّل:       DATABASE_URL='postgresql://***@127.0.0.1:5433/madarek'
+أمر النسخ الذي شُغّل:       DATABASE_URL='postgresql://***@127.0.0.1:5433/tadmora'
                             npm run db:backup -- --label r169-exercise
-أمر الاستعادة الذي شُغّل:   R169_TARGET='postgresql://***@127.0.0.1:5433/madarek-restore-r169'
+أمر الاستعادة الذي شُغّل:   R169_TARGET='postgresql://***@127.0.0.1:5433/tadmora-restore-r169'
                             npm run db:restore -- --url-env R169_TARGET
-                            --file backups/madarek-20261015T160636Z-r169-exercise.dump
+                            --file backups/tadmora-20261015T160636Z-r169-exercise.dump
 
 # ── النسخة (خطوة 1) ───────────────────────────────────────────
-ملف النسخة:                madarek-20261015T160636Z-r169-exercise.dump
+ملف النسخة:                tadmora-20261015T160636Z-r169-exercise.dump
 الحجم:                     225 KB (230639 bytes)
 sha256:                    363566f9668812eaba8ba601172214f22468cb7f1af8ded04fc774d9de36049c
 نُقل خارج جهاز الخدمة إلى:  لا — ملف محليّ للتجربة فقط (بيانات بذرة تطوير،
                             بلا بيانات إنتاج حقيقية)
-المصدر (مقنّع):             postgresql://***@127.0.0.1:5433/madarek
+المصدر (مقنّع):             postgresql://***@127.0.0.1:5433/tadmora
                             (PostgreSQL 17.10 محليّ مضمن، مهيَّأ من prisma/seed.ts)
 
 # ── الهدف (خطوة 2) ────────────────────────────────────────────
-فرع/قاعدة التجربة:         madarek-restore-r169 (قاعدة محلية جديدة فارغة via createdb)
-الهدف (مقنّع):              postgresql://***@127.0.0.1:5433/madarek-restore-r169
+فرع/قاعدة التجربة:         tadmora-restore-r169 (قاعدة محلية جديدة فارغة via createdb)
+الهدف (مقنّع):              postgresql://***@127.0.0.1:5433/tadmora-restore-r169
 حارس الاستعادة الحيّة:      نعم — رفض الهدف المتطابق مع DATABASE_URL بخروج 1
                             (اختُبر بـ --dry-run مع R169_LIVE = نفس قيمة
                             DATABASE_URL؛ الحارس يقارن القيمة لا اسم المتغير)
@@ -192,7 +192,7 @@ sha256:                    363566f9668812eaba8ba601172214f22468cb7f1af8ded04fc77
 
 ```yaml
 المشغّل: "<اسمك>" · UTC: YYYY-MM-DD HH:MM · الأدوات: pg_dump/pg_restore/node
-نسخة: madarek-<ts>[-label].dump · الحجم · sha256 · خارج الموقع؟ · المصدر (مقنّع)
+نسخة: tadmora-<ts>[-label].dump · الحجم · sha256 · خارج الموقع؟ · المصدر (مقنّع)
 هدف: قاعدة فارغة جديدة (مقنّع) · حارس الاستعادة الحيّة: اختُبر؟
 1 خارج الموقع · 2 فرع جديد · 3 الاستعادة (مخرج pg_restore) ·
 4 جداول ~77 · آخر ترحيل · توزيع الأدوار · التسجيلات ·
@@ -218,13 +218,13 @@ sha256:                    363566f9668812eaba8ba601172214f22468cb7f1af8ded04fc77
                             --label restore-drill-r183-v2
 أمر الاستعادة الذي شُغّل:   RESTORE_TARGET='<هدف معزول>' \
                             npm run db:restore -- --url-env RESTORE_TARGET \
-                            --file backups/madarek-20261017T233632Z-restore-drill-r183-v2.dump
+                            --file backups/tadmora-20261017T233632Z-restore-drill-r183-v2.dump
 
 # ── النسخة (خطوة 1) ───────────────────────────────────────────
-ملف النسخة:                madarek-20261017T233632Z-restore-drill-r183-v2.dump
+ملف النسخة:                tadmora-20261017T233632Z-restore-drill-r183-v2.dump
 الحجم:                     315 KB (323,058 bytes)
 sha256:                    a8435078212f48522ff6296069d2773651837f469aae524acc3b1689ff54fb88
-نسخة أولى (عميل 17.11):    madarek-20261017T233037Z-restore-drill-r183.dump ·
+نسخة أولى (عميل 17.11):    tadmora-20261017T233037Z-restore-drill-r183.dump ·
                             318 KB · sha256 8c87e1c2f15c5168146588671da655fce0
                             01db18459f22ac5695f706b66a80c28 — أُبقيت كدليل
                             الدرس ① (تفاوت إصدارات العميل/الخادم)
@@ -236,11 +236,11 @@ sha256:                    a8435078212f48522ff6296069d2773651837f469aae524acc3b1
                             خادم r180 الحيّ: 80 جدولًا · 21 ترحيلًا)
 
 # ── الهدف (خطوة 2) ────────────────────────────────────────────
-فرع/قاعدة التجربة:         madarek_restore_drill — قاعدة **جديدة فارغة** في
+فرع/قاعدة التجربة:         tadmora_restore_drill — قاعدة **جديدة فارغة** في
                             نفس مشروع Neon (CREATE DATABASE صريح) — معزولة
                             تمامًا عن neondb المصدر
 الهدف (مقنّع):              postgresql://***:***@ep-cool-paper-avl6in4y-pooler
-                            .c-11.us-east-1.aws.neon.tech/madarek_restore_drill
+                            .c-11.us-east-1.aws.neon.tech/tadmora_restore_drill
 حارس الاستعادة الحيّة:      يعمل بحكم التصميم — الهدف مختلف عن مصدر الإنتاج
                             فمرّ الحارس؛ (اختبار الرفض الصريح موثق في مدخلَي
                             r167/r169 أعلاه)
@@ -280,7 +280,7 @@ DROP DATABASE:             احتاج WITH (FORCE) — جلسات مجمِّع �
 6_الإنتاج_لم_يُمس:         ✅ الحيّة كلها على القاعدة المعزولة — كتابات
                             التجربة (سجلات دخول التدخين) وقعت في النسخة
                             المستعادة فقط؛ neondb لم يتصل به أي مسار كتابة
-7_التنظيف:                 ✅ أُسقطت قاعدة madarek_restore_drill بعد توثيق
+7_التنظيف:                 ✅ أُسقطت قاعدة tadmora_restore_drill بعد توثيق
                             الأدلة (DROP DATABASE … WITH (FORCE))؛ ملفا النسخة
                             أُبقيا محليًا في backups/ (مُهمَل في git)
 
@@ -327,10 +327,10 @@ DROP DATABASE:             احتاج WITH (FORCE) — جلسات مجمِّع �
                             npm run db:backup -- --label r187-baseline
 أمر الاستعادة الذي شُغّل:   VERIFY_TARGET='<هدف معزول محلي 5433>' \
                             npm run db:restore -- --url-env VERIFY_TARGET \
-                            --file backups/madarek-20261018T181411Z-r187-baseline.dump
+                            --file backups/tadmora-20261018T181411Z-r187-baseline.dump
 
 # ── النسخة (خطوة 1) ───────────────────────────────────────────
-ملف النسخة:                madarek-20261018T181411Z-r187-baseline.dump
+ملف النسخة:                tadmora-20261018T181411Z-r187-baseline.dump
 الحجم:                     319 KB (326,947 bytes)
 sha256:                    9924d596a35394ce93abc8d2652297c1fd936e3aa188a6f11ff17c27ebdd5055
 نُقل خارج جهاز الخدمة إلى:  لا — ⬜ خطوة إلزامية فعل مالك (backups/ مُهمَل
@@ -370,7 +370,7 @@ sha256:                    9924d596a35394ce93abc8d2652297c1fd936e3aa188a6f11ff17
 
 ```yaml
 # ── هوية التجربة ──────────────────────────────────────────────
-المشغّل / operator:        "وكيل r189 — تحوّل «سجلّ مدارك» (الجولة
+المشغّل / operator:        "وكيل r189 — تحوّل «سجلّ تادمورا» (الجولة
                             البصرية الشاملة) + إغلاق تعرّض كلمة العرض"
 تاريخ التنفيذ (UTC):       2026-10-19 02:0x
 الأدوات:                   Prisma Client فقط (pg_dump غير متوفر في
@@ -378,7 +378,7 @@ sha256:                    9924d596a35394ce93abc8d2652297c1fd936e3aa188a6f11ff17
 
 # ── تدوير أسرار حسابات العرض (r189 §7) ──────────────────────
 المسار:                    npm run db:rotate-password لكل من
-                            student/teacher/admin/quality@demo.madarek.ly
+                            student/teacher/admin/quality@demo.tadmora.ly
                             (الـowner دُوِّر في r187)
 التحقّق الحيّ (production): الكلمة القديمة → 401 مرفوضة على الأربعة
                             (owner من r187) · الكلمات الجديدة → 200
@@ -432,7 +432,7 @@ pg_dump:                   غير متوفر في رمل الوكيل هذه ا�
 ```yaml
 # ── هوية التجربة ──────────────────────────────────────────────
 المشغّل / operator:        "الوكيل C — مهمة r327 صف E (P4e) — بيئة الرمل
-                            المحلية للوكيل (مكدس مدارك الحي على :4000)"
+                            المحلية للوكيل (مكدس تادمورا الحي على :4000)"
 تاريخ التنفيذ (UTC):       2026-10-31 23:08 → 23:11
 الأدوات:                   pg_dump 16.15 · pg_restore 16.15 · psql 16.15
                             (عميل مطابق للإصدار الأكبر للخادم — درس مدخل 3 ①:
@@ -441,28 +441,28 @@ pg_dump:                   غير متوفر في رمل الوكيل هذه ا�
                             مستودع pgdg بلا صلاحيات جذر:
                             postgresql-client-16_16.15-1.pgdg13+2_amd64.deb
                             عبر apt-get download + dpkg -x)
-أمر النسخ الذي شُغّل:       DATABASE_URL='postgresql://postgres@localhost:5433/madarek_dev'
+أمر النسخ الذي شُغّل:       DATABASE_URL='postgresql://postgres@localhost:5433/tadmora_dev'
                             npm run db:backup -- --label r327-drill
-أمر الاستعادة الذي شُغّل:   DRILL_URL='postgresql://postgres@localhost:5433/madarek_drill'
+أمر الاستعادة الذي شُغّل:   DRILL_URL='postgresql://postgres@localhost:5433/tadmora_drill'
                             npm run db:restore -- --url-env DRILL_URL
-                            --file backups/madarek-20261031T230815Z-r327-drill.dump
+                            --file backups/tadmora-20261031T230815Z-r327-drill.dump
 
 # ── النسخة (خطوة 1) ───────────────────────────────────────────
-ملف النسخة:                madarek-20261031T230815Z-r327-drill.dump
+ملف النسخة:                tadmora-20261031T230815Z-r327-drill.dump
 الحجم:                     294 KB (300,564 bytes)
 sha256:                    5e564811b91a228cad5adcfe8f3b10f65f9c25af2c7610b30a8fd6607125ed53
 المدة:                     241 ms
 نُقل خارج جهاز الخدمة إلى:  لا — ⬜ خطوة إلزامية فعل مالك (بيانات بذرة تطوير
                             محلية؛ backups/ مُهمَل في git)
-المصدر (مقنّع):             postgresql://***@localhost:5433/madarek_dev
+المصدر (مقنّع):             postgresql://***@localhost:5433/tadmora_dev
                             (قاعدة البذرة الحيّة للمكدس المحلي — 90 جدولًا ·
                             30 ترحيلة · 42 مستخدمًا بعد حمل r327 P4)
 
 # ── الهدف (خطوة 2) ────────────────────────────────────────────
-فرع/قاعدة التجربة:         madarek_drill (createdb جديدة فارغة ثم DROP بعد
-                            التحقق — القائمة أدناه تُثبت البقاء: madarek_dev
+فرع/قاعدة التجربة:         tadmora_drill (createdb جديدة فارغة ثم DROP بعد
+                            التحقق — القائمة أدناه تُثبت البقاء: tadmora_dev
                             فقط + قوالب النظام)
-الهدف (مقنّع):              postgresql://***@localhost:5433/madarek_drill
+الهدف (مقنّع):              postgresql://***@localhost:5433/tadmora_drill
 حارس الاستعادة الحيّة:      ✅ اختُبر رفضًا صريحًا قبل الاستعادة: هدف مطابق
                             لقيمة DATABASE_URL مع --dry-run بلا
                             --confirm-live-restore → «رفض الاستعادة… REFUSED»
@@ -486,16 +486,16 @@ sha256:                    5e564811b91a228cad5adcfe8f3b10f65f9c25af2c7610b30a8fd
 
 # ── الإقلاع الحيّ (خطوة 5) ────────────────────────────────────
 ✅ خلفية ثانية كاملة على :4001 فوق القاعدة المستعادة (tsx ·
-  PORT=4001 DATABASE_URL=…madarek_drill): /api/v1/health → ok=true,
+  PORT=4001 DATABASE_URL=…tadmora_drill): /api/v1/health → ok=true,
   dbLatencyMs=2 · دخول student@test.ly بكلمة البذرة → 200 (توكن 256
   حرفًا، المستخدم cmvwl5olm0025124xlc4nkjuy) · GET /me/dashboard
   بالتوكن → 200 · أُوقفت الخلفية بعدها وبقيت :4000 الحيّة سليمة
 
 # ── الإنتاج_لم_يُمس + التنظيف (خطوتا 6-7) ────────────────────
 ✅ التجربة كلها على 127.0.0.1:5433 المحلي — كتابات الاستعادة وقعت في
-  madarek_drill فقط؛ madarek_dev قراءة فقط (pg_dump + SELECT)
-✅ DROP DATABASE madarek_drill بعد التحقق — القوائم الباقية:
-  madarek_dev + postgres + template0/1 فقط؛ ملف النسخة أُبقي محليًا
+  tadmora_drill فقط؛ tadmora_dev قراءة فقط (pg_dump + SELECT)
+✅ DROP DATABASE tadmora_drill بعد التحقق — القوائم الباقية:
+  tadmora_dev + postgres + template0/1 فقط؛ ملف النسخة أُبقي محليًا
   (backups/ مُهمَل في git)
 
 # ── الخلاصة ───────────────────────────────────────────────────

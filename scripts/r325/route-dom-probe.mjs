@@ -109,9 +109,9 @@ const dom = fs.existsSync(DEST) ? JSON.parse(fs.readFileSync(DEST, 'utf8')) : {}
 
 const browser = await chromium.launch({ executablePath: EXE, args: ['--disable-dev-shm-usage'] });
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, locale: 'ar', colorScheme: 'light', serviceWorkers: 'block' });
-await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* */ } });
+await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* */ } });
 await ctx.addInitScript(() => {
-  try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: 1 }, version: 2 })); } catch { /* */ }
+  try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: 1 }, version: 2 })); } catch { /* */ }
 });
 
 let n = 0;
@@ -122,7 +122,7 @@ for (const role of ROLE_ORDER) {
   const page = await ctx.newPage();
   if (session) {
     await ctx.addInitScript(({ auth }) => {
-      try { localStorage.setItem('mdrk-auth', auth); } catch { /* */ }
+      try { localStorage.setItem('tdmr-auth', auth); } catch { /* */ }
     }, { auth: authStorageJson(session) });
   }
   for (const route of ROLE_ROUTES[role] ?? []) {

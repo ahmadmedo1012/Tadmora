@@ -16,7 +16,7 @@
  *   /contact — the one real early-access channel; no fake opt-in copy).
  * col2 = the 3+3 link index (mono 11.67px labels, first link orange,
  *   fit-content seats) + CONTACT/ADDRESS/REGION/CHANNELS groups.
- * col3 = the drawn construction mark — Madarek's OWN Logo geometry as
+ * col3 = the drawn construction mark — Tadmora's OWN Logo geometry as
  *   authored inline line-art (NEVER Heron's paths).
  *
  * R342-07 seat map (new ds keys ride the same grammar):
@@ -90,14 +90,14 @@ const INDEX_TOP: { label: string; links: [string, string][] }[] = [
  * 2×3 fit-content grid) — [to, label], all real public routes */
 const CHANNEL_LINKS: [string, string][] = [
   ['/contact', 'التواصل'],
-  ['/about', 'عن مدارك'],
+  ['/about', 'عن تادمورا'],
   ['/help', 'المساعدة'],
   ['/legal/data', 'البيانات'],
   ['/legal/privacy', 'الخصوصية'],
   ['/legal/terms', 'الشروط'],
 ];
 
-/* the col3 construction mark — Madarek's OWN Logo geometry, authored
+/* the col3 construction mark — Tadmora's OWN Logo geometry, authored
  * inline line-art (never Heron's paths) */
 const MARK_PATHS = [
   'M178 38A94 94 0 1 0 190 122', // the orbit circle (open at the reading apex)
@@ -178,16 +178,16 @@ export function Footer({ year }: { year: number }) {
           <div className="fo-col" data-spec="footer.col1">
             <div className="fo-c1-top" data-spec="footer.c1top">
               <div className="fo-brand" data-spec="footer.brand">
-                <div className="fo-brand-name" data-spec="footer.brandname">مدارك</div>
+                <div className="fo-brand-name" data-spec="footer.brandname">تادمورا</div>
                 {/* r177: the descriptor seat — className rides LAST so the
                     source pin reads the class verbatim (one seat) */}
-                <div data-spec="footer.brandsub" className="fo-brand-sub">منصّة التعليم الذكي — عربية أولًا</div>
+                <div data-spec="footer.brandsub" className="fo-brand-sub">نظام تشغيل الجامعة — عربية أولًا</div>
                 {/* r188/r320 §D: the independence paragraph — VERBATIM the
                     About page's own sentence (one text node; «اصطناعية
                     بالكامل» stays contiguous on one source line — the
                     brand-integrity gate). R342-07: it rides INSIDE the brand
                     block as the census's third 27px row family. */}
-                <p className="fo-footer-about">منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «جامعة مدارك التجريبية» — مؤسسة اصطناعية بالكامل لأغراض العرض.</p>
+                <p className="fo-footer-about">منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل لأغراض العرض.</p>
               </div>
               {BRAND_ROWS.map((row, i) => (
                 <div className="fo-brow" key={i} data-spec={`footer.brow.${i + 1}`}>
@@ -344,7 +344,7 @@ export function Footer({ year }: { year: number }) {
                 </div>
                 <div className="fo-lgroup" data-spec="footer.bgroup.2">
                   <ML s="footer.bg2label.1" ts="footer.bg2labelt.1" t="ADDRESS" />
-                  <A to="/about" cls="fo-link" t="جامعة مدارك التجريبية" ds="footer.b2link.1" tds="footer.b2linkt.1" />
+                  <A to="/about" cls="fo-link" t="جامعة تادمورا التجريبية" ds="footer.b2link.1" tds="footer.b2linkt.1" />
                   <R c="fo-rule fo-rule-h fo-rule-g" s="footer.b2rule" />
                   <ML s="footer.bg2label.2" ts="footer.bg2labelt.2" t="REGION" />
                   <A to="/about" cls="fo-link" t="طرابلس، ليبيا" ds="footer.b2link.2" tds="footer.b2linkt.2" />
@@ -369,7 +369,7 @@ export function Footer({ year }: { year: number }) {
           </div>
 
           {/* col3 (RTL: the left column) — the drawn construction mark:
-              Madarek's OWN mark geometry, authored inline line-art (the
+              Tadmora's OWN mark geometry, authored inline line-art (the
               circle + orbit + point construction), never Heron's paths */}
           <div className="fo-col fo-col3" data-spec="footer.col3">
             <R c="fo-rule fo-rule-v fo-rule-solid" s="footer.col3rule" />
@@ -380,7 +380,7 @@ export function Footer({ year }: { year: number }) {
                   data-spec="footer.marksvg"
                   viewBox="0 0 215 215"
                   role="img"
-                  aria-label="علامة مدارك — رسم بنائي لخط المدار والنقطة"
+                  aria-label="علامة تادمورا — رسم بنائي لخط المدار والنقطة"
                 >
                   {MARK_PATHS.map((d, i) => (
                     <path key={i} className="fo-mark-p" data-spec={`footer.markpath.${i + 1}`} d={d} />
@@ -498,7 +498,7 @@ export function Footer({ year }: { year: number }) {
                   + DIRECT text so the census's tc=medium p[1] holds — the
                   link rides inline at its end */}
               <p className="fo-legal-p" data-spec="footer.legalp">
-                <span className="fo-mono">© {year} مدارك</span>
+                <span className="fo-mono">© {year} تادمورا</span>
                 {' '}— منصّة مستقلّة · عربية أولًا · بيانات العرض اصطناعية بالكامل —{' '}
                 <a className="fo-legal-a" data-spec="footer.legalcta" href="/about">
                   عن المنصّة
@@ -521,7 +521,7 @@ export function Footer({ year }: { year: number }) {
             <span className="fo-legal-sep" aria-hidden="true">·</span>
             <Link to="/legal/data" className="fo-legal-link" data-spec="footer.llink.6">البيانات</Link>
             <span className="fo-legal-sep" aria-hidden="true">·</span>
-            <Link to="/about" className="fo-legal-link" data-spec="footer.llink.7">عن مدارك</Link>
+            <Link to="/about" className="fo-legal-link" data-spec="footer.llink.7">عن تادمورا</Link>
             <span className="fo-legal-sep" aria-hidden="true">·</span>
             <Link to="/help" className="fo-legal-link" data-spec="footer.llink.8">المساعدة</Link>
             <span className="fo-legal-sep" aria-hidden="true">·</span>

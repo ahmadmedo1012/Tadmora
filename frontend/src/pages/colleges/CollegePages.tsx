@@ -171,7 +171,7 @@ function formatRelative(iso: string): string {
  * The docTitle effect lives inside the AppShell, which never mounts
  * for guests — the app's ONLY crawlable pages shipped the static
  * index.html title. This local effect mirrors the shell's exact
- * grammar (title + « · مدارك», base restore on unmount) for the guest
+ * grammar (title + « · تادمورا», base restore on unmount) for the guest
  * branch on the listing surfaces, and carries the PAYLOAD name on the
  * detail pages for everyone (the shell resolves titles from the
  * pathname alone and cannot know the record's name — «كلّيّة» for
@@ -179,12 +179,12 @@ function formatRelative(iso: string): string {
  * payload can land in the SAME commit as the shell's pathname effect,
  * and child effects run BEFORE the parent's — the task schedules
  * after every effect in that commit, so the payload title survives. */
-const GUEST_TITLE_BASE = 'مدارك · منصّة التعليم الذكي'; // AppShell's DOC_TITLE_BASE (keep in sync)
+const GUEST_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة'; // AppShell's DOC_TITLE_BASE (keep in sync)
 function useDocTitle(title: string | null) {
   useEffect(() => {
     if (title === null) return;
     const set = window.setTimeout(() => {
-      document.title = `${title} · مدارك`;
+      document.title = `${title} · تادمورا`;
     }, 0);
     return () => {
       window.clearTimeout(set);
@@ -236,7 +236,7 @@ function GuestClosingBand() {
     <section className="guest-cta-band" aria-labelledby="guest-cta-title">
       <h2 id="guest-cta-title" className="guest-cta-title">هل هذه كلّيتك؟</h2>
       <p className="guest-cta-note">
-        أنشئ حسابك الجامعي وابدأ رحلتك الأكاديميّة على منصّة مدارك.
+        أنشئ حسابك الجامعي وابدأ رحلتك الأكاديميّة على منصّة تادمورا.
       </p>
       <div className="guest-cta-actions">
         <Link to="/auth/register" state={from} className="btn primary">أنشئ حسابك الجامعي</Link>
@@ -317,7 +317,7 @@ export function CollegesIndexPage() {
           title + [01] gutter index (the inner-public sheet bridge). */}
       <div className="inx-head">
         <PageHeader
-          title="البنية الأكاديمية التجريبية — جامعة مدارك التجريبية"
+          title="البنية الأكاديمية التجريبية — جامعة تادمورا التجريبية"
           description="استكشف الكلّيّات والأقسام في سجلّ المؤسّسة المرجعية للعرض، وقادة كلّ كلّيّة، وأبرز طلّابها وأنشطها."
           actions={isGuest ? <GuestJoinRow /> : undefined}
           index="01"
@@ -647,7 +647,7 @@ export function CollegeDetailPage() {
           <div className="college-hero-emoji" aria-hidden><EmojiIcon emoji={c.iconEmoji ?? '🏛️'} size={36} /></div>
         )}
         <div className="college-hero-titles">
-          <div className="college-hero-eyebrow">جامعة مدارك التجريبية · {c.city} · بيانات تجريبية</div>
+          <div className="college-hero-eyebrow">جامعة تادمورا التجريبية · {c.city} · بيانات تجريبية</div>
           <h1 className="page-title college-hero-name">{c.name}</h1>
           {c.nameEn && <div className="college-hero-sub">{c.nameEn}</div>}
         </div>

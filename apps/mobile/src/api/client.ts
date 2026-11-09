@@ -1,11 +1,11 @@
 /**
- * Madarek API client — typed transport for https://madarek.onrender.com/api/v1.
+ * Tadmora API client — typed transport for https://tadmora.onrender.com/api/v1.
  *
  * Backend contract (backend/src/app.ts + lib/errors.ts):
  *   success:   { data: T }            paginated: { data: T[], meta }
  *   error:     { error: { code, message, details? } }
  *   auth:      Authorization: Bearer <accessToken> (15-min JWT)
- *   refresh:   POST /auth/refresh with Cookie: mdrk_refresh=<token>
+ *   refresh:   POST /auth/refresh with Cookie: tdmr_refresh=<token>
  *              (httpOnly on web; the native client captures Set-Cookie and
  *               persists the value via SecureStore — no backend change needed).
  *
@@ -16,7 +16,7 @@ import { AppNotification, PageMeta, Paginated } from "./types";
 
 export const API_BASE =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-  "https://madarek.onrender.com/api/v1";
+  "https://tadmora.onrender.com/api/v1";
 
 export class ApiError extends Error {
   code: string;
@@ -78,7 +78,7 @@ function extractRefreshCookie(res: Response): string | null {
     (res.headers as unknown as Record<string, string>)["Set-Cookie"] ??
     "";
   if (!raw) return null;
-  const m = /mdrk_refresh=([^;]+)/.exec(Array.isArray(raw) ? raw.join("; ") : raw);
+  const m = /tdmr_refresh=([^;]+)/.exec(Array.isArray(raw) ? raw.join("; ") : raw);
   return m ? m[1] : null;
 }
 
@@ -127,7 +127,7 @@ async function tryRefresh(): Promise<boolean> {
       try {
         const res = await fetch(`${API_BASE}/auth/refresh`, {
           method: "POST",
-          headers: { "Content-Type": "application/json", Cookie: `mdrk_refresh=${cookie}` },
+          headers: { "Content-Type": "application/json", Cookie: `tdmr_refresh=${cookie}` },
           body: "{}",
         });
         if (!res.ok) return false;
@@ -158,7 +158,7 @@ export async function api<T>(path: string, opts: RequestOptions = {}): Promise<T
   // Replay the refresh cookie on auth-family requests (login/refresh benefit;
   // harmless elsewhere, and refresh REQUIRES it).
   const refreshCookie = authBridge?.getRefreshCookie();
-  if (refreshCookie) headers["Cookie"] = `mdrk_refresh=${refreshCookie}`;
+  if (refreshCookie) headers["Cookie"] = `tdmr_refresh=${refreshCookie}`;
 
   try {
     const res = await fetch(url, {
@@ -198,7 +198,7 @@ export async function apiWithCookieCapture<T>(path: string, opts: RequestOptions
   const token = authBridge?.getAccessToken();
   if (token && !opts._skipAuth) headers["Authorization"] = `Bearer ${token}`;
   const cookie = authBridge?.getRefreshCookie();
-  if (cookie) headers["Cookie"] = `mdrk_refresh=${cookie}`;
+  if (cookie) headers["Cookie"] = `tdmr_refresh=${cookie}`;
   try {
     const res = await fetch(url, {
       method: opts.method ?? "GET",

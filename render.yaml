@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: madarek
+    name: tadmora
     runtime: node
     plan: free
     # virginia (us-east-1) — co-located with the Neon PostgreSQL primary,
@@ -150,5 +150,5 @@ services:
       # Deploy-time `npm run db:seed` (root build) already ensures the
       # accounts — this belt also heals a locked/renamed account on
       # every boot/restart. Turn OFF for launch by removing the value.
-      - key: MADAREK_TEST_ACCOUNTS
+      - key: TADMORA_TEST_ACCOUNTS
         value: '1'

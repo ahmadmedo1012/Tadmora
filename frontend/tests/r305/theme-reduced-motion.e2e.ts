@@ -3,7 +3,7 @@
  * honor (R305 Task 4).
  *
  * THEME — the mechanism is theme-persistence.e2e.ts's (tests/e2e): the
- * zustand persist store `madarek-theme` (v2) + `<html data-theme>`.
+ * zustand persist store `tadmora-theme` (v2) + `<html data-theme>`.
  * This spec rides the GUEST funnel instead of the shell: the landing
  * header ships its own ThemeToggle (LandingPage.tsx), so the flip,
  * the surface-var change and the reload persistence are pinned on a
@@ -46,13 +46,13 @@ test.describe('السمة — تبديل وثبات على سطح عام', () =>
     expect(darkBg.length).toBeGreaterThan(0);
 
     // The persisted store carries the choice.
-    const stored = await page.evaluate(() => localStorage.getItem('madarek-theme'));
+    const stored = await page.evaluate(() => localStorage.getItem('tadmora-theme'));
     expect(stored).toContain('"mode":"dark"');
 
     // Reload: the choice survives (one-shot seed never overwrites it).
     await page.reload();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-    const storedAfterReload = await page.evaluate(() => localStorage.getItem('madarek-theme'));
+    const storedAfterReload = await page.evaluate(() => localStorage.getItem('tadmora-theme'));
     expect(storedAfterReload).toContain('"mode":"dark"');
   });
 });

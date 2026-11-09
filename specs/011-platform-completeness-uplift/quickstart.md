@@ -8,7 +8,7 @@ This is the engineer-facing adoption guide for the work in spec 011. Pick up a t
 
 ## What this feature is — in one sentence
 
-Close the verifiable gaps surfaced by `madarek_audit_report00.md` (cold start, accessibility verification, English UI, real-time notifications, search Arabic-normalization, motion polish, branded loading, step-up auth on sensitive routes) without rebuilding the existing inner application.
+Close the verifiable gaps surfaced by `tadmora_audit_report00.md` (cold start, accessibility verification, English UI, real-time notifications, search Arabic-normalization, motion polish, branded loading, step-up auth on sensitive routes) without rebuilding the existing inner application.
 
 ---
 
@@ -155,7 +155,7 @@ The constitution requires at least integration-level happy-path + one failure pa
 2. Run the manual a11y smoke for any page you touched.
 3. Mark the task completed in `tasks.md` and link your PR.
 4. PR description must list which constitution principles the change touches (constitution principle, governance section).
-5. After merge, verify the deployed state on `https://madarek.onrender.com` — you authored the merge, you own the verification (constitution VII).
+5. After merge, verify the deployed state on `https://tadmora.onrender.com` — you authored the merge, you own the verification (constitution VII).
 
 ---
 

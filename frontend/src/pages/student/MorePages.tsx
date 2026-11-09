@@ -1731,10 +1731,10 @@ export function DownloadsPage() {
 /* r183-B3 (A6 P2): the slug of the reference showcase institution —
  * the same contract as the backend's SHOWCASE_INSTITUTION_SLUG
  * (http/routes/colleges.routes.ts) and the seed row (prisma/seed.ts,
- * slug `madarek-demo` — r188 fictional demo tenant). Only this institution renders the curated
+ * slug `tadmora-demo` — r188 fictional demo tenant). Only this institution renders the curated
  * ZU showcase facts; every other institution gets its own identity
  * and only the facts the platform actually holds for it. */
-const SHOWCASE_INSTITUTION_SLUG = 'madarek-demo';
+const SHOWCASE_INSTITUTION_SLUG = 'tadmora-demo';
 
 export function UniversityInfoPage() {
   const institution = useAuthStore((s) => s.currentInstitution);
@@ -1774,7 +1774,7 @@ export function UniversityInfoPage() {
         <PatternPageHeader
           eyebrow="خدمات الجامعة"
           title={inst.name}
-          description="مؤسّسة تعليميّة على منصّة مدارك — تعرض هذه الصفحة الكليّات المسجَّلة في مؤسّستك."
+          description="مؤسّسة تعليميّة على منصّة تادمورا — تعرض هذه الصفحة الكليّات المسجَّلة في مؤسّستك."
           /* R342-08 — the header CTA pair rides the masthead (the
              D11/D8 measured seat; the phone band hides the topbar
              «اسأل AI» ≤920, D6): the university-services family's
@@ -1883,8 +1883,8 @@ export function UniversityInfoPage() {
           page labels the tenant as بيانات تجريبية throughout. */}
       <PatternPageHeader
         eyebrow="خدمات الجامعة"
-        title="جامعة مدارك التجريبية"
-        description="مؤسّسة العرض على منصّة مدارك — مؤسّسة اصطناعية بالكامل تُظهر سير العمل الأكاديمي ببيانات تجريبية عبر ثلاثة حرَم معرفيّة."
+        title="جامعة تادمورا التجريبية"
+        description="مؤسّسة العرض على منصّة تادمورا — مؤسّسة اصطناعية بالكامل تُظهر سير العمل الأكاديمي ببيانات تجريبية عبر ثلاثة حرَم معرفيّة."
         meta={outsideCityCount > 0 ? (
           /* سطر التوزيع الحقيقي للفروع — العدّ من مدن الكليّات الخارجيّة
              الفعليّة لا من السقّ النظري (عقد r183-B3: لا «في 0 مدينة»). */
@@ -1950,7 +1950,7 @@ export function UniversityInfoPage() {
         </Card>
         <Card title="الرسالة" icon={Star}>
           <p style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-muted)', lineHeight: 'var(--lh-loose)', margin: 0 }}>
-            إظهار سير العمل الأكاديمي الكامل — من الهيكل إلى الإتقان — داخل مدارك:
+            إظهار سير العمل الأكاديمي الكامل — من الهيكل إلى الإتقان — داخل تادمورا:
             تجربة الطالب، تقييم الأستاذ، عزل المؤسّسات، وجودة قابلة للقياس، كلها كأمثلة حيّة.
           </p>
         </Card>
@@ -1966,10 +1966,10 @@ export function UniversityInfoPage() {
         <SectionBar index="01" title="بطاقة تعريف" />
         <div className="r305s-band r305s-band--deep">
           <div className="r305u-facts">
-            <FactRow deep label="الاسم الرسميّ" value="جامعة مدارك التجريبية" />
+            <FactRow deep label="الاسم الرسميّ" value="جامعة تادمورا التجريبية" />
             <FactRow deep label="النطاق" value="بيانات اصطناعية — لا مؤسّسة حقيقية" />
             <FactRow deep label="النوع" value="مؤسّسة عرض تجريبية (اصطناعية)" />
-            <FactRow deep label="بريد العرض" value="demo.madarek.ly" mono />
+            <FactRow deep label="بريد العرض" value="demo.tadmora.ly" mono />
             <FactRow deep label="الحرم" value="حرم المعرفة · حرم الابتكار · حرم البيان" />
             <FactRow deep label="طابع البيانات" value="مولَّدة لأغراض العرض" />
           </div>
@@ -2071,7 +2071,7 @@ export function UniversityInfoPage() {
               المصدر المعتمد أصلاً. */}
           {/* R305 Heron: the inline surface-2 wells become hairline ledger
               rows (.r305u-row). The membership Badge drops the gold tone —
-              gold is the ACHIEVEMENTS-only signal on the Madarek canon;
+              gold is the ACHIEVEMENTS-only signal on the Tadmora canon;
               institutional classifications ride the neutral chip. */}
           {UNIVERSITY_FACTS.profile.map((m) => (
             <div key={m.label} className="r305u-row">
@@ -2137,9 +2137,9 @@ export function UniversityInfoPage() {
           <FactRow label="العنوان" value="بيانات عرض — بلا عنوان حقيقي (مؤسّسة اصطناعية)" />
           <FactRow label="الهاتف" value="+218 23 762659" mono />
           <FactRow label="هاتف بديل" value="+218 23 762882" mono />
-          <FactRow label="البريد العامّ" value="info@demo.madarek.ly" mono />
-          <FactRow label="بريد العرض" value="ico@demo.madarek.ly" mono />
-          <FactRow label="نطاق العرض" value="demo.madarek.ly" mono />
+          <FactRow label="البريد العامّ" value="info@demo.tadmora.ly" mono />
+          <FactRow label="بريد العرض" value="ico@demo.tadmora.ly" mono />
+          <FactRow label="نطاق العرض" value="demo.tadmora.ly" mono />
         </div>
       </Card>
     </PageFrame>

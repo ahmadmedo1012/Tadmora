@@ -8,7 +8,7 @@ This document resolves every "needs research" item the plan deferred from Phase 
 
 ## R-001 — Cold-start strategy
 
-**Decision**: Migrate the production deployment from Render's free instance to Render's **Standard** paid tier ($7/month, no cold starts, no sleep), and stand up Cloudflare in front of the public domain to cache the marketing landing page (`/` for unauthenticated visitors) at the edge with `Cache-Control: public, max-age=300, s-maxage=300, stale-while-revalidate=86400`. Authenticated routes and `/api/v1/*` are explicitly excluded from CDN caching via Cloudflare page rules. Add a tiny static `frontend/public/splash.html` served by the SPA's `index.html` <noscript>/early-paint slot so any residual server cold start (e.g., the very first request after a redeploy) shows Madarek branding for the brief delay rather than a blank document.
+**Decision**: Migrate the production deployment from Render's free instance to Render's **Standard** paid tier ($7/month, no cold starts, no sleep), and stand up Cloudflare in front of the public domain to cache the marketing landing page (`/` for unauthenticated visitors) at the edge with `Cache-Control: public, max-age=300, s-maxage=300, stale-while-revalidate=86400`. Authenticated routes and `/api/v1/*` are explicitly excluded from CDN caching via Cloudflare page rules. Add a tiny static `frontend/public/splash.html` served by the SPA's `index.html` <noscript>/early-paint slot so any residual server cold start (e.g., the very first request after a redeploy) shows Tadmora branding for the brief delay rather than a blank document.
 
 **Rationale**:
 
@@ -97,7 +97,7 @@ Normalization runs at write time (Prisma extension hook on create/update of inde
 **Decision**: Build the landing-page Oasis demo as a **lazy-loaded** widget (`frontend/src/components/landing/OasisDemo/`) with a two-mode behavior:
 
 1. **Autoplay mode** (default on first reveal): three pre-programmed Q&A exchanges play out with realistic typing rhythm, no network call. Content is hand-curated, committed under `frontend/src/components/landing/OasisDemo/script.ts`, and emphasizes the platform's flagship features (matrix, lectures, exam help).
-2. **Free-form mode** (after autoplay completes or after the user clicks "اطرح سؤالك"): the input is enabled and submits to a new server endpoint **`POST /api/v1/public/oasis-demo`**. The endpoint is unauthenticated, IP-rate-limited at 3 requests/minute per IP, payload-bounded to 200 characters, and proxies to the same LLM the authenticated Oasis assistant uses with a constrained system prompt: "You are demonstrating Madarek's Oasis assistant on a public landing page. Respond in 2–3 sentences in the user's language (Arabic or English). Stay focused on Madarek's features (lectures, assignments, study tips, university navigation). Decline politely if asked something off-topic." Responses are not persisted as authenticated `AiConversation` rows.
+2. **Free-form mode** (after autoplay completes or after the user clicks "اطرح سؤالك"): the input is enabled and submits to a new server endpoint **`POST /api/v1/public/oasis-demo`**. The endpoint is unauthenticated, IP-rate-limited at 3 requests/minute per IP, payload-bounded to 200 characters, and proxies to the same LLM the authenticated Oasis assistant uses with a constrained system prompt: "You are demonstrating Tadmora's Oasis assistant on a public landing page. Respond in 2–3 sentences in the user's language (Arabic or English). Stay focused on Tadmora's features (lectures, assignments, study tips, university navigation). Decline politely if asked something off-topic." Responses are not persisted as authenticated `AiConversation` rows.
 
 **Rationale**:
 
@@ -137,7 +137,7 @@ Normalization runs at write time (Prisma extension hook on create/update of inde
 
 **Decision**: Reconcile Clarification 4 with the existing JWT contract as follows:
 
-1. **Operational session lifetime is unchanged**: 15-minute access token in `Authorization: Bearer`, 7-day refresh token in `mdrk_refresh` http-only cookie scoped to `/api/v1/auth`, rotated on every refresh.
+1. **Operational session lifetime is unchanged**: 15-minute access token in `Authorization: Bearer`, 7-day refresh token in `tdmr_refresh` http-only cookie scoped to `/api/v1/auth`, rotated on every refresh.
 2. **"Remember me" toggle at login** extends the refresh-cookie `Max-Age` to **30 days** at issuance (existing 7-day default applies if unchecked). The refresh cookie carries no claim about remember-me; the lifetime difference is enforced by the cookie's own `Max-Age`. On rotation, the new refresh inherits the same maximum lifetime as the prior one — i.e., a 30-day remember-me session keeps re-issuing 30-day refreshes.
 3. **Step-up re-authentication** for sensitive routes (active exam pages, grade entry, password change, account-settings changes): the access token issued by an interactive password entry carries a custom claim `pwd_at` (epoch seconds). Sensitive route middleware checks `Date.now() / 1000 - pwd_at > 1800`; on overshoot, the route returns `403 STEP_UP_REQUIRED` with no body content beyond the error code. The frontend interceptor catches this code, opens `<StepUpModal>` to capture the user's password, calls **`POST /api/v1/auth/step-up`** which validates the password via the same Argon2 verification path as login, and re-issues an access+refresh pair with a fresh `pwd_at`. The original request is then retried.
 4. The "12-hour absolute lifetime" promised in Clarification 4's spec answer is delivered as the **user-perceived** continuous session bounded by the refresh cookie; with the silent 401-refresh interceptor and a 7-day refresh window, a non-remember-me user stays signed in across reloads for 7 days unless they explicitly sign out. For practical purposes this satisfies the user-facing intent of Clarification 4 and is **stronger** than the 12-hour ceiling stated; we reflect this honestly in the spec rather than artificially shortening the session.
@@ -150,7 +150,7 @@ Normalization runs at write time (Prisma extension hook on create/update of inde
 
 **Alternatives considered**:
 
-1. **Separate `mdrk_step_up` cookie carrying a fresh-auth marker**. Rejected: doubles client-side auth surface, requires its own scope/expiry/rotation policy, and doesn't compose with the existing 401-refresh interceptor.
+1. **Separate `tdmr_step_up` cookie carrying a fresh-auth marker**. Rejected: doubles client-side auth surface, requires its own scope/expiry/rotation policy, and doesn't compose with the existing 401-refresh interceptor.
 2. **Server-side session table keyed by sessionId**. Rejected: would require introducing stateful session storage, replacing the stateless JWT contract — large rewrite for no measurable gain.
 3. **Force a full re-login on every sensitive route entry (no step-up modal)**. Rejected: hostile UX, would push users away from the very flows that need to feel trustworthy.
 
@@ -176,7 +176,7 @@ Animation: a 1.4-second linear gradient shimmer on `--color-surface-2`, suppress
 
 **Rationale**:
 
-1. The audit specifically called out the contrast between Madarek's static landing and "world-class platforms (Idraak, Notion)" that show layout-mimicking skeletons during data fetch. Closing that gap is a high-perception, low-cost win.
+1. The audit specifically called out the contrast between Tadmora's static landing and "world-class platforms (Idraak, Notion)" that show layout-mimicking skeletons during data fetch. Closing that gap is a high-perception, low-cost win.
 2. Co-locating skeletons next to pages keeps them in sync as page layouts evolve. A central skeleton library always drifts.
 3. The 500 ms trigger threshold is the well-known UX heuristic for "any fetch shorter than this should not show a loader at all" — under that, the skeleton flashes and degrades perceived smoothness.
 

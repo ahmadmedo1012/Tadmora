@@ -8,7 +8,7 @@
  *
  * 1. Lecture player SQUARE video stage (E1 P2, DOM-verified live):
  *    a paused <video> sizes itself by its SQUARE poster
- *    (/brand/madarek-mark.svg, viewBox 64×64 → 818×818 live), and as
+ *    (/brand/tadmora-mark.svg, viewBox 64×64 → 818×818 live), and as
  *    in-flow content it stretched the aspect-ratio'd .lecture-video-wrap
  *    into a square (the .lecture-main flex item's auto min-content
  *    block-size). The wrap now owns the geometry: the video is pinned

@@ -37,7 +37,7 @@ import { logger } from '../../logger.js';
 const MAIL_TTL_MINUTES = Math.round(TOKEN_TTL_MS / 60_000);
 
 const router = Router();
-const REFRESH_COOKIE = 'mdrk_refresh';
+const REFRESH_COOKIE = 'tdmr_refresh';
 
 // Derived from the SAME string jsonwebtoken signs the refresh token with
 // (env.jwtRefreshTtl) — the cookie must die with its token, not before

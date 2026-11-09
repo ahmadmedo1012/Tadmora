@@ -18,7 +18,7 @@ import {
 const S3: MailConfig = {
   provider: 'resend',
   apiKey: 're_test_key',
-  from: 'مدارك <no-reply@madarek.ly>',
+  from: 'تادمورا <no-reply@tadmora.ly>',
 };
 
 describe('resolveMailConfig', () => {
@@ -33,8 +33,8 @@ describe('resolveMailConfig', () => {
 
 describe('brevoSender', () => {
   it('splits «اسم <addr>» and passes a bare address through', () => {
-    expect(brevoSender('مدارك <no-reply@madarek.ly>')).toEqual({ name: 'مدارك', email: 'no-reply@madarek.ly' });
-    expect(brevoSender('no-reply@madarek.ly')).toEqual({ email: 'no-reply@madarek.ly' });
+    expect(brevoSender('تادمورا <no-reply@tadmora.ly>')).toEqual({ name: 'تادمورا', email: 'no-reply@tadmora.ly' });
+    expect(brevoSender('no-reply@tadmora.ly')).toEqual({ email: 'no-reply@tadmora.ly' });
   });
 });
 
@@ -57,18 +57,18 @@ describe('renderEmailShell (the brand RTL shell)', () => {
 
 describe('renderResetEmail / renderInviteEmail', () => {
   it('carries the one-use + TTL honesty in text and html', () => {
-    const mail = renderResetEmail('https://madarek.ly/auth/reset-password?token=t1', 30);
+    const mail = renderResetEmail('https://tadmora.ly/auth/reset-password?token=t1', 30);
     expect(mail.text).toContain('مرة واحدة');
     expect(mail.text).toContain('30 دقيقة');
-    expect(mail.text).toContain('https://madarek.ly/auth/reset-password?token=t1');
+    expect(mail.text).toContain('https://tadmora.ly/auth/reset-password?token=t1');
     expect(mail.html).toContain('تعيين كلمة مرور جديدة');
   });
 
   it('carries the temp password exactly once, clearly labeled', () => {
-    const mail = renderInviteEmail('أحمد', 'https://madarek.ly/auth', 'TempPass123');
+    const mail = renderInviteEmail('أحمد', 'https://tadmora.ly/auth', 'TempPass123');
     expect(mail.html).toContain('TempPass123');
     expect(mail.text).toContain('TempPass123');
-    expect(mail.subject).toContain('مدارك');
+    expect(mail.subject).toContain('تادمورا');
   });
 });
 
@@ -96,7 +96,7 @@ describe('sendMail — provider shapes and honest modes', () => {
     expect(url).toBe('https://api.resend.com/emails');
     expect((init.headers as Record<string, string>).Authorization).toBe('Bearer re_test_key');
     const body = JSON.parse(String(init.body));
-    expect(body).toMatchObject({ from: 'مدارك <no-reply@madarek.ly>', to: ['s@x.ly'], subject: 'مرحبا' });
+    expect(body).toMatchObject({ from: 'تادمورا <no-reply@tadmora.ly>', to: ['s@x.ly'], subject: 'مرحبا' });
   });
 
   it('brevo: POST with the api-key header and the sender split', async () => {
@@ -111,7 +111,7 @@ describe('sendMail — provider shapes and honest modes', () => {
     expect(url).toBe('https://api.brevo.com/v3/smtp/email');
     expect((init.headers as Record<string, string>)['api-key']).toBe('re_test_key');
     const body = JSON.parse(String(init.body));
-    expect(body.sender).toEqual({ name: 'مدارك', email: 'no-reply@madarek.ly' });
+    expect(body.sender).toEqual({ name: 'تادمورا', email: 'no-reply@tadmora.ly' });
     expect(body.to).toEqual([{ email: 's@x.ly' }]);
   });
 

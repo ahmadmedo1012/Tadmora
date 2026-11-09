@@ -2,7 +2,7 @@
 /**
  * legal-icons.mjs — R320 §D (c2-LEGAL · PAGES-GAP P2-8): render the
  * PWA/manifest icons from the ONE brand mark (public/brand/
- * madarek-mark.svg) at exact sizes 180/192/512.
+ * tadmora-mark.svg) at exact sizes 180/192/512.
  *
  * Why a browser renderer and not sharp/canvas: the worktree ships
  * neither sharp nor a canvas binding, but it ships Playwright +
@@ -31,7 +31,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const MARK_PATH = path.join(ROOT, 'frontend', 'public', 'brand', 'madarek-mark.svg');
+const MARK_PATH = path.join(ROOT, 'frontend', 'public', 'brand', 'tadmora-mark.svg');
 const OUT_DIR = path.join(ROOT, 'frontend', 'public', 'brand');
 const SIZES = [180, 192, 512];
 /** The mark's share of the tile — comfortably inside the maskable
@@ -51,7 +51,7 @@ const svg = readFileSync(MARK_PATH, 'utf8');
  * worktree runs against the PRE-INSTALLED Chrome-for-Testing build
  * when the bundled headless-shell revision is absent (CI installs its
  * own and never sets the override). */
-const EXECUTABLE = process.env.MADAREK_E2E_EXECUTABLE
+const EXECUTABLE = process.env.TADMORA_E2E_EXECUTABLE
   ?? '/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 
 const browser = await chromium.launch({

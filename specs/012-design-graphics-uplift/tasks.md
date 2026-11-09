@@ -127,9 +127,9 @@ description: "Task list — 012-design-graphics-uplift"
 ### Custom chart treatment (`contracts/chart-treatment.md`)
 
 - [X] T050 [US3] Extend `frontend/src/lib/chartTheme.ts` with `chartPalette()` resolving Light/Dark categorical palette from `--chart-{idx}` / `--chart-{idx}-dark` tokens.
-- [X] T051 [US3] Implement `madarekTooltipPlugin` inside `frontend/src/lib/chartTheme.ts` (designed surface tokens, type roles, opacity fade).
-- [X] T052 [US3] Implement `madarekFadingAxisPlugin` inside `frontend/src/lib/chartTheme.ts`.
-- [X] T053 [US3] Implement `madarekGradientFillPlugin` inside `frontend/src/lib/chartTheme.ts` with a `MutationObserver` on `<html>[data-theme]` triggering `chart.update('none')` for tracked instances.
+- [X] T051 [US3] Implement `tadmoraTooltipPlugin` inside `frontend/src/lib/chartTheme.ts` (designed surface tokens, type roles, opacity fade).
+- [X] T052 [US3] Implement `tadmoraFadingAxisPlugin` inside `frontend/src/lib/chartTheme.ts`.
+- [X] T053 [US3] Implement `tadmoraGradientFillPlugin` inside `frontend/src/lib/chartTheme.ts` with a `MutationObserver` on `<html>[data-theme]` triggering `chart.update('none')` for tracked instances.
 - [X] T054 [US3] Update `createChartConfig()` defaults: `borderCapStyle: 'round'`, `borderJoinStyle: 'round'`, `borderWidth: 2`, `pointRadius: 0`, `tension: 0.32`. Apply same defaults to bar charts (`borderRadius: 4`).
 
 ### Surface depth

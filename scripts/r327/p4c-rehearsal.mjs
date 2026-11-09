@@ -47,7 +47,7 @@ const FACULTY_ID = process.env.FACULTY_ID ?? 'cmvwl5oiu0002124xqqg65j7p';
 const DEPARTMENT_ID = process.env.DEPARTMENT_ID ?? 'cmvwl5ojg001g124x8a1251es';
 const N_STUDENTS = 20;
 const THROWAWAY_PASSWORD = 'r327-p4c-rehearsal!x';
-const DOMAIN = '@demo.madarek.ly'; // the registrar-sweepable domain (B3 convention)
+const DOMAIN = '@demo.tadmora.ly'; // the registrar-sweepable domain (B3 convention)
 const TIMEOUT_MS = 30_000;
 
 const lines = [];

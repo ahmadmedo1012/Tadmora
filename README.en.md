@@ -1,19 +1,19 @@
 <div dir="ltr">
 
-# Madarek — Smart Learning Platform
+# Tadmora — University Operating System
 
-> **Brand (one line, no image):** the khatam idea redrawn on a 32-unit
-> grid — two squares in uniform hairline ink with miter joins and ONE
-> solid orange point (`#FA3600`) seated on the grid intersection (24,8)
-> — «a point becomes an orbit»; paper `#F6F6EE`, ink `#282828`, dark
-> mode swaps via tokens. Guide:
+> **Brand (one line, no image):** the Tadmora arch on a 32-unit grid —
+> a hairline gateway (two pillars, a semicircular arch, a baseline) with
+> miter joins and ONE solid orange keystone (`#FA3600`) seated at the
+> arch's apex (16,7) — «the university in one system»; paper `#F6F6EE`,
+> ink `#282828`, dark mode swaps via tokens. Guide:
 > [`docs/redesign/r323/brand/BRAND.md`](docs/redesign/r323/brand/BRAND.md)
 > · spec page: `/__brand`.
 
 **Arabic-primary README lives here: [`README.md`](README.md).** This file
 is the English mirror for international readers and tooling.
 
-**Madarek** is an **independent** smart-learning platform (Arabic-first).
+**Tadmora** is an **independent** University Operating System (Arabic-first).
 No official adoption or endorsement by any educational
 institution exists — the institutional data currently shown (faculties,
 facts) is showcase/reference data for the University of Zawia, sourced
@@ -61,7 +61,7 @@ Prereqs: **Node `>=20 <25`**, **npm**, a PostgreSQL (free Neon works).
 Full guide: `docs/05-setup.md`.
 
 ```bash
-git clone <repository-url> && cd madarek
+git clone <repository-url> && cd tadmora
 cp .env.example backend/.env       # fill DATABASE_URL + both JWT secrets
 npm install
 npm run db:migrate                 # apply schema
@@ -93,7 +93,7 @@ their institution's courses (a foreign offering answers 403). Deploy-time
 seeding on Render runs after every deploy, non-destructively (r180) —
 the one documented exception being these `@test.ly` accounts (R320 §C;
 on Render the boot-time ensure can be enabled with
-`MADAREK_TEST_ACCOUNTS=1`).
+`TADMORA_TEST_ACCOUNTS=1`).
 
 ## Verify it yourself
 

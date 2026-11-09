@@ -4,7 +4,7 @@
  * The reference's published implementation resolves smooth scrolling,
  * pointer effects, masks, and scroll-linked motion from a single
  * gsap.ticker frame state («one clock — no drift»). This module is
- * Madarek's original equivalent, on the platform's own rules:
+ * Tadmora's original equivalent, on the platform's own rules:
  *
  *  · ONE requestAnimationFrame loop for the whole landing sheet —
  *    effects subscribe (`subscribeSheetFrame`) and unsubscribe; there

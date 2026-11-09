@@ -27,7 +27,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BASE: https://madarek.onrender.com/api/v1
+  BASE: https://tadmora.onrender.com/api/v1
 
 jobs:
   wait-for-deploy:
@@ -88,7 +88,7 @@ jobs:
           # candidate URLs, parse defensively, and SKIP (warn) when the
           # live spec isn't exposed as JSON. The additive-only contract
           # itself is enforced by the repo's contract tests.
-          curl -sfL --max-time 30 "https://madarek.onrender.com/openapi.json" -o live1.json || true
+          curl -sfL --max-time 30 "https://tadmora.onrender.com/openapi.json" -o live1.json || true
           curl -sfL --max-time 30 "$BASE/openapi.json" -o live2.json || true
           python3 - <<'EOF' || echo "::warning::live openapi not exposed as JSON — skipping (repo contract tests own the gate)"
           import json, sys

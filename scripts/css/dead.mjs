@@ -76,8 +76,8 @@ try {
   ({ chromium } = createRequire(path.join(WORKTREE, "frontend", "package.json"))("playwright"));
   esbuild = createRequire(path.join(WORKTREE, "frontend", "package.json"))("esbuild");
 } catch {
-  ({ chromium } = createRequire("/home/z/madarek/frontend/package.json")("playwright"));
-  esbuild = createRequire("/home/z/madarek/frontend/package.json")("esbuild");
+  ({ chromium } = createRequire("/home/z/tadmora/frontend/package.json")("playwright"));
+  esbuild = createRequire("/home/z/tadmora/frontend/package.json")("esbuild");
 }
 
 /* ── args ─────────────────────────────────────────────────────────── */
@@ -223,7 +223,7 @@ const D7A_OVERRIDES = [
 /* the seat helper (scroll.mjs): Lenis owns the landing scroll — jump it
  * imperatively or the tween fights the read for ~150ms. */
 const SEAT_JS = `(y) => {
-  const L = window.__mdrkLenis;
+  const L = window.__tdmrLenis;
   if (L && typeof L.scrollTo === "function") { L.scrollTo(y, { immediate: true, force: true }); return; }
   window.scrollTo(0, Math.max(0, Math.round(y)));
 }`;

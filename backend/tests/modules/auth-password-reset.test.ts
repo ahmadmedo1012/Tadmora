@@ -345,7 +345,7 @@ describe('POST /auth/forgot-password (route envelope)', () => {
     const res = await post(
       '/auth/forgot-password',
       { email: 'student@test.ly' },
-      { origin: 'https://madarek.example.org/' },
+      { origin: 'https://tadmora.example.org/' },
     );
     expect(res.status).toBe(200);
     const body = (await res.json()) as {
@@ -356,7 +356,7 @@ describe('POST /auth/forgot-password (route envelope)', () => {
     // Trailing slash on the Origin is normalised away; the raw token
     // rides the query string URL-encoded.
     expect(body.data.devInbox?.url).toMatch(
-      /^https:\/\/madarek\.example\.org\/auth\/reset-password\?token=[A-Za-z0-9_-]{43}$/,
+      /^https:\/\/tadmora\.example\.org\/auth\/reset-password\?token=[A-Za-z0-9_-]{43}$/,
     );
   });
 

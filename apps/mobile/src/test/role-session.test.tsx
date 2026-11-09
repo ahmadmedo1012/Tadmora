@@ -40,7 +40,7 @@ function makeUser(role: AppRole): AuthUser {
     email: `${role.toLowerCase()}@test.ly`,
     role,
     firstName: "تجربة",
-    lastName: "مدارك",
+    lastName: "تادمورا",
     memberships: [
       {
         institutionId: "inst-1",

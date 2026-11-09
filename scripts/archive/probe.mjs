@@ -5,7 +5,7 @@ const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, l
 const page = await ctx.newPage();
 await page.goto('http://localhost:5173/auth', { waitUntil: 'networkidle' });
 await page.fill('#auth-email', 'student@zu.edu.ly');
-await page.fill('#auth-password', 'Madarek2026!');
+await page.fill('#auth-password', 'Tadmora2026!');
 await Promise.all([
   page.waitForURL((url) => !url.pathname.includes('/auth')),
   page.click('button.auth-submit'),

@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — R323 §A1 — r323-brand.css — the /__brand spec sheet
+   TADMORA — R323 §A1 — r323-brand.css — the /__brand spec sheet
    ═════════════════════════════════════════════════════════════════════
    Styles for frontend/src/pages/BrandPage.tsx (route /__brand — the
    foreman's integration pass wires the route; the page imports this
@@ -17,7 +17,7 @@
      the hover-guard lint stays at zero).
 
    The brand mark styles itself (frontend/src/brand/Logo.tsx —
-   .mdrk-logo + inline keyframes); this sheet carries ONLY the sheet
+   .tdmr-logo + inline keyframes); this sheet carries ONLY the sheet
    chrome around it.
    ═════════════════════════════════════════════════════════════════════ */
 

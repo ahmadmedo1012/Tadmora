@@ -1,14 +1,14 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Madarek Platform API",
+    "title": "Tadmora Platform API",
     "version": "1.0.0",
-    "description": "مدارك — Arabic-first smart-learning platform. Non-browser (Expo) clients should start at `docs/api/mobile-auth.md`.\n\nConventions: every endpoint lives under `/api/v1` and answers `{ data: … }`\n(errors: `{ error: { code, message, details? } }`, Arabic messages, UPPER_SNAKE codes).\nAuth: `Authorization: Bearer <accessToken>` (15 min) + a 7-day `mdrk_refresh` cookie\nfor rotation. The contract is ADDITIVE-ONLY for mobile clients — enforced by\n`backend/tests/contract/api-contract.test.ts` against the committed snapshot.\n\nGenerated from the live Express route table + the real zod DTOs; response field\nshapes on snapshot-covered operations come from the committed contract snapshot\n(top-level observed fields, additionalProperties open)."
+    "description": "تادمورا — Arabic-first University Operating System. Non-browser (Expo) clients should start at `docs/api/mobile-auth.md`.\n\nConventions: every endpoint lives under `/api/v1` and answers `{ data: … }`\n(errors: `{ error: { code, message, details? } }`, Arabic messages, UPPER_SNAKE codes).\nAuth: `Authorization: Bearer <accessToken>` (15 min) + a 7-day `tdmr_refresh` cookie\nfor rotation. The contract is ADDITIVE-ONLY for mobile clients — enforced by\n`backend/tests/contract/api-contract.test.ts` against the committed snapshot.\n\nGenerated from the live Express route table + the real zod DTOs; response field\nshapes on snapshot-covered operations come from the committed contract snapshot\n(top-level observed fields, additionalProperties open)."
   },
   "servers": [
     {
       "url": "http://localhost:4000",
-      "description": "Local dev (PORT=4000, madarek_dev)"
+      "description": "Local dev (PORT=4000, tadmora_dev)"
     }
   ],
   "tags": [
@@ -18600,7 +18600,7 @@
       "refreshCookie": {
         "type": "apiKey",
         "in": "cookie",
-        "name": "mdrk_refresh",
+        "name": "tdmr_refresh",
         "description": "httpOnly refresh cookie (SameSite=Strict, Path=/api/v1/auth, 7 days) consumed by POST /api/v1/auth/refresh. Native clients must persist this cookie (cookie jar) — the refresh endpoint does not (yet) accept a body token."
       }
     },

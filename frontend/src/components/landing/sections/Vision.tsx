@@ -82,7 +82,7 @@ export function Vision({ year }: { year: number }) {
               </div>
               <div className="fo-cta-cell fo-cta-side" data-spec="cta.top-side">
                 <div className="fo-cta-kick" data-spec="cta.top-side-kick-wrap">
-                  <div className="lp-kicker lp-kicker--cta-ink fo-mono" dir="ltr" data-spec="cta.top-side-kicker">MADAREK</div>
+                  <div className="lp-kicker lp-kicker--cta-ink fo-mono" dir="ltr" data-spec="cta.top-side-kicker">TADMORA</div>
                 </div>
                 <div className="fo-cta-vrule" data-spec="cta.top-side-rule" aria-hidden="true" />
               </div>
@@ -97,19 +97,19 @@ export function Vision({ year }: { year: number }) {
               </div>
               <div className="fo-cta-cell fo-cta-inner" data-spec="cta.title-mid">
                 <div className="fo-cta-copy" data-spec="cta.title-box">
-                  <h2 className="fo-cta-title" data-spec="cta.title" data-mdrk-reveal="lines">
+                  <h2 className="fo-cta-title" data-spec="cta.title" data-tdmr-reveal="lines">
                     جاهز لبدء <em>رحلتك</em>؟
                   </h2>
                 </div>
                 <div className="fo-cta-lede-wrap" data-spec="cta.lede-wrap">
                   {/* T-10f: the instrument asserts tags — heron's lede seat is a
                       div (p margins are globally reset, so the swap is neutral). */}
-                  <div className="fo-cta-lede" data-spec="cta.lede" data-mdrk-reveal="item">
+                  <div className="fo-cta-lede" data-spec="cta.lede" data-tdmr-reveal="item">
                     أنشئ حسابك الجامعي في دقائق — ببريدك الإلكتروني ورقم قيدك،
                     وتابع تقدّمك من أول محاضرة.
                   </div>
                 </div>
-                <div className="fo-cta-actions" data-spec="cta.actions" data-mdrk-reveal="item" id="cta">
+                <div className="fo-cta-actions" data-spec="cta.actions" data-tdmr-reveal="item" id="cta">
                   {/* T-10f RESTRUCTURE — heron's measured resolve-button tree:
                       a (transparent interactive shell) > bg div (the orange
                       wash + border-color/color voice) > label column (two
@@ -185,9 +185,9 @@ export function Vision({ year }: { year: number }) {
         </section>
       </div>
 
-      <p className="fo-cta-meta" data-spec="cta.meta" data-mdrk-reveal="item">
+      <p className="fo-cta-meta" data-spec="cta.meta" data-tdmr-reveal="item">
         <Icon icon={Check} size={13} />
-        مدارك · {year} · منصّة تعليمية مستقلّة
+        تادمورا · {year} · منصّة تعليمية مستقلّة
       </p>
 
       {/* [8] the colleges registry strip — the ruled hairline row
@@ -202,7 +202,7 @@ export function Vision({ year }: { year: number }) {
           <strong><span className="fo-mono" dir="ltr">{formatInt(colleges.length)}</span> كلية</strong> في{' '}
           <span className="fo-mono" dir="ltr">{formatInt(CAMPUS_COUNT)}</span> أحرام —{' '}
           <span className="fo-mono" dir="ltr">[{String(LIVE_COUNT).padStart(2, '0')}]</span> قدرات تعمل اليوم.
-          بيانات «جامعة مدارك التجريبية»: اصطناعية بالكامل لأغراض العرض.
+          بيانات «جامعة تادمورا التجريبية»: اصطناعية بالكامل لأغراض العرض.
         </p>
         <div className="cg-strip-links" data-spec="cta.registry-links">
           <Link to="/colleges" className="btn ghost sm" data-spec-hover="6">تصفح الكليات التجريبية</Link>

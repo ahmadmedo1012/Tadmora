@@ -11,19 +11,19 @@ import { ABOUT_LEDE, ABOUT_SECTIONS } from "@/features/common/helpData";
 import { LEGAL_COLOPHON, LEGAL_UPDATED } from "@/features/common/legalData";
 
 /**
- * /about — «عن مدارك» (web AboutPage port): the landing's identity
+ * /about — «عن تادمورا» (web AboutPage port): the landing's identity
  * paragraph VERBATIM, what works today, the honest builders pending
  * marker, and the data-separation pointer. Nothing invented about who
- * builds مدارك until the owner states it.
+ * builds تادمورا until the owner states it.
  */
 export default function About() {
   return (
     <Screen scroll>
-      <StackHeader title="عن مدارك" kicker="المنصّة" />
+      <StackHeader title="عن تادمورا" kicker="المنصّة" />
 
       <View style={{ gap: sp[8], paddingBottom: sp[4] }}>
         <T variant="h3" weight="bold">
-          عن مدارك
+          عن تادمورا
         </T>
         <T variant="body" color="secondary">
           {ABOUT_LEDE}

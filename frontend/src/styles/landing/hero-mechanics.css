@@ -8,7 +8,7 @@
    file replaces were deleted from landing.css / r330-home.css (the
    R330 file-ownership contract, inverted: this file owns the hero now).
 
-   THE MOTION REGISTER — GSAP values → CSS translations. The Madarek
+   THE MOTION REGISTER — GSAP values → CSS translations. The Tadmora
    stack carries NO GSAP (Lenis 1.1.5 on window + the shared
    sheetConductor rAF clock + CSS transitions are the landing's whole
    engine), so the reference's eases ride their canonical cubic-bezier
@@ -1095,7 +1095,7 @@
 /* ══ R338 T-11c — the measured restyle pass. Every value below is a
    MEASURED parameter from the frozen reference spec
    (docs/redesign/r335/heron-spec/home-hero-wrap.*.json) reproduced in
-   Madarek's own construction — never pasted reference styling. Scoped
+   Tadmora's own construction — never pasted reference styling. Scoped
    vars carry the measured inks per the r338 wave-9 token ruling. ══ */
 .hro {
   --hro-ink-72: var(--grid-ink-72); /* r339 T-18 gate → R342-02: the tokens' own rgba(40,40,40,.72) literal — byte-equal in light AND rgb()-noted (the color-mix arm computed to color(srgb …), which the instrument's parser cannot read — the honest token twin of the frozen literal) */
@@ -1285,7 +1285,7 @@ section.fo-hero .hro-alt {
    mirrored sr-exact into our RTL frame. Geometry/opacity/colour ride
    per-element CSS custom properties set inline by HeroGrid.tsx (the
    single measured data table — no duplicated per-element rules); this
-   sheet holds only the layer laws. Dashed rows render Madarek's own
+   sheet holds only the layer laws. Dashed rows render Tadmora's own
    dash rhythm for the spec's background-image hairlines. The wrapper
    is visibility:hidden (visible children) so the edge-390 gutter
    census — which unions every visible descendant — sees only the
@@ -1333,7 +1333,7 @@ section.fo-hero .hro-alt {
    sr-exact into our RTL frame. Geometry/opacity/colour ride per-element
    CSS custom properties set inline by HeroChrome.tsx (the single
    measured data table); this sheet holds only the layer laws. The glyph
-   geometry inside each icon svg is Madarek's own line art (stroked
+   geometry inside each icon svg is Tadmora's own line art (stroked
    arrows and crosses, filled pin squares/dots) authored to the measured
    boxes — never Heron's asset. The wrapper is visibility:hidden with
    visible children so the edge-390 gutter census — which unions every

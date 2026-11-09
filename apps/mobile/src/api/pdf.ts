@@ -98,7 +98,7 @@ export async function downloadAuthenticated(
   }
   const buf = await res.arrayBuffer();
   const safe = suggestedName.replace(/[^\w.\-]+/g, "_");
-  const local = new File(Paths.cache, `mdrk-${safe}-${Date.now()}`);
+  const local = new File(Paths.cache, `tdmr-${safe}-${Date.now()}`);
   await local.write(new Uint8Array(buf));
   return local;
 }

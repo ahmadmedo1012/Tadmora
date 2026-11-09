@@ -1,7 +1,7 @@
-# Madarek Mobile — Feature & API Parity Matrix
+# Tadmora Mobile — Feature & API Parity Matrix
 
 **App:** `apps/mobile` (Expo SDK 58 · RN 0.88.1 · expo-router · TypeScript strict)
-**API:** `https://madarek.onrender.com/api/v1` — deployed `buildId b773b188ce31` (= GitHub `b773b18`, r323 B3.6) at time of writing; the backend continues to evolve on `main` and the deployed service may lag behind source between Render deploys.
+**API:** `https://tadmora.onrender.com/api/v1` — deployed `buildId b773b188ce31` (= GitHub `b773b18`, r323 B3.6) at time of writing; the backend continues to evolve on `main` and the deployed service may lag behind source between Render deploys.
 **Sources of truth:** `frontend/src/App.tsx` (113 web routes), `backend/src/app.ts` + `backend/src/http/routes/*` (real contract), `DESIGN.md` + `frontend/src/styles/tokens/tokens.css` (Heron).
 
 **Status legend:**
@@ -151,14 +151,14 @@
 
 | Concern | Implementation | Status |
 |---|---|---|
-| Auth transport | Bearer access (15min) + `mdrk_refresh` cookie replayed manually (Set-Cookie captured natively; SameSite/Secure are browser-only constraints) | ✅ verified against live API |
+| Auth transport | Bearer access (15min) + `tdmr_refresh` cookie replayed manually (Set-Cookie captured natively; SameSite/Secure are browser-only constraints) | ✅ verified against live API |
 | Token storage | SecureStore (access + refresh value); user JSON in AsyncStorage; never logged | ✅ |
 | Session boundaries | logout / change-password / reset bump tokenVersion → clean sign-out honored | ✅ |
 | Cache discipline | TanStack Query, institution-scoped keys, `queryClient.clear()` at session boundaries | ✅ |
 | Pagination | `{data, meta}` offset pagination; keepPreviousData on page flips | ✅ |
 | Offline | NetInfo banner; cached reads; writes blocked honestly | ✅ |
 | RTL | forced RTL, logical props, mirrored back arrow | ✅ (Android first-ever launch applies from second start — native limitation, documented) |
-| Deep links | web-path-mirroring routes + `madarek://` scheme; notification links honor safe in-app paths | ✅ |
+| Deep links | web-path-mirroring routes + `tadmora://` scheme; notification links honor safe in-app paths | ✅ |
 | Performance | FlashList on long feeds, expo-image caching, lazy tabs | ✅ |
 
 ## 8. Deployment mismatch watch

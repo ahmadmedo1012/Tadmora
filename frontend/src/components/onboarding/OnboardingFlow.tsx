@@ -66,7 +66,7 @@ interface FrameCopy {
 
 const GENERIC_FRAMES: FrameCopy[] = [
   {
-    headline: 'أهلاً بك في مدارك',
+    headline: 'أهلاً بك في تادمورا',
     body: 'وفّر وقتك وتركيزك: كل ما يخصّ حياتك الدراسية في جامعتك يجتمع هنا في مكان واحد.',
     mkIllustration: 'welcome-first-run',
   },

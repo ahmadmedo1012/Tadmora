@@ -17,7 +17,7 @@ export default function MaintenancePage() {
   usePageTitle('صيانة دورية');
   return (
     <ErrorSheetPage
-      title="مدارك في صيانة قصيرة"
+      title="تادمورا في صيانة قصيرة"
       lead="أوقفنا الخدمة مؤقتًا لتحديثٍ دوري. بياناتك محفوظة ولن يُفقد شيء — عود بعد قليل وستجد كل شيء في مكانه."
       illustration="server-waking"
       kicker="صيانة دورية"

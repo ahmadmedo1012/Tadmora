@@ -9,7 +9,7 @@
  * One named constant per string, imported everywhere it renders; the
  * rendered DOM is byte-identical.
  */
-export const BRAND_LABEL = 'مدارك — منصّة التعليم الذكي';
+export const BRAND_LABEL = 'تادمورا — نظام تشغيل الجامعة';
 export const LOGIN = 'تسجيل الدخول';
 export const REGISTER = 'أنشئ حسابك الجامعي';
 export const START_NOW = 'ابدأ الآن';

@@ -1,28 +1,28 @@
 import type { ExpoConfig } from "expo/config";
 
 /**
- * مدارك — Madarek mobile (Expo / React Native).
+ * تادمورا — Tadmora mobile (Expo / React Native).
  *
  * Brand: the Heron system — paper #F6F6EE · ink #282828 · orange #FA3600.
  * The API base URL is public configuration (EXPO_PUBLIC_API_BASE_URL);
  * secrets never belong in this file or in the app bundle.
  */
 const config: ExpoConfig = {
-  name: "مدارك",
-  slug: "madarek-mobile",
+  name: "تادمورا",
+  slug: "tadmora-mobile",
   version: "1.0.0",
-  scheme: "madarek",
+  scheme: "tadmora",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   userInterfaceStyle: "automatic",
-  description: "مدارك — منصّة التعليم الذكي (تطبيق الجوال الرسمي)",
+  description: "تادمورا — نظام تشغيل الجامعة (تطبيق الجوال الرسمي)",
   backgroundColor: "#F6F6EE",
   primaryColor: "#FA3600",
   ios: {
-    bundleIdentifier: "ly.madarek.mobile",
+    bundleIdentifier: "ly.tadmora.mobile",
     supportsTablet: true,
     infoPlist: {
-      CFBundleDisplayName: "مدارك",
+      CFBundleDisplayName: "تادمورا",
       CFBundleLocalizations: ["ar"],
       CFBundleDevelopmentRegion: "ar",
       SupportsRTL: true,
@@ -30,7 +30,7 @@ const config: ExpoConfig = {
     },
   },
   android: {
-    package: "ly.madarek.mobile",
+    package: "ly.tadmora.mobile",
     adaptiveIcon: {
       foregroundImage: "./assets/images/adaptive-foreground.png",
       backgroundImage: "./assets/images/adaptive-background.png",
@@ -93,12 +93,17 @@ const config: ExpoConfig = {
     [
       "expo-updates",
       {
-        url: "https://u.expo.dev/afc4265f-664e-4325-a0ff-b621b81fe1b0",
+        // TADMORA-REBRAND: a NEW EAS project must be provisioned — the
+        // retired pre-rebrand project is intentionally NOT reused
+        // (deployment independence). Replace this placeholder after
+        // `eas init`.
+        url: "https://u.expo.dev/00000000-0000-0000-0000-000000000000",
       },
     ],
   ],
   updates: {
-    url: "https://u.expo.dev/afc4265f-664e-4325-a0ff-b621b81fe1b0",
+    // TADMORA-REBRAND: placeholder until the new EAS project is provisioned.
+    url: "https://u.expo.dev/00000000-0000-0000-0000-000000000000",
     checkAutomatically: "ON_LOAD",
     fallbackToCacheTimeout: 0,
   },
@@ -120,9 +125,10 @@ const config: ExpoConfig = {
     // Public configuration — safe to inline. The default targets the deployed
     // production API at all times so a bare clone works out of the box.
     apiBaseUrl:
-      process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://madarek.onrender.com/api/v1",
+      process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://tadmora.onrender.com/api/v1",
     eas: {
-      projectId: "afc4265f-664e-4325-a0ff-b621b81fe1b0",
+      // TADMORA-REBRAND: placeholder — run `eas init` to bind the NEW project.
+      projectId: "00000000-0000-0000-0000-000000000000",
     },
   },
 };

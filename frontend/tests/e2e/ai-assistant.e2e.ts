@@ -93,7 +93,7 @@ test.describe('المساعد الذكيّ — رحلة محادثة كاملة'
     ]);
 
     await page.goto('/student/ai');
-    await expect(page).toHaveTitle('المساعد الذكي · مدارك');
+    await expect(page).toHaveTitle('المساعد الذكي · تادمورا');
     // (G re-pin — R287 precedent: the header rides the patterns contract
     // now, so the h1 carries the family's pf-page-title class.)
     await expect(page.locator('h1.pf-page-title')).toHaveText('المساعد الذكيّ');

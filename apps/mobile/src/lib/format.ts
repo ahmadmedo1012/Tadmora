@@ -20,7 +20,7 @@
  *   <T>{formatNumber(kpi.courseCount)}</T>            // ٠١٢٣ or 0123
  *
  * The preference persists via zustand + AsyncStorage (the exact pattern of
- * the theme store in src/design/theme.tsx — key "madarek-mobile-numerals").
+ * the theme store in src/design/theme.tsx — key "tadmora-mobile-numerals").
  * No Intl.NumberFormat on purpose: Hermes Intl support is engine-dependent
  * (the R326 crash), so digit mapping is a pure string transform.
  */
@@ -140,7 +140,7 @@ const useNumeralsStore = create(
       setPreference: (preference) => set({ preference }),
     }),
     {
-      name: "madarek-mobile-numerals",
+      name: "tadmora-mobile-numerals",
       storage: createJSONStorage(() => AsyncStorage),
     },
   ),

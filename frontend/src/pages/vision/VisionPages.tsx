@@ -27,7 +27,7 @@ import '../../styles/vision.css';
  * measure token (taste floor: 45–75ch) — .vision-article in
  * vision.css. */
 
-/* Payload document title (A12 P3-6): the tab said «ابتكار قادم · مدارك»
+/* Payload document title (A12 P3-6): the tab said «ابتكار قادم · تادمورا»
  * for every article while the h1 carried the real name. The concept
  * data is STATIC, so this effect lands in the same commit as the
  * shell's pathname-title effect — child effects run before the
@@ -39,7 +39,7 @@ function useDocTitle(title: string | null) {
   useEffect(() => {
     if (title === null) return;
     const set = window.setTimeout(() => {
-      document.title = `${title} · مدارك`;
+      document.title = `${title} · تادمورا`;
     }, 0);
     return () => {
       window.clearTimeout(set);

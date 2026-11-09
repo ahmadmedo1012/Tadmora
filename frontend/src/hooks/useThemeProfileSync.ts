@@ -20,7 +20,7 @@
  *   the hook can tell its own hydrate apart from a user toggle.
  *
  *   PRE-PAINT: every observed profile is cached in localStorage
- *   (`mdrk-theme-profile`) for the index.html bootstrap, which
+ *   (`tdmr-theme-profile`) for the index.html bootstrap, which
  *   applies the same rules before the first paint — the theme no
  *   longer resolves light and flip to dark a second or two after
  *   load once `me` arrives.
@@ -43,7 +43,7 @@ const toLocal  = (s: ServerPreference): ThemeMode  => s.toLowerCase() as ThemeMo
  *  first paint. Storage failures (Safari private mode, embedded
  *  browsers) are non-fatal: the bootstrap falls back to the local
  *  store's mode. */
-const PROFILE_CACHE_KEY = 'mdrk-theme-profile';
+const PROFILE_CACHE_KEY = 'tdmr-theme-profile';
 
 function cacheProfilePref(pref: ServerPreference, tsMs: number): void {
   try {

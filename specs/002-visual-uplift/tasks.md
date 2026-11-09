@@ -34,7 +34,7 @@ Web app layout (existing).
 **Purpose**: Install Playwright, scaffold the audit harness, and create the icon-discipline gate. Pure infrastructure — no behavior change.
 
 - [~] T001 Install `@playwright/test` as a devDependency in `frontend/package.json` (pinned version, no range). Run `npx playwright install chromium` once and document the command in `frontend/README.md` (or create one).
-- [~] T002 [P] Add `frontend/playwright.config.ts` configured for the visual audit: `testDir: 'tests/visual'`, base URL from env (`MADAREK_BASE_URL` default `http://localhost:5173`), retries 0 locally / 2 in CI, single worker.
+- [~] T002 [P] Add `frontend/playwright.config.ts` configured for the visual audit: `testDir: 'tests/visual'`, base URL from env (`TADMORA_BASE_URL` default `http://localhost:5173`), retries 0 locally / 2 in CI, single worker.
 - [~] T003 [P] Create `frontend/tests/visual/__captures__/.gitkeep` so the captures directory exists. Add `frontend/tests/visual/__captures__/*.png` to `.gitignore` for now (reviewer will commit selected baselines after the first audit run).
 - [X] T004 [P] Create `scripts/check-icons.sh` per `contracts/icon-policy.md` (grep gate for emoji + non-Lucide SVG outside the documented allowlist). Make executable. Wire `npm run check:icons` in root `package.json`.
 - [~] T005 [P] Add `frontend` scripts in `frontend/package.json`: `test:visual` (`playwright test`), `test:visual:reduced-motion` (`playwright test reduced-motion.spec.ts`).
@@ -56,7 +56,7 @@ Web app layout (existing).
 - [X] T010 [P] Extend the chart palette in `frontend/src/styles/tokens.css` with `--chart-6: #E8B547`, `--chart-7: #3F8B8B`, `--chart-8: #A65D8A` per `contracts/chart-theme.md`. Keep `--chart-1..--chart-5` unchanged.
 - [X] T011 [P] Update `chartPalette()` in `frontend/src/lib/chartTheme.ts` to read all eight `--chart-*` tokens (was 5). Document the cycle rule (`(i % 8) + 1`) in the function's JSDoc.
 - [~] T012 [P] Create `frontend/tests/visual/routes.ts` per `contracts/audit-script.md`: typed `AuditRoute[]` manifest with the ~25 representative routes per the data-model section.
-- [~] T013 [P] Create `frontend/tests/visual/test-users.ts` per the audit contract — reads `MADAREK_TEST_<ROLE>_EMAIL` / `_PASSWORD` env vars; logs a warning and skips routes whose role is unconfigured.
+- [~] T013 [P] Create `frontend/tests/visual/test-users.ts` per the audit contract — reads `TADMORA_TEST_<ROLE>_EMAIL` / `_PASSWORD` env vars; logs a warning and skips routes whose role is unconfigured.
 - [~] T014 Create `frontend/tests/visual/audit.spec.ts` per `contracts/audit-script.md`: walks routes × breakpoints (360/768/1280/3840) × directions (LTR/RTL); captures full-page screenshots; asserts (a) no horizontal scroll on document, (b) no element overflows viewport horizontally, (c) focus ring visible after first Tab.
 - [~] T015 Create `frontend/tests/visual/reduced-motion.spec.ts` — same harness with `page.emulateMedia({ reducedMotion: 'reduce' })`. Assertions: reveals render in final state on first paint, counters render target value immediately, page transition collapses to ≤80 ms fade. Targets only the homepage, student dashboard, college index, and a course detail (one fixture page each is fine).
 - [~] T016 Run the audit ONCE against the current state (`npm run -w frontend test:visual`) to capture the **before-uplift** baseline; commit selected baseline captures into `frontend/tests/visual/__captures__/baseline/` with a README pointing to the visible-improvement HTML.
@@ -78,7 +78,7 @@ Web app layout (existing).
 - [X] T019 [P] [US1] Apply `--section-pad-y-wide` to hero and CTA sections, `--section-pad-y-narrow` to interior content sections in `frontend/src/styles/landing.css`. Remove ad-hoc `padding-block` values flagged by audit.
 - [~] T020 [P] [US1] Replace the homepage's existing CountUp instances with `<AnimatedNumber>` (from 001-* primitives) in `frontend/src/pages/LandingPage.tsx` for proof-point statistics. Add `tabular` to keep digit width stable.
 - [X] T021 [P] [US1] Verify all homepage statistics source from real University of Zawia data (Principle III). For any synthetic numbers found, replace with a "data-pending" surface or remove. Document in PR.
-- [X] T022 [US1] Verify the returning-visitor calm flag from 001-* (`madarek.intro.seen`) suppresses the hero re-animation; if any new motion was introduced by the uplift that doesn't honor this flag, add it.
+- [X] T022 [US1] Verify the returning-visitor calm flag from 001-* (`tadmora.intro.seen`) suppresses the hero re-animation; if any new motion was introduced by the uplift that doesn't honor this flag, add it.
 - [~] T023 [US1] Re-run `npm run -w frontend test:visual` for `/` only (filter via `playwright test --grep landing`). Compare against the baseline captures via `scripts/visual-diff.html`. Record the visible delta in PR description (one screenshot pair per breakpoint).
 
 **Checkpoint**: Homepage feels demonstrably stronger; first-impression test passes; bundle add < 4 KB gzip.

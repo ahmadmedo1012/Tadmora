@@ -142,7 +142,7 @@ export default function Settings() {
 
   return (
     <Screen scroll>
-      <PageHeader title="الإعدادات" kicker="مدارك" />
+      <PageHeader title="الإعدادات" kicker="تادمورا" />
 
       {/* [01] التفضيلات — مظهرك وأرقامك وملمس التفاعل، مقاعد متطابقة مع الملف */}
       <View style={{ gap: sp[8] }}>
@@ -325,7 +325,7 @@ export default function Settings() {
         />
       </View>
       <T variant="xs" color="faint" style={{ textAlign: "center" }}>
-        مدارك موبايل {Constants.expoConfig?.version ?? "1.0.0"} — Expo SDK {Constants.expoConfig?.sdkVersion ?? "58"}
+        تادمورا موبايل {Constants.expoConfig?.version ?? "1.0.0"} — Expo SDK {Constants.expoConfig?.sdkVersion ?? "58"}
       </T>
 
       {/* Same destructive ConfirmSheet as the student Profile — one

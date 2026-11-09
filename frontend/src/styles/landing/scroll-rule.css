@@ -9,7 +9,7 @@
  * the document — plus the mono % readout 18px above the rule at the
  * frame's inline-start edge (measured x33 = 26px inside the frame).
  *
- * Madarek's own construction (never the reference's source): the
+ * Tadmora's own construction (never the reference's source): the
  * split is a CSS SCROLL-DRIVEN animation — animation-timeline:
  * scroll() over the first 50% of the root scroll, zero JS per tick,
  * zero keyframe durations (motion-gate law), the curve rides the

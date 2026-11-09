@@ -28,7 +28,7 @@ for (const vp of VPS) {
       deviceScaleFactor: 1, locale: 'ar',
     });
     await ctx.addInitScript((t) => {
-      localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 1 }, version: 2 }));
+      localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 1 }, version: 2 }));
     }, theme);
     const page = await ctx.newPage();
     await page.goto(BASE + '/__design', { waitUntil: 'load', timeout: 45000 });

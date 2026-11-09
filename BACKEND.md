@@ -38,7 +38,7 @@ condensed overview.
 1. `app.disable('x-powered-by')`
 2. `app.set('trust proxy', 1)` (Render)
 3. **Helmet** — CSP **enabled** (D7 allow-list: `default-src 'self'`, plus a sha256 pin for the inline theme-bootstrap script), `crossOriginResourcePolicy: cross-origin`
-4. **CORS** — allow-list from `CORS_ORIGINS` env (default: `https://madarek.onrender.com`, `http://localhost:5173`), `credentials: true`
+4. **CORS** — allow-list from `CORS_ORIGINS` env (default: `https://tadmora.onrender.com`, `http://localhost:5173`), `credentials: true`
 5. **gzip compression** middleware (≥1 KB, text/JSON/JS/SVG; `Vary: Accept-Encoding` on all responses)
 6. `express.json({ limit: '1mb' })` + `express.urlencoded({ limit: '1mb' })` — the two PDF upload routes add route-level `express.raw({ type: 'application/pdf', limit: '20mb' })` (JSON/URLENCODED parsers skip non-matching content types, so the 20 MB raw bodies pass through untouched)
 7. `cookieParser()`
@@ -59,7 +59,7 @@ condensed overview.
 | Aspect | Detail |
 |--------|--------|
 | Access token | JWT HS256, TTL 15m, payload `{ sub, role, type:'access' }`, `Authorization: Bearer` |
-| Refresh token | JWT, TTL 7d, payload `{ sub, ver, type:'refresh' }`, http‑only cookie `mdrk_refresh`, `sameSite:strict`, path `/api/v1/auth` |
+| Refresh token | JWT, TTL 7d, payload `{ sub, ver, type:'refresh' }`, http‑only cookie `tdmr_refresh`, `sameSite:strict`, path `/api/v1/auth` |
 | Rotation | **Sliding session** — a normal refresh re‑issues tokens at the SAME `tokenVersion` (multi‑device survives). `tokenVersion` is bumped only on explicit revocation events (logout, password change, role change, deactivation), each an atomic conditional write |
 | Passwords | Argon2id — memoryCost ≈19 MiB, timeCost 2, parallelism 1 + common‑password blocklist (8–72 chars) |
 | Lockout | 5 failed logins → 15‑min lock (atomic increment + read‑back); reset on success |
@@ -281,7 +281,7 @@ condensed overview.
 | `JWT_REFRESH_SECRET` | ✅ | — | ≥32 chars |
 | `NODE_ENV` | ❌ | `development` | `production` enables static serving + secure cookies |
 | `PORT` | ❌ | `4000` | listen port |
-| `CORS_ORIGINS` | ❌ | madarek.onrender.com + localhost:5173 | Comma-separated CORS allow-list (no wildcards — credentials are on) |
+| `CORS_ORIGINS` | ❌ | tadmora.onrender.com + localhost:5173 | Comma-separated CORS allow-list (no wildcards — credentials are on) |
 | `INTERNAL_SERVICE_TOKEN` | ❌ | — | Service-to-service auth for `POST /api/v1/me/milestones/:id/fire` (≥16 chars; fail-closed when unset; constant-time compare) |
 | `DIRECT_DATABASE_URL` | ❌ | derived | Neon **direct** (non-pooled) URL for `prisma migrate deploy`; when unset, the deploy script derives it from `DATABASE_URL` (strips `-pooler` + pooling params) |
 | `STORAGE_DRIVER` | ❌ | `local` | Upload storage driver (`lib/storage.ts`): `local` filesystem or `s3` (any S3-compatible store). `s3` without the four `S3_*` vars → boot fails closed naming them; `local` in production logs a one-time ephemeral-disk warning |
@@ -417,7 +417,7 @@ daily wall.
 
 The 4 LLM‑only probes and citation presence on grounded cases are the
 production‑mode acceptance bar for the owner's rerun
-(`BASE_URL=https://madarek.onrender.com` + eval creds; the bounded r176
+(`BASE_URL=https://tadmora.onrender.com` + eval creds; the bounded r176
 harness `scripts/ai-eval-live.mjs` stays the free‑tier‑respectful
 12‑turn production probe).
 
@@ -555,7 +555,7 @@ and the roundtrip above then passed end‑to‑end.
 The registrar's bulk story is therefore: mint one code per cohort with
 `maxUses = N`, share it, and every registration lands enrolled + counted.
 `DELETE /users/demo-cohort` (ADMIN/OWNER) is the counterpart bulk
-**removal** — the one‑transaction sweep of the `@demo.madarek.ly`
+**removal** — the one‑transaction sweep of the `@demo.tadmora.ly`
 pilot sample (30 seeded users on the showcase institution).
 
 ### 11.2 What was proven live (seeded DB, real API)
@@ -568,7 +568,7 @@ throwaway students register with the code → **201 each**, and throwaway
 #1's `GET /enrollments/me` shows the scoped offering **active**; the
 teacher's `GET /invites` shows `usedCount 3/3`; a 4th registration with
 the same code → **400** «استُنفد هذا الكود (بلغ أقصى عدد للاستخدام).»
-Throwaways registered under `@demo.madarek.ly` and were removed
+Throwaways registered under `@demo.tadmora.ly` and were removed
 immediately after by id (ordered delete mirroring `removeDemoCohort`;
 the seed's own 30 demo users untouched — recorded in the evidence log).
 

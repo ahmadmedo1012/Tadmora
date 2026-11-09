@@ -28,7 +28,7 @@
  * both actions are native buttons — Tab reaches them, Enter/Space
  * fires them (the site focus ring is base.css's). The region is
  * aria-live="polite" (announced on entrance; role="region" + label
- * kept). Madarek's OWN honest sentence — never the reference's copy,
+ * kept). Tadmora's OWN honest sentence — never the reference's copy,
  * logo, or awards.
  *
  * THE TAIL SEAM (the one measured dependency the flow seat inherits):
@@ -47,14 +47,14 @@
  * (R328): the band carries the full honest sentence at every width.
  *
  * This is a REAL gate, not decoration:
- *  · «موافق»  → localStorage `madarek.consent = "accepted"` (+ a JSON
- *    record with a timestamp under `madarek.consent.record`); the
+ *  · «موافق»  → localStorage `tadmora.consent = "accepted"` (+ a JSON
+ *    record with a timestamp under `tadmora.consent.record`); the
  *    banner never shows again.
- *  · «أرفض»   → `madarek.consent = "rejected"`; the same persistence,
+ *  · «أرفض»   → `tadmora.consent = "rejected"`; the same persistence,
  *    PLUS the app's non-essential UI-pref keys are removed (see
  *    GATED_KEYS — only keys the app already re-derives on demand, so
  *    nothing breaks; user-authored data is deliberately left alone).
- *  · `window.MadarekConsent` exposes the live state + both actions
+ *  · `window.TadmoraConsent` exposes the live state + both actions
  *    for consoles, tests, and future surfaces (JSDoc below).
  *
  * Landing-only by mount site (LandingPage, after the footer — R314 B10):
@@ -77,13 +77,13 @@ import { useBottomStackLayer } from '../../../hooks/useBottomStackLayer';
 import '../../../styles/landing/consent.css';
 
 /* ── The storage contract ────────────────────────────────────────────
- * `madarek.consent` holds the plain decision ("accepted"/"rejected") —
- * the value every gate reads first. `madarek.consent.record` holds the
+ * `tadmora.consent` holds the plain decision ("accepted"/"rejected") —
+ * the value every gate reads first. `tadmora.consent.record` holds the
  * JSON audit twin `{"decision":…,"ts":<epoch-ms>}` (the "JSON with
  * timestamp" of the spec) so the decision stays a one-comparison read
  * while the full record stays inspectable. */
-const CONSENT_KEY = 'madarek.consent';
-const CONSENT_RECORD_KEY = 'madarek.consent.record';
+const CONSENT_KEY = 'tadmora.consent';
+const CONSENT_RECORD_KEY = 'tadmora.consent.record';
 
 /** The visitor's recorded decision. */
 export type ConsentDecision = 'accepted' | 'rejected';
@@ -93,35 +93,35 @@ export type ConsentState = ConsentDecision | 'unanswered';
 /**
  * localStorage keys that SURVIVE a reject — essential to the session or
  * to a pre-consent choice the visitor already made:
- *  · `madarek-theme`       — the theme choice (kept per the R314 spec:
+ *  · `tadmora-theme`       — the theme choice (kept per the R314 spec:
  *                            a pre-consent user choice is essential);
- *  · `mdrk-theme-profile`  — the pre-paint theme cache derived from it;
- *  · `mdrk-auth`           — session/auth persistence.
+ *  · `tdmr-theme-profile`  — the pre-paint theme cache derived from it;
+ *  · `tdmr-auth`           — session/auth persistence.
  * No language key exists yet (Arabic-first, single language) — the seat
  * is documented here so a future i18n key joins this list, not GATED.
  */
 const ESSENTIAL_KEYS: readonly string[] = [
-  'madarek-theme',
-  'mdrk-theme-profile',
-  'mdrk-auth',
+  'tadmora-theme',
+  'tdmr-theme-profile',
+  'tdmr-auth',
 ];
 
 /**
  * Non-essential UI-pref keys removed on reject — ONLY keys the app
  * already re-derives from defaults the next time it needs them, so
  * removal can never break a surface:
- *  · `mdrk-ui`          — sidebar fold + palette recents (zustand
+ *  · `tdmr-ui`          — sidebar fold + palette recents (zustand
  *                         persist; falls back to defaults on rehydrate);
- *  · `mdrk-doc-side-w`  — the document viewer's side-panel width
+ *  · `tdmr-doc-side-w`  — the document viewer's side-panel width
  *                         (re-measured on open).
- * `mdrk-academic-links` is deliberately NOT here: it is user-authored
+ * `tdmr-academic-links` is deliberately NOT here: it is user-authored
  * content (their saved links), not a UI preference — deleting it would
  * destroy the visitor's own data, the one thing a privacy reject must
  * never do.
  */
 const GATED_KEYS: readonly string[] = [
-  'mdrk-ui',
-  'mdrk-doc-side-w',
+  'tdmr-ui',
+  'tdmr-doc-side-w',
 ];
 
 /**
@@ -129,7 +129,7 @@ const GATED_KEYS: readonly string[] = [
  * mounted (see the effect below). `state` is a live getter — it always
  * reflects storage, not a snapshot.
  */
-export interface MadarekConsentApi {
+export interface TadmoraConsentApi {
   /** Live decision from storage: `accepted` · `rejected` · `unanswered`. */
   readonly state: ConsentState;
   /** Keys that survive a reject (theme choice, session, language seat). */
@@ -144,12 +144,12 @@ export interface MadarekConsentApi {
 
 declare global {
   interface Window {
-    MadarekConsent?: MadarekConsentApi;
+    TadmoraConsent?: TadmoraConsentApi;
   }
 }
 
 /** The event fired on the API's accept()/reject() (same-document only). */
-const CONSENT_EVENT = 'madarek:consent';
+const CONSENT_EVENT = 'tadmora:consent';
 
 /* ── Pure helpers (storage-touching, but testable in isolation) ────── */
 
@@ -313,13 +313,13 @@ export function ConsentBanner() {
     setDecision(next);
   }, []);
 
-  /* Install window.MadarekConsent while the landing is mounted; the
+  /* Install window.TadmoraConsent while the landing is mounted; the
    * API reads storage live (not React state) so it stays correct even
    * after the banner unmounts itself, and it drives the banner through
    * the same `answer` path via a CustomEvent. */
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
-    const api: MadarekConsentApi = {
+    const api: TadmoraConsentApi = {
       get state(): ConsentState {
         return readDecision() ?? 'unanswered';
       },
@@ -332,7 +332,7 @@ export function ConsentBanner() {
         new CustomEvent(CONSENT_EVENT, { detail: 'rejected' }),
       ),
     };
-    window.MadarekConsent = api;
+    window.TadmoraConsent = api;
     const onApiCall = (e: Event) => {
       const detail = (e as CustomEvent<ConsentDecision>).detail;
       if (detail === 'accepted' || detail === 'rejected') answer(detail);
@@ -340,7 +340,7 @@ export function ConsentBanner() {
     window.addEventListener(CONSENT_EVENT, onApiCall);
     return () => {
       window.removeEventListener(CONSENT_EVENT, onApiCall);
-      if (window.MadarekConsent === api) delete window.MadarekConsent;
+      if (window.TadmoraConsent === api) delete window.TadmoraConsent;
     };
   }, [answer]);
 

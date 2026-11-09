@@ -6,7 +6,7 @@
 
 **Status**: Partial — أجزاء نُفّذت ولم يُبنَ طبقة i18n؛ أُغلقت بوابة i18n نهائيًا في r137 بالحذف (مبدأ zero-bloat + D17-3: العربية هي حقيقة المنتج) — (الحالة المرجعية: `docs/SPECS-REFERENCE.md`)
 
-**Input**: User description: "@madarek_audit_report00.md — comprehensive UX/UI audit (SkyClaw AI Agent, 2026-06-02) identifying gaps between Madarek's promised landing page experience and the delivered experience. Critical findings: (1) inner application routes (`/dashboard`, `/courses`, `/faculties`) return the landing page rather than functional pages; (2) Render free-tier cold starts produce 30–60s first-load waits with the generic Render splash; (3) no observable scroll animations, micro-interactions, or branded loading states; (4) static Oasis AI demo on the landing page; (5) hamburger-only navigation with no breadcrumbs, no global search, no sticky header; (6) no notification center; (7) no dark mode; (8) WCAG 2.1 AA accessibility unverified (contrast risk on cream/gold, no skip-link, focus indicators undocumented); (9) Arabic-only UI with no English option; (10) discussion forums absent. This feature responds to the audit by closing the launch-blocking gaps and lifting visible polish to a level comparable to Idraak / Canvas / Notion."
+**Input**: User description: "@tadmora_audit_report00.md — comprehensive UX/UI audit (SkyClaw AI Agent, 2026-06-02) identifying gaps between Tadmora's promised landing page experience and the delivered experience. Critical findings: (1) inner application routes (`/dashboard`, `/courses`, `/faculties`) return the landing page rather than functional pages; (2) Render free-tier cold starts produce 30–60s first-load waits with the generic Render splash; (3) no observable scroll animations, micro-interactions, or branded loading states; (4) static Oasis AI demo on the landing page; (5) hamburger-only navigation with no breadcrumbs, no global search, no sticky header; (6) no notification center; (7) no dark mode; (8) WCAG 2.1 AA accessibility unverified (contrast risk on cream/gold, no skip-link, focus indicators undocumented); (9) Arabic-only UI with no English option; (10) discussion forums absent. This feature responds to the audit by closing the launch-blocking gaps and lifting visible polish to a level comparable to Idraak / Canvas / Notion."
 
 ## Overview
 
@@ -20,7 +20,7 @@ Discussion forums, certificate generation, native mobile apps, virtual labs (Cis
 
 ### Session 2026-06-02
 
-1. Q: Authentication method for v1 → A: University email + password, managed by Madarek. Greenfield — there is no pre-existing login mechanism in the platform today, so this feature ships the first authentication system rather than integrating with one.
+1. Q: Authentication method for v1 → A: University email + password, managed by Tadmora. Greenfield — there is no pre-existing login mechanism in the platform today, so this feature ships the first authentication system rather than integrating with one.
 2. Q: Notification email digest in v1? → A: In-app channel only ships in v1. Email-digest preference controls remain visible in the preferences UI as disabled "coming soon" controls; actual email delivery is deferred to a future feature.
 3. Q: Concurrent-user scalability target for v1 → A: 2,000 concurrent users sustained, 5,000 concurrent users at burst peak (exam windows). Sized to ~5–10% of the audited ~48K-registered base, with headroom for growth.
 4. Q: Session lifetime → A: 12-hour absolute lifetime by default; opt-in "remember me" extends to 30 days; sensitive routes (active exam pages, grade entry, password change, account-settings changes) enforce a 30-minute idle timeout requiring re-authentication.
@@ -28,10 +28,10 @@ Discussion forums, certificate generation, native mobile apps, virtual labs (Cis
 
 ## Implementation Reality (added 2026-06-02 after planning kickoff)
 
-The audit (`madarek_audit_report00.md`) was conducted by an external crawler that observed the platform unauthenticated. Its central finding — that `/dashboard`, `/courses`, and `/faculties` "all return the landing page" — describes the protected-route guard correctly redirecting guests to the public landing, not the absence of an inner application. Inspection of the codebase after Clarification 1 showed:
+The audit (`tadmora_audit_report00.md`) was conducted by an external crawler that observed the platform unauthenticated. Its central finding — that `/dashboard`, `/courses`, and `/faculties` "all return the landing page" — describes the protected-route guard correctly redirecting guests to the public landing, not the absence of an inner application. Inspection of the codebase after Clarification 1 showed:
 
 1. The inner application exists. `frontend/src/pages/**` contains 80+ routed pages across student, teacher, admin, quality, and owner roles, lazy-loaded and wrapped by `<AppShell />` and `ProtectedRoute`.
-2. Authentication exists. `backend/src/modules/**` ships JWT (15-min access + 7-day refresh with rotation, Argon2id passwords, account lockout after 5 failures, http-only `mdrk_refresh` cookie scoped to `/api/v1/auth`).
+2. Authentication exists. `backend/src/modules/**` ships JWT (15-min access + 7-day refresh with rotation, Argon2id passwords, account lockout after 5 failures, http-only `tdmr_refresh` cookie scoped to `/api/v1/auth`).
 3. The data model exists. Prisma schema (60+ models) covers identity, faculties/departments/courses/offerings/enrollments, lectures/chapters/checkpoints/watch events, materials/assignments/submissions/grades/attendance, exams, research, notifications, social/community, library, gamification, AI conversations, owner ops.
 4. Notifications exist. `Notification` model + `NotificationDropdown` component + 60-second polling hook in `useResources.ts`.
 5. A global search component exists in `Topbar`.
@@ -54,7 +54,7 @@ FR-001 is reconciled with the existing implementation in §Functional Requiremen
 
 ### User Story 1 — Student can actually use the platform end-to-end (Priority: P1)
 
-A student visits Madarek, logs in with their university credentials, lands on a personal dashboard that summarizes their term, opens a course, watches or reads a lecture, submits an assignment, and later returns to see the grade. Today, all of these inner routes serve the landing page — the platform's promised value cannot be delivered without this story.
+A student visits Tadmora, logs in with their university credentials, lands on a personal dashboard that summarizes their term, opens a course, watches or reads a lecture, submits an assignment, and later returns to see the grade. Today, all of these inner routes serve the landing page — the platform's promised value cannot be delivered without this story.
 
 **Why this priority**: Without a working core flow, the platform is a marketing site. The audit calls this "the single most important finding." Every other improvement compounds on top of a working core; nothing meaningful compounds on top of a non-functional one.
 
@@ -74,7 +74,7 @@ A student visits Madarek, logs in with their university credentials, lands on a 
 
 ### User Story 2 — First load is fast and never shows the generic Render splash (Priority: P1)
 
-A first-time visitor opens madarek.onrender.com after a period of inactivity and sees a branded loading state in under three seconds, with the landing page itself becoming interactive in under five seconds on a typical broadband connection. They never see the white "INCOMING HTTP REQUEST DETECTED" Render placeholder.
+A first-time visitor opens tadmora.onrender.com after a period of inactivity and sees a branded loading state in under three seconds, with the landing page itself becoming interactive in under five seconds on a typical broadband connection. They never see the white "INCOMING HTTP REQUEST DETECTED" Render placeholder.
 
 **Why this priority**: The audit captured a 30–60 second cold-start with the unbranded Render splash. That destroys credibility for an institutional platform on the first impression and dwarfs every other UX improvement. Fixing this is mechanical but launch-blocking.
 
@@ -82,8 +82,8 @@ A first-time visitor opens madarek.onrender.com after a period of inactivity and
 
 **Acceptance Scenarios**:
 
-1. **Given** a cold visitor on a typical broadband connection (≥10 Mbps), **When** they request the home page, **Then** the first content paint shows Madarek-branded content within 3 seconds and the page is interactive within 5 seconds.
-2. **Given** a cold visitor, **When** the page is loading, **Then** any visible loading state uses Madarek's branding (logo, palette, motion vocabulary), not the hosting provider's default splash.
+1. **Given** a cold visitor on a typical broadband connection (≥10 Mbps), **When** they request the home page, **Then** the first content paint shows Tadmora-branded content within 3 seconds and the page is interactive within 5 seconds.
+2. **Given** a cold visitor, **When** the page is loading, **Then** any visible loading state uses Tadmora's branding (logo, palette, motion vocabulary), not the hosting provider's default splash.
 3. **Given** a returning visitor with a warm cache, **When** they request any page, **Then** the page is interactive within 1.5 seconds.
 4. **Given** the back-end is processing a request that exceeds 500ms, **When** the visitor is waiting, **Then** a branded skeleton screen mimics the page's actual layout rather than a generic spinner.
 
@@ -149,7 +149,7 @@ The platform meets WCAG 2.1 Level AA for every page in scope: keyboard-only user
 
 ### User Story 6 — Dark mode (Priority: P2)
 
-A user can switch between light and dark themes from the header or settings, and the platform respects `prefers-color-scheme` on first visit. The dark theme preserves Madarek's identity (warm dark surfaces with adjusted gold accents), maintains WCAG AA contrast, and persists across sessions.
+A user can switch between light and dark themes from the header or settings, and the platform respects `prefers-color-scheme` on first visit. The dark theme preserves Tadmora's identity (warm dark surfaces with adjusted gold accents), maintains WCAG AA contrast, and persists across sessions.
 
 **Why this priority**: An expected feature for a modern student-facing platform; the audit explicitly calls it out and it has near-zero scope creep when paired with US5's contrast work.
 
@@ -219,7 +219,7 @@ The landing page and platform shell carry the visible signature of the existing 
 
 ### Functional Requirements — Working core (US1)
 
-- **FR-001**: System MUST authenticate users via university email address + password (Argon2id-hashed; existing implementation), issue a JWT access token with a 15-minute lifetime, and a refresh token (http-only cookie `mdrk_refresh`) with a 7-day lifetime that rotates on every refresh. The browser MUST silently refresh on `401 TOKEN_EXPIRED` and retry the original request once, so the user-perceived continuous session is at least 7 days of activity. An opt-in "remember me" choice at login MUST extend the refresh-token lifetime to 30 days. Sensitive routes (active exam pages, grade entry, password change, account-settings changes) MUST additionally require step-up re-authentication if more than 30 minutes have elapsed since the last interactive password entry. The system MUST support password reset via email-link verification. SSO/SAML integration with the university identity provider is explicitly deferred to a future feature.
+- **FR-001**: System MUST authenticate users via university email address + password (Argon2id-hashed; existing implementation), issue a JWT access token with a 15-minute lifetime, and a refresh token (http-only cookie `tdmr_refresh`) with a 7-day lifetime that rotates on every refresh. The browser MUST silently refresh on `401 TOKEN_EXPIRED` and retry the original request once, so the user-perceived continuous session is at least 7 days of activity. An opt-in "remember me" choice at login MUST extend the refresh-token lifetime to 30 days. Sensitive routes (active exam pages, grade entry, password change, account-settings changes) MUST additionally require step-up re-authentication if more than 30 minutes have elapsed since the last interactive password entry. The system MUST support password reset via email-link verification. SSO/SAML integration with the university identity provider is explicitly deferred to a future feature.
 - **FR-002**: System MUST route signed-in users to a personal dashboard at `/dashboard` that surfaces enrolled courses, upcoming deadlines, and recent grades — not the marketing landing page.
 - **FR-003**: System MUST list a student's enrolled courses on a dedicated authenticated route distinct from the public `/colleges` discovery surface.
 - **FR-004**: System MUST render each course at a dedicated route showing lecture list, assignment list, and current grade summary.
@@ -323,7 +323,7 @@ The landing page and platform shell carry the visible signature of the existing 
 ## Assumptions
 
 1. The student MVP flow (US1) targets students first; professor and administrator tools beyond grade entry are deferred to a follow-on feature.
-2. Authentication is greenfield — Madarek does not currently have a working login flow, so v1 ships email + password managed entirely by Madarek (per Clarification 1). University SSO/SAML is out of scope for this feature.
+2. Authentication is greenfield — Tadmora does not currently have a working login flow, so v1 ships email + password managed entirely by Tadmora (per Clarification 1). University SSO/SAML is out of scope for this feature.
 3. File submission size and type limits are configurable per assignment by professors; sensible defaults (e.g., 50 MB per file, common document and code formats) are applied when not configured.
 4. Notification delivery latency is "soft real-time" (target ≤30s) using whatever transport the platform already runs; no hard real-time SLA is required for v1.
 5. The motion identity, type roles, chart palette, and decorative motion are sourced from `001-premium-motion-system`, `002-visual-uplift`, and `003-motion-graphics-layer` and are not redesigned in this feature.
@@ -356,4 +356,4 @@ The following items appear in the audit but are explicitly **out of scope** for 
 2. `002-visual-uplift` — type roles, chart palette, icon discipline. Used across the platform shell and dark-mode translation.
 3. `003-motion-graphics-layer` — decorative motion (spec only at audit time). Used opportunistically by US8 where appropriate.
 4. `004-colleges-gallery` — discoverable colleges surface; authenticated course list (US1) is a sibling, not a replacement, and the public colleges surface continues to power discovery.
-5. The audit report itself: `madarek_audit_report00.md` (committed at the project root).
+5. The audit report itself: `tadmora_audit_report00.md` (committed at the project root).

@@ -77,7 +77,7 @@ let chromium;
 try {
   ({ chromium } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium } = createRequire("/home/z/madarek/frontend/package.json"))("playwright");
+  ({ chromium } = createRequire("/home/z/tadmora/frontend/package.json"))("playwright");
 }
 
 const SPEC_DIR = join(WORKTREE, "docs", "redesign", "r335", "heron-spec");
@@ -346,7 +346,7 @@ const WAAPI_PATCH = `(() => {
       Object.defineProperty(navigator.connection, "effectiveType", { get: () => "4g", configurable: true });
     }
   } catch {}
-  try { sessionStorage.removeItem("madarek-intro-seen"); sessionStorage.removeItem("madarek-intro-skip"); } catch {}
+  try { sessionStorage.removeItem("tadmora-intro-seen"); sessionStorage.removeItem("tadmora-intro-skip"); } catch {}
   const log = [];
   const safe = (v) => { try { return JSON.parse(JSON.stringify(v)); } catch { return String(v); } };
   const origAnimate = Element.prototype.animate;
@@ -460,7 +460,7 @@ const SAMPLE_JS = String.raw`
 async (steps) => {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const seat = (y) => {
-    const L = window.__mdrkLenis;
+    const L = window.__tdmrLenis;
     if (L && typeof L.scrollTo === "function") L.scrollTo(y, { immediate: true, force: true });
     else window.scrollTo(0, y);
   };
@@ -514,7 +514,7 @@ const UP_JS = String.raw`
 async () => {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const seat = (y) => {
-    const L = window.__mdrkLenis;
+    const L = window.__tdmrLenis;
     if (L && typeof L.scrollTo === "function") L.scrollTo(y, { immediate: true, force: true });
     else window.scrollTo(0, y);
   };
@@ -596,9 +596,9 @@ const CSSOM_JS = String.raw`
     scrollTimeline,
     ruleCount: rules,
     crossOrigin,
-    revealsArmed: !!window.__mdrkReveals,
-    revealBelt: window.__mdrkRevealBelt ? { registry: window.__mdrkRevealBelt.registry, observers: window.__mdrkRevealBelt.observers } : null,
-    lenis: !!window.__mdrkLenis,
+    revealsArmed: !!window.__tdmrReveals,
+    revealBelt: window.__tdmrRevealBelt ? { registry: window.__tdmrRevealBelt.registry, observers: window.__tdmrRevealBelt.observers } : null,
+    lenis: !!window.__tdmrLenis,
     jsRevealArmed: document.documentElement.classList.contains("js-reveal-armed"),
     introDone: !!document.querySelector(".landing.intro-done"),
   };

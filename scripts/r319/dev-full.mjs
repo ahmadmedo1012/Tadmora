@@ -9,16 +9,16 @@
  *            (idempotent — the r183 established-db guard makes the seed
  *            a no-op on an already-seeded database)
  *   3. [api] backend dev server  → http://localhost:4000 (PORT override
- *            via MADAREK_API_PORT; env: backend/.env.local + inline)
+ *            via TADMORA_API_PORT; env: backend/.env.local + inline)
  *   4. [web] frontend Vite dev   → http://localhost:5173 (override via
- *            MADAREK_WEB_PORT)
+ *            TADMORA_WEB_PORT)
  *
  * Ctrl-C (SIGINT/SIGTERM) tears everything down in reverse; the embedded
  * postgres is stopped ONLY when dev-full itself booted it (a database
  * you started separately stays up). Children run in their own process
  * groups so the whole tree (npm → sh → tsx/vite → node) gets the signal.
  *
- * Skip knobs: MADAREK_SKIP_SEED=1 (migrate only), MADAREK_SKIP_DB=1
+ * Skip knobs: TADMORA_SKIP_SEED=1 (migrate only), TADMORA_SKIP_DB=1
  * (assume an already-migrated database).
  */
 import { spawn, spawnSync } from 'node:child_process';
@@ -32,9 +32,9 @@ import { isPortOpen, readEnvFile, REPO_ROOT } from './local-db.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 void __dirname;
 
-const API_PORT = Number(process.env.MADAREK_API_PORT || 4000);
-const WEB_PORT = Number(process.env.MADAREK_WEB_PORT || 5173);
-const PG_PORT = Number(process.env.MADAREK_PG_PORT || 5433);
+const API_PORT = Number(process.env.TADMORA_API_PORT || 4000);
+const WEB_PORT = Number(process.env.TADMORA_WEB_PORT || 5173);
+const PG_PORT = Number(process.env.TADMORA_PG_PORT || 5433);
 const ENV_FILE = path.join(REPO_ROOT, 'backend', '.env.local');
 
 const useColor = process.stdout.isTTY && !process.env.NO_COLOR;
@@ -207,19 +207,19 @@ async function main() {
   }
 
   /* 3 ── migrations (+ seed) ────────────────────────────────────── */
-  if (process.env.MADAREK_SKIP_DB !== '1') {
+  if (process.env.TADMORA_SKIP_DB !== '1') {
     log('applying prisma migrations (db:deploy)…');
     let code = await runPrefixed(PREFIX.db, 'npm', ['run', 'db:deploy'], { env: childEnv });
     if (code !== 0) throw new Error('db:deploy failed');
-    if (process.env.MADAREK_SKIP_SEED === '1') {
-      log('seed skipped (MADAREK_SKIP_SEED=1)');
+    if (process.env.TADMORA_SKIP_SEED === '1') {
+      log('seed skipped (TADMORA_SKIP_SEED=1)');
     } else {
       log('seeding (db:seed — no-op once established)…');
       code = await runPrefixed(PREFIX.db, 'npm', ['run', 'db:seed'], { env: childEnv });
       if (code !== 0) throw new Error('db:seed failed');
     }
   } else {
-    log('migrate + seed skipped (MADAREK_SKIP_DB=1)');
+    log('migrate + seed skipped (TADMORA_SKIP_DB=1)');
   }
 
   /* 4 ── backend dev server ─────────────────────────────────────── */
@@ -240,8 +240,8 @@ async function main() {
   /* 5 ── frontend dev server ────────────────────────────────────── */
   log(`starting frontend on :${WEB_PORT} …`);
   const webArgs = ['run', 'dev', '-w', 'frontend'];
-  if (process.env.MADAREK_WEB_PORT) webArgs.push('--', '--port', String(WEB_PORT));
-  // R320 §C — a custom MADAREK_API_PORT must flow into the Vite /api
+  if (process.env.TADMORA_WEB_PORT) webArgs.push('--', '--port', String(WEB_PORT));
+  // R320 §C — a custom TADMORA_API_PORT must flow into the Vite /api
   // proxy too: the dev proxy defaults to :4000, so a stack booted on
   // (say) :4253 would 500 every browser API call. Pass the live API
   // origin unless the operator explicitly pointed VITE_API_TARGET at a

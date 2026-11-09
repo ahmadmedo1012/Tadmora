@@ -12,7 +12,7 @@
  *     التركيز إلى البرغر).
  *  3. سكة الحاسوب المطموسة/الموسّعة: html[data-sidebar-collapsed]،
  *     عرض 64⇄256، aria-label في المطموس، Ctrl+B، الثبات عبر إعادة
- *     التحميل (zustand persist mdrk-ui).
+ *     التحميل (zustand persist tdmr-ui).
  *  4. صدق المسار النشط: ‏.nav-item.on واحدة بالضبط بعنوانها في الشريط
  *     والترويسة وdocument.title (nav.ts مصدرًا واحدًا) + استعادة
  *     التمرير عند الرجوع (مراقب POP المحدود ~1s).
@@ -254,7 +254,7 @@ test.describe('السكّة المطموسة (الحاسوب ≥921)', () => {
       .toBe(SIDEBAR_W_EXPANDED);
     await expect(firstItem).not.toHaveAttribute('aria-label');
 
-    // الثبات: التوسعة تبقى بعد إعادة التحميل (mdrk-ui persist).
+    // الثبات: التوسعة تبقى بعد إعادة التحميل (tdmr-ui persist).
     await page.reload();
     await expect(page.locator('h1.pf-page-title')).toBeVisible();
     expect(await isCollapsed(page)).toBe(false);
@@ -292,7 +292,7 @@ test.describe('المسار النشط واستعادة التمرير', () => {
 
     // الترويسة (والتبويب) يتحدثان بلغة nav.ts نفسها — لا انجراف.
     await expect(page.locator('.topbar-title')).toContainText('مقرّراتي الدراسية');
-    await expect(page).toHaveTitle('مقرّراتي الدراسية · مدارك');
+    await expect(page).toHaveTitle('مقرّراتي الدراسية · تادمورا');
 
     // 2) الرجوع يستعيد التمرير على صفحة طويلة (مراقب POP المحدود ~1s).
     await page.goto('/student/dashboard');

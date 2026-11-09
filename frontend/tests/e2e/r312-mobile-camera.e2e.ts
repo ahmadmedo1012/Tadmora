@@ -27,7 +27,7 @@ import type { Page } from '@playwright/test';
 const VW = { mobile: { width: 390, height: 844 }, desktop: { width: 1440, height: 900 } };
 
 /* R315 (c4-E) re-pin: the page-ready sentinel — the cycle-1 V1 hero
- * (45f8c32) replaced the H1 copy; the old 'مدارك' sentinel has been
+ * (45f8c32) replaced the H1 copy; the old 'تادمورا' sentinel has been
  * stale since (the brand name lives in the header/footer, not the
  * H1). The sentinel now waits on the current H1's first line. */
 const HERO_READY = 'رحلة تعلم واحدة';

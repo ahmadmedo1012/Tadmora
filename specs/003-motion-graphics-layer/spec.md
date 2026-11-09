@@ -552,6 +552,6 @@ the PR description AND get explicit governance review.
   `<PointerGlow>` wrapper) is justified in planning, not declared
   here.
 - "Once per session" semantics use the existing
-  `madarek.intro.seen` sessionStorage flag from `001-*` for the
-  homepage hero, and a new `madarek.brand-mark.seen` flag for the
+  `tadmora.intro.seen` sessionStorage flag from `001-*` for the
+  homepage hero, and a new `tadmora.brand-mark.seen` flag for the
   brand mark.

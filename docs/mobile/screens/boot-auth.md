@@ -7,7 +7,7 @@
 
 ### `/` is now the Boot screen — the splash IS the first frame
 - The native splash (icon `imageWidth: 120`, centred, paper ground — `app.config.ts`) cross-fades into `<Boot>` at the **same geometry**: `BootMark` renders the canonical mark at size 120, centred. The mark **is** the loader (squares converging in counter-phase) — one logo, at most one loader, never a second brand mark or generic spinner.
-- Two honest Arabic labels: hydrating guest → «نستعد لتحميل مدارك…»; cached session → «جارٍ الدخول…». After 6s `Boot`'s slow state tells the truth about the sleeping Render free tier: «الخادم يستيقظ… قد يستغرق لحظات ثم يبدأ العمل.» (+ optional retry — `/` doesn't offer one; the `/auth/me` refresh resolves or the user cold-starts again).
+- Two honest Arabic labels: hydrating guest → «نستعد لتحميل تادمورا…»; cached session → «جارٍ الدخول…». After 6s `Boot`'s slow state tells the truth about the sleeping Render free tier: «الخادم يستيقظ… قد يستغرق لحظات ثم يبدأ العمل.» (+ optional retry — `/` doesn't offer one; the `/auth/me` refresh resolves or the user cold-starts again).
 - The handoff rule is **one pure function**, `resolveEntryDestination(user, continueParam, roleHome)` in `boot.tsx`, shared by cold start and fresh login, pinned by `boot.test.ts` (role homes, unknown→student, `?continue=` honored only with an institution context or OWNER, gate for context-less roles, ADMIN exemption, blank param ignored). No duplicated routing logic anywhere.
 - A cached session routes **immediately** to its role home — the `/auth/me` refresh (60s stale window) rides along in the background; no dead wait on a cold server.
 - Update/min-version states never render here by construction: below the server floor the root layout's `BlockingUpdateGate` replaces the navigator entirely (`_layout.tsx` — untouched).
@@ -24,7 +24,7 @@
 - Secure toggle («إظهار»/«إخفاء») via `SecretField`; `purpose` maps `textContentType`/autoFill (username/password/newPassword/email/name).
 - **Every** failure goes through `humanizeError` (`src/lib/errors`) — never raw `e.message`. Reset-password additionally swaps the generic bucket for its own honest sentence (expired/used link). Field errors = validation only; API refusals get the form-level summary under the button (R2 B4 honesty contract: a 429 lockout is a lockout).
 - `haptics.notify("success" | "error")` on every submit outcome; `haptics.selection()` on register's role pick and as the biometric prompt appears. One orange accent per screen: the primary action (`submitKind="accent"`).
-- Flows preserved: demo accounts (dev/preview builds only), invite-code check, institution select handoff (`/select-institution`), role routing (`ROLE_HOME`), `/auth/login` deep links (`madarek://auth/login` — previously an alias, now the real form).
+- Flows preserved: demo accounts (dev/preview builds only), invite-code check, institution select handoff (`/select-institution`), role routing (`ROLE_HOME`), `/auth/login` deep links (`tadmora://auth/login` — previously an alias, now the real form).
 
 ### Biometric gate
 - Arabic copy end-to-end; a clear cancel path: after a cancelled prompt the gate says «لم تُفتح بعد — اضغط «فتح القفل» للمحاولة مرة أخرى.» plus «تعمل البصمة أو رمز قفل الجهاز — لن تُحبس خارج حسابك أبدًا.» (device-PIN fallback is always offered).

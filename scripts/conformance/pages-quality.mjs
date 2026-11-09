@@ -4,7 +4,7 @@
  * the /quality/* routes (the D6 hermetic seeded-session method, D7a's
  * pages-authed.mjs shape): pages.mjs's exact probe axes/score/floor +
  * the REAL e2e fixture transport (mock-transport.ts + api-fixtures.ts,
- * esbuild-bundled the r319 way) with the `mdrk-auth` persist key
+ * esbuild-bundled the r319 way) with the `tdmr-auth` persist key
  * seeded QUALITY before first paint, so the app boots signed-in
  * reload-style. Distinct filename (not pages-authed.mjs) so the
  * concurrent D7a branch merges without conflict.
@@ -38,8 +38,8 @@ try {
   ({ chromium } = require('./../../frontend/node_modules/playwright'));
   esbuild = require.esbuild ?? require('./../../frontend/node_modules/esbuild');
 } catch {
-  ({ chromium } = createRequire('/home/z/madarek/frontend/package.json')('playwright'));
-  esbuild = createRequire('/home/z/madarek/frontend/package.json')('esbuild');
+  ({ chromium } = createRequire('/home/z/tadmora/frontend/package.json')('playwright'));
+  esbuild = createRequire('/home/z/tadmora/frontend/package.json')('esbuild');
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

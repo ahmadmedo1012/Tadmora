@@ -2,8 +2,8 @@
  * sheet-code — r324 X10 residue.
  *
  * The R319/R320 «drawing-sheet» mono identity lines (`SHEET S-01 ·
- * STUDENT` on page headers, `[MDRK-AUTH] · SHEET 01/01` on the auth
- * doors, `MADAREK · LEGAL SHEET · [L-01]` on the public sheets,
+ * STUDENT` on page headers, `[TDMR-AUTH] · SHEET 01/01` on the auth
+ * doors, `TADMORA · LEGAL SHEET · [L-01]` on the public sheets,
  * `[SHEET · FIELD 06]`, `SHEET 05 · SCALE 1:100`, the error pages'
  * `ERR [nnn]` + `[0,0] · …` coordinates) are RETIRED — coordinates,
  * scale and revision tags are not content, and the owner's red team

@@ -1,7 +1,7 @@
 /**
  * HeroInkWindow — R315 (B1 · owner §0-A.1) → R322 (2-b · the measured
  * transplant): the hero art band shows the WHOLE frontal elevation of
- * Madarek's own ink building on TRANSPARENT paper — no crop, no white
+ * Tadmora's own ink building on TRANSPARENT paper — no crop, no white
  * box — and the ink owns the FULL band width.
  *
  * R314 rode a raster fragment (object-fit-cover crop of a photo
@@ -83,7 +83,7 @@ export function HeroInkWindow() {
       viewBox={`${HERO_FRAME.x} ${HERO_FRAME.y} ${HERO_FRAME.w} ${HERO_FRAME.h}`}
       preserveAspectRatio="xMidYMid meet"
       role="img"
-      aria-label="الواجهة الأمامية الكاملة لمبنى التعلّم في مدارك: قاعة المحاضرات، جسر نقطة الفحص، جناح الاختبار، جناح المكتبة، وبرج الإتقان — على خط أرض واحد، بشجرتين على الجانبين ومربعين برتقاليين"
+      aria-label="الواجهة الأمامية الكاملة لمبنى التعلّم في تادمورا: قاعة المحاضرات، جسر نقطة الفحص، جناح الاختبار، جناح المكتبة، وبرج الإتقان — على خط أرض واحد، بشجرتين على الجانبين ومربعين برتقاليين"
     >
       {/* transparent paper — no background fill anywhere: the page's
           paper shows through the whole window (owner §0-A.1). */}

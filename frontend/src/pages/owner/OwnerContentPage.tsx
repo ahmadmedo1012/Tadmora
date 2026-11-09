@@ -38,7 +38,7 @@ import { Icon } from '../../components/Icon';
  * r183-B5 (A9 wave-A P2 — the identity surface's honesty): the old
  * BRAND_SWATCHES hardcoded the reference university's palette
  * (#003461/#fed65b/#a3c9ff) while the notice above claimed «ألوان علامة
- * مدارك الرسميّة… في نظام التصميم» — chips and copy disagreed. The
+ * تادمورا الرسميّة… في نظام التصميم» — chips and copy disagreed. The
  * swatches now resolve AT RUNTIME from the live design tokens
  * (getComputedStyle on <html>: the [data-theme="dark"] block wins when
  * the night skin is applied), so the card displays the platform's
@@ -148,7 +148,7 @@ export function OwnerContentPage() {
           <Icon icon={Info} size={14} />
           <span>
             تعديل ألوان العلامة التجاريّة (الأساسيّ، الثانويّ، التمييز) ومحتوى الصفحة الرئيسيّة قيد
-            التطوير. حالياً تُعتمَد ألوان علامة مدارك الرسميّة المعتمدة في نظام التصميم — تُقرَأ
+            التطوير. حالياً تُعتمَد ألوان علامة تادمورا الرسميّة المعتمدة في نظام التصميم — تُقرَأ
             مباشرةً من رموز نظام التصميم النشطة (فاتح/داكن) عند عرض الصفحة.
             {/* r299: the one-sentence «محتوى الواجهة الرئيسيّة» card folded
                 in here — a whole bordered box for one sentence that restated

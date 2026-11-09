@@ -17,7 +17,7 @@
 ### 1) الاستنساخ والتثبيت
 
 ```bash
-git clone <repository-url> && cd madarek
+git clone <repository-url> && cd tadmora
 npm install        # workspaces: يثبت backend + frontend معًا، وينفّذ prisma generate
 ```
 
@@ -59,7 +59,7 @@ npm run db:seed      # بذر البيانات التجريبية
   تُضبط للقيمة الموثقة في كل تشغيلة — انظر رأس `seed.ts`.
 - بديل بلا Neon: `tools/boot-pg.sh` يشغّل PostgreSQL مدمجًا على `:5433`
   (يتطلب `cd tools && npm install` مرة واحدة). استخدم بعدئذ
-  `postgresql://madarek@127.0.0.1:5433/madarek` في `DATABASE_URL`.
+  `postgresql://tadmora@127.0.0.1:5433/tadmora` في `DATABASE_URL`.
 
 ### 4) التشغيل (نافذتان)
 
@@ -82,9 +82,9 @@ Vite تحويله إلى `:4000` — لا حاجة لأي إعداد CORS محل
 
 | المهمّة | البريد | الدور |
 |---|---|---|
-| طالب | `student@test.ly` | طالب (أحمد الزروق) — جامعة مدارك التجريبية |
+| طالب | `student@test.ly` | طالب (أحمد الزروق) — جامعة تادمورا التجريبية |
 | طالب ثانٍ (للرسائل/المجتمع) | `student2@test.ly` | طالبة (ليلى المهدي) — مؤسسة الأندلس |
-| أستاذ | `teacher@test.ly` | أستاذ (د. سالم البوسيفي) — جامعة مدارك التجريبية |
+| أستاذ | `teacher@test.ly` | أستاذ (د. سالم البوسيفي) — جامعة تادمورا التجريبية |
 | رئيس قسم | `head@test.ly` | أستاذ (محمد الشريف) — TeacherProfile.position: DEPARTMENT_HEAD |
 | عميد | `dean@test.ly` | أستاذ (إبراهيم الفيتوري) — position: DEAN |
 | نائب عميد | `vicedean@test.ly` | أستاذ (آمال بن عيسى) — position: ASSOCIATE_DEAN |
@@ -103,7 +103,7 @@ Vite تحويله إلى `:4000` — لا حاجة لأي إعداد CORS محل
 > وراقب العزل.
 >
 > على Render يمكن أيضًا ضمان الحسابات عند كل إقلاع للخلفية بضبط
-> `MADAREK_TEST_ACCOUNTS=1` من لوحة Environment (انظر
+> `TADMORA_TEST_ACCOUNTS=1` من لوحة Environment (انظر
 > `docs/SECRETS-REFERENCE.md`).
 
 ## البناء والإنتاج محليًا (اختياري)

@@ -25,7 +25,7 @@ await page.getByRole('button', { name: 'استيراد طلاب من ملف' }).
 await page.waitForTimeout(1200);
 
 const tag = String(Date.now()).slice(-6);
-const csv = `الاسم الأول,اسم العائلة,البريد الإلكتروني,الرقم الجامعي,الكلية,القسم,السنة\nطالب,آلي الأول,probe-ui-a-${tag}@e2e.madarek.ly,90${tag}1,كلية تقنية المعلومات,علوم الحاسوب,2\n`;
+const csv = `الاسم الأول,اسم العائلة,البريد الإلكتروني,الرقم الجامعي,الكلية,القسم,السنة\nطالب,آلي الأول,probe-ui-a-${tag}@e2e.tadmora.ly,90${tag}1,كلية تقنية المعلومات,علوم الحاسوب,2\n`;
 const ta = page.getByLabel('محتوى ملف CSV');
 console.log('textarea found:', await ta.count());
 await ta.fill(csv);

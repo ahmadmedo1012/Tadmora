@@ -1,6 +1,6 @@
 # role-owner — المالك: دخول ← تبويبات ← خروج عبر رابط عميق.
 # OWNER is platform-level (no institution gate) → lands straight on the owner dashboard.
-appId: ly.madarek.mobile
+appId: ly.tadmora.mobile
 name: "06 — مالك: دخول، تبويبات، خروج"
 ---
 - launchApp
@@ -25,7 +25,7 @@ name: "06 — مالك: دخول، تبويبات، خروج"
 - extendedWaitUntil:
     visible: "الإشعارات"
     timeout: 30000
-- openLink: "madarek://settings"
+- openLink: "tadmora://settings"
 - extendedWaitUntil:
     visible: "تسجيل الخروج"
     timeout: 30000

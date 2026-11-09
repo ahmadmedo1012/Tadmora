@@ -4,7 +4,7 @@ const EXE = (() => { const b = path.join(process.env.HOME, '.cache/ms-playwright
 const browser = await chromium.launch({ executablePath: EXE });
 const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
 await page.goto('http://localhost:4173/', { waitUntil: 'networkidle' });
-await page.evaluate(() => sessionStorage.setItem('madarek-intro-skip', '1'));
+await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
 await page.reload({ waitUntil: 'networkidle' });
 await page.waitForTimeout(800);
 const r = await page.evaluate(() => {

@@ -4,7 +4,7 @@
  * the authed OWNER routes (pages-authed.mjs's exact probe axes/score/
  * floor, D7a's hermetic seeded-session method re-keyed to OWNER_USER):
  * the REAL e2e fixture transport (mock-transport.ts + api-fixtures.ts,
- * esbuild-bundled the r319 way) with the `mdrk-auth` persist key
+ * esbuild-bundled the r319 way) with the `tdmr-auth` persist key
  * seeded OWNER before first paint, so the app boots signed-in
  * reload-style. Distinct filename from pages-authed/pages-quality so
  * the concurrent branches merge without conflict.
@@ -40,8 +40,8 @@ try {
   ({ chromium } = require('./../../frontend/node_modules/playwright'));
   esbuild = require.esbuild ?? require('./../../frontend/node_modules/esbuild');
 } catch {
-  ({ chromium } = createRequire('/home/z/madarek/frontend/package.json')('playwright'));
-  esbuild = createRequire('/home/z/madarek/frontend/package.json')('esbuild');
+  ({ chromium } = createRequire('/home/z/tadmora/frontend/package.json')('playwright'));
+  esbuild = createRequire('/home/z/tadmora/frontend/package.json')('esbuild');
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -370,7 +370,7 @@ const SYSTEM = {
 
 /* GET /owner/settings — PlatformSetting[]. */
 const SETTINGS = [
-  { id: 'set_1', key: 'platform.name', value: 'مدارك', category: 'عام', updatedAt: hoursAgo(24 * 90), updatedBy: 'usr_e2e_owner' },
+  { id: 'set_1', key: 'platform.name', value: 'تادمورا', category: 'عام', updatedAt: hoursAgo(24 * 90), updatedBy: 'usr_e2e_owner' },
   { id: 'set_2', key: 'maintenance.mode', value: 'false', category: 'تشغيل', updatedAt: hoursAgo(24 * 10), updatedBy: 'usr_e2e_owner' },
   { id: 'set_3', key: 'ai.dailyLimit', value: '200', category: 'ذكاء اصطناعي', updatedAt: hoursAgo(24 * 3), updatedBy: 'usr_e2e_admin' },
 ];

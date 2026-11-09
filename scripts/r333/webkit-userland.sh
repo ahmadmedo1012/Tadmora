@@ -10,9 +10,9 @@
 #   3. launching with software-EGL env vars (no /dev/dri in sandbox)
 #
 # Usage:
-#   bash /home/z/madarek/scripts/r333/webkit-userland.sh fix    # download+extract+symlink
-#   bash /home/z/madarek/scripts/r333/webkit-userland.sh test   # launch probe (exit 0 = OK)
-#   bash /home/z/madarek/scripts/r333/webkit-userland.sh env    # print launch env vars
+#   bash /home/z/tadmora/scripts/r333/webkit-userland.sh fix    # download+extract+symlink
+#   bash /home/z/tadmora/scripts/r333/webkit-userland.sh test   # launch probe (exit 0 = OK)
+#   bash /home/z/tadmora/scripts/r333/webkit-userland.sh env    # print launch env vars
 #
 # Required launch env (also printed by `... env`):
 #   LIBGL_ALWAYS_SOFTWARE=1
@@ -46,7 +46,7 @@ _webkit_launch_probe() {
     __EGL_VENDOR_LIBRARY_FILENAMES="$LIBDIR/usr/share/glvnd/egl_vendor.d/50_mesa.json" \
     PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 \
     timeout 90 node -e '
-      const { webkit } = require("/home/z/madarek/node_modules/playwright-core");
+      const { webkit } = require("/home/z/tadmora/node_modules/playwright-core");
       (async () => {
         const b = await webkit.launch();
         const p = await b.newPage();

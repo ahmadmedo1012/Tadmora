@@ -39,7 +39,7 @@ const authHeaderOf = (config: ApiRequestConfig): string => config.headers?.Autho
 beforeEach(() => {
   useAuthStore.setState({ user: null, accessToken: null });
   queryClient.clear();
-  localStorage.removeItem('mdrk-auth');
+  localStorage.removeItem('tdmr-auth');
 });
 
 describe('failed refresh ends the session cleanly (P0-1)', () => {

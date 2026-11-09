@@ -16,7 +16,7 @@
  * the documented price of quota hygiene until the delete route ships).
  * The demo cohort's rows stay untouched (different student ids).
  *
- * RUN: DATABASE_URL=postgresql://postgres@localhost:5433/madarek_dev \
+ * RUN: DATABASE_URL=postgresql://postgres@localhost:5433/tadmora_dev \
  *      npx tsx scripts/r325/reset-paper-quota.ts [email]
  * (invoked by tests/r325/flows/flow-11-research.spec.ts SETUP — never
  * by product code.)

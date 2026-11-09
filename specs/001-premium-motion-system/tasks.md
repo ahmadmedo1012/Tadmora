@@ -210,7 +210,7 @@ This is a **web application** layout (existing).
 - [X] T072 [US7] Wrap each narrative section in `<Reveal>` (and the page in `<RevealGroup>`); apply `distance="large"` to the hero, `distance="medium"` to subsequent sections
 - [X] T073 [US7] Source proof-point statistics from the canonical University of Zawia data layer (Principle III). If a statistic is unavailable, render the "data pending" surface — never a synthetic placeholder
 - [X] T074 [P] [US7] Apply `<AnimatedNumber>` to every proof-point statistic on the homepage
-- [X] T075 [P] [US7] Add a session-storage flag `madarek.intro.seen` that, once set on first homepage visit, suppresses the hero's full intro motion on subsequent in-session visits — falls back to a calm fade. Stored, read, written in `frontend/src/pages/LandingPage.tsx`
+- [X] T075 [P] [US7] Add a session-storage flag `tadmora.intro.seen` that, once set on first homepage visit, suppresses the hero's full intro motion on subsequent in-session visits — falls back to a calm fade. Stored, read, written in `frontend/src/pages/LandingPage.tsx`
 - [X] T076 [US7] Verify hero responsiveness at 360 px, 768 px, 1280 px, 4 K. Headline + supporting line + CTA all visible in the first viewport at each size
 - [X] T077 [US7] Run Lighthouse on the homepage on a representative mid-tier mobile profile (Slow 4G); confirm CLS ≤ 0.05, LCP within target, no a11y violations introduced
 - [X] T078 [US7] Verify the homepage renders correctly in RTL: hero heading direction, section ordering, indicator/slide direction, Arabic-Indic numerals on counters

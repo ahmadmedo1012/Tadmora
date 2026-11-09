@@ -2,7 +2,7 @@
  * r309-prod-verify.e2e.ts — the FINAL production verification (R309
  * §12/§13): re-run the exact audit scenarios against the LIVE
  * deployment. Plain @playwright/test (no mock transport — the landing
- * is static-data driven) via MADAREK_E2E_BASE_URL.
+ * is static-data driven) via TADMORA_E2E_BASE_URL.
  */
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
@@ -10,12 +10,12 @@ import { mkdirSync } from 'node:fs';
 
 /* Deployment verification — NOT part of the hermetic CI belt: these
  * specs run against the LIVE production deployment. They are skipped
- * unless explicitly enabled (MADAREK_PROD_VERIFY=1 with
- * MADAREK_E2E_BASE_URL pointing at the deployment to verify). */
-const ENABLED = !!process.env.MADAREK_PROD_VERIFY;
-test.skip(!ENABLED, 'deployment verification — set MADAREK_PROD_VERIFY=1 to run');
+ * unless explicitly enabled (TADMORA_PROD_VERIFY=1 with
+ * TADMORA_E2E_BASE_URL pointing at the deployment to verify). */
+const ENABLED = !!process.env.TADMORA_PROD_VERIFY;
+test.skip(!ENABLED, 'deployment verification — set TADMORA_PROD_VERIFY=1 to run');
 
-const BASE = process.env.MADAREK_E2E_BASE_URL ?? 'https://madarek.onrender.com';
+const BASE = process.env.TADMORA_E2E_BASE_URL ?? 'https://tadmora.onrender.com';
 /* cwd = the frontend workspace → ../audits is the repo's evidence tree */
 const SHOTS = process.env.R309_SHOTS
   ?? path.resolve(process.cwd(), '../audits/evidence/r309-recovery/production');
@@ -28,7 +28,7 @@ test('prod · the deployed build carries the sheet markers', async ({ page }) =>
    * is four hairlines only (nothing may overlap the masthead); the
    * pin flips to assert their absence. */
   const html = await page.content();
-  expect(html).toContain('mdrk-boot-plate');
+  expect(html).toContain('tdmr-boot-plate');
   await expect(page.locator('.sheet-coord-be')).toHaveCount(0);
   await expect(page.locator('.sheet-coord-ts')).toHaveCount(0);
 });
@@ -36,7 +36,7 @@ test('prod · the deployed build carries the sheet markers', async ({ page }) =>
 test('prod · desktop drag reveals [CP] unclipped, no RR/MG overlap, guides confined', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.addInitScript(() => {
-    try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
+    try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
   });
   await page.goto(BASE + '/');
   await page.waitForFunction(() => {
@@ -107,7 +107,7 @@ test('prod · desktop drag reveals [CP] unclipped, no RR/MG overlap, guides conf
 test('prod · mobile 390 — flow cards inside the viewport; menu owns the scroll', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.addInitScript(() => {
-    try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
+    try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
   });
   await page.goto(BASE + '/');
   await page.waitForFunction(() => {
@@ -186,7 +186,7 @@ test('prod · the entrance — composed first frame, ≈9–10s sequence, scroll
 test('prod · return-to-top resets the stations', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.addInitScript(() => {
-    try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
+    try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
   });
   await page.goto(BASE + '/');
   await page.locator('.hi-marker[data-marker="cp"]').click();
@@ -202,7 +202,7 @@ test('prod · return-to-top resets the stations', async ({ page }) => {
 test('prod · non-regression — scenes, /colleges, browser back', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.addInitScript(() => {
-    try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
+    try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* */ } /* R313: the skip key is the hermetic opt-out (the seen-flag is inert) */
   });
   await page.goto(BASE + '/');
   /* forward + reverse scene traversal */
@@ -217,5 +217,5 @@ test('prod · non-regression — scenes, /colleges, browser back', async ({ page
   await expect(page).toHaveURL(/\/colleges/);
   await page.goBack();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.locator('.fo-hero-title')).toContainText('مدارك');
+  await expect(page.locator('.fo-hero-title')).toContainText('تادمورا');
 });

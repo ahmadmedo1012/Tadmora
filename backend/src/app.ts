@@ -116,9 +116,9 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
  * the boot plate moved with it. */
 const THEME_BOOTSTRAP_SHA256 = 'jEZ9yPBzXBwMFxHwFlLFqiKKy+HtK9TOGA7FRviqIMc=';
 /* r188: pin refreshed — the JSON-LD block now describes the INDEPENDENT
- * Madarek platform alone (WebSite node; the retired University-of-Zawia
+ * Tadmora platform alone (WebSite node; the retired University-of-Zawia
  * `about` node is gone — the only demo-data story is the explicitly
- * fictional «جامعة مدارك التجريبية», named in the description as
+ * fictional «جامعة تادمورا التجريبية», named in the description as
  * synthetic data, never as affiliation). Verified by check-csp-hash.sh. */
 // r191: pin refreshed — the JSON-LD description dropped the rejected
 // provenance slogan with the meta copy fix.

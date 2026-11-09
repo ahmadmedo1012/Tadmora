@@ -28,7 +28,7 @@
  *     /--%|undefined|NaN|lorem|TODO|\[object/i.
  *   5 overflow — documentElement/body scrollWidth must not exceed
  *     clientWidth (protects docH parity ≈12,340 @1440).
- *   6 ocr — footer wordmark must read «مدارك» via tesseract ara+eng at
+ *   6 ocr — footer wordmark must read «تادمورا» via tesseract ara+eng at
  *     1440 & 390. `--skip=ocr` → BLOCKED-with-reason: §A6 wordmark
  *     rebuild owned by C3 (later cycle).
  *   7 perf — CPU 4× throttle + rAF-delta sampling during a CDP wheel
@@ -302,10 +302,10 @@ const PERF_TEARDOWN = () => {
 async function newCtx(browser, theme, width, height, extra = {}) {
   const ctx = await browser.newContext({ viewport: { width, height }, ...extra });
   await ctx.addInitScript(() => {
-    try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* storage off */ } // loader bypass (probe recipe)
+    try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* storage off */ } // loader bypass (probe recipe)
   });
   await ctx.addInitScript(([t]) => {
-    try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 })); } catch { /* storage off */ }
+    try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 })); } catch { /* storage off */ }
   }, [theme]);
   // Belt & braces (§B): the store's useThemeSync() re-applies the same
   // value on mount, but seed <html data-theme> too so the theme is right
@@ -549,7 +549,7 @@ function writeReport(opt, cells, startedAt) {
       if (name === 'collisions') count = `${c.overlapFails} overlaps · ${c.edgeCrossings} edge · ${c.allowlisted} allowlisted`;
       if (name === 'placeholders' && c.matches.length) count = `${c.matches.length} matches`;
       if (name === 'overflow') count = `doc ${c.htmlSW}/${c.htmlCW} · body ${c.bodySW}/${c.bodyCW}`;
-      if (name === 'ocr' && (c.status === 'PASS' || c.status === 'FAIL')) count = c.error ? 'tesseract-error' : (c.normalizedContainsWordmark ? 'مدارك found' : 'مدارك NOT read');
+      if (name === 'ocr' && (c.status === 'PASS' || c.status === 'FAIL')) count = c.error ? 'tesseract-error' : (c.normalizedContainsWordmark ? 'تادمورا found' : 'تادمورا NOT read');
       if (name === 'perf' && c.status !== 'BLOCKED') count = `${c.pctFramesLe20}% ≤20ms · ${c.longTasksOver50ms} longtasks · CLS ${c.cls}`;
       let sample = String(sampleOf(name, c)).slice(0, 110);
       if (c.status === 'BLOCKED') { count = '—'; sample = c.reason; }

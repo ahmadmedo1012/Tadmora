@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * r327/scroll-screencast.mjs — THE HERON↔MADAREK SCROLL SCREENCAST (P3).
+ * r327/scroll-screencast.mjs — THE HERON↔TADMORA SCROLL SCREENCAST (P3).
  *
  * Records both sites scrolling under ONE viewport (1440×900) and ONE
  * scroll program — fixed-pace wheel downs to the bottom, a pause, then
  * wheel ups partway (35% of the page) — plus the quantitative glide
  * curve that makes the video falsifiable:
  *
- *   · the VIDEOS:   audits/evidence/r327/p3/{heron,madarek-landing}-1440x900.webm
+ *   · the VIDEOS:   audits/evidence/r327/p3/{heron,tadmora-landing}-1440x900.webm
  *   · the CURVES:   audits/evidence/r327/p3/scroll-curve.json — one wheel
  *     impulse of deltaY=720 (the r313 reference probe's own delta) on
  *     each site, sampled every animation frame: first-motion latency,
@@ -18,11 +18,11 @@
  * Honest differences are recorded, not hidden: Heron replays its
  * entrance loader on every full load (~5–7s, measured r313) — the
  * recording starts at page load on BOTH sites so the timing context is
- * real; Madarek's intro is hermetically skipped (the audit fixture's
+ * real; Tadmora's intro is hermetically skipped (the audit fixture's
  * own opt-out — the screencast's subject is scroll feel, not the
  * entrance); Heron's cookie banner is dismissed best-effort before the
  * program starts. Heron scrolls an inner wrapper (.main-inner.lenis —
- * window.scrollY stays 0); Madarek scrolls the window (owner decision,
+ * window.scrollY stays 0); Tadmora scrolls the window (owner decision,
  * D6) — the sampler records both and picks the one that moves.
  */
 import { chromium } from 'playwright-core';
@@ -36,7 +36,7 @@ const EXEC = process.env.CHROME_BIN || '/home/z/.cache/ms-playwright/chromium-12
 const DIR = process.env.OUT || path.join(ROOT, 'audits', 'evidence', 'r327', 'p3');
 const SITES = [
   { id: 'heron', url: 'https://heronaiapp.com/', guestInit: false },
-  { id: 'madarek-landing', url: `${BASE}/`, guestInit: true },
+  { id: 'tadmora-landing', url: `${BASE}/`, guestInit: true },
 ];
 
 const VIEWPORT = { width: 1440, height: 900 };
@@ -171,7 +171,7 @@ async function main() {
     /* 1 · the glide curve (measured first, no video) */
     {
       const ctx = await browser.newContext({ viewport: VIEWPORT });
-      if (site.guestInit) await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* n/a */ } });
+      if (site.guestInit) await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* n/a */ } });
       const page = await ctx.newPage();
       await page.goto(site.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
       await settleForSite(page, site);
@@ -201,7 +201,7 @@ async function main() {
         if (stale.endsWith('.webm')) fs.rmSync(path.join(videoDir, stale));
       }
       const ctx = await browser.newContext({ viewport: VIEWPORT, recordVideo: { dir: videoDir, size: VIEWPORT } });
-      if (site.guestInit) await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* n/a */ } });
+      if (site.guestInit) await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* n/a */ } });
       const page = await ctx.newPage();
       await page.goto(site.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
       await settleForSite(page, site);

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * R314 §3.2 — Pixel + structural judge.
- * For every aligned frame pair (heron | madarek):
+ * For every aligned frame pair (heron | tadmora):
  *  - pixelmatch diff (threshold 0.1), worst-region clustering (grid cells,
  *    ranked by differing area) — the gate is WORST REGION, not global %.
  *  - structural metrics robust to language: per-region ink coverage,
@@ -89,7 +89,7 @@ const report = { generatedAt: new Date().toISOString(), pairs: [] };
 for (const vp of viewports) {
   for (const theme of fs.readdirSync(path.join(CAP, 'heron', vp))) {
     const heronDir = path.join(CAP, 'heron', vp, theme);
-    const madDir = path.join(CAP, 'madarek', vp, theme);
+    const madDir = path.join(CAP, 'tadmora', vp, theme);
     if (!fs.existsSync(madDir)) continue;
     const files = fs.readdirSync(heronDir).filter((f) => f.startsWith('p-')).sort();
     for (const f of files) {

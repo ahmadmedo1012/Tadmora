@@ -12,7 +12,7 @@
  * session, never the full id on the wire). */
 export function jitsiRoomNameFor(sessionId: string): string {
   const tail = sessionId.replace(/[^a-zA-Z0-9]/g, '').slice(-12).toLowerCase();
-  return `madarek-${tail}`;
+  return `tadmora-${tail}`;
 }
 
 export function jitsiUrlFor(room: string): string {

@@ -14,7 +14,7 @@
  *   - The search input is auto-focused on open
  *   - The exit animation plays before unmount (wave 21-a: the delayed
  *     unmount is wired on the component side — data-closing flips the
- *     entrance for the madarek-overlay-out / madarek-modal-out pair
+ *     entrance for the tadmora-overlay-out / tadmora-modal-out pair
  *     that components.css has been shipping dormant since wave 7-a)
  *
  * Global ⌘K/Ctrl-K triggers that OPEN a palette-like surface must bail
@@ -67,7 +67,7 @@ export function CommandPalette({
       }}
       onAnimationEnd={(e) => {
         // Only an animation that ENDED ON THE OVERLAY ITSELF closes the
-        // exit window — the card's madarek-modal-out bubbles here too
+        // exit window — the card's tadmora-modal-out bubbles here too
         // (target = card ≠ overlay) and must not double-fire the
         // unmount. (The animationName check jsdom can't exercise —
         // it has no AnimationEvent constructor — and the only overlay

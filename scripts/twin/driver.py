@@ -10,7 +10,7 @@ Scroll architecture (spec of record: docs/redesign/r331/heron-program.json):
               onNativeScroll resyncs its target to the real scroll; when a glide
               is in flight the write would be overwritten, so we re-write and
               re-check until |actual - y| <= tol.
-  · madarek — window scroller driven by `window.__mdrkLenis` (the app's own
+  · tadmora — window scroller driven by `window.__tdmrLenis` (the app's own
               e2e seam; sheetLenis.ts:256). `seek` uses
               lenis.scrollTo(y, {immediate:true}) — the ONLY way to seat scroll
               exactly without racing the engine — and falls back to
@@ -25,7 +25,7 @@ from typing import Any, Dict, List, Optional, Tuple
 # ── locator for the scroller top per side ────────────────────────────────────
 SCROLLER_TOP_JS = {
     "heron": "() => { const el = document.querySelector('.main-inner'); return el ? el.scrollTop : 0; }",
-    "madarek": "() => window.scrollY || 0",
+    "tadmora": "() => window.scrollY || 0",
 }
 
 # ── seek ─────────────────────────────────────────────────────────────────────
@@ -37,11 +37,11 @@ _HERON_SEEK_JS = """
   return { ok: true, actual: el.scrollTop };
 }
 """
-_MADAREK_SEEK_JS = """
+_TADMORA_SEEK_JS = """
 (y) => {
-  if (window.__mdrkLenis && typeof window.__mdrkLenis.scrollTo === 'function') {
+  if (window.__tdmrLenis && typeof window.__tdmrLenis.scrollTo === 'function') {
     try {
-      window.__mdrkLenis.scrollTo(y, { immediate: true });
+      window.__tdmrLenis.scrollTo(y, { immediate: true });
       return { ok: true, actual: window.scrollY, engine: 'lenis' };
     } catch (e) { /* fall through to native */ }
   }
@@ -71,7 +71,7 @@ def seek(page, side: str, y: float, tol: float = 2.0, retries: int = 8,
 
     Returns {'ok', 'actual', 'engine', 'tries'} — honest about the final offset.
     """
-    js = _HERON_SEEK_JS if side == "heron" else _MADAREK_SEEK_JS
+    js = _HERON_SEEK_JS if side == "heron" else _TADMORA_SEEK_JS
     last = {"ok": False, "actual": -1.0, "engine": "n/a", "tries": 0}
     for i in range(retries):
         try:
@@ -147,17 +147,17 @@ def motion_state(page, side: str, section_sel: str,
                  key_sels: Optional[List[str]] = None) -> Dict[str, Any]:
     """Best-effort motion state for one frame.
 
-    madarek — window.__mdrkLenis exists (velocity / targetScroll / actualScroll).
+    tadmora — window.__tdmrLenis exists (velocity / targetScroll / actualScroll).
               No ScrollTrigger debug handle is exposed by the app (verified in
-              source: the only seams are __mdrkLenis + MadarekConsent).
+              source: the only seams are __tdmrLenis + TadmoraConsent).
     heron   — window.gsap / window.ScrollTrigger are likely NOT exposed; when
               absent we record computed transform matrices of 2-3 key animated
               elements (the section's first child + any [class*=inner] child).
     """
-    if side == "madarek":
+    if side == "tadmora":
         return page.evaluate(
             """() => {
-                 const L = window.__mdrkLenis;
+                 const L = window.__tdmrLenis;
                  let lenis = null;
                  if (L) {
                    try { lenis = { velocity: L.velocity, targetScroll: L.targetScroll,

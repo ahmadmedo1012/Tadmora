@@ -19,8 +19,8 @@ CI (يبني ويفحص فقط).
 
 ## الخطوات الثلاث (كما في README)
 
-1. اربط المستودع بـRender: **New + → Blueprint** واختر `madarek`.
-   `render.yaml` ينشئ خدمة `web` باسم `madarek` (runtime node، خطة
+1. اربط المستودع بـRender: **New + → Blueprint** واختر `tadmora`.
+   `render.yaml` ينشئ خدمة `web` باسم `tadmora` (runtime node، خطة
    مجانية، إقليم `virginia` — بجوار أساسي Neon لتقليل زمن الاستعلام).
 2. من تبويب **Environment**، ضع `DATABASE_URL` بسلسلة Neon pooler:
    `postgresql://…?sslmode=require&channel_binding=require`.
@@ -46,7 +46,7 @@ buildCommand: npm ci --include=dev && npm run build
   التطويرية — وهي ليست أسرار الإنتاج؛ أسرار الإنتاج لكل حساب تُدار
   عبر `db:rotate-password` — وتحديث نضارة العرض) فعل مشغِّل صريح
   ومعزول:
-  `MADAREK_SEED_FORCE=1 npm run db:seed:force` — وحتى في مسار FORCE
+  `TADMORA_SEED_FORCE=1 npm run db:seed:force` — وحتى في مسار FORCE
   يبقى العقد: التقدم التعليمي المُدار من المستخدمين (درجات/إتقان/
   مشاهدات/مستويات مهارات) **لا يُرجَع أبدًا** (upserts إنشاء-فقط) —
   انظر رأس `backend/prisma/seed.ts` وعقد الاختبار في
@@ -87,7 +87,7 @@ buildCommand: npm ci --include=dev && npm run build
 اليدوي بعد كل نشر أو لربطه بأتمتة المالك:
 
 ```bash
-npm run smoke                                 # الافتراضي: madarek.onrender.com
+npm run smoke                                 # الافتراضي: tadmora.onrender.com
 BASE_URL=https://<نطاقك> npm run smoke        # هدف مختلف عبر البيئة
 npm run smoke -- https://<نطاقك>              # أو وسيطًا موضعيًا
 SMOKE_EMAIL=<بريد> SMOKE_PASSWORD=<كلمة> npm run smoke   # + حلقة دخول كاملة
@@ -199,7 +199,7 @@ npm run db:backup -- --url-env PG_DIRECT --dry-run   # معاينة الأمر �
 # الأمر الخام الذي يشغّله السكربت (قانون هذا الدليل نفسه —
 # نسخة كاملة بصيغة custom قابلة للضغط والاستعادة الانتقائية):
 pg_dump --format=custom --no-owner --no-privileges \
-  --file="madarek-$(date -u +%Y%m%dT%H%M%SZ).dump" "$PG_DIRECT"
+  --file="tadmora-$(date -u +%Y%m%dT%H%M%SZ).dump" "$PG_DIRECT"
 ```
 
 قالب الاستعادة إلى قاعدة/فرع **تجريبي** (لا إلى الإنتاج مباشرة أبدًا —
@@ -218,12 +218,12 @@ pg_dump --format=custom --no-owner --no-privileges \
 ```bash
 STAGE_DIRECT='<سلسلة الاتصال المباشر لفرع التجربة من لوحة Neon>'
 
-npm run db:restore -- --url-env STAGE_DIRECT --file madarek-YYYYMMDDTHHMMSSZ.dump
+npm run db:restore -- --url-env STAGE_DIRECT --file tadmora-YYYYMMDDTHHMMSSZ.dump
 npm run db:restore -- --url-env STAGE_DIRECT --file <dump> --dry-run
 
 # الأمر الخام الذي يشغّله السكربت:
 pg_restore --no-owner --no-privileges \
-  --dbname="$STAGE_DIRECT" madarek-YYYYMMDDTHHMMSSZ.dump
+  --dbname="$STAGE_DIRECT" tadmora-YYYYMMDDTHHMMSSZ.dump
 ```
 
 - `--no-owner --no-privileges`: أسماء الأدوار في Neon مُدارة ولا تُنقل
@@ -311,7 +311,7 @@ npm run db:rotate-password -- --email owner@test.ly --new-password-env NEW_PASSW
 اختر كلمة قوية كما في الأمر أعلاه.
 
 > تاريخيًا: حسابات العرض الأربعة القديمة (student/teacher/admin/
-> quality على نطاق demo.madarek.ly السابق) دُوّيرت في الإنتاج عبر
+> quality على نطاق demo.tadmora.ly السابق) دُوّيرت في الإنتاج عبر
 > التطبيق نفسه (`/auth/change-password`). منذ R320 §C حسابات الاختبار
 > الموثّقة تعيش على `@test.ly` بكلمة معلَنة للتطوير — إن رُقِّيت
 > المنصة للإنتاج دوّرها بالمسار نفسه (أو علّقها). هذا السكربت
@@ -412,7 +412,7 @@ DATABASE_URL="<إproduction>" node scripts/provision-owner.mjs \
 الدقيقة (مثال Cloudflare R2 — الأرخص للخطة المجانية؛ AWS S3 / MinIO
 بنفس المعادلة):
 
-1. أنشئ حاوية (bucket) — مثل `madarek-files` — وفعّل الوصول للكائنات فقط
+1. أنشئ حاوية (bucket) — مثل `tadmora-files` — وفعّل الوصول للكائنات فقط
    (لا استضافة عامة: كل تقديم يمر عبر الخلفية المصرَّدة).
 2. أنشئ رمز وصول API (Access Key ID + Secret) بصلاحيات على تلك الحاوية
    فقط — لا مفاتيح الحساب كاملة.
@@ -422,7 +422,7 @@ DATABASE_URL="<إproduction>" node scripts/provision-owner.mjs \
      من لوحة R2 (عنونة path-style)؛ مع MinIO عنوان خدمتك، ومع AWS S3
      إقليمك مثل `https://s3.us-east-1.amazonaws.com`
    - `S3_REGION=auto` (اصطلاح R2؛ `us-east-1` مع AWS)
-   - `S3_BUCKET=madarek-files`
+   - `S3_BUCKET=tadmora-files`
    - `S3_ACCESS_KEY_ID=…` و`S3_SECRET_ACCESS_KEY=…` (سريّان — Render
      فقط، لا يوضعان في الشيفرة أو `.env.example` بقيم حقيقية)
 4. احفظ → autoDeploy يعيد النشر، وتفحص السجلات: لا تحذير القرص الزائل،
@@ -498,7 +498,7 @@ Groq، OpenRouter، DeepSeek، Together، vLLM/Ollama ذاتي الاستضاف�
 
 ## علاقة النشر بالمنظومة
 
-مدارك لا يعتمد على أي خدمة خارجية وقت التشغيل افتراضيًا (لا بريد، لا
+تادمورا لا يعتمد على أي خدمة خارجية وقت التشغيل افتراضيًا (لا بريد، لا
 Redis؛ المساعد الذكيّ محلي ما لم يفعّل المالك `AI_PROVIDER=openai`
 بمزوّد حقيقي — والتخزين محلي ما لم يفعّل `s3`) — قاعدة البيانات هي
 الاعتماد الخارجي الوحيد افتراضيًا، مما يجعل النشر

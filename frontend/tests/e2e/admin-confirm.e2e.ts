@@ -41,7 +41,7 @@ test.describe('حذف مقرّر بصلاحيات إدارية', () => {
   test.beforeEach(async ({ page }) => {
     await installStatefulApi(page, adminRoutes);
     await page.goto('/admin/courses');
-    await expect(page).toHaveTitle('إدارة المقرّرات · مدارك');
+    await expect(page).toHaveTitle('إدارة المقرّرات · تادمورا');
     // العدّ من meta.total: مقرّران في الجامعة.
     await expect(page.locator('.pf-page-desc')).toContainText('مقرّران في الجامعة');
     const row = page.locator('tr', { hasText: 'مقدمة في الخوارزميات' });

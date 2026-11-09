@@ -2,10 +2,10 @@
 /**
  * R315 J1 — measure-sections.mjs: the geometry target table for the cycle.
  *
- * For HERON (https://heronaiapp.com/) and MADAREK (local vite dev build) at
+ * For HERON (https://heronaiapp.com/) and TADMORA (local vite dev build) at
  * every R315 target viewport, measure:
  *   - total scroll content height (Heron: .main-inner Lenis wrapper
- *     scrollHeight — the document itself never scrolls; Madarek: window /
+ *     scrollHeight — the document itself never scrolls; Tadmora: window /
  *     documentElement scroll height), and
  *   - the 9 landing band offsetHeights (+ layout tops + pct share),
  * deterministically: full load → document.fonts.ready → per-site loader wait
@@ -29,12 +29,12 @@ const EXE = process.env.HOME + '/.cache/ms-playwright/chromium-1200/chrome-linux
 
 const SITES = {
   heron: { url: 'https://heronaiapp.com/', wait: 11000 },
-  madarek: { url: 'http://localhost:5173/', wait: 9000 },
+  tadmora: { url: 'http://localhost:5173/', wait: 9000 },
 };
 
 // The 9 canonical landing bands (DOM order). Selectors are tried in order.
 // Heron selectors come from audits/evidence/r313/reference/digest.json
-// (.main-inner scroller); Madarek class names were verified live against
+// (.main-inner scroller); Tadmora class names were verified live against
 // http://localhost:5173/ on 2026-10-24 (J1 probe): .fo-hero, #statement.st-section,
 // #live.pm-section, #chapters.chapters, #product.pr-section, .wy-section,
 // #roles.rl-section, #vision.fo-cta, footer.fo-footer — each unique.
@@ -50,7 +50,7 @@ const BANDS = {
     ['cta', ['.main-inner .cta', '.cta']],
     ['footer', ['.main-inner .footer', '.footer']],
   ],
-  madarek: [
+  tadmora: [
     ['hero', ['.fo-hero']],
     ['statement', ['#statement', '.st-section']],
     ['problem', ['.pm-section', '#live']],
@@ -72,7 +72,7 @@ const DRIFT_PCT_THRESHOLD = 2; // >2% vs r313 → flagged, never silently picked
 
 const args = process.argv.slice(2);
 const get = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : d; };
-const sites = (get('sites', 'heron,madarek')).split(',');
+const sites = (get('sites', 'heron,tadmora')).split(',');
 const viewports = (get('viewports', DEFAULT_VIEWPORTS.join(','))).split(',');
 const outPath = get('out', '_local/captures/r315-manifest.json');
 
@@ -119,7 +119,7 @@ const browser = await chromium.launch({ executablePath: EXE, args: ['--no-sandbo
 const manifest = {
   generatedAt: new Date().toISOString(),
   generatedBy: 'scripts/r315/measure-sections.mjs (R315 J1)',
-  method: 'loader wait + fonts.ready + stability loop; heights are element offsetHeights; Heron docHeight = .main-inner Lenis wrapper scrollHeight (document never scrolls), Madarek docHeight = document scroll height',
+  method: 'loader wait + fonts.ready + stability loop; heights are element offsetHeights; Heron docHeight = .main-inner Lenis wrapper scrollHeight (document never scrolls), Tadmora docHeight = document scroll height',
   driftRule: `Heron fresh vs r313 reference: |pct| > ${DRIFT_PCT_THRESHOLD}% flagged in drift fields; fresh values are authoritative, reference kept alongside`,
   viewports,
   sites: {},
@@ -214,5 +214,5 @@ console.log(manifest.driftSummary.length
   ? `⚠ ${manifest.driftSummary.length} drift(s) > ${DRIFT_PCT_THRESHOLD}% vs r313: ` + manifest.driftSummary.map((d) => `${d.viewport} ${d.metric} ${d.fresh} vs ${d.ref} (${d.pct}%)`).join(' · ')
   : `✓ no drift > ${DRIFT_PCT_THRESHOLD}% vs r313 reference`);
 if (heron && heron.failures.length) console.log(`⚠ heron failures: ` + heron.failures.map((f) => f.viewport).join(', '));
-const mad = manifest.sites.madarek;
-if (mad && mad.failures.length) console.log(`⚠ madarek failures: ` + mad.failures.map((f) => f.viewport).join(', '));
+const mad = manifest.sites.tadmora;
+if (mad && mad.failures.length) console.log(`⚠ tadmora failures: ` + mad.failures.map((f) => f.viewport).join(', '));

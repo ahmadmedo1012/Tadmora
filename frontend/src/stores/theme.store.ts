@@ -30,8 +30,8 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      // مدارك v3: night is the product's flagship skin — the same سماء
-      // مدارك world the landing lives in. New sessions start in the
+      // تادمورا v3: night is the product's flagship skin — the same سماء
+      // تادمورا world the landing lives in. New sessions start in the
       // night; the sidebar's 3-state toggle (فاتح · داكن · تلقائي) keeps
       // the نهاري reading mode one tap away, and persisted choices are
       // untouched (zustand merges stored state over this default).
@@ -51,7 +51,7 @@ export const useThemeStore = create<ThemeState>()(
       },
     }),
     {
-      name: 'madarek-theme',
+      name: 'tadmora-theme',
       storage: createJSONStorage(() => localStorage),
       version: 2,
       migrate: (persisted: unknown, version) => {

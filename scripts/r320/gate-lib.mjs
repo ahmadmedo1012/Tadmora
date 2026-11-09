@@ -148,13 +148,13 @@ export async function makeContext(browser, transport, { routeDef, width, theme }
     reducedMotion: 'reduce', // deterministic state forcing (the r319 contract)
     locale: 'ar',
   });
-  await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* storage off */ } });
+  await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* storage off */ } });
   const user = routeDef.role ? transport[`${routeDef.role}_USER`] : null;
   if (user) {
     await transport.seedSession(ctx, user, { theme });
   } else if (theme) {
     await ctx.addInitScript(([t]) => {
-      try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 })); } catch { /* storage off */ }
+      try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 })); } catch { /* storage off */ }
     }, [theme]);
   }
   // belt & braces (the r318 recipe): <html data-theme> right from frame 0

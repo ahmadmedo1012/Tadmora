@@ -27,7 +27,7 @@ This document resolves every open technical decision the spec leaves to planning
 
 **Decision**: Two-layer persistence (matches Q2 clarification):
 
-1. **Local layer** (everyone, including guests): `localStorage` key `madarek.theme` ∈ `{"light", "dark", "system"}`. Default is `"system"` (defer to OS).
+1. **Local layer** (everyone, including guests): `localStorage` key `tadmora.theme` ∈ `{"light", "dark", "system"}`. Default is `"system"` (defer to OS).
 2. **Profile layer** (authenticated users only): `User.themePreference` enum column `'LIGHT' | 'DARK' | 'SYSTEM'`, default `'SYSTEM'`.
 
 **Sync behaviour** on sign-in (`useTheme()` reconciles):
@@ -102,9 +102,9 @@ Family rules (documented under `contracts/illustration-system.md`):
 
 **Decision**: Extend the existing `lib/chartTheme.ts` with three Chart.js plugins (no new runtime dependencies — all are first-party `chart.js` plugin hooks):
 
-1. **`madarekTooltipPlugin`** — replaces the default tooltip with a designed surface (platform typography, surface tokens, shadow stack, rounded radius, soft fade).
-2. **`madarekFadingAxisPlugin`** — paints axis labels and gridlines via `afterDraw`, applying a horizontal/vertical fade towards the chart edge (gradient mask).
-3. **`madarekGradientFillPlugin`** — converts area fills under line charts into a vertical gradient sourced from `--chart-{idx}` tokens.
+1. **`tadmoraTooltipPlugin`** — replaces the default tooltip with a designed surface (platform typography, surface tokens, shadow stack, rounded radius, soft fade).
+2. **`tadmoraFadingAxisPlugin`** — paints axis labels and gridlines via `afterDraw`, applying a horizontal/vertical fade towards the chart edge (gradient mask).
+3. **`tadmoraGradientFillPlugin`** — converts area fills under line charts into a vertical gradient sourced from `--chart-{idx}` tokens.
 
 Rounded line caps are achieved via dataset config (`borderCapStyle: 'round'`, `borderJoinStyle: 'round'`). Smooth between-state transitions use `chart.update('none')` + a CSS transition wrapper for the canvas.
 

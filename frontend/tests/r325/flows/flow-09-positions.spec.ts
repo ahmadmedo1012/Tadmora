@@ -72,7 +72,7 @@ test('F9 · owner writes the audit trail and reads the system settings sheet', a
     //     student B, then every later step retried against drifting
     //     rows until the test timeout). A pinned email keeps the row
     //     identity stable across every refetch.
-    const TARGET_EMAIL = 'demo-student-30@demo.madarek.ly';
+    const TARGET_EMAIL = 'demo-student-30@demo.tadmora.ly';
     await page.goto('/owner/users');
     await expect(page.locator('h1').first()).toContainText('إدارة المستخدمين');
     await page.getByPlaceholder('ابحث بالاسم أو البريد الإلكتروني…').fill(TARGET_EMAIL);

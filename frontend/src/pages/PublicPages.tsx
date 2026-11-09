@@ -31,11 +31,11 @@ import { LEGAL_UPDATED } from './legal/LegalPages';
 import '../styles/about.css';
 import '../styles/help.css';
 
-/* ═══ [C-04] عن مدارك ═══════════════════════════════════════════════ */
+/* ═══ [C-04] عن تادمورا ═══════════════════════════════════════════════ */
 
 export function AboutPage() {
   useLegalMeta({
-    title: 'عن مدارك',
+    title: 'عن تادمورا',
     path: '/about',
     description: 'منصّة تعليمية تقنية مستقلّة، عربية أولًا — البيان كاملًا كما هو في صفحة البداية، بلا إضافات.',
   });
@@ -57,9 +57,9 @@ export function AboutPage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="ab-header-brand" aria-label="مدارك — الصفحة الرئيسية">
+          <Link to="/" className="ab-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            مدارك
+            تادمورا
           </Link>
         </div>
       </header>
@@ -69,7 +69,7 @@ export function AboutPage() {
           <div className="pf-page-header">
             <div className="pf-page-header-text">
               <p className="pf-eyebrow">بيان المنصّة</p>
-              <h1 className="pf-page-title">عن مدارك</h1>
+              <h1 className="pf-page-title">عن تادمورا</h1>
               <p className="pf-page-desc">
                 كل ما يمكن قوله بصدق اليوم موجود في فقرة واحدة — نضعها هنا كما هي في صفحة البداية، حرفيًا.
               </p>
@@ -92,9 +92,9 @@ export function AboutPage() {
                   (LandingPage.tsx:1346-1350 — the r188 honesty pin keeps
                   «اصطناعية بالكامل» contiguous on one source line; the same
                   discipline holds here). LEGAL-TODO row 14: nothing may be
-                  added about who builds مدارك until the owner states it. */}
+                  added about who builds تادمورا until the owner states it. */}
               <p className="ab-p ab-p-statement">
-                منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «جامعة مدارك التجريبية» — مؤسسة اصطناعية بالكامل لأغراض العرض.
+                منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل لأغراض العرض.
               </p>
             </div>
           </section>
@@ -124,7 +124,7 @@ export function AboutPage() {
             </div>
             <div className="ab-cell">
               <p className="ab-p">
-                لا نضيف هنا شيئًا لم يقله المالك بعد — ما يمكن نشره عن من يبني مدارك (خلفية، فريق، تمويل)
+                لا نضيف هنا شيئًا لم يقله المالك بعد — ما يمكن نشره عن من يبني تادمورا (خلفية، فريق، تمويل)
                 <span className="ab-pending">[يُستكمل قبل الإطلاق]</span>.
               </p>
             </div>
@@ -183,7 +183,7 @@ const faqs = (showPilotAccounts: boolean): ReadonlyArray<{ q: string; a: ReactNo
     ) : (
       <>
         حسابات التجربة تُوزّع على فريق المختبرين عند فتح كل مرحلة — إن كنت من المختبرين فاستخدم
-        الحساب الذي وصلك من فريق مدارك، وإن لم يصل بعدُ فانتظر فتح التسجيل من
+        الحساب الذي وصلك من فريق تادمورا، وإن لم يصل بعدُ فانتظر فتح التسجيل من
         {' '}<Link to="/auth/register" className="hp-link">نموذج إنشاء الحساب</Link>.
       </>
     ),
@@ -278,7 +278,7 @@ export function HelpPage() {
   useLegalMeta({
     title: 'المساعدة والأسئلة الشائعة',
     path: '/help',
-    description: 'إجابات قصيرة وصادقة عن مدارك — كل جواب يشير إلى سطح حقيقي في المنصّة، لا إلى وعود.',
+    description: 'إجابات قصيرة وصادقة عن تادمورا — كل جواب يشير إلى سطح حقيقي في المنصّة، لا إلى وعود.',
   });
 
   /* r324 X15 — the credential-bearing FAQ variants render on dev/preview
@@ -314,9 +314,9 @@ export function HelpPage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="hp-header-brand" aria-label="مدارك — الصفحة الرئيسية">
+          <Link to="/" className="hp-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            مدارك
+            تادمورا
           </Link>
         </div>
       </header>
@@ -370,7 +370,7 @@ export function ContactPage() {
   useLegalMeta({
     title: 'التواصل والتسجيل المبكر',
     path: '/contact',
-    description: 'قناة التواصل المتاحة مع منصّة مدارك — التسجيل المبكر، بلا بريد ولا هواتف مخترعة.',
+    description: 'قناة التواصل المتاحة مع منصّة تادمورا — التسجيل المبكر، بلا بريد ولا هواتف مخترعة.',
   });
 
   return (

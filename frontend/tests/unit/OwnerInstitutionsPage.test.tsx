@@ -342,7 +342,7 @@ describe('OwnerInstitutionsPage — keep edits on provision failure (r183-B5)', 
     fireEvent.click(screen.getByRole('button', { name: /تعيين مسجل عام/ }));
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText(/البريد الإلكتروني/), { target: { value: 'new@test.ly' } });
-    fireEvent.change(within(dialog).getByLabelText('كلمة المرور'), { target: { value: 'Madarek-2026-Demo' } });
+    fireEvent.change(within(dialog).getByLabelText('كلمة المرور'), { target: { value: 'Tadmora-2026-Demo' } });
 
     mocks.provision.mutateAsync.mockRejectedValueOnce(new Error('404 UNKNOWN_EMAIL'));
     fireEvent.click(within(dialog).getByRole('button', { name: 'تعيين المسجل العام' }));
@@ -351,7 +351,7 @@ describe('OwnerInstitutionsPage — keep edits on provision failure (r183-B5)', 
     // The modal stays open — the old code closed it right after mutate().
     expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect((within(dialog).getByLabelText(/البريد الإلكتروني/) as HTMLInputElement).value).toBe('new@test.ly');
-    expect((within(dialog).getByLabelText('كلمة المرور') as HTMLInputElement).value).toBe('Madarek-2026-Demo');
+    expect((within(dialog).getByLabelText('كلمة المرور') as HTMLInputElement).value).toBe('Tadmora-2026-Demo');
   });
 
   it('a successful provision closes the modal', async () => {
@@ -361,7 +361,7 @@ describe('OwnerInstitutionsPage — keep edits on provision failure (r183-B5)', 
     fireEvent.click(screen.getByRole('button', { name: /تعيين مسجل عام/ }));
     const dialog = screen.getByRole('dialog');
     fireEvent.change(within(dialog).getByLabelText(/البريد الإلكتروني/), { target: { value: 'new@test.ly' } });
-    fireEvent.change(within(dialog).getByLabelText('كلمة المرور'), { target: { value: 'Madarek-2026-Demo' } });
+    fireEvent.change(within(dialog).getByLabelText('كلمة المرور'), { target: { value: 'Tadmora-2026-Demo' } });
 
     mocks.provision.mutateAsync.mockResolvedValueOnce({
       user: { firstName: 'مسجل', lastName: 'جديد' },

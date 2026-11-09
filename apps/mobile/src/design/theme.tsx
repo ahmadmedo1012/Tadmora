@@ -20,7 +20,7 @@ const useThemeStore = create(
       setPreference: (preference) => set({ preference }),
     }),
     {
-      name: "madarek-mobile-theme",
+      name: "tadmora-mobile-theme",
       storage: createJSONStorage(() => AsyncStorage),
     },
   ),

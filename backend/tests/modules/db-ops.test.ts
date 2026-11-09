@@ -61,24 +61,24 @@ function readSource(relativeUrl: string): string {
   return readFileSync(new URL(`${relativeUrl}`, import.meta.url), 'utf8');
 }
 
-const SECRET_URL = 'postgresql://madarek-owner:supersecret@ep-pooler.example.neon.tech/madarek?sslmode=require';
+const SECRET_URL = 'postgresql://tadmora-owner:supersecret@ep-pooler.example.neon.tech/tadmora?sslmode=require';
 
 // ─── redactUrl — credentials never leak ────────────────────────────
 
 describe('redactUrl (shared with migrate-deploy semantics)', () => {
   it('redacts username AND password of a postgres URL', () => {
     const out = redactUrl(SECRET_URL);
-    expect(out).not.toContain('madarek-owner');
+    expect(out).not.toContain('tadmora-owner');
     expect(out).not.toContain('supersecret');
     expect(out).toContain('***');
     // host + db stay visible — they are not secrets and the operator
     // needs them to recognize the target.
     expect(out).toContain('ep-pooler.example.neon.tech');
-    expect(out).toContain('/madarek');
+    expect(out).toContain('/tadmora');
   });
 
   it('keeps scheme/host for URLs without credentials', () => {
-    expect(redactUrl('postgresql://localhost:5433/madarek')).toBe('postgresql://localhost:5433/madarek');
+    expect(redactUrl('postgresql://localhost:5433/tadmora')).toBe('postgresql://localhost:5433/tadmora');
   });
 
   it('returns <invalid-url> for garbage instead of echoing it', () => {
@@ -91,7 +91,7 @@ describe('redactUrl (shared with migrate-deploy semantics)', () => {
 // ─── refuse-live-restore guard ─────────────────────────────────────
 
 describe('liveRestoreGuard (db-restore HARD GUARD)', () => {
-  const LIVE = 'postgresql://u:pw@db.example.neon.tech/madarek?sslmode=require';
+  const LIVE = 'postgresql://u:pw@db.example.neon.tech/tadmora?sslmode=require';
 
   it('REFUSES when the target IS the live DATABASE_URL', () => {
     const result = liveRestoreGuard({ targetUrl: LIVE, liveUrl: LIVE });
@@ -102,7 +102,7 @@ describe('liveRestoreGuard (db-restore HARD GUARD)', () => {
 
   it('passes when the target is a DIFFERENT database', () => {
     const result = liveRestoreGuard({
-      targetUrl: 'postgresql://u:pw@stage.example.neon.tech/madarek-restore',
+      targetUrl: 'postgresql://u:pw@stage.example.neon.tech/tadmora-restore',
       liveUrl: LIVE,
     });
     expect(result.ok).toBe(true);
@@ -123,7 +123,7 @@ describe('liveRestoreGuard (db-restore HARD GUARD)', () => {
   it('catches normalized equality: postgres:// alias + default 5432 port', () => {
     // Literal strings differ; the database does not.
     const result = liveRestoreGuard({
-      targetUrl: 'postgres://u:pw@db.example.neon.tech:5432/madarek',
+      targetUrl: 'postgres://u:pw@db.example.neon.tech:5432/tadmora',
       liveUrl: LIVE,
     });
     expect(result.ok).toBe(false);
@@ -131,7 +131,7 @@ describe('liveRestoreGuard (db-restore HARD GUARD)', () => {
 
   it('same host but different database passes (a branch is a different target)', () => {
     const result = liveRestoreGuard({
-      targetUrl: 'postgresql://u:pw@db.example.neon.tech/madarek-restore-exercise',
+      targetUrl: 'postgresql://u:pw@db.example.neon.tech/tadmora-restore-exercise',
       liveUrl: LIVE,
     });
     expect(result.ok).toBe(true);
@@ -244,26 +244,26 @@ describe('missingBinaryMessage', () => {
 describe('buildBackupCommand / buildRestoreCommand / displayCommand', () => {
   it('backup argv is the documented canon: custom format, no owner/privileges, URL positional', () => {
     expect(
-      buildBackupCommand({ binary: 'pg_dump', url: SECRET_URL, outFile: 'backups/madarek-x.dump' }),
+      buildBackupCommand({ binary: 'pg_dump', url: SECRET_URL, outFile: 'backups/tadmora-x.dump' }),
     ).toEqual([
       'pg_dump',
       '--format=custom',
       '--no-owner',
       '--no-privileges',
       '--file',
-      'backups/madarek-x.dump',
+      'backups/tadmora-x.dump',
       SECRET_URL,
     ]);
   });
   it('restore argv targets --dbname with the dump positional (never the live DB unguarded)', () => {
     expect(
-      buildRestoreCommand({ binary: 'pg_restore', url: SECRET_URL, dumpFile: 'backups/madarek-x.dump' }),
-    ).toEqual(['pg_restore', '--no-owner', '--no-privileges', '--dbname', SECRET_URL, 'backups/madarek-x.dump']);
+      buildRestoreCommand({ binary: 'pg_restore', url: SECRET_URL, dumpFile: 'backups/tadmora-x.dump' }),
+    ).toEqual(['pg_restore', '--no-owner', '--no-privileges', '--dbname', SECRET_URL, 'backups/tadmora-x.dump']);
   });
   it('displayCommand redacts every postgres URL slot and quotes unsafe args', () => {
     const out = displayCommand(buildBackupCommand({ binary: 'pg_dump', url: SECRET_URL, outFile: 'my dump file' }));
     expect(out).not.toContain('supersecret');
-    expect(out).not.toContain('madarek-owner');
+    expect(out).not.toContain('tadmora-owner');
     expect(out).toContain('***');
     expect(out).toContain("'my dump file'");
   });
@@ -272,12 +272,12 @@ describe('buildBackupCommand / buildRestoreCommand / displayCommand', () => {
 // ─── Backup naming ─────────────────────────────────────────────────
 
 describe('backup naming', () => {
-  it('default path: backups/madarek-<UTC timestamp>.dump', () => {
-    expect(defaultBackupPath(new Date('2026-10-15T09:08:07Z'))).toBe('backups/madarek-20261015T090807Z.dump');
+  it('default path: backups/tadmora-<UTC timestamp>.dump', () => {
+    expect(defaultBackupPath(new Date('2026-10-15T09:08:07Z'))).toBe('backups/tadmora-20261015T090807Z.dump');
   });
   it('label is slugified and folded into the name', () => {
     expect(defaultBackupPath(new Date('2026-10-15T09:08:07Z'), 'Pre Migration!!')).toBe(
-      'backups/madarek-20261015T090807Z-pre-migration.dump',
+      'backups/tadmora-20261015T090807Z-pre-migration.dump',
     );
   });
   it('timestampSlug is UTC-stable regardless of local timezone', () => {
@@ -289,7 +289,7 @@ describe('backup naming', () => {
 
 describe('sha256File / humanSize', () => {
   it('streams a real local file to its sha256 hex digest', async () => {
-    const dir = mkdtempSync(path.join(tmpdir(), 'madarek-dbops-'));
+    const dir = mkdtempSync(path.join(tmpdir(), 'tadmora-dbops-'));
     const file = path.join(dir, 'probe.txt');
     writeFileSync(file, 'abc');
     try {
@@ -510,7 +510,7 @@ describe('db-restore safety contract (r166c)', () => {
 // ─── r167: db-verify — automated post-restore verification ─────────
 
 describe('db:verify (r167) — pure verdict logic', () => {
-  it('PASS on a sane restored Madarek copy (77 tables / 18 migrations / users / owner)', () => {
+  it('PASS on a sane restored Tadmora copy (77 tables / 18 migrations / users / owner)', () => {
     const v = summarizeVerify({ tables: 77, migrations: 18, users: 6, ownerCount: 1 });
     expect(v.level).toBe('PASS');
     expect(v.findings.length).toBeGreaterThanOrEqual(4);
@@ -521,7 +521,7 @@ describe('db:verify (r167) — pure verdict logic', () => {
     expect(v.level).toBe('FAIL');
     expect(v.findings.some((f) => f.includes('incomplete restore'))).toBe(true);
   });
-  it('FAIL when _prisma_migrations is empty/missing — not a Madarek schema', () => {
+  it('FAIL when _prisma_migrations is empty/missing — not a Tadmora schema', () => {
     const v = summarizeVerify({ tables: 77, migrations: 0, users: 6, ownerCount: 1 });
     expect(v.level).toBe('FAIL');
     expect(v.findings.some((f) => f.includes('_prisma_migrations'))).toBe(true);

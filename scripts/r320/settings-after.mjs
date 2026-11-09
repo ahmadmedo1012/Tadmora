@@ -15,7 +15,7 @@
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://madarek.onrender.com';
+const BASE = process.argv[2] ?? 'https://tadmora.onrender.com';
 const OUT = 'audits/evidence/r320/settings';
 
 const browser = await chromium.launch();
@@ -31,7 +31,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('madarek-intro-skip', '1');
+        sessionStorage.setItem('tadmora-intro-skip', '1');
       } catch {
         /* noop */
       }
@@ -85,7 +85,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('madarek-intro-skip', '1');
+        sessionStorage.setItem('tadmora-intro-skip', '1');
       } catch {
         /* noop */
       }
@@ -93,7 +93,7 @@ try {
     for (const [route, expectH1] of [
       ['/500', 'خللٌ من جانبنا — لا من جانبك'],
       ['/403', 'هذه الصفحة خارج نطاق صلاحياتك'],
-      ['/maintenance', 'مدارك في صيانة قصيرة'],
+      ['/maintenance', 'تادمورا في صيانة قصيرة'],
     ]) {
       await page.goto(`${BASE}${route}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
       const h1 = page.locator('h1');

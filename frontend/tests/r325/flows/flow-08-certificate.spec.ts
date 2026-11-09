@@ -9,7 +9,7 @@
  * completion ISSUES the certificate (POST /training/lessons/:id/
  * complete — the backend's single writer of Certificate rows with a
  * trackId), and /achievements → «الشهادات» renders it: track title,
- * issuer «منصّة مدارك التعليميّة», مكتملة badge, hours.
+ * issuer «منصّة تادمورا التعليميّة», مكتملة badge, hours.
  *
  * HONEST GAPS (kept in the FLOWS.md matrix): a PUBLIC verifiable URL
  * and a branded PDF/print view do NOT exist in the current build (no
@@ -107,7 +107,7 @@ test('F8 · student completes a training track → the certificate renders', asy
     const panel = page.getByRole('tabpanel', { name: 'الشهادات' });
     await expect(panel.getByText('شهادة إتمام مسار').first()).toBeVisible({ timeout: 30_000 });
     await expect(panel.getByText(TRACK_TITLE).first()).toBeVisible();
-    await expect(panel.getByText('منصّة مدارك التعليميّة').first()).toBeVisible();
+    await expect(panel.getByText('منصّة تادمورا التعليميّة').first()).toBeVisible();
     await expect(panel.getByText('مكتملة').first()).toBeVisible();
     await flowShot(page, 'flow-08-certificate');
   } finally {

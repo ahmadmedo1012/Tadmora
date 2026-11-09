@@ -140,13 +140,13 @@ for (const g of groups.values()) {
     viewport: VP_SIZES[g.bp], deviceScaleFactor: 1, locale: 'ar',
     colorScheme: 'dark', serviceWorkers: 'block',
   });
-  await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { } });
+  await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { } });
   await ctx.addInitScript(() => {
-    try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { }
+    try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { }
   });
   if (email) {
     const session = await sessionForEmail(email);
-    await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('mdrk-auth', auth); } catch { } }, { auth: authStorageJson(session) });
+    await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('tdmr-auth', auth); } catch { } }, { auth: authStorageJson(session) });
   }
   const page = await ctx.newPage();
   const errors = [];

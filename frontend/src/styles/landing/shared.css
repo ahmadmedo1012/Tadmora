@@ -105,7 +105,7 @@
      later in the cascade, same specificity). */
 
   /* ═══ R314 (V13) — the mobile compaction pass. Measured @390×844 vs
-     the reference (11 441px total): Madarek was 15 868 — every content
+     the reference (11 441px total): Tadmora was 15 868 — every content
      section carried a 77–98vh min-block-size + sp-10/12 bands. The
      reference's mobile sections are CONTENT-sized (517–950px): the
      min-block-sizes retire on mobile, paddings step to the reference's

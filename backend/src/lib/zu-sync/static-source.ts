@@ -9,7 +9,7 @@
  * history, stale marking, per-institution scoping) is the REAL
  * product capability being demonstrated.
  *
- * r188 — FICTIONAL SOURCE: every fact below belongs to «جامعة مدارك
+ * r188 — FICTIONAL SOURCE: every fact below belongs to «جامعة تادمورا
  * التجريبية», the platform's explicitly-synthetic demonstration
  * institution. Nothing here transcribes a real university: the
  * identity, contacts, strategy and grading values are coherent demo
@@ -41,23 +41,23 @@ export interface FactPatch {
 
 /**
  * Curated facts for the fictional demonstration tenant
- * (جامعة مدارك التجريبية). Synthetic by design — demo contact
+ * (جامعة تادمورا التجريبية). Synthetic by design — demo contact
  * details, demo identity, demo structure.
  */
 export const STATIC_FACTS: FactPatch[] = [
   // ─── Identity ────────────────────────────────────────────
-  { key: 'name.ar', value: 'جامعة مدارك التجريبية', category: 'identity', source: 'demo-source:identity' },
-  { key: 'name.en', value: 'Madarek Demo University', category: 'identity', source: 'demo-source:identity' },
+  { key: 'name.ar', value: 'جامعة تادمورا التجريبية', category: 'identity', source: 'demo-source:identity' },
+  { key: 'name.en', value: 'Tadmora Demo University', category: 'identity', source: 'demo-source:identity' },
   { key: 'foundingYear', value: '2015', category: 'identity', source: 'demo-source:identity' },
   { key: 'foundingDecree', value: 'سجلّ عرض تجريبي — لا قرار حقيقي (بيانات اصطناعية)', category: 'identity', source: 'demo-source:identity' },
   { key: 'collegeCount', value: '25', category: 'identity', source: 'demo-source:colleges' },
-  { key: 'website', value: 'https://demo.madarek.ly', category: 'identity', source: 'demo-source:identity' },
+  { key: 'website', value: 'https://demo.tadmora.ly', category: 'identity', source: 'demo-source:identity' },
 
   // ─── Contact (obviously-synthetic demo details) ──────────
   { key: 'address.ar', value: 'حرم المعرفة · حرم الابتكار · حرم البيان — بيانات عرض', category: 'contact', source: 'demo-source:contact' },
   { key: 'phone.primary', value: '+218 00 000000', category: 'contact', source: 'demo-source:contact' },
   { key: 'postBox', value: '00000', category: 'contact', source: 'demo-source:contact' },
-  { key: 'email.primary', value: 'info@demo.madarek.ly', category: 'contact', source: 'demo-source:contact' },
+  { key: 'email.primary', value: 'info@demo.tadmora.ly', category: 'contact', source: 'demo-source:contact' },
 
   // ─── Structure ───────────────────────────────────────────
   { key: 'memberships', value: 'لا عضويّات — مؤسّسة عرض اصطناعية (بيانات تجريبية)', category: 'memberships', source: 'demo-source:identity' },

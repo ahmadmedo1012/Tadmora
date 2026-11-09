@@ -14,11 +14,11 @@
  *
  * Usage:
  *   node scripts/r320/admin-clip-probe.mjs [baseURL]
- *   (default https://madarek.onrender.com)
+ *   (default https://tadmora.onrender.com)
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://madarek.onrender.com';
+const BASE = process.argv[2] ?? 'https://tadmora.onrender.com';
 const OUT = 'audits/evidence/r320/accounts-production';
 
 const EMAIL = 'registrar@test.ly';
@@ -37,7 +37,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('madarek-intro-skip', '1');
+        sessionStorage.setItem('tadmora-intro-skip', '1');
       } catch {
         /* noop */
       }
@@ -64,7 +64,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('madarek-intro-skip', '1');
+        sessionStorage.setItem('tadmora-intro-skip', '1');
       } catch {
         /* noop */
       }

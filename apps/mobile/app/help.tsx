@@ -91,7 +91,7 @@ export default function Help() {
           onPress={() => router.push("/legal/accessibility" as never)}
         />
         <Button
-          label="عن مدارك"
+          label="عن تادمورا"
           kind="ghost"
           small
           onPress={() => router.push("/about" as never)}

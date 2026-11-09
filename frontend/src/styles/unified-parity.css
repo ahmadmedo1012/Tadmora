@@ -1,10 +1,10 @@
 /* ═════════════════════════════════════════════════════════════════════
-   Canonical Madarek parity export v2 — faithful distillation of
+   Canonical Tadmora parity export v2 — faithful distillation of
    tokens.css @ R313 (the Heron FULL-parity foundation).
 
    Reference artifact for the design canon — the verification surface
    the parity gate diffs against tokens.css. This file is NOT imported
-   by madarek's own app (main.tsx chain: fonts/tokens/motion/base/
+   by tadmora's own app (main.tsx chain: fonts/tokens/motion/base/
    components/layout/auth/notifications/student/polish).
 
    HISTORY (r127-F1): the first revision of this file (added in cc03c2e
@@ -50,7 +50,7 @@
        stage 2; landing-only vocabulary stays out of the product
        export except the poster aliases.
      · Role-accent / college-accent slots (:root… body[data-role]) are
-       madarek-app identity slots; they stay out of the export.
+       tadmora-app identity slots; they stay out of the export.
      · The illustration palette (--ill-*) and its prefers-contrast
        stroke thickening are illustration-layer vocabulary and stay
        with the illustration system.

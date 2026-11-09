@@ -36,10 +36,10 @@
  */
 
 /** The single body class that carries the lock. */
-export const SCROLL_LOCK_BODY_CLASS = 'mdrk-scroll-locked';
+export const SCROLL_LOCK_BODY_CLASS = 'tdmr-scroll-locked';
 
 /** Id of the injected one-rule stylesheet (installed once, kept inert). */
-const STYLE_RULE_ID = 'mdrk-scroll-lock-rule';
+const STYLE_RULE_ID = 'tdmr-scroll-lock-rule';
 
 /** Currently-holding keys. Never exported. */
 const holders = new Set<string>();

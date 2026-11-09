@@ -1,7 +1,7 @@
 # role-registrar — المسجل العام (ADMIN): دخول ← تبويبات ← خروج عبر رابط عميق.
 # ADMIN has no profile tab (B3 backlog) → logout reaches /settings via the
-# madarek:// deep link, which doubles as the deep-link proof.
-appId: ly.madarek.mobile
+# tadmora:// deep link, which doubles as the deep-link proof.
+appId: ly.tadmora.mobile
 name: "04 — مسجل عام: دخول، تبويبات، خروج"
 ---
 - launchApp
@@ -26,7 +26,7 @@ name: "04 — مسجل عام: دخول، تبويبات، خروج"
 - extendedWaitUntil:
     visible: "الأساتذة"
     timeout: 30000
-- openLink: "madarek://settings"
+- openLink: "tadmora://settings"
 - extendedWaitUntil:
     visible: "تسجيل الخروج"
     timeout: 30000

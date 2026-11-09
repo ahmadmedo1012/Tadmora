@@ -39,7 +39,7 @@ declare function useTheme(): ThemeAPI
 | Layer | Key / column | Trigger |
 |-------|--------------|---------|
 | In-memory (Zustand) | — | App lifetime |
-| localStorage | `madarek.theme` ∈ `{light, dark, system}` | On every `setChoice` |
+| localStorage | `tadmora.theme` ∈ `{light, dark, system}` | On every `setChoice` |
 | Backend | `User.themePreference` enum + `User.themePreferenceUpdatedAt` | On `setChoice` if authenticated |
 
 ### Sync-on-sign-in algorithm (R-002)
@@ -47,7 +47,7 @@ declare function useTheme(): ThemeAPI
 ```text
 function syncOnSignIn(local: ThemeChoice, profile: ThemeChoice, profileTs: Date) {
   // local does not have its own timestamp; we treat 'changed locally just now' if it differs from profile
-  const localTs = readLocalTs() // stored alongside madarek.theme as madarek.theme.ts
+  const localTs = readLocalTs() // stored alongside tadmora.theme as tadmora.theme.ts
 
   if (profile === 'SYSTEM' && local !== 'system') {
     pushToProfile(local)
@@ -64,7 +64,7 @@ function syncOnSignIn(local: ThemeChoice, profile: ThemeChoice, profileTs: Date)
 }
 ```
 
-`readLocalTs` reads `madarek.theme.ts` (Number timestamp). `setChoice` writes both keys atomically. Missing-timestamp legacy entries are treated as `0` — profile wins.
+`readLocalTs` reads `tadmora.theme.ts` (Number timestamp). `setChoice` writes both keys atomically. Missing-timestamp legacy entries are treated as `0` — profile wins.
 
 ---
 

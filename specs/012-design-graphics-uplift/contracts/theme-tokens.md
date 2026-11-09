@@ -162,7 +162,7 @@ Components do NOT switch logic for this preference; the cascading variables do t
 ```html
 <script>
   (function() {
-    var stored = localStorage.getItem('madarek.theme');
+    var stored = localStorage.getItem('tadmora.theme');
     var choice = stored || 'system';
     var resolved = choice === 'system'
       ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')

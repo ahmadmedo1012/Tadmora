@@ -42,7 +42,7 @@ function slugPath(p) {
 
 const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, locale: 'ar', colorScheme: 'dark', deviceScaleFactor: 2 });
-await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch {} });
+await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch {} });
 const page = await ctx.newPage();
 page.setDefaultTimeout(25000);
 await page.goto(`${BASE}/auth`, { waitUntil: 'load', timeout: 30000 });

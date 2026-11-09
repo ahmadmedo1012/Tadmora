@@ -643,7 +643,7 @@ export function AdminSettingsPage() {
           <div className="settings-row">
             <div>
               <div className="settings-label">اسم المنصّة</div>
-              <div className="settings-value">مدارك — منصّة التعليم الذكي</div>
+              <div className="settings-value">تادمورا — نظام تشغيل الجامعة</div>
             </div>
           </div>
           <div className="settings-row">
@@ -655,7 +655,7 @@ export function AdminSettingsPage() {
           <div className="settings-row">
             <div>
               <div className="settings-label">الشعار</div>
-              <div className="settings-value">مدارك — علامة المنصّة المستقلّة</div>
+              <div className="settings-value">تادمورا — علامة المنصّة المستقلّة</div>
             </div>
           </div>
         </Card>

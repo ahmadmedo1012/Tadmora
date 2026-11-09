@@ -1,8 +1,8 @@
-# Heron — /contact-us (the sheet template Madarek /auth codes against)
+# Heron — /contact-us (the sheet template Tadmora /auth codes against)
 
 **Crawl:** `contact-us-1440x900.json`, `contact-us-390x844.json` (2026-10-24). Title: «Heron AI | Get in touch with us». Page = **contact-hero 713.75 + shared footer 710.66 = docH 1424** @1440 (@390: 993.97 + 1239.11 = 2233). Live form-state probe (focus + fill + submit hover) ran in the same pass — `states.contactForm`.
 
-**Frame / chrome:** identical on every Heron page — fixed `.main-deco` 1px #B3B3AF at the 6.66px inset (no plus marks), fixed 56.3px header, `.awwwards` edge tab, cookie banner. No page-level mono index/coordinate labels exist on this page (the mono indices in Madarek's /auth rebuild are an interpretation of the shared grammar, not a literal copy — see "mono labels" below).
+**Frame / chrome:** identical on every Heron page — fixed `.main-deco` 1px #B3B3AF at the 6.66px inset (no plus marks), fixed 56.3px header, `.awwwards` edge tab, cookie banner. No page-level mono index/coordinate labels exist on this page (the mono indices in Tadmora's /auth rebuild are an interpretation of the shared grammar, not a literal copy — see "mono labels" below).
 
 ## Layout @1440 — two half-sheets
 
@@ -61,7 +61,7 @@ form#contact-form (0,264.61 713.34×449.14)
 - Form: `h2` «Please fill out this form» (0,208.72 374.13×73.81, 3 lines), rule 281.53, then rows **59.53px tall** — the item-50 pairs STACK (one field per row, full 374.13 width): First name 282.53 · Last name 342.06 · Email 401.59 · Phone 461.12 · Message (input-area) — same gray rule + parked orange line (x=−374.12) + `.active` slide. Labels 20px/700 #B4B4B1 at (11.91, ~y+20). Submit row full-width at the end.
 - Footer stacks per the shared mobile footer grammar (see landing-chrome.md §6).
 
-## Builder notes (for Madarek /auth parity)
+## Builder notes (for Tadmora /auth parity)
 
 1. Rows are borderless; the RULE is the row's bottom edge — never box the inputs.
 2. The focus accent is a **full-row-width 1px #FA3600 line that slides in from the inline-start edge** (transform-only motion; RM-token compatible).

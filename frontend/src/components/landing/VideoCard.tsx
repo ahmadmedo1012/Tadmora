@@ -12,7 +12,7 @@
  *
  * Honesty: `kindAr` («فيديو توثيقي من القناة الرسمية للجامعة») is
  * rendered as the card's type label — a university documentary is
- * never presented as a Madarek product demo.
+ * never presented as a Tadmora product demo.
  */
 import { useEffect, useRef, useState } from 'react';
 import { PlayCircle, ExternalLink, X } from 'lucide-react';

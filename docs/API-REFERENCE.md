@@ -1,4 +1,4 @@
-# Madarek — API Reference
+# Tadmora — API Reference
 
 **Base URL:** `/api/v1`
 **Envelope:** `{ data: T }` on success, `{ error: { code, message, details? } }` on error

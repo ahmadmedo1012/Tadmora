@@ -1,8 +1,8 @@
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — R314 «VISUAL TRUTH» chrome layer (Task 6-a / B10)
+   TADMORA — R314 «VISUAL TRUTH» chrome layer (Task 6-a / B10)
    ─────────────────────────────────────────────────────────────────────
    Two NEW landing chrome components in the reference's measured
-   geometry, carrying Madarek's OWN honest content (never the
+   geometry, carrying Tadmora's OWN honest content (never the
    reference's text, logo, or awards):
 
    · cb — ConsentBanner (V11 → R315 K-C → R318 §A9 → R341 L1-c): the
@@ -16,16 +16,16 @@
      Reject ink-labelled), the pair grouped at the inline end on wide
      frames, anchored edge to edge on phones with 44px touch targets.
      Keyboard-dismissable (native buttons); aria-live="polite" region.
-     Real functionality: «موافق»/«أرفض» persist `madarek.consent`
-     (+ JSON record with timestamp under `madarek.consent.record`);
-     reject removes the gated UI-pref keys; window.MadarekConsent
+     Real functionality: «موافق»/«أرفض» persist `tadmora.consent`
+     (+ JSON record with timestamp under `tadmora.consent.record`);
+     reject removes the gated UI-pref keys; window.TadmoraConsent
      exposes the live state. See
      components/landing/chrome/ConsentBanner.tsx.
 
    · et — EdgeTab (V12): the right-edge vertical tab (paper ground,
      outer hairline, orange square + tiny white 4-pointed star at the
-     top, rotated vertical mono label «منصّة مستقلّة · مدارك ٢٠٢٦» —
-     Madarek's own mark and line, NO award claims). Click scrolls to
+     top, rotated vertical mono label «منصّة مستقلّة · تادمورا ٢٠٢٦» —
+     Tadmora's own mark and line, NO award claims). Click scrolls to
      the colophon footer. Hidden below 768px.
 
    CASCADE CONTRACT: imported by LandingPage.tsx right after
@@ -440,7 +440,7 @@
 /* The small orange square (~14×14 @1440) at the rail's TOP —
    var(--accent) ground with the tiny white 4-pointed star stroked in
    --accent-fg (#FFFFFF light · warm ink dark — the label-on-accent
-   seat). Madarek's own mark; no award badge, ever. */
+   seat). Tadmora's own mark; no award badge, ever. */
 .et-mark {
   flex: 0 0 auto;
   inline-size: 1.68rem;           /* 14px @1440 — measured */
@@ -450,8 +450,8 @@
   background: var(--accent);
 }
 
-/* The rotated vertical mono label — Madarek's own honest line:
-   «منصّة مستقلّة · مدارك ٢٠٢٦». writing-mode vertical-rl + the 180°
+/* The rotated vertical mono label — Tadmora's own honest line:
+   «منصّة مستقلّة · تادمورا ٢٠٢٦». writing-mode vertical-rl + the 180°
    rotate gives the RTL bottom-to-top reading; mono 10px @1440
    (--fs-mono-sm — the stack's Arabic fallback carries the script);
    muted ink — the solid twin of rgba(40,40,40,.72). NOTE: the 0.14em

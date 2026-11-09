@@ -135,7 +135,7 @@ const { numerals, formatNumber: fmt, setNumerals } = useNumerals();
 - `arabic-indic` maps 0-9 → **٠١٢٣٤٥٦٧٨٩** (pure string transform — no
   `Intl.NumberFormat` on purpose; Hermes Intl is the R326 crash class).
 - Persisted preference: zustand + `AsyncStorage`
-  (`"madarek-mobile-numerals"`) — the exact pattern of the theme store in
+  (`"tadmora-mobile-numerals"`) — the exact pattern of the theme store in
   `src/design/theme.tsx`. Default `"latin"` until the user opts in.
 - `NUMERALS_OPTIONS` carries Arabic labels («0123 لاتينية» /
   «٠١٢٣ عربية-هندية») ready for the /settings appearance card.

@@ -14,13 +14,13 @@ PROBE = """
   };
   return {
     armed: document.documentElement.classList.contains('js-reveal-armed'),
-    handle: !!window.__mdrkReveals,
+    handle: !!window.__tdmrReveals,
     ctaTitle: g('.fo-cta-title'),
-    ctaLine0: g('.fo-cta-title .mdrk-line'),
+    ctaLine0: g('.fo-cta-title .tdmr-line'),
     rlRow0: g('.rl-row'),
     pmCol0: g('.pm-col'),
     pmArt: g('.pm-artzone .pm-art'),
-    ctSplit: document.querySelectorAll('.fo-cta-title .mdrk-line').length,
+    ctSplit: document.querySelectorAll('.fo-cta-title .tdmr-line').length,
     st: window.ScrollTrigger ? 'global' : 'n/a',
   };
 }

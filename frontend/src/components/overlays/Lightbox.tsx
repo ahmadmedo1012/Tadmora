@@ -51,7 +51,7 @@ export function Lightbox({
   const contentRef = useRef<HTMLDivElement | null>(null);
   useFocusTrap({ open, containerRef: contentRef, closeOnEscape, onClose, overlayKind: 'lightbox' });
   // r305 token alignment: the safety net reads the token the data-closing
-  // exit consumes (components.css: madarek-lightbox-out pair at
+  // exit consumes (components.css: tadmora-lightbox-out pair at
   // var(--motion-duration-short)) — animationend-driven unmounts are
   // unchanged; only the no-animationend fallback tightens 320→240ms.
   const { rendered, onExitEnd } = useDelayedUnmount(open, '--motion-duration-short');
@@ -67,7 +67,7 @@ export function Lightbox({
         if (e.target === e.currentTarget) onClose();
       }}
       onAnimationEnd={(e) => {
-        if (!open && e.animationName === 'madarek-lightbox-out') onExitEnd();
+        if (!open && e.animationName === 'tadmora-lightbox-out') onExitEnd();
       }}
     >
       <div

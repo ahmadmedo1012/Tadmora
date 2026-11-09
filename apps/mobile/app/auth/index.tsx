@@ -52,7 +52,7 @@ export default function Welcome() {
           {/* quiet mark row — the drawing carries the brand from here */}
           <Animated.View entering={enter(0)} style={{ flexDirection: "row", alignItems: "center", gap: sp[8] }}>
             <BrandMark size={20} />
-            <T variant="bodyLg" weight="bold">مدارك</T>
+            <T variant="bodyLg" weight="bold">تادمورا</T>
           </Animated.View>
 
           {/* the signature: the facade draws itself in */}
@@ -86,7 +86,7 @@ export default function Welcome() {
           <Animated.View entering={enter(3)} style={{ marginTop: sp[24], gap: sp[8] }}>
             <Hairline />
             <T variant="xs" color="faint">
-              مدارك منصّة تعليمية مستقلّة عربية-أولًا من ليبيا — بيانات مؤسّسة العرض المرجعية بوضع الطيار الحالي.
+              تادمورا منصّة تعليمية مستقلّة عربية-أولًا من ليبيا — بيانات مؤسّسة العرض المرجعية بوضع الطيار الحالي.
             </T>
           </Animated.View>
         </View>

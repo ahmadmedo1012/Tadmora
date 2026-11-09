@@ -49,7 +49,7 @@ export function SheetFrame() {
  * The paper grain — ONE element, raster-cheap: the 256px tile repeats
  * (background-repeat: repeat) with the 24px micro-grid under it, fixed
  * full-viewport, pointer-transparent, under the flowing content. Same
- * data-URIs/tiles as the landing's body.mdrk-grain::before and the
+ * data-URIs/tiles as the landing's body.tdmr-grain::before and the
  * auth door's .auth-grain — hoisted here as shared custom properties
  * (r319-shell.css §1) so this cycle adds ONE new copy of the recipe,
  * not a third hand-inlined one (dedupe note in the worklog: landing.css

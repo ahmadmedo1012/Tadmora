@@ -1,4 +1,4 @@
-# Madarek — Frontend Reference
+# Tadmora — Frontend Reference
 
 **Stack:** React 18.3.1 + Vite 5.4.11 + TypeScript 5.7.2 (strict)
 **Routing:** React Router DOM 6.30.6
@@ -25,9 +25,9 @@
 
 | Store | Persisted Key | Storage | Purpose |
 |-------|---------------|---------|---------|
-| `useAuthStore` | `mdrk-auth` | localStorage via a crash-proof wrapper (SecurityError → in-memory fallback; corrupted payload = defaults; blocked writes best-effort) | user, accessToken, hydration flag |
-| `useThemeStore` | `madarek-theme` | localStorage | 'light'\|'dark'\|'system' + cycle |
-| `useUiStore` | `mdrk-ui` | localStorage | sidebar collapsed/expanded state |
+| `useAuthStore` | `tdmr-auth` | localStorage via a crash-proof wrapper (SecurityError → in-memory fallback; corrupted payload = defaults; blocked writes best-effort) | user, accessToken, hydration flag |
+| `useThemeStore` | `tadmora-theme` | localStorage | 'light'\|'dark'\|'system' + cycle |
+| `useUiStore` | `tdmr-ui` | localStorage | sidebar collapsed/expanded state |
 | `useOnboardingStore` | — | none (in-memory, per tab) | onboarding flow state; server persistence stays in `useOnboardingState` |
 
 ### useAuthStore
@@ -181,7 +181,7 @@ Unified platform: every overlay registers in `lib/overlayStack` (topmost layer o
 | `pdf/PdfViewer` | Full PDF viewer (page nav, zoom, race-guarded search, highlight, fullscreen, RTL) — generation-guarded search, render-task cleanup, password-protected-PDF state |
 | `pdf/AnnotationsPanel` | Paper annotation side panel (inline retryable error states) |
 | `Illustration` | SVG illustration wrapper (reads CSS vars for theming; discriminated decorative/alt props) |
-| `BrandMark` | Madarek logo/brand mark |
+| `BrandMark` | Tadmora logo/brand mark |
 | `Icon` | Lucide icon wrapper — **decorative by default** (`aria-hidden="true"` unless the call site opts out with `aria-hidden={false}` + `aria-label`) |
 | `EmojiIcon` | Data-driven emoji→Lucide bridge (API `iconEmoji` strings only — never chrome) |
 | `CollegesPopover` | College selection popover (homepage) |

@@ -5,11 +5,11 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  * An ORIGINAL tab in the reference's measured geometry (vertically
  * centred, paper ground, a 1px hairline on the outer edge, a small
  * orange square with a tiny mark at the top, rotated vertical mono
- * label) — carrying Madarek's OWN honest label «منصّة مستقلّة · مدارك
+ * label) — carrying Tadmora's OWN honest label «منصّة مستقلّة · تادمورا
  * <year>» (the year COMPUTED at render in Arabic-Indic digits — r315
  * C4-D: the ٢٠٢٦ hardcode went stale at the 2027 rollover). NEVER the
  * reference's "Site of the Day"/awwwards badge or any award claim —
- * Madarek claims no awards.
+ * Tadmora claims no awards.
  *
  * R322 (§1 V7 — the owner's overlap rule): the ≥992px tab is a SLIM
  * RAIL inside the frame margin (never a 44px slab over body copy);
@@ -40,7 +40,7 @@ const FOOTER_SELECTOR = '.fo-footer';
  * fix): Arabic-Indic digits via the codepoint math toWestern() mirrors
  * (٠ = U+0660 = 1632, the run is consecutive) — the tab's vertical mono
  * label keeps the drafting-script numeral family, so today it still
- * renders exactly «مدارك ٢٠٢٦» and rolls to ٢٠٢٧ on its own. */
+ * renders exactly «تادمورا ٢٠٢٦» and rolls to ٢٠٢٧ on its own. */
 const yearAr = () =>
   String(new Date().getFullYear()).replace(/[0-9]/g, (d) =>
     String.fromCharCode(d.charCodeAt(0) - 48 + 1632),
@@ -80,9 +80,9 @@ export function EdgeTab() {
         <span className="et-mark" aria-hidden="true">
           <Logo variant="mark" size={12} tone="paper" className="et-mark-logo" />
         </span>
-        {/* the rotated vertical mono label — Madarek's own honest line
-            (no award claims): «منصّة مستقلّة · مدارك <computed year>» */}
-        <span className="et-label">{`منصّة مستقلّة · مدارك ${yearAr()}`}</span>
+        {/* the rotated vertical mono label — Tadmora's own honest line
+            (no award claims): «منصّة مستقلّة · تادمورا <computed year>» */}
+        <span className="et-label">{`منصّة مستقلّة · تادمورا ${yearAr()}`}</span>
       </span>
     </button>
   );
