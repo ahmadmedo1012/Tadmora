@@ -27,7 +27,7 @@ CFG = json.loads((Path(__file__).resolve().parent / "config.json").read_text())
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 
-CONSENT_SEED = "try { window.localStorage.setItem('madarek.consent','accepted'); } catch (e) {}"
+CONSENT_SEED = "try { window.localStorage.setItem('tadmora.consent','accepted'); } catch (e) {}"
 
 SHEET_TMPL = """<!doctype html>
 <html><head><meta charset="utf-8"><title>Blind A/B — Heron Twin</title>
@@ -83,15 +83,15 @@ def main():
             key_v = {}
             rows = []
             recs_h = _load(vdir / "heron-records.jsonl")
-            recs_m = _load(vdir / "madarek-records.jsonl")
+            recs_m = _load(vdir / "tadmora-records.jsonl")
             sections = sorted(set(recs_h) & set(recs_m))
             for sec in sections:
                 p, rec = nearest_step(recs_h[sec])
                 if rec is None:
                     continue
                 # both sides must have the same p (they do — same walk)
-                sides = {"heron": recs_h[sec], "madarek": recs_m[sec]}
-                order = ["heron", "madarek"]
+                sides = {"heron": recs_h[sec], "tadmora": recs_m[sec]}
+                order = ["heron", "tadmora"]
                 rng.shuffle(order)
                 assignment = {order[0]: "A", order[1]: "B"}
                 imgs = {}
@@ -106,13 +106,13 @@ def main():
                         driver.ready(page, extra_ms=2000)
                         page.wait_for_timeout(1800)  # R332: entrance-fade guard — the first panel run caught mid-reveal frames (QA-1/QA-3 both flagged the wash-out asymmetry)
                         # R332 blind-panel policy: mask BOTH sides' consent chrome
-                        # (heron cookie-banner + awwwards badge vs madarek seeded
+                        # (heron cookie-banner + awwwards badge vs tadmora seeded
                         # consent) — QA-3R: the asymmetry alone unblinds every pair.
                         page.add_style_tag(content=(
                             " .cookie-banner, .awwwards, [class*='cookie'], "
                             "[class*='awwwards'] { display: none !important; }"))
                         # prime reveal observers: sweep the target's neighborhood
-                        # once (madarek's observers didn't settle in 6/9 pairs).
+                        # once (tadmora's observers didn't settle in 6/9 pairs).
                         rng_top = max(0, int(rec2["targetY"]) - 900)
                         for yy in range(rng_top, int(rec2["targetY"]) + 900, 450):
                             driver.seek(page, side, yy, tol=4, retries=3)

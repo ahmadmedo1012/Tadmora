@@ -1,7 +1,7 @@
 # product/ — intentionally empty (R342 decision)
 
 The homepage's platform/product band seats are REAL product captures of implemented
-Madarek features (`/media/product/*.webp` + `frontend/src/assets/product/*.webp`).
+Tadmora features (`/media/product/*.webp` + `frontend/src/assets/product/*.webp`).
 The R342 brief prohibits substituting fictional interfaces for real product
 screenshots, so no generated imagery is published here.
 

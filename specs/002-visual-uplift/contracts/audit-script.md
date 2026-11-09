@@ -31,8 +31,8 @@ seed. Auth tokens are obtained once per role + breakpoint × direction
 combination via `await login(page, role)`.
 
 Test users live in `frontend/tests/visual/test-users.ts` and read
-credentials from environment variables `MADAREK_TEST_<ROLE>_EMAIL` and
-`MADAREK_TEST_<ROLE>_PASSWORD`. CI sets these from secrets; locally,
+credentials from environment variables `TADMORA_TEST_<ROLE>_EMAIL` and
+`TADMORA_TEST_<ROLE>_PASSWORD`. CI sets these from secrets; locally,
 unset roles are skipped with a logged warning.
 
 ## Outputs

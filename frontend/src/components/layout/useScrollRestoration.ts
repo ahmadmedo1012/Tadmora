@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigationType, type NavigationType } from 'react-router-dom';
 
-const SCROLL_STORAGE_KEY_PREFIX = 'madarek.scroll:';
+const SCROLL_STORAGE_KEY_PREFIX = 'tadmora.scroll:';
 
 /* r152a (A4 P3): hardened browsers and embedded webviews can throw on
  * sessionStorage access itself (the app already guards this in

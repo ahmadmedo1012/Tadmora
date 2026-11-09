@@ -18,7 +18,7 @@ import { test, expect } from './fixtures/e2e';
 /* R315 (c4-E) re-pin: the landing H1 is «رحلة تعلم واحدة / من
  * المحاضرة إلى الإتقان» (cycle-1 V1 hero, then the cycle-3 copy pass
  * de-tashkeeled the display line — «رحلةُ تعلُّمٍ واحدة» is gone too).
- * The brand «مدارك» lives in the header/footer brand cells, not the H1;
+ * The brand «تادمورا» lives in the header/footer brand cells, not the H1;
  * this sentinel is the page-ready proof, not a copy pin. */
 const HERO_READY = 'رحلة تعلم واحدة';
 
@@ -139,7 +139,7 @@ test.describe('R311 — the entrance loader', () => {
       try {
         /* R313: the fixture seeds the skip key — clear THAT (the
          * seen-flag is inert under the replay-on-every-load rule) */
-        sessionStorage.removeItem('madarek-intro-skip');
+        sessionStorage.removeItem('tadmora-intro-skip');
       } catch { /* ignore */ }
     });
     await page.setViewportSize(VW.desktop);

@@ -159,7 +159,7 @@ try {
       reducedMotion: 'reduce',
       locale: 'ar',
     });
-    await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* storage off */ } });
+    await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* storage off */ } });
     const page = await ctx.newPage();
     await page.goto(`${baseUrl}/`, { waitUntil: 'networkidle', timeout: 45000 }).catch(async () => { await page.waitForTimeout(1500); });
     await page.waitForTimeout(1000);

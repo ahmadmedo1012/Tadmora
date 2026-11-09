@@ -27,7 +27,7 @@ const mockImpact = Haptics.impactAsync as unknown as jest.Mock;
 const mockNotify = Haptics.notificationAsync as unknown as jest.Mock;
 const storageGet = AsyncStorage.getItem as unknown as jest.Mock;
 
-const STORAGE_KEY = "mdrk-mobile-haptics-enabled";
+const STORAGE_KEY = "tdmr-mobile-haptics-enabled";
 
 /* ── deterministic clock (injected via __hapticsInternals.setClock) ──── */
 
@@ -85,7 +85,7 @@ describe("haptics — toggle gate", () => {
   });
 });
 
-/* ── 2. persistence (mdrk-mobile-haptics-enabled, AsyncStorage) ──────── */
+/* ── 2. persistence (tdmr-mobile-haptics-enabled, AsyncStorage) ──────── */
 
 describe("haptics — persistence", () => {
   it("persists '0' / '1' through AsyncStorage", async () => {

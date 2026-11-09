@@ -243,10 +243,10 @@ jobs:
   # iPhone verification. The dev sandbox worktrees cannot launch
   # Playwright WebKit (missing system libs — libgtk/libgraphene/
   # gstreamer; no root to install), so the webkit-iphone Playwright
-  # project skips there (MADAREK_IOS_SKIP_UNSUPPORTED=1 or launch
+  # project skips there (TADMORA_IOS_SKIP_UNSUPPORTED=1 or launch
   # failure → test.skip) and runs HERE instead — ubuntu runners install
   # WebKit with --with-deps exactly like the e2e job's chromium.
-  # Same hermetic model as the e2e job: MADAREK_E2E_BASE_URL stays
+  # Same hermetic model as the e2e job: TADMORA_E2E_BASE_URL stays
   # unset so Playwright's webServer boots the Vite dev server and every
   # /api/ call rides the fixture transport (page.route mocks) — no
   # backend, no database, no network. The specs (tests/e2e/
@@ -344,7 +344,7 @@ jobs:
       - run: node scripts/r321/rename-ledger-scan.mjs
 
   conform-gate:
-    name: Conformance gate (frozen Heron spec, ratchet)
+    name: Conformance gate (frozen product spec, ratchet)
     # R337 CI fix: same ubuntu-latest → 26.04 roll that hit the e2e and
     # ios-webkit jobs (R320) — @playwright/test 1.60 has no chromium
     # builds for ubuntu26.04-x64, so `npx playwright install chromium`
@@ -424,7 +424,7 @@ jobs:
         if: steps.baseline.outputs.captures != '0'
         working-directory: frontend
         env:
-          MADAREK_E2E_BASE_URL: http://localhost:4173
+          TADMORA_E2E_BASE_URL: http://localhost:4173
           AUDIT_API_MOCK: '1'
           AUDIT_BASELINE_SLICE: '1'
           # FCP is the one hardware-dependent axis — the deterministic

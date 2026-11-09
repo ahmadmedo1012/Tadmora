@@ -3,7 +3,7 @@
  * (r188; previously the r153k University-of-Zawia fact sheet).
  *
  * Provenance: every literal below is SYNTHETIC demo data for «جامعة
- * مدارك التجريبية» — the platform's fictional demonstration tenant.
+ * تادمورا التجريبية» — the platform's fictional demonstration tenant.
  * It mirrors the curated backend source shape
  * (backend/src/lib/zu-sync/static-source.ts, key `identity.*`) so the
  * same fact surfaces keep working, but nothing here claims a real
@@ -14,8 +14,8 @@ export const UNIVERSITY_FACTS = {
   /** Synthetic founding year of the demo institution (demo-source). */
   foundedYear: 2015,
   /** Demo tenant — the platform's showcase institution (r188). */
-  institutionNameAr: 'جامعة مدارك التجريبية',
-  institutionNameEn: 'Madarek Demo University',
+  institutionNameAr: 'جامعة تادمورا التجريبية',
+  institutionNameEn: 'Tadmora Demo University',
   /**
    * Demo structure profile — what the student «about my university»
    * page shows instead of the retired real-university membership

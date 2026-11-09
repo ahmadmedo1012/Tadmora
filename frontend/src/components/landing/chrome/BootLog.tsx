@@ -5,7 +5,7 @@
  * scroll-incremented boot-log (7 progress elements recorded) so "you
  * always know where you are"; ours had a single progress element.
  * The ScrollRule (T-18 A6) is the rule pair + % readout; THIS strip is
- * the status twin — Madarek's OWN construction in the drafting-paper
+ * the status twin — Tadmora's OWN construction in the drafting-paper
  * instrument language (never the reference's text):
  *
  *   · a 1px fill rail (scaleY over the document — composited, the
@@ -17,7 +17,7 @@
  *     voice (original Arabic, ≥768px only: the phone keeps only the
  *     counter + rail, the panel's mobile-density lesson).
  *
- * All three are registered in window.__madarekProgress (see
+ * All three are registered in window.__tadmoraProgress (see
  * lib/progressRegistry.ts) for the conformance instrument. Reduced
  * motion never mounts the strip (matchMedia guard + the boot-log.css
  * display:none belt); it is decorative chrome — pointer-events none,

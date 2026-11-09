@@ -1,13 +1,13 @@
-# Madarek Mobile — مدارك
+# Tadmora Mobile — تادمورا
 
-Native Arabic-first (RTL) mobile app for the Madarek education platform,
+Native Arabic-first (RTL) mobile app for the Tadmora education platform,
 built with **Expo SDK 58 / React Native 0.88.1 / expo-router / TypeScript**,
 wired to the live production API.
 
 ```
-API   https://madarek.onrender.com/api/v1
-App   ly.madarek.mobile · slug madarek-mobile
-EAS   project afc4265f-664e-4325-a0ff-b621b81fe1b0 (account: rh2011)
+API   https://tadmora.vercel.app/api/v1
+App   ly.tadmora.mobile · slug tadmora-mobile
+EAS   project — NEW project pending `eas init` (the retired pre-rebrand project is not reused; account: rh2011)
 ```
 
 ## Quick start
@@ -24,7 +24,7 @@ npm run contract-check # static API-parity gate vs ../../backend source
 `.env` (all values are public config — no secrets ever live in the bundle):
 
 ```
-EXPO_PUBLIC_API_BASE_URL=https://madarek.onrender.com/api/v1
+EXPO_PUBLIC_API_BASE_URL=https://tadmora.vercel.app/api/v1
 ```
 
 ## Where things live
@@ -32,7 +32,7 @@ EXPO_PUBLIC_API_BASE_URL=https://madarek.onrender.com/api/v1
 | Area | Location |
 |---|---|
 | Routes (file-based, deep-linkable) | `app/**` — `app/(role)/**` role homes, `app/student/**`, `app/teacher/**`, `app/admin/**`, `app/quality/**`, `app/owner/**`, public pages at the root |
-| Typed API layer (one file per backend family) | `src/api/*.ts` — `client.ts` is the transport (Bearer + manual `mdrk_refresh` cookie replay + single-flight refresh + normalized Arabic errors) |
+| Typed API layer (one file per backend family) | `src/api/*.ts` — `client.ts` is the transport (Bearer + manual `tdmr_refresh` cookie replay + single-flight refresh + normalized Arabic errors) |
 | Auth & institution context | `src/auth/session.ts` (Zustand + SecureStore) |
 | Design system | `src/design/{tokens,fonts,theme}.tsx` + primitives in `src/components/ui/**` (FROZEN — see `docs/CONTRACTS.md`) |
 | App chrome | `src/components/shell/**` (top bars, tabs, feedback sheet host) |
@@ -49,13 +49,13 @@ positions (dean, associate dean, department head). `useSession()` exposes
 the active institution; **every institution-scoped TanStack Query key is
 suffixed via `useInstitutionScope()`** so switching institution never serves
 cross-context caches. Route groups under `app/**` mirror the web paths so
-`madarek://` deep links resolve to the same destinations as web routes.
+`tadmora://` deep links resolve to the same destinations as web routes.
 
 ## Backend contract
 
 - Success `{ data, meta? }` · errors `{ error: { code, message, details? } }`
 - `POST /auth/login|register|select-institution` respond with
-  `Set-Cookie: mdrk_refresh=…` — the native client captures the value and
+  `Set-Cookie: tdmr_refresh=…` — the native client captures the value and
   replays it manually (httpOnly is a browser constraint, not a transport one).
 - Access tokens are 15-min JWTs; refresh is single-flight; logout, password
   change, and reset bump `tokenVersion` → hard session clear on the client.

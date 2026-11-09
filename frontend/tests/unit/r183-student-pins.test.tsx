@@ -202,9 +202,9 @@ const STUDENT = {
 const ZAWIA: InstitutionSummary = {
   // r188: the demonstration tenant — fictional identity, legacy id kept.
   id: 'inst-zawia-showcase',
-  name: 'جامعة مدارك التجريبية',
-  nameEn: 'Madarek Demo University',
-  slug: 'madarek-demo',
+  name: 'جامعة تادمورا التجريبية',
+  nameEn: 'Tadmora Demo University',
+  slug: 'tadmora-demo',
 };
 
 const ANDALUS: InstitutionSummary = {
@@ -251,10 +251,10 @@ function changeLines(container: HTMLElement): string[] {
 }
 
 describe('r183-B3 — /student/university derives its identity from the session institution (A6 P2)', () => {
-  it('madarek-demo session: the fictional demo facts stay, labeled as the demonstration institution', () => {
+  it('tadmora-demo session: the fictional demo facts stay, labeled as the demonstration institution', () => {
     const { container } = renderUniversity(ZAWIA, ZAWIA_FACULTIES);
 
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('جامعة مدارك التجريبية');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('جامعة تادمورا التجريبية');
     // r188: the real-university facts (1988/decree/memberships) are GONE —
     // the demo tenant's synthetic profile is the only fact story.
     expect(screen.queryByText('1988')).toBeNull();
@@ -271,7 +271,7 @@ describe('r183-B3 — /student/university derives its identity from the session 
     renderUniversity(ANDALUS, ANDALUS_FACULTIES);
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مؤسّسة الأندلس التعليميّة');
-    expect(screen.getByText(/مؤسّسة تعليميّة على منصّة مدارك/)).toBeInTheDocument();
+    expect(screen.getByText(/مؤسّسة تعليميّة على منصّة تادمورا/)).toBeInTheDocument();
 
     // The ZU-specific facts are dropped, never re-attributed.
     expect(screen.queryByText('سنة التأسيس')).toBeNull();

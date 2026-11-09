@@ -29,9 +29,9 @@ const PAGE_FOR = {
 };
 
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'ar', colorScheme: 'dark', serviceWorkers: 'block' });
-await ctx.addInitScript(() => { try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { } });
+await ctx.addInitScript(() => { try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { } });
 const session = await sessionForEmail(ROLE_EMAIL.student);
-await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('mdrk-auth', auth); } catch { } }, { auth: authStorageJson(session) });
+await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('tdmr-auth', auth); } catch { } }, { auth: authStorageJson(session) });
 
 const counts = {};
 for (const [target, pagePath] of Object.entries(PAGE_FOR)) {

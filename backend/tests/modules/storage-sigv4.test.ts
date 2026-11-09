@@ -43,7 +43,7 @@ const EMPTY_SHA256 = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b78
 
 const VECTOR = {
   method: 'PUT',
-  path: '/madarek-files/papers/cku5c2x9p0000upload.pdf',
+  path: '/tadmora-files/papers/cku5c2x9p0000upload.pdf',
   query: '',
   headers: {
     'content-type': 'application/pdf',
@@ -62,7 +62,7 @@ const VECTOR = {
 // Expected outputs (deterministic — see the file header).
 const EXPECTED_CANONICAL_REQUEST =
   'PUT\n' +
-  '/madarek-files/papers/cku5c2x9p0000upload.pdf\n' +
+  '/tadmora-files/papers/cku5c2x9p0000upload.pdf\n' +
   '\n' +
   'content-type:application/pdf\n' +
   'host:storage.example.com\n' +
@@ -90,7 +90,7 @@ describe('sha256Hex', () => {
   });
 
   it('hashes buffers and strings identically (utf8)', () => {
-    expect(sha256Hex(Buffer.from('madarek', 'utf8'))).toBe(sha256Hex('madarek'));
+    expect(sha256Hex(Buffer.from('tadmora', 'utf8'))).toBe(sha256Hex('tadmora'));
   });
 });
 

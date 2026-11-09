@@ -37,7 +37,7 @@ page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
 
 await page.goto(`${BASE}/auth`, { waitUntil: 'networkidle' });
-await page.evaluate(() => sessionStorage.setItem('madarek-intro-skip', '1'));
+await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
 await page.getByLabel('البريد الإلكتروني أو رقم القيد').fill('student@test.ly');
 await page.getByRole('textbox', { name: 'كلمة المرور' }).fill('12345678');
 await page.getByRole('button', { name: 'تسجيل الدخول' }).click();

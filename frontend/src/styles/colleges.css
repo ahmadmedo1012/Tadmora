@@ -397,9 +397,9 @@
   background: var(--accent);
   transform: scaleY(0);
   transform-origin: top;
-  animation: madarek-hero-bar-draw var(--t-slower) var(--ease-spring-soft) 240ms both;
+  animation: tadmora-hero-bar-draw var(--t-slower) var(--ease-spring-soft) 240ms both;
 }
-@keyframes madarek-hero-bar-draw {
+@keyframes tadmora-hero-bar-draw {
   from { transform: scaleY(0); }
   to   { transform: scaleY(1); }
 }

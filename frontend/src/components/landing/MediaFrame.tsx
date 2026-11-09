@@ -83,7 +83,7 @@ export function MediaFrame({ photo, variant, eager = false, className, overlay }
         <span className="mf-caption-name">{photo.nameAr}</span>
         <span className="mf-caption-institution">{photo.institution}</span>
         {card ? (
-          <span className="mf-caption-credit fo-mono" dir="ltr">MADAREK · ORIGINAL DRAWING</span>
+          <span className="mf-caption-credit fo-mono" dir="ltr">TADMORA · ORIGINAL DRAWING</span>
         ) : (
           <span className="mf-caption-credit fo-mono" dir="ltr">
             {photo.author} ·{' '}

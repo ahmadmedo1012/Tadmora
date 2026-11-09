@@ -5,7 +5,7 @@
  * Run:  npm run db:seed
  *
  * r178 (multi-institution foundation): the demo data now spans TWO
- * institutions — جامعة مدارك التجريبية (slug madarek-demo, the
+ * institutions — جامعة تادمورا التجريبية (slug tadmora-demo, the
  * r188 FICTIONAL demonstration institution that owns the 25-faculty
  * synthetic catalogue + all academic demo content — renamed from the
  * retired real-university showcase; the row keeps its stable id
@@ -21,11 +21,11 @@
  * Test accounts (R320 §C — ONE easy account per job; the single source
  * of truth is src/modules/auth/test-accounts.data.ts, re-exported at
  * the repo root as shared/testAccounts.ts):
- *   student@test.ly   → STUDENT (أحمد الزروق) — membership in madarek-demo
+ *   student@test.ly   → STUDENT (أحمد الزروق) — membership in tadmora-demo
  *   student2@test.ly  → STUDENT (ليلى المهدي) — membership in alandalus-demo
- *   teacher@test.ly   → TEACHER (د. سالم البوسيفي) — membership in madarek-demo
- *   registrar@test.ly → ADMIN   (المسجل العام) — membership in madarek-demo
- *   quality@test.ly   → QUALITY (ضمان الجودة) — membership in madarek-demo
+ *   teacher@test.ly   → TEACHER (د. سالم البوسيفي) — membership in tadmora-demo
+ *   registrar@test.ly → ADMIN   (المسجل العام) — membership in tadmora-demo
+ *   quality@test.ly   → QUALITY (ضمان الجودة) — membership in tadmora-demo
  *   owner@test.ly     → OWNER   (مالك المنصة) — NO membership (platform owner)
  *   teacher2@test.ly  → TEACHER (خالد التربلسي) — membership in alandalus-demo
  *   admin2@test.ly    → ADMIN   (مسجل عام — الأندلس) — membership in alandalus-demo
@@ -39,7 +39,7 @@
  * AND established databases — as the ONE deliberate exception to the
  * r183 zero-writes rule below, and it touches ONLY the @test.ly
  * accounts (never real users' data). The backend boot path can also
- * run it by setting MADAREK_TEST_ACCOUNTS=1 (see backend/src/index.ts).
+ * run it by setting TADMORA_TEST_ACCOUNTS=1 (see backend/src/index.ts).
  *
  * NOTE (final-polish audit, 2026-09-28): the PRODUCTION database was
  * seeded by older generations of this file whose demo passwords differ
@@ -54,7 +54,7 @@
  * redeploy of an ESTABLISHED database (any users exist) SKIPS the seed
  * entirely — zero writes: passwords, settings and academic records are
  * not even read for update. The deliberate demo-reset path is explicit
- * and operator-invoked ONLY: `MADAREK_SEED_FORCE=1` (`npm run
+ * and operator-invoked ONLY: `TADMORA_SEED_FORCE=1` (`npm run
  * db:seed:force`), which re-runs the full create-only body including the
  * documented demo-password resets and demo-freshness refreshes. CI
  * never runs the root build, so this only executes on Render deploys.
@@ -71,8 +71,8 @@
  * usable), (b) notification timestamps + training-track catalogue
  * metadata are refreshed (deliberate demo freshness).
  *
- * NOTE (r183 brand voice): all seed copy speaks in the Madarek
- * platform voice («منصّة مدارك») — the showcase university is DATA
+ * NOTE (r183 brand voice): all seed copy speaks in the Tadmora
+ * platform voice («منصّة تادمورا») — the showcase university is DATA
  * (organizer/institution context), never the platform's identity.
  */
 
@@ -104,9 +104,9 @@ async function main() {
   // A NORMAL redeploy must never touch an established database: with
   // any users present the seed skips ENTIRELY (zero writes). Fresh
   // installs (no users) self-bootstrap. The deliberate demo reset is
-  // explicit and conscious: MADAREK_SEED_FORCE=1 (npm run
+  // explicit and conscious: TADMORA_SEED_FORCE=1 (npm run
   // db:seed:force) — guarded so no accidental production path sets it.
-  const force = process.env.MADAREK_SEED_FORCE === '1';
+  const force = process.env.TADMORA_SEED_FORCE === '1';
   const existingUsers = await prisma.user.count();
   if (existingUsers > 0 && !force) {
     // R320 §C — the test accounts are the ONE explicit exception to
@@ -115,19 +115,19 @@ async function main() {
     // touching nothing else. See src/modules/auth/test-accounts.ts.
     const ensured = await ensureTestAccounts(prisma);
     console.log(
-      `ℹ بذرة r183: القاعدة مؤسَّسة (${existingUsers} مستخدمًا) — التشغيل العادي للنشر لا يكتب شيئًا أصلًا، باستثناء حسابات الاختبار الموثقة (${ensured} حسابًا على نطاق test.ly) / seed skipped: established database, zero writes except the documented @test.ly test accounts. إعادة ضبط العرض الواعية: MADAREK_SEED_FORCE=1 (npm run db:seed:force).`,
+      `ℹ بذرة r183: القاعدة مؤسَّسة (${existingUsers} مستخدمًا) — التشغيل العادي للنشر لا يكتب شيئًا أصلًا، باستثناء حسابات الاختبار الموثقة (${ensured} حسابًا على نطاق test.ly) / seed skipped: established database, zero writes except the documented @test.ly test accounts. إعادة ضبط العرض الواعية: TADMORA_SEED_FORCE=1 (npm run db:seed:force).`,
     );
     return;
   }
   if (force) {
     console.warn(
-      '⚠ MADAREK_SEED_FORCE=1 — إعادة ضبط عرض واعية: كلمات مرور حسابات العرض ستُضبط للقيمة الموثقة وبيانات نضارة العرض تُحدَّث. سجلات التعليم المُدارة من المستخدمين لا تُمحى أبدًا (بذرة إنشاء-فقط) / deliberate demo reset: demo passwords reset, user-managed records never wiped.',
+      '⚠ TADMORA_SEED_FORCE=1 — إعادة ضبط عرض واعية: كلمات مرور حسابات العرض ستُضبط للقيمة الموثقة وبيانات نضارة العرض تُحدَّث. سجلات التعليم المُدارة من المستخدمين لا تُمحى أبدًا (بذرة إنشاء-فقط) / deliberate demo reset: demo passwords reset, user-managed records never wiped.',
     );
   }
   console.log('🌱 Seeding database...');
 
   // ─── Institutions (r178 → r188) ───────────────────────────
-  // Upsert by slug. The demonstration tenant is جامعة مدارك التجريبية —
+  // Upsert by slug. The demonstration tenant is جامعة تادمورا التجريبية —
   // fully FICTIONAL (r188). The row is created with the FIXED literal
   // id 'inst-zawia-showcase' — a LEGACY stable identifier carried from
   // the pre-r188 era (renaming ids would churn every FK for zero
@@ -137,13 +137,13 @@ async function main() {
   // it). The r188 migration renames an existing zawia-showcase row to
   // this slug/name; fresh installs create it directly.
   const zawia = await prisma.institution.upsert({
-    where: { slug: 'madarek-demo' },
-    update: { name: 'جامعة مدارك التجريبية', nameEn: 'Madarek Demo University', status: 'ACTIVE' },
+    where: { slug: 'tadmora-demo' },
+    update: { name: 'جامعة تادمورا التجريبية', nameEn: 'Tadmora Demo University', status: 'ACTIVE' },
     create: {
       id: 'inst-zawia-showcase',
-      name: 'جامعة مدارك التجريبية',
-      nameEn: 'Madarek Demo University',
-      slug: 'madarek-demo',
+      name: 'جامعة تادمورا التجريبية',
+      nameEn: 'Tadmora Demo University',
+      slug: 'tadmora-demo',
       status: 'ACTIVE',
     },
   });
@@ -160,7 +160,7 @@ async function main() {
     },
   });
 
-  // ─── Faculties & Departments (جامعة مدارك التجريبية) ───
+  // ─── Faculties & Departments (جامعة تادمورا التجريبية) ───
   // r188: the FICTIONAL demonstration catalogue — 25 faculties across
   // three synthetic knowledge-named campuses (حرم المعرفة · حرم
   // الابتكار · حرم البيان). Same name CAN repeat across campuses
@@ -762,8 +762,8 @@ async function main() {
 
   // ─── MOOCs ──────────────────────────────────────────────────
   const moocs = [
-    { title: 'Python للبيانات والذكاء الاصطناعي', organization: 'منصة مدارك', iconEmoji: '🐍', category: 'prog', durationHours: 40, level: 'متوسط', rating: 4.8, enrolled: 1240 },
-    { title: 'تصميم قواعد البيانات المتقدمة', organization: 'منصة مدارك', iconEmoji: '🗄️', category: 'data', durationHours: 25, level: 'متقدم', rating: 4.6, enrolled: 840 },
+    { title: 'Python للبيانات والذكاء الاصطناعي', organization: 'منصة تادمورا', iconEmoji: '🐍', category: 'prog', durationHours: 40, level: 'متوسط', rating: 4.8, enrolled: 1240 },
+    { title: 'تصميم قواعد البيانات المتقدمة', organization: 'منصة تادمورا', iconEmoji: '🗄️', category: 'data', durationHours: 25, level: 'متقدم', rating: 4.6, enrolled: 840 },
     { title: 'تسويق رقمي شامل', organization: 'شراكة Coursera', iconEmoji: '📱', category: 'business', durationHours: 30, level: 'مبتدئ', rating: 4.7, enrolled: 2100 },
     { title: 'تصميم UI/UX من الصفر', organization: 'شراكة Udemy', iconEmoji: '🎨', category: 'design', durationHours: 35, level: 'مبتدئ', rating: 4.9, enrolled: 3400 },
   ];
@@ -1050,7 +1050,7 @@ async function main() {
           ordinal: def.ordinal,
           durationSec: def.durationSec,
           videoUrl: def.videoUrl,
-          posterUrl: '/brand/madarek-mark.svg',
+          posterUrl: '/brand/tadmora-mark.svg',
         },
       });
     } else {
@@ -1066,7 +1066,7 @@ async function main() {
           ordinal: def.ordinal,
           durationSec: def.durationSec,
           videoUrl: def.videoUrl,
-          posterUrl: '/brand/madarek-mark.svg',
+          posterUrl: '/brand/tadmora-mark.svg',
         },
       });
     }
@@ -1200,9 +1200,9 @@ async function main() {
       studentId: student.id,
       reviewerId: teacher.id,
       offeringId: seOffering.id,
-      title: 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في جامعة مدارك التجريبية',
+      title: 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في جامعة تادمورا التجريبية',
       abstract:
-        'دراسة شبه تجريبية على 84 طالباً من أقسام الهندسة، تقارن متوسط التحصيل بين فصلين أحدهما اعتمد الصف المعكوس مدعوماً بمنصة مدارك. النتائج تُظهر فرقاً ذا دلالة إحصائية لصالح المجموعة التجريبية.',
+        'دراسة شبه تجريبية على 84 طالباً من أقسام الهندسة، تقارن متوسط التحصيل بين فصلين أحدهما اعتمد الصف المعكوس مدعوماً بمنصة تادمورا. النتائج تُظهر فرقاً ذا دلالة إحصائية لصالح المجموعة التجريبية.',
       status: ResearchPaperStatus.PUBLISHED,
       fileUrl: '/api/v1/files/papers/sample.pdf',
       plagiarismPct: 5.6,
@@ -1310,13 +1310,13 @@ async function main() {
   const TRACKS: TrackSeed[] = [
     {
       slug: 'platform-onboarding',
-      title: 'كيف تستخدم منصّة مدارك',
+      title: 'كيف تستخدم منصّة تادمورا',
       titleEn: 'Platform Onboarding',
       summary: 'جولة سريعة على واجهات المنصة: المحاضرات، المصفوفة التعليمية، البحوث، المكتبة، والإحصاءات.',
       category: 'ONBOARDING', level: 'BEGINNER', iconEmoji: '🧭', themeColor: '#2952C8',
       estMinutes: 25, pointsAward: 150, order: 1,
       lessons: [
-        { title: 'الترحيب والتسجيل', summary: 'كيفية إنشاء الحساب وإكمال الملف الشخصي', content: 'أهلاً بك في منصّة مدارك للتعليم الذكي. تبدأ رحلتك بإنشاء حسابك الجامعي عبر صفحة "إنشاء حساب"، وإدخال بياناتك الأساسية. بعدها أكمل ملفك الشخصي بإضافة الكلية والقسم والمعرّف الجامعي.', quiz: { q: 'ما نطاق بريد حسابات العرض في المنصّة؟', a: 'test.ly' } },
+        { title: 'الترحيب والتسجيل', summary: 'كيفية إنشاء الحساب وإكمال الملف الشخصي', content: 'أهلاً بك في منصّة تادمورا للتعليم الذكي. تبدأ رحلتك بإنشاء حسابك الجامعي عبر صفحة "إنشاء حساب"، وإدخال بياناتك الأساسية. بعدها أكمل ملفك الشخصي بإضافة الكلية والقسم والمعرّف الجامعي.', quiz: { q: 'ما نطاق بريد حسابات العرض في المنصّة؟', a: 'test.ly' } },
         { title: 'لوحة التحكم الرئيسية', summary: 'فهم العناصر في الصفحة الرئيسية', content: 'لوحة التحكم تعرض: المقررات الحالية، نسبة الإنجاز، الإشعارات، والمساعد الذكي. كل بطاقة قابلة للنقر وتأخذك إلى التفاصيل.' },
         { title: 'المصفوفة التعليمية', summary: 'كيف تعمل وكيف تستفيد منها', content: 'المصفوفة التعليمية تتبع فهمك لكل مفهوم على حدة وتقترح فيديوهات لسد أي فجوة معرفية تظهر في امتحاناتك أو نقاط التفاعل.' },
         { title: 'البحوث والمكتبة', summary: 'رفع البحث والبحث في المكتبة', content: 'يمكنك رفع بحثك من قسم البحوث، وستجري المنصة فحص انتحال وفحص ذكاء اصطناعي قبل الإرسال للأستاذ. المكتبة تتيح البحث عبر آلاف الأبحاث المنشورة.', quiz: { q: 'ما النسبة القصوى المقبولة للانتحال في البحث؟', a: '15' } },
@@ -1475,7 +1475,7 @@ async function main() {
         { title: 'تعلم الآلة مقابل التعلم العميق', summary: 'متى نستخدم كل منهما', content: 'تعلم الآلة الكلاسيكي مناسب للبيانات المهيكلة وكميات قليلة. التعلم العميق يحتاج بيانات ضخمة وقوة حسابية كبيرة، لكنه يتفوق في الصور واللغة.' },
         { title: 'علم البيانات والإحصاء', summary: 'الأساس الذي يقوم عليه كل شيء', content: 'علم البيانات يدمج الإحصاء والبرمجة والمعرفة المجالية. أدوات: Python (pandas, numpy)، R، SQL. مهارة قراءة البيانات أهم من إتقان الأدوات.' },
         { title: 'تتبع المعرفة (Knowledge Tracing)', summary: 'الخوارزمية وراء مصفوفتنا التعليمية', content: 'خوارزميات تتبع المعرفة تنتج نموذج معرفة الطالب بمرور الوقت. مسابقة Kaggle لشركة Riiid (2020) كانت محطة فاصلة. المنصة تستخدم نموذجاً مشابهاً لتحديد فجواتك المعرفية.', quiz: { q: 'ما اسم الشركة الكورية صاحبة مسابقة تتبع المعرفة على Kaggle؟', a: 'Riiid' } },
-        { title: 'الذكاء الاصطناعي في التعليم', summary: 'مستقبل التعلم المخصص', content: 'الذكاء الاصطناعي سيغير التعليم: مدرسون افتراضيون، محتوى مخصص لكل طالب، تقييم لحظي، اكتشاف الفجوات قبل أن تظهر في الامتحان. منصّة مدارك خطوة في هذا الاتجاه.' },
+        { title: 'الذكاء الاصطناعي في التعليم', summary: 'مستقبل التعلم المخصص', content: 'الذكاء الاصطناعي سيغير التعليم: مدرسون افتراضيون، محتوى مخصص لكل طالب، تقييم لحظي، اكتشاف الفجوات قبل أن تظهر في الامتحان. منصّة تادمورا خطوة في هذا الاتجاه.' },
       ],
       badge: { slug: 'badge-ai-pioneer', title: 'رائد ذكاء اصطناعي', description: 'أنهيت المسار المتخصص في الذكاء الاصطناعي', iconEmoji: '🤖', rarity: 'LEGENDARY' },
     },
@@ -1684,7 +1684,7 @@ async function main() {
       difficulty: 'HARD' as const, points: 5,
     },
     {
-      category: generalCategory.id, type: 'MCQ' as const, prompt: 'ما النسبة القصوى المقبولة للتشابه (الانتحال) في البحث العلمي على منصّة مدارك؟',
+      category: generalCategory.id, type: 'MCQ' as const, prompt: 'ما النسبة القصوى المقبولة للتشابه (الانتحال) في البحث العلمي على منصّة تادمورا؟',
       choices: ['5%', '10%', '15%', '25%'], correct: 2, difficulty: 'EASY' as const, points: 1,
     },
     {
@@ -1796,8 +1796,8 @@ async function main() {
   const announcementDefs = [
       {
         authorId: admin.id, scope: 'PLATFORM', scopeId: null,
-        title: 'مدارك: انطلاق منصّة التعليم الذكي',
-        body: 'تنطلق منصّة مدارك — منصّة التعليم الذكي المستقلّة — لخدمة مؤسساتها التعليمية بكامل ميزاتها الذكية. يستطيع جميع الطلاب والأساتذة الاستفادة من الميزات الجديدة فوراً.',
+        title: 'تادمورا: انطلاق نظام تشغيل الجامعة',
+        body: 'تنطلق منصّة تادمورا — نظام تشغيل الجامعة المستقلّ — لخدمة مؤسساتها التعليمية بكامل ميزاتها الذكية. يستطيع جميع الطلاب والأساتذة الاستفادة من الميزات الجديدة فوراً.',
         pinned: true, iconEmoji: '🎉',
       },
       {
@@ -1809,7 +1809,7 @@ async function main() {
       {
         authorId: teacher.id, scope: 'FACULTY', scopeId: faculties[0]!.id,
         title: 'محاضرة افتراضية مع خبير عالمي في الذكاء الاصطناعي',
-        body: 'تستضيف كلية تقنية المعلومات محاضرة عن بُعد مع البروفيسور أندرو نج يوم الخميس عبر منصّة مدارك. الحضور مفتوح لجميع طلاب الكلية.',
+        body: 'تستضيف كلية تقنية المعلومات محاضرة عن بُعد مع البروفيسور أندرو نج يوم الخميس عبر منصّة تادمورا. الحضور مفتوح لجميع طلاب الكلية.',
         iconEmoji: '🎤',
       },
       {
@@ -1833,7 +1833,7 @@ async function main() {
         organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '🔬', themeColor: '#7B3AED',
       },
       {
-        title: 'هاكاثون مدارك الأول',
+        title: 'هاكاثون تادمورا الأول',
         description: 'هاكاثون 48 ساعة لتطوير حلول رقمية لتحديات المؤسسات التعليمية. مفتوح لجميع الطلاب من جميع الكليات.',
         category: 'برمجة', prize: '5,000 د.ل + فرصة تدريب',
         deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
@@ -1899,11 +1899,11 @@ async function main() {
   console.log(`✅ Test accounts ensured (${ensured} jobs on the test.ly domain).`);
 
   // r323 B4 — the pilot cohort: the 8-course floor, the per-course
-  // lecture packs, the 30 @demo.madarek.ly students with their
+  // lecture packs, the 30 @demo.tadmora.ly students with their
   // enrollments/grades/attendance. Create-once; re-runs are no-ops.
   const pilot = await seedPilotCohort(prisma);
   if (pilot.students > 0) {
-    console.log(`✅ بذرة العرض التجريبي: ${pilot.students} طالبًا + ${pilot.lectures} محاضرة جديدة (نطاق demo.madarek.ly — قابل للحذف من مسار المسجل).`);
+    console.log(`✅ بذرة العرض التجريبي: ${pilot.students} طالبًا + ${pilot.lectures} محاضرة جديدة (نطاق demo.tadmora.ly — قابل للحذف من مسار المسجل).`);
   }
 
   console.log('✅ Seed complete.');

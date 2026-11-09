@@ -18,14 +18,14 @@
  * transparently re-logged). No other module here touches the limiter.
  *
  * Grammar inherited from tests/e2e/fixtures/auth-storage.ts (r319 §C1-B):
- * the zustand persist key `mdrk-auth` is seeded on the WEB origin with
+ * the zustand persist key `tdmr-auth` is seeded on the WEB origin with
  * the REAL login payload, so the SPA boots reload-style signed-in.
  *
  * HOW TO RUN
  * ──────────
  *   cd frontend
- *   MADAREK_E2E_BASE_URL=http://localhost:5173 \
- *   MADAREK_E2E_EXECUTABLE=/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome \
+ *   TADMORA_E2E_BASE_URL=http://localhost:5173 \
+ *   TADMORA_E2E_EXECUTABLE=/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome \
  *     npx playwright test --project=flows
  *
  * EVIDENCE: every spec ends with `flowShot(page, 'flow-XX-…')` writing
@@ -42,8 +42,8 @@ import { join } from 'node:path';
 // auth-storage.ts header for the verified reason). One table, no copy.
 import { TEST_PASSWORD, testAccountForJob } from '../../../../../backend/src/modules/auth/test-accounts.data';
 
-export const API_BASE = (process.env.MADAREK_E2E_API_URL ?? 'http://localhost:4000').replace(/\/+$/, '');
-export const WEB_ORIGIN = (process.env.MADAREK_E2E_BASE_URL ?? 'http://localhost:5173').replace(/\/+$/, '');
+export const API_BASE = (process.env.TADMORA_E2E_API_URL ?? 'http://localhost:4000').replace(/\/+$/, '');
+export const WEB_ORIGIN = (process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173').replace(/\/+$/, '');
 
 export type FlowRole =
   | 'STUDENT' | 'STUDENT2' | 'TEACHER' | 'HEAD' | 'DEAN' | 'VICEDEAN'
@@ -90,7 +90,7 @@ const SESSION_TTL_MS = 10 * 60 * 1000; // access token lives 15 min — cache 10
 const memoryCache = new Map<string, FlowSession>();
 
 const cacheFile = (): string =>
-  join(tmpdir(), `madarek-flows-sessions-${new Date().toISOString().slice(0, 10)}.json`);
+  join(tmpdir(), `tadmora-flows-sessions-${new Date().toISOString().slice(0, 10)}.json`);
 
 function readCacheFile(): Record<string, { at: number; session: FlowSession }> {
   try {
@@ -142,7 +142,7 @@ export async function sessionForRole(role: FlowRole): Promise<FlowSession> {
   return data;
 }
 
-/** The `mdrk-auth` zustand-persist value (auth-storage.ts authStorageJson
+/** The `tdmr-auth` zustand-persist value (auth-storage.ts authStorageJson
  * shape — persist version 1, the REAL user + token). */
 export function authStorageJson(session: FlowSession): string {
   const { user, accessToken } = session;
@@ -170,7 +170,7 @@ export async function flowPage(browser: Browser, role: FlowRole): Promise<{ page
     storageState: {
       cookies: [],
       origins: [
-        { origin: WEB_ORIGIN, localStorage: [{ name: 'mdrk-auth', value: authStorageJson(session) }] },
+        { origin: WEB_ORIGIN, localStorage: [{ name: 'tdmr-auth', value: authStorageJson(session) }] },
       ],
     },
   });
@@ -179,7 +179,7 @@ export async function flowPage(browser: Browser, role: FlowRole): Promise<{ page
   // skip key first (same init script the e2e fixture factory uses).
   await page.addInitScript(() => {
     try {
-      sessionStorage.setItem('madarek-intro-skip', '1');
+      sessionStorage.setItem('tadmora-intro-skip', '1');
     } catch {
       /* storage unavailable — the page stands complete anyway */
     }

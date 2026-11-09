@@ -1,4 +1,4 @@
-# Madarek — Database Reference
+# Tadmora — Database Reference
 
 **Platform:** PostgreSQL (Neon serverless) via Prisma 5.22
 **Models:** 79 across ~27 domain groups (r178: +Institution, +Membership)

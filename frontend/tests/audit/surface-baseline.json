@@ -13,7 +13,7 @@
    "collegeAccentFallback": true,
    "motionTreatments": [
     {
-     "selector": "body.mdrk-grain",
+     "selector": "body.tdmr-grain",
      "durationMs": 400,
      "easing": "cubic-bezier(0.23, 1, 0.32, 1), cubic-bezier(0.23, 1, 0.32, 1)"
     },
@@ -261,7 +261,7 @@
    "collegeAccentFallback": true,
    "motionTreatments": [
     {
-     "selector": "body.mdrk-grain",
+     "selector": "body.tdmr-grain",
      "durationMs": 400,
      "easing": "cubic-bezier(0.23, 1, 0.32, 1), cubic-bezier(0.23, 1, 0.32, 1)"
     },
@@ -509,7 +509,7 @@
    "collegeAccentFallback": true,
    "motionTreatments": [
     {
-     "selector": "body.mdrk-grain",
+     "selector": "body.tdmr-grain",
      "durationMs": 400,
      "easing": "cubic-bezier(0.23, 1, 0.32, 1), cubic-bezier(0.23, 1, 0.32, 1)"
     },
@@ -757,7 +757,7 @@
    "collegeAccentFallback": true,
    "motionTreatments": [
     {
-     "selector": "body.mdrk-grain",
+     "selector": "body.tdmr-grain",
      "durationMs": 400,
      "easing": "cubic-bezier(0.23, 1, 0.32, 1), cubic-bezier(0.23, 1, 0.32, 1)"
     },
@@ -1005,7 +1005,7 @@
    "collegeAccentFallback": true,
    "motionTreatments": [
     {
-     "selector": "body.mdrk-grain",
+     "selector": "body.tdmr-grain",
      "durationMs": 400,
      "easing": "cubic-bezier(0.23, 1, 0.32, 1), cubic-bezier(0.23, 1, 0.32, 1)"
     },
@@ -1253,7 +1253,7 @@
    "collegeAccentFallback": true,
    "motionTreatments": [
     {
-     "selector": "body.mdrk-grain",
+     "selector": "body.tdmr-grain",
      "durationMs": 400,
      "easing": "cubic-bezier(0.23, 1, 0.32, 1), cubic-bezier(0.23, 1, 0.32, 1)"
     },

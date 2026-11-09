@@ -37,7 +37,7 @@
  *
  * Emitted:
  *   audits/evidence/r322/perf.json       — the machine result set
- *   /tmp/mdrk-r322-traces/*.jsonl        — raw CDP traces (outside the
+ *   /tmp/tdmr-r322-traces/*.jsonl        — raw CDP traces (outside the
  *                                          repo, the r316 convention)
  *
  * Usage: node scripts/r322/perf-baseline.mjs
@@ -59,7 +59,7 @@ const PORT = opt('port', '4317');
 const CPU = Number(opt('cpu', '4'));
 const SESSIONS = (opt('sessions', 's1,s1net,s2,s2clean,s2native')).split(',').map((s) => s.trim());
 const OUT_JSON = path.join(ROOT, 'audits/evidence/r322/perf.json');
-const TRACE_DIR = '/tmp/mdrk-r322-traces';
+const TRACE_DIR = '/tmp/tdmr-r322-traces';
 const VIEWPORT = { width: 1440, height: 900 };
 const FAST3G = { latency: 150, download: (1.6 * 1024 * 1024) / 8, upload: (750 * 1024) / 8 };
 
@@ -140,8 +140,8 @@ function summarizeLoaf(loaf) {
 function initScript({ autoStart, grbcOn }) {
   return `
 (function () {
-  if (window.__mdrkPerf) return;
-  var W = (window.__mdrkPerf = {
+  if (window.__tdmrPerf) return;
+  var W = (window.__tdmrPerf = {
     frameDeltas: [], marks: [], recording: ${autoStart ? 'true' : 'false'},
     _rafOn: false, _last: 0,
     longtasks: [], shifts: [], lcps: [], loaf: [], wheelEvents: [],
@@ -160,7 +160,7 @@ function initScript({ autoStart, grbcOn }) {
     return s;
   }
   W.desc = desc;
-  window.__mdrkPerfStart = function () {
+  window.__tdmrPerfStart = function () {
     W.recording = true;
     if (!W._rafOn) {
       W._rafOn = true; W._last = 0;
@@ -175,8 +175,8 @@ function initScript({ autoStart, grbcOn }) {
       });
     }
   };
-  window.__mdrkPerfStop = function () { W.recording = false; };
-  window.__mdrkMark = function (label) { W.marks.push({ label: String(label), t: Math.round(performance.now()) }); };
+  window.__tdmrPerfStop = function () { W.recording = false; };
+  window.__tdmrMark = function (label) { W.marks.push({ label: String(label), t: Math.round(performance.now()) }); };
   /* the wheel cadence log — the in-page truth for notch times + scrollY */
   window.addEventListener('wheel', function (e) {
     W.wheelEvents.push({ t: Math.round(performance.now()), y: Math.round(window.scrollY || 0), dy: e.deltaY });
@@ -216,22 +216,22 @@ function initScript({ autoStart, grbcOn }) {
   /* the gBCR read census (r316 recipe) */
   var gRBC = Element.prototype.getBoundingClientRect;
   Element.prototype.getBoundingClientRect = function () {
-    var g = window.__mdrkPerf && window.__mdrkPerf.grbc;
+    var g = window.__tdmrPerf && window.__tdmrPerf.grbc;
     if (g && g.on) {
       g.count++;
-      try { var k = window.__mdrkPerf.desc(this); g.bySel[k] = (g.bySel[k] || 0) + 1; } catch (e) {}
+      try { var k = window.__tdmrPerf.desc(this); g.bySel[k] = (g.bySel[k] || 0) + 1; } catch (e) {}
     }
     return gRBC.call(this);
   };
   /* fonts.ready timing (LCP decomposition: the font leg) */
-  try { document.fonts.ready.then(function () { window.__mdrkPerf.fontsReadyAt = Math.round(performance.now()); }); } catch (e) {}
-  ${autoStart ? 'window.__mdrkPerfStart();' : ''}
+  try { document.fonts.ready.then(function () { window.__tdmrPerf.fontsReadyAt = Math.round(performance.now()); }); } catch (e) {}
+  ${autoStart ? 'window.__tdmrPerfStart();' : ''}
 })();
 `;
 }
 
 /* the loader-skip seed (the repo's hermetic mechanism — INTRO_SKIP_KEY) */
-const INTRO_SKIP_SEED = `try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch (e) {}`;
+const INTRO_SKIP_SEED = `try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch (e) {}`;
 
 /* ── trace collection + streaming reduction ────────────────────────── */
 const TRACE_CATEGORIES = [
@@ -444,7 +444,7 @@ async function driveWheelScroll(page, cdp, hooks = {}) {
 
 /* ── page-side data collection ────────────────────────────────────── */
 const COLLECT_FN = `(() => {
-  const W = window.__mdrkPerf || {};
+  const W = window.__tdmrPerf || {};
   const nav = (performance.getEntriesByType('navigation')[0] || {});
   const fcp = performance.getEntriesByName('first-contentful-paint')[0];
   const res = performance.getEntriesByType('resource').map(function (r) {
@@ -533,7 +533,7 @@ async function runLoaderOnSession(browser, { tag, net, windowMs }) {
     result.loaderGateProbe = await page.evaluate(() => ({
       cores: navigator.hardwareConcurrency,
       gateOpen: (() => {
-        try { return !sessionStorage.getItem('madarek-intro-skip') && !sessionStorage.getItem('madarek-intro-seen'); } catch (e) { return false; }
+        try { return !sessionStorage.getItem('tadmora-intro-skip') && !sessionStorage.getItem('tadmora-intro-seen'); } catch (e) { return false; }
       })(),
     })).catch(() => null);
     /* loader mount + auto-dismiss + exit */
@@ -554,7 +554,7 @@ async function runLoaderOnSession(browser, { tag, net, windowMs }) {
     ).catch(() => result.notes.push('25s window wait timed out'));
     await page.waitForTimeout(1500);
 
-    await page.evaluate(() => window.__mdrkPerfStop());
+    await page.evaluate(() => window.__tdmrPerfStop());
     await cdp.send('Tracing.end');
     await Promise.race([traceDone, new Promise((r) => setTimeout(r, 15000))]);
     tc.finish();
@@ -670,14 +670,14 @@ async function runScrollSession(browser, { tag, cpu, traced, clean }) {
       await cdp.send('Tracing.start', { transferMode: 'ReportEvents', streamFormat: 'json', categories: TRACE_CATEGORIES });
     }
     const startMs = await page.evaluate(() => Math.round(performance.now()));
-    await page.evaluate(() => window.__mdrkPerfStart());
-    await page.evaluate(() => window.__mdrkMark('active-start'));
+    await page.evaluate(() => window.__tdmrPerfStart());
+    await page.evaluate(() => window.__tdmrMark('active-start'));
 
     const { scrollYSamples } = await driveWheelScroll(page, cdp, {});
 
-    await page.evaluate(() => window.__mdrkMark('active-end'));
+    await page.evaluate(() => window.__tdmrMark('active-end'));
     await page.waitForTimeout(1200); /* the Lenis glide tail */
-    const endMs = await page.evaluate(() => { window.__mdrkPerfStop(); return Math.round(performance.now()); });
+    const endMs = await page.evaluate(() => { window.__tdmrPerfStop(); return Math.round(performance.now()); });
 
     if (tc) {
       await cdp.send('Tracing.end');

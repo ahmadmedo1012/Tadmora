@@ -1,26 +1,31 @@
 /**
- * mark.ts — the R323 Madarek mark «نقطة تصبح مدارًا» — the single source
- * of the mark's GEOMETRY (the <Logo> component in ./index.ts renders it;
+ * mark.ts — the TADMORA mark «قوس تادمورا» — the single source of the
+ * mark's GEOMETRY (the <Logo> component in ./Logo.tsx renders it;
  * scripts/r323/brand-assets.mjs re-states the same numbers for the static
- * twins, and frontend/tests/unit/r323-brand-system.test.ts pins the two
+ * twins, scripts/brand/build-app-icons.mjs parses this file for the mobile
+ * asset set, and frontend/tests/unit/r323-brand-system.test.ts pins them
  * together — never edit one without the other).
  *
  * CONSTRUCTION (32-unit grid, viewBox 0 0 32 32):
- *  · the khatam idea kept: TWO squares sharing one centre (16,16), one
- *    rotated 45°;
- *  · the axis square x=8..24 (side 16) — its four corners sit on grid
- *    intersections (8,8) (24,8) (24,24) (8,24);
- *  · the rotated square's vertices sit ON grid intersections too:
- *    (16,5) (27,16) (16,27) (5,16) — the √2 tax snapped (a congruent
- *    rotated square would put its vertices at 16±8√2 ≈ 4.69/27.31, OFF
- *    the grid; the 2.8% side difference is invisible, the grid snap is
- *    permanent — docs/redesign/r323/brand/VARIANTS.md, variant B);
- *  · ONE solid orange square — the point of light — seated ON the north-
- *    east grid intersection (24,8): a 4×4 square at x=22..26, y=6..10,
- *    covering the axis square's NE corner (the «نقطة» the brand copy
- *    begins from — the same NE story the r188 star told, redrawn);
+ *  · the Palmyra gateway idea: TWO hairline pillars carry a semicircular
+ *    arch over a baseline — the colonnade of Tadmor (تدمر), the university
+ *    as the gateway of knowledge;
+ *  · the pillars stand at x=8 and x=24, rising from the baseline y=27 to
+ *    the arch spring y=15 — every anchor ON a grid intersection;
+ *  · the arch: radius 8, centre (16,15) — springs (8,15) and (24,15), the
+ *    apex at the grid intersection (16,7); ONE closed path
+ *    M8 27 L8 15 A8 8 0 0 1 24 15 L24 27 Z (the Z draws the baseline
+ *    back to the first pillar — the stylobate of the colonnade);
+ *  · ONE solid orange square — the KEYSTONE — seated exactly at the arch's
+ *    apex: a 4×4 square at x=14..18, y=5..9, centred (16,7), interrupting
+ *    the arch line like a true keystone. The keystone is the person —
+ *    student, teacher, researcher — at the apex of the system: the
+ *    University Operating System is built around its people
+ *    («الجامعة في منظومة واحدة»);
+ *  · the ink lands x=8..24, y=5..27 — perfectly centred in the 32-grid
+ *    (8-unit side margins, 5-unit top/bottom margins);
  *  · hairline ink strokes, UNIFORM weight, MITER joins (never round),
- *    radius 0, no fills except the point, no gradients, no shadows.
+ *    radius 0, no fills except the keystone, no gradients, no shadows.
  *
  * COLOURS (the only three): paper #F6F6EE · ink #282828 · orange #FA3600.
  * In the app the ink rides currentColor and the orange rides var(--accent)
@@ -32,24 +37,22 @@
 /** The mark's own viewBox (the 32-unit grid). */
 export const MARK_VIEWBOX = '0 0 32 32';
 
-/** Axis square: x,y = top-left on the grid, size = side (8..24). */
-export const MARK_AXIS = { x: 8, y: 8, size: 16 } as const;
+/** The gateway as ONE closed path: left pillar up, the arch over the top,
+ * right pillar down, the baseline back — miter joins at every corner. */
+export const MARK_ARCH_PATH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z';
 
-/** Rotated square as an explicit path — vertices on the grid axes. */
-export const MARK_DIAMOND_PATH = 'M16 5L27 16L16 27L5 16Z';
+/** The orange keystone: 4×4 square centred on the arch's apex (16,7). */
+export const MARK_KEYSTONE = { x: 14, y: 5, size: 4 } as const;
 
-/** The orange point: 4×4 square centred on the grid intersection (24,8). */
-export const MARK_POINT = { x: 22, y: 6, size: 4 } as const;
-export const MARK_POINT_CENTRE = { x: 24, y: 8 } as const;
+/** The mark's ink bbox inside the 32 viewBox (x8..24, y5..27). */
+export const MARK_INK = { x: 8, y: 5, w: 16, h: 22 } as const;
 
-/** The mark's ink bbox inside the 32 viewBox (tips 5..27 all round). */
-export const MARK_INK = { x: 5, y: 5, w: 22, h: 22 } as const;
-
-/** The five grid intersections the construction is judged on. */
+/** The grid intersections the construction is judged on. */
 export const MARK_GRID_POINTS: readonly (readonly [number, number])[] = [
-  [8, 8], [24, 8], [24, 24], [8, 24], /* axis square corners */
-  [16, 5], [27, 16], [16, 27], [5, 16], /* rotated square vertices */
-  [24, 8], /* the point's seat (NE) */
+  [8, 15], [24, 15], /* the arch springs */
+  [16, 7],           /* the apex — the keystone's seat */
+  [8, 27], [24, 27], /* the baseline corners */
+  [14, 5], [18, 5], [14, 9], [18, 9], /* the keystone's corners */
 ];
 
 /** Static stroke ratios. The component renders the mark with a

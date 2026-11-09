@@ -25,7 +25,7 @@ export interface RoleTab {
   name: string;
   /**
    * Stabilized URL — the `(tabs)` group never contributes a path segment,
-   * so `/student/dashboard` and the `madarek://student/dashboard` deep link
+   * so `/student/dashboard` and the `tadmora://student/dashboard` deep link
    * keep working unchanged.
    */
   path: string;

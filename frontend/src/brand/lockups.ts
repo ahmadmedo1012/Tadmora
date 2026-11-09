@@ -38,17 +38,17 @@ function place(sheetInkH: number, inkH: number, inkX: number, inkY: number) {
   };
 }
 
-/* ── LOCKUP — horizontal, RTL: mark right, «مدارك» left ──────────────
+/* ── LOCKUP — horizontal, RTL: mark right, «تادمورا» left ───────────
  * Canvas 32 units tall (the mark's own grid). The wordmark ink is 11
  * units tall (≈⅓ of the mark box), vertically centred, seated 5 units
- * from the mark's west diamond tip — the same 5-unit air the mark's
- * viewBox already carries on every side, so the whole lockup reads as
- * ONE evenly-framed plate. */
+ * from the mark's west pillar — the same 5-unit air the mark's viewBox
+ * carries top and bottom, so the whole lockup reads as ONE evenly-
+ * framed plate. */
 const LOCKUP_AR_INK_H = 11;
 const LOCKUP_AR = place(WORDMARK_AR.ink.h, LOCKUP_AR_INK_H, 5, (32 - LOCKUP_AR_INK_H) / 2);
 const LOCKUP_AR_INK_W = +(WORDMARK_AR.ink.w * LOCKUP_AR.scale).toFixed(3);
 /** mark box x: wordmark ink left (5) + wordmark ink width + 5-unit
- * perceived gap − the mark's own west air (MARK_INK.x = 5). */
+ * perceived gap − the mark's own west air (MARK_INK.x = 8). */
 const LOCKUP_MARK_X = +(5 + LOCKUP_AR_INK_W + 5 - MARK_INK.x).toFixed(3);
 
 export const LOCKUP = {
@@ -60,7 +60,7 @@ export const LOCKUP = {
   ar: LOCKUP_AR,
 } as const;
 
-/* ── STACKED — the full vertical identity: mark / «مدارك» / MADAREK ──
+/* ── STACKED — the full vertical identity: mark / «تادمورا» / TADMORA ──
  * Mark on top (32-box), the wordmark ink 10 units tall centred 5 units
  * below, the Geist Mono transliteration 3.5 units tall (slightly
  * narrower than the wordmark — the mono micro-label hierarchy) 4 units

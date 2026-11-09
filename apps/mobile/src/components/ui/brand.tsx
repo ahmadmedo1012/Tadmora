@@ -4,7 +4,7 @@ import { usePalette } from "@/design/theme";
 import { T } from "./text";
 
 /**
- * The Madarek brand mark — geometry from frontend/src/brand/mark.ts:
+ * The Tadmora brand mark — geometry from frontend/src/brand/mark.ts:
  * square + rotated-square (compass) hairlines in ink, one orange node.
  */
 export function BrandMark({ size = 32, ink, orange }: { size?: number; ink?: string; orange?: string }) {
@@ -14,7 +14,7 @@ export function BrandMark({ size = 32, ink, orange }: { size?: number; ink?: str
   const sw = 1;
   const scale = size / 32;
   return (
-    <View style={{ width: size, height: size }} accessibilityLabel="شعار مدارك">
+    <View style={{ width: size, height: size }} accessibilityLabel="شعار تادمورا">
       <Svg width={size} height={size} viewBox="0 0 32 32">
         <Rect x={8 * scale} y={8 * scale} width={16 * scale} height={16 * scale} fill="none" stroke={stroke} strokeWidth={sw} strokeLinejoin="miter" />
         <Path
@@ -30,13 +30,13 @@ export function BrandMark({ size = 32, ink, orange }: { size?: number; ink?: str
   );
 }
 
-/** Wordmark row — mark + مدارك word in display weight. */
+/** Wordmark row — mark + تادمورا word in display weight. */
 export function BrandLockup({ size = 28 }: { size?: number }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
       <BrandMark size={size} />
       <T variant="h3" weight="bold">
-        مدارك
+        تادمورا
       </T>
     </View>
   );
@@ -60,10 +60,10 @@ export function LaunchSheet({ label }: { label?: string }) {
         <View style={{ position: "absolute", bottom: -1, left: -1, width: 8, height: 8, backgroundColor: p.accent }} />
       </View>
       <T variant="h3" weight="bold">
-        {label ?? "مدارك"}
+        {label ?? "تادمورا"}
       </T>
       <T variant="sm" color="muted">
-        منصّة التعليم الذكي
+        نظام تشغيل الجامعة
       </T>
     </View>
   );

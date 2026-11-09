@@ -28,20 +28,21 @@ const schema = z
     // refuses every request — fail-closed by default.
     INTERNAL_SERVICE_TOKEN: z.string().min(16).optional(),
     // Optional comma-separated CORS origin allow-list, e.g.
-    // CORS_ORIGINS="https://madarek.onrender.com,https://staging.example.com".
+    // CORS_ORIGINS="https://tadmora.vercel.app,https://staging.example.com".
     // Unset (or empty after trimming) → DEFAULT_CORS_ORIGINS below.
     // Wildcards are NOT supported on purpose: credentials are enabled,
     // so reflecting arbitrary origins would be a CSRF/CORS hole.
     CORS_ORIGINS: z.string().optional(),
-    // ── Deployment identity (r184) ── Render injects the deployed
-    // commit SHA as RENDER_GIT_COMMIT on every git-connected build;
-    // GIT_SHA is the generic escape hatch for other providers. Both
-    // optional: local dev simply reports 'local-dev' from
-    // lib/build-id.ts — the health buildId is DERIVED, never a
-    // hand-bumped constant that can silently rot (see the r184 note
-    // in that file: production served r183 code while still reporting
+    // ── Deployment identity (r184) ── the platform injects the deployed
+    // commit SHA on every git-connected deploy (Render: RENDER_GIT_COMMIT,
+    // Vercel: VERCEL_GIT_COMMIT_SHA); GIT_SHA is the generic escape hatch
+    // for other providers. All optional: local dev simply reports
+    // 'local-dev' from lib/build-id.ts — the health buildId is DERIVED,
+    // never a hand-bumped constant that can silently rot (see the r184
+    // note in that file: production served r183 code while still reporting
     // an r180 buildId).
     RENDER_GIT_COMMIT: z.string().optional(),
+    VERCEL_GIT_COMMIT_SHA: z.string().optional(),
     GIT_SHA: z.string().optional(),
     // ── File storage (uploads: backend/src/lib/storage.ts) ── All
     // optional individually; selecting s3 without its credentials
@@ -207,7 +208,7 @@ if (!parsed.success) {
 const isProd = parsed.data.NODE_ENV === 'production';
 
 /** CORS allow-list fallback — production is same-origin, so this mostly serves local Vite dev. */
-const DEFAULT_CORS_ORIGINS = ['https://madarek.onrender.com', 'http://localhost:5173'];
+const DEFAULT_CORS_ORIGINS = ['https://tadmora.vercel.app', 'http://localhost:5173'];
 
 /**
  * Parse CORS_ORIGINS (comma-separated) into a normalized allow-list.

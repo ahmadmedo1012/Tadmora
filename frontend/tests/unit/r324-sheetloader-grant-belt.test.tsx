@@ -76,8 +76,8 @@ beforeEach(() => {
       (handle: number): void => window.clearTimeout(handle as unknown as ReturnType<typeof setTimeout>);
   }
   try {
-    sessionStorage.removeItem('madarek-intro-skip');
-    sessionStorage.removeItem('madarek-intro-seen');
+    sessionStorage.removeItem('tadmora-intro-skip');
+    sessionStorage.removeItem('tadmora-intro-seen');
   } catch {
     /* the setup polyfill guarantees a working storage */
   }

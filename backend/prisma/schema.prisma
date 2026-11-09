@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════
-//  Madarek AI — Prisma schema (PostgreSQL)
+//  Tadmora AI — Prisma schema (PostgreSQL)
 // ════════════════════════════════════════════════════════════════
 //  Models the full domain extracted from the prototype:
 //  users + role profiles, faculties, departments, courses,
@@ -9,7 +9,7 @@
 //  virtual labs, AR experiences, AI conversations, audit log.
 // ────────────────────────────────────────────────────────────────
 //  r178 — MULTI-INSTITUTION FOUNDATION:
-//  · NEW Institution + Membership models: one product/brand (مدارك)
+//  · NEW Institution + Membership models: one product/brand (تادمورا)
 //    serving multiple institutions as CONTEXT labels (no per-university
 //    logos/themes/domains). Membership is the per-user, per-institution
 //    standing — the effective institutional role ALWAYS comes from
@@ -262,7 +262,7 @@ enum ThemePreference {
 //  r178 — Institutions & memberships (أساس المؤسسات المتعددة)
 // ────────────────────────────────────────────────────────────────
 
-// المؤسسة سياق تعليمي داخل مدارك (ليست هوية بصرية — لا شعارات ولا
+// المؤسسة سياق تعليمي داخل تادمورا (ليست هوية بصرية — لا شعارات ولا
 // نطاقات). مؤسسة العرض المرجعية: جامعة الزاوية (slug: zawia-showcase)
 // تحمل البيانات التجريبية؛ ومؤسسة الأندلس التعليمية (slug:
 // alandalus-demo) مؤسسة تجريبية عامة تثبت تفرد رموز المقررات وأرقام

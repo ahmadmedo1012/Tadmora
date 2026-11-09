@@ -44,7 +44,7 @@
 #                                    reduced-motion token overrides)
 #   frontend/src/styles/base.css     (global reduced-motion belt with
 #                                    `0.01ms !important`)
-#   frontend/src/styles/landing.css  (immersive v2 «سماء مدارك» — a
+#   frontend/src/styles/landing.css  (immersive v2 «سماء تادمورا» — a
 #                                    self-contained cinematic sheet whose
 #                                    hand-tuned cascade IS the authored
 #                                    choreography: scene-in 1.1s, drip
@@ -191,18 +191,10 @@ WHOLESALE = {
 #     composited translateX(calc(var(--motion-direction) * 18px)) by
 #     21-b (A11 P2-10).
 DEBT = [
-    # R323 CI-debt (reviewed): the brand mark's bespoke stroke-draw
-    # choreography — Logo.tsx composes the animated lockup inline
-    # (per-instance keyframes via useId; the staggered 600–900 ms
-    # draws and the orange point's 750 ms pop ARE the brand animation
-    # spec authored in the r323 brand system, not generic UI motion —
-    # a token sweep must never silently re-choreograph the mark).
-    # Unpicks: the next brand-system round (a named --brand-draw-*
-    # ladder in tokens.css is the exit).
-    (r'frontend/src/brand/Logo\.tsx:57:',
-     'r323 brand mark: bespoke stroke-draw easing (the brand spec)'),
-    (r'frontend/src/brand/Logo\.tsx:60:',
-     'r323 brand mark: bespoke point-pop timing (the brand spec)'),
+    # (empty — the r323 brand-mark entries were retired with the mark's
+    #  token ladder: the arch/wordmark draws + keystone pop now ride
+    #  --motion-duration-brand-* rungs + --brand-draw-ease defined in
+    #  tokens.css, so Logo.tsx holds no raw motion literals anymore)
 ]
 
 # ── helpers ────────────────────────────────────────────────────────────

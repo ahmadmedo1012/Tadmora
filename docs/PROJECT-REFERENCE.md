@@ -1,13 +1,13 @@
-# Madarek Platform — Project Reference
+# Tadmora Platform — Project Reference
 
-> مدارك — منصّة تعليم ذكي مستقلّة عربية-أولًا (Madarek — an independent Arabic-first smart-learning platform)
+> تادمورا — منصّة تعليم ذكي مستقلّة عربية-أولًا (Tadmora — the Arabic-first University Operating System)
 > Arabic-first, built in Libya — University of Zawia records shown in the platform are showcase/reference data, not affiliation or endorsement
 
 ## Quick Facts
 
 | Aspect | Value |
 |--------|-------|
-| **Production** | https://madarek.onrender.com |
+| **Production** | https://tadmora.onrender.com |
 | **Repo** | <repository-url> |
 | **Branch** | `main` |
 | **Stack** | React 18 + Vite + Express + Prisma + PostgreSQL (Neon) |
@@ -29,7 +29,7 @@ Single-service deployment. No separate API host. In dev, Vite on `:5173` proxies
 ## Repository Layout
 
 ```
-madarek/
+tadmora/
 ├── frontend/            # React SPA (Vite + React Router + TanStack Query + Zustand)
 │   ├── src/
 │   │   ├── pages/           # Route pages by role
@@ -97,15 +97,15 @@ The UI is Arabic-first RTL with no i18n runtime — there is **no** i18next/reac
 | `JWT_REFRESH_SECRET` | ✅ | — | ≥32 chars |
 | `NODE_ENV` | ❌ | `development` | `production` enables static serving + secure cookies |
 | `PORT` | ❌ | `4000` | Listen port |
-| `CORS_ORIGINS` | ❌ | madarek.onrender.com + localhost:5173 | Comma-separated allow-list; wildcards unsupported (credentials are on) |
+| `CORS_ORIGINS` | ❌ | tadmora.onrender.com + localhost:5173 | Comma-separated allow-list; wildcards unsupported (credentials are on) |
 | `INTERNAL_SERVICE_TOKEN` | ❌ | — | ≥16 chars; gates `POST /api/v1/me/milestones/:id/fire` (fail-closed when unset) |
 | `DIRECT_DATABASE_URL` | ❌ | derived | Neon direct URL for `prisma migrate deploy`; derived from `DATABASE_URL` when unset |
 
 ## Authentication Flow
 
-1. Login → returns `{ user, accessToken }` + http-only `mdrk_refresh` cookie
+1. Login → returns `{ user, accessToken }` + http-only `tdmr_refresh` cookie
 2. Access token: JWT HS256, 15min, `Authorization: Bearer`
-3. Refresh token: JWT, 7d, http-only cookie `mdrk_refresh`, path `/api/v1/auth`
+3. Refresh token: JWT, 7d, http-only cookie `tdmr_refresh`, path `/api/v1/auth`
 4. Refresh = **sliding session**: tokens re-issue at the same `tokenVersion`; a normal refresh never revokes other devices. `tokenVersion` is bumped only on explicit revocation events — logout, password change, role change, deactivation (atomic conditional writes)
 5. 401 `TOKEN_EXPIRED` → frontend silently calls `/auth/refresh` (single-flight) → retries once; failure clears the auth store + query cache
 6. Passwords: Argon2id (~19 MiB, timeCost 2) + common-password blocklist (8–72 chars)
@@ -239,7 +239,7 @@ The current maintenance phase ran as four waves of parallel, file-disjoint batch
 1. `app.disable('x-powered-by')`
 2. `app.set('trust proxy', 1)`
 3. Helmet — **CSP enabled** (D7 allow-list + sha256 pin for the inline theme bootstrap), cross-origin resource policy
-4. CORS — allow-list `https://madarek.onrender.com` + `http://localhost:5173` by default, overridable via `CORS_ORIGINS`; `credentials: true`
+4. CORS — allow-list `https://tadmora.onrender.com` + `http://localhost:5173` by default, overridable via `CORS_ORIGINS`; `credentials: true`
 5. gzip compression middleware (≥1KB, text/JSON/JS/SVG, `Vary: Accept-Encoding`)
 6. `express.json({ limit: '1mb' })` + urlencoded (rejects mapped to 400/413/415)
 7. `cookieParser()`

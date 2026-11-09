@@ -28,7 +28,7 @@ import {
   radialOptions,
   chartAnimation,
   lineFillGradient,
-  madarekCenterLabelPlugin,
+  tadmoraCenterLabelPlugin,
   __chartThemeTestUtils__,
 } from '../../src/lib/chartTheme';
 
@@ -235,7 +235,7 @@ describe('external tooltip rendering — token-styled DOM surface', () => {
       } as unknown as TooltipModel<ChartType>,
     });
 
-    const el = document.querySelector<HTMLElement>('.madarek-chart-tooltip');
+    const el = document.querySelector<HTMLElement>('.tadmora-chart-tooltip');
     expect(el).not.toBeNull();
     // Decorative mirror of data already exposed via ChartFrame — hidden from AT.
     expect(el?.getAttribute('aria-hidden')).toBe('true');
@@ -270,7 +270,7 @@ describe('external tooltip rendering — token-styled DOM surface', () => {
       } as unknown as TooltipModel<ChartType>,
     });
 
-    const el = document.querySelector<HTMLElement>('.madarek-chart-tooltip');
+    const el = document.querySelector<HTMLElement>('.tadmora-chart-tooltip');
     // caret view coords: 40 + 150 = 190 (x), 60 + 40 = 100 (y) — element
     // is placed above the caret, clamped to the viewport, offset by scroll.
     expect(el?.style.transform).toContain('translate3d(');
@@ -294,7 +294,7 @@ describe('external tooltip rendering — token-styled DOM surface', () => {
       tooltip: { opacity: 0 } as unknown as TooltipModel<ChartType>,
     });
 
-    const el = document.querySelector<HTMLElement>('.madarek-chart-tooltip');
+    const el = document.querySelector<HTMLElement>('.tadmora-chart-tooltip');
     expect(el?.style.opacity).toBe('0');
   });
 });
@@ -389,17 +389,17 @@ describe('fading-axis grid — scriptable edge-fade gradient', () => {
 describe('opt-in plugin flags + numeric tick typography', () => {
   it('raises the gradient-fill flag only when requested', () => {
     const withFlag = cartesianOptions({ gradientFill: true }).plugins as Record<string, unknown>;
-    expect(withFlag.madarekGradientFill).toEqual({ enabled: true });
+    expect(withFlag.tadmoraGradientFill).toEqual({ enabled: true });
     const without = cartesianOptions().plugins as Record<string, unknown>;
-    expect(without.madarekGradientFill).toBeUndefined();
+    expect(without.tadmoraGradientFill).toBeUndefined();
   });
 
   it('wires the doughnut center-label options only when requested', () => {
     const withLabel = radialOptions({ centerLabel: { value: '85%', label: 'التقدّم' } })
       .plugins as Record<string, unknown>;
-    expect(withLabel.madarekCenterLabel).toEqual({ value: '85%', label: 'التقدّم' });
+    expect(withLabel.tadmoraCenterLabel).toEqual({ value: '85%', label: 'التقدّم' });
     const without = radialOptions().plugins as Record<string, unknown>;
-    expect(without.madarekCenterLabel).toBeUndefined();
+    expect(without.tadmoraCenterLabel).toBeUndefined();
   });
 
   it('gives numeric axes the Geist-Mono-led mono stack and category axes the Arabic sans stack', () => {
@@ -432,7 +432,7 @@ describe('opt-in plugin flags + numeric tick typography', () => {
 
 /* ═══ Task 2-c — doughnut center label plugin ═══════════════════════ */
 
-describe('madarekCenterLabelPlugin — afterDraw center text', () => {
+describe('tadmoraCenterLabelPlugin — afterDraw center text', () => {
   it('draws the value with --type-metric tokens and the label under it', () => {
     const calls: string[] = [];
     const ctx = {
@@ -451,7 +451,7 @@ describe('madarekCenterLabelPlugin — afterDraw center text', () => {
       ctx,
     });
 
-    madarekCenterLabelPlugin.afterDraw?.(
+    tadmoraCenterLabelPlugin.afterDraw?.(
       chart,
       {},
       { value: '85%', label: 'التقدّم' },
@@ -471,6 +471,6 @@ describe('madarekCenterLabelPlugin — afterDraw center text', () => {
       chartArea: { top: 0, bottom: 200, left: 0, right: 200 },
       ctx: { save: () => {}, restore: () => {}, fillText: () => {} } as unknown as CanvasRenderingContext2D,
     });
-    expect(() => madarekCenterLabelPlugin.afterDraw?.(chart, {}, {})).not.toThrow();
+    expect(() => tadmoraCenterLabelPlugin.afterDraw?.(chart, {}, {})).not.toThrow();
   });
 });

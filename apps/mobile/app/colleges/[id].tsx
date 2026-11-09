@@ -53,7 +53,7 @@ export default function CollegeDetail() {
   if (q.isLoading) {
     return (
       <Screen scroll>
-        <StackHeader title="كلّيّة" kicker="جامعة مدارك التجريبية" />
+        <StackHeader title="كلّيّة" kicker="جامعة تادمورا التجريبية" />
         <SkeletonList rows={5} />
       </Screen>
     );
@@ -61,7 +61,7 @@ export default function CollegeDetail() {
   if (q.isError || !q.data) {
     return (
       <Screen scroll>
-        <StackHeader title="كلّيّة" kicker="جامعة مدارك التجريبية" />
+        <StackHeader title="كلّيّة" kicker="جامعة تادمورا التجريبية" />
         <ErrorState message={apiMessage(q.error)} onRetry={() => q.refetch()} />
       </Screen>
     );
@@ -77,7 +77,7 @@ export default function CollegeDetail() {
 
   return (
     <Screen scroll>
-      <StackHeader title={c.name} kicker={c.city ?? "جامعة مدارك التجريبية"} />
+      <StackHeader title={c.name} kicker={c.city ?? "جامعة تادمورا التجريبية"} />
 
       {/* Identity band — the honest eyebrow (web parity). */}
       <View style={{ gap: sp[4], paddingBottom: sp[8] }}>
@@ -90,7 +90,7 @@ export default function CollegeDetail() {
           </T>
         ) : null}
         <T variant="xs" color="faint">
-          {`جامعة مدارك التجريبية${c.city ? ` · ${c.city}` : ""} · بيانات تجريبية`}
+          {`جامعة تادمورا التجريبية${c.city ? ` · ${c.city}` : ""} · بيانات تجريبية`}
         </T>
       </View>
 

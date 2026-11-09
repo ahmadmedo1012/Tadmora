@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * r325/y3-probe.mjs — the Y3 defect probe (§06 «لماذا مدارك»).
+ * r325/y3-probe.mjs — the Y3 defect probe (§06 «لماذا تادمورا»).
  *
  * For each pinned breakpoint (1440/768/390) × theme (paper/ink):
  *   1. the overlay tooltip is GONE — .wy .prf-cards resolves display:none
@@ -53,7 +53,7 @@ for (const { w, h } of BPS) {
     await page.addInitScript(
       ([t]) => {
         localStorage.setItem(
-          'madarek-theme',
+          'tadmora-theme',
           JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 }),
         );
       },
@@ -85,7 +85,7 @@ for (const { w, h } of BPS) {
 
       // every visible demo-disclosure string inside the section
       // («بيانات العرض التجريبية» = the per-frame caption demo;
-      //  «جامعة مدارك التجريبية» = the section's own .wy-note wording)
+      //  «جامعة تادمورا التجريبية» = the section's own .wy-note wording)
       const texts = [];
       section?.querySelectorAll('*').forEach((el) => {
         if (el.children.length > 0) return;

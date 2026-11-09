@@ -99,7 +99,7 @@ let chromium, webkit;
 try {
   ({ chromium, webkit } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium, webkit } = createRequire("/home/z/madarek/frontend/package.json"))("playwright");
+  ({ chromium, webkit } = createRequire("/home/z/tadmora/frontend/package.json"))("playwright");
 }
 
 const SPEC_DIR = join(WORKTREE, "docs", "redesign", "r335", "heron-spec");
@@ -382,7 +382,7 @@ const WALK_JS = String.raw`
 async function SCROLL_WALK_JS(sectionSelectors) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const seat = (y) => {
-    const L = window.__mdrkLenis;
+    const L = window.__tdmrLenis;
     if (L && typeof L.scrollTo === "function") L.scrollTo(y, { immediate: true, force: true });
     else window.scrollTo(0, y);
   };

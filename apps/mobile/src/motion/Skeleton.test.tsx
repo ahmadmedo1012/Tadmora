@@ -90,7 +90,7 @@ describe("Skeleton", () => {
     const first = await render(<Skeleton width={100} height={10} />);
     const second = await render(<Skeleton width={100} height={10} />);
     const nameOf = (json: unknown) =>
-      collectProps(json as JsonNode, (p) => typeof p.name === "string" && (p.name as string).startsWith("mdrk-skel-")).map((p) => p.name as string);
+      collectProps(json as JsonNode, (p) => typeof p.name === "string" && (p.name as string).startsWith("tdmr-skel-")).map((p) => p.name as string);
     const names = [...nameOf(first.toJSON()), ...nameOf(second.toJSON())];
     expect(names).toHaveLength(2);
     expect(new Set(names).size).toBe(2);

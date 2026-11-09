@@ -21,7 +21,7 @@ const get = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i
 const flag = (k) => args.includes('--' + k);
 const [w, h] = get('viewport', '1440x900').split('x').map(Number);
 const theme = get('theme', 'light');
-const outDir = '/home/z/madarek/_local/b9-preview';
+const outDir = '/home/z/tadmora/_local/b9-preview';
 
 const browser = await chromium.launch({ executablePath: EXE, args: ['--no-sandbox', '--force-color-profile=srgb', '--font-render-hinting=none'] });
 const ctx = await browser.newContext({
@@ -36,7 +36,7 @@ page.on('pageerror', (e) => console.error('  [pageerror]', String(e).slice(0, 20
 await page.goto('http://localhost:5173/', { waitUntil: 'load', timeout: 60000 });
 if (theme === 'dark') {
   await page.evaluate(() => {
-    try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch {}
+    try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch {}
   });
   await page.reload({ waitUntil: 'load' });
   await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
@@ -49,7 +49,7 @@ await page.waitForFunction(
 );
 try { await page.evaluate(() => document.fonts.ready); } catch {}
 await page.evaluate(() => {
-  try { localStorage.setItem('madarek.consent', JSON.stringify({ v: 1, t: Date.now() })); } catch {}
+  try { localStorage.setItem('tadmora.consent', JSON.stringify({ v: 1, t: Date.now() })); } catch {}
   window.__lenisOff = true;
 });
 await page.waitForTimeout(1200);
@@ -162,7 +162,7 @@ if (flag('cells')) {
   await p2.goto('http://localhost:5173/', { waitUntil: 'load', timeout: 60000 });
   if (theme === 'dark') {
     await p2.evaluate(() => {
-      try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch {}
+      try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch {}
     });
     await p2.reload({ waitUntil: 'load' });
     await p2.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));

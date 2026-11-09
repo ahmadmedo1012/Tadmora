@@ -108,7 +108,7 @@ const HELP = [
   '  --email <email>          (إلزامي) بريد المشغّل — حساب OWNER عالمي جديد بهذه الهوية',
   '                           (required) the operator\'s email — the new global OWNER identity',
   '  --first-name <name>      الاسم الأول (افتراضي: المشغّل) / first name (default: المشغّل)',
-  '  --last-name <name>       اللقب (افتراضي: مدارك) / last name (default: مدارك)',
+  '  --last-name <name>       اللقب (افتراضي: تادمورا) / last name (default: تادمورا)',
   '  --password-env <NAME>    اسم متغير بيئة يحمل كلمة مرور اخترتها أنت (لا تُطبع أبدًا)',
   '                           env var NAME holding YOUR chosen password (never printed)',
   '                           — بدونها: يولّد السكربت سرًّا عشوائيًّا لمرة واحدة ويطبعه مرة واحدة',
@@ -214,7 +214,7 @@ async function main() {
   }
 
   const firstName = (values.firstName ?? 'المشغّل').trim() || 'المشغّل';
-  const lastName = (values.lastName ?? 'مدارك').trim() || 'مدارك';
+  const lastName = (values.lastName ?? 'تادمورا').trim() || 'تادمورا';
 
   const prisma = new PrismaClient({ log: ['error'] });
   try {
@@ -234,7 +234,7 @@ async function main() {
       return;
     }
 
-    console.log('━━━ مدارك — تجهيز حساب مالك المشغّل (operator provisioning) ━━━');
+    console.log('━━━ تادمورا — تجهيز حساب مالك المشغّل (operator provisioning) ━━━');
     console.log(`القاعدة / database: ${redactUrl(process.env.DATABASE_URL ?? '')}`);
     console.log(`الهوية الجديدة / new identity: ${email} · OWNER · نشط/active`);
     console.log(`الاسم / name: ${firstName} ${lastName}`);

@@ -90,7 +90,7 @@ Web app monorepo: `frontend/src/`, `backend/src/`, `backend/prisma/`, `scripts/`
 - [ ] T027 [US1] Add `STEP_UP` value to `LoginEvent.kind` enum in `backend/prisma/schema.prisma` (additive enum migration).
 - [ ] T028 [US1] Extend the axios response interceptor in `frontend/src/lib/api.ts` to catch `403 STEP_UP_REQUIRED`, open `<StepUpModal>`, and retry the original request once on success — preserving the existing 401-refresh path unchanged.
 - [ ] T029 [P] [US1] Add `rememberMe` checkbox to `frontend/src/pages/AuthPage.tsx`; wire to login post body.
-- [ ] T030 [US1] Update `POST /api/v1/auth/login` handler to accept `rememberMe`, set `mdrk_refresh` `Max-Age` to 2592000 vs 604800 accordingly, write `User.rememberMeUntil` per `contracts/session-policy.md`.
+- [ ] T030 [US1] Update `POST /api/v1/auth/login` handler to accept `rememberMe`, set `tdmr_refresh` `Max-Age` to 2592000 vs 604800 accordingly, write `User.rememberMeUntil` per `contracts/session-policy.md`.
 - [ ] T031 [US1] Update `POST /api/v1/auth/refresh` handler to compute new refresh `Max-Age` as `min(7d, rememberMeUntil - now)`; carry `pwd_at` over.
 - [ ] T032 [US1] Update `POST /api/v1/auth/logout` to clear `User.rememberMeUntil` and bump `tokenVersion` (preserving the existing tokenVersion behavior).
 - [ ] T033 [US1] Verification pass — walk every authenticated route in `frontend/src/App.tsx`. For each, capture in `specs/011-platform-completeness-uplift/audit/route-status.md` whether (a) it renders real data via `useResources.ts`, (b) `ProtectedRoute` allow-list matches role intent, (c) any placeholder leaks. Open follow-up tasks for the placeholder admin pages already documented in `FRONTEND.md`.
@@ -107,7 +107,7 @@ Web app monorepo: `frontend/src/`, `backend/src/`, `backend/prisma/`, `scripts/`
 **Independent Test**: From a cold cache (incognito) after >1 hour idle, hit production. First branded paint ≤ 3 s, TTI ≤ 5 s, no third-party splash visible. Repeat warm: TTI ≤ 1.5 s.
 
 - [ ] T035 [US2] Upgrade Render service to **Standard** tier — coordinated with project owner; deployment-config change, no source-code commit. Document the change in `docs/operations/render-tier.md`.
-- [ ] T036 [P] [US2] Configure Cloudflare in front of `madarek.onrender.com` with page rules: cache `/` for guests `s-maxage=300, swr=86400`; explicitly bypass cache for `/api/v1/*` and any path containing `mdrk_refresh` cookie. Document in `docs/operations/cloudflare.md`.
+- [ ] T036 [P] [US2] Configure Cloudflare in front of `tadmora.onrender.com` with page rules: cache `/` for guests `s-maxage=300, swr=86400`; explicitly bypass cache for `/api/v1/*` and any path containing `tdmr_refresh` cookie. Document in `docs/operations/cloudflare.md`.
 - [ ] T037 [P] [US2] Add early-paint reference in `frontend/index.html` to `frontend/public/splash.html` content (inline script that injects splash markup before React hydrates) — composes with T020.
 - [ ] T038 [US2] Add per-route branded skeleton variants for the nine routes inventoried in `research.md` R-008. Each lives next to its page (e.g., `frontend/src/pages/student/DashboardPage.skeleton.tsx`). All consume `RouteSkeleton` from T021. Reduced-motion fallback verified.
 - [ ] T039 [US2] Wire each route's skeleton as the `Suspense` fallback in `frontend/src/App.tsx` lazy-load boundaries (replace the single `<PageSkeleton />` fallback with the route-specific one).
@@ -232,7 +232,7 @@ Web app monorepo: `frontend/src/`, `backend/src/`, `backend/prisma/`, `scripts/`
 - [ ] T090 [P] [US8] Add hover elevation tokens to feature cards on the landing page via `frontend/src/styles/landing-pro.css` — uses existing `--shadow-elev-2` token, ≤150 ms transition.
 - [ ] T091 [US8] Add page-transition fade in `<AppShell>` for authenticated route changes — ≤250 ms; suppressed under reduced-motion. Mount via React Router `<Outlet>` wrapper.
 - [ ] T092 [P] [US8] Create `frontend/src/components/landing/OasisDemo/OasisDemo.tsx` (lazy chunk) — autoplay three pre-programmed exchanges from `OasisDemo/script.ts`, then enable input.
-- [ ] T093 [P] [US8] Create `frontend/src/components/landing/OasisDemo/script.ts` — three hand-curated Q&A samples in Arabic (with English mirror). Reviewed for accuracy against actual Madarek capabilities.
+- [ ] T093 [P] [US8] Create `frontend/src/components/landing/OasisDemo/script.ts` — three hand-curated Q&A samples in Arabic (with English mirror). Reviewed for accuracy against actual Tadmora capabilities.
 - [ ] T094 [US8] Implement `POST /api/v1/public/oasis-demo` in `backend/src/modules/public/oasis-demo.ts` — unauthenticated, IP-rate-limited 3/min, payload ≤200 chars, constrained system prompt, no `AiConversation` write.
 - [ ] T095 [US8] Replace static Oasis mockup section on `LandingPage.tsx` with a `<Suspense>` boundary loading `<OasisDemo>`.
 - [ ] T096 [P] [US8] Verify `--motion-shimmer` token in `frontend/src/styles/system.css` collapses to a static tinted block under `@media (prefers-reduced-motion: reduce)` — adjust if not.

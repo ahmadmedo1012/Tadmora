@@ -5,7 +5,7 @@
  * a scroll-scrubbed SVG mask: a downward-bulging quadratic curve whose
  * baseline sweeps top→bottom, its edge displaced by a turbulence
  * filter (the ink bleed) — reference-observations.md §10 / case-study
- * §5. This is the Madarek translation, composed of original layers:
+ * §5. This is the Tadmora translation, composed of original layers:
  *
  *  · Mounted through MediaFrame's `overlay` slot, this covers the
  *    PHOTOGRAPH only — the caption/licence row stays visible at all

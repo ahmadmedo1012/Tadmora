@@ -114,7 +114,7 @@ const CRAWL_CAPTURES = [
 const MEDIA_ART = {
   light: '/media/illustrations/r342/statement/statement-courtyard-light.webp',
   dark: '/media/illustrations/r342/statement/statement-courtyard-dark.webp',
-  alt: 'المقطع المعماري لقلب الحرم الجامعي: فناء داخلي تُحيط به أروقة مقوسة وفي مركزه شجرة المعرفة — رسم حبر أصلي لمنصّة مدارك',
+  alt: 'المقطع المعماري لقلب الحرم الجامعي: فناء داخلي تُحيط به أروقة مقوسة وفي مركزه شجرة المعرفة — رسم حبر أصلي لمنصّة تادمورا',
   width: 1200,
   height: 1200,
 } as const;

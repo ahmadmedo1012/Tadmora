@@ -3,7 +3,7 @@
  * on the landing sheet (DESIGN.md §6c, r307).
  *
  * A flat hairline frame around an authentic capture of the running
- * application (seeded demo environment — fully synthetic «جامعة مدارك
+ * application (seeded demo environment — fully synthetic «جامعة تادمورا
  * التجريبية» data). Every frame carries:
  *   · the demo-data disclosure — the honest «بيانات العرض
  *     التجريبية» line (the r324 X4 sweep retired the «real-ui»

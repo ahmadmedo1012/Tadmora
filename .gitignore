@@ -73,7 +73,7 @@ agentdb.rvf.lock
 **/agentdb.rvf.lock
 
 # Stray nested copy of the repo (created by some tooling)
-/madarek/
+/tadmora/
 
 # Secrets (contains credentials, never committed)
 secrets.txt
@@ -168,3 +168,7 @@ docs/redesign/**/evidence/
 # docs/redesign/r3xx/heron-live/) — local-only.
 *.har
 **/heron-live/
+
+# Vercel CLI local link (per-machine project binding)
+.vercel/
+.env*

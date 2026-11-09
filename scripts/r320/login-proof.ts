@@ -8,8 +8,8 @@
  *       r320/accounts/<job-slug>.jpg (≤150 KB).
  *
  * Stack contract (boot it first — see docs/redesign/r319/STACK.md):
- *   MADAREK_TEST_ACCOUNTS=1 MADAREK_API_PORT=4253 MADAREK_WEB_PORT=4254
- *   MADAREK_PG_PORT=5434 …  (the seed + boot ensure create the accounts)
+ *   TADMORA_TEST_ACCOUNTS=1 TADMORA_API_PORT=4253 TADMORA_WEB_PORT=4254
+ *   TADMORA_PG_PORT=5434 …  (the seed + boot ensure create the accounts)
  *
  * Run:  npx tsx scripts/r320/login-proof.ts \
  *         --api http://localhost:4253 --web http://localhost:4254 \
@@ -17,7 +17,7 @@
  *
  * Production run (§C-7 "after deploy" leg): 
  *   npx tsx scripts/r320/login-proof.ts \
- *     --api https://madarek.onrender.com --web https://madarek.onrender.com \
+ *     --api https://tadmora.onrender.com --web https://tadmora.onrender.com \
  *     --out audits/evidence/r320/accounts-production
  * — also proves the demo panel itself on the target env: the reopen
  * chip opens it, 10 rows render, and the registrar logs in THROUGH
@@ -94,7 +94,7 @@ async function checkDemoPanel(
   try {
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('madarek-intro-skip', '1');
+        sessionStorage.setItem('tadmora-intro-skip', '1');
       } catch {
         /* storage unavailable */
       }
@@ -154,7 +154,7 @@ async function uiLogin(
   try {
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('madarek-intro-skip', '1');
+        sessionStorage.setItem('tadmora-intro-skip', '1');
       } catch {
         /* storage unavailable */
       }

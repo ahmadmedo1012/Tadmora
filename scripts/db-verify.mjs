@@ -42,7 +42,7 @@ import {
 const SCRIPT = 'db-verify';
 
 function printHelp() {
-  console.log(`مدارك — تحقّق ما بعد الاستعادة · Madarek ${SCRIPT}
+  console.log(`تادمورا — تحقّق ما بعد الاستعادة · Tadmora ${SCRIPT}
 شغّل فحوص قائمة 12-deployment §3 (العناصر 1–4) كاستعلامات حقيقية واطبع
 حكمًا مقيسًا PASS/WARN/FAIL.
 
@@ -95,7 +95,7 @@ if (!psql) {
   process.exit(1);
 }
 
-console.log(`━━━ مدارك — تحقّق ما بعد الاستعادة · Madarek ${SCRIPT} ━━━`);
+console.log(`━━━ تادمورا — تحقّق ما بعد الاستعادة · Tadmora ${SCRIPT} ━━━`);
 console.log(`الهدف / target (${urlEnvName}): ${redactUrl(targetUrl.url)}`);
 console.log('');
 

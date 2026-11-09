@@ -23,7 +23,7 @@
  *
  * Login: ONCE per context (student@test.ly / 12345678 at /auth via
  * getByLabel البريد الإلكتروني أو رقم القيد + textbox كلمة المرور +
- * button تسجيل الدخول; sessionStorage intro-skip 'madarek-intro-skip'
+ * button تسجيل الدخول; sessionStorage intro-skip 'tadmora-intro-skip'
  * ='1'; locale ar) — the same recipe as the session's reviewer probes.
  *
  * Usage:
@@ -277,12 +277,12 @@ async function runStream(vp, theme, doShot, list) {
     storageState: AUTH_STATE,
   });
   await ctx.addInitScript(() => {
-    sessionStorage.setItem('madarek-intro-skip', '1');
+    sessionStorage.setItem('tadmora-intro-skip', '1');
   });
   if (theme === 'dark') {
     await ctx.addInitScript(() => {
       localStorage.setItem(
-        'madarek-theme',
+        'tadmora-theme',
         JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 })
       );
     });
@@ -309,7 +309,7 @@ async function runStream(vp, theme, doShot, list) {
       /* persisted local choice lost to a profile hydrate — re-pin + reload once */
       await page.evaluate(() => {
         localStorage.setItem(
-          'madarek-theme',
+          'tadmora-theme',
           JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 })
         );
       });
@@ -365,7 +365,7 @@ const seedCtx = await browser.newContext({
   locale: 'ar',
   reducedMotion: 'reduce',
 });
-await seedCtx.addInitScript(() => sessionStorage.setItem('madarek-intro-skip', '1'));
+await seedCtx.addInitScript(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
 const seedPage = await login(seedCtx);
 
 if (PARAMS_FILE && existsSync(PARAMS_FILE)) {

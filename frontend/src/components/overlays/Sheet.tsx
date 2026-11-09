@@ -11,7 +11,7 @@
  * sheets slide down. Wave 12-14: Escape answers one layer per press
  * and the scroll lock is ref-counted (overlayStack + scrollLock).
  * Wave 21-b (A9 P1-1): the ENTRANCE keyframes are direction-aware
- * too (madarek-sheet-slide-end/-start in components.css multiply the
+ * too (tadmora-sheet-slide-end/-start in components.css multiply the
  * translateX offset by --motion-direction), so an `end` sheet now
  * arrives FROM its own edge in RTL (left) instead of entering out of
  * the page interior.
@@ -96,8 +96,8 @@ export function Sheet({
   const panelRef = useRef<HTMLDivElement | null>(null);
   useFocusTrap({ open, containerRef: panelRef, closeOnEscape, onClose, overlayKind: 'sheet' });
   // r305 token alignment: the safety net reads the token the data-closing
-  // exit animation consumes (components.css: madarek-overlay-out + the
-  // madarek-sheet-out-* pair at var(--motion-duration-short)) — the old
+  // exit animation consumes (components.css: tadmora-overlay-out + the
+  // tadmora-sheet-out-* pair at var(--motion-duration-short)) — the old
   // --motion-duration-medium read only stretched the no-animationend
   // fallback (320ms) past the real 160ms exit.
   const { rendered, onExitEnd } = useDelayedUnmount(open, '--motion-duration-short');
@@ -177,7 +177,7 @@ export function Sheet({
         if (e.target === e.currentTarget) onClose();
       }}
       onAnimationEnd={(e) => {
-        if (!open && e.animationName === 'madarek-overlay-out') onExitEnd();
+        if (!open && e.animationName === 'tadmora-overlay-out') onExitEnd();
       }}
     >
       <div

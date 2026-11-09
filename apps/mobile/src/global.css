@@ -1,4 +1,4 @@
-/* Web reset for the Madarek mobile-web output.
+/* Web reset for the Tadmora mobile-web output.
    Native layouts own the real chrome; this keeps the paper ground, removes
    default margins, and fixes text rendering for RTL Arabic. */
 html,

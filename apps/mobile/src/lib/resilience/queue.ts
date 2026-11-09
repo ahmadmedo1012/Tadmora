@@ -26,7 +26,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { examsApi } from "@/api/exams";
 
 /** Storage key for the offline exam-answer queue. */
-export const ANSWER_QUEUE_STORAGE_KEY = "madarek-mobile-exam-answer-queue";
+export const ANSWER_QUEUE_STORAGE_KEY = "tadmora-mobile-exam-answer-queue";
 
 /** One queued exam answer — mirrors examsApi.answer's payload. */
 export interface QueuedAnswer {

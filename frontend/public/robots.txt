@@ -1,4 +1,4 @@
-# robots.txt — مدارك (R320 §D · PAGES-GAP P2-6)
+# robots.txt — تادمورا (R320 §D · PAGES-GAP P2-6)
 #
 # The honest crawl contract: every PUBLIC surface is allowed (the
 # landing, the auth door + self-serve register, the public colleges
@@ -32,4 +32,4 @@ Disallow: /admin
 Disallow: /quality
 Disallow: /owner
 
-Sitemap: https://madarek.onrender.com/sitemap.xml
+Sitemap: https://tadmora.vercel.app/sitemap.xml

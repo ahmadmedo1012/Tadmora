@@ -4,7 +4,7 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  *
  * An ORIGINAL implementation of the reference's measured cursor
  * grammar (docs/redesign/r308/reference-observations.md §4), on the
- * Madarek token system:
+ * Tadmora token system:
  *
  *  · Canvas 2D layer (fixed, viewport-sized, DPR-capped at 2): a 10px
  *    square in the ONE signal color, eased toward the pointer

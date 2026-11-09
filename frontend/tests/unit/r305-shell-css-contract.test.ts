@@ -508,10 +508,10 @@ describe('r305 shell CSS contract — 2-a/2-b hook grammar', () => {
     // token, medium duration, decelerate — desktop band only, with
     // `backwards` fill so v13's row press survives the entrance.
     expect(shell.stripped).toMatch(
-      /@media \(min-width: 921px\)\s*\{[^@]*madarek-group-reveal\s+var\(--motion-duration-medium\)\s*\n\s*var\(--motion-ease-decelerate\) backwards/,
+      /@media \(min-width: 921px\)\s*\{[^@]*tadmora-group-reveal\s+var\(--motion-duration-medium\)\s*\n\s*var\(--motion-ease-decelerate\) backwards/,
     );
     expect(shell.raw).toMatch(
-      /@keyframes madarek-group-reveal\s*\{[\s\S]{0,200}?translateY\(var\(--motion-distance-small\)\)/,
+      /@keyframes tadmora-group-reveal\s*\{[\s\S]{0,200}?translateY\(var\(--motion-distance-small\)\)/,
     );
     // The stagger ladder is the token ladder (step per row, capped).
     expect(shell.stripped).toMatch(/animation-delay:\s*calc\(var\(--motion-stagger-step\)/);

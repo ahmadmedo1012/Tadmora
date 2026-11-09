@@ -110,7 +110,7 @@ export function Live({ colsRef, dotsRef }: LiveProps) {
           </div>
           <div className="pm-subwrap" data-spec="problem.subwrap">
             <div className="pm-sub" data-spec="problem.sub">
-              ليست أحكامًا على أحد — بل هي المشكلات التي بُنيت مدارك لحلّها؛ تحت كل وجع بند
+              ليست أحكامًا على أحد — بل هي المشكلات التي بُنيت تادمورا لحلّها؛ تحت كل وجع بند
               يعمل اليوم، والسجل الكامل في{' '}
               <Link to="/capabilities" className="fo-text-link">صفحة القدرات</Link>.
             </div>
@@ -134,7 +134,7 @@ export function Live({ colsRef, dotsRef }: LiveProps) {
                 key={p.num}
                 className="pm-col"
                 role="listitem"
-                data-mdrk-reveal="item"
+                data-tdmr-reveal="item"
                 data-spec={`problem.col.${i + 1}`}
               >
                 {/* the column's own start-edge rule — the reference renders
@@ -168,7 +168,7 @@ export function Live({ colsRef, dotsRef }: LiveProps) {
                     <div className="pm-artcolor" data-spec={`problem.artcolor.${i + 1}`}>
                       <div className="pm-artin" data-spec={`problem.artin.${i + 1}`}>
                         {/* R342 — the svg box itself is the spec's bound art
-                            window (the drawing inside is Madarek's own motif);
+                            window (the drawing inside is Tadmora's own motif);
                             the container hooks stay on the boxes around it. */}
                         <PainArt kind={p.num} data-spec={`problem.artsvg.${i + 1}`} />
                       </div>

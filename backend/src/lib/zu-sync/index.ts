@@ -89,7 +89,7 @@ export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
  * WHICH source POST /admin/sync/trigger runs.
  *
  * The demonstration tenant's curated synthetic source (static-source.ts,
- * r188 fictional «جامعة مدارك التجريبية» fact sheet) is the DEMO
+ * r188 fictional «جامعة تادمورا التجريبية» fact sheet) is the DEMO
  * institution's source, NOT a global source for every university. An
  * institution absent from this registry (today: every institution other
  * than the demo tenant, e.g. alandalus-demo) has NO configured source —
@@ -98,7 +98,7 @@ export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
  *
  * Matching is by institution id OR slug (both unique in the DB): the
  * demo row keeps the FIXED legacy id `inst-zawia-showcase` (stable FK
- * anchor) with the r188 slug `madarek-demo` (prisma/seed.ts), so either
+ * anchor) with the r188 slug `tadmora-demo` (prisma/seed.ts), so either
  * identity resolves the same row. This is deliberately a simple in-code
  * registry — there is no operator-editable source-config surface yet,
  * so a DB config table would be speculative. Adding a future source =
@@ -116,7 +116,7 @@ export interface InstitutionSyncConfig {
 export const INSTITUTION_SYNC_CONFIGS: readonly InstitutionSyncConfig[] = [
   {
     institutionId: DEFAULT_SYNC_INSTITUTION_ID,
-    institutionSlug: 'madarek-demo',
+    institutionSlug: 'tadmora-demo',
     source: 'static-markdown',
   },
 ];
@@ -128,7 +128,7 @@ export const INSTITUTION_SYNC_CONFIGS: readonly InstitutionSyncConfig[] = [
  * registry on purpose: the public default and the scheduled sources
  * are separate decisions, even though both are the demo tenant today.
  */
-export const PUBLIC_FACTS_DEFAULT_SLUG = 'madarek-demo';
+export const PUBLIC_FACTS_DEFAULT_SLUG = 'tadmora-demo';
 
 /**
  * The configured source for an institution, matched by id OR slug.

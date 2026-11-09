@@ -198,7 +198,7 @@ export const TRAINING_BADGES = [
 
 /** GET /training/me/certificates — TrainingCertificate[]. */
 export const TRAINING_CERTS = [
-  { id: 'cert_qa_study', title: 'شهادة إتمام: مهارات الدراسة الفعّالة', issuer: 'منصة مدارك', issuedAt: iso(-240), hours: 3, status: 'COMPLETED', trackSlug: 'study-skills', iconEmoji: '📜', themeColor: null },
+  { id: 'cert_qa_study', title: 'شهادة إتمام: مهارات الدراسة الفعّالة', issuer: 'منصة تادمورا', issuedAt: iso(-240), hours: 3, status: 'COMPLETED', trackSlug: 'study-skills', iconEmoji: '📜', themeColor: null },
 ];
 
 /** GET /training/leaderboard — LeaderboardRow[]. */
@@ -468,14 +468,14 @@ export async function installQaApi(
 
 /**
  * localStorage payload exactly as zustand's persist middleware writes
- * it for `mdrk-auth` (stores/auth.store.ts — safeSessionStorage
+ * it for `tdmr-auth` (stores/auth.store.ts — safeSessionStorage
  * JSON.stringify's { state, version }).
  */
 export function authStorageJson(user: FixtureUser, token: string): string {
   return JSON.stringify({ state: { user, accessToken: token }, version: 0 });
 }
 
-/** localStorage payload for `madarek-theme` (theme.store.ts v2). */
+/** localStorage payload for `tadmora-theme` (theme.store.ts v2). */
 export function themeStorageJson(mode: 'light' | 'dark'): string {
   return JSON.stringify({ state: { mode, modeUpdatedAt: 0 }, version: 2 });
 }
@@ -498,15 +498,15 @@ export async function seedQaSession(
     ([auth, theme]) => {
       if (auth) {
         try {
-          if (localStorage.getItem('mdrk-auth') === null) {
-            localStorage.setItem('mdrk-auth', auth);
+          if (localStorage.getItem('tdmr-auth') === null) {
+            localStorage.setItem('tdmr-auth', auth);
           }
         } catch { /* storage unavailable — app falls back to guest */ }
       }
       if (theme) {
         try {
-          if (localStorage.getItem('madarek-theme') === null) {
-            localStorage.setItem('madarek-theme', theme);
+          if (localStorage.getItem('tadmora-theme') === null) {
+            localStorage.setItem('tadmora-theme', theme);
           }
         } catch { /* same probe-guard story as the auth store */ }
       }

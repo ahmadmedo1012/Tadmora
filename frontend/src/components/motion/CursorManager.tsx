@@ -11,7 +11,7 @@ import {
 import './cursor.css';
 
 /* ═════════════════════════════════════════════════════════════════════
-   CursorManager — R305-A2 additive pointer layer (original Madarek
+   CursorManager — R305-A2 additive pointer layer (original Tadmora
    implementation of the Heron-style cursor mechanics).
 
    PUBLIC CONTRACT

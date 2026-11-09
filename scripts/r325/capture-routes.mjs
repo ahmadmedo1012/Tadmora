@@ -12,7 +12,7 @@
  *     → viewport screenshot (NOT fullPage) at the top scroll position;
  *     long pages ALSO get a mid-scroll shot (1440 only — the reading
  *     breakpoint where P2.6 ink-parity islands matter most).
- *   · themes via the `madarek-theme` zustand-persist seed
+ *   · themes via the `tadmora-theme` zustand-persist seed
  *     ({state:{mode,modeUpdatedAt:1},version:2}) — modeUpdatedAt=1 is
  *     non-zero so the local choice wins the useThemeProfileSync
  *     tiebreak against the profile's themePreference.
@@ -126,7 +126,7 @@ const NOISE = [
 
 const SESSION_TTL_MS = 10 * 60 * 1000; // access token lives 15 min — cache 10
 const sessionMemory = new Map();
-const sessionFile = () => path.join(os.tmpdir(), `madarek-capture-sessions-${new Date().toISOString().slice(0, 10)}.json`);
+const sessionFile = () => path.join(os.tmpdir(), `tadmora-capture-sessions-${new Date().toISOString().slice(0, 10)}.json`);
 
 function readSessionDisk() {
   try { return JSON.parse(fs.readFileSync(sessionFile(), 'utf8')); } catch { return {}; }
@@ -619,20 +619,20 @@ async function sweepRole(browser, role) {
         serviceWorkers: 'block',
       });
       await ctx.addInitScript(() => {
-        try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { /* the intro may replay */ }
+        try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* the intro may replay */ }
       });
       // theme seed — modeUpdatedAt:1 (non-zero) beats the profile's
       // themePreference in the useThemeProfileSync tiebreak, so Ink/Paper
       // is pinned regardless of the account's server-side preference.
       await ctx.addInitScript(({ mode }) => {
         try {
-          localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode, modeUpdatedAt: 1 }, version: 2 }));
+          localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode, modeUpdatedAt: 1 }, version: 2 }));
         } catch { /* private mode */ }
       }, { mode: THEME_MODE[theme] ?? theme });
       if (email) {
         const session = await sessionForEmail(email);
         await ctx.addInitScript(({ auth }) => {
-          try { localStorage.setItem('mdrk-auth', auth); } catch { /* ignore */ }
+          try { localStorage.setItem('tdmr-auth', auth); } catch { /* ignore */ }
         }, { auth: authStorageJson(session) });
       }
       const pages = [];

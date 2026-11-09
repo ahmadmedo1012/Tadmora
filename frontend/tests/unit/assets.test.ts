@@ -100,7 +100,7 @@ describe('r188 brand reset — campus photography retired (no real-university im
     expect(src).not.toContain('<picture>');
     expect(src).not.toContain('main_photo');
     // R315 (owner §0-A.1, supersedes the R314 raster sanction): the
-    // hero's ONE graphic object is Madarek's own drafted ELEVATION SVG
+    // hero's ONE graphic object is Tadmora's own drafted ELEVATION SVG
     // — whole frontal building, centred, transparent paper, no crop.
     // The R314 ink render (the Commons-licensed derivative in
     // manifest.json renders[], adapted:true, ShareAlike kept) leaves
@@ -114,7 +114,7 @@ describe('r188 brand reset — campus photography retired (no real-university im
     // transparent paper — the raster <image> is gone from the window
     expect(ink).not.toContain('<image');
     // …and the r188 provenance strings survive (brand gates below
-    // still pin جامعة مدارك التجريبية as synthetic data).
+    // still pin جامعة تادمورا التجريبية as synthetic data).
   });
 
   it('r198 — the retired landing raster family stays deleted', () => {
@@ -179,24 +179,24 @@ describe('welcome-card background + dead brand assets (audit 11-g P2-3 / P1-4 �
 
   it('dead brand assets stay deleted; the three referenced keepers remain', () => {
     const dead = [
-      'madarek-logo-full.jpg',
-      'madarek-logo.jpg',
-      'madarek-logo-md.jpg',
-      'madarek-logo-sm.jpg',
+      'tadmora-logo-full.jpg',
+      'tadmora-logo.jpg',
+      'tadmora-logo-md.jpg',
+      'tadmora-logo-sm.jpg',
       'zu-campus.jpg',
       'zu-campus-sm.jpg',
     ];
     for (const f of dead) {
       expect(existsSync(path.join(root, 'public/brand', f)), `${f} should stay deleted`).toBe(false);
     }
-    // keepers (r188): og:image/twitter (index.html → madarek-og.jpg) +
-    // BrandMark / favicon (madarek-mark.svg). The retired ZU crest
-    // (zu-mark.svg) and the old logo sheet (madarek-logo-lg.jpg) joined
+    // keepers (r188): og:image/twitter (index.html → tadmora-og.jpg) +
+    // BrandMark / favicon (tadmora-mark.svg). The retired ZU crest
+    // (zu-mark.svg) and the old logo sheet (tadmora-logo-lg.jpg) joined
     // the dead list — no real-university asset remains on disk.
-    for (const f of ['madarek-og.jpg', 'madarek-mark.svg']) {
+    for (const f of ['tadmora-og.jpg', 'tadmora-mark.svg']) {
       expect(existsSync(path.join(root, 'public/brand', f)), `${f} must remain`).toBe(true);
     }
-    for (const f of ['zu-mark.svg', 'madarek-logo-lg.jpg']) {
+    for (const f of ['zu-mark.svg', 'tadmora-logo-lg.jpg']) {
       expect(existsSync(path.join(root, 'public/brand', f)), `${f} must stay deleted (r188 brand reset)`).toBe(false);
     }
   });

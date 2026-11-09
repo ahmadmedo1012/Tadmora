@@ -7,7 +7,7 @@
  * backend/src/modules/auth/test-accounts.data.ts — see that file's
  * header for WHY (the backend build's rootDir contract; the table must
  * be compilable into the backend dist for the boot-time
- * `MADAREK_TEST_ACCOUNTS=1` ensure). This module re-exports it so
+ * `TADMORA_TEST_ACCOUNTS=1` ensure). This module re-exports it so
  * NON-playwright consumers import one canonical specifier:
  *
  *   frontend source + vitest:  import { TEST_ACCOUNTS } from '@shared/testAccounts'

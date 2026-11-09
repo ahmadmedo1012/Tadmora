@@ -804,7 +804,7 @@ export function RoutedCursorManager() {
 /* ──────────────────────────────────────────────────────────────────
    R313 (4-b · D6) — the guest smooth-scroll engine mount.
 
-   Heron runs Lenis 1.1.5 on every public page; Madarek runs it on the
+   Heron runs Lenis 1.1.5 on every public page; Tadmora runs it on the
    PUBLIC window-scrolled surfaces only — the authenticated app keeps
    its native .content scroller untouched (owner decision). The active
    set follows the REAL route tree in this file:

@@ -271,7 +271,7 @@ export default function AuthPage() {
         {/* r191: the brand mark owns the auth chrome — the national-flag
             provenance marker is retired with the rejected slogan family. */}
         <span className="auth-context">
-          <Logo variant="mark" size={14} /> مدارك
+          <Logo variant="mark" size={14} /> تادمورا
         </span>
       </header>
 

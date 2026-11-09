@@ -6,7 +6,7 @@
  *
  * Contents (docs/redesign/r323/brand/BRAND.md is the written contract;
  * this page is its live specimen):
- *   1. the construction plate — the mark ON its 32-grid, coordinates
+ *   1. the construction plate — the Tadmora arch ON its 32-grid, coordinates
  *      labelled, drawn from the SAME constants the Logo renders
  *      (frontend/src/brand/mark.ts — no second geometry),
  *   2. the four variants (lockup · mark · wordmark · stacked),
@@ -15,7 +15,7 @@
  *   5. the minimum sizes (mark 16 px, lockup 88 px),
  *   6. the three colour tokens (paper · ink · orange),
  *   7. do / don't,
- *   8. the animated draw (hairlines → the orange point LAST).
+ *   8. the animated draw (the hairline gateway → the orange keystone LAST).
  *
  * Dark-mode correctness is structural: every chrome colour is a system
  * token; the three literal brand hexes appear ONLY inside the swatch
@@ -28,10 +28,9 @@ import type React from 'react';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { Logo } from '../brand';
 import {
-  MARK_AXIS,
-  MARK_DIAMOND_PATH,
+  MARK_ARCH_PATH,
   MARK_GRID_POINTS,
-  MARK_POINT,
+  MARK_KEYSTONE,
   MARK_VIEWBOX,
 } from '../brand/mark';
 import '../styles/shared/brand.css';
@@ -40,10 +39,10 @@ import '../styles/shared/brand.css';
  * lattice intersections the mark's anchors snap to. */
 const GRID_LINES = Array.from({ length: 17 }, (_, i) => i * 2);
 const LABELLED: ReadonlyArray<readonly [number, number, string]> = [
-  [8, 8, '(8,8)'],
-  [24, 8, '(24,8)'],
-  [16, 5, '(16,5)'],
-  [16, 27, '(16,27)'],
+  [8, 15, '(8,15)'],
+  [24, 15, '(24,15)'],
+  [16, 7, '(16,7)'],
+  [8, 27, '(8,27)'],
 ];
 
 function ConstructionPlate(): React.JSX.Element {
@@ -53,7 +52,7 @@ function ConstructionPlate(): React.JSX.Element {
         className="r323b-grid-svg"
         viewBox="0 0 32 32"
         role="img"
-        aria-label="لوحة الإنشاء: الخاتم على شبكة 32 وحدة"
+        aria-label="لوحة الإنشاء: القوس على شبكة 32 وحدة"
         focusable="false"
         style={{ display: 'block' }}
       >
@@ -66,17 +65,16 @@ function ConstructionPlate(): React.JSX.Element {
             <line key={`h${v}`} x1={0} y1={v} x2={32} y2={v} />
           ))}
         </g>
-        {/* the point's seat — the crosshair through (24,8) */}
+        {/* the keystone's seat — the crosshair through the apex (16,7) */}
         <g stroke="var(--rule-strong)" strokeWidth="0.14">
-          <line x1={MARK_POINT.x - 1} y1={MARK_POINT.y + 2} x2={MARK_POINT.x + 5} y2={MARK_POINT.y + 2} />
-          <line x1={MARK_POINT.x + 2} y1={MARK_POINT.y - 1} x2={MARK_POINT.x + 2} y2={MARK_POINT.y + 5} />
+          <line x1={MARK_KEYSTONE.x - 2} y1={MARK_KEYSTONE.y + 2} x2={MARK_KEYSTONE.x + 6} y2={MARK_KEYSTONE.y + 2} />
+          <line x1={MARK_KEYSTONE.x + 2} y1={MARK_KEYSTONE.y - 2} x2={MARK_KEYSTONE.x + 2} y2={MARK_KEYSTONE.y + 6} />
         </g>
         {/* the mark itself — the same constants <Logo> renders */}
         <g fill="none" stroke="var(--text-strong)" strokeWidth="0.5" strokeLinejoin="miter">
-          <rect x={MARK_AXIS.x} y={MARK_AXIS.y} width={MARK_AXIS.size} height={MARK_AXIS.size} />
-          <path d={MARK_DIAMOND_PATH} />
+          <path d={MARK_ARCH_PATH} />
         </g>
-        <rect x={MARK_POINT.x} y={MARK_POINT.y} width={MARK_POINT.size} height={MARK_POINT.size} fill="var(--accent)" />
+        <rect x={MARK_KEYSTONE.x} y={MARK_KEYSTONE.y} width={MARK_KEYSTONE.size} height={MARK_KEYSTONE.size} fill="var(--accent)" />
         {/* the anchors, pinned as dots */}
         <g fill="var(--text-muted)">
           {MARK_GRID_POINTS.map(([gx, gy]) => (
@@ -93,7 +91,7 @@ function ConstructionPlate(): React.JSX.Element {
         </g>
       </svg>
       <figcaption>
-        MARK_VIEWBOX «{MARK_VIEWBOX}» · الشعرة 1.5px غير قياسية · وصلات miter · النقطة فوق التقاطع (24,8)
+        MARK_VIEWBOX «{MARK_VIEWBOX}» · الشعرة 1.5px غير قياسية · وصلات miter · حجر الزاوية على القمة (16,7)
       </figcaption>
     </figure>
   );
@@ -118,7 +116,7 @@ const VARIANT_ROWS: ReadonlyArray<readonly [string, React.JSX.Element, string]> 
   [
     'stacked — التكوين الرأسي',
     <Logo key="stacked" variant="stacked" size={44} />,
-    'alt: <Logo variant="stacked" /> · mark / مدارك / MADAREK',
+    'alt: <Logo variant="stacked" /> · mark / تادمورا / TADMORA',
   ],
 ];
 
@@ -132,7 +130,7 @@ const TONE_ROWS: ReadonlyArray<readonly [string, string, React.JSX.Element]> = [
 const SWATCHES: ReadonlyArray<readonly [string, string, string, string]> = [
   ['الورق · paper', 'r323b-chip-paper', '#F6F6EE', 'الأرضية (فاتح) + النسخ الساكنة'],
   ['الحبر · ink', 'r323b-chip-ink', '#282828', 'الشعيرات والكلمة — يركب currentColor'],
-  ['البرتقالي · orange', 'r323b-chip-orange', '#FA3600', 'النقطة — الإشارة الوحيدة · var(--accent)'],
+  ['البرتقالي · orange', 'r323b-chip-orange', '#FA3600', 'حجر الزاوية — الإشارة الوحيدة · var(--accent)'],
 ];
 
 export default function BrandPage(): React.JSX.Element {

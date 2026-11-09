@@ -1,6 +1,6 @@
 # Parity Export — the design-canon gate · بوابة تكافؤ التصميم
 
-**Contract:** what the Madarek design-canon export pair ([`DESIGN.md`](../DESIGN.md)) is, and what the verify gate enforces.
+**Contract:** what the Tadmora design-canon export pair ([`DESIGN.md`](../DESIGN.md)) is, and what the verify gate enforces.
 
 **One command, four gates:**
 
@@ -24,7 +24,7 @@ Dependency-free (`node:fs` / `node:path` / `node:url` only) — runs anywhere No
 
 **The two hard facts about the pair:**
 
-1. **It is NOT imported by madarek's own app.** The app chain is `fonts → tokens → motion → base → components → layout → auth → notifications → student → polish` — the export pair sits outside it, as reference artifacts.
+1. **It is NOT imported by tadmora's own app.** The app chain is `fonts → tokens → motion → base → components → layout → auth → notifications → student → polish` — the export pair sits outside it, as reference artifacts.
 2. **It is not a runtime dependency of anything.** The pair exists as the reference distillate the verify gate diffs against canonical `tokens.css` — pinning the canon so silent drift fails loudly.
 
 > **History (why this contract exists):** the first revision of the parity file (added in cc03c2e with a false claim of external application — it was never applied anywhere) diverged from canonical `tokens.css` in 40+ tokens: a generic near-black dark ground instead of night indigo, a 100/200/300ms motion scale instead of the 80/160/240/380/520/720 ladder, a saffron/ember light accent instead of copper-on-cream, an invented 24px radius rung, Tailwind-gray neutrals, a dark `.btn.primary` referencing an un-inverted neutral ramp, a reduced-motion hole (raw `--t-*` never zeroed), and an invented ten-band z-scale. The r127-F1 rewrite corrected every divergence, and the verify script now pins the export to the canonical source so it can never silently drift again.
@@ -76,7 +76,7 @@ These spellings are **retired forever**. They must never reappear in the export 
 | Stays out of the export | Why |
 |---|---|
 | **The r191 landing choreography vocabulary** (`--ln-*` family — DELETED from tokens.css r197, not just unexported) | The r197 re-key retired the family outright (zero consumers); the r196 direction rebuilds the homepage in stage 2 on the `--poster-*` namespace (which IS exported as root aliases). The historical fleet porting contract: [`docs/PORT-KIT.md`](PORT-KIT.md) — sibling clones of the deleted layer need their own re-pin rounds. |
-| **Role-accent / college-accent slots** (`body[data-role]`) | Madarek-app identity slots — stay out of the export. |
+| **Role-accent / college-accent slots** (`body[data-role]`) | Tadmora-app identity slots — stay out of the export. |
 | **Illustration palette (`--ill-*)`** | Illustration-layer vocabulary (incl. its `prefers-contrast` stroke thickening) — stays with the illustration system. |
 
 ---
@@ -90,14 +90,14 @@ harness) مستقل يُقارن نسخًا يدوية من القيم المر�
 
 | المنتج | المِحكّ | ما يُثبّت |
 |---|---|---|
-| Smart-Link | `tests/parity.mjs` | **538 دبوسًا (لقطة r140 — 2026-10-11؛ بعد مسمار manifest في جولة SL نفسها — كانت 537 عند c4b4506)** (الأعمق في المنظومة؛ مرجعه المعلن: `tokens.css` مباشرة) — الحلقة اليدوية الأكبر، وكل تعديل توكن في مدارك يُفشل مِحكّها حتى يُعاد التدبيس |
+| Smart-Link | `tests/parity.mjs` | **538 دبوسًا (لقطة r140 — 2026-10-11؛ بعد مسمار manifest في جولة SL نفسها — كانت 537 عند c4b4506)** (الأعمق في المنظومة؛ مرجعه المعلن: `tokens.css` مباشرة) — الحلقة اليدوية الأكبر، وكل تعديل توكن في تادمورا يُفشل مِحكّها حتى يُعاد التدبيس |
 | Smart-Menu | `tests/design/parity.test.ts` + `mobile/tests/design/parity.mjs` | نسخة القيم المرجعية مقابل `globals.css` (+توأم الجوال) — **web 237 (لقطة r139)** و**mobile 256 (لقطة r140 — 2026-10-11)** — مِحكّان للمنتج الواحد |
-| Smart-Order | `tests/parity.mjs` | نفس النمط، مع جسر أسماء shadcn (`--background`/`--card`…) فوق القيم المداركية — **347 دبوسًا (لقطة r140 — 2026-10-11)** |
-| SmartBot | `fb_dashboard/frontend/tests/parity.mjs` + `src/test/MadarekParity.test.ts` | مِحكّ **422 دبوسًا (لقطة r140 — 2026-10-11)** + منافذ حرفية من ملفات مدارك (سجل الضغط من `shared-design-system.css`، توست `notifications.css`، قاعدة المتصفح من `base.css`)؛ **mobile بلا محكّ تصميمي بعد** (ثغرة موثقة P-SB-3 — تدقيق r140) |
+| Smart-Order | `tests/parity.mjs` | نفس النمط، مع جسر أسماء shadcn (`--background`/`--card`…) فوق القيم التادموراية — **347 دبوسًا (لقطة r140 — 2026-10-11)** |
+| SmartBot | `fb_dashboard/frontend/tests/parity.mjs` + `src/test/TadmoraParity.test.ts` | مِحكّ **422 دبوسًا (لقطة r140 — 2026-10-11)** + منافذ حرفية من ملفات تادمورا (سجل الضغط من `shared-design-system.css`، توست `notifications.css`، قاعدة المتصفح من `base.css`)؛ **mobile بلا محكّ تصميمي بعد** (ثغرة موثقة P-SB-3 — تدقيق r140) |
 | **PORT-KIT** (عالم الـlanding — Orbit-Ink) | [`docs/PORT-KIT.md`](PORT-KIT.md) (المواصفة نفسها؛ لا مِحكّ آلي — الانضباط بالمواصفة) | مواصفة استنساخ طبقة `--ln-*` — **SL/SO/SB استنسخوها عبره (r128)**، وlanding.css الخاص بـSM يستشهد الكيت نفسه حرفيًا (SM landing.css:5 — r128-F1a) |
 
 **حقيقة الصيانة (لا إطار تجاريًا — علاقة صيانة معلنة):** لا يستورد أي منتج
-شقيق ملفات مدارك وقت البناء؛ النسخ يدوية ويجري تحديثها على جولات كل
+شقيق ملفات تادمورا وقت البناء؛ النسخ يدوية ويجري تحديثها على جولات كل
 مستودع بنفسه. لذلك أي تغيير قيمة يمر بالترتيب نفسه دائمًا:
 
 1. **`tokens.css` أولًا** — المصدر المُؤلَّف هو وحده مكان التعديل (قاعدة §8 أدناه).
@@ -175,7 +175,7 @@ SL/SO/SB تستخدم 14px خامًا لمقاطع كروم الواجهة (رو
 ### د) حزمة الخطوط — 10 وجوه للأسطولة (r132)
 
 **الاستنساخ الأسطولي = 10 وجوه (بلا Serif italic — حذف موثق r132 في
-SM/SL)؛ الـSerif مدارك-فقط.** مدارك نفسها تشحن الوجوه الاثني عشر
+SM/SL)؛ الـSerif تادمورا-فقط.** تادمورا نفسها تشحن الوجوه الاثني عشر
 كاملة؛ منتجات الأسطولة تقتطع وجهي الـSerif فلا يشحنونه قط. (تصحيح
 تبعي معروف: SB `MASTER.md` §3 تدّعي 12 وجهًا مع Serif — خطأ توثيقي
 سجّله تدقيق r140 P-SB-1.)
@@ -193,7 +193,7 @@ PORT-KIT سطره الجديد في الجدول نفسه.
 
 | الدين | الحالة | التفصيل |
 |---|---|---|
-| إسقاط `all` من `--t-clean` | **مؤجل r140 بقرار المنسق — يحتاج قياس سلوك polish.css** | `tokens.css:160` يشحن `--t-clean: all …` و`polish.css` يحيّده (4-A11 P1-3)؛ بوابة `check-motion-tokens.sh` توثق الاستثناء وتسمح له. إسقاط `all` = تغيير سلوك تشغيلي لمدارك نفسه — لا يُفعل إلا بقياس تحرّكات polish.css الفعلية أولًا (قرار المنسق r140). |
+| إسقاط `all` من `--t-clean` | **مؤجل r140 بقرار المنسق — يحتاج قياس سلوك polish.css** | `tokens.css:160` يشحن `--t-clean: all …` و`polish.css` يحيّده (4-A11 P1-3)؛ بوابة `check-motion-tokens.sh` توثق الاستثناء وتسمح له. إسقاط `all` = تغيير سلوك تشغيلي لتادمورا نفسه — لا يُفعل إلا بقياس تحرّكات polish.css الفعلية أولًا (قرار المنسق r140). |
 | بوابة هاتف Smart-Menu | معلقة على قرار المنسق منذ r138 | `payment-schema.ts:40` (`^09\d{8}$` محمول-فقط قبل التطبيع) — آخر المتخلفين عن عقد §6أ (P-SM-1 — تدقيق r140). |
 | محكّ parity لـSB mobile | ثغرة موثقة (P-SB-3) | توأم SM-mobile عنده محكّ؛ SB-mobile يعتمد الكنون بلا محكّ تصميمي بعد. |
 

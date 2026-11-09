@@ -48,7 +48,7 @@
  * listener):
  *   - register() of a blocking layer pushes a marker entry on top of
  *     the history stack — `pushState({ ...history.state,
- *     madarekOverlay: id }, '')` — no URL change, and the router's
+ *     tadmoraOverlay: id }, '')` — no URL change, and the router's
  *     own state (usr/key/idx) is preserved inside the marker entry.
  *   - unregister() (UI close: X, Esc, outside click) consumes that
  *     entry via `history.back()` when the CURRENT entry still carries
@@ -123,7 +123,7 @@ function indexOfId(id: string): number {
 /* ── History side-channel state (r183-B7 — see the header) ────────── */
 
 /** The state field that marks a history entry as pushed by an overlay. */
-export const OVERLAY_HISTORY_MARKER = 'madarekOverlay';
+export const OVERLAY_HISTORY_MARKER = 'tadmoraOverlay';
 
 /** Only blocking layers (focus-trap + scroll-lock) own a history entry.
  *  See the header for why anchored micro-layers stay out. */

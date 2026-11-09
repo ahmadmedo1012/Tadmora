@@ -12,10 +12,10 @@ const VP = { '1440': { width: 1440, height: 900 }, '768': { width: 768, height: 
 
 const browser = await chromium.launch({ executablePath: EXE, args: ['--disable-dev-shm-usage'] });
 const ctx = await browser.newContext({ viewport: VP[bp], locale: 'ar', colorScheme: 'dark', serviceWorkers: 'block' });
-await ctx.addInitScript(() => { try { sessionStorage.setItem('madarek-intro-skip', '1'); } catch { } });
-await ctx.addInitScript(() => { try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { } });
+await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { } });
+await ctx.addInitScript(() => { try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { } });
 const session = await sessionForEmail(ROLE_EMAIL[role]);
-await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('mdrk-auth', auth); } catch { } }, { auth: authStorageJson(session) });
+await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('tdmr-auth', auth); } catch { } }, { auth: authStorageJson(session) });
 const page = await ctx.newPage();
 await page.goto(BASE + routePath, { waitUntil: 'load', timeout: 30000 });
 await page.waitForTimeout(2500);

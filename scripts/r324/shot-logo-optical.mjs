@@ -38,7 +38,7 @@ const SEATS = [
 
 const markSvg = (size, stroke) => `
   <svg viewBox="0 0 32 32" width="${size}" height="${size}"
-       style="display:block;overflow:visible" role="img" aria-label="مدارك">
+       style="display:block;overflow:visible" role="img" aria-label="تادمورا">
     <g stroke="var(--ink)" fill="none" stroke-width="${stroke}"
        stroke-linejoin="miter" vector-effect="non-scaling-stroke">
       <rect x="${AXIS.x}" y="${AXIS.y}" width="${AXIS.size}" height="${AXIS.size}"

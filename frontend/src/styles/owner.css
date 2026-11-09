@@ -256,7 +256,7 @@
 .owner-health-dot.green {
   background: var(--success);
   position: relative;
-  animation: madarek-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
+  animation: tadmora-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
 }
 
 /* (r153e: the green dot's half of the v17 heartbeat family moved
@@ -271,7 +271,7 @@
   border-radius: inherit;
   background: inherit;
   opacity: 0.6;
-  animation: madarek-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
+  animation: tadmora-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
   pointer-events: none;
 }
 
@@ -314,7 +314,7 @@
 /* ── Command Center: Live Pulse ────────────────────────────── */
 /* (r153e: the v17 heartbeat family moved home from polish.css's
    overrides layer — declarations verbatim. The old `pulse-live`
-   keyframes were DEAD CODE (polish v17's madarek-heartbeat beat
+   keyframes were DEAD CODE (polish v17's tadmora-heartbeat beat
    this rule on layer order alone, so nothing rendered them) and are
    deleted with this move. Render-neutral for the normal state
    (probe-verified at HEAD 3dacc23); leaving the overrides layer also
@@ -331,7 +331,7 @@
      gone; polish.css's overrides-layer RM belt (v18 owner list) still
      kills this loop under reduced motion, and the local switch at
      the bottom of this sheet keeps it self-contained (guardrail #6). */
-  animation: madarek-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
+  animation: tadmora-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
   flex-shrink: 0;
 }
 
@@ -342,16 +342,16 @@
   border-radius: inherit;
   background: inherit;
   opacity: 0.6;
-  animation: madarek-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
+  animation: tadmora-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
   pointer-events: none;
 }
 
-@keyframes madarek-heartbeat {
+@keyframes tadmora-heartbeat {
   0%, 100% { transform: scale(1); }
   50%      { transform: scale(1.06); }
 }
 
-@keyframes madarek-pulse-ring {
+@keyframes tadmora-pulse-ring {
   0%   { transform: scale(1); opacity: 0.6; }
   80%  { transform: scale(2.2); opacity: 0; }
   100% { transform: scale(2.2); opacity: 0; }
@@ -476,7 +476,7 @@
    polish v17 shipped: its overrides-layer .owner-live-pulse
    heartbeat beat them on layer order alone, so pending/degraded
    dots kept beating (probe-documented at HEAD 3dacc23: forced
-   is-pending still computed madarek-heartbeat). The heartbeat
+   is-pending still computed tadmora-heartbeat). The heartbeat
    moved home to THIS sheet, so specificity wins again — and the
    ::after ring freeze below is new: the v17 ring pulsed through
    pending/degraded too; both layers of the dot are honest now. */

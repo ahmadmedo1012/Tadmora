@@ -1,5 +1,5 @@
 # role-quality — أخصائي جودة: دخول ← تبويبات ← خروج عبر رابط عميق.
-appId: ly.madarek.mobile
+appId: ly.tadmora.mobile
 name: "05 — جودة: دخول، تبويبات، خروج"
 ---
 - launchApp
@@ -24,7 +24,7 @@ name: "05 — جودة: دخول، تبويبات، خروج"
 - extendedWaitUntil:
     visible: "التقارير"
     timeout: 30000
-- openLink: "madarek://settings"
+- openLink: "tadmora://settings"
 - extendedWaitUntil:
     visible: "تسجيل الخروج"
     timeout: 30000

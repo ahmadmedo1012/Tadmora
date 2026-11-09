@@ -11,7 +11,7 @@ await page.goto('http://localhost:5173' + route, { waitUntil: 'networkidle' });
 if (dark) {
   await page.evaluate(() => {
     document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('madarek-theme', 'dark');
+    localStorage.setItem('tadmora-theme', 'dark');
   });
 }
 await page.evaluate(() => document.fonts?.ready ?? Promise.resolve());

@@ -10,7 +10,7 @@ async function run(label, css) {
   const cdp = await ctx.newCDPSession(page);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
   await page.goto('http://localhost:4173/', { waitUntil: 'networkidle' });
-  await page.evaluate(() => sessionStorage.setItem('madarek-intro-skip', '1'));
+  await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
   await page.reload({ waitUntil: 'networkidle' });
   await page.evaluate(() => (document.fonts ? document.fonts.ready : null)).catch(() => {});
   await page.waitForTimeout(800);

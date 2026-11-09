@@ -8,7 +8,7 @@
 | المسار | المكوّن | الملف | ملاحظة |
 |---|---|---|---|
 | `/student/dashboard` | `DashboardPage` | `pages/student/DashboardPage.tsx` | استعلام مجمّع جولة واحدة `/me/dashboard`؛ الأجندة تدمج الحصص+الواجبات+البث+**الاختبارات** (r164c) وبطاقة «أكمل من حيث توقفت» تمتد للمحاضرة المتوقفة أو مسار تدريبي بدأته (r164c) |
-| `/student/calendar` | `CalendarPage` | `pages/student/CalendarPage.tsx` | تقويم شهريّ واحد لكل المواعيد (r164c): شبكة RTL بتسميات عربية وأيام مدارك المدنية (أفريقيا/طرابلس)، يوحّد الحصص الأسبوعية + مواعيد الواجبات + نوافذ الاختبارات + البث؛ تركيب في الواجهة من `/enrollments/me` و`/me/dashboard` و`/exams/me` — بلا مسار خلفيّ جديد |
+| `/student/calendar` | `CalendarPage` | `pages/student/CalendarPage.tsx` | تقويم شهريّ واحد لكل المواعيد (r164c): شبكة RTL بتسميات عربية وأيام تادمورا المدنية (أفريقيا/طرابلس)، يوحّد الحصص الأسبوعية + مواعيد الواجبات + نوافذ الاختبارات + البث؛ تركيب في الواجهة من `/enrollments/me` و`/me/dashboard` و`/exams/me` — بلا مسار خلفيّ جديد |
 | `/student/courses` + `/:offeringId` | `CoursesPage`/`CourseDetailPage` | `pages/student/CoursesPage.tsx` + `CourseDetailPage.tsx` | تسليم واجبات عبر `SubmitAssignmentModal` |
 | `/student/lectures/:lectureId` | `LecturePlayerPage` | `pages/student/LecturePlayerPage.tsx` | قلب الفصول المقلوبة (تتبع 10 ثوانٍ، إدماجيات) |
 | `/student/matrix` | `MatrixPage` | `pages/student/MatrixPage.tsx` | خريطة حرارية + مرشحات مستويات |

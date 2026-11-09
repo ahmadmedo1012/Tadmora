@@ -9,7 +9,7 @@
  *   · the 9-page grammar — ONE h1, the corner SHEET code derived from
  *     PUBLIC_SHEET_CODES, the skip link + landmarks, the
  *     GuestSheetChrome frame + grain, the colophon + آخر تحديث stamp;
- *   · the title pattern «<سياق> · مدارك» + useLegalMeta's head tags
+ *   · the title pattern «<سياق> · تادمورا» + useLegalMeta's head tags
  *     (set on mount, RESTORED on unmount);
  *   · the honesty markers — every page that states an unknown legal
  *     fact renders [يُستكمل قبل الإطلاق] ≥1, and LEGAL-TODO.md mirrors
@@ -79,7 +79,7 @@ const PAGES: PageSpec[] = [
   { key: 'security', path: '/legal/security', title: 'الأمن والإفصاح المسؤول', label: 'LEGAL SHEET', Component: SecurityPage, hasPending: true },
   { key: 'data', path: '/legal/data', title: 'البيانات وبيانات العرض', label: 'LEGAL SHEET', Component: DataPage, hasPending: true },
   { key: 'contact', path: '/contact', title: 'التواصل والتسجيل المبكر', label: 'CONTACT SHEET', Component: ContactPage, hasPending: true },
-  { key: 'about', path: '/about', title: 'عن مدارك', label: 'ABOUT SHEET', Component: AboutPage, hasPending: true },
+  { key: 'about', path: '/about', title: 'عن تادمورا', label: 'ABOUT SHEET', Component: AboutPage, hasPending: true },
   { key: 'help', path: '/help', title: 'المساعدة والأسئلة الشائعة', label: 'HELP SHEET', Component: HelpPage, hasPending: false },
 ];
 
@@ -139,7 +139,7 @@ describe('R320 §D — the 9-page grammar (the Heron public sheet)', () => {
     renderPage(PrivacyPage);
     const back = screen.getByRole('link', { name: /العودة إلى الصفحة الرئيسية/ });
     expect(back.getAttribute('href')).toBe('/');
-    const brand = screen.getByRole('link', { name: 'مدارك — الصفحة الرئيسية' });
+    const brand = screen.getByRole('link', { name: 'تادمورا — الصفحة الرئيسية' });
     expect(brand.getAttribute('href')).toBe('/');
   });
 
@@ -164,11 +164,11 @@ describe('R320 §D — the 9-page grammar (the Heron public sheet)', () => {
 /* ═══ B · the title pattern + useLegalMeta ══════════════════════════ */
 
 describe('R320 §D — titles + per-page head metadata', () => {
-  it('every page titles the tab «<سياق> · مدارك» (the house pattern)', () => {
+  it('every page titles the tab «<سياق> · تادمورا» (the house pattern)', () => {
     for (const { Component, title } of PAGES) {
       document.title = 'العنوان السابق';
       const { unmount } = renderPage(Component);
-      expect(document.title, `${title}`).toBe(`${title} · مدارك`);
+      expect(document.title, `${title}`).toBe(`${title} · تادمورا`);
       unmount();
       expect(document.title).toBe('العنوان السابق');
     }
@@ -182,23 +182,23 @@ describe('R320 §D — titles + per-page head metadata', () => {
       return el;
     };
     const desc = mk('meta', { name: 'description', content: 'الوصف السابق' });
-    const canonical = mk('link', { rel: 'canonical', href: 'https://madarek.onrender.com/prev' });
+    const canonical = mk('link', { rel: 'canonical', href: 'https://tadmora.vercel.app/prev' });
     const ogTitle = mk('meta', { property: 'og:title', content: 'العنوان السابق' });
-    const ogUrl = mk('meta', { property: 'og:url', content: 'https://madarek.onrender.com/prev' });
+    const ogUrl = mk('meta', { property: 'og:url', content: 'https://tadmora.vercel.app/prev' });
 
     const { unmount } = renderPage(PrivacyPage);
     expect(desc.getAttribute('content')).toBe(
-      'ما تجمعه منصّة مدارك من بيانات، ولماذا، وأين تُخزَّن، وحقوقك — مكتوبة من سلوك المنصّة الفعلي لا من قوالب.',
+      'ما تجمعه منصّة تادمورا من بيانات، ولماذا، وأين تُخزَّن، وحقوقك — مكتوبة من سلوك المنصّة الفعلي لا من قوالب.',
     );
-    expect(canonical.getAttribute('href')).toBe('https://madarek.onrender.com/legal/privacy');
+    expect(canonical.getAttribute('href')).toBe('https://tadmora.vercel.app/legal/privacy');
     expect(ogTitle.getAttribute('content')).toBe('سياسة الخصوصية');
-    expect(ogUrl.getAttribute('content')).toBe('https://madarek.onrender.com/legal/privacy');
+    expect(ogUrl.getAttribute('content')).toBe('https://tadmora.vercel.app/legal/privacy');
     unmount();
     // restore-on-unmount: the previous values come back
     expect(desc.getAttribute('content')).toBe('الوصف السابق');
-    expect(canonical.getAttribute('href')).toBe('https://madarek.onrender.com/prev');
+    expect(canonical.getAttribute('href')).toBe('https://tadmora.vercel.app/prev');
     expect(ogTitle.getAttribute('content')).toBe('العنوان السابق');
-    expect(ogUrl.getAttribute('content')).toBe('https://madarek.onrender.com/prev');
+    expect(ogUrl.getAttribute('content')).toBe('https://tadmora.vercel.app/prev');
     [desc, canonical, ogTitle, ogUrl].forEach((el) => el.remove());
   });
 });
@@ -276,13 +276,13 @@ describe('R320 §D — the real facts (every sentence from real code)', () => {
     expect(text).toContain('72');
     expect(text).toContain('@test.ly');
     expect(text).toContain('كما هي');
-    expect(text).toContain('جامعة مدارك التجريبية');
+    expect(text).toContain('جامعة تادمورا التجريبية');
   });
 
   it('cookies: the ONE cookie with its REAL attributes (httpOnly · strict · path · 7d)', () => {
     renderPage(CookiesPage);
     const text = document.body.textContent ?? '';
-    expect(text).toContain('mdrk_refresh');
+    expect(text).toContain('tdmr_refresh');
     expect(text).toContain('httpOnly');
     expect(text).toContain('sameSite=strict');
     expect(text).toContain('/api/v1/auth');
@@ -292,9 +292,9 @@ describe('R320 §D — the real facts (every sentence from real code)', () => {
   it('cookies: the reject-purge story — the two gated keys purged, the user links NEVER destroyed', () => {
     renderPage(CookiesPage);
     const text = document.body.textContent ?? '';
-    expect(text).toContain('mdrk-ui');
-    expect(text).toContain('mdrk-doc-side-w');
-    expect(text).toContain('mdrk-academic-links');
+    expect(text).toContain('tdmr-ui');
+    expect(text).toContain('tdmr-doc-side-w');
+    expect(text).toContain('tdmr-academic-links');
     expect(text).toContain('لا يُمس أبدًا عند الرفض');
     expect(text).toContain('لا يدمّر محتوى المستخدم');
   });
@@ -318,35 +318,35 @@ describe('R320 §D — the real facts (every sentence from real code)', () => {
 
   it('STORAGE_LEDGER exports EXACTLY the 9 real keys, in the §2 inventory order', () => {
     expect(STORAGE_LEDGER.map((r) => r.key)).toEqual([
-      'madarek.consent',
-      'madarek.consent.record',
-      'madarek-theme',
-      'mdrk-theme-profile',
-      'mdrk-auth',
-      'mdrk-ui',
-      'mdrk-doc-side-w',
-      'mdrk-academic-links',
-      'mdrk-auth::probe',
+      'tadmora.consent',
+      'tadmora.consent.record',
+      'tadmora-theme',
+      'tdmr-theme-profile',
+      'tdmr-auth',
+      'tdmr-ui',
+      'tdmr-doc-side-w',
+      'tdmr-academic-links',
+      'tdmr-auth::probe',
     ]);
   });
 
   it('gate-agreement (source check): every ledger key appears in its real writer source', () => {
     const banner = read('src/components/landing/chrome/ConsentBanner.tsx');
     // consent + gated + essential classes — straight from the banner
-    for (const k of ['madarek.consent', 'madarek.consent.record', 'mdrk-ui', 'mdrk-doc-side-w']) {
+    for (const k of ['tadmora.consent', 'tadmora.consent.record', 'tdmr-ui', 'tdmr-doc-side-w']) {
       expect(banner, k).toContain(`'${k}'`);
     }
-    for (const k of ['madarek-theme', 'mdrk-theme-profile', 'mdrk-auth']) {
+    for (const k of ['tadmora-theme', 'tdmr-theme-profile', 'tdmr-auth']) {
       expect(banner, k).toContain(`'${k}'`);
     }
     // the remaining writers
-    expect(read('src/hooks/useThemeProfileSync.ts')).toContain("'mdrk-theme-profile'");
-    expect(read('src/stores/auth.store.ts')).toContain('mdrk-auth');
-    expect(read('src/pages/DocumentViewerPage.tsx')).toContain('mdrk-doc-side-w');
-    expect(read('src/pages/student/ProfilePage.tsx')).toContain('mdrk-academic-links');
+    expect(read('src/hooks/useThemeProfileSync.ts')).toContain("'tdmr-theme-profile'");
+    expect(read('src/stores/auth.store.ts')).toContain('tdmr-auth');
+    expect(read('src/pages/DocumentViewerPage.tsx')).toContain('tdmr-doc-side-w');
+    expect(read('src/pages/student/ProfilePage.tsx')).toContain('tdmr-academic-links');
     // the ONE cookie + its attributes — the backend routes file
     const routes = read('../backend/src/http/routes/auth.routes.ts');
-    expect(routes).toContain("'mdrk_refresh'");
+    expect(routes).toContain("'tdmr_refresh'");
     expect(routes).toContain('httpOnly: true');
     expect(routes).toContain("sameSite: 'strict'");
     expect(routes).toContain("path: '/api/v1/auth'");
@@ -617,7 +617,7 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
     for (const dis of ['/student', '/teacher', '/admin', '/quality', '/owner']) {
       expect(robots, `Disallow: ${dis}`).toContain(`Disallow: ${dis}`);
     }
-    expect(robots).toContain('Sitemap: https://madarek.onrender.com/sitemap.xml');
+    expect(robots).toContain('Sitemap: https://tadmora.vercel.app/sitemap.xml');
   });
 
   it('sitemap.xml: exactly 16 public routes', () => {
@@ -625,7 +625,7 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
     expect(urls).toHaveLength(16);
     // the 7 existing public paths + the 9 new sheets, all on the canonical base
-    const base = 'https://madarek.onrender.com';
+    const base = 'https://tadmora.vercel.app';
     expect(urls).toEqual([
       `${base}/`, `${base}/auth`, `${base}/auth/register`, `${base}/colleges`,
       `${base}/colleges/leaderboard`, `${base}/campus`, `${base}/capabilities`,
@@ -639,9 +639,9 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
     }
   });
 
-  it('manifest.webmanifest: مدارك · ar · rtl · standalone · #F6F6EE · 192+512 maskable', () => {
+  it('manifest.webmanifest: تادمورا · ar · rtl · standalone · #F6F6EE · 192+512 maskable', () => {
     const manifest = JSON.parse(read('public/manifest.webmanifest'));
-    expect(manifest.short_name).toBe('مدارك');
+    expect(manifest.short_name).toBe('تادمورا');
     expect(manifest.lang).toBe('ar');
     expect(manifest.dir).toBe('rtl');
     expect(manifest.display).toBe('standalone');
@@ -666,7 +666,7 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
 
   it('the icons were rendered FROM the one brand mark (the recipe script + the mark exist)', () => {
     const script = read('../scripts/r320/legal-icons.mjs');
-    expect(script).toContain('madarek-mark.svg');
+    expect(script).toContain('tadmora-mark.svg');
     expect(script).toContain('icon-${size}.png');
     // the ink-on-paper ground is the platform's own light token
     expect(script).toContain('#F6F6EE');

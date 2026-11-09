@@ -1,37 +1,37 @@
 #!/usr/bin/env node
 /* eslint-disable */
 /**
- * run.mjs — R329 M1b — the Madarek⇄Heron fidelity metric.
+ * run.mjs — R329 M1b — the Tadmora⇄Heron fidelity metric.
  *
- * Scores Madarek's public pages against the LIVE Heron reference captured by
+ * Scores Tadmora's public pages against the LIVE Heron reference captured by
  * scripts/fidelity/heron-extract.mjs into docs/redesign/r329/heron-live/
  * (10 pages × 4 viewports; geometry + computed styles + motion facts; text
  * never copied — see that script's IP policy).
  *
  * WHAT IT DOES (per page × viewport × theme):
- *   1. boots/reuses Madarek's vite dev server on :5175 (public pages render
+ *   1. boots/reuses Tadmora's vite dev server on :5175 (public pages render
  *      without a backend),
- *   2. captures Madarek with the SAME probe family as the reference
+ *   2. captures Tadmora with the SAME probe family as the reference
  *      extractor — sections (rects + computed styles + heading metadata +
  *      hairline/radius census), rhythm, type ladder, fonts, motion census,
  *      and a trusted-wheel scroll-feel trace fitted to an exponential decay
  *      — under the project's measurement hygiene:
  *        · fresh context per combo, serviceWorkers:'block',
- *        · theme forced BEFORE load via addInitScript (madarek-theme +
- *          mdrk-theme-profile), consent banner pre-accepted (madarek.consent),
+ *        · theme forced BEFORE load via addInitScript (tadmora-theme +
+ *          tdmr-theme-profile), consent banner pre-accepted (tadmora.consent),
  *        · the page is traversed ONCE (stepwise to bottom, back to top) via
- *          window.__mdrkLenis.scrollTo(y,{immediate:true}) so content-
+ *          window.__tdmrLenis.scrollTo(y,{immediate:true}) so content-
  *          visibility / reveal-in-view states settle before any measurement,
  *        · the Lenis engine is stopped before the full-page screenshot so it
  *          cannot snap the scroll back mid-stitch.
- *   3. aligns Madarek sections to the reference by ORDER + ROLE (documented
+ *   3. aligns Tadmora sections to the reference by ORDER + ROLE (documented
  *      DP below) and scores 5 axes (0–100): type-scale ladder, spacing/
  *      rhythm, color/contrast, geometry, motion — see README.md for the
  *      exact formulas and tolerances.
  *   4. emits:
  *        docs/redesign/r329/fidelity/<page>.json     full per-combo results
  *        docs/redesign/r329/fidelity/summary.md      the aggregate tables
- *        docs/redesign/r329/fidelity/contact/*.jpg   Heron|Madarek sheets (q80)
+ *        docs/redesign/r329/fidelity/contact/*.jpg   Heron|Tadmora sheets (q80)
  *        docs/redesign/r329/fidelity/diff/*.png      pixelmatch diff images
  *
  * The pixel diff is EVIDENCE, not a score: the two sites carry different
@@ -64,7 +64,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..', '..');
 const REF_DIR = path.join(ROOT, 'docs', 'redesign', 'r329', 'heron-live');
 const OUT_DIR = path.join(ROOT, 'docs', 'redesign', 'r329', 'fidelity');
-const TMP_DIR = '/tmp/mdrk-fidelity';
+const TMP_DIR = '/tmp/tdmr-fidelity';
 const BASE_URL = process.env.FIDELITY_BASE_URL || 'http://localhost:5175';
 const TMP_PORT = 5180;
 
@@ -81,7 +81,7 @@ const themeArg = argOf('theme');
 const WANT_SHEETS = !args.includes('--no-sheets');
 const WANT_DIFF = !args.includes('--no-diff');
 
-/* Madarek route → Heron reference slug. Rationale in README.md §mapping. */
+/* Tadmora route → Heron reference slug. Rationale in README.md §mapping. */
 const PAGE_MAP = [
   { route: '/', slug: 'home', ref: 'home', why: 'homepage ↔ homepage' },
   { route: '/login', slug: 'login', ref: 'contact-us', why: 'the reference has no auth page; contact-us is its only form-centric page' },
@@ -211,7 +211,7 @@ function fitDecay(samples) {
   return { tauMs: Math.round(tau * 10) / 10, lerpPerFrame: Math.round(lerpPerFrame * 1000) / 1000, r2: Math.round(r2 * 1000) / 1000, moved: Math.round(moved), nPts: n };
 }
 
-/* ── in-page probes (Madarek flavor of the heron-extract family) ───── */
+/* ── in-page probes (Tadmora flavor of the heron-extract family) ───── */
 
 const PROBE_LIB = () => {
   window.__fq = {
@@ -243,7 +243,7 @@ const PROBE_LIB = () => {
       }
       return cur;
     },
-    /* Madarek sections = direct sizable children of <main> + the page
+    /* Tadmora sections = direct sizable children of <main> + the page
      * <footer> when it lives outside <main> (mirrors Heron's content
      * container, whose children include footer-wrap). */
     findSections() {
@@ -444,7 +444,7 @@ const MOTION_PROBE = () => {
     keyframesNames: [...new Set(keyframes)],
     lenis: {
       wrapperClass: !!document.querySelector('.lenis'),
-      windowLenis: !!window.__mdrkLenis,
+      windowLenis: !!window.__tdmrLenis,
     },
     gsap: { present: typeof window.gsap !== 'undefined', scrollTrigger: typeof window.ScrollTrigger !== 'undefined',
       scrollTriggerCount: window.ScrollTrigger ? window.ScrollTrigger.getAll().length : 0 },
@@ -488,7 +488,7 @@ async function probe(url) {
 async function ensureVite() {
   if (await probe(BASE_URL + '/')) return { booted: false };
   console.log('[vite] not reachable on', BASE_URL, '— booting (frontend, port 5175)…');
-  const log = fs.openSync('/tmp/mdrk-fidelity-vite.log', 'a');
+  const log = fs.openSync('/tmp/tdmr-fidelity-vite.log', 'a');
   spawn('npx', ['vite', '--port', '5175', '--host'], {
     cwd: path.join(ROOT, 'frontend'), detached: true, stdio: ['ignore', log, log],
   }).unref();
@@ -497,7 +497,7 @@ async function ensureVite() {
     await new Promise((r) => setTimeout(r, 1500));
     if (await probe(BASE_URL + '/')) return { booted: true };
   }
-  throw new Error('vite did not come up on ' + BASE_URL + ' (see /tmp/mdrk-fidelity-vite.log)');
+  throw new Error('vite did not come up on ' + BASE_URL + ' (see /tmp/tdmr-fidelity-vite.log)');
 }
 
 /* tiny static server for the composer (tmp shots + repo reference shots) */
@@ -528,7 +528,7 @@ async function traverse(page) {
   const max = await page.evaluate(() => Math.max(0, (document.scrollingElement || document.documentElement).scrollHeight - window.innerHeight));
   const step = Math.max(400, Math.round(max / 24)) || 400;
   const seat = (y) => page.evaluate((yy) => {
-    const L = window.__mdrkLenis;
+    const L = window.__tdmrLenis;
     if (L && typeof L.scrollTo === 'function') L.scrollTo(yy, { immediate: true });
     else window.scrollTo(0, yy);
   }, y);
@@ -548,9 +548,9 @@ async function captureCombo(browser, route, vp, theme) {
   const page = await context.newPage();
   try {
     await page.addInitScript((mode) => {
-      localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode, modeUpdatedAt: Date.now() }, version: 2 }));
-      localStorage.setItem('mdrk-theme-profile', mode);
-      localStorage.setItem('madarek.consent', 'accepted');
+      localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode, modeUpdatedAt: Date.now() }, version: 2 }));
+      localStorage.setItem('tdmr-theme-profile', mode);
+      localStorage.setItem('tadmora.consent', 'accepted');
     }, theme);
     const resp = await page.goto(BASE_URL + route, { waitUntil: 'domcontentloaded', timeout: 45000 });
     if (resp && resp.status() >= 400) throw new Error('HTTP ' + resp.status());
@@ -583,11 +583,11 @@ async function captureCombo(browser, route, vp, theme) {
     feel.wheelMode = wheelMode;
     /* full-page screenshot with the Lenis engine parked (no snap-back) */
     await page.evaluate(() => {
-      try { if (window.__mdrkLenis && window.__mdrkLenis.stop) window.__mdrkLenis.stop(); } catch { /* ignore */ }
+      try { if (window.__tdmrLenis && window.__tdmrLenis.stop) window.__tdmrLenis.stop(); } catch { /* ignore */ }
       window.scrollTo(0, 0);
     });
     await page.waitForTimeout(200);
-    const shot = path.join(TMP_DIR, 'shots', `mdrk-${vp.label}-${theme}.png`);
+    const shot = path.join(TMP_DIR, 'shots', `tdmr-${vp.label}-${theme}.png`);
     await page.screenshot({ path: shot, fullPage: true, type: 'png', animations: 'disabled' });
     return { extract, fonts, motion, feel, shot };
   } finally {
@@ -646,7 +646,7 @@ function alignSections(ref, md) {
 
 function pairTypeScore(a, b) {
   /* the section's TITLE RUNG — the largest rendered text size on each side,
-   * tag-agnostic (Heron carries several titles as styled divs, Madarek as
+   * tag-agnostic (Heron carries several titles as styled divs, Tadmora as
    * semantic h2; the visual ladder is what the redesign is about). */
   const maxFs = (sec) => {
     let m = 0;
@@ -689,7 +689,7 @@ function gapScore(gh, gm) {
 
 /* top content inset — where the first text starts inside the section —
  * nesting-independent visual breathing (Heron pads inner containers while
- * the x-wrap itself reads pad=0; Madarek pads the section directly).
+ * the x-wrap itself reads pad=0; Tadmora pads the section directly).
  * Only text INSIDE the section's span counts — sticky/out-of-flow children
  * (e.g. the chapters strip's pinned nav at −616px) are rhythm outliers. */
 function topInset(sec) {
@@ -790,7 +790,7 @@ function motionScore(refMotion, refFeel, mdMotion, mdFeel) {
   /* (1) scroll feel: the wheel-impulse decay constant */
   if (refFeel && refFeel.fit && refFeel.fit.tauMs && mdFeel && mdFeel.tauMs) {
     factors.push({ k: 'tau', w: 0.4, s: scoreDev(Math.abs(ln(mdFeel.tauMs / refFeel.fit.tauMs)), LN_2) });
-  } else factors.push({ k: 'tau', w: 0.4, s: 0, note: 'unmeasured on ' + (!refFeel?.fit?.tauMs ? 'reference' : 'madarek') });
+  } else factors.push({ k: 'tau', w: 0.4, s: 0, note: 'unmeasured on ' + (!refFeel?.fit?.tauMs ? 'reference' : 'tadmora') });
   /* (2) CSS transition durations (median + spread) */
   const dH = transitionDurations(refMotion.transitions);
   const dM = transitionDurations(mdMotion.transitions);
@@ -924,9 +924,9 @@ function pngPadTo(img, W, H, bg) {
   return out;
 }
 
-async function fullResDiff(composerPage, heronPngPath, mdrkPngPath, outPath, bgH, bgM) {
+async function fullResDiff(composerPage, heronPngPath, tdmrPngPath, outPath, bgH, bgM) {
   const A = PNG.sync.read(fs.readFileSync(heronPngPath));
-  const B = PNG.sync.read(fs.readFileSync(mdrkPngPath));
+  const B = PNG.sync.read(fs.readFileSync(tdmrPngPath));
   const W = Math.max(A.width, B.width);
   const H = Math.max(A.height, B.height);
   const a = pngPadTo(A, W, H, bgH);
@@ -1009,7 +1009,7 @@ async function contactSheet(page, { refUrl, mdUrl, refLabel, mdLabel, outPath, s
 </style>
 <div id="sheet">
   <figure><figcaption>HERON · ${refLabel}</figcaption><img src="${refUrl}"></figure>
-  <figure><figcaption>MADAREK · ${mdLabel} · <b>${score}%</b></figcaption><img src="${mdUrl}"></figure>
+  <figure><figcaption>TADMORA · ${mdLabel} · <b>${score}%</b></figcaption><img src="${mdUrl}"></figure>
 </div>`;
   await page.setContent(html, { waitUntil: 'networkidle' });
   await page.waitForTimeout(150);
@@ -1128,7 +1128,7 @@ async function main() {
 
 function writeSummary() {
   const lines = [];
-  lines.push('# Fidelity baseline — Madarek vs Heron (live reference)');
+  lines.push('# Fidelity baseline — Tadmora vs Heron (live reference)');
   lines.push('');
   lines.push('Generated by `scripts/fidelity/run.mjs` (see `scripts/fidelity/README.md` for the metric).');
   lines.push('Reference: `docs/redesign/r329/heron-live/` — 0 content copied; geometry/styles/motion facts only.');

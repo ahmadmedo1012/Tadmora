@@ -36,7 +36,7 @@ import '../../styles/campus-media.css'; // r341 D9 flat-paper law: the 3 gradien
  *     youtube-nocookie, click-to-load (VideoCard) — «توثيقي» is the
  *     label, and it is the truth;
  *   · a university appearing here is documentation, not endorsement —
- *     «مدارك مستقلّة» stays on the page.
+ *     «تادمورا مستقلّة» stays on the page.
  */
 export function CampusLifePage() {
   useThemeSync();
@@ -52,9 +52,9 @@ export function CampusLifePage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="cu-header-brand" aria-label="مدارك — الصفحة الرئيسية">
+          <Link to="/" className="cu-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            مدارك
+            تادمورا
           </Link>
         </div>
       </header>
@@ -103,7 +103,7 @@ export function CampusLifePage() {
 
           <RevealCssClass as="p" className="cu-foot" delay={3}>
             المصدر: ويكيميديا كومنز — تراخيص PD / CC BY / CC BY-SA، ونسب كل مصوّر مرفقة بإطاره.
-            أعيد تحجيم الصور وقصّها للعرض. ظهور جامعة هنا توثيقٌ لحقيقتها، لا تبنّيًا ولا شراكة — مدارك مستقلّة.
+            أعيد تحجيم الصور وقصّها للعرض. ظهور جامعة هنا توثيقٌ لحقيقتها، لا تبنّيًا ولا شراكة — تادمورا مستقلّة.
           </RevealCssClass>
         </section>
 

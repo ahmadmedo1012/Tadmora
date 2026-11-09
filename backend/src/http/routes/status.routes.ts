@@ -16,7 +16,7 @@ import { logger } from '../../logger.js';
 
 const router = Router();
 
-const BUILD_ID = buildIdFromEnv(env.RENDER_GIT_COMMIT ?? env.GIT_SHA);
+const BUILD_ID = buildIdFromEnv(env.RENDER_GIT_COMMIT ?? env.VERCEL_GIT_COMMIT_SHA ?? env.GIT_SHA);
 
 router.get('/status', async (_req, res) => {
   const start = Date.now();
@@ -51,7 +51,7 @@ router.get('/status', async (_req, res) => {
       // the blocking «يلزم تحديث التطبيق» screen pointing at updateUrl.
       // Unset MIN_APP_VERSION = no gate (bare-clone/dev default).
       minAppVersion: env.MIN_APP_VERSION ?? null,
-      updateUrl: env.APP_DOWNLOAD_URL ?? 'https://madarek.onrender.com/app',
+      updateUrl: env.APP_DOWNLOAD_URL ?? 'https://tadmora.vercel.app/app',
     },
   });
 });

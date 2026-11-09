@@ -157,7 +157,7 @@ export type AuditRoute = typeof AUDIT_ROUTES[number];
  *
  * Re-capture locally with:
  *   AUDIT_BASELINE=1 AUDIT_API_MOCK=1 AUDIT_BASELINE_SLICE=1 \
- *   MADAREK_E2E_BASE_URL=http://localhost:4173 \
+ *   TADMORA_E2E_BASE_URL=http://localhost:4173 \
  *   npx playwright test tests/audit/surface-inventory.spec.ts
  * (vite preview serving `npm run build` output on :4173), then
  * `npm run audit:baseline` to promote, then re-capture + drift.

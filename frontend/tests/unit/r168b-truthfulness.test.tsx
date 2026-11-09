@@ -96,7 +96,7 @@ describe('r168b — landing copy claims only what ships', () => {
       stripJsx(read('src/components/landing/sections/Vision.tsx')) +
       stripJsx(read('src/components/landing/sections/Footer.tsx'));
     expect(
-      page.includes('aria-label="مدارك — منصّة التعليم الذكي"') ||
+      page.includes('aria-label="تادمورا — نظام تشغيل الجامعة"') ||
         page.includes('aria-label={BRAND_LABEL}'),
     ).toBe(true);
     expect(page).toContain('aria-label="ابدأ رحلتك — أنشئ حسابك"');

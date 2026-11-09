@@ -678,7 +678,7 @@ describe('r157 — checkpoint answer memory (seed) + honest skip', () => {
     const overlay = document.querySelector('.modal-overlay');
     if (!overlay) return;
     const e = new Event('animationend', { bubbles: true });
-    Object.defineProperty(e, 'animationName', { value: 'madarek-overlay-out' });
+    Object.defineProperty(e, 'animationName', { value: 'tadmora-overlay-out' });
     // act() — the exit sets state (setRendered(false)); without it the
     // update defers past the assertions (raw dispatch ≠ RTL fireEvent).
     act(() => {
@@ -951,7 +951,7 @@ describe('r164d — completed watch, open checkpoints: the banner (not a wall)',
       const overlay = document.querySelector('.modal-overlay');
       if (!overlay) return;
       const e = new Event('animationend', { bubbles: true });
-      Object.defineProperty(e, 'animationName', { value: 'madarek-overlay-out' });
+      Object.defineProperty(e, 'animationName', { value: 'tadmora-overlay-out' });
       act(() => {
         overlay.dispatchEvent(e);
       });

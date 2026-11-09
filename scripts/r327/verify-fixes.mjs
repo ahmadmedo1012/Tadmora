@@ -4,7 +4,7 @@ const browser = await chromium.launch({ executablePath: EXEC, args: ['--disable-
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
 const res = await fetch('http://localhost:4000/api/v1/auth/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: 'student@test.ly', password: '12345678' }) });
 const session = (await res.json()).data;
-await page.addInitScript(([s]) => { try { sessionStorage.setItem('madarek-intro-skip','1'); localStorage.setItem('mdrk-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 })); localStorage.setItem('madarek-theme', JSON.stringify({state:{mode:'dark',modeUpdatedAt:Date.now()},version:2})); } catch {} }, [session]);
+await page.addInitScript(([s]) => { try { sessionStorage.setItem('tadmora-intro-skip','1'); localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 })); localStorage.setItem('tadmora-theme', JSON.stringify({state:{mode:'dark',modeUpdatedAt:Date.now()},version:2})); } catch {} }, [session]);
 await page.goto('http://localhost:5173/student/dashboard', { waitUntil: 'domcontentloaded' });
 await page.waitForTimeout(3500);
 const out = await page.evaluate(() => {

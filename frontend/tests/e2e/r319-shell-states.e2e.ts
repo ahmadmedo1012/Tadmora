@@ -43,7 +43,7 @@ import path from 'node:path';
 import { FIXED_NOW_ISO, STUDENT_USER } from './fixtures/api-fixtures';
 import { installMockApi, seedSession } from './fixtures/mock-transport';
 
-const BASE_URL = process.env.MADAREK_E2E_BASE_URL ?? 'http://localhost:5173';
+const BASE_URL = process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173';
 /* Evidence frames — the R319 board's owner-screenshot re-shoot mandate. */
 const EVIDENCE_DIR = path.resolve(process.cwd(), '..', 'audits', 'evidence', 'r319-shell');
 const THEMES = ['light', 'dark'] as const;
@@ -149,7 +149,7 @@ async function iphoneSuite(browser: Browser, theme: (typeof THEMES)[number]): Pr
   // init script, same reasons — deterministic task-focused boot).
   await context.addInitScript(() => {
     try {
-      sessionStorage.setItem('madarek-intro-skip', '1');
+      sessionStorage.setItem('tadmora-intro-skip', '1');
       try {
         Object.defineProperty(Navigator.prototype, 'hardwareConcurrency', {
           configurable: true,

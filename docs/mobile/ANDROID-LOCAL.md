@@ -54,21 +54,21 @@ never update the same listing (unless Play App Signing is enabled, §5).
 Generate once, back it up, never commit it:
 
 ```bash
-mkdir -p ~/.madarek && keytool -genkeypair -v \
-  -keystore ~/.madarek/madarek-release.keystore \
-  -alias madarek -keyalg RSA -keysize 2048 -validity 10000 \
+mkdir -p ~/.tadmora && keytool -genkeypair -v \
+  -keystore ~/.tadmora/tadmora-release.keystore \
+  -alias tadmora -keyalg RSA -keysize 2048 -validity 10000 \
   -storetype PKCS12 \
-  -dname "CN=Madarek, OU=Mobile, O=Madarek, L=Tripoli, ST=Tripoli, C=LY"
+  -dname "CN=Tadmora, OU=Mobile, O=Tadmora, L=Tripoli, ST=Tripoli, C=LY"
 ```
 
 keytool prompts for the passwords — keep them OFF the command line (shell
 history). Then export before building:
 
 ```bash
-export MADAREK_ANDROID_KEYSTORE=~/.madarek/madarek-release.keystore
-export MADAREK_ANDROID_KEYSTORE_ALIAS=madarek
-export MADAREK_ANDROID_KEYSTORE_PASSWORD='…'          # keystore password
-export MADAREK_ANDROID_KEYSTORE_KEY_PASSWORD='…'      # optional; defaults to the store password
+export TADMORA_ANDROID_KEYSTORE=~/.tadmora/tadmora-release.keystore
+export TADMORA_ANDROID_KEYSTORE_ALIAS=tadmora
+export TADMORA_ANDROID_KEYSTORE_PASSWORD='…'          # keystore password
+export TADMORA_ANDROID_KEYSTORE_KEY_PASSWORD='…'      # optional; defaults to the store password
 ```
 
 The script turns these into `android/key.properties` (chmod 600, gitignored
@@ -111,7 +111,7 @@ keystore once so both paths sign identically:
 
 ```bash
 npm i -g eas-cli && eas login                 # or EXPO_TOKEN=… headless
-eas credentials -p android                    # upload ~/.madarek/madarek-release.keystore
+eas credentials -p android                    # upload ~/.tadmora/tadmora-release.keystore
 cd apps/mobile
 eas build --platform android --profile preview --local
 ```
@@ -134,7 +134,7 @@ quota — the very constraint that birthed paths A/B.
 |---|---|---|---|
 | EAS quota | none | none | consumed |
 | Machine | yours (JDK+SDK) | yours (Docker) | Expo's |
-| Credentials | `MADAREK_ANDROID_*` env | EAS servers | EAS servers |
+| Credentials | `TADMORA_ANDROID_*` env | EAS servers | EAS servers |
 | Best for | quota-free releases, full control | EAS-parity without quota | default, zero setup |
 
 ## 4. Signing for Play
@@ -149,8 +149,8 @@ quota — the very constraint that birthed paths A/B.
   `android.versionCode` explicitly). EAS cloud builds with
   `appVersionSource: "remote"` auto-increment (`eas.json` `autoIncrement`).
   Never ship two different binaries with the same `versionCode`.
-- One keystore per listing, forever: `ly.madarek.mobile` is signed by
-  `~/.madarek/madarek-release.keystore` (alias `madarek`) on every path.
+- One keystore per listing, forever: `ly.tadmora.mobile` is signed by
+  `~/.tadmora/tadmora-release.keystore` (alias `tadmora`) on every path.
 
 ## 5. Troubleshooting
 
@@ -160,7 +160,7 @@ quota — the very constraint that birthed paths A/B.
 | `failed to find target with hash string 'android-37'` / license prompt mid-build | SDK component or licenses missing → `sdkmanager "platforms;android-37" "build-tools;37.0.0"` then `yes \| sdkmanager --licenses` |
 | Script exits `Android SDK missing` | `ANDROID_HOME` unset or not a dir → §1 step 2, new shell |
 | Script exits `template drift: …` | Expo changed the prebuild gradle template → inspect `android/app/build.gradle`, update the patcher anchors in `scripts/build-android-local.sh` |
-| Script exits `keystore file not found` | env points at a missing path → re-check `MADAREK_ANDROID_KEYSTORE` (§2 keytool command is printed by the script) |
+| Script exits `keystore file not found` | env points at a missing path → re-check `TADMORA_ANDROID_KEYSTORE` (§2 keytool command is printed by the script) |
 | `git status` dirty after a build | unexpected — the script restores `package.json` scripts post-prebuild; the whole `android/` dir is gitignored (CNG). Commit nothing from `android/`. |
 | Gradle OOM (4 GB machines) | raise `org.gradle.jvmargs` in `android/gradle.properties` (e.g. `-Xmx4096m`) or `--no-daemon` |
 | First build "hangs" | downloading gradle 9.4.1 + maven deps + NDK (~2 GB) — watch `~/.gradle`; later builds are incremental |

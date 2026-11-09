@@ -7,7 +7,7 @@
  * WHAT THIS IS
  *   One polite Playwright chromium visit per breakpoint (1440×900 / 768×1024 / 390×844)
  *   to the Heron reference site of record. It records GEOMETRY (px + rem on the site's own
- *   fluid root), COMPUTED STYLES, GRID, and MOTION PARAMETERS only, so the Madarek
+ *   fluid root), COMPUTED STYLES, GRID, and MOTION PARAMETERS only, so the Tadmora
  *   transplant packages can rebuild the same grammar with our own Arabic copy + artwork.
  *
  * HARD RULES ENCODED HERE (owner brief §12 + task 1-c hard rules)
@@ -18,7 +18,7 @@
  *   - Screenshots are internal evidence captures written under audits/evidence/r322/heron/
  *     (JPEG q70) — reference sheets for side-by-side review; never inlined into product code.
  *   - The Awwwards badge is measured for completeness but flagged DO_NOT_TRANSPLANT
- *     (R322 non-negotiable: no award badges in Madarek).
+ *     (R322 non-negotiable: no award badges in Tadmora).
  *   - Cookie/consent banner: geometry noted, Escape attempted once, consent buttons are
  *     NEVER clicked.
  *

@@ -26,7 +26,7 @@ const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1', '[::1]']);
 
 /** Production-looking substrings — belt AND braces (they are not local
  * hosts anyway, but the message must name the danger explicitly). */
-const PROD_HOST_MARKERS = ['onrender', 'neon'] as const;
+const PROD_HOST_MARKERS = ['onrender', 'vercel', 'neon'] as const;
 
 function refuse(reasonAr: string, reasonEn: string): never {
   console.error('');

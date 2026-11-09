@@ -12,7 +12,7 @@
  *   - ≥ 3 lectures (3 chapters + 1 checkpoint each) per course that
  *     lacks them — SE301's authored set is never touched
  *   - one material + one assignment per offering that lacks them
- *   - 30 demo students (@demo.madarek.ly — the flag the registrar's
+ *   - 30 demo students (@demo.tadmora.ly — the flag the registrar's
  *     «حذف بيانات العرض» action sweeps), enrolled across 5 of the 8
  *     offerings each, with a QUIZ_1 grade on their first course and
  *     an attendance row on today's SE301 session
@@ -30,7 +30,7 @@ import { utcDayStart } from '../src/lib/dates.js';
 
 /** The demo-cohort flag: every pilot-sample student carries this
  *  domain — the registrar's removal action sweeps exactly it. */
-export const DEMO_EMAIL_DOMAIN = '@demo.madarek.ly';
+export const DEMO_EMAIL_DOMAIN = '@demo.tadmora.ly';
 
 const TERM = '2024-FALL';
 
@@ -423,7 +423,7 @@ async function ensureDemoStudent(
 }
 
 export async function seedPilotCohort(prisma: PrismaClient): Promise<{ students: number; lectures: number }> {
-  const institution = await prisma.institution.findUnique({ where: { slug: 'madarek-demo' } });
+  const institution = await prisma.institution.findUnique({ where: { slug: 'tadmora-demo' } });
   const teacher = await prisma.user.findUnique({ where: { email: 'teacher@test.ly' }, select: { id: true } });
   if (!institution || !teacher) return { students: 0, lectures: 0 };
 
@@ -490,7 +490,7 @@ export async function seedPilotCohort(prisma: PrismaClient): Promise<{ students:
           durationSec: def.durationSec,
           // the honest self-hosted chapter-card clip the player ships
           videoUrl: `/media/generated/chapter-card-${offering.course.code.toLowerCase()}-${i + 1}.mp4`,
-          posterUrl: '/brand/madarek-mark.svg',
+          posterUrl: '/brand/tadmora-mark.svg',
         },
       });
       lecturesCreated++;

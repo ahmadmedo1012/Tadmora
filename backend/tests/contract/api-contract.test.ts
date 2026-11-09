@@ -24,7 +24,7 @@
  *
  * The snapshot `shape` values (recursive `{'[]': …}` / scalar-type tree)
  * are the OBSERVED shapes of real responses against the seeded dev DB
- * (DATABASE_URL=postgresql://postgres@localhost:5433/madarek_dev) — the
+ * (DATABASE_URL=postgresql://postgres@localhost:5433/tadmora_dev) — the
  * same file feeds docs/api/openapi.json via `npm run api:openapi`.
  * Regenerate after an intentional additive change:
  *
@@ -192,8 +192,8 @@ async function call(
 }
 
 const refreshCookieFrom = (res: Response): string => {
-  const raw = res.headers.getSetCookie().find((c) => c.startsWith('mdrk_refresh='));
-  if (!raw) throw new Error('login/refresh response carried no mdrk_refresh Set-Cookie');
+  const raw = res.headers.getSetCookie().find((c) => c.startsWith('tdmr_refresh='));
+  if (!raw) throw new Error('login/refresh response carried no tdmr_refresh Set-Cookie');
   return raw.slice(0, raw.indexOf(';'));
 };
 

@@ -43,12 +43,12 @@ function setProfile(pref: ServerPreference, at: string): void {
   me = { id: 'u1', themePreference: pref, themePreferenceUpdatedAt: at };
 }
 
-const PROFILE_CACHE = 'mdrk-theme-profile';
+const PROFILE_CACHE = 'tdmr-theme-profile';
 
 beforeEach(() => {
   vi.clearAllMocks();
   useThemeStore.setState({ mode: 'system', modeUpdatedAt: 0 });
-  localStorage.removeItem('madarek-theme');
+  localStorage.removeItem('tadmora-theme');
   localStorage.removeItem(PROFILE_CACHE);
   setProfile('SYSTEM', '2024-01-01T00:00:00.000Z');
   mockMe.mockImplementation(() => ({ data: me }));

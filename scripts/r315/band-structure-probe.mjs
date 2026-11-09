@@ -8,7 +8,7 @@
  *
  * Usage:
  *   node scripts/r315/band-structure-probe.mjs --site heron --viewport 768x1024
- *   node scripts/r315/band-structure-probe.mjs --site madarek --viewport 768x1024 \
+ *   node scripts/r315/band-structure-probe.mjs --site tadmora --viewport 768x1024 \
  *        [--bands intro,platform] [--depth 2]
  */
 import { chromium } from 'playwright-core';
@@ -17,7 +17,7 @@ import fs from 'node:fs';
 const EXE = process.env.HOME + '/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 const SITES = {
   heron: { url: 'https://heronaiapp.com/', wait: 11000 },
-  madarek: { url: 'http://localhost:5173/', wait: 9000 },
+  tadmora: { url: 'http://localhost:5173/', wait: 9000 },
 };
 
 const BANDS = {
@@ -31,7 +31,7 @@ const BANDS = {
     cta: '.cta',
     footer: '.footer',
   },
-  madarek: {
+  tadmora: {
     intro: '#statement.st-section',
     problem: '#live.pm-section',
     map: '#chapters.chapters',

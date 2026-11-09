@@ -1,6 +1,6 @@
-# AGENTS.md — Madarek repo guide (for humans and AI agents)
+# AGENTS.md — Tadmora repo guide (for humans and AI agents)
 
-Madarek (مدارك) is an independent, Arabic-first smart-learning platform: one service —
+Tadmora (تادمورا) is an independent, Arabic-first University Operating System: one service —
 Express + TypeScript + Prisma backend that also serves the built React 18 + Vite SPA —
 deployed to Render with Neon PostgreSQL. The UI is fully Arabic RTL. **Code wins over
 docs**: on any conflict, fix the doc in the same change. Platform docs (docs/01–16,
@@ -10,7 +10,7 @@ docs/modules/) are Arabic; generated references (docs/*-REFERENCE.md) are Englis
 
 | path | what lives there |
 |---|---|
-| `frontend/` | `@madarek/frontend` — React 18 + Vite SPA: `src/App.tsx` shell, `src/pages/` (incl. `LandingPage.tsx`), `src/components/landing/sections/*.tsx` (landing seats), `src/styles/` (token + layer + feature CSS), `stores/` (zustand), `tests/` (vitest + Playwright e2e/audit/r305) |
+| `frontend/` | `@tadmora/frontend` — React 18 + Vite SPA: `src/App.tsx` shell, `src/pages/` (incl. `LandingPage.tsx`), `src/components/landing/sections/*.tsx` (landing seats), `src/styles/` (token + layer + feature CSS), `stores/` (zustand), `tests/` (vitest + Playwright e2e/audit/r305) |
 | `backend/` | Express + TS + Prisma workspace: `src/app.ts`, `src/http/routes/*.ts` (API), `src/modules/*`, `src/lib/` (permissions, governance, storage), `prisma/schema.prisma` + `migrations/` + `seed.ts` |
 | `apps/mobile/` | Expo ~58 (React Native) app with its own lockfile — see `apps/mobile/README.md` |
 | `scripts/` | `verify.sh` (the ONE gate set) + gates: `check-bundle-size.mjs`, `check-{icons,colors,raw-css,motion-tokens,csp-hash}.sh`, `tokens/build.mjs`, `verify-parity-export.mjs`, `spec/extract-heron.mjs`, round dirs (`r314…r333`, history), `gates/` (stylelint ratchet + css-counts/coverage), `deadcode/` (knip/jscpd ratchet) |
@@ -203,9 +203,9 @@ briefs in `docs/redesign/r341/tasks/`.
   with the requested build name symlinked to `chromium-1200`. WebKit is often absent →
   report it as RESIDUAL, never fake the number.
 - Dark cells: measure with `run.mjs --dark` (site's own `html[data-theme=dark]` flip).
-- `madarek.onrender.com` is NOT reachable from the sandbox — take product-UI crops from
+- `tadmora.onrender.com` is NOT reachable from the sandbox — take product-UI crops from
   the local dev server/build; `heronaiapp.com` IS reachable.
 - No `gh` CLI, no pnpm/yarn on PATH; GitHub API via `curl` + token header. git identity
-  is preset in `/home/z/madarek` (worktrees inherit it).
+  is preset in `/home/z/tadmora` (worktrees inherit it).
 - Commits: `type(rNNN): subject` (feat|fix|chore|docs); section rewrites carry
   `conformance <section>: a% → b%` in the message.

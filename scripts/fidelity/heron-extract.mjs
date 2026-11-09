@@ -5,7 +5,7 @@
  *
  * Purpose: one polite, reproducible crawl of https://heronaiapp.com/ that
  * produces the machine-readable reference the fidelity metric
- * (scripts/fidelity/run.mjs) scores Madarek against. Everything lives in
+ * (scripts/fidelity/run.mjs) scores Tadmora against. Everything lives in
  * docs/redesign/r329/heron-live/.
  *
  * WHAT IS EXTRACTED (and what is deliberately NOT — same IP policy as

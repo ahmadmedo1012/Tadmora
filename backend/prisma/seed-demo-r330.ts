@@ -9,15 +9,15 @@
  *     /\br\d{3}\b|probe|APP_INTERNAL|SYNC_|test/i   → must NOT match
  *
  * What it seeds (all upsert/guarded-create → re-runs are no-ops):
- *   - reuses the established demo tenant جامعة مدارك التجريبية
- *     (slug madarek-demo — the same row seed.ts maintains; the fixed
+ *   - reuses the established demo tenant جامعة تادمورا التجريبية
+ *     (slug tadmora-demo — the same row seed.ts maintains; the fixed
  *     legacy id 'inst-zawia-showcase' is only on the fresh-create
  *     branch so migrated and fresh databases agree on the reference id)
  *   - 8 courses with real Arabic names (codes CS101…NT101 — a fresh
  *     grammar that cannot collide with the 30x codes of seed.ts /
  *     seed-pilot.ts), 38 lectures with sensible durations
  *   - 6 teachers with Arabic names + full TeacherProfiles
- *   - 40 students — emails userNN@demo.madarek.ly (the SAME demo
+ *   - 40 students — emails userNN@demo.tadmora.ly (the SAME demo
  *     domain the registrar's «حذف بيانات العرض» action already sweeps
  *     for the pilot cohort — so this pack is removable by that one
  *     action too), reg numbers DEMO-2026-101…140 (no overlap with the
@@ -50,7 +50,7 @@ import { hashPassword } from '../src/lib/password.js';
 import { TEST_PASSWORD } from '../src/modules/auth/test-accounts.data.js';
 
 const TERM = '2024-FALL';
-const INSTITUTION_SLUG = 'madarek-demo';
+const INSTITUTION_SLUG = 'tadmora-demo';
 
 // ─── Teachers (6) — Arabic names, full profiles ─────────────────
 interface TeacherSeedDef {
@@ -70,7 +70,7 @@ interface TeacherSeedDef {
 
 const TEACHERS: TeacherSeedDef[] = [
   {
-    email: 'khaled.mansouri@demo.madarek.ly',
+    email: 'khaled.mansouri@demo.tadmora.ly',
     firstName: 'خالد',
     lastName: 'المنصوري',
     rank: AcademicRank.PROFESSOR,
@@ -84,7 +84,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#4F8EF7',
   },
   {
-    email: 'salma.benissa@demo.madarek.ly',
+    email: 'salma.benissa@demo.tadmora.ly',
     firstName: 'سلمى',
     lastName: 'بن عيسى',
     rank: AcademicRank.ASSOCIATE_PROFESSOR,
@@ -98,7 +98,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#3DD68C',
   },
   {
-    email: 'omar.sherif@demo.madarek.ly',
+    email: 'omar.sherif@demo.tadmora.ly',
     firstName: 'عمر',
     lastName: 'الشريف',
     rank: AcademicRank.LECTURER,
@@ -112,7 +112,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#F5A623',
   },
   {
-    email: 'hoda.taher@demo.madarek.ly',
+    email: 'hoda.taher@demo.tadmora.ly',
     firstName: 'هدى',
     lastName: 'الطاهر',
     rank: AcademicRank.ASSISTANT_PROFESSOR,
@@ -126,7 +126,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#9B59B6',
   },
   {
-    email: 'youssef.warshafana@demo.madarek.ly',
+    email: 'youssef.warshafana@demo.tadmora.ly',
     firstName: 'يوسف',
     lastName: 'ورشفاني',
     rank: AcademicRank.ASSISTANT_PROFESSOR,
@@ -140,7 +140,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#EF6C00',
   },
   {
-    email: 'mariam.ahmar@demo.madarek.ly',
+    email: 'mariam.ahmar@demo.tadmora.ly',
     firstName: 'مريم',
     lastName: 'الأحمر',
     rank: AcademicRank.LECTURER,
@@ -184,7 +184,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🐍',
     color: '#3B82F6',
     departmentKey: 'كلية تقنية المعلومات::علوم الحاسوب',
-    teacherEmail: 'khaled.mansouri@demo.madarek.ly',
+    teacherEmail: 'khaled.mansouri@demo.tadmora.ly',
     room: 'قاعة 101',
     lectures: [
       { title: 'أول برنامج لك في بايثون', description: 'تشغيل المفسّر، أمر الطباعة، وأخطاء البداية الشائعة.', durationSec: 1560 },
@@ -202,7 +202,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🫀',
     color: '#EF5350',
     departmentKey: 'كلية الطب البشري::التشريح',
-    teacherEmail: 'salma.benissa@demo.madarek.ly',
+    teacherEmail: 'salma.benissa@demo.tadmora.ly',
     room: 'قاعة المشرّح 1',
     lectures: [
       { title: 'مستويات التنظيم في جسم الإنسان', description: 'من الخلية إلى النسيج إلى العضو إلى الجهاز.', durationSec: 1500 },
@@ -220,7 +220,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '📊',
     color: '#7E57C2',
     departmentKey: 'كلية الاقتصاد::إدارة الأعمال',
-    teacherEmail: 'omar.sherif@demo.madarek.ly',
+    teacherEmail: 'omar.sherif@demo.tadmora.ly',
     room: 'قاعة 204',
     lectures: [
       { title: 'ماهية الإدارة ووظائفها', description: 'تعريف الإدارة وأربع وظائفها الكبرى بمثال مشروع طالب.', durationSec: 1380 },
@@ -237,7 +237,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '➗',
     color: '#26A69A',
     departmentKey: 'كلية العلوم::قسم الرياضيات',
-    teacherEmail: 'hoda.taher@demo.madarek.ly',
+    teacherEmail: 'hoda.taher@demo.tadmora.ly',
     room: 'قاعة 305',
     lectures: [
       { title: 'المنطق والبراهين', description: 'القضايا المنطقية، الكمّيات، وأشكال البرهان الشائعة.', durationSec: 1500 },
@@ -255,7 +255,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '⚗️',
     color: '#00897B',
     departmentKey: 'كلية العلوم::قسم الكيمياء',
-    teacherEmail: 'youssef.warshafana@demo.madarek.ly',
+    teacherEmail: 'youssef.warshafana@demo.tadmora.ly',
     room: 'مختبر الكيمياء 2',
     lectures: [
       { title: 'الروابط التساهمية والبنية الجزيئية', description: 'هجينة الأوربتالات وأشكال الجزيئات العضوية.', durationSec: 1500 },
@@ -273,7 +273,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🏛️',
     color: '#8D6E63',
     departmentKey: 'كلية الآداب::التاريخ',
-    teacherEmail: 'mariam.ahmar@demo.madarek.ly',
+    teacherEmail: 'mariam.ahmar@demo.tadmora.ly',
     room: 'قاعة 12',
     lectures: [
       { title: 'ليبيا أواخر العهد العثماني', description: 'الولايات الثلاث والمجتمع والمشهد التعليمي قبل التغيير الكبير.', durationSec: 1440 },
@@ -290,7 +290,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🔤',
     color: '#2952C8',
     departmentKey: 'كلية الآداب::اللغة الإنجليزية',
-    teacherEmail: 'mariam.ahmar@demo.madarek.ly',
+    teacherEmail: 'mariam.ahmar@demo.tadmora.ly',
     room: 'معمل اللغة 1',
     lectures: [
       { title: 'مهارات القراءة الأكاديمية', description: 'القراءة السريعة، الفكرة الرئيسة، وتدوين الملاحظات.', durationSec: 1380 },
@@ -307,7 +307,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🌐',
     color: '#5C6BC0',
     departmentKey: 'كلية تقنية المعلومات::علوم الحاسوب',
-    teacherEmail: 'khaled.mansouri@demo.madarek.ly',
+    teacherEmail: 'khaled.mansouri@demo.tadmora.ly',
     room: 'معمل الشبكات',
     lectures: [
       { title: 'مقدمة في شبكات الحاسوب', description: 'لماذا شبكات؟ أنواعها حسب المدى وأمثلة من الحرم الجامعي.', durationSec: 1320 },
@@ -320,7 +320,7 @@ const COURSES: CourseSeedDef[] = [
   },
 ];
 
-// ─── Students (40) — Arabic names, emails userNN@demo.madarek.ly ─
+// ─── Students (40) — Arabic names, emails userNN@demo.tadmora.ly ─
 const STUDENT_NAMES: string[] = [
   'أحمد بن يونس', 'سارة الفيتوري', 'محمد الزروق', 'هدى بن عامر',
   'عبد السلام الككلي', 'ريم الشريف', 'منصور العجيلي', 'آية المغربي',
@@ -378,8 +378,8 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
     update: {},
     create: {
       id: 'inst-zawia-showcase',
-      name: 'جامعة مدارك التجريبية',
-      nameEn: 'Madarek Demo University',
+      name: 'جامعة تادمورا التجريبية',
+      nameEn: 'Tadmora Demo University',
       slug: INSTITUTION_SLUG,
       status: 'ACTIVE',
     },
@@ -518,7 +518,7 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
           durationSec: lec.durationSec,
           // the honest self-hosted placeholder clip the player ships
           videoUrl: `/media/generated/chapter-card-${c.code.toLowerCase()}-${i + 1}.mp4`,
-          posterUrl: '/brand/madarek-mark.svg',
+          posterUrl: '/brand/tadmora-mark.svg',
         },
       });
       summary.lectures++;
@@ -578,7 +578,7 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
   for (const [i, fullName] of STUDENT_NAMES.entries()) {
     const [firstName, ...rest] = fullName.split(' ');
     const lastName = rest.join(' ') || 'العرض';
-    const email = `user${String(i + 1).padStart(2, '0')}@demo.madarek.ly`;
+    const email = `user${String(i + 1).padStart(2, '0')}@demo.tadmora.ly`;
     const universityId = `DEMO-2026-${String(i + 101).padStart(3, '0')}`;
     // spread the roster across the departments the 8 courses live in
     const homeDeptKey = COURSES[i % COURSES.length]!.departmentKey;
@@ -769,7 +769,7 @@ async function main(): Promise<void> {
   try {
     const s = await seedDemoR330(prisma);
     console.log(
-      `🌱 بذرة العرض النظيفة: مؤسسة «جامعة مدارك التجريبية» — ${s.courses} مقررات، ${s.lectures} محاضرات، ` +
+      `🌱 بذرة العرض النظيفة: مؤسسة «جامعة تادمورا التجريبية» — ${s.courses} مقررات، ${s.lectures} محاضرات، ` +
         `${s.teachers} أساتذة، ${s.students} طلبة، ${s.enrollments} تسجيل، ${s.grades} درجة، ` +
         `${s.examTemplates} نماذج امتحان، ${s.messages} رسائل، ${s.notifications} إشعارات — كل النصوص المعروضة نظيفة (بلا سلاسل فنية).`,
     );

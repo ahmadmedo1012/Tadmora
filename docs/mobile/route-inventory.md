@@ -62,14 +62,14 @@ Root Stack (`app/_layout.tsx`: RTL-forced at module scope, one-reload `ensureRTL
 | Route path | File | Role(s) | Purpose | Tier | Read | Issues | Pri |
 |---|---|---|---|---|---|---|---|
 | (root) | `app/_layout.tsx` | all | SHELL: RTL force+reload, fonts/splash, version gate, providers | L3 | DEEP | none — exemplary (crumb boot timeline, gates) | P0 |
-| `/` | `app/index.tsx` | guest/all | Welcome «مدارك» — SVG plan drawing, one CTA, role redirect | L3 | DEEP | GridBackdrop draws `cols+rows` SVG lines each render (cheap but unmeasured); no haptics on CTA | P0 |
+| `/` | `app/index.tsx` | guest/all | Welcome «تادمورا» — SVG plan drawing, one CTA, role redirect | L3 | DEEP | GridBackdrop draws `cols+rows` SVG lines each render (cheap but unmeasured); no haptics on CTA | P0 |
 | `/auth/login` | `app/auth/login.tsx` | guest | Route alias re-exporting `/auth` (deep-link parity) | L3 | DEEP | none (alias by design) | P0 |
 | `/report` | `app/(modals)/report.tsx` | all | «الإبلاغ عن مشكلة» → POST /feedback (route auto-attached) | L2 | DEEP | plain Screen+Card, no success motion; delegate form not audited | P0 |
 | `/+not-found` | `app/+not-found.tsx` | all | «الصفحة غير موجودة» + two exits | L2 | DEEP | bare (no illustration/brand motion) — acceptable | P1 |
 | `/select-institution` | `app/select-institution.tsx` | non-OWNER | Institution gate after login | L2 | QS | delegate-heavy; not deep-read | P0 |
 | `/settings` | `app/settings.tsx` | all | Settings: biometric lock, theme, report card, session | L2 | QS | menu-list feel; no grouped sections motion; not deep-read | P0 |
 | `/search` | `app/search.tsx` | all | Global search (kit skeletons present) | L2 | QS | not deep-read; results list = ScrollView map | P1 |
-| `/about` | `app/about.tsx` | public | «عن مدارك» identity page | L2 | QS | static; MonoLabels (brand terms) | P2 |
+| `/about` | `app/about.tsx` | public | «عن تادمورا» identity page | L2 | QS | static; MonoLabels (brand terms) | P2 |
 | `/achievements` | `app/achievements.tsx` | student | «الإنجازات» (322 ln, kit) | L2 | QS | not deep-read | P1 |
 | `/campus` | `app/campus.tsx` | public | «الحياة الجامعية» — TEXT-ONLY port of web media rail | L1 | PART | placeholder-feel: photo registry rendered as ledger text, no images (honest but dead-end); no states (static) | P2 |
 | `/community` | `app/community.tsx` | student | Community feed/bookmarks/events (706 ln monolith) | L2 | QS | longest non-player screen; ScrollView + .map (no virtualization); not deep-read | P1 |

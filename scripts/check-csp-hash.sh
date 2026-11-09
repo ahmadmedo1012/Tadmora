@@ -12,14 +12,20 @@
 # This guard recomputes both hashes from frontend/index.html exactly
 # the way a browser does (the raw text between the opening and closing
 # tag, leading/trailing whitespace included) and fails when either hash
-# no longer appears in backend/src/app.ts. Run it after ANY edit to an
-# inline script in index.html, then refresh the pins in app.ts (see the
-# recompute recipe in the comment above THEME_BOOTSTRAP_SHA256).
+# no longer appears in backend/src/app.ts. It ALSO verifies the copy of
+# the policy in vercel.json (the platform serves the STATIC pages, so
+# the CSP header lives in THREE places that must never drift:
+# frontend/index.html — the hashed scripts; backend/src/app.ts — helmet's
+# pins for API responses; vercel.json — the platform header for static
+# pages). Run it after ANY edit to an inline script in index.html, then
+# refresh the pins in app.ts AND the vercel.json header together (see
+# the recompute recipe in the comment above THEME_BOOTSTRAP_SHA256).
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INDEX_HTML="$REPO_ROOT/frontend/index.html"
 APP_TS="$REPO_ROOT/backend/src/app.ts"
+VERCEL_JSON="$REPO_ROOT/vercel.json"
 
 for f in "$INDEX_HTML" "$APP_TS"; do
   if [[ ! -f "$f" ]]; then
@@ -61,6 +67,13 @@ while IFS= read -r line; do
     echo "FAIL $label: index.html script changed — update the CSP pin in backend/src/app.ts" >&2
     echo "     expected pin: $hash" >&2
     echo "     (recompute recipe: comment above THEME_BOOTSTRAP_SHA256 in backend/src/app.ts)" >&2
+    status=1
+  fi
+  if grep -qF "$hash" "$VERCEL_JSON"; then
+    echo "OK   $label: $hash is mirrored in the vercel.json static-page CSP header"
+  else
+    echo "FAIL $label: the vercel.json Content-Security-Policy header is missing the pin — the static pages would block the script" >&2
+    echo "     expected pin: $hash" >&2
     status=1
   fi
 done <<< "$pins_output"

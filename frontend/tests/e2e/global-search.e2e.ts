@@ -40,7 +40,7 @@ test.describe('لوحة الأوامر والبحث الشامل', () => {
        entity-name write — CI's slower machines exposed it.) */
     await hit.click();
     await expect(page).toHaveURL(new RegExp(`/student/courses/${OFFERING_ID}$`));
-    await expect(page).toHaveTitle('مقدمة في الخوارزميات · مدارك');
+    await expect(page).toHaveTitle('مقدمة في الخوارزميات · تادمورا');
     // اللوحة أُغلقت بالتنقّل (goTo يستدعي onClose).
     await expect(page.getByRole('combobox', { name: 'الأوامر والبحث' })).toHaveCount(0);
   });

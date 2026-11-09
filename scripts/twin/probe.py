@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""probe.py — one-shot DOM probe of heron live + madarek local.
+"""probe.py — one-shot DOM probe of heron live + tadmora local.
 
 Verifies, per side:
-  · scroller architecture (.main-inner for heron / window+__mdrkLenis for madarek)
+  · scroller architecture (.main-inner for heron / window+__tdmrLenis for tadmora)
   · section selectors exist + absolute document ranges (top, height)
   · exposed globals (gsap / ScrollTrigger / lenis)
   · fonts status + html font-size (rem base)
@@ -19,8 +19,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 HERON_URL = "https://heronaiapp.com/"
-MADAREK_URL = "http://localhost:5173/"
-CONSENT_SEED = "window.localStorage.setItem('madarek.consent','accepted');"
+TADMORA_URL = "http://localhost:5173/"
+CONSENT_SEED = "window.localStorage.setItem('tadmora.consent','accepted');"
 
 HERON_SECTIONS = {
     "hero": ".home-hero-wrap",
@@ -33,7 +33,7 @@ HERON_SECTIONS = {
     "cta": ".home-cta-wrap",
     "footer": ".footer-wrap, footer-wrap, footer",
 }
-MADAREK_SECTIONS = {
+TADMORA_SECTIONS = {
     "hero": "section.fo-hero.hro",
     "statement": "#statement",
     "pains": "#live",
@@ -56,7 +56,7 @@ RANGE_JS = """
     }
     if (!el) { out[name] = null; continue; }
     const r = el.getBoundingClientRect();
-    const sc = (window.__mdrkProbeScrollerTop ?? window.scrollY) || 0;
+    const sc = (window.__tdmrProbeScrollerTop ?? window.scrollY) || 0;
     out[name] = {
       selector: el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(/\\s+/).filter(Boolean).slice(0,3).join('.') : ''),
       top: Math.round((r.top + sc) * 10) / 10,
@@ -70,7 +70,7 @@ RANGE_JS = """
 SCROLLER_JS = """
 () => {
   const g = {};
-  for (const k of ['gsap', 'ScrollTrigger', 'lenis', 'Lenis', 'barba', 'jQuery', 'Swiper', '__mdrkLenis']) {
+  for (const k of ['gsap', 'ScrollTrigger', 'lenis', 'Lenis', 'barba', 'jQuery', 'Swiper', '__tdmrLenis']) {
     try { g[k] = typeof window[k]; } catch { g[k] = 'err'; }
   }
   const mi = document.querySelector('.main-inner');
@@ -85,8 +85,8 @@ SCROLLER_JS = """
     docScrollHeight: de.scrollHeight,
     winScrollY: window.scrollY,
     fontsStatus: document.fonts ? document.fonts.status : 'n/a',
-    lenisHandle: typeof window.__mdrkLenis,
-    lenisLimit: (() => { try { return window.__mdrkLenis ? { limit: window.__mdrkLenis.limit, velocity: window.__mdrkLenis.velocity, target: window.__mdrkLenis.targetScroll } : null; } catch (e) { return 'err:' + e.message; } })(),
+    lenisHandle: typeof window.__tdmrLenis,
+    lenisLimit: (() => { try { return window.__tdmrLenis ? { limit: window.__tdmrLenis.limit, velocity: window.__tdmrLenis.velocity, target: window.__tdmrLenis.targetScroll } : null; } catch (e) { return 'err:' + e.message; } })(),
   };
 }
 """
@@ -102,14 +102,14 @@ def probe(page, url, sections, label, wait_extra_ms=2500):
         pass
     page.wait_for_timeout(500)
     info = page.evaluate(SCROLLER_JS)
-    # probe scroller top: heron uses .main-inner, madarek uses window
+    # probe scroller top: heron uses .main-inner, tadmora uses window
     scroller_top = 0.0
     if info.get("mainInner"):
         scroller_top = info["mainInner"]["scrollTop"] or 0.0
     else:
         scroller_top = info.get("winScrollY") or 0.0
     ranges = page.evaluate(
-        "(seed) => { window.__mdrkProbeScrollerTop = arguments !== undefined ? null : null; return null; }",
+        "(seed) => { window.__tdmrProbeScrollerTop = arguments !== undefined ? null : null; return null; }",
         sections,
     ) if False else None
     # evaluate with scroller top injected
@@ -161,20 +161,20 @@ def main():
         except Exception as e:
             heron = {"label": "heron", "error": repr(e)}
         ph.close()
-        # madarek
+        # tadmora
         pm = ctx.new_page()
         try:
-            madarek = probe(pm, MADAREK_URL, MADAREK_SECTIONS, "madarek")
+            tadmora = probe(pm, TADMORA_URL, TADMORA_SECTIONS, "tadmora")
         except Exception as e:
-            madarek = {"label": "madarek", "error": repr(e)}
+            tadmora = {"label": "tadmora", "error": repr(e)}
         pm.close()
         browser.close()
-    out = {"viewport": {"width": vp, "height": vh}, "heron": heron, "madarek": madarek}
+    out = {"viewport": {"width": vp, "height": vh}, "heron": heron, "tadmora": tadmora}
     outp = outdir / f"probe-{vp}.json"
     outp.write_text(json.dumps(out, indent=1, ensure_ascii=False))
     print("WROTE", outp)
     # console summary
-    for side in ("heron", "madarek"):
+    for side in ("heron", "tadmora"):
         d = out[side]
         if "error" in d:
             print(f"[{side}] ERROR {d['error']}")

@@ -32,7 +32,7 @@ const KEY = "test-query-cache";
 
 beforeEach(async () => {
   await AsyncStorage.removeItem(KEY);
-  await AsyncStorage.removeItem("madarek-mobile-query-cache");
+  await AsyncStorage.removeItem("tadmora-mobile-query-cache");
 });
 
 describe("createAsyncStoragePersister", () => {

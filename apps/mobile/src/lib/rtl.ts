@@ -11,7 +11,7 @@
 import { I18nManager } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const KEY = "mdrk.rtl.applied.v1";
+const KEY = "tdmr.rtl.applied.v1";
 
 /**
  * Returns true when a reload was requested (caller should not render the app

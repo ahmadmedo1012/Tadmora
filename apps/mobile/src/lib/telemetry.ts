@@ -13,7 +13,7 @@ import * as Device from "expo-device";
 
 const API_BASE =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-  "https://madarek.onrender.com/api/v1";
+  "https://tadmora.vercel.app/api/v1";
 
 export type ClientErrorKind = "crash" | "js_error" | "unhandled_rejection" | "api_error" | "render";
 
@@ -141,10 +141,10 @@ export function installGlobalErrorHandlers(): void {
         getGlobalHandler?: () => ((error: unknown, isFatal: boolean) => void) | undefined;
       };
       onunhandledrejection?: ((event: { reason?: unknown }) => void) | undefined;
-      __mdrkHandlersInstalled?: boolean;
-      __mdrkRejectionHooked?: boolean;
+      __tdmrHandlersInstalled?: boolean;
+      __tdmrRejectionHooked?: boolean;
     };
-    if (typeof g.ErrorUtils?.setGlobalHandler === "function" && !g.__mdrkHandlersInstalled) {
+    if (typeof g.ErrorUtils?.setGlobalHandler === "function" && !g.__tdmrHandlersInstalled) {
       const previous = g.ErrorUtils.getGlobalHandler?.();
       g.ErrorUtils.setGlobalHandler((error: unknown, isFatal: boolean) => {
         const err = error as Error | undefined;
@@ -156,11 +156,11 @@ export function installGlobalErrorHandlers(): void {
         });
         previous?.(error, isFatal);
       });
-      g.__mdrkHandlersInstalled = true;
+      g.__tdmrHandlersInstalled = true;
     }
     // Hermes ships onunhandledrejection support on RN ≥ 0.73-ish; set it
     // defensively — if the hook doesn't exist this is a no-op.
-    if (typeof g.onunhandledrejection === "undefined" || !g.__mdrkRejectionHooked) {
+    if (typeof g.onunhandledrejection === "undefined" || !g.__tdmrRejectionHooked) {
       g.onunhandledrejection = (event: { reason?: unknown }) => {
         const reason = event?.reason;
         const err = reason instanceof Error ? reason : undefined;
@@ -171,7 +171,7 @@ export function installGlobalErrorHandlers(): void {
           route: getTelemetryRoute(),
         });
       };
-      g.__mdrkRejectionHooked = true;
+      g.__tdmrRejectionHooked = true;
     }
   } catch {
     /* never */

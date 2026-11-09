@@ -45,14 +45,14 @@
  * login (rate-limited by the auth limiter like any client).
  */
 
-const DEFAULT_BASE_URL = 'https://madarek.onrender.com';
+const DEFAULT_BASE_URL = 'https://tadmora.vercel.app';
 /** frontend/index.html SPA mount root — the page is dead without it. */
 const MOUNT_ROOT_MARKER = 'id="root"';
 /** D7: the CSP header must pin inline scripts with sha256 hashes. */
 const CSP_PIN_MARKER = 'sha256-';
 const HEALTH_TIMEOUT_MS = 90_000;
 const DEFAULT_TIMEOUT_MS = 30_000;
-const USER_AGENT = 'madarek-smoke/1.0 (post-deploy check)';
+const USER_AGENT = 'tadmora-smoke/1.0 (post-deploy check)';
 
 // ─── CLI / env parsing ────────────────────────────────────────────
 
@@ -80,7 +80,7 @@ function parseArgs(argv) {
 function helpText() {
   return [
     'الاستخدام / usage: npm run smoke -- [BASE_URL | --base-url URL]',
-    'المتغيرات / env:  BASE_URL (default https://madarek.onrender.com)',
+    'المتغيرات / env:  BASE_URL (default https://tadmora.vercel.app)',
     '                  SMOKE_EMAIL + SMOKE_PASSWORD (both) → login round-trip',
   ].join('\n');
 }
@@ -399,7 +399,7 @@ const STATUS_TAG = {
 function printReport(baseUrl, checks) {
   const line = '─'.repeat(72);
   console.log(line);
-  console.log('  مدارك — فحص الدخان بعد النشر · Madarek post-deploy smoke');
+  console.log('  تادمورا — فحص الدخان بعد النشر · Tadmora post-deploy smoke');
   console.log(`  الهدف / target: ${baseUrl}`);
   console.log(line);
   for (const check of checks) {

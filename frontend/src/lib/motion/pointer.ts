@@ -1,7 +1,7 @@
 /* ═════════════════════════════════════════════════════════════════════
    R305-A2 — pointer math for the cursor layer (pure, dependency-free).
 
-   Heron-inspired MECHANICS, original Madarek implementation:
+   Heron-inspired MECHANICS, original Tadmora implementation:
    normalized-follow with per-frame lerp toward the pointer and a
    SELF-CANCELLING rAF loop — the loop stops once the follower is
    within STOP_EPS of the target (idle stop = zero perpetual work)

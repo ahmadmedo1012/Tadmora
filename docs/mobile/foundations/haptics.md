@@ -34,7 +34,7 @@ needs no fake timers or `Platform` mutation.
 ## 2. The three policies
 
 ### 2a. Enabled gate (persisted)
-- **Storage:** AsyncStorage key `mdrk-mobile-haptics-enabled`, value `"1"`/`"0"` — the non-secret `mdrk-mobile-*` family (`auth/session.ts` precedent; SecureStore stays secrets-only per `lib/tokenStorage.ts` / `lib/biometric.tsx`).
+- **Storage:** AsyncStorage key `tdmr-mobile-haptics-enabled`, value `"1"`/`"0"` — the non-secret `tdmr-mobile-*` family (`auth/session.ts` precedent; SecureStore stays secrets-only per `lib/tokenStorage.ts` / `lib/biometric.tsx`).
 - **Default ON**; a missing, unreadable, or `"1"` value never disables. Only an explicit `"0"` disables.
 - `setEnabled()` applies **synchronously** and persists fire-and-forget (repo pattern). A hydrate read already in flight when the user flips the switch loses the race (`explicitSet` guard).
 - The module kicks one cheap hydrate read at import; the shell may `await haptics.hydrate()` for exactness.

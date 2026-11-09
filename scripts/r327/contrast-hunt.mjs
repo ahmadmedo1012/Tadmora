@@ -8,9 +8,9 @@ const res = await fetch('http://localhost:4000/api/v1/auth/login', { method: 'PO
 const env = await res.json(); const session = env?.data ?? env;
 await page.addInitScript(([s]) => {
   try {
-    sessionStorage.setItem('madarek-intro-skip', '1');
-    localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 }));
-    localStorage.setItem('mdrk-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 }));
+    sessionStorage.setItem('tadmora-intro-skip', '1');
+    localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 }));
+    localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 }));
   } catch {}
 }, [session]);
 await page.goto('http://localhost:5173/student/dashboard', { waitUntil: 'domcontentloaded' });

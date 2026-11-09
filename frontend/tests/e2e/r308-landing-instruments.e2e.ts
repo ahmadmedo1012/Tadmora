@@ -23,11 +23,11 @@ test.describe('R308 — لوحة البدء (the entrance)', () => {
          * page-level ones); the old once-guard starved the reload at
          * the end of this spec (the replay could never play).
          * R318 §C override (R319 re-pin): the first-visit policy ALSO
-         * writes the seen-flag (madarek-intro-seen) — this spec asserts
+         * writes the seen-flag (tadmora-intro-seen) — this spec asserts
          * the REPLAY contract, so BOTH keys clear on every init run
          * (the spec plays the role of a fresh visitor each load). */
-        sessionStorage.removeItem('madarek-intro-skip');
-        sessionStorage.removeItem('madarek-intro-seen');
+        sessionStorage.removeItem('tadmora-intro-skip');
+        sessionStorage.removeItem('tadmora-intro-seen');
       } catch {
         /* ignore */
       }
@@ -57,8 +57,8 @@ test.describe('R308 — لوحة البدء (the entrance)', () => {
   test('the skip control ends the entrance immediately', async ({ page }) => {
     await page.addInitScript(() => {
       try {
-        sessionStorage.removeItem('madarek-intro-skip');
-        sessionStorage.removeItem('madarek-intro-seen'); /* R318 §C re-pin: the seen-flag rides too */
+        sessionStorage.removeItem('tadmora-intro-skip');
+        sessionStorage.removeItem('tadmora-intro-seen'); /* R318 §C re-pin: the seen-flag rides too */
       } catch {
         /* ignore */
       }
@@ -69,7 +69,7 @@ test.describe('R308 — لوحة البدء (the entrance)', () => {
      * PLAY, not cut) — gone by ~1s */
     await expect(page.locator('.pl')).toHaveCount(0, { timeout: 3000 });
     /* R315 (B1·A.2) re-pin: the sheet-stands proof anchors on the
-     * current display H1 (was the pre-r306 «مدارك» title) */
+     * current display H1 (was the pre-r306 «تادمورا» title) */
     await expect(page.locator('.fo-hero-title')).toContainText('رحلة تعلم واحدة');
   });
 });
@@ -156,8 +156,8 @@ test.describe('R308 — the static belt', () => {
   test('reduced motion: the complete sheet stands — no loader, no cursor, stations readable', async ({ page }) => {
     await page.addInitScript(() => {
       try {
-        sessionStorage.removeItem('madarek-intro-skip');
-        sessionStorage.removeItem('madarek-intro-seen'); /* R318 §C re-pin: the seen-flag rides too */
+        sessionStorage.removeItem('tadmora-intro-skip');
+        sessionStorage.removeItem('tadmora-intro-seen'); /* R318 §C re-pin: the seen-flag rides too */
       } catch {
         /* ignore */
       }
@@ -166,7 +166,7 @@ test.describe('R308 — the static belt', () => {
     await expect(page.locator('.pl')).toHaveCount(0);
     await expect(page.locator('.sc-canvas')).toHaveCount(0);
     /* R315 (B1·A.2) re-pin: the static belt's complete-sheet proof
-     * anchors on the current display H1 (was «مدارك») */
+     * anchors on the current display H1 (was «تادمورا») */
     await expect(page.locator('.fo-hero-title')).toContainText('رحلة تعلم واحدة');
     /* the drawing is complete, not dash-hidden */
     await expect(page.locator('.hi-marker')).toHaveCount(3);

@@ -137,7 +137,7 @@ frontend/
     └── motion/                            # primitive unit + a11y tests
 
 design-system/
-└── madarek-zawia-university-lms/          # reference visual spec — authoritative
+└── tadmora-zawia-university-lms/          # reference visual spec — authoritative
                                            # source of accent palette already
                                            # used by the project
 

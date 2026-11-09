@@ -9,7 +9,7 @@
  *    (re-registration is idempotent — the upsert re-owns the row);
  *  · Android channels: «alerts» (high importance) — configured at boot;
  *  · a notification tap deep-links into the app (payload.data.link —
- *    the same madarek:// routes the notification row carries);
+ *    the same tadmora:// routes the notification row carries);
  *  · foreground arrivals bump the badge; logout unregisters (a handed-
  *    -over phone must not keep pushing).
  *

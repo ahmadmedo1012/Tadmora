@@ -39,6 +39,7 @@ import ownerRoutes from './http/routes/owner.routes.js';
 import collegesRoutes from './http/routes/colleges.routes.js';
 import institutionRoutes from './http/routes/institution.routes.js';
 import adminExtrasRoutes from './http/routes/admin-extras.routes.js';
+import jobsRoutes from './http/routes/jobs.routes.js';
 import studentDashboardRoutes from './http/routes/student-dashboard.routes.js';
 import teacherDashboardRoutes from './http/routes/teacher-dashboard.routes.js';
 // Mounted by the submissions workstream (WS-B1). The router handles
@@ -114,15 +115,15 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
  * (dark #282828 / light #F6F6EE — the warm vintage paper, owner
  * decision; audits/evidence/r313/reference/digest.json); the metas and
  * the boot plate moved with it. */
-const THEME_BOOTSTRAP_SHA256 = 'jEZ9yPBzXBwMFxHwFlLFqiKKy+HtK9TOGA7FRviqIMc=';
+const THEME_BOOTSTRAP_SHA256 = 'tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=';
 /* r188: pin refreshed — the JSON-LD block now describes the INDEPENDENT
- * Madarek platform alone (WebSite node; the retired University-of-Zawia
+ * Tadmora platform alone (WebSite node; the retired University-of-Zawia
  * `about` node is gone — the only demo-data story is the explicitly
- * fictional «جامعة مدارك التجريبية», named in the description as
+ * fictional «جامعة تادمورا التجريبية», named in the description as
  * synthetic data, never as affiliation). Verified by check-csp-hash.sh. */
 // r191: pin refreshed — the JSON-LD description dropped the rejected
 // provenance slogan with the meta copy fix.
-const JSON_LD_SHA256 = 'IRTvs2lj91QMTupUETl0okZh8+Bgoccsoy/MNlneYDI=';
+const JSON_LD_SHA256 = 'iuL/6zJA7tueoBlf/WhDgsHDQEsvQOBerb8PIlbx7Dw=';
 
 export function createApp() {
   const app = express();
@@ -204,7 +205,7 @@ export function createApp() {
   // is serving. (r184: the old constant said 'r180-product-completion'
   // while production was actually serving r183 — a rot the derived id
   // makes structurally impossible. See lib/build-id.ts.)
-  const BUILD_ID = buildIdFromEnv(env.RENDER_GIT_COMMIT ?? env.GIT_SHA);
+  const BUILD_ID = buildIdFromEnv(env.RENDER_GIT_COMMIT ?? env.VERCEL_GIT_COMMIT_SHA ?? env.GIT_SHA);
   app.get('/api/v1/health', async (_req, res) => {
     const start = Date.now();
     // Race the DB ping against a 5s timeout so a sleepy Neon
@@ -254,6 +255,14 @@ export function createApp() {
   // regardless of rate-limit pressure on the API (it is a tiny,
   // secret-free SELECT 1 + mode names).
   app.use('/api/v1', statusRoutes);
+
+  // Scheduled-jobs surface (serverless deployments): vercel.json's cron
+  // invokes GET /api/v1/jobs/daily once a day with the Bearer CRON secret
+  // — the same two jobs the in-process ticker runs on the long-process
+  // entry. Mounted BEFORE the authenticated routers (it carries its own
+  // fail-closed service-token guard, the milestones contract) so no
+  // router-level session gate shadows it.
+  app.use('/api/v1/jobs', jobsRoutes);
 
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/users', usersRoutes);

@@ -30,9 +30,9 @@ for (const vp of VIEWPORTS) {
      * {state:{mode,modeUpdatedAt},version:2} + the legacy pair + the
      * profile-cache clear, resolved before first paint. */
     await ctx.addInitScript(([t]) => {
-      try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: Date.now() }, version: 2 })); } catch {}
-      try { localStorage.removeItem('mdrk-theme-profile'); } catch {}
-      try { localStorage.setItem('madarek.theme', t); } catch {}
+      try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t, modeUpdatedAt: Date.now() }, version: 2 })); } catch {}
+      try { localStorage.removeItem('tdmr-theme-profile'); } catch {}
+      try { localStorage.setItem('tadmora.theme', t); } catch {}
       try { localStorage.setItem('theme', t); } catch {}
     }, [theme]);
     for (const route of ROUTES) {

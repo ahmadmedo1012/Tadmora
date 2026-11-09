@@ -396,7 +396,7 @@ router.post(
                 // r183-B2: issuer is the platform's own name — the
                 // The demo university is synthetic showcase data, never the
                 // certificate-issuing authority.
-                issuer: 'منصّة مدارك التعليميّة',
+                issuer: 'منصّة تادمورا التعليميّة',
                 issuedAt: new Date(),
                 hours: Math.max(1, Math.round(lesson.track.estMinutes / 60)),
                 status: 'COMPLETED',

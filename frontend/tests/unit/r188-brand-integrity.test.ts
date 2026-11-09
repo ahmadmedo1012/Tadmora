@@ -3,7 +3,7 @@
  *
  * The R188 brand reset removed the real University of Zawia identity
  * from every ACTIVE product surface, replacing it with the explicitly
- * fictional demonstration tenant (جامعة مدارك التجريبية). This gate
+ * fictional demonstration tenant (جامعة تادمورا التجريبية). This gate
  * fails loudly if that identity — or any real-university imagery or
  * claim — re-appears where users can see it.
  *
@@ -123,8 +123,8 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
   it('the fictional demonstration tenant IS the public sample-data story', () => {
     // positive pins: the new identity exists where users see it.
     const seed = readFileSync(path.join(root, 'backend/prisma/seed.ts'), 'utf8');
-    expect(seed).toContain("slug: 'madarek-demo'");
-    expect(seed).toContain("name: 'جامعة مدارك التجريبية'");
+    expect(seed).toContain("slug: 'tadmora-demo'");
+    expect(seed).toContain("name: 'جامعة تادمورا التجريبية'");
     /* P2-0 (r335 split): the demo-tenant copy rides the guest surface
      * (LandingPage + the nine section bands) — the pin reads all of it. */
     const landing = [
@@ -139,7 +139,7 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
       'frontend/src/components/landing/sections/Vision.tsx',
       'frontend/src/components/landing/sections/Footer.tsx',
     ].map((p) => readFileSync(path.join(root, p), 'utf8')).join('\n');
-    expect(landing).toContain('جامعة مدارك التجريبية');
+    expect(landing).toContain('جامعة تادمورا التجريبية');
     expect(landing).toContain('اصطناعية بالكامل');
   });
 
@@ -150,7 +150,7 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
     const preR188Landing = [
       'مؤسّسة العرض: جامعة الزاوية · 25 كلية · 1988',
       'ZAWIYA · 1988',
-      'مؤسّسة العرض المرجعية على منصّة مدارك — مؤسّسة تعليميّة حكوميّة',
+      'مؤسّسة العرض المرجعية على منصّة تادمورا — مؤسّسة تعليميّة حكوميّة',
       'بيانات جامعة الزاوية الظاهرة في المنصّة بيانات عرض مرجعية',
       'student@zu.edu.ly',
     ].join('\n');

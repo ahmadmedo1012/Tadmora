@@ -17,7 +17,7 @@
  *   (ticker/marquee bands), and paints a solid "greeking bar" over it
  *   (position:fixed at viewport coords, inserted after the 900ms settle so
  *   scroll is at rest). Bar colour = the text's own computed colour; if the
- *   fill colour is transparent but a -webkit-text-stroke is set (Madarek's
+ *   fill colour is transparent but a -webkit-text-stroke is set (Tadmora's
  *   outlined wordmark), the stroke colour is used so the mass survives.
  *   SVG <text>/<tspan> get the same treatment (AABB + computed fill).
  *   A CSS safety net —
@@ -37,7 +37,7 @@
  *   SCRIPT unreadable. Why not blur: blur leaks glyph shapes (task rule).
  *   Why not image-space text detection: hatching/stipple artwork is
  *   statistically indistinguishable from text strokes without the DOM — too
- *   fragile (task rule). Why not mask ONLY Madarek via its DOM and leave
+ *   fragile (task rule). Why not mask ONLY Tadmora via its DOM and leave
  *   Heron's existing crops unmasked: asymmetric masking is itself a judge
  *   bias — so BOTH sides go through the SAME masker.
  *
@@ -58,7 +58,7 @@
  *   prove the live page still matches the state being judged.
  *
  * Usage:
- *   node scripts/r314/vlm-mask.mjs --site madarek --frames-mode live
+ *   node scripts/r314/vlm-mask.mjs --site tadmora --frames-mode live
  *       # localhost:3000 — safe to re-run. LIVE mode derives the 29 frames
  *       # from the page's CURRENT sections (same formula as capture.mjs), so
  *       # frame sNN-P always shows section NN at progress P of the layout
@@ -71,7 +71,7 @@
  *
  * R315 C4-D — --frames-mode section (the alignment-harness fix for the
  *   deferred 768 mid/late family):
- *   node scripts/r314/vlm-mask.mjs --site madarek --frames-mode section \
+ *   node scripts/r314/vlm-mask.mjs --site tadmora --frames-mode section \
  *        --viewport 768x1024 [--url http://localhost:PORT/] \
  *        [--out <dir>] [--anchors-file anchors.json]
  *   The cycle-2 768×1024 mid/late progress frames were recorded SKIPPED as
@@ -84,7 +84,7 @@
  *   band — INCONCLUSIVE by construction). SECTION mode derives every frame
  *   from a SECTION-ANCHOR element instead:
  *     1. ANCHOR RESOLUTION — each frame id pairs with a STABLE selector
- *        (Madarek's own band ids/classes baked below; the reference's
+ *        (Tadmora's own band ids/classes baked below; the reference's
  *        selectors supplied via --anchors-file, one {"sNN": {"sel": …,
  *        "steps": 3}} map per run), resolved in the live DOM — never a
  *        DOM-order index, so differently-composed pages still pair s07
@@ -117,7 +117,7 @@
  *   p-sNN-P.png (masked) · drift-p-sNN-P.png (unmasked) · meta.json
  *
  * METHOD-CHOICE DISCLOSURE (honest, per task): the recommended path was
- *   “Madarek masked via CSS/JS at capture time + Heron's EXISTING crops
+ *   “Tadmora masked via CSS/JS at capture time + Heron's EXISTING crops
  *   masked in IMAGE SPACE”. Image-space masking was assessed and rejected
  *   for this reference: heronaiapp.com's aesthetic IS hand-drawn architectural
  *   hatching/stipple, which is statistically indistinguishable from glyph
@@ -149,12 +149,12 @@ const sharp = req('sharp');
 const EXE = process.env.HOME + '/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 const SITES = {
   heron: { url: 'https://heronaiapp.com/', wait: 11000 },
-  madarek: { url: 'http://localhost:3000/', wait: 9000 },
+  tadmora: { url: 'http://localhost:3000/', wait: 9000 },
 };
 
 const args = process.argv.slice(2);
 const get = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : d; };
-const site = get('site', 'madarek');
+const site = get('site', 'tadmora');
 // 'replay' (cycle-1 ys — the default, backward compatible) | 'live' (current
 // sections, §3.1 formula) | 'section' (R315 C4-D: anchor-resolved — header ☝)
 const FRAMES_MODE = get('frames-mode', 'replay');
@@ -179,7 +179,7 @@ fs.mkdirSync(OUT, { recursive: true });
 // steps ride in the table (not runtime geometry) so both sides of a pair
 // derive the same id set even when a section sits near the §3.1 25% rule.
 const DEFAULT_ANCHORS = {
-  madarek: [
+  tadmora: [
     { id: 's00', sel: '.fo-hero', steps: 3 },
     { id: 's01', sel: '#statement', steps: 3 },
     { id: 's02', sel: '#live', steps: 3 },

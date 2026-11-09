@@ -40,10 +40,10 @@ for (const [key, fs_] of byRoute) {
   if (!session) { verdicts.push({ key, verdict: 'no-session' }); continue; }
   const ctx = await browser.newContext({ baseURL: BASE, viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
-  await page.addInitScript(() => sessionStorage.setItem('madarek-intro-skip', '1'));
+  await page.addInitScript(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
   await page.addInitScript((s) => {
-    localStorage.setItem('mdrk-auth', s);
-    localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 }));
+    localStorage.setItem('tdmr-auth', s);
+    localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 }));
   }, JSON.stringify({ state: { user: session.user, accessToken: session.accessToken, isAuthenticated: true }, version: 0 }));
   try {
     await page.goto(`${BASE}${ROLE_PATH[role].replace('/dashboard', '')}${slug === 'forbidden-owner-users' ? '' : ''}`.replace(/\/$/, '') , { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {});

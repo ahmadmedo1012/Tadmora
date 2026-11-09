@@ -26,7 +26,7 @@ on:
       ipa_name:
         description: "IPA file/artifact name, without .ipa"
         required: false
-        default: "Madarek"
+        default: "Tadmora"
 
 # The rolling "latest" release is created/updated from the workflow, so the
 # default GITHUB_TOKEN needs write access to release assets. No PAT is used.
@@ -46,8 +46,8 @@ env:
   COCOAPODS_DISABLE_STATS: "true"
   # Public build-time configuration (the same value as eas.json). This is not
   # a secret: it is already the default in apps/mobile/app.config.ts.
-  EXPO_PUBLIC_API_BASE_URL: "https://madarek.onrender.com/api/v1"
-  IPA_NAME: ${{ github.event.inputs.ipa_name || 'Madarek' }}
+  EXPO_PUBLIC_API_BASE_URL: "https://tadmora.onrender.com/api/v1"
+  IPA_NAME: ${{ github.event.inputs.ipa_name || 'Tadmora' }}
 
 jobs:
   build-unsigned-ipa:
@@ -111,7 +111,7 @@ jobs:
           const c = require('./build/expo-config.json');
           const fail = (msg) => { console.error(`::error::${msg}`); process.exit(1); };
           if (c.sdkVersion !== '58.0.0') fail(`Unexpected Expo SDK: ${c.sdkVersion}`);
-          if (c.ios?.bundleIdentifier !== 'ly.madarek.mobile') {
+          if (c.ios?.bundleIdentifier !== 'ly.tadmora.mobile') {
             fail(`Unexpected iOS bundle id: ${c.ios?.bundleIdentifier}`);
           }
           if (!c.runtimeVersion) fail('runtimeVersion is missing');
@@ -184,13 +184,13 @@ jobs:
           BID=$(bundle_id_for_scheme "$SCHEME")
           echo "Project scheme: $PROJECT_SCHEME (bundle id: ${BID:-<none>})"
 
-          if [ "$BID" != "ly.madarek.mobile" ]; then
+          if [ "$BID" != "ly.tadmora.mobile" ]; then
             echo "Project scheme did not resolve the app bundle id; scanning schemes..."
             SCHEME=""
             while IFS= read -r candidate; do
               [ -z "$candidate" ] && continue
               CANDIDATE_BID=$(bundle_id_for_scheme "$candidate")
-              if [ "$CANDIDATE_BID" = "ly.madarek.mobile" ]; then
+              if [ "$CANDIDATE_BID" = "ly.tadmora.mobile" ]; then
                 SCHEME="$candidate"
                 BID="$CANDIDATE_BID"
                 break
@@ -198,8 +198,8 @@ jobs:
             done < <(jq -r '(.workspace // .project).schemes[]?' build/xcode-list.json | grep -v '^Pods' || true)
           fi
 
-          if [ -z "$SCHEME" ] || [ "$BID" != "ly.madarek.mobile" ]; then
-            echo "::error::Could not find a scheme that builds ly.madarek.mobile"
+          if [ -z "$SCHEME" ] || [ "$BID" != "ly.tadmora.mobile" ]; then
+            echo "::error::Could not find a scheme that builds ly.tadmora.mobile"
             exit 1
           fi
 
@@ -308,7 +308,7 @@ jobs:
           echo "CFBundleSupportedPlatforms[0]: $SUPPORTED_PLATFORM"
           echo "DTPlatformName: $DT_PLATFORM"
 
-          test "$BUNDLE_ID" = "ly.madarek.mobile"
+          test "$BUNDLE_ID" = "ly.tadmora.mobile"
           test "$SUPPORTED_PLATFORM" = "iPhoneOS"
           test "$DT_PLATFORM" = "iphoneos"
 
@@ -406,7 +406,7 @@ jobs:
       - name: Upload the unsigned IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Madarek-unsigned-ipa
+          name: Tadmora-unsigned-ipa
           path: |
             apps/mobile/build/${{ env.IPA_NAME }}.ipa
             apps/mobile/build/SHA256SUMS.txt
@@ -421,7 +421,7 @@ jobs:
         run: |
           set -euo pipefail
           TAG="sidestore-latest"
-          TITLE="Madarek.ipa — latest unsigned SideStore build"
+          TITLE="Tadmora.ipa — latest unsigned SideStore build"
           NOTES="$RUNNER_TEMP/sidestore-latest-notes.md"
           BUILD_INFO="apps/mobile/build/build-info.json"
 
@@ -438,14 +438,14 @@ jobs:
           DOWNLOAD_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$TAG/$IPA_NAME.ipa"
 
           {
-            echo "# Madarek.ipa — latest unsigned SideStore build"
+            echo "# Tadmora.ipa — latest unsigned SideStore build"
             echo ""
             echo "This release is updated automatically from the latest push to main that touches the mobile app."
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| IPA | $IPA_NAME.ipa |"
-            echo "| Bundle ID | ly.madarek.mobile |"
+            echo "| Bundle ID | ly.tadmora.mobile |"
             echo "| Version | $VERSION ($BUILD_NUMBER) |"
             echo "| Minimum iOS | $MIN_OS |"
             echo "| Architecture | $ARCH — $PLATFORM |"
@@ -507,11 +507,11 @@ jobs:
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| IPA | \`${IPA_NAME}.ipa\` |"
-            echo "| Bundle ID | \`ly.madarek.mobile\` |"
+            echo "| Bundle ID | \`ly.tadmora.mobile\` |"
             echo "| Commit | \`$GITHUB_SHA\` |"
             echo "| Platform | iPhoneOS / arm64 (not Simulator) |"
             echo "| Signed | No — ready for SideStore re-signing |"
-            echo "| Artifact | \`Madarek-unsigned-ipa\` |"
+            echo "| Artifact | \`Tadmora-unsigned-ipa\` |"
             echo ""
             echo "Download the artifact from this run's **Artifacts** section."
           } >> "$GITHUB_STEP_SUMMARY"

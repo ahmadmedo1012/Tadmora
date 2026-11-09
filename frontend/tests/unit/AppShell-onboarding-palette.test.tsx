@@ -229,14 +229,14 @@ describe('AppShell — palette recents (5-D3 / A10 P3-5)', () => {
     act(() => {
       useUiStore.setState({ recentPaletteIds: [] });
     });
-    localStorage.removeItem('mdrk-ui');
+    localStorage.removeItem('tdmr-ui');
   });
 
   afterEach(() => {
     act(() => {
       useUiStore.setState({ recentPaletteIds: [] });
     });
-    localStorage.removeItem('mdrk-ui');
+    localStorage.removeItem('tdmr-ui');
   });
 
   it('records a run and surfaces it as the first row of «الأخيرة» on reopen', async () => {

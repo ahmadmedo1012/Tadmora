@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   MADAREK — Base layer (r305 — the Heron blueprint foundation)
+   TADMORA — Base layer (r305 — the Heron blueprint foundation)
    Reset · document · shell · browser surfaces · RTL · typography
 
    r305: this sheet stays fully token-routed — the Heron re-key
@@ -235,9 +235,9 @@
      ║  Native lazy-loaded images fade in once decoded.               ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   img[loading="lazy"] {
-    animation: madarek-img-in var(--motion-duration-long) var(--ease-out) both;
+    animation: tadmora-img-in var(--motion-duration-long) var(--ease-out) both;
   }
-  @keyframes madarek-img-in {
+  @keyframes tadmora-img-in {
     from { opacity: 0; }
     to   { opacity: 1; }
   }
@@ -372,7 +372,7 @@
        `.content-inner > *` — every content mount: route changes AND
        first-visit Suspense resolves — with page-enter +
        its prefers-reduced-motion kill); @layer base can never win
-       against overrides, so this duplicate `madarek-page-enter`
+       against overrides, so this duplicate `tadmora-page-enter`
        declaration (240ms + its own keyframes) never painted while
        doubling the transition surface area for future edits. The
        layout properties stay; the motion contract lives in exactly
@@ -529,7 +529,7 @@
    Splash (.mdk-splash) · RouteProgress (.mdk-route-progress) ·
    SlowServerCard (.mdk-slow-server) — the three components of the ONE
    loading surface. (The R323 brand mark styles itself inside
-   frontend/src/brand/Logo.tsx — class .mdrk-logo + inline keyframes —
+   frontend/src/brand/Logo.tsx — class .tdmr-logo + inline keyframes —
    so no sheet CSS is spent on it here.)
 
    Grammar: paper grounds, hairline rules, ink text, the ONE orange
@@ -666,7 +666,7 @@
 
 /* ── The brand mark (frontend/src/brand/Logo.tsx — the real R323
    Logo, landed by the parallel brand agent) styles itself inline
-   (class .mdrk-logo + injected keyframes); no sheet CSS is needed
+   (class .tdmr-logo + injected keyframes); no sheet CSS is needed
    here. The temporary .mdk-logo-* styles that task 1-b staged for the
    placeholder implementation were retired when the real Logo landed. */
 

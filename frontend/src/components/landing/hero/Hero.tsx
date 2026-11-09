@@ -1,13 +1,13 @@
 /**
  * Hero — R331 (A-Web-Hero) — the Heron-mechanics rebuild of the landing
- * hero, Madarek's own content on Heron's construction.
+ * hero, Tadmora's own content on Heron's construction.
  *
  * Port source of record: docs/redesign/r331/heron-program.md (§4 hero
  * recipe + §7 motion values) / heron-program.json (`imagery.hero`).
  * The reference's hero anatomy, mirrored for RTL:
  *
  *   .home-hero (full-bleed band, 100svh-class height)
- *   ├─ the art layer stack — interact (cursor crosshair — Madarek's
+ *   ├─ the art layer stack — interact (cursor crosshair — Tadmora's
  *   │  own HeroInspect instrument) → the img (OUR ink elevation,
  *   │  HeroInkWindow, FULL-BLEED — R332 W1: the paper runs edge-to-edge
  *   │  and the ink breaks the viewport edge) → ruler (dashed ticks +
@@ -27,12 +27,12 @@
  *     overflow-hidden mask, translateY(103%)→0, 0.8s power2.out,
  *     0.02s stagger (y is direction-neutral — no RTL mirror);
  *   · img/frame/deco fades — 1s power3.out;
- *   · the ink itself DRAWS (the staged ink-in belt — Madarek's
+ *   · the ink itself DRAWS (the staged ink-in belt — Tadmora's
  *     superior substitute for Heron's static img fade);
  *   · block/work rise — y 3.2rem→0, 1s power3.out.
  *
  * The motion engine is CSS transitions + the landing's OWN gates —
- * NO GSAP in the Madarek stack. The choreography hangs on the
+ * NO GSAP in the Tadmora stack. The choreography hangs on the
  * `.landing.intro-draw → .landing.intro-done` flip (R308's entrance
  * gate: the loader plays once per session; on its exit slit the hero
  * timeline begins, exactly like the belt it replaces). The GSAP ease
@@ -123,7 +123,7 @@ export function Hero() {
           <HeroInkWindow />
           {/* the cursor instrument — crosshair guides + coordinate
               readout + the drag-to-inspect stations (fine pointers,
-              ≥992 — the reference's interact-wrap, Madarek's own). */}
+              ≥992 — the reference's interact-wrap, Tadmora's own). */}
           <HeroInspect />
           {/* the ruler chrome — dashed ticks, corner plus marks,
               registration marks and the measure graticule (the
@@ -242,7 +242,7 @@ export function Hero() {
           subjects (the reference's home-hero-work band): ONE static
           row ≥1200 (space-between, zero mask), a snap-scrolling strip
           below — riding the work-card rise (3.2rem · 1s p3.out). ══ */}
-      <div className="hro-work fo-hero-work" aria-label="قدرات مدارك العاملة اليوم">
+      <div className="hro-work fo-hero-work" aria-label="قدرات تادمورا العاملة اليوم">
         <div className="hro-work-track">
           {/* divs, not spans — the instrument asserts the reference's
               measured div boxes (T-11c) */}

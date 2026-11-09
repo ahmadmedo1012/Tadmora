@@ -45,7 +45,7 @@ export function AppTopBar({ alertsPath }: { alertsPath: string }) {
     >
       <BrandMark size={26} />
       <T variant="h4" weight="bold" numberOfLines={1} style={{ flex: 1 }}>
-        مدارك
+        تادمورا
       </T>
       <Pressable
         accessibilityRole="button"

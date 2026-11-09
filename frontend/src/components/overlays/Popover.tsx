@@ -127,7 +127,7 @@ export function Popover({
       data-side={pos.flipped ? 'above' : 'below'}
       data-closing={!open ? 'true' : undefined}
       onAnimationEnd={(e) => {
-        if (!open && e.animationName === 'madarek-popover-out') onExitEnd();
+        if (!open && e.animationName === 'tadmora-popover-out') onExitEnd();
       }}
     >
       {children}

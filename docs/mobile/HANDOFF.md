@@ -22,8 +22,8 @@ Owner-facing handoff for the mobile-pro branch. Kept current as work lands.
 - Deps confirmed installed: reanimated 4.7.1 · gesture-handler 3.3.0 · @gorhom/bottom-sheet 5.2.14 · flash-list 2.3.2 · expo-haptics/image/video 58.x · keyboard-controller 1.22.7 · react-native-svg 15.16 · worklets 0.13 → **Round 1 adds NO new native modules** (fingerprint unchanged for JS-only work).
 
 ## EAS builds
-- Baseline iOS-simulator preview (bootstrap head `d610a62`): **FINISHED — ID `1cd3219d-e8a3-4510-a6b5-67783802cdcd`** · runtime `d8246c7287a119f1b5ce28e8bbb7e9473bb059fe` · **Artifact (simulator .tar.gz): https://expo.dev/artifacts/eas/gzH2LyPlEwVa6MpBMljqDnGlLZIjRoW7Adpt7_Bu084.tar.gz** · logs: https://expo.dev/accounts/rh2011/projects/madarek-mobile/builds/1cd3219d-e8a3-4510-a6b5-67783802cdcd
-- **Final iOS-simulator preview (mission head): ID `bd254942-f2a1-4a47-9a78-7e8a4a8ec3ce`** · submitted from `8a6390e` (content-identical to final head `92dc49c` for `apps/mobile/**` — the later rebase only added main's non-mobile commits) · logs: https://expo.dev/accounts/rh2011/projects/madarek-mobile/builds/bd254942-f2a1-4a47-9a78-7e8a4a8ec3ce
+- Baseline iOS-simulator preview (bootstrap head `d610a62`): **FINISHED — ID `1cd3219d-e8a3-4510-a6b5-67783802cdcd`** · runtime `d8246c7287a119f1b5ce28e8bbb7e9473bb059fe` · **Artifact (simulator .tar.gz): https://expo.dev/artifacts/eas/gzH2LyPlEwVa6MpBMljqDnGlLZIjRoW7Adpt7_Bu084.tar.gz** · logs: https://expo.dev/accounts/rh2011/projects/tadmora-mobile/builds/1cd3219d-e8a3-4510-a6b5-67783802cdcd
+- **Final iOS-simulator preview (mission head): ID `bd254942-f2a1-4a47-9a78-7e8a4a8ec3ce`** · submitted from `8a6390e` (content-identical to final head `92dc49c` for `apps/mobile/**` — the later rebase only added main's non-mobile commits) · logs: https://expo.dev/accounts/rh2011/projects/tadmora-mobile/builds/bd254942-f2a1-4a47-9a78-7e8a4a8ec3ce
 - Baseline + final Android preview: **BLOCKED — Free-plan Android quota exhausted this month (resets ~Dec 1 2026)**. Retry command for the owner/lead:
   `cd apps/mobile && EXPO_TOKEN=… npx eas-cli@latest build --platform android --profile preview --no-wait --non-interactive`
   (or upgrade: `eas billing:subscribe starter --account rh2011`).
@@ -31,7 +31,7 @@ Owner-facing handoff for the mobile-pro branch. Kept current as work lands.
 ## RN-web capture pipeline (pinned, reproducible — used for the VLM verification + review panel)
 1. `cd apps/mobile && EXPO_PUBLIC_API_BASE_URL=http://localhost:8900/api/v1 npx expo export --platform web --output-dir /tmp/export-branch`
 2. Serve with SPA fallback (plain `http.server` 404s deep links — `output: "single"`): tiny node server mapping unknown paths → `index.html` on :8899.
-3. CORS-open reverse proxy on :8900 → `https://madarek.onrender.com` (echoes Origin, answers preflights) — the prod API does not allow localhost origins.
+3. CORS-open reverse proxy on :8900 → `https://tadmora.onrender.com` (echoes Origin, answers preflights) — the prod API does not allow localhost origins.
 4. Playwright walks: login (`student|teacher|admin|quality|owner@test.ly` / `12345678`) via `[role="button"]:has-text("دخول")`, then route captures at 360/390/430/768 + `colorScheme: dark`.
 5. Visual review: `z-ai vision -p "<question>" -i <png>` (VLM) — Arabic-string claims always re-verified against code (VLM misreads Arabic ligatures at small sizes).
 

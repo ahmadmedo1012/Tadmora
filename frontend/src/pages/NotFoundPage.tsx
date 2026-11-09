@@ -58,7 +58,7 @@ export default function NotFoundPage() {
         </div>
 
         {/* r324 X10 — the mono `ERR [404]` eyebrow and the
-            `[0,0] · ROUTE NOT MAPPED · MADAREK` coordinates line are
+            `[0,0] · ROUTE NOT MAPPED · TADMORA` coordinates line are
             RETIRED: coordinates/revision tags are not content. R341 D5
             — the pattern library's quiet kicker seat carries the
             sheet's own tab-title word (no code chrome). The sr-only
@@ -68,7 +68,7 @@ export default function NotFoundPage() {
 
         <h1 className="nf-title">هذه الصفحة تغيّبت عن الحضور</h1>
         <p className="nf-sub">
-          الرابط الذي فتحته لا يطابق أيّ صفحة في مدارك — ربّما تغيّر عنوانها أو وُرِد
+          الرابط الذي فتحته لا يطابق أيّ صفحة في تادمورا — ربّما تغيّر عنوانها أو وُرِد
           بشكل غير دقيق.
         </p>
 

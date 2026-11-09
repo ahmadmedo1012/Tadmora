@@ -156,8 +156,8 @@ describe('r170-e — passwordStrengthTier heuristic (ASVS 2.1.8)', () => {
   it.each([
     ['a', 'weak'],        // < 8
     ['Ab1!xyz', 'weak'],  // 7 chars — one under the boundary
-    ['Madarek2', 'medium'], // exactly 8
-    ['Madarek26', 'medium'], // 9
+    ['Tadmora2', 'medium'], // exactly 8
+    ['Tadmora26', 'medium'], // 9
     ['123456789a', 'medium'], // 11 — one under the strong boundary
     ['Salam-Zawiya-26', 'strong'], // 15
     ['a'.repeat(12), 'strong'], // exactly 12
@@ -208,7 +208,7 @@ describe('r170-e — RegisterPage live strength hint (polite, advisory only)', (
     expect(weak).toHaveAttribute('aria-live', 'polite');
 
     // 9 chars → متوسطة (same node role — the live region swaps content)
-    fireEvent.change(input, { target: { value: 'Madarek26' } });
+    fireEvent.change(input, { target: { value: 'Tadmora26' } });
     expect(screen.getByText('قوة كلمة المرور: متوسطة')).toHaveAttribute('role', 'status');
 
     // 15 chars → قوية

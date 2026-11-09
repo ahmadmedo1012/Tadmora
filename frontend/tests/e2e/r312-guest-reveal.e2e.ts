@@ -16,7 +16,7 @@ test.use({ e2eRole: 'guest', reducedMotion: 'no-preference' });
 /* R315 (c4-E) re-pin: the landing H1 is «رحلة تعلم واحدة / من
  * المحاضرة إلى الإتقان» (cycle-1 V1 hero, then the cycle-3 copy pass
  * de-tashkeeled the display line — «رحلةُ تعلُّمٍ واحدة» is gone too).
- * The brand «مدارك» lives in the header/footer brand cells, not the H1;
+ * The brand «تادمورا» lives in the header/footer brand cells, not the H1;
  * this sentinel is the page-ready proof, not a copy pin. */
 const HERO_READY = 'رحلة تعلم واحدة';
 

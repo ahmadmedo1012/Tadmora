@@ -16,7 +16,7 @@ test.describe('لوحة تحكم الطالب', () => {
     await page.goto('/student/dashboard');
 
     // التحية من الساعة المجمدة (10:00 UTC → «صباح الخير») + الاسم من
-    // جلسة mdrk-auth المبذورة.
+    // جلسة tdmr-auth المبذورة.
     /* R189→R287 re-pin: the masthead — the patterns PageHeader h1
        carries the nav-label identity («لوحة التحكم»، r183-B6 contract),
        the greeting + name + faculty ride pf-page-desc, and the KPI row

@@ -5,8 +5,8 @@
  * The GEOMETRY is shared byte-identical (mark.ts · lockups.ts ·
  * wordmark.generated.ts are verbatim copies — enforced by
  * `npm run tokens:check`), and the variant math below mirrors the web
- * implementation line for line: lockup (RTL: mark right, «مدارك» left) ·
- * mark · wordmark · stacked (mark / «مدارك» / MADAREK).
+ * implementation line for line: lockup (RTL: mark right, «تادمورا» left) ·
+ * mark · wordmark · stacked (mark / «تادمورا» / TADMORA).
  *
  * Two documented platform differences:
  *  · react-native-svg has no vector-effect:non-scaling-stroke — the
@@ -20,9 +20,8 @@ import type { ReactNode } from "react";
 import Svg, { G, Path, Rect } from "react-native-svg";
 import { useTheme } from "../design/theme";
 import {
-  MARK_AXIS,
-  MARK_DIAMOND_PATH,
-  MARK_POINT,
+  MARK_ARCH_PATH,
+  MARK_KEYSTONE,
   MARK_VIEWBOX,
   markStrokePx,
 } from "./mark";
@@ -43,7 +42,7 @@ export function Logo({
   /** mark height in px; lockup/stacked scale from it. In the 'wordmark'
    * variant it is the wordmark's ink height in px. */
   size?: number;
-  /** 'auto' = the live palette (ink text · accent point — themes with
+  /** 'auto' = the live palette (ink text · accent keystone — themes with
    * the app); 'ink'/'paper'/'orange' are literal one-colour settings
    * for fixed backgrounds (BRAND.md §tones). */
   tone?: LogoTone;
@@ -58,7 +57,7 @@ export function Logo({
         : tone === "ink"
           ? "#282828"
           : palette.text;
-  const point = tone === "auto" ? palette.accent : ink;
+  const keystone = tone === "auto" ? palette.accent : ink;
 
   /* the web's non-scaling hairline, reproduced in viewBox units (X11):
    * at size 32 → 1.5 units ≈ 1.5px; at size 16 the taper keeps the same
@@ -68,14 +67,14 @@ export function Logo({
   /* ── the mark (shared by mark/lockup/stacked) ─────────────────────── */
   const markShape = (
     <G stroke={ink} fill="none" strokeWidth={markStrokeUnits} strokeLinejoin="miter">
-      <Rect x={MARK_AXIS.x} y={MARK_AXIS.y} width={MARK_AXIS.size} height={MARK_AXIS.size} />
-      <Path d={MARK_DIAMOND_PATH} />
+      <Path d={MARK_ARCH_PATH} />
+      
       <Rect
-        x={MARK_POINT.x}
-        y={MARK_POINT.y}
-        width={MARK_POINT.size}
-        height={MARK_POINT.size}
-        fill={point}
+        x={MARK_KEYSTONE.x}
+        y={MARK_KEYSTONE.y}
+        width={MARK_KEYSTONE.size}
+        height={MARK_KEYSTONE.size}
+        fill={keystone}
         stroke="none"
       />
     </G>
@@ -142,7 +141,7 @@ export function Logo({
       height={height}
       testID={testID}
       accessibilityRole="image"
-      accessibilityLabel="مدارك"
+      accessibilityLabel="تادمورا"
     >
       {body}
     </Svg>

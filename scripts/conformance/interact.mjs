@@ -41,7 +41,7 @@ let chromium;
 try {
   ({ chromium } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium } = createRequire("/home/z/madarek/frontend/package.json"))("playwright");
+  ({ chromium } = createRequire("/home/z/tadmora/frontend/package.json"))("playwright");
 }
 const SPEC_DIR = join(WORKTREE, "docs", "redesign", "r335", "heron-spec");
 

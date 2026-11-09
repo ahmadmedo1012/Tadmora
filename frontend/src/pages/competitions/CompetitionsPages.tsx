@@ -36,7 +36,7 @@ import '../../styles/landing/inner.css';
 import { formatDate, formatNum } from '../../utils/numbers';
 
 /* Payload document title (A12 P3-6): the h1 carries the competition's
- * real name while the tab said «مسابقة · مدارك» for every competition.
+ * real name while the tab said «مسابقة · تادمورا» for every competition.
  * Same contract as CollegePages' useDocTitle — the set rides a 0ms
  * macrotask so a cached payload landing in the same commit as the
  * shell's pathname-title effect still wins (child effects run before
@@ -45,7 +45,7 @@ function useDocTitle(title: string | null) {
   useEffect(() => {
     if (title === null) return;
     const set = window.setTimeout(() => {
-      document.title = `${title} · مدارك`;
+      document.title = `${title} · تادمورا`;
     }, 0);
     return () => {
       window.clearTimeout(set);

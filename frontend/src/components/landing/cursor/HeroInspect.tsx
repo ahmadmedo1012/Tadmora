@@ -6,8 +6,8 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  * a LOCAL drafting instrument (reference-observations.md §3.3–3.4):
  * full-span guide lines + an 8×8 plus + a scene-relative coordinate
  * readout, and a drag-to-inspect gesture whose selection box reveals
- * annotation markers by AABB overlap. This is Madarek's original
- * implementation of that grammar over «مخطط مدارك»:
+ * annotation markers by AABB overlap. This is Tadmora's original
+ * implementation of that grammar over «مخطط تادمورا»:
  *
  *  · Guides + plus + readout: `(hover:hover) and (min-width:992px)`
  *    only (the reference's own gate); eased follow on the shared

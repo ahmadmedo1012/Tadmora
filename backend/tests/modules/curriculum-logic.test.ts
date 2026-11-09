@@ -140,7 +140,7 @@ describe('CURRICULUM_MEDIA_URL_PATTERN', () => {
 describe('isSanctionedMediaUrl (same-origin static assets)', () => {
   it('accepts root-relative static asset paths (self-hosted sample lectures)', () => {
     expect(isSanctionedMediaUrl('/lectures/se301-01-intro.mp4')).toBe(true);
-    expect(isSanctionedMediaUrl('/brand/madarek-mark.svg')).toBe(true);
+    expect(isSanctionedMediaUrl('/brand/tadmora-mark.svg')).toBe(true);
   });
 
   it('still accepts the classic prefixes', () => {

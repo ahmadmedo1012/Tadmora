@@ -12,7 +12,7 @@ import { test, expect } from './fixtures/e2e';
 /* R315 (c4-E) re-pin: the landing H1 is «رحلة تعلم واحدة / من
  * المحاضرة إلى الإتقان» (cycle-1 V1 hero, then the cycle-3 copy pass
  * de-tashkeeled the display line — «رحلةُ تعلُّمٍ واحدة» is gone too).
- * The brand «مدارك» lives in the header/footer brand cells, not the H1;
+ * The brand «تادمورا» lives in the header/footer brand cells, not the H1;
  * this sentinel is the page-ready proof, not a copy pin. */
 const HERO_READY = 'رحلة تعلم واحدة';
 
@@ -412,12 +412,12 @@ test.describe('R309 menu — the scroll lock', () => {
     expect(during, 'the document scrolled behind the open menu').toBe(before);
 
     /* the body carries the ref-counted lock class while open */
-    await expect(page.locator('body')).toHaveClass(/mdrk-scroll-locked/);
+    await expect(page.locator('body')).toHaveClass(/tdmr-scroll-locked/);
 
     /* close → lock released, position preserved */
     await page.locator('.fo-burger').click();
     await expect(page.locator('.fo-mobile-menu')).toHaveCount(0);
-    await expect(page.locator('body')).not.toHaveClass(/mdrk-scroll-locked/);
+    await expect(page.locator('body')).not.toHaveClass(/tdmr-scroll-locked/);
     const after = await page.evaluate(() => window.scrollY);
     expect(after).toBe(before);
     /* and the page scrolls normally again */
@@ -445,7 +445,7 @@ test.describe('R309 menu — the scroll lock', () => {
     await expect(page.locator('.fo-mobile-menu')).toBeVisible({ timeout: 30_000 }); /* R312 (D4): mount-latency hardening */
     await page.locator('.fo-mobile-menu a[href="#chapters"]').click();
     await expect(page.locator('.fo-mobile-menu')).toHaveCount(0);
-    await expect(page.locator('body')).not.toHaveClass(/mdrk-scroll-locked/);
+    await expect(page.locator('body')).not.toHaveClass(/tdmr-scroll-locked/);
     await expect(page.locator('#chapters')).toBeVisible();
   });
 
@@ -455,12 +455,12 @@ test.describe('R309 menu — the scroll lock', () => {
     for (let i = 0; i < 3; i += 1) {
       await page.locator('.fo-burger').click();
       await expect(page.locator('.fo-mobile-menu')).toBeVisible({ timeout: 30_000 }); /* R312 (D4): mount-latency hardening */
-      await expect(page.locator('body')).toHaveClass(/mdrk-scroll-locked/);
+      await expect(page.locator('body')).toHaveClass(/tdmr-scroll-locked/);
       await page.locator('.fo-burger').click();
       await expect(page.locator('.fo-mobile-menu')).toHaveCount(0);
     }
     /* after the cycles: unlocked and scrollable */
-    await expect(page.locator('body')).not.toHaveClass(/mdrk-scroll-locked/);
+    await expect(page.locator('body')).not.toHaveClass(/tdmr-scroll-locked/);
     const y0 = await page.evaluate(() => window.scrollY);
     await page.mouse.wheel(0, 500);
     await page.waitForTimeout(350);
@@ -479,7 +479,7 @@ test.describe('R309/R313 loader — the asset-gated entrance clock and the lock 
          * the skip key must be cleared on EVERY init run (the shared
          * fixture re-seeds it per load; the once-guard starved the
          * reload replay this spec ends with). */
-        sessionStorage.removeItem('madarek-intro-skip');
+        sessionStorage.removeItem('tadmora-intro-skip');
       } catch {
         /* ignore */
       }
@@ -551,7 +551,7 @@ test.describe('R309/R313 loader — the asset-gated entrance clock and the lock 
     await page.setViewportSize(VW.desktop);
     await page.addInitScript(() => {
       try {
-        sessionStorage.removeItem('madarek-intro-skip');
+        sessionStorage.removeItem('tadmora-intro-skip');
       } catch {
         /* ignore */
       }
@@ -567,7 +567,7 @@ test.describe('R309/R313 loader — the asset-gated entrance clock and the lock 
     test('no loader at all; the page stands complete and scrollable', async ({ page }) => {
       await page.addInitScript(() => {
         try {
-          sessionStorage.removeItem('madarek-intro-skip');
+          sessionStorage.removeItem('tadmora-intro-skip');
         } catch {
           /* ignore */
         }

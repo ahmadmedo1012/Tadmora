@@ -26,7 +26,7 @@ import { S3Driver, probeStorage, type StorageDriver } from '../../src/lib/storag
 const CFG = {
   endpoint: 'https://storage.example.com',
   region: 'auto',
-  bucket: 'madarek-files',
+  bucket: 'tadmora-files',
   accessKeyId: 'test-example-access-key',
   secretAccessKey: 'test-example-secret-key-not-real-000',
 };
@@ -88,7 +88,7 @@ describe('S3Driver.put — the write wire', () => {
     expect(calls).toHaveLength(1);
     const call = calls[0]!;
     expect(call.method).toBe('PUT');
-    expect(call.url).toBe('https://storage.example.com/madarek-files/papers/cku5c2x9p0000wire.pdf');
+    expect(call.url).toBe('https://storage.example.com/tadmora-files/papers/cku5c2x9p0000wire.pdf');
     // The body rides as bytes — byte-equal, not stringified.
     expect(Buffer.from(call.body!)).toEqual(PDF_BYTES);
     // The 60s PUT timeout rides as an abort signal.
@@ -372,7 +372,7 @@ describe('probeStorage (r166d) — advisory reachability, never a gate', () => {
     const probe = await probeStorage(driver);
     expect(probe).toEqual({ ok: true }); // 404 = the store answered
     expect(calls).toHaveLength(1);
-    expect(calls[0]!.url).toBe('https://storage.example.com/madarek-files/papers/probe.pdf');
+    expect(calls[0]!.url).toBe('https://storage.example.com/tadmora-files/papers/probe.pdf');
     expect(calls[0]!.method).toBe('HEAD');
   });
 

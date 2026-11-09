@@ -98,7 +98,7 @@ describe('Button labelMotion — duplicate-label slide structure', () => {
   });
 
   it('long Arabic label survives in both rows (no truncation in markup)', () => {
-    const long = 'ابدأ رحلتك التعليمية اليوم مع مدارك خطوة بخطوة نحو التفوق';
+    const long = 'ابدأ رحلتك التعليمية اليوم مع تادمورا خطوة بخطوة نحو التفوق';
     render(<Button labelMotion>{long}</Button>);
     const dups = containerDupCount(long);
     expect(dups.visible).toBe(1);

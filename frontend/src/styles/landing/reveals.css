@@ -9,7 +9,7 @@
 /* the armed root class is observability, not hiding — a hook point for
    harnesses asserting the reveal grammar is live. */
 .js-reveal-armed {
-  --mdrk-reveals: on;
+  --tdmr-reveals: on;
 }
 
 /* ── The card rung — heron-craft row 13's imgCardReveal, re-keyed to

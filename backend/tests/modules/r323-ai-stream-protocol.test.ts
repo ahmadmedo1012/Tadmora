@@ -27,7 +27,7 @@ const migrationSource = readFileSync(
   'utf8',
 );
 const envExampleSource = readFileSync(new URL('../../../.env.example', import.meta.url), 'utf8');
-const renderSource = readFileSync(new URL('../../../render.yaml', import.meta.url), 'utf8');
+const vercelSource = readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8');
 
 const CFG: AiProviderConfig = {
   baseUrl: 'https://provider.example/v1',
@@ -292,11 +292,9 @@ describe('operator config — the r323 env vars are documented + optional', () =
     }
   });
 
-  it('render.yaml carries the new knobs as sync:false placeholders (never required)', () => {
+  it('the stream/STT knobs stay dashboard-level opt-in (no platform-manifest baking)', () => {
     for (const key of ['AI_TIMEOUT_MS', 'AI_DAILY_LIMIT_DEFAULT']) {
-      const i = renderSource.indexOf(`- key: ${key}`);
-      expect(i).toBeGreaterThan(-1);
-      expect(renderSource.slice(i, i + key.length + 45)).toContain('sync: false');
+      expect(vercelSource).not.toContain(key);
     }
   });
 });

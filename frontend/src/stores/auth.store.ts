@@ -85,7 +85,7 @@ export interface SessionInstitutionExtras {
   membershipRole: AppRole | null;
 }
 
-/** The partialized slice persisted under the `mdrk-auth` key.
+/** The partialized slice persisted under the `tdmr-auth` key.
  *  r178: widened deliberately — see the D4 block above. */
 type PersistedSession = SessionInstitutionExtras & {
   user: AuthUser | null;
@@ -134,8 +134,8 @@ interface AuthState extends PersistedSession {
 function resolveStringStorage(): SyncStringStorage {
   try {
     const real = globalThis.localStorage;
-    real.setItem('mdrk-auth::probe', '1');
-    real.removeItem('mdrk-auth::probe');
+    real.setItem('tdmr-auth::probe', '1');
+    real.removeItem('tdmr-auth::probe');
     return real;
   } catch {
     const mem = new Map<string, string>();
@@ -232,7 +232,7 @@ export const useAuthStore = create<AuthState>()(
       };
     },
     {
-      name: 'mdrk-auth',
+      name: 'tdmr-auth',
       storage: safeSessionStorage(),
       // r178: version 0 payloads ({user, accessToken}) pre-date the
       // institution context fields. The migrate folds them into the new

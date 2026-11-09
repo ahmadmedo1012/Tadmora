@@ -136,13 +136,13 @@ describe('useScrollRestoration', () => {
     expect(scrollerOf().scrollTop).toBe(0);
   });
 
-  it('persists per history key under the madarek.scroll: prefix', async () => {
+  it('persists per history key under the tadmora.scroll: prefix', async () => {
     mount();
     scrollToPosition(640);
     fireEvent.click(document.querySelector<HTMLButtonElement>('button')!);
     await flushFrame();
     const keys = Object.keys(sessionStorage).filter((k) =>
-      k.startsWith('madarek.scroll:'),
+      k.startsWith('tadmora.scroll:'),
     );
     expect(keys).toHaveLength(1);
     expect(sessionStorage.getItem(keys[0]!)).toBe('640');

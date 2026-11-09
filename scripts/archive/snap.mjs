@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// Quick screenshot harness for the Madarek rebuild — uses Playwright's
+// Quick screenshot harness for the Tadmora rebuild — uses Playwright's
 // bundled chromium-headless-shell so it doesn't need /opt/google/chrome.
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const OUT = '/tmp/madarek-shots';
+const OUT = '/tmp/tadmora-shots';
 mkdirSync(OUT, { recursive: true });
 
 const PUBLIC_ROUTES = [
@@ -81,7 +81,7 @@ for (const theme of THEMES) {
       locale: 'ar-LY',
     });
     await ctx.addInitScript((t) => {
-      try { localStorage.setItem('madarek-theme', JSON.stringify({ state: { mode: t }, version: 0 })); } catch {}
+      try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: t }, version: 0 })); } catch {}
     }, theme);
 
     const page = await ctx.newPage();
@@ -106,7 +106,7 @@ for (const theme of THEMES) {
       try {
         await page.goto('http://localhost:5173/auth', { waitUntil: 'networkidle', timeout: 20_000 });
         await page.fill('#auth-email', cohort.email);
-        await page.fill('#auth-password', 'Madarek2026!');
+        await page.fill('#auth-password', 'Tadmora2026!');
         await Promise.all([
           page.waitForURL((url) => !url.pathname.includes('/auth'), { timeout: 20_000 }),
           page.click('button[type="submit"].auth-submit'),

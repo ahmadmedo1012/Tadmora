@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * wordmark-build-r323.mjs — the R323 brand wordmark «مدارك» + the Latin
- * transliteration «MADAREK» — the ONE wordmark of the unified brand
+ * wordmark-build-r323.mjs — the R323 brand wordmark «تادمورا» + the Latin
+ * transliteration «TADMORA» — the ONE wordmark of the unified brand
  * system (frontend/src/brand), adapted from scripts/r318/wordmark-build.mjs
  * (which stays untouched — it still owns the FOOTER wordmark sheet until
  * the foreman's integration pass swaps that call-site).
@@ -18,8 +18,9 @@
  *   path data — zero new runtime dependencies):
  *   1. decompress the woff2s → ttf (python3 fontTools; a hash-keyed tmp
  *      cache keeps runs deterministic and the repo clean),
- *   2. shape «مدارك» with harfbuzzjs — REAL contextual joining: م initial
- *      connected into د final; ا/ر/ك isolated. NO kashida: the brand
+ *   2. shape «تادمورا» with harfbuzzjs — REAL contextual joining: ت initial
+ *      connected into ا final; م initial connected into و final; د/ر/ا
+ *      isolated. NO kashida: the brand
  *      wordmark is the compact natural setting (the r318 footer sheet's
  *      10-tatweel elongation is a footer-layout device, not a brand one).
  *      The output arrives in visual left-to-right order (clusters 4..0)
@@ -27,12 +28,12 @@
  *   3. extract the shaped glyphs' outlines with opentype.js (font units,
  *      y-up, quadratic TrueType contours — outer loops AND counters),
  *   4. flatten every contour to polygons and UNION them with clipper-lib
- *      (nonzero fill): the م→د join is two overlapping glyph outlines, so
+ *      (nonzero fill): the تـا and مـو joins are overlapping glyph outlines, so
  *      a stroke-only render without the union draws DOUBLE lines through
  *      the join (the measured r319 §D1 defect — «صدارك»),
  *   5. normalize: ink height → 100 units, 6-unit construction margins all
  *      round, coordinates rounded to 2dp — ONE path per word,
- *   6. «MADAREK»: Geist Mono 500 glyphs placed at their advances + 0.08em
+ *   6. «TADMORA»: Geist Mono 500 glyphs placed at their advances + 0.08em
  *      tracking (Latin MAY be letter-spaced — Arabic never is), same
  *      flatten+union+normalize pass,
  *   7. emit:
@@ -65,8 +66,8 @@ const AR_WOFF2 = path.join(ROOT, 'frontend/public/fonts/plex-sans-arabic-600-nor
 const LAT_WOFF2 = path.join(ROOT, 'frontend/public/fonts/geist-mono-500-normal-latin.woff2');
 const OUT_TS = path.join(ROOT, 'frontend/src/brand/wordmark.generated.ts');
 const OUT_SVG = path.join(ROOT, 'frontend/public/brand/wordmark.svg');
-const WORD = 'مدارك';
-const LATIN = 'MADAREK';
+const WORD = 'تادمورا';
+const LATIN = 'TADMORA';
 
 /* normalization: ink height 100, construction margins 6, 2dp coords */
 const INK_H = 100;
@@ -219,14 +220,14 @@ function inkEnvelope(glyphs) {
   return { xMin, xMax, yMin, yMax };
 }
 
-/* ══ A. the Arabic wordmark «مدارك» ══════════════════════════════════ */
+/* ══ A. the Arabic wordmark «تادمورا» ══════════════════════════════════ */
 const arTtf = woff2ToTtf(AR_WOFF2);
 const shaped = shapeText(arTtf, WORD);
-if (shaped.length !== 5) {
-  console.error(`[wordmark-r323] expected 5 shaped glyphs for «${WORD}», got ${shaped.length}`);
+if (shaped.length !== 7) {
+  console.error(`[wordmark-r323] expected 7 shaped glyphs for «${WORD}», got ${shaped.length}`);
   process.exit(1);
 }
-const expectedClusters = [4, 3, 2, 1, 0]; /* harfbuzz RTL output = visual LTR */
+const expectedClusters = [6, 5, 4, 3, 2, 1, 0]; /* harfbuzz RTL output = visual LTR */
 if (JSON.stringify(shaped.map((g) => g.cluster)) !== JSON.stringify(expectedClusters)) {
   console.error(`[wordmark-r323] unexpected cluster order ${JSON.stringify(shaped.map((g) => g.cluster))} (want ${JSON.stringify(expectedClusters)})`);
   process.exit(1);
@@ -242,11 +243,18 @@ const arGlyphs = shaped.map((g) => {
   return { name: glyph.name, advance: g.xAdvance, cluster: g.cluster, commands: glyph.path.commands.map((c) => ({ ...c })) };
 });
 console.log(`[wordmark-r323] shaped «${WORD}» → visual LTR ${arGlyphs.map((g) => g.name).join(' · ')} (advances ${arGlyphs.map((g) => g.advance).join('/')})`);
-/* the join proof: م (cluster 0) and د (cluster 1) must be ADJACENT in the
- * visual stream and their forms must be the connected pair — logged for
- * the audit, asserted structurally (adjacency + non-zero advances). */
-if (arGlyphs[3].cluster !== 1 || arGlyphs[4].cluster !== 0) {
-  console.error('[wordmark-r323] م/د not adjacent in the visual stream — the join would break');
+/* the join proofs: ت (cluster 0) must join into ا (cluster 1) — the
+ * تـا pair — ADJACENT at the END of the visual stream (the rightmost
+ * pair), and م (cluster 3) must join into و (cluster 4) — the مـو pair —
+ * ADJACENT mid-stream; د (cluster 2), ر (cluster 5) and the trailing ا
+ * (cluster 6) are isolated. Logged for the audit, asserted structurally
+ * (adjacency + non-zero advances). */
+if (arGlyphs[6].cluster !== 0 || arGlyphs[5].cluster !== 1) {
+  console.error('[wordmark-r323] ت/ا not adjacent at the visual tail — the تـا join would break');
+  process.exit(1);
+}
+if (arGlyphs[3].cluster !== 3 || arGlyphs[2].cluster !== 4) {
+  console.error('[wordmark-r323] م/و not adjacent mid-stream — the مـو join would break');
   process.exit(1);
 }
 
@@ -259,7 +267,7 @@ const arInk = inkEnvelope(arGlyphs);
 const ar = normalize(unionContours(arContours), arInk);
 console.log(`[wordmark-r323] AR ink ${ar.inkW}×${ar.inkH}u sheet ${ar.viewBox} (${(ar.inkW / ar.inkH).toFixed(3)}:1), ${ar.d.length} bytes of path`);
 
-/* ══ B. the Latin transliteration «MADAREK» ══════════════════════════ */
+/* ══ B. the Latin transliteration «TADMORA» ══════════════════════════ */
 const latTtf = woff2ToTtf(LAT_WOFF2);
 const latOt = opentype.parse(latTtf.buffer.slice(latTtf.byteOffset, latTtf.byteOffset + latTtf.length));
 const latGlyphs = [...LATIN].map((ch, i) => {
@@ -293,19 +301,19 @@ const header = `/* ════════════════════�
  * Generator: scripts/r323/wordmark-build-r323.mjs (deterministic:
  * same fonts + same words ⇒ same bytes; rerun after any font change).
  *
- * The R323 brand wordmark — the ONE «مدارك» of the unified system.
+ * The R323 brand wordmark — the ONE «تادمورا» of the unified system.
  * Shaped with harfbuzz from IBM Plex Sans Arabic 600 (the R322-seated
- * display voice): م initial CONNECTED into د final, ا/ر/ك isolated,
- * NO kashida (the compact brand setting; the r318 footer sheet's
- * tatweel elongation is a footer-layout device). The م→د join is
- * unioned (clipper) so the stroke-only render never draws double
- * lines through the join. Normalized sheet: ink height 100 units,
+ * display voice): ت initial CONNECTED into ا final, م initial into و
+ * final; د/ر/ا isolated. NO kashida (the compact brand setting; the
+ * r318 footer sheet's tatweel elongation is a footer-layout device).
+ * The تـا and مـو joins are unioned (clipper) so the stroke-only render
+ * never draws double lines through the joins. Normalized sheet: ink height 100 units,
  * 6-unit construction margins, 2dp coordinates.
  *
  * Render contract (docs/redesign/r323/brand/BRAND.md):
  *  · WORDMARK_AR — stroke-only: fill:none, stroke:currentColor,
  *    vector-effect non-scaling ≈1.5px (hollow drafting outline).
- *  · WORDMARK_LATIN — «MADAREK» in Geist Mono 500, 0.08em tracking
+ *  · WORDMARK_LATIN — «TADMORA» in Geist Mono 500, 0.08em tracking
  *    (Latin may be tracked; Arabic never), rendered FILLED
  *    currentColor (the solid mono voice).
  * ═══════════════════════════════════════════════════════════════════ */
@@ -325,12 +333,12 @@ export const WORDMARK_LATIN = {
 fs.writeFileSync(OUT_TS, header);
 console.log(`[wordmark-r323] wrote ${path.relative(ROOT, OUT_TS)} (${(header.length / 1024).toFixed(1)}KB)`);
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ar.viewBox}" role="img" aria-label="مدارك">
-  <!-- R323 brand wordmark «مدارك» — generated by scripts/r323/wordmark-build-r323.mjs
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ar.viewBox}" role="img" aria-label="تادمورا">
+  <!-- R323 brand wordmark «تادمورا» — generated by scripts/r323/wordmark-build-r323.mjs
        (IBM Plex Sans Arabic 600, harfbuzz-shaped, join-unioned). Static twin of
        frontend/src/brand/wordmark.generated.ts — same geometry. Stroke-only ink;
        recolour via the component (currentColor) — this file is for og/pdf/e-mail. -->
-  <title>مدارك</title>
+  <title>تادمورا</title>
   <path d="${ar.d}" fill="none" stroke="#282828" stroke-width="${WORDMARK_STROKE_SHEET}" stroke-linejoin="miter"/>
 </svg>
 `;

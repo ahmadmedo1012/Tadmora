@@ -67,7 +67,7 @@ let mismatches = 0, written = 0;
 for (const theme of ["light", "dark"]) {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 2 });
   await context.addInitScript(([t]) => {
-    localStorage.setItem("madarek-theme", JSON.stringify({ state: { mode: t, modeUpdatedAt: 1 }, version: 2 }));
+    localStorage.setItem("tadmora-theme", JSON.stringify({ state: { mode: t, modeUpdatedAt: 1 }, version: 2 }));
   }, [theme]);
   const page = await context.newPage();
   await page.goto(`${URL_BASE}/__plates`, { waitUntil: "networkidle", timeout: 60000 });

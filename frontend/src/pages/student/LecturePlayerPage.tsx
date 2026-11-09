@@ -541,7 +541,7 @@ export default function LecturePlayerPage() {
         {/* Video + meta */}
         <div className="lecture-main">
           {/* R2-B branded chrome: native `controls` removed — the
-              VideoPlayerChrome layers the مدارك player skin over the
+              VideoPlayerChrome layers the تادمورا player skin over the
               SAME <video> (same ref, same reporting/checkpoint/
               resume handlers below, byte-identical). The checkpoint
               Modal portals to <body> at --z-modal, so the quiz always

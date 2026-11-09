@@ -76,8 +76,8 @@ const gzKB = (buf) => Math.round(zlib.gzipSync(buf, { level: 9 }).length / 1024)
 function initScript() {
   return `
 (function () {
-  if (window.__mdrkGate) return;
-  var W = (window.__mdrkGate = {
+  if (window.__tdmrGate) return;
+  var W = (window.__tdmrGate = {
     frameDeltas: [], _rafOn: false, _last: 0,
     shifts: [], lcps: [], evts: [],
   });
@@ -148,7 +148,7 @@ async function runRoute(browser, route, vp) {
   await ctx.addInitScript(initScript());
   /* returning-visit: the intro flag is preset → splash+sheet loader skip. */
   await ctx.addInitScript(`
-    try { localStorage.setItem('madarek.intro.v1', '1'); sessionStorage.setItem('madarek-intro-seen', '1'); } catch (e) {}
+    try { localStorage.setItem('tadmora.intro.v1', '1'); sessionStorage.setItem('tadmora-intro-seen', '1'); } catch (e) {}
   `);
   const page = await ctx.newPage();
   const t0 = Date.now();
@@ -156,7 +156,7 @@ async function runRoute(browser, route, vp) {
   await page.waitForTimeout(1200); /* settle — hydration + fonts */
 
   const metrics = await page.evaluate(() => {
-    const W = window.__mdrkGate;
+    const W = window.__tdmrGate;
     return {
       cls: Math.round(W.shifts.reduce((a, b) => a + b.v, 0) * 1000) / 1000,
       lcp: W.lcps.length ? Math.min(...W.lcps) : null,
@@ -166,7 +166,7 @@ async function runRoute(browser, route, vp) {
 
   let scroll = null;
   if (route === '/' && !SKIP_SCROLL) {
-    await page.evaluate(() => window.__mdrkGate.startRaf());
+    await page.evaluate(() => window.__tdmrGate.startRaf());
     /* the r322 descent — mouse wheel notches (real input path) */
     for (let i = 0; i < NOTCHES; i++) {
       await page.mouse.wheel(0, NOTCH_PX);
@@ -174,7 +174,7 @@ async function runRoute(browser, route, vp) {
     }
     await page.waitForTimeout(400);
     const deltas = await page.evaluate(() => {
-      const W = window.__mdrkGate;
+      const W = window.__tdmrGate;
       W.stopRaf();
       return W.frameDeltas.slice();
     });

@@ -21,7 +21,7 @@ import { flowPage, flowShot, runTag } from './fixtures/live';
 
 const CSV_HEADER = 'الاسم الأول,اسم العائلة,البريد الإلكتروني,الرقم الجامعي,الكلية,القسم,السنة';
 // Names the preview resolves against the REAL seeded institution
-// (جامعة مدارك التجريبية — كلية تقنية المعلومات / علوم الحاسوب, verified
+// (جامعة تادمورا التجريبية — كلية تقنية المعلومات / علوم الحاسوب, verified
 // against POST /users/bulk-import/preview).
 const FACULTY = 'كلية تقنية المعلومات';
 const DEPARTMENT = 'علوم الحاسوب';
@@ -31,8 +31,8 @@ test('F1 · registrar bulk-imports two students from CSV (preview → commit →
   const tag = runTag();
   const csv = [
     CSV_HEADER,
-    `طالب,آلي الأول,flow01-a-${tag}@e2e.madarek.ly,90${tag.slice(-6)}1,${FACULTY},${DEPARTMENT},2`,
-    `طالب,آلي الثاني,flow01-b-${tag}@e2e.madarek.ly,90${tag.slice(-6)}2,${FACULTY},${DEPARTMENT},2`,
+    `طالب,آلي الأول,flow01-a-${tag}@e2e.tadmora.ly,90${tag.slice(-6)}1,${FACULTY},${DEPARTMENT},2`,
+    `طالب,آلي الثاني,flow01-b-${tag}@e2e.tadmora.ly,90${tag.slice(-6)}2,${FACULTY},${DEPARTMENT},2`,
     '', // trailing newline — the parser's real-world shape
   ].join('\n');
 
@@ -61,8 +61,8 @@ test('F1 · registrar bulk-imports two students from CSV (preview → commit →
     await modal.getByRole('button', { name: 'إنشاء 2 حساباً' }).click();
     await expect(modal.getByText('تم إنشاء 2 حساباً')).toBeVisible({ timeout: 30_000 });
     // The temp-password sheet carries the two fresh emails.
-    await expect(modal.getByText(`flow01-a-${tag}@e2e.madarek.ly`)).toBeVisible();
-    await expect(modal.getByText(`flow01-b-${tag}@e2e.madarek.ly`)).toBeVisible();
+    await expect(modal.getByText(`flow01-a-${tag}@e2e.tadmora.ly`)).toBeVisible();
+    await expect(modal.getByText(`flow01-b-${tag}@e2e.tadmora.ly`)).toBeVisible();
     // The print hand-out stays a real button (the registrar prints the
     // sheet and distributes it) — clicked but its print dialog is a
     // native window.print() call this headless run does not wait on.
@@ -72,9 +72,9 @@ test('F1 · registrar bulk-imports two students from CSV (preview → commit →
     //     for the first imported student through the UI search field.
     await page.keyboard.press('Escape'); // the done stage closes via the modal's Esc contract
     await expect(modal).toBeHidden();
-    await page.getByPlaceholder('ابحث بالاسم أو البريد أو رقم القيد…').fill(`flow01-a-${tag}@e2e.madarek.ly`);
+    await page.getByPlaceholder('ابحث بالاسم أو البريد أو رقم القيد…').fill(`flow01-a-${tag}@e2e.tadmora.ly`);
     await expect(
-      page.getByRole('group', { name: 'قائمة الطلاب' }).getByText(`flow01-a-${tag}@e2e.madarek.ly`),
+      page.getByRole('group', { name: 'قائمة الطلاب' }).getByText(`flow01-a-${tag}@e2e.tadmora.ly`),
     ).toBeVisible({ timeout: 20_000 });
 
     await flowShot(page, 'flow-01-bulk-import-roster');

@@ -677,8 +677,8 @@ describe('POST /api/v1/ai/chat — OPENROUTER mode (free router)', () => {
     expect(calls[0]!.url).toBe('https://openrouter.ai/api/v1/chat/completions');
     const headers = calls[0]!.init.headers as Record<string, string>;
     expect(headers.Authorization).toBe('Bearer sk-or-test-placeholder');
-    expect(headers['HTTP-Referer']).toBe('https://madarek.onrender.com');
-    expect(headers['X-Title']).toBe('Madarek');
+    expect(headers['HTTP-Referer']).toBe('https://tadmora.vercel.app');
+    expect(headers['X-Title']).toBe('Tadmora');
 
     // Success telemetry carries the per-RESPONSE model.
     expect(telemetryCreate).toHaveBeenCalledWith({

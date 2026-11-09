@@ -2,7 +2,7 @@
 
 Audience: the owner's **Expo mobile client**. Everything below is verified
 against the live dev backend (`http://localhost:4000`, seeded
-`madarek_dev` database) — every response block is a **real captured
+`tadmora_dev` database) — every response block is a **real captured
 response**, trimmed only by omitting long array contents.
 
 The wire contract is **additive-only** for mobile clients: fields are never
@@ -29,21 +29,21 @@ the committed snapshot, and published as machine-readable
 | Format | JWT **HS256** (algorithm pinned on both sides) | JWT **HS256** |
 | TTL | **15 minutes** (`env.jwtAccessTtl`) | **7 days** (`env.jwtRefreshTtl`) |
 | Claims | `{ sub: userId, role, inst: institutionId\|null, type: 'access' }` | `{ sub: userId, ver: tokenVersion, type: 'refresh' }` |
-| Transport | JSON body (`data.accessToken`) **and** used via `Authorization: Bearer` | **`Set-Cookie` only** — `mdrk_refresh=<jwt>; Max-Age=604800; Path=/api/v1/auth; HttpOnly; SameSite=Strict` (+`Secure` in production) |
+| Transport | JSON body (`data.accessToken`) **and** used via `Authorization: Bearer` | **`Set-Cookie` only** — `tdmr_refresh=<jwt>; Max-Age=604800; Path=/api/v1/auth; HttpOnly; SameSite=Strict` (+`Secure` in production) |
 
 **The one thing a native client must know:** the refresh token is **not**
 in the login/refresh JSON body. It arrives exclusively in the
 `Set-Cookie` response header. Expo's `fetch` exposes it
 (`response.headers.getSetCookie()`), so:
 
-1. after every successful `login` / `refresh`, extract the `mdrk_refresh`
+1. after every successful `login` / `refresh`, extract the `tdmr_refresh`
    cookie value from `Set-Cookie` and persist it (SecureStore / Keychain —
    it is a 7-day credential);
 2. on `POST /api/v1/auth/refresh`, send it back yourself as a raw header:
-   `Cookie: mdrk_refresh=<jwt>`.
+   `Cookie: tdmr_refresh=<jwt>`.
 
 There is **no body-field and no query-parameter fallback** for the refresh
-token today — the endpoint reads `req.cookies.mdrk_refresh` and nothing
+token today — the endpoint reads `req.cookies.tdmr_refresh` and nothing
 else (verified in `auth.routes.ts`). This is the main honest gap for
 mobile; see §8.
 
@@ -54,7 +54,7 @@ Body: `{ "email": string, "password": string, "institutionSlug"?: string }`.
 The `email` field accepts **either** an email address (contains `@`) **or**
 a university registration number (e.g. `UZ-2024-00001`). A reg-number
 registered in several institutions answers `400 REG_NUMBER_AMBIGUOUS`
-until you pass `institutionSlug` (demo institution: `madarek-demo`) — both
+until you pass `institutionSlug` (demo institution: `tadmora-demo`) — both
 behaviors verified live below. Failures are timing-equalized; 5 wrong
 passwords lock the account for 15 minutes (`429`).
 
@@ -76,8 +76,8 @@ Real response (HTTP 200, trimmed):
       "firstName": "…", "lastName": "…",
       "avatarColor": "…", "avatarInitials": "…",
       "themePreference": "light",
-      "memberships": [ { "institutionId": "…", "slug": "madarek-demo", "role": "MEMBER", "isActive": true, "…": "…" } ],
-      "currentInstitution": { "id": "…", "name": "جامعة مدارك التجريبية", "nameEn": "Madarek Demo University", "slug": "madarek-demo" },
+      "memberships": [ { "institutionId": "…", "slug": "tadmora-demo", "role": "MEMBER", "isActive": true, "…": "…" } ],
+      "currentInstitution": { "id": "…", "name": "جامعة تادمورا التجريبية", "nameEn": "Tadmora Demo University", "slug": "tadmora-demo" },
       "membershipRole": "MEMBER"
     },
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ…"
@@ -88,7 +88,7 @@ Real response (HTTP 200, trimmed):
 …plus the response header (exact, dev):
 
 ```
-Set-Cookie: mdrk_refresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbXZ1b3Y3bTQwMDI1d2lnbnM5YjQ0bGN5IiwidmVyIjowLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc5MzM2MzYyMiwiZXhwIjoxNzkzOTY4NDIyfQ.E0vWrwqYruqWr7DPlwRGEjWHfNFliBmNbXX8TNH3ZFc; Max-Age=604800; Path=/api/v1/auth; Expires=Fri, 06 Nov 2026 12:33:42 GMT; HttpOnly; SameSite=Strict
+Set-Cookie: tdmr_refresh=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbXZ1b3Y3bTQwMDI1d2lnbnM5YjQ0bGN5IiwidmVyIjowLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc5MzM2MzYyMiwiZXhwIjoxNzkzOTY4NDIyfQ.E0vWrwqYruqWr7DPlwRGEjWHfNFliBmNbXX8TNH3ZFc; Max-Age=604800; Path=/api/v1/auth; Expires=Fri, 06 Nov 2026 12:33:42 GMT; HttpOnly; SameSite=Strict
 ```
 
 Reg-number variant (verified, HTTP 400 without the slug → then 200 with it):
@@ -101,7 +101,7 @@ curl -s http://localhost:4000/api/v1/auth/login -H 'Content-Type: application/js
 
 # 200 with disambiguation:
 curl -s http://localhost:4000/api/v1/auth/login -H 'Content-Type: application/json' \
-  -d '{"email":"UZ-2024-00001","password":"12345678","institutionSlug":"madarek-demo"}'
+  -d '{"email":"UZ-2024-00001","password":"12345678","institutionSlug":"tadmora-demo"}'
 # → {"data":{ "user": { "email": "student@test.ly", "role": "STUDENT", "…": "…" }, "accessToken": "…" }}
 ```
 
@@ -138,7 +138,7 @@ so clients can auto-refresh; the wire example above shows the
 
 ## 5. Refresh — `POST /api/v1/auth/refresh`
 
-Sends **no body**; authenticates with the `mdrk_refresh` **cookie header**
+Sends **no body**; authenticates with the `tdmr_refresh` **cookie header**
 you persisted. Auth-surface rate limit: 10 req / 15 min / IP, and
 **successful refreshes are not counted** — only replay/abuse is.
 
@@ -147,11 +147,11 @@ Verified:
 ```bash
 curl -s http://localhost:4000/api/v1/auth/refresh \
   -X POST \
-  -H "Cookie: mdrk_refresh=<the-jwt-from-Set-Cookie>"
+  -H "Cookie: tdmr_refresh=<the-jwt-from-Set-Cookie>"
 # HTTP 200 (trimmed):
 # {"data":{ "user": { "id":"cmvuov7m40025wigns9b44lcy", "email":"student@test.ly", "role":"STUDENT", "…":"…" },
 #           "accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6Ik…" }}
-# …and a FRESH Set-Cookie: mdrk_refresh=… — persist it again.
+# …and a FRESH Set-Cookie: tdmr_refresh=… — persist it again.
 ```
 
 ### Rotation semantics — EXACTLY what the code does (D3 policy)
@@ -195,7 +195,7 @@ Verified — after logout, the previously captured refresh cookie is dead:
 
 ```bash
 curl -s -X POST http://localhost:4000/api/v1/auth/refresh \
-  -H "Cookie: mdrk_refresh=<cookie-captured-before-logout>"
+  -H "Cookie: tdmr_refresh=<cookie-captured-before-logout>"
 # → {"error":{"code":"UNAUTHENTICATED","message":"انتهت صلاحية هذه الجلسة — سجّل الدخول من جديد"}}  (HTTP 401)
 ```
 
@@ -285,7 +285,7 @@ in `CORS_ORIGINS`.)
 
 ## 9. Quick checklist for the Expo client
 
-1. Login → keep `data.accessToken` (memory) + `mdrk_refresh` cookie value (SecureStore).
+1. Login → keep `data.accessToken` (memory) + `tdmr_refresh` cookie value (SecureStore).
 2. Every call: `Authorization: Bearer <accessToken>`.
 3. On `401 TOKEN_EXPIRED` → `POST /auth/refresh` with the persisted `Cookie:` header → persist the NEW cookie + token → retry the original call once.
 4. On `401 UNAUTHENTICATED` (or refresh 401) → drop to login screen.

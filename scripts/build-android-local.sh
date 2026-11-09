@@ -12,7 +12,7 @@
 #   1. npx expo prebuild -p android --no-install   (clean regen of android/)
 #      → restores the repo's committed `android`/`ios` npm scripts that
 #        prebuild rewrites to `expo run:*` (repo state stays clean).
-#   2. Materializes android/key.properties from MADAREK_ANDROID_* env vars
+#   2. Materializes android/key.properties from TADMORA_ANDROID_* env vars
 #      and patches android/app/build.gradle with a release signingConfig
 #      (the SDK-58 prebuild template release-signs with the DEBUG keystore —
 #      see the patcher's drift checks).
@@ -20,17 +20,17 @@
 #   4. Prints the APK path (…/android/app/build/outputs/apk/release/).
 #
 # Keystore env vars (release signing; see §Keystore generation below):
-#   MADAREK_ANDROID_KEYSTORE            path to the .keystore (REQUIRED)
-#   MADAREK_ANDROID_KEYSTORE_ALIAS      key alias inside it            (REQUIRED)
-#   MADAREK_ANDROID_KEYSTORE_PASSWORD   keystore password              (REQUIRED)
-#   MADAREK_ANDROID_KEYSTORE_KEY_PASSWORD  key password (DEFAULT: = store password)
+#   TADMORA_ANDROID_KEYSTORE            path to the .keystore (REQUIRED)
+#   TADMORA_ANDROID_KEYSTORE_ALIAS      key alias inside it            (REQUIRED)
+#   TADMORA_ANDROID_KEYSTORE_PASSWORD   keystore password              (REQUIRED)
+#   TADMORA_ANDROID_KEYSTORE_KEY_PASSWORD  key password (DEFAULT: = store password)
 #
 # Keystore generation (once, if you don't have one):
-#   mkdir -p ~/.madarek && keytool -genkeypair -v \
-#     -keystore ~/.madarek/madarek-release.keystore \
-#     -alias madarek -keyalg RSA -keysize 2048 -validity 10000 \
+#   mkdir -p ~/.tadmora && keytool -genkeypair -v \
+#     -keystore ~/.tadmora/tadmora-release.keystore \
+#     -alias tadmora -keyalg RSA -keysize 2048 -validity 10000 \
 #     -storetype PKCS12 \
-#     -dname "CN=Madarek, OU=Mobile, O=Madarek, L=Tripoli, ST=Tripoli, C=LY"
+#     -dname "CN=Tadmora, OU=Mobile, O=Tadmora, L=Tripoli, ST=Tripoli, C=LY"
 #   (keytool prompts for the passwords — do NOT put them on the command line;
 #    they would land in your shell history.)
 #
@@ -148,27 +148,27 @@ warn "If gradle later fails with 'failed to find target with hash string' or lic
 ok "ANDROID_HOME=$ANDROID_HOME_DIR ($SDK_PLATFORM + $SDK_BUILD_TOOLS present)"
 
 # ── 0d. Release keystore (env-provided; opt out with ALLOW_DEBUG_KEYSTORE=1) ──
-say "Release keystore (MADAREK_ANDROID_KEYSTORE, …_ALIAS, …_PASSWORD[, …_KEY_PASSWORD])"
-KEYSTORE="${MADAREK_ANDROID_KEYSTORE:-}"
-ALIAS="${MADAREK_ANDROID_KEYSTORE_ALIAS:-}"
-STORE_PASS="${MADAREK_ANDROID_KEYSTORE_PASSWORD:-}"
-KEY_PASS="${MADAREK_ANDROID_KEYSTORE_KEY_PASSWORD:-$STORE_PASS}"   # keytool defaults keypass=storepass
+say "Release keystore (TADMORA_ANDROID_KEYSTORE, …_ALIAS, …_PASSWORD[, …_KEY_PASSWORD])"
+KEYSTORE="${TADMORA_ANDROID_KEYSTORE:-}"
+ALIAS="${TADMORA_ANDROID_KEYSTORE_ALIAS:-}"
+STORE_PASS="${TADMORA_ANDROID_KEYSTORE_PASSWORD:-}"
+KEY_PASS="${TADMORA_ANDROID_KEYSTORE_KEY_PASSWORD:-$STORE_PASS}"   # keytool defaults keypass=storepass
 if [[ -n "$KEYSTORE" || -n "$ALIAS" || -n "$STORE_PASS" ]]; then
-  [[ -n "$KEYSTORE" && -n "$ALIAS" && -n "$STORE_PASS" ]] || die "partial keystore env — set ALL of MADAREK_ANDROID_KEYSTORE, MADAREK_ANDROID_KEYSTORE_ALIAS, MADAREK_ANDROID_KEYSTORE_PASSWORD (…_KEY_PASSWORD optional)"
+  [[ -n "$KEYSTORE" && -n "$ALIAS" && -n "$STORE_PASS" ]] || die "partial keystore env — set ALL of TADMORA_ANDROID_KEYSTORE, TADMORA_ANDROID_KEYSTORE_ALIAS, TADMORA_ANDROID_KEYSTORE_PASSWORD (…_KEY_PASSWORD optional)"
   [[ -f "$KEYSTORE" ]] || {
     cat >&2 <<EOF
-  MADAREK_ANDROID_KEYSTORE='$KEYSTORE' — file not found. Generate one (exact command):
+  TADMORA_ANDROID_KEYSTORE='$KEYSTORE' — file not found. Generate one (exact command):
 
-    mkdir -p ~/.madarek && keytool -genkeypair -v \\
-      -keystore ~/.madarek/madarek-release.keystore \\
-      -alias madarek -keyalg RSA -keysize 2048 -validity 10000 \\
+    mkdir -p ~/.tadmora && keytool -genkeypair -v \\
+      -keystore ~/.tadmora/tadmora-release.keystore \\
+      -alias tadmora -keyalg RSA -keysize 2048 -validity 10000 \\
       -storetype PKCS12 \\
-      -dname "CN=Madarek, OU=Mobile, O=Madarek, L=Tripoli, ST=Tripoli, C=LY"
+      -dname "CN=Tadmora, OU=Mobile, O=Tadmora, L=Tripoli, ST=Tripoli, C=LY"
 
   (keytool prompts for the passwords — never put them on the command line.)
-  Then: export MADAREK_ANDROID_KEYSTORE=~/.madarek/madarek-release.keystore \\
-              MADAREK_ANDROID_KEYSTORE_ALIAS=madarek \\
-              MADAREK_ANDROID_KEYSTORE_PASSWORD='…'
+  Then: export TADMORA_ANDROID_KEYSTORE=~/.tadmora/tadmora-release.keystore \\
+              TADMORA_ANDROID_KEYSTORE_ALIAS=tadmora \\
+              TADMORA_ANDROID_KEYSTORE_PASSWORD='…'
 EOF
     die "keystore file not found — see the keytool command above"
   }
@@ -177,15 +177,15 @@ elif [[ "${ALLOW_DEBUG_KEYSTORE:-0}" == "1" ]]; then
   warn "ALLOW_DEBUG_KEYSTORE=1 → release APK will be signed with the DEBUG keystore (emulator/local installs only — Play rejects it)"
 else
   cat >&1 <<'EOF'
-  No MADAREK_ANDROID_* credentials in the environment. Generate a keystore (exact command):
+  No TADMORA_ANDROID_* credentials in the environment. Generate a keystore (exact command):
 
-    mkdir -p ~/.madarek && keytool -genkeypair -v \
-      -keystore ~/.madarek/madarek-release.keystore \
-      -alias madarek -keyalg RSA -keysize 2048 -validity 10000 \
+    mkdir -p ~/.tadmora && keytool -genkeypair -v \
+      -keystore ~/.tadmora/tadmora-release.keystore \
+      -alias tadmora -keyalg RSA -keysize 2048 -validity 10000 \
       -storetype PKCS12 \
-      -dname "CN=Madarek, OU=Mobile, O=Madarek, L=Tripoli, ST=Tripoli, C=LY"
+      -dname "CN=Tadmora, OU=Mobile, O=Tadmora, L=Tripoli, ST=Tripoli, C=LY"
 
-  Then export MADAREK_ANDROID_KEYSTORE / _ALIAS / _PASSWORD (and optionally
+  Then export TADMORA_ANDROID_KEYSTORE / _ALIAS / _PASSWORD (and optionally
   _KEY_PASSWORD, default = store password) and re-run.
   Just want to exercise the build path on an emulator? Re-run with:
     ALLOW_DEBUG_KEYSTORE=1 scripts/build-android-local.sh
@@ -214,7 +214,7 @@ if [[ -n "$KEYSTORE" ]]; then
     > "$MOBILE_DIR/android/key.properties"
   chmod 600 "$MOBILE_DIR/android/key.properties"
   grep -q '^key.properties$' "$MOBILE_DIR/android/.gitignore" 2>/dev/null || \
-    printf '\n# MADAREK local release signing (build-android-local.sh)\nkey.properties\n' >> "$MOBILE_DIR/android/.gitignore"
+    printf '\n# TADMORA local release signing (build-android-local.sh)\nkey.properties\n' >> "$MOBILE_DIR/android/.gitignore"
   ok "android/key.properties written (gitignored, chmod 600)"
 else
   ok "no credentials — leaving the template's debug-keystore signing in place"
@@ -229,13 +229,13 @@ GRADLE_FILE="$GRADLE_FILE" node <<'PATCHER'
 const fs = require("fs");
 const file = process.env.GRADLE_FILE;
 let s = fs.readFileSync(file, "utf8");
-if (s.includes("MADAREK local release signing")) {
+if (s.includes("TADMORA local release signing")) {
   console.log("  ✔ app/build.gradle already patched (idempotent)");
   process.exit(0);
 }
 const PREAMBLE = [
-  "// ── MADAREK local release signing (scripts/build-android-local.sh) ──",
-  "// Reads android/key.properties (written from MADAREK_ANDROID_* env vars).",
+  "// ── TADMORA local release signing (scripts/build-android-local.sh) ──",
+  "// Reads android/key.properties (written from TADMORA_ANDROID_* env vars).",
   "def keystoreProperties = new Properties()",
   'def keystorePropertiesFile = rootProject.file("key.properties")',
   "if (keystorePropertiesFile.exists()) {",
@@ -244,7 +244,7 @@ const PREAMBLE = [
   "",
 ].join("\n");
 const RELEASE_CFG = [
-  "        // MADAREK local release signing (key.properties present → sign; else debug fallback)",
+  "        // TADMORA local release signing (key.properties present → sign; else debug fallback)",
   "        if (keystorePropertiesFile.exists()) {",
   "            release {",
   '                storeFile file(keystoreProperties["storeFile"])',

@@ -3,7 +3,7 @@
  * Mirrors frontend/src/stores/auth.store.ts semantics for the native app:
  *  - accessToken (15 min) + refresh cookie value persisted in SecureStore.
  *  - user JSON (non-secret profile) persisted in AsyncStorage under
- *    mdrk-mobile-user. Cache clearing happens at every session boundary.
+ *    tdmr-mobile-user. Cache clearing happens at every session boundary.
  */
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,10 +11,10 @@ import { setToken, getToken } from "@/lib/tokenStorage";
 import { apiWithCookieCapture, post, registerAuthBridge, get as apiGet } from "@/api/client";
 import type { AuthUser, SessionResponse } from "@/api/types";
 
-const KEY_USER = "mdrk-mobile-user";
-const KEY_ACCESS = "mdrk-mobile-access-token";
-const KEY_REFRESH = "mdrk-mobile-refresh-cookie";
-const KEY_INST = "mdrk-mobile-active-institution";
+const KEY_USER = "tdmr-mobile-user";
+const KEY_ACCESS = "tdmr-mobile-access-token";
+const KEY_REFRESH = "tdmr-mobile-refresh-cookie";
+const KEY_INST = "tdmr-mobile-active-institution";
 
 export interface SessionState {
   user: AuthUser | null;

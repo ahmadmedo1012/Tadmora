@@ -1,31 +1,30 @@
 /**
- * Logo.tsx — the R323 <Logo> implementation (the public barrel ./index
+ * Logo.tsx — the TADMORA <Logo> implementation (the public barrel ./index
  * re-exports it under the frozen contract).
  *
- * ONE logo for the whole product (the R323 brief retires the six
- * competing variants — see docs/redesign/r323/brand/AUDIT.md):
- *   · mark      — the 32-grid hairline khatam + the orange point
- *   · lockup    — horizontal, RTL: mark right, «مدارك» left (default)
- *   · stacked   — mark / «مدارك» / MADAREK, the full vertical identity
+ * ONE logo for the whole product (the R323 brief retired the six
+ * competing variants; the TADMORA rebrand re-seats the same system):
+ *   · mark      — the 32-grid hairline Tadmora arch + the orange keystone
+ *   · lockup    — horizontal, RTL: mark right, «تادمورا» left (default)
+ *   · stacked   — mark / «تادمورا» / TADMORA, the full vertical identity
  *   · wordmark  — the outlined word alone (size = its ink height)
  *
  * Everything is inline SVG (no <img>), inherits currentColor, and the
- * orange point rides var(--accent) — the seat tokens.css re-keys per
+ * orange keystone rides var(--accent) — the seat tokens.css re-keys per
  * theme (#FA3600 light · luminous ember #FF5A1F dark) — so the mark
  * themes without props. The root svg carries data-logo (the
  * loader-orchestrator tests count them) and role="img" + <title>.
  *
- * `animated` draws the construction in 600–900 ms — hairlines first,
- * the orange point LAST (a base-visible CSS draw: under
+ * `animated` draws the construction in 600–900 ms — the hairline gateway
+ * first, the orange keystone LAST (a base-visible CSS draw: under
  * prefers-reduced-motion the animation never applies and the logo is
  * simply there, complete).
  */
 import { useId } from 'react';
 import type React from 'react';
 import {
-  MARK_AXIS,
-  MARK_DIAMOND_PATH,
-  MARK_POINT,
+  MARK_ARCH_PATH,
+  MARK_KEYSTONE,
   MARK_VIEWBOX,
   markStrokePx,
 } from './mark';
@@ -41,12 +40,12 @@ export function Logo(props: {
   /** mark height in px; lockup/stacked scale from it. In the 'wordmark'
    * variant it is the wordmark's ink height in px. */
   size?: number;
-  /** 'auto' = currentColor + var(--accent) for the orange point;
+  /** 'auto' = currentColor + var(--accent) for the orange keystone;
    * 'ink'/'paper'/'orange' are literal one-colour settings for fixed
    * backgrounds (paper #F6F6EE, ink #282828, orange #FA3600). */
   tone?: LogoTone;
   className?: string;
-  /** stroke-draw 600–900 ms, orange point LAST */
+  /** stroke-draw 600–900 ms, orange keystone LAST */
   animated?: boolean;
 }): React.JSX.Element {
   const {
@@ -57,7 +56,7 @@ export function Logo(props: {
     animated = false,
   } = props;
 
-  /* the ink slot (strokes + wordmark) and the point slot, per tone:
+  /* the ink slot (strokes + wordmark) and the keystone slot, per tone:
    * 'auto' inherits (currentColor + var(--accent)); 'ink'/'paper'/
    * 'orange' pin BOTH slots to the literal brand colour for fixed
    * grounds (documented in BRAND.md §tones). */
@@ -69,50 +68,41 @@ export function Logo(props: {
         : tone === 'ink'
           ? '#282828'
           : 'currentColor';
-  const point = tone === 'auto' ? 'var(--accent)' : ink;
+  const keystone = tone === 'auto' ? 'var(--accent)' : ink;
 
   /* unique keyframe names per instance (multiple Logos per page) */
   const rawId = useId();
   const uid = rawId.replace(/[^a-zA-Z0-9]/g, '');
-  const kfAxis = `mdrkA${uid}`;
-  const kfDiamond = `mdrkB${uid}`;
-  const kfWord = `mdrkW${uid}`;
-  const kfPoint = `mdrkP${uid}`;
+  const kfArch = `tdmrA${uid}`;
+  const kfWord = `tdmrW${uid}`;
+  const kfKey = `tdmrK${uid}`;
 
-  const draw = (name: string, duration: number, delay: number): React.CSSProperties | undefined =>
+  const draw = (name: string, durationVar: string, delay: number): React.CSSProperties | undefined =>
     animated
-      ? { strokeDasharray: 1, animation: `${name} ${duration}ms cubic-bezier(0.6, 0, 0.2, 1) ${delay}ms both` }
+      ? { strokeDasharray: 1, animation: `${name} var(${durationVar}) var(--brand-draw-ease) ${delay}ms both` }
       : undefined;
   const pop = (): React.CSSProperties | undefined =>
-    animated ? { animation: `${kfPoint} 150ms linear 750ms both` } : undefined;
+    animated ? { animation: `${kfKey} var(--motion-duration-brand-pop) var(--ease-linear) 750ms both` } : undefined;
 
   const styleTag = animated ? (
-    <style>{`@keyframes ${kfAxis}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfDiamond}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfWord}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfPoint}{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion:reduce){.mdrk-logo *{animation:none !important}}`}</style>
+    <style>{`@keyframes ${kfArch}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfWord}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfKey}{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion:reduce){.tdmr-logo *{animation:none !important}}`}</style>
   ) : null;
 
   /* ── the mark (shared by mark/lockup/stacked) ───────────────────────
    * The hairline rides the optical-size ramp (X11): markStrokePx tapers
    * the non-scaling stroke below the 32-grid design size so the small
    * seats (12/14/16/22/24/26 px) keep the designed weight instead of
-   * bloating to 2.7× the ratio. */
+   * bloating to 2.7× the ratio. The gateway draws as ONE stroke —
+   * pillars, arch, baseline — then the keystone pops LAST. */
   const markShape = (
     <g stroke={ink} fill="none" strokeWidth={markStrokePx(size)} strokeLinejoin="miter">
-      <rect
-        x={MARK_AXIS.x}
-        y={MARK_AXIS.y}
-        width={MARK_AXIS.size}
-        height={MARK_AXIS.size}
-        pathLength={1}
-        vectorEffect="non-scaling-stroke"
-        style={draw(kfAxis, 500, 0)}
-      />
       <path
-        d={MARK_DIAMOND_PATH}
+        d={MARK_ARCH_PATH}
         pathLength={1}
         vectorEffect="non-scaling-stroke"
-        style={draw(kfDiamond, 500, 250)}
+        style={draw(kfArch, '--motion-duration-brand-draw-arch', 0)}
       />
-      <rect x={MARK_POINT.x} y={MARK_POINT.y} width={MARK_POINT.size} height={MARK_POINT.size} fill={point} stroke="none" style={pop()} />
+      <rect x={MARK_KEYSTONE.x} y={MARK_KEYSTONE.y} width={MARK_KEYSTONE.size} height={MARK_KEYSTONE.size} fill={keystone} stroke="none" style={pop()} />
     </g>
   );
 
@@ -126,7 +116,7 @@ export function Logo(props: {
       strokeWidth={WORDMARK_STROKE_SHEET}
       strokeLinejoin="miter"
       pathLength={1}
-      style={draw(name, 600, 200)}
+      style={draw(name, '--motion-duration-brand-draw-word', 200)}
     />
   );
   const latinPath = (transform: string): React.JSX.Element => (
@@ -177,14 +167,14 @@ export function Logo(props: {
       viewBox={viewBox}
       width={width}
       height={height}
-      className={className ? `mdrk-logo ${className}` : 'mdrk-logo'}
+      className={className ? `tdmr-logo ${className}` : 'tdmr-logo'}
       role="img"
       data-logo={variant}
       focusable="false"
       style={{ display: 'block' }}
-      aria-label="مدارك"
+      aria-label="تادمورا"
     >
-      <title>مدارك</title>
+      <title>تادمورا</title>
       {styleTag}
       {body}
     </svg>

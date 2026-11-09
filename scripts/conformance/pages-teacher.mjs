@@ -4,7 +4,7 @@
  * the /teacher/* routes (the D6 hermetic seeded-session method, D7a's
  * pages-authed.mjs shape): pages.mjs's exact probe axes/score/floor +
  * the REAL e2e fixture transport (mock-transport.ts + api-fixtures.ts,
- * esbuild-bundled the r319 way) with the `mdrk-auth` persist key
+ * esbuild-bundled the r319 way) with the `tdmr-auth` persist key
  * seeded TEACHER before first paint, so the app boots signed-in
  * reload-style. Distinct filename (not pages-authed.mjs) so the
  * concurrent D7/D10 branches merge without conflict.
@@ -38,8 +38,8 @@ try {
   ({ chromium } = require('./../../frontend/node_modules/playwright'));
   esbuild = require.esbuild ?? require('./../../frontend/node_modules/esbuild');
 } catch {
-  ({ chromium } = createRequire('/home/z/madarek/frontend/package.json')('playwright'));
-  esbuild = createRequire('/home/z/madarek/frontend/package.json')('esbuild');
+  ({ chromium } = createRequire('/home/z/tadmora/frontend/package.json')('playwright'));
+  esbuild = createRequire('/home/z/tadmora/frontend/package.json')('esbuild');
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -325,8 +325,8 @@ const TGRADES = [
 
 /* ── /teacher/me/materials. */
 const TMATERIALS = [
-  { id: 'mat_e2e_1', name: 'محاضرة الخوارزميات الجشعة', type: 'PDF', url: 'https://cdn.madarek.dev/lectures/greedy.pdf', sizeBytes: 2411520, downloads: 118, views: 342, createdAt: hoursAgo(24 * 6), course: { code: 'CS-201', name: 'مقدمة في الخوارزميات' } },
-  { id: 'mat_e2e_2', name: 'شرائح الفهارس والمخططات', type: 'PPT', url: 'https://cdn.madarek.dev/lectures/indexing.pptx', sizeBytes: 5242880, downloads: 64, views: 190, createdAt: hoursAgo(24 * 3), course: { code: 'CS-304', name: 'قواعد البيانات' } },
+  { id: 'mat_e2e_1', name: 'محاضرة الخوارزميات الجشعة', type: 'PDF', url: 'https://cdn.tadmora.dev/lectures/greedy.pdf', sizeBytes: 2411520, downloads: 118, views: 342, createdAt: hoursAgo(24 * 6), course: { code: 'CS-201', name: 'مقدمة في الخوارزميات' } },
+  { id: 'mat_e2e_2', name: 'شرائح الفهارس والمخططات', type: 'PPT', url: 'https://cdn.tadmora.dev/lectures/indexing.pptx', sizeBytes: 5242880, downloads: 64, views: 190, createdAt: hoursAgo(24 * 3), course: { code: 'CS-304', name: 'قواعد البيانات' } },
 ];
 
 /* ── /me/teacher-profile — TeacherFullProfile. */
@@ -355,7 +355,7 @@ const TPROFILE = {
  * CHECKS_PASSED (awaiting the teacher's grade) + GRADED (awaiting
  * the teacher's publish) — the two halves of the review loop. */
 const RQUEUE = [
-  { id: 'pap_e2e_1', title: 'فهرسة قواعد البيانات الموزعة', abstract: 'دراسة مقارنة لاستراتيجيات الفهرسة في الأنظمة الموزعة.', fileUrl: 'https://cdn.madarek.dev/papers/indexing.pdf', status: 'CHECKS_PASSED', plagiarismPct: 4, aiContentPct: 9, grade: null, feedback: null, uploadedAt: hoursAgo(20), scannedAt: hoursAgo(18), gradedAt: null, publishedAt: null, student: { id: 'stu_e2e_2', firstName: 'سالم', lastName: 'قدّور', avatarInitials: 'سق', avatarColor: '#059669', email: 'salim@zu.edu.ly' }, reviewer: null, offering: { id: 'offr_e2e_t_db', course: { name: 'قواعد البيانات', code: 'CS-304' } } },
+  { id: 'pap_e2e_1', title: 'فهرسة قواعد البيانات الموزعة', abstract: 'دراسة مقارنة لاستراتيجيات الفهرسة في الأنظمة الموزعة.', fileUrl: 'https://cdn.tadmora.dev/papers/indexing.pdf', status: 'CHECKS_PASSED', plagiarismPct: 4, aiContentPct: 9, grade: null, feedback: null, uploadedAt: hoursAgo(20), scannedAt: hoursAgo(18), gradedAt: null, publishedAt: null, student: { id: 'stu_e2e_2', firstName: 'سالم', lastName: 'قدّور', avatarInitials: 'سق', avatarColor: '#059669', email: 'salim@zu.edu.ly' }, reviewer: null, offering: { id: 'offr_e2e_t_db', course: { name: 'قواعد البيانات', code: 'CS-304' } } },
   { id: 'pap_e2e_2', title: 'الخوارزميات الجشعة في جدولة المهام', abstract: 'تطبيقات الخوارزميات الجشعة على جدولة المهام الزمنية.', fileUrl: null, status: 'GRADED', plagiarismPct: 2, aiContentPct: 6, grade: 17, feedback: 'معالجة جيدة للبنية الفرعية المثلى مع نقص في التحليل التجريبي.', uploadedAt: hoursAgo(96), scannedAt: hoursAgo(94), gradedAt: hoursAgo(30), publishedAt: null, student: { id: 'stu_e2e_1', firstName: 'مروة', lastName: 'البراني', avatarInitials: 'مر', avatarColor: '#0ea5e9', email: 'marwa@zu.edu.ly' }, reviewer: { firstName: 'ليلى', lastName: 'الفيتوري' }, offering: { id: 'offr_e2e_t_algo', course: { name: 'مقدمة في الخوارزميات', code: 'CS-201' } } },
 ];
 
@@ -375,8 +375,8 @@ const QCATEGORIES = [
 
 /* ── /live/sessions — LiveSessionRow[]. */
 const LIVE = [
-  { id: 'lv_e2e_1', offeringId: 'offr_e2e_t_algo', teacherId: TEACHER_USER.id, title: 'مراجعة الاختبار الرابع', description: 'جلسة مراجعة قبل الاختبار.', topic: 'الخوارزميات الجشعة', scheduledAt: daysAhead(0.1), startedAt: null, endedAt: null, status: 'SCHEDULED', joinUrl: 'https://meet.madarek.dev/rev-4', recordingUrl: null, offering: { id: 'offr_e2e_t_algo', course: { name: 'مقدمة في الخوارزميات', code: 'CS-201', iconEmoji: '🧮', themeColor: '#7c3aed' } }, teacher: { firstName: 'ليلى', lastName: 'الفيتوري', avatarInitials: 'لف', avatarColor: '#7c3aed' } },
-  { id: 'lv_e2e_2', offeringId: 'offr_e2e_t_db', teacherId: TEACHER_USER.id, title: 'جلسة الفهارس المباشرة', description: null, topic: 'الفهارس', scheduledAt: hoursAgo(24 * 5), startedAt: hoursAgo(24 * 5), endedAt: hoursAgo(24 * 5 - 2), status: 'ENDED', joinUrl: 'https://meet.madarek.dev/idx-1', recordingUrl: 'https://cdn.madarek.dev/live/idx-1.mp4', offering: { id: 'offr_e2e_t_db', course: { name: 'قواعد البيانات', code: 'CS-304', iconEmoji: '🗄️', themeColor: '#0e7490' } }, teacher: { firstName: 'ليلى', lastName: 'الفيتوري', avatarInitials: 'لف', avatarColor: '#7c3aed' } },
+  { id: 'lv_e2e_1', offeringId: 'offr_e2e_t_algo', teacherId: TEACHER_USER.id, title: 'مراجعة الاختبار الرابع', description: 'جلسة مراجعة قبل الاختبار.', topic: 'الخوارزميات الجشعة', scheduledAt: daysAhead(0.1), startedAt: null, endedAt: null, status: 'SCHEDULED', joinUrl: 'https://meet.tadmora.dev/rev-4', recordingUrl: null, offering: { id: 'offr_e2e_t_algo', course: { name: 'مقدمة في الخوارزميات', code: 'CS-201', iconEmoji: '🧮', themeColor: '#7c3aed' } }, teacher: { firstName: 'ليلى', lastName: 'الفيتوري', avatarInitials: 'لف', avatarColor: '#7c3aed' } },
+  { id: 'lv_e2e_2', offeringId: 'offr_e2e_t_db', teacherId: TEACHER_USER.id, title: 'جلسة الفهارس المباشرة', description: null, topic: 'الفهارس', scheduledAt: hoursAgo(24 * 5), startedAt: hoursAgo(24 * 5), endedAt: hoursAgo(24 * 5 - 2), status: 'ENDED', joinUrl: 'https://meet.tadmora.dev/idx-1', recordingUrl: 'https://cdn.tadmora.dev/live/idx-1.mp4', offering: { id: 'offr_e2e_t_db', course: { name: 'قواعد البيانات', code: 'CS-304', iconEmoji: '🗄️', themeColor: '#0e7490' } }, teacher: { firstName: 'ليلى', lastName: 'الفيتوري', avatarInitials: 'لف', avatarColor: '#7c3aed' } },
 ];
 
 /* ── /labs — VirtualLab[]. */

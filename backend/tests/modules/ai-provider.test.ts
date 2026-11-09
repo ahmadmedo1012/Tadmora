@@ -60,7 +60,7 @@ import {
 const aiRouteSource = readFileSync(new URL('../../src/http/routes/ai.routes.ts', import.meta.url), 'utf8');
 const aiLibSource = readFileSync(new URL('../../src/lib/ai.ts', import.meta.url), 'utf8');
 const envSource = readFileSync(new URL('../../src/env.ts', import.meta.url), 'utf8');
-const renderSource = readFileSync(new URL('../../../render.yaml', import.meta.url), 'utf8');
+const vercelSource = readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8');
 
 // ─── Constants (the contract's ceilings) ──────────────────────────
 
@@ -295,7 +295,7 @@ describe('masteryContextLines (worst gaps first)', () => {
 describe('buildStudentSystemPrompt', () => {
   it('carries the persona, the gap-first focus, and the anti-fabrication guardrails', () => {
     const p = buildStudentSystemPrompt(['- مفهوم (مقرر): 40% — فجوة']);
-    expect(p).toContain('مساعد مدارك الدراسيّ');
+    expect(p).toContain('مساعد تادمورا الدراسيّ');
     expect(p).toContain('لا تختلق');
     expect(p).toContain('ركّز على فجوات الطالب');
     expect(p).toContain('- مفهوم (مقرر): 40% — فجوة');
@@ -487,8 +487,8 @@ describe('callOpenAiCompatible — request shape', () => {
     const init = calls[0]!.init as { headers: Record<string, string> };
     expect(init.headers['HTTP-Referer']).toBe(OPENROUTER_REFERER);
     expect(init.headers['X-Title']).toBe(OPENROUTER_TITLE);
-    expect(OPENROUTER_REFERER).toBe('https://madarek.onrender.com');
-    expect(OPENROUTER_TITLE).toBe('Madarek');
+    expect(OPENROUTER_REFERER).toBe('https://tadmora.vercel.app');
+    expect(OPENROUTER_TITLE).toBe('Tadmora');
   });
 
   it('r176i: a configured models list rides the wire as the `models` array — and `model` is ABSENT (OpenRouter ignores the array when model rides along)', async () => {
@@ -910,12 +910,10 @@ describe('env.ts — the openai fail-closed superRefine', () => {
   });
 });
 
-describe('render.yaml — the AI vars are opt-in on Render', () => {
-  it('all five AI vars are sync:false (never required by the dashboard)', () => {
+describe('vercel.json — the AI vars stay dashboard-level opt-in', () => {
+  it('no AI var is baked into the platform manifest (they are set per-environment only when a provider is chosen)', () => {
     for (const key of ['AI_PROVIDER', 'AI_BASE_URL', 'AI_API_KEY', 'AI_MODEL', 'AI_MODELS']) {
-      const i = renderSource.indexOf(`- key: ${key}`);
-      expect(i).toBeGreaterThan(-1);
-      expect(renderSource.slice(i, i + key.length + 45)).toContain('sync: false');
+      expect(vercelSource).not.toContain(key);
     }
   });
 });

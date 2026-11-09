@@ -18,10 +18,10 @@
  *    facade never pretends to be a product demo («توثيقي» is the
  *    label, and it is the truth).
  *  - Product captures are real UI from the seeded demo environment
- *    (fully synthetic «جامعة مدارك التجريبية» data) — disclosed on
+ *    (fully synthetic «جامعة تادمورا التجريبية» data) — disclosed on
  *    every frame.
  *  - A university appearing here is documentation, not endorsement:
- *    «مدارك مستقلّة» stays on the sheet.
+ *    «تادمورا مستقلّة» stays on the sheet.
  */
 
 export interface UniversityPhoto {
@@ -215,7 +215,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-dashboard',
     titleAr: 'لوحة الطالب',
     captionAr: 'نظرة الطالب على يومه: جدول اليوم، والمهام، والتقدّم',
-    altAr: 'لقطة حقيقية من لوحة الطالب في مدارك — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من لوحة الطالب في تادمورا — بيانات العرض التجريبية',
     route: '/student/dashboard',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 44rem, 100vw',
@@ -224,7 +224,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-library',
     titleAr: 'المكتبة الإلكترونية',
     captionAr: 'بحث عربي، وفهرس، وتصفّح الكتب والبحوث',
-    altAr: 'لقطة حقيقية من المكتبة الإلكترونية في مدارك — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من المكتبة الإلكترونية في تادمورا — بيانات العرض التجريبية',
     route: '/student/library',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 30rem, 100vw',
@@ -233,7 +233,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-lecture-player',
     titleAr: 'المحاضرة التفاعلية',
     captionAr: 'مشغّل المحاضرة مع نقطة فحص تُصحَّح فورًا',
-    altAr: 'لقطة حقيقية من مشغّل المحاضرة التفاعلية في مدارك مع بطاقة نقطة الفحص — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من مشغّل المحاضرة التفاعلية في تادمورا مع بطاقة نقطة الفحص — بيانات العرض التجريبية',
     route: '/student/courses',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 30rem, 100vw',
@@ -242,7 +242,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-matrix',
     titleAr: 'مصفوفة الإتقان',
     captionAr: 'درجة إتقان لكل مفهوم، وربطها بالدرس المناسب',
-    altAr: 'لقطة حقيقية من مصفوفة الإتقان في مدارك — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من مصفوفة الإتقان في تادمورا — بيانات العرض التجريبية',
     route: '/student/matrix',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 30rem, 100vw',
@@ -260,7 +260,7 @@ export const CAPTURE_LECTURE_CHECKPOINT_2X: ProductCapture = {
   id: 'lecture-checkpoint',
   titleAr: 'المحاضرة التفاعلية',
   captionAr: 'مشغّل المحاضرة مع نقطة فحص تُصحَّح فورًا',
-  altAr: 'لقطة حقيقية من مشغّل المحاضرة في مدارك أثناء محاضرة «هندسة البرمجيات»، مع بطاقة نقطة فحص مدمجة في الفيديو — بيانات العرض التجريبية',
+  altAr: 'لقطة حقيقية من مشغّل المحاضرة في تادمورا أثناء محاضرة «هندسة البرمجيات»، مع بطاقة نقطة فحص مدمجة في الفيديو — بيانات العرض التجريبية',
   route: '/student/courses',
   widths: [1440],
   sizes: '(min-width: 992px) 30rem, 100vw',

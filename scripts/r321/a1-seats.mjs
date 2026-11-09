@@ -22,7 +22,7 @@ const page = await ctx.newPage();
 const cdp = await ctx.newCDPSession(page);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
 await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
-await page.evaluate(() => sessionStorage.setItem('madarek-intro-skip', '1'));
+await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
 await page.reload({ waitUntil: 'networkidle' });
 await page.waitForTimeout(900);
 // scroll into the chapters band (the worst zone per the r318 report)

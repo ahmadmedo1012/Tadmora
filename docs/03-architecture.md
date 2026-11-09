@@ -2,7 +2,7 @@
 
 ## الصورة الكبيرة
 
-مدارك **خدمة ويب واحدة**: في الإنتاج تشغّل عملية Express واحدة تخدم
+تادمورا **خدمة ويب واحدة**: في الإنتاج تشغّل عملية Express واحدة تخدم
 واجهات API تحت `/api/v1/*` وملفات الواجهة المبنية (SPA) من `frontend/dist`
 في كل مسار آخر. قاعدة البيانات PostgreSQL مُدارة (Neon) عبر Prisma. لا
 طوابير مهام، لا Redis، لا WebSocket — العمليات الخلفية اليومية داخل
@@ -68,7 +68,7 @@ sequenceDiagram
     U->>F: بريد/رقم جامعي + كلمة مرور
     F->>A: POST /login
     A->>A: argon2id (~100ms) + مساواة زمنية للمسارات الفاشلة + قفل بعد 5 إخفاقات/15د
-    A-->>F: access JWT (15د، الدور داخل الحمولة) + كوكي mdrk_refresh (httpOnly، strict، 7 أيام)
+    A-->>F: access JWT (15د، الدور داخل الحمولة) + كوكي tdmr_refresh (httpOnly، strict، 7 أيام)
     F->>F: تخزين access في sessionStorage (مخزن auth.store)
     loop عند 401 TOKEN_EXPIRED
         F->>A: POST /refresh (كوكي) — جلسة انزلاقية لا تُدوّر tokenVersion

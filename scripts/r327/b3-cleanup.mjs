@@ -2,9 +2,9 @@
 /**
  * scripts/r327/b3-cleanup.mjs — remove exactly the throwaways the B3
  * proof script created (audits/evidence/r327/p4/b3/invite-bulk-proof.ids.json):
- * the three @demo.madarek.ly users + the invite code the test minted.
+ * the three @demo.tadmora.ly users + the invite code the test minted.
  *
- * NEVER touches the seed's own 30 @demo.madarek.ly demo users — only
+ * NEVER touches the seed's own 30 @demo.tadmora.ly demo users — only
  * the ids recorded in the ids file. The deletion order mirrors
  * removeDemoCohort (backend/src/modules/users/demo-cohort.ts): the
  * relations that do not cascade on User (enrollment, inviteUse,
@@ -21,7 +21,7 @@ import path from 'node:path';
 
 const IDS_FILE = process.argv[2] ?? 'audits/evidence/r327/p4/b3/invite-bulk-proof.ids.json';
 if (!process.env.DATABASE_URL) {
-  console.error('DATABASE_URL is required (the local sandbox default: postgresql://postgres@localhost:5433/madarek_dev)');
+  console.error('DATABASE_URL is required (the local sandbox default: postgresql://postgres@localhost:5433/tadmora_dev)');
   process.exit(1);
 }
 
@@ -58,7 +58,7 @@ console.log(
 );
 
 // sanity: the seed's demo cohort must be untouched (30 users)
-const remaining = await prisma.user.count({ where: { email: { endsWith: '@demo.madarek.ly' } } });
-console.log(`@demo.madarek.ly users remaining (seed baseline 30): ${remaining}`);
+const remaining = await prisma.user.count({ where: { email: { endsWith: '@demo.tadmora.ly' } } });
+console.log(`@demo.tadmora.ly users remaining (seed baseline 30): ${remaining}`);
 
 await prisma.$disconnect();

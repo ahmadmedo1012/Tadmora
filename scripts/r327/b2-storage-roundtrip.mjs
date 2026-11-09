@@ -62,7 +62,7 @@ function minimalPdf() {
     null, // stream — length computed below
     '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
   ];
-  const streamBody = 'BT /F1 18 Tf 72 720 Td (Madarek r327 P4d-B2 storage roundtrip) Tj ET';
+  const streamBody = 'BT /F1 18 Tf 72 720 Td (Tadmora r327 P4d-B2 storage roundtrip) Tj ET';
   objects[3] = `<< /Length ${streamBody.length} >>\nstream\n${streamBody}\nendstream`;
 
   let out = '%PDF-1.4\n';

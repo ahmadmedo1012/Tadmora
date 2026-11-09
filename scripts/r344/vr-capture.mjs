@@ -12,7 +12,7 @@
  * installMockApi + seedSession + the institution-bearing /auth/me), so
  * student surfaces render their designed fixture state without a backend;
  * public cells run as guests on the same hermetic table.
- * Themes: madarek-theme zustand-persist seed via seedSession (the recorded
+ * Themes: tadmora-theme zustand-persist seed via seedSession (the recorded
  * r325 pattern — modeUpdatedAt:1 wins the profile tiebreak).
  *
  * Usage:
@@ -113,7 +113,7 @@ const D7A_OVERRIDES = [
 ];
 
 const SEAT_JS = `(y) => {
-  const L = window.__mdrkLenis;
+  const L = window.__tdmrLenis;
   if (L && typeof L.scrollTo === "function") { L.scrollTo(y, { immediate: true, force: true }); return; }
   window.scrollTo(0, Math.max(0, Math.round(y)));
 }`;

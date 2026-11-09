@@ -63,7 +63,7 @@ test.describe('حلقة تصحيح الأستاذ', () => {
     /* الطابور من النقل الوهمي STATEFUL — بلا أي درجة هنا، صفوان. */
     await installStatefulApi(page, teacherRoutes(new Set(), []));
     await page.goto('/teacher/assignments');
-    await expect(page).toHaveTitle('الواجبات والاختبارات · مدارك');
+    await expect(page).toHaveTitle('الواجبات والاختبارات · تادمورا');
     await expect(page.locator('h1.page-title')).toHaveText('الواجبات والاختبارات');
 
     /* بطاقة الطابور — العدّ العربي المزدوج + رأس المجموعة (العنوان،

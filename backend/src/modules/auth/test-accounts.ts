@@ -12,7 +12,7 @@
  *      established DB performs zero writes — these accounts are the ONE
  *      explicit, deliberate exception, and they are the ONLY rows the
  *      exception touches).
- *   2. BACKEND BOOT with `MADAREK_TEST_ACCOUNTS=1` (backend/src/index.ts)
+ *   2. BACKEND BOOT with `TADMORA_TEST_ACCOUNTS=1` (backend/src/index.ts)
  *      — the self-healing dev/ops path; guarded, non-fatal, logged.
  *
  * Guarantees:
@@ -123,13 +123,13 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
  * rows the corpus seed would create). */
 async function ensureSkeleton(prisma: PrismaClient) {
   const zawia = await prisma.institution.upsert({
-    where: { slug: 'madarek-demo' },
-    update: { name: 'جامعة مدارك التجريبية', nameEn: 'Madarek Demo University', status: 'ACTIVE' },
+    where: { slug: 'tadmora-demo' },
+    update: { name: 'جامعة تادمورا التجريبية', nameEn: 'Tadmora Demo University', status: 'ACTIVE' },
     create: {
       id: 'inst-zawia-showcase',
-      name: 'جامعة مدارك التجريبية',
-      nameEn: 'Madarek Demo University',
-      slug: 'madarek-demo',
+      name: 'جامعة تادمورا التجريبية',
+      nameEn: 'Tadmora Demo University',
+      slug: 'tadmora-demo',
       status: 'ACTIVE',
     },
   });

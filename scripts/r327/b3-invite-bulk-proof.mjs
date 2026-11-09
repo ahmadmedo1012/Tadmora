@@ -27,7 +27,7 @@
  *      code                               → honest 4xx Arabic (exhausted)
  *   7. role-mismatch validation           → honest Arabic verdict
  *
- * Throwaways register under @demo.madarek.ly (the registrar-sweepable
+ * Throwaways register under @demo.tadmora.ly (the registrar-sweepable
  * domain) and are removed afterwards by scripts/r327/b3-cleanup.mjs
  * (ordered delete of exactly the ids created here — the seed's own 30
  * demo users are NEVER touched).
@@ -115,7 +115,7 @@ async function main() {
   /* 3 — three throwaway registrations with the code */
   const stamp = Date.now().toString(36);
   const throwaways = [1, 2, 3].map((n) => ({
-    email: `r327b3-${stamp}-${n}@demo.madarek.ly`,
+    email: `r327b3-${stamp}-${n}@demo.tadmora.ly`,
     firstName: 'طالب',
     lastName: `اختبار ${n}`,
     universityId: `R327B3${stamp}${n}`.slice(0, 40),
@@ -174,7 +174,7 @@ async function main() {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
-      email: `r327b3-${stamp}-4@demo.madarek.ly`,
+      email: `r327b3-${stamp}-4@demo.tadmora.ly`,
       password: THROWAWAY_PASSWORD,
       firstName: 'طالب',
       lastName: 'اختبار 4',
