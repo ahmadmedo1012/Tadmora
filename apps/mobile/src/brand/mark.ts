@@ -41,12 +41,8 @@ export const MARK_VIEWBOX = '0 0 32 32';
  * right pillar down, the baseline back — miter joins at every corner. */
 export const MARK_ARCH_PATH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z';
 
-/** The arch's own geometry (springs, centre, apex — all on-grid). */
-export const MARK_ARCH = { springs: [[8, 15], [24, 15]] as const, centre: [16, 15] as const, radius: 8, apex: [16, 7] as const };
-
 /** The orange keystone: 4×4 square centred on the arch's apex (16,7). */
 export const MARK_KEYSTONE = { x: 14, y: 5, size: 4 } as const;
-export const MARK_KEYSTONE_CENTRE = { x: 16, y: 7 } as const;
 
 /** The mark's ink bbox inside the 32 viewBox (x8..24, y5..27). */
 export const MARK_INK = { x: 8, y: 5, w: 16, h: 22 } as const;

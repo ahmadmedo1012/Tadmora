@@ -114,7 +114,7 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
  * (dark #282828 / light #F6F6EE — the warm vintage paper, owner
  * decision; audits/evidence/r313/reference/digest.json); the metas and
  * the boot plate moved with it. */
-const THEME_BOOTSTRAP_SHA256 = 'jEZ9yPBzXBwMFxHwFlLFqiKKy+HtK9TOGA7FRviqIMc=';
+const THEME_BOOTSTRAP_SHA256 = 'tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=';
 /* r188: pin refreshed — the JSON-LD block now describes the INDEPENDENT
  * Tadmora platform alone (WebSite node; the retired University-of-Zawia
  * `about` node is gone — the only demo-data story is the explicitly
@@ -122,7 +122,7 @@ const THEME_BOOTSTRAP_SHA256 = 'jEZ9yPBzXBwMFxHwFlLFqiKKy+HtK9TOGA7FRviqIMc=';
  * synthetic data, never as affiliation). Verified by check-csp-hash.sh. */
 // r191: pin refreshed — the JSON-LD description dropped the rejected
 // provenance slogan with the meta copy fix.
-const JSON_LD_SHA256 = 'IRTvs2lj91QMTupUETl0okZh8+Bgoccsoy/MNlneYDI=';
+const JSON_LD_SHA256 = '6BgZCN53irlTV8mjiydtgqi8FM4RzO8ICoVKHo1SFc8=';
 
 export function createApp() {
   const app = express();

@@ -38,12 +38,12 @@ function place(sheetInkH: number, inkH: number, inkX: number, inkY: number) {
   };
 }
 
-/* ── LOCKUP — horizontal, RTL: mark right, «تادمورا» left ──────────────
+/* ── LOCKUP — horizontal, RTL: mark right, «تادمورا» left ───────────
  * Canvas 32 units tall (the mark's own grid). The wordmark ink is 11
  * units tall (≈⅓ of the mark box), vertically centred, seated 5 units
- * from the mark's west diamond tip — the same 5-unit air the mark's
- * viewBox already carries on every side, so the whole lockup reads as
- * ONE evenly-framed plate. */
+ * from the mark's west pillar — the same 5-unit air the mark's viewBox
+ * carries top and bottom, so the whole lockup reads as ONE evenly-
+ * framed plate. */
 const LOCKUP_AR_INK_H = 11;
 const LOCKUP_AR = place(WORDMARK_AR.ink.h, LOCKUP_AR_INK_H, 5, (32 - LOCKUP_AR_INK_H) / 2);
 const LOCKUP_AR_INK_W = +(WORDMARK_AR.ink.w * LOCKUP_AR.scale).toFixed(3);

@@ -77,12 +77,12 @@ export function Logo(props: {
   const kfWord = `tdmrW${uid}`;
   const kfKey = `tdmrK${uid}`;
 
-  const draw = (name: string, duration: number, delay: number): React.CSSProperties | undefined =>
+  const draw = (name: string, durationVar: string, delay: number): React.CSSProperties | undefined =>
     animated
-      ? { strokeDasharray: 1, animation: `${name} ${duration}ms cubic-bezier(0.6, 0, 0.2, 1) ${delay}ms both` }
+      ? { strokeDasharray: 1, animation: `${name} var(${durationVar}) var(--brand-draw-ease) ${delay}ms both` }
       : undefined;
   const pop = (): React.CSSProperties | undefined =>
-    animated ? { animation: `${kfKey} 150ms linear 750ms both` } : undefined;
+    animated ? { animation: `${kfKey} var(--motion-duration-brand-pop) var(--ease-linear) 750ms both` } : undefined;
 
   const styleTag = animated ? (
     <style>{`@keyframes ${kfArch}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfWord}{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes ${kfKey}{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion:reduce){.tdmr-logo *{animation:none !important}}`}</style>
@@ -100,7 +100,7 @@ export function Logo(props: {
         d={MARK_ARCH_PATH}
         pathLength={1}
         vectorEffect="non-scaling-stroke"
-        style={draw(kfArch, 700, 0)}
+        style={draw(kfArch, '--motion-duration-brand-draw-arch', 0)}
       />
       <rect x={MARK_KEYSTONE.x} y={MARK_KEYSTONE.y} width={MARK_KEYSTONE.size} height={MARK_KEYSTONE.size} fill={keystone} stroke="none" style={pop()} />
     </g>
@@ -116,7 +116,7 @@ export function Logo(props: {
       strokeWidth={WORDMARK_STROKE_SHEET}
       strokeLinejoin="miter"
       pathLength={1}
-      style={draw(name, 600, 200)}
+      style={draw(name, '--motion-duration-brand-draw-word', 200)}
     />
   );
   const latinPath = (transform: string): React.JSX.Element => (
