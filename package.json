@@ -53,7 +53,7 @@
     "gate:size": "bash scripts/gates/size-gate.sh",
     "gate:identity": "bash scripts/brand/identity-gate.sh"
   },
-  "prepare": "git config core.hooksPath .githooks",
+  "prepare": "node scripts/setup-hooks.mjs",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "clipper-lib": "^6.4.2",
