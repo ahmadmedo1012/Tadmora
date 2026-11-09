@@ -11,11 +11,16 @@
  * Exits non-zero on any validation error. Runs in CI (typecheck job,
  * .github/workflows/ci.yml — `npm run validate:colleges`) and manually.
  */
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { existsSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
-const REPO_ROOT = resolve(__dirname, '..');
+// The root package is ESM (the serverless entry's module contract), so
+// this tsx-run script is ESM too — __dirname does not exist here.
+// import.meta.dirname is the standard ESM answer (Node ≥ 20.11).
+const here = import.meta.dirname ?? dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = resolve(here, '..');
 const CONFIG = resolve(REPO_ROOT, 'frontend/src/data/colleges.config.ts');
 const PUBLIC_DIR = resolve(REPO_ROOT, 'frontend/public');
 
