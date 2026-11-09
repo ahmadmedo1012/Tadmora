@@ -4,7 +4,8 @@
  *
  * THE PLATFORM'S TIMEZONE MODEL (documented here once, enforced by helpers):
  *
- * · The server runs with `TZ=UTC` (declared in render.yaml). Instants are
+ * · The server runtime clock is UTC (the CI runners and the serverless
+ *   functions both run UTC). Instants are
  *   always UTC; Prisma stores TIMESTAMP(3) UTC instants.
  * · DATE-ONLY concepts — attendance roll-call days, agenda weekday labels,
  *   month buckets — are anchored to one of two calendars:

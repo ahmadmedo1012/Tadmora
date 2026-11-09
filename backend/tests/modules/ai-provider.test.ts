@@ -60,7 +60,7 @@ import {
 const aiRouteSource = readFileSync(new URL('../../src/http/routes/ai.routes.ts', import.meta.url), 'utf8');
 const aiLibSource = readFileSync(new URL('../../src/lib/ai.ts', import.meta.url), 'utf8');
 const envSource = readFileSync(new URL('../../src/env.ts', import.meta.url), 'utf8');
-const renderSource = readFileSync(new URL('../../../render.yaml', import.meta.url), 'utf8');
+const vercelSource = readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8');
 
 // ─── Constants (the contract's ceilings) ──────────────────────────
 
@@ -910,12 +910,10 @@ describe('env.ts — the openai fail-closed superRefine', () => {
   });
 });
 
-describe('render.yaml — the AI vars are opt-in on Render', () => {
-  it('all five AI vars are sync:false (never required by the dashboard)', () => {
+describe('vercel.json — the AI vars stay dashboard-level opt-in', () => {
+  it('no AI var is baked into the platform manifest (they are set per-environment only when a provider is chosen)', () => {
     for (const key of ['AI_PROVIDER', 'AI_BASE_URL', 'AI_API_KEY', 'AI_MODEL', 'AI_MODELS']) {
-      const i = renderSource.indexOf(`- key: ${key}`);
-      expect(i).toBeGreaterThan(-1);
-      expect(renderSource.slice(i, i + key.length + 45)).toContain('sync: false');
+      expect(vercelSource).not.toContain(key);
     }
   });
 });

@@ -32,4 +32,4 @@ Disallow: /admin
 Disallow: /quality
 Disallow: /owner
 
-Sitemap: https://tadmora.onrender.com/sitemap.xml
+Sitemap: https://tadmora.vercel.app/sitemap.xml

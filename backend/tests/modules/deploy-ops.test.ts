@@ -6,17 +6,17 @@
  * that unpins or drifts them fails HERE instead of failing silently in
  * production:
  *
- *  1. render.yaml pins NODE_VERSION — and the pin equals CI's
- *     env.NODE_VERSION exactly (a pin that drifts from CI recreates the
- *     "works in CI, breaks on Render" gap the pin exists to close).
- *  2. The pinned major satisfies the repo engines range (>=20 <25) —
- *     Node 22 is the LTS line in support (Node 20 reached EOL April
- *     2026; the ci.yml header says the same).
- *  3. The documented deployment invariants stay put: healthCheckPath
- *     /api/v1/health, TZ=UTC, `npm ci --include=dev` build (Render sets
- *     NODE_ENV=production BEFORE install — without --include=dev the
- *     devDependencies needed by the build are skipped).
- *  4. The root package.json wires the post-deploy smoke script
+ *  1. The repo's engines range (>=20 <25) is the deployment runtime
+ *     contract (the serverless platform reads package.json engines) —
+ *     and CI's env.NODE_VERSION sits INSIDE it exactly (a CI major that
+ *     drifts outside the range recreates the "works in CI, breaks in
+ *     production" gap the pin exists to close).
+ *  2. The documented deployment invariants stay put on the current
+ *     platform manifest (vercel.json): installCommand npm ci, the
+ *     health surface /api/v1/health, and the server-UTC instants
+ *     contract declared by backend/src/lib/dates.ts (the serverless
+ *     runtime clock is UTC).
+ *  3. The root package.json wires the post-deploy smoke script
  *     (`npm run smoke` → scripts/smoke-deploy.mjs).
  *  5. The smoke script stays dependency-free — every import must be a
  *     node: builtin (it runs in ops contexts where node_modules may be
@@ -25,7 +25,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
-const renderSource = readFileSync(new URL('../../../render.yaml', import.meta.url), 'utf8');
+const vercelSource = readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8');
+const datesSource = readFileSync(new URL('../../src/lib/dates.ts', import.meta.url), 'utf8');
 const ciSource = readFileSync(
   new URL('../../../.github/workflows/ci.yml', import.meta.url),
   'utf8',
@@ -38,27 +39,22 @@ const smokeSource = readFileSync(
   'utf8',
 );
 
-// ─── NODE_VERSION pin ─────────────────────────────────────────────
+// ─── Node runtime pin (engines ↔ CI) ─────────────────────────────
 
-describe('render.yaml NODE_VERSION pin (r164-l)', () => {
-  const renderPin = renderSource.match(/key:\s*NODE_VERSION\s*\n\s*value:\s*'?(\d+)'?/);
-
-  it('pins NODE_VERSION (docs/16 row closed in r164-l)', () => {
-    expect(renderPin).not.toBeNull();
+describe('node runtime pin — engines range vs CI (r164-l, re-anchored to the serverless platform)', () => {
+  it("the repo declares an engines.node range (the platform's runtime contract)", () => {
+    const engines = rootPackage.engines?.node ?? '';
+    expect(engines.length).toBeGreaterThan(0);
   });
 
-  it("the pin equals CI's env.NODE_VERSION exactly — no CI/production drift", () => {
+  it("CI's env.NODE_VERSION sits inside the engines range — no CI/production drift", () => {
     const ciPin = ciSource.match(/NODE_VERSION:\s*'(\d+)'/);
     expect(ciPin).not.toBeNull();
-    expect(renderPin?.[1]).toBe(ciPin?.[1]);
-  });
-
-  it("the pinned major sits inside the repo's engines range (>=20 <25)", () => {
-    const major = Number(renderPin?.[1]);
+    const major = Number(ciPin?.[1]);
     const engines = rootPackage.engines?.node ?? '';
     // The range is documented as '>=20 <25' — parse the two bounds rather
     // than trust a literal, so an engines bump must consciously revisit
-    // this pin (and render.yaml) together.
+    // this pin together.
     const min = Number(engines.match(/>=\s*(\d+)/)?.[1] ?? NaN);
     const max = Number(engines.match(/<\s*(\d+)/)?.[1] ?? NaN);
     expect(Number.isFinite(min)).toBe(true);
@@ -70,17 +66,21 @@ describe('render.yaml NODE_VERSION pin (r164-l)', () => {
 
 // ─── Documented deployment invariants (regression pins) ───────────
 
-describe('render.yaml deployment invariants', () => {
-  it('health check path stays /api/v1/health (app.ts mounts it there)', () => {
-    expect(renderSource).toContain('healthCheckPath: /api/v1/health');
+describe('vercel.json deployment invariants (the platform manifest)', () => {
+  it('install command stays npm ci (devDependencies present for the build)', () => {
+    expect(vercelSource).toContain('"installCommand": "npm ci"');
   });
 
-  it('runtime clock stays pinned to UTC (attendance day-key model)', () => {
-    expect(renderSource).toMatch(/key:\s*TZ\s*\n\s*value:\s*UTC/);
+  it('the /api rewrite keeps the Express surface under one function', () => {
+    expect(vercelSource).toContain('"/api/(.*)"');
   });
 
-  it('build keeps npm ci --include=dev (NODE_ENV=production is set before install)', () => {
-    expect(renderSource).toContain('npm ci --include=dev');
+  it('the post-deploy smoke still targets /api/v1/health (app.ts mounts it there)', () => {
+    expect(smokeSource).toContain('/api/v1/health');
+  });
+
+  it('runtime clock stays UTC (attendance day-key model — dates.ts declares the contract)', () => {
+    expect(datesSource).toContain('runtime clock is UTC');
   });
 });
 

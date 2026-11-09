@@ -3,22 +3,22 @@
      The PUBLIC routes only, 16 exactly: the 7 existing public surfaces
      + the 9 legal/public sheets. The five authenticated trees are
      deliberately absent (see robots.txt). Canonical base is the one
-     absolute URL index.html declares (tadmora.onrender.com). -->
+     absolute URL index.html declares (tadmora.vercel.app). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://tadmora.onrender.com/</loc></url>
-  <url><loc>https://tadmora.onrender.com/auth</loc></url>
-  <url><loc>https://tadmora.onrender.com/auth/register</loc></url>
-  <url><loc>https://tadmora.onrender.com/colleges</loc></url>
-  <url><loc>https://tadmora.onrender.com/colleges/leaderboard</loc></url>
-  <url><loc>https://tadmora.onrender.com/campus</loc></url>
-  <url><loc>https://tadmora.onrender.com/capabilities</loc></url>
-  <url><loc>https://tadmora.onrender.com/legal/privacy</loc></url>
-  <url><loc>https://tadmora.onrender.com/legal/terms</loc></url>
-  <url><loc>https://tadmora.onrender.com/legal/cookies</loc></url>
-  <url><loc>https://tadmora.onrender.com/legal/accessibility</loc></url>
-  <url><loc>https://tadmora.onrender.com/legal/security</loc></url>
-  <url><loc>https://tadmora.onrender.com/legal/data</loc></url>
-  <url><loc>https://tadmora.onrender.com/about</loc></url>
-  <url><loc>https://tadmora.onrender.com/help</loc></url>
-  <url><loc>https://tadmora.onrender.com/contact</loc></url>
+  <url><loc>https://tadmora.vercel.app/</loc></url>
+  <url><loc>https://tadmora.vercel.app/auth</loc></url>
+  <url><loc>https://tadmora.vercel.app/auth/register</loc></url>
+  <url><loc>https://tadmora.vercel.app/colleges</loc></url>
+  <url><loc>https://tadmora.vercel.app/colleges/leaderboard</loc></url>
+  <url><loc>https://tadmora.vercel.app/campus</loc></url>
+  <url><loc>https://tadmora.vercel.app/capabilities</loc></url>
+  <url><loc>https://tadmora.vercel.app/legal/privacy</loc></url>
+  <url><loc>https://tadmora.vercel.app/legal/terms</loc></url>
+  <url><loc>https://tadmora.vercel.app/legal/cookies</loc></url>
+  <url><loc>https://tadmora.vercel.app/legal/accessibility</loc></url>
+  <url><loc>https://tadmora.vercel.app/legal/security</loc></url>
+  <url><loc>https://tadmora.vercel.app/legal/data</loc></url>
+  <url><loc>https://tadmora.vercel.app/about</loc></url>
+  <url><loc>https://tadmora.vercel.app/help</loc></url>
+  <url><loc>https://tadmora.vercel.app/contact</loc></url>
 </urlset>
