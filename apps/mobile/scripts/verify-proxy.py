@@ -16,7 +16,7 @@ import ssl
 
 PORT = 9999
 DIST = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dist-web"))
-HOST = "tadmora.onrender.com"
+HOST = "tadmora.vercel.app"
 
 ctx = ssl.create_default_context()
 

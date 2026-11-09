@@ -1,5 +1,5 @@
 /**
- * Tadmora API client — typed transport for https://tadmora.onrender.com/api/v1.
+ * Tadmora API client — typed transport for https://tadmora.vercel.app/api/v1.
  *
  * Backend contract (backend/src/app.ts + lib/errors.ts):
  *   success:   { data: T }            paginated: { data: T[], meta }
@@ -16,7 +16,7 @@ import { AppNotification, PageMeta, Paginated } from "./types";
 
 export const API_BASE =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-  "https://tadmora.onrender.com/api/v1";
+  "https://tadmora.vercel.app/api/v1";
 
 export class ApiError extends Error {
   code: string;

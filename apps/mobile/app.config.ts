@@ -3,13 +3,13 @@ import type { ExpoConfig } from "expo/config";
 /**
  * تادمورا — Tadmora mobile (Expo / React Native).
  *
- * Brand: the Heron system — paper #F6F6EE · ink #282828 · orange #FA3600.
+ * Brand: the TADMORA system — paper #F6F6EE · ink #282828 · orange #FA3600.
  * The API base URL is public configuration (EXPO_PUBLIC_API_BASE_URL);
  * secrets never belong in this file or in the app bundle.
  */
 const config: ExpoConfig = {
   name: "تادمورا",
-  slug: "tadmora-mobile",
+  slug: "tadmora",
   version: "1.0.0",
   scheme: "tadmora",
   orientation: "portrait",
@@ -125,7 +125,7 @@ const config: ExpoConfig = {
     // Public configuration — safe to inline. The default targets the deployed
     // production API at all times so a bare clone works out of the box.
     apiBaseUrl:
-      process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://tadmora.onrender.com/api/v1",
+      process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://tadmora.vercel.app/api/v1",
     eas: {
       // TADMORA-REBRAND: placeholder — run `eas init` to bind the NEW project.
       projectId: "00000000-0000-0000-0000-000000000000",
