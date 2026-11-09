@@ -123,10 +123,12 @@ jobs:
     needs: mobile-gates
     # The OTA publish rides the EAS project, which needs the EXPO_TOKEN
     # repository secret AND the provisioned project id in app.config.ts.
-    # Without the credential the job skips WITH THIS NOTICE — the mobile
-    # quality gates (typecheck/lint/contract/export) run unconditionally
-    # above and remain the merge-relevant signal.
-    if: github.event_name == 'push' && secrets.EXPO_TOKEN != ''
+    # (secrets are not usable in a job-level if — the credential gate
+    # runs as the first STEP and skips the publish steps with a notice
+    # when the token is absent. The mobile quality gates above —
+    # typecheck/lint/contract/export — run unconditionally and remain
+    # the merge-relevant signal.)
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     defaults:
@@ -138,11 +140,24 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - run: npm ci --no-audit --no-fund
+      - name: Credential gate (EXPO_TOKEN)
+        id: ota-cred
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::notice::EXPO_TOKEN is not configured — OTA publish skipped (set the repository secret to enable)"
+            echo "has_token=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_token=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Publish OTA update (production)
+        if: steps.ota-cred.outputs.has_token == 'true'
         run: npx eas-cli@latest update --branch production --auto --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
       - name: Publish OTA update (preview)
+        if: steps.ota-cred.outputs.has_token == 'true'
         run: npx eas-cli@latest update --branch preview --auto --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
@@ -151,19 +166,33 @@ jobs:
     name: EAS Build (preview — native change detected)
     needs: mobile-gates
     # push: only native-affecting changes; manual dispatch: always (the
-    # human pressed the button — that IS the intent). Requires the
-    # EXPO_TOKEN repository secret — skipped with a notice without it.
-    if: (github.event_name == 'workflow_dispatch' || github.event_name == 'push') && secrets.EXPO_TOKEN != ''
+    # human pressed the button — that IS the intent). The EXPO_TOKEN
+    # credential gate runs as the first STEP (secrets are not usable in
+    # a job-level if) and skips the build with a notice when absent.
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     defaults:
       run:
         working-directory: apps/mobile
     steps:
-      - uses: actions/checkout@v4
+      - name: Credential gate (EXPO_TOKEN)
+        id: build-cred
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::notice::EXPO_TOKEN is not configured — EAS build skipped (set the repository secret to enable)"
+            echo "has_token=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_token=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.build-cred.outputs.has_token == 'true'
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - uses: actions/setup-node@v4
+      - if: steps.build-cred.outputs.has_token == 'true'
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
       # R327 D2/Z14: the EAS CLI resolves the app's config plugins
@@ -172,8 +201,10 @@ jobs:
       # dies with «Failed to resolve plugin for module "expo-router"».
       # This job had never actually run (it was skipped behind the red
       # icons gate from B1 to C5), so the gap only surfaced now.
-      - run: npm ci --no-audit --no-fund
+      - if: steps.build-cred.outputs.has_token == 'true'
+        run: npm ci --no-audit --no-fund
       - name: Detect native-affecting changes (fingerprint inputs)
+        if: steps.build-cred.outputs.has_token == 'true' && github.event_name == 'push'
         id: native
         if: github.event_name == 'push'
         run: |
@@ -192,7 +223,7 @@ jobs:
             echo "JS-only change — OTA suffices, no build needed."
           fi
       - name: "Build (preview = internal APK + iOS sim, production = the store cut)"
-        if: github.event_name == 'workflow_dispatch' || steps.native.outputs.native == 'true'
+        if: steps.build-cred.outputs.has_token == 'true' && (github.event_name == 'workflow_dispatch' || steps.native.outputs.native == 'true')
         # R327 D2: the old `|| cat build-out.txt` swallowed EAS failures —
         # the job went green while NO build was queued (that is exactly how
         # the missing-npm_ci gap hid). The step now fails loudly.
