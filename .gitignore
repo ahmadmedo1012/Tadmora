@@ -171,3 +171,4 @@ docs/redesign/**/evidence/
 
 # Vercel CLI local link (per-machine project binding)
 .vercel/
+.env*
