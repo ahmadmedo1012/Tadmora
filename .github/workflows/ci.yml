@@ -344,7 +344,7 @@ jobs:
       - run: node scripts/r321/rename-ledger-scan.mjs
 
   conform-gate:
-    name: Conformance gate (frozen Heron spec, ratchet)
+    name: Conformance gate (frozen product spec, ratchet)
     # R337 CI fix: same ubuntu-latest → 26.04 roll that hit the e2e and
     # ios-webkit jobs (R320) — @playwright/test 1.60 has no chromium
     # builds for ubuntu26.04-x64, so `npx playwright install chromium`

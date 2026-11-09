@@ -1,12 +1,16 @@
-# Deploy smoke — R326 M0.6: after a backend change deploys to Render,
+# Deploy smoke — R326 M0.6: after a backend change is deployed,
 # prove the LIVE service before users complain.
 #
 #   wait-for-deploy  → poll GET /api/v1/status until buildId == the pushed
-#                      SHA (Render derives buildId from RENDER_GIT_COMMIT),
-#                      up to 20 minutes (free-tier builds are slow)
+#                      SHA (the platform derives buildId from the deployed
+#                      commit env), up to 20 minutes (builds take minutes)
 #   smoke            → health · login ×3 test accounts · one app-critical
 #                      endpoint · live openapi.json vs the committed
 #                      contract (additive-only). Failure opens an issue.
+# Deployment model note: production deploys are made from the repo with
+# the Vercel CLI (`npx vercel deploy --prod --regions fra1`), so after a
+# push to main the wait-for-deploy job polls until the CLI deploy of that
+# SHA lands and reports its buildId — or times out honestly.
 name: Deploy smoke
 
 on:
@@ -15,7 +19,6 @@ on:
     paths:
       - 'backend/**'
       - 'docs/api/openapi.json'
-      - 'render.yaml'
   workflow_dispatch:
 
 permissions:
@@ -27,11 +30,11 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BASE: https://tadmora.onrender.com/api/v1
+  BASE: https://tadmora.vercel.app/api/v1
 
 jobs:
   wait-for-deploy:
-    name: Wait for the Render deploy (buildId == ${{ github.sha }})
+    name: Wait for the production deploy (buildId == ${{ github.sha }})
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     outputs:
@@ -51,7 +54,7 @@ jobs:
             sleep 20
           done
           echo "deployed=false" >> "$GITHUB_OUTPUT"
-          echo "::warning::Render did not report buildId $SHORT within 20 minutes — smokes run against the PREVIOUS deploy."
+          echo "::warning::The production deploy did not report buildId $SHORT within 20 minutes — smokes run against the PREVIOUS deploy."
 
   smoke:
     name: Smoke the live service
@@ -88,7 +91,7 @@ jobs:
           # candidate URLs, parse defensively, and SKIP (warn) when the
           # live spec isn't exposed as JSON. The additive-only contract
           # itself is enforced by the repo's contract tests.
-          curl -sfL --max-time 30 "https://tadmora.onrender.com/openapi.json" -o live1.json || true
+          curl -sfL --max-time 30 "https://tadmora.vercel.app/openapi.json" -o live1.json || true
           curl -sfL --max-time 30 "$BASE/openapi.json" -o live2.json || true
           python3 - <<'EOF' || echo "::warning::live openapi not exposed as JSON — skipping (repo contract tests own the gate)"
           import json, sys
@@ -131,6 +134,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `🚨 Deploy smoke failed — ${context.sha.slice(0, 12)}`,
-              body: `The post-deploy smoke failed on main@${context.sha}.\n\nRun: https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${run}\n\nCheck the Render deploy and the failing step.`,
+              body: `The post-deploy smoke failed on main@${context.sha}.\n\nRun: https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${run}\n\nCheck the production deploy and the failing step.`,
               labels: ['deploy-smoke'],
             });

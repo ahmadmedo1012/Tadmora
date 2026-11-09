@@ -132,8 +132,8 @@ npm run dev:web                    # الواجهة :5173 (proxy ‏/api → :40
 > بـ`student2@test.ly` — الرقمان الجامعيان متطابقان عمدًا
 > (`UZ-2024-00001`) ورمز المقرر `SE301` موجود في المؤسستين، وكلٌّ منهما
 > يرى مقررات مؤسسته فقط (واختبار الشعبة الأخرى يُرفض 403). البذر يعمل
-> بعد كل نشر على Render تلقائيًا وغير مدمّر (r180) — والاستثناء الوحيد
-> الموثَّق هو ضمان حسابات `@test.ly` هذه (R320 §C؛ وعلى Render يمكن
+> بعد كل تشغيل واعٍ للبذرة (r183 — create-only وغير مدمّر) — والاستثناء الوحيد
+> الموثَّق هو ضمان حسابات `@test.ly` هذه (R320 §C؛ ويمكن
 > تفعيل الضمان عند الإقلاع عبر `TADMORA_TEST_ACCOUNTS=1`).
 
 ## الاختبارات والفحوص
@@ -165,13 +165,18 @@ npm run validate:colleges              # هوية 25 كلية (AA)
 [`docs/06-configuration.md`](docs/06-configuration.md). لا تضع أسرارًا حقيقية
 في أي ملف متتبع.
 
-## النشر على Render (3 خطوات)
+## النشر على Vercel + Neon
 
-1. اربط المستودع بـRender: **New + → Blueprint** — `render.yaml` ينشئ
-   الخدمة ويولّد سريّي JWT تلقائيًا.
-2. من تبويب **Environment**: ضع `DATABASE_URL` (سلسلة Neon pooler).
-3. ادفع إلى `main` — البناء يطبق الترحيلات (`prisma migrate deploy`)
-   ثم يقلب خدمة واحدة تخدم API وSPA وفحص صحة `/api/v1/health`.
+1. جهّز قاعدة Neon (مشروع `tadmora-production` — فرانكفورت) وطبّق الترحيلات
+   والبذرة: من `backend/` نفّذ `DATABASE_URL=<السلسلة المباشرة> node
+   scripts/migrate-deploy.mjs` ثم `npm run prisma:seed`، وتليها سلسلة
+   التحصين (`provision-owner.mjs` ثم `rotate-demo-passwords.mjs`).
+2. اضبط متغيرات بيئة المشروع على Vercel: `DATABASE_URL` (سلسلة
+   **pooler** لبيئة الدوال)، سريّي JWT، و`INTERNAL_SERVICE_TOKEN` مع
+   `CRON_SECRET` بالقيمة نفسها (توقيع مهمة cron اليومية).
+3. انشر من جذر المستودع: `npx vercel deploy --prod --regions fra1` —
+   البناء يولّد عميل Prisma ويبني الواجهة والخلفية، والصحة على
+   `/api/v1/health` تعرض SHA المنشور.
 
 التفصيل والتحقق بعد النشر والتراجع: [`docs/12-deployment.md`](docs/12-deployment.md).
 
@@ -186,7 +191,7 @@ tadmora/
 ├── audits/           تقارير تدقيق بصري تاريخية (جولتا 4 و5)
 ├── scripts/          بوابات الجودة + أدوات المشغِّل (db:backup/db:restore/smoke) + لقطات محلية
 ├── tools/            boot-pg.sh — PostgreSQL مدمج للتطوير
-└── render.yaml       مخطط Render
+└── vercel.json      مخطط النشر (Vercel — دوال + ثوابت + cron)
 ```
 
 الخريطة المفصلة «أين أعدّل ماذا»: [`docs/04-repository-map.md`](docs/04-repository-map.md).
@@ -201,6 +206,6 @@ tadmora/
 
 ---
 
-*الاسم التطويري للمشروع: تادمورا (Tadmora) · منصّة مستقلّة · الإنتاج: [tadmora.onrender.com](https://tadmora.onrender.com)*
+*الاسم التطويري للمشروع: تادمورا (Tadmora) · منصّة مستقلّة · الإنتاج: [tadmora.vercel.app](https://tadmora.vercel.app)*
 
 </div>

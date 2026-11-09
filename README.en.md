@@ -32,8 +32,10 @@ with a bespoke two-theme design system driven by one token set
 in the brand).
 
 **Stack:** Express + TypeScript + Prisma 5 backend serving `/api/v1/*`
-*and* the built React 18 + Vite SPA as a single service; PostgreSQL on
-Neon; deployed on Render with auto-deploy from `main`.
+*and* the built React 18 + Vite SPA as one platform; PostgreSQL on Neon
+(Frankfurt); deployed on **Vercel** (project `tadmora` — serverless functions
+in `fra1`, https://tadmora.vercel.app, scheduled daily jobs via the platform
+cron).
 
 ## Current state (honest)
 
@@ -89,11 +91,12 @@ isolation): `teacher2@test.ly` · `admin2@test.ly` (same password).
 
 Log in as `student@test.ly` then `student2@test.ly` — the two
 students share reg-number `UZ-2024-00001` on purpose and each sees only
-their institution's courses (a foreign offering answers 403). Deploy-time
-seeding on Render runs after every deploy, non-destructively (r180) —
-the one documented exception being these `@test.ly` accounts (R320 §C;
-on Render the boot-time ensure can be enabled with
-`TADMORA_TEST_ACCOUNTS=1`).
+their institution's courses (a foreign offering answers 403). Seeding is
+an explicit operator step from `backend/` (see `docs/12-deployment.md`),
+non-destructive on an established database (r180) — the one documented
+exception being these `@test.ly` accounts (R320 §C; the boot-time ensure
+can be enabled with `TADMORA_TEST_ACCOUNTS=1` in the Vercel project
+environment).
 
 ## Verify it yourself
 
@@ -106,21 +109,38 @@ bash scripts/check-csp-hash.sh        # CSP pin drift guard (now in CI)
 npm run validate:colleges             # 25 college identities (WCAG AA)
 ```
 
-## Deploy on Render (3 steps)
+## Deploy on Vercel + Neon
 
-1. Render → **New + → Blueprint** → pick this repo (`render.yaml` creates
-   the service and auto-generates both JWT secrets).
-2. Environment tab: set **`DATABASE_URL`** to your Neon **pooler** string
-   (`?sslmode=require&channel_binding=require`).
-3. Push to `main` — build applies migrations (`prisma migrate deploy`),
-   then one Node service serves API + SPA with health check
-   `/api/v1/health`. Details: `docs/12-deployment.md`.
+The production stack: **Vercel** (project `tadmora` — serverless functions
+in `fra1`, https://tadmora.vercel.app; the static SPA served from
+`frontend/dist`, `/api/v1/*` through one Express serverless function, a
+daily platform cron on `GET /api/v1/jobs/daily`) + **Neon PostgreSQL**
+(project `tadmora-production`, Frankfurt `aws-eu-central-1`, PG 16).
+Deploy from the repo root:
+
+```bash
+npm ci
+npx vercel deploy --prod --regions fra1
+```
+
+1. **Neon**: the pooled `-pooler` URL is `DATABASE_URL` for the serverless
+   runtime; migrations + seed run from `backend/` against the direct URL
+   (`DATABASE_URL=<direct> node scripts/migrate-deploy.mjs`).
+2. **Vercel project env**: `DATABASE_URL` (pooled), both JWT secrets, and
+   `INTERNAL_SERVICE_TOKEN` with `CRON_SECRET` set to the same value.
+3. **After the first seed**: harden with `provision-owner.mjs` +
+   `rotate-demo-passwords.mjs`, then verify the live deployment with
+   `BASE_URL=https://tadmora.vercel.app npm run smoke`.
+
+Deploys ride the Vercel CLI today — GitHub auto-deploy needs the GitHub
+login connection added to the Vercel account (the known manual step).
+Details: `docs/12-deployment.md`.
 
 ## Environment variables (required only)
 
 | Variable | Notes |
 |---|---|
-| `DATABASE_URL` | Neon PostgreSQL pooler string (`sslmode=require&channel_binding=require`) |
+| `DATABASE_URL` | Neon PostgreSQL pooled string (`…-pooler.REGION.aws.neon.tech/…?sslmode=require&pgbouncer=true&connection_limit=1`) |
 | `JWT_ACCESS_SECRET` | 64 bytes random hex — `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` |
 | `JWT_REFRESH_SECRET` | a *different* 64-byte random hex |
 
