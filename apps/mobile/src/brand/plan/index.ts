@@ -1,5 +1,5 @@
 /**
- * plan — the R330 signature library (توقيع مدارك البصري).
+ * plan — the R330 signature library (توقيع تادمورا البصري).
  *
  * Four drafted sheets in the website's architectural-plan language:
  * hairline ink (stroke 1–1.5), lettered axis scaffolds, dimension

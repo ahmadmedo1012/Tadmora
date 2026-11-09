@@ -205,35 +205,35 @@ describe('R323 gate (b) — the StarMark/BrandMark import graph is frozen', () =
 /* ════════════════════════════════════════════════════════════════════
  * the regenerated assets (gate c) + geometry sync
  * ════════════════════════════════════════════════════════════════════ */
-const DIAMOND = 'M16 5L27 16L16 27L5 16Z';
+const ARCH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z';
 
-describe('R323 gate (c) — favicon + brand twins are the new system', () => {
+describe('R323 gate (c) — favicon + brand twins are the TADMORA system', () => {
   const favicon = read('public/favicon.svg');
-  const madarekMark = read('public/brand/madarek-mark.svg');
+  const tadmoraMark = read('public/brand/tadmora-mark.svg');
 
-  it('favicon.svg + madarek-mark.svg carry no <linearGradient> and no copper hexes', () => {
+  it('favicon.svg + tadmora-mark.svg carry no <linearGradient> and no copper hexes', () => {
     for (const [name, svg] of [
       ['public/favicon.svg', favicon],
-      ['public/brand/madarek-mark.svg', madarekMark],
+      ['public/brand/tadmora-mark.svg', tadmoraMark],
     ] as const) {
       expect(svg, name).not.toMatch(/<linearGradient/i);
       expect(svg, name).not.toMatch(COPPER_RE);
     }
   });
 
-  it('favicon.svg: 32-grid khatam, miter joins, the 2.25 favicon ratio, one #FA3600 point', () => {
-    expect(favicon).toContain(DIAMOND);
+  it('favicon.svg: 32-grid Tadmora arch, miter joins, the 2.25 favicon ratio, one #FA3600 keystone', () => {
+    expect(favicon).toContain(ARCH);
     expect(favicon).toContain('stroke-linejoin="miter"');
     expect(favicon).toContain('stroke-width="2.25"');
     expect(favicon).toContain('#FA3600');
     expect(favicon).not.toMatch(/stroke-linejoin="round"/i);
   });
 
-  it('madarek-mark.svg: same geometry, miter joins, one #FA3600 point, byte-twin of mark.svg', () => {
-    expect(madarekMark).toContain(DIAMOND);
-    expect(madarekMark).toContain('stroke-linejoin="miter"');
-    expect(madarekMark).toContain('#FA3600');
-    expect(madarekMark).toBe(read('public/brand/mark.svg'));
+  it('tadmora-mark.svg: same geometry, miter joins, one #FA3600 keystone, byte-twin of mark.svg', () => {
+    expect(tadmoraMark).toContain(ARCH);
+    expect(tadmoraMark).toContain('stroke-linejoin="miter"');
+    expect(tadmoraMark).toContain('#FA3600');
+    expect(tadmoraMark).toBe(read('public/brand/mark.svg'));
   });
 
   it('every public/brand/*.svg is gradient-free and copper-free', () => {
@@ -259,16 +259,14 @@ describe('R323 gate (c) — favicon + brand twins are the new system', () => {
     const mark = read('src/brand/mark.ts');
     const gen = repoRead('scripts/r323/brand-assets.mjs');
     for (const fact of [
-      "MARK_AXIS = { x: 8, y: 8, size: 16 }",
-      "MARK_DIAMOND_PATH = 'M16 5L27 16L16 27L5 16Z'",
-      "MARK_POINT = { x: 22, y: 6, size: 4 }",
+      "MARK_ARCH_PATH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z'",
+      "MARK_KEYSTONE = { x: 14, y: 5, size: 4 }",
     ]) {
       expect(mark, `mark.ts missing ${fact}`).toContain(fact);
     }
     for (const fact of [
-      "axis: { x: 8, y: 8, size: 16 }",
-      `diamond: '${DIAMOND}'`,
-      "point: { x: 22, y: 6, size: 4 }",
+      `arch: '${ARCH}'`,
+      "keystone: { x: 14, y: 5, size: 4 }",
     ]) {
       expect(gen, `brand-assets.mjs missing ${fact}`).toContain(fact);
     }
@@ -287,14 +285,14 @@ describe('R323 gate (c) — favicon + brand twins are the new system', () => {
  * the public contract (the parallel packages code against this)
  * ════════════════════════════════════════════════════════════════════ */
 describe('R323 contract — <Logo> (frontend/src/brand)', () => {
-  it('default render: lockup, role=img, <title>مدارك, data-logo, miter joins', () => {
+  it('default render: lockup, role=img, <title>تادمورا, data-logo, miter joins', () => {
     const { container } = render(React.createElement(Logo));
     const svg = container.querySelector('svg');
     expect(svg).not.toBeNull();
     expect(svg?.getAttribute('data-logo')).toBe('lockup');
     expect(svg?.getAttribute('role')).toBe('img');
-    expect(svg?.getAttribute('aria-label')).toBe('مدارك');
-    expect(svg?.querySelector('title')?.textContent).toBe('مدارك');
+    expect(svg?.getAttribute('aria-label')).toBe('تادمورا');
+    expect(svg?.querySelector('title')?.textContent).toBe('تادمورا');
     expect(svg?.querySelector('[stroke-linejoin="miter"]')).not.toBeNull();
     /* auto tone: the ink rides currentColor, the point rides var(--accent) */
     expect(svg?.querySelector('[fill="var(--accent)"]')).not.toBeNull();

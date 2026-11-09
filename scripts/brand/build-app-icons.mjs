@@ -3,7 +3,8 @@
  * scripts/brand/build-app-icons.mjs — R327 B1 «الشعار الواحد».
  *
  * ONE canonical source: apps/mobile/src/brand/mark.ts (the 32-grid
- * construction — two squares + the orange point). This script PARSES the
+ * Tadmora arch construction — the gateway path + the orange keystone).
+ * This script PARSES the
  * constants out of that file (loudly failing if its shape changes), builds
  * EVERY app asset from the same numbers, and byte-verifies the committed
  * PNGs/SVG in --check mode (wired into `npm run tokens:check` → CI).
@@ -49,9 +50,8 @@ function need(re, name, cast = (x) => x) {
 }
 
 const VIEWBOX = need(/MARK_VIEWBOX = '([^']+)'/, "MARK_VIEWBOX", (g) => g[0]);
-const AXIS = need(/MARK_AXIS = \{ x: (\d+), y: (\d+), size: (\d+) \}/, "MARK_AXIS", (g) => g.map(Number));
-const DIAMOND = need(/MARK_DIAMOND_PATH = '([^']+)'/, "MARK_DIAMOND_PATH", (g) => g[0]);
-const POINT = need(/MARK_POINT = \{ x: (\d+), y: (\d+), size: (\d+) \}/, "MARK_POINT", (g) => g.map(Number));
+const ARCH = need(/MARK_ARCH_PATH = '([^']+)'/, "MARK_ARCH_PATH", (g) => g[0]);
+const KEY = need(/MARK_KEYSTONE = \{ x: (\d+), y: (\d+), size: (\d+) \}/, "MARK_KEYSTONE", (g) => g.map(Number));
 
 const STROKE_COMPONENT = 1.5; // mark.ts: hairline at the 32-grid design size
 const STROKE_FAVICON = 2.25;  // mark.ts: the sanctioned small-seat ratio
@@ -65,15 +65,13 @@ const STROKE_FAVICON = 2.25;  // mark.ts: the sanctioned small-seat ratio
  * the full 32-grid box occupies; bg — background fill or null.
  */
 function markSvg({ stroke, ink = "#282828", orange = "#FA3600", canvas = 1024, box = 1, bg = null }) {
-  const u = (canvas * box) / 32; // one grid unit in output px
-  const off = (canvas - 32 * u) / 2; // centre the 32-box
-  const g = (n) => +(n * u + off).toFixed(2);
-  const sw = +(stroke * u).toFixed(2);
-  const [ax, ay, as] = AXIS;
-  const [px, py, ps] = POINT;
-  const diamondScaled = DIAMOND.replace(/-?\d+(?:\.\d+)?/g, (n) => g(parseFloat(n)));
-  const bgRect = bg ? `<rect width="${canvas}" height="${canvas}" fill="${bg}"/>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas}" height="${canvas}" viewBox="0 0 ${canvas} ${canvas}">${bgRect}<g fill="none" stroke="${ink}" stroke-width="${sw}" stroke-linejoin="miter"><rect x="${g(ax)}" y="${g(ay)}" width="${(as * u).toFixed(2)}" height="${(as * u).toFixed(2)}"/><path d="${diamondScaled}"/></g><rect x="${g(px)}" y="${g(py)}" width="${(ps * u).toFixed(2)}" height="${(ps * u).toFixed(2)}" fill="${orange}"/></svg>`;
+  // Build in the mark's own 32-unit space; the viewBox carries the box
+  // fraction (the mark occupies `box` of the canvas, centred) so the arc
+  // command's flags stay literal — never re-scale path numbers by hand.
+  const vb = 32 / box; // total viewBox units across the canvas
+  const off = +((vb - 32) / 2).toFixed(4);
+  const bgRect = bg ? `<rect x="${-off}" y="${-off}" width="${vb}" height="${vb}" fill="${bg}"/>` : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas}" height="${canvas}" viewBox="${-off} ${-off} ${vb} ${vb}">${bgRect}<g fill="none" stroke="${ink}" stroke-width="${stroke}" stroke-linejoin="miter"><path d="${ARCH}"/></g><rect x="${KEY[0]}" y="${KEY[1]}" width="${KEY[2]}" height="${KEY[2]}" fill="${orange}"/></svg>`;
 }
 
 /* ── 3. the asset table (every number derived from the one source) ──── */
@@ -132,7 +130,7 @@ const report = (name, ok, note) => {
 console.log(`build-app-icons (${MODE}) — source: apps/mobile/src/brand/mark.ts`);
 
 // The ONE SVG — canonical, committed, byte-checked (viewBox = mark's own).
-const oneSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="${VIEWBOX}"><g fill="none" stroke="#282828" stroke-width="${STROKE_COMPONENT}" stroke-linejoin="miter"><rect x="${AXIS[0]}" y="${AXIS[1]}" width="${AXIS[2]}" height="${AXIS[2]}"/><path d="${DIAMOND}"/></g><rect x="${POINT[0]}" y="${POINT[1]}" width="${POINT[2]}" height="${POINT[2]}" fill="#FA3600"/></svg>`;
+const oneSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="${VIEWBOX}"><g fill="none" stroke="#282828" stroke-width="${STROKE_COMPONENT}" stroke-linejoin="miter"><path d="${ARCH}"/></g><rect x="${KEY[0]}" y="${KEY[1]}" width="${KEY[2]}" height="${KEY[2]}" fill="#FA3600"/></svg>`;
 
 if (MODE === "png") {
   writeFileSync(join(SHARED_BRAND, "mark.svg"), oneSvg + "\n");
