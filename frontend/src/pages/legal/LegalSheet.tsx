@@ -20,7 +20,7 @@ import '../../styles/legal.css';
 
 /** The canonical public URL every page's canonical/OG:url derives from
  * (index.html:33 — the one absolute base the site declares). */
-const CANONICAL_BASE = 'https://tadmora.onrender.com';
+const CANONICAL_BASE = 'https://tadmora.vercel.app';
 
 /* ═══ useLegalMeta — per-page head metadata ══════════════════════════
  *

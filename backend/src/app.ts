@@ -123,7 +123,7 @@ const THEME_BOOTSTRAP_SHA256 = 'tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=';
  * synthetic data, never as affiliation). Verified by check-csp-hash.sh. */
 // r191: pin refreshed — the JSON-LD description dropped the rejected
 // provenance slogan with the meta copy fix.
-const JSON_LD_SHA256 = '6BgZCN53irlTV8mjiydtgqi8FM4RzO8ICoVKHo1SFc8=';
+const JSON_LD_SHA256 = 'iuL/6zJA7tueoBlf/WhDgsHDQEsvQOBerb8PIlbx7Dw=';
 
 export function createApp() {
   const app = express();

@@ -7,14 +7,14 @@
  * .landing-header, the تادمورا brand, the Arabic document title).
  *
  * Parameterized + deterministic for release verification:
- *   BASE_URL (default https://tadmora.onrender.com)
+ *   BASE_URL (default https://tadmora.vercel.app)
  *   CAPTURE_DIR (default /tmp/r174-captures)
  * Exit code: 0 pass · 1 fail.
  */
 import { mkdir } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
-const BASE = process.env.BASE_URL ?? 'https://tadmora.onrender.com';
+const BASE = process.env.BASE_URL ?? 'https://tadmora.vercel.app';
 const CAPTURE_DIR = process.env.CAPTURE_DIR ?? '/tmp/r174-captures';
 
 async function main(): Promise<void> {

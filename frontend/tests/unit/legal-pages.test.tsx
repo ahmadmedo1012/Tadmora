@@ -182,23 +182,23 @@ describe('R320 §D — titles + per-page head metadata', () => {
       return el;
     };
     const desc = mk('meta', { name: 'description', content: 'الوصف السابق' });
-    const canonical = mk('link', { rel: 'canonical', href: 'https://tadmora.onrender.com/prev' });
+    const canonical = mk('link', { rel: 'canonical', href: 'https://tadmora.vercel.app/prev' });
     const ogTitle = mk('meta', { property: 'og:title', content: 'العنوان السابق' });
-    const ogUrl = mk('meta', { property: 'og:url', content: 'https://tadmora.onrender.com/prev' });
+    const ogUrl = mk('meta', { property: 'og:url', content: 'https://tadmora.vercel.app/prev' });
 
     const { unmount } = renderPage(PrivacyPage);
     expect(desc.getAttribute('content')).toBe(
       'ما تجمعه منصّة تادمورا من بيانات، ولماذا، وأين تُخزَّن، وحقوقك — مكتوبة من سلوك المنصّة الفعلي لا من قوالب.',
     );
-    expect(canonical.getAttribute('href')).toBe('https://tadmora.onrender.com/legal/privacy');
+    expect(canonical.getAttribute('href')).toBe('https://tadmora.vercel.app/legal/privacy');
     expect(ogTitle.getAttribute('content')).toBe('سياسة الخصوصية');
-    expect(ogUrl.getAttribute('content')).toBe('https://tadmora.onrender.com/legal/privacy');
+    expect(ogUrl.getAttribute('content')).toBe('https://tadmora.vercel.app/legal/privacy');
     unmount();
     // restore-on-unmount: the previous values come back
     expect(desc.getAttribute('content')).toBe('الوصف السابق');
-    expect(canonical.getAttribute('href')).toBe('https://tadmora.onrender.com/prev');
+    expect(canonical.getAttribute('href')).toBe('https://tadmora.vercel.app/prev');
     expect(ogTitle.getAttribute('content')).toBe('العنوان السابق');
-    expect(ogUrl.getAttribute('content')).toBe('https://tadmora.onrender.com/prev');
+    expect(ogUrl.getAttribute('content')).toBe('https://tadmora.vercel.app/prev');
     [desc, canonical, ogTitle, ogUrl].forEach((el) => el.remove());
   });
 });
@@ -617,7 +617,7 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
     for (const dis of ['/student', '/teacher', '/admin', '/quality', '/owner']) {
       expect(robots, `Disallow: ${dis}`).toContain(`Disallow: ${dis}`);
     }
-    expect(robots).toContain('Sitemap: https://tadmora.onrender.com/sitemap.xml');
+    expect(robots).toContain('Sitemap: https://tadmora.vercel.app/sitemap.xml');
   });
 
   it('sitemap.xml: exactly 16 public routes', () => {
@@ -625,7 +625,7 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
     const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
     expect(urls).toHaveLength(16);
     // the 7 existing public paths + the 9 new sheets, all on the canonical base
-    const base = 'https://tadmora.onrender.com';
+    const base = 'https://tadmora.vercel.app';
     expect(urls).toEqual([
       `${base}/`, `${base}/auth`, `${base}/auth/register`, `${base}/colleges`,
       `${base}/colleges/leaderboard`, `${base}/campus`, `${base}/capabilities`,
