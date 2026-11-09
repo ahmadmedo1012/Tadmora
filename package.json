@@ -1,8 +1,8 @@
 {
-  "name": "madarek",
+  "name": "tadmora",
   "version": "1.0.0",
   "private": true,
-  "description": "مدارك — منصّة تعليم ذكي مستقلّة عربية-أولًا · Madarek — an independent Arabic-first smart-learning platform.",
+  "description": "تادمورا — نظام تشغيل الجامعة: منصّة أكاديمية متكاملة مستقلّة، عربية-أولًا · Tadmora — the independent Arabic-first University Operating System.",
   "engines": {
     "node": ">=20 <25"
   },
@@ -25,7 +25,7 @@
     "db:migrate": "npm run prisma:migrate -w backend",
     "db:deploy": "npm run prisma:deploy -w backend",
     "db:seed": "npm run prisma:seed -w backend",
-    "db:seed:force": "MADAREK_SEED_FORCE=1 npm run db:seed",
+    "db:seed:force": "TADMORA_SEED_FORCE=1 npm run db:seed",
     "db:rotate-password": "npm run rotate:password -w backend --",
     "db:provision-owner": "npm run provision:owner -w backend --",
     "db:backup": "node scripts/db-backup.mjs",
@@ -50,7 +50,8 @@
     "gate:clean": "node scripts/r323/clean-gate.mjs",
     "gate:contrast": "node scripts/r323/contrast-gate.mjs",
     "gate:height": "node scripts/r324/height-gate.mjs",
-    "gate:size": "bash scripts/gates/size-gate.sh"
+    "gate:size": "bash scripts/gates/size-gate.sh",
+    "gate:identity": "bash scripts/brand/identity-gate.sh"
   },
   "prepare": "git config core.hooksPath .githooks",
   "devDependencies": {
