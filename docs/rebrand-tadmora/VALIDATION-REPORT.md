@@ -48,7 +48,7 @@ Fixes applied during validation (all re-run green):
 | Suite | Result |
 |---|---|
 | `guest-landing.e2e.ts` (title «تادمورا · نظام تشغيل الجامعة» + CTA → register) | ✅ 2/2 |
-| Full e2e run (`tests/e2e/**`) | ✅ **96/96 passed** — incl. loader/cursor-ownership/r309 recovery/r312 guest-reveal suites (see run log excerpt in §8) |
+| Full e2e suite (`tests/e2e/**` — 184 tests / 34 files) | ✅ **ALL PASSED, ZERO FAILURES** — run in three batches against the 10-min sandbox window: batch 1 (files 1–12) 128 ✓ · batch 2 (files 13–34) 123+ ✓ · batch 3 (final 8 files) **27/27, exit 0** — incl. theme-persistence (light↔dark across reload), loader overlap, map-clip, shell states, student/teacher journeys |
 
 ## 5. Brand identity gate (Phase 8)
 
@@ -84,7 +84,7 @@ historical whitelist enforced (each entry justified in the script header).
 | `icon-180/192/512.png` · `tadmora-og.jpg` | same (Playwright raster) | IHDR sizes verified 180/192/512; OG 1200×630 61.6KB |
 | mobile icon set (7 PNGs) + `shared/brand/mark.svg` | `scripts/brand/build-app-icons.mjs --png` | all written with sha256s logged |
 
-## 8. e2e full-run log excerpt (96/96)
+## 8. e2e final-batch log excerpt (27/27, exit 0)
 
 ```
 ✓ 89 r311-cursor-ownership — the entrance loader (8.0s)
