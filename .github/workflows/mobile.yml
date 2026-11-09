@@ -206,7 +206,6 @@ jobs:
       - name: Detect native-affecting changes (fingerprint inputs)
         if: steps.build-cred.outputs.has_token == 'true' && github.event_name == 'push'
         id: native
-        if: github.event_name == 'push'
         run: |
           CHANGED=$(git diff --name-only HEAD~1 HEAD || echo "")
           NATIVE=$(echo "$CHANGED" | grep -E '^apps/mobile/(package(-lock)?\.json|app\.config\.ts|eas\.json|assets/|plugins?/)|^\.github/workflows/mobile\.yml' || true)
