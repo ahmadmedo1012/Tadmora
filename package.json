@@ -2,6 +2,7 @@
   "name": "tadmora",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "تادمورا — نظام تشغيل الجامعة: منصّة أكاديمية متكاملة مستقلّة، عربية-أولًا · Tadmora — the independent Arabic-first University Operating System.",
   "engines": {
     "node": ">=20 <25"
