@@ -176,8 +176,15 @@ jobs:
       run:
         working-directory: apps/mobile
     steps:
+      # The gate runs BEFORE checkout — it only inspects the secret, never
+      # the tree — so it must not inherit the job's apps/mobile default
+      # (the directory does not exist until checkout; bash then dies with
+      # "working directory … No such file or directory" and the whole job
+      # goes red before the intended honest skip). Pin it to the workspace
+      # root, which always exists.
       - name: Credential gate (EXPO_TOKEN)
         id: build-cred
+        working-directory: .
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
