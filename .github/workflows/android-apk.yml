@@ -76,11 +76,18 @@ jobs:
           [ -x "$SDKMANAGER" ] || SDKMANAGER="$(command -v sdkmanager)"
           [ -n "$SDKMANAGER" ] || { echo "::error::sdkmanager not found under ANDROID_HOME=$ANDROID_HOME"; exit 1; }
           yes | "$SDKMANAGER" --licenses > /dev/null || true
+          # The 2026 repository serves MINOR-VERSIONED platform packages —
+          # compileSdk 37's platform is 'platforms;android-37.0' (plain
+          # android-37 does not exist in the index; verified against
+          # repository2-3.xml). AGP/legacy paths that ask for the
+          # android-37 DIRECTORY are covered by the symlink below.
           "$SDKMANAGER" --install \
             "platform-tools" \
-            "platforms;android-37" \
+            "platforms;android-37.0" \
             "build-tools;37.0.0" \
             "ndk;27.1.12297006"
+          [ -d "$ANDROID_HOME/platforms/android-37" ] || \
+            ln -s "$ANDROID_HOME/platforms/android-37.0" "$ANDROID_HOME/platforms/android-37"
 
       - name: Gradle + NDK cache
         uses: actions/cache@v4

@@ -65,9 +65,15 @@ APK_PATH="$MOBILE_DIR/android/app/build/outputs/apk/release/app-release.apk"
 
 # SDK components required by Expo SDK 58 / RN 0.88 (react-native/gradle
 # libs.versions.toml): compileSdk 37 · targetSdk 36 · buildTools 37.0.0.
-SDK_PLATFORM="platforms;android-37"
+# Phase Ω discovery: the 2026 repository serves the platform as the
+# MINOR-VERSIONED package 'platforms;android-37.0' (api-level 37.0) — the
+# plain android-37 package no longer exists in the index. The directory
+# lands as platforms/android-37.0; tools that ask for the android-37 name
+# are served by a symlink (the CI workflow makes it; locally: ln -s).
+SDK_PLATFORM="platforms;android-37.0"
 SDK_BUILD_TOOLS="build-tools;37.0.0"
-SDK_PLATFORM_DIR="platforms/android-37"
+SDK_PLATFORM_DIR="platforms/android-37.0"
+SDK_PLATFORM_DIR_ALIAS="platforms/android-37"
 SDK_BUILD_TOOLS_DIR="build-tools/37.0.0"
 
 say()  { printf '\n\033[1;36m▸ %s\033[0m\n' "$*"; }
@@ -142,7 +148,11 @@ EOF
   die "Android SDK missing — follow the 3 steps above, then re-run"
 fi
 [[ -x "$ANDROID_HOME_DIR/platform-tools/adb" ]] || warn "platform-tools/adb not found — gradle needs it for device installs (sdkmanager \"platform-tools\")"
-[[ -d "$ANDROID_HOME_DIR/$SDK_PLATFORM_DIR" ]] || die "$SDK_PLATFORM missing under ANDROID_HOME — install it: sdkmanager \"$SDK_PLATFORM\""
+if [[ ! -d "$ANDROID_HOME_DIR/$SDK_PLATFORM_DIR" && -d "$ANDROID_HOME_DIR/$SDK_PLATFORM_DIR_ALIAS" ]]; then
+  # the alias name exists (a pre-minor-version SDK layout) — accept it.
+  SDK_PLATFORM_DIR="$SDK_PLATFORM_DIR_ALIAS"
+fi
+[[ -d "$ANDROID_HOME_DIR/$SDK_PLATFORM_DIR" ]] || die "platforms/android-37(.0) missing under ANDROID_HOME — install it: sdkmanager \"platforms;android-37.0\" (then symlink android-37 → android-37.0 if a tool asks for the old name)"
 [[ -d "$ANDROID_HOME_DIR/$SDK_BUILD_TOOLS_DIR" ]] || die "$SDK_BUILD_TOOLS missing under ANDROID_HOME — install it: sdkmanager \"$SDK_BUILD_TOOLS\""
 warn "If gradle later fails with 'failed to find target with hash string' or license prompts: yes | sdkmanager --licenses"
 ok "ANDROID_HOME=$ANDROID_HOME_DIR ($SDK_PLATFORM + $SDK_BUILD_TOOLS present)"
