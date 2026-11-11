@@ -319,7 +319,7 @@ export function CollegesIndexPage() {
         <EmptyState
           illustration="empty-list"
           title="لا توجد كليات بعد"
-          description="كل مؤسسة تبني كلياتها بعد انضمامها — يضيفها المسجّل العام من «الهيكل الأكاديمي» في لوحة الإدارة."
+          description="كل مؤسسة تبني كلياتها بعد انضمامها — يضيفها المسجّل العام من «الهيكل الأكاديمي» في لوحة المسجل العام."
         />
       )}
 
@@ -426,7 +426,7 @@ export function CollegesIndexPage() {
               <RowItem
                 leading={<span aria-hidden><Icon icon={Building2} size={22} /></span>}
                 title="١ · الهيكل الأكاديمي"
-                meta={<span className="cp-meta-row">من لوحة الإدارة ينشئ المسجّل العام الكليات والأقسام — الاسم واللغة والهيكل قرار مؤسستك، لا قالبًا جاهزًا.</span>}
+                meta={<span className="cp-meta-row">من لوحة المسجّل العام تُنشأ الكليات والأقسام — الاسم واللغة والهيكل قرار مؤسستك، لا قالبًا جاهزًا.</span>}
               />
               <RowItem
                 leading={<span aria-hidden><Icon icon={BookOpen} size={22} /></span>}
