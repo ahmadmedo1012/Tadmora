@@ -60,12 +60,12 @@ afterAll(async () => {
 
 // ── Fixtures ────────────────────────────────────────────────────────
 
-const ZAWIA = { id: 'inst-zawia-showcase', slug: 'tadmora-demo', name: 'جامعة تادمورا التجريبية' };
+const ZAWIA = { id: 'inst-zawia-showcase', slug: 'tadmora-demo', name: 'مساحة عمل تادمورا التجريبية' };
 const OTHER = { id: 'inst-other', slug: 'other-demo', name: 'مؤسسة أخرى' };
 
 const FACT_ROWS = [
   {
-    institutionId: ZAWIA.id, key: 'name.ar', value: 'جامعة تادمورا التجريبية',
+    institutionId: ZAWIA.id, key: 'name.ar', value: 'مساحة عمل تادمورا التجريبية',
     category: 'identity', source: 'zu.edu.ly:about', isStale: false, syncedAt: new Date(),
   },
   {
@@ -173,7 +173,7 @@ describe('GET /api/v1/university/facts — public per-institution facts', () => 
       data: { institution: { slug: string }; categories: Record<string, Record<string, string>> };
     };
     expect(body.data.institution.slug).toBe('tadmora-demo');
-    expect(body.data.categories.identity!['name.ar']).toBe('جامعة تادمورا التجريبية');
+    expect(body.data.categories.identity!['name.ar']).toBe('مساحة عمل تادمورا التجريبية');
     // No auth → no membership re-resolution ever runs on this path.
     expect(membershipFindFirst).not.toHaveBeenCalled();
   });
@@ -227,7 +227,7 @@ describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () 
     expect(factFindMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: { institutionId: ZAWIA.id } }),
     );
-    expect(body.data.categories[0]!.items[0]!.value).toBe('جامعة تادمورا التجريبية');
+    expect(body.data.categories[0]!.items[0]!.value).toBe('مساحة عمل تادمورا التجريبية');
   });
 
   it('a contextless ADMIN gets 403 INSTITUTION_CONTEXT_REQUIRED (no institution guessing)', async () => {

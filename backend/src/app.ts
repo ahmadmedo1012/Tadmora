@@ -153,19 +153,13 @@ export function createApp() {
           'worker-src': ["'self'", 'blob:'],
           'object-src': ["'none'"],
           'base-uri': ["'self'"],
-          /* r307: the landing's official-university documentaries embed
-             via the privacy-enhanced youtube-nocookie mechanism, mounted
-             ONLY after an explicit user click (the facade contract — see
-             frontend/src/components/landing/VideoCard.tsx). frame-src
-             admits exactly the two embed hosts; media-src stays unset
-             (falls back to 'self' — all landing video bytes stay local
-             until the visitor opts in), and img-src stays self-only: no
-             third-party thumbnail hosts, posters are composed in CSS. */
-          'frame-src': [
-            "'self'",
-            'https://www.youtube-nocookie.com',
-            'https://www.youtube.com',
-          ],
+          /* Phase Ω (identity purity): the official-university video
+             embeds (youtube-nocookie, mounted after a click via the
+             retired VideoCard) are gone with the real-university media
+             programme — the platform embeds nothing external anymore.
+             frame-src collapses to 'self'; media-src stays unset
+             (falls back to 'self'), img-src stays self-only. */
+          'frame-src': ["'self'"],
         },
       },
       crossOriginResourcePolicy: { policy: 'cross-origin' },
