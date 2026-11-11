@@ -5,12 +5,12 @@
 
 ## What triggers what
 
-| You push to `main`… | Render (web) | GitHub Actions | EAS |
+| You push to `main`… | Vercel (web) | GitHub Actions | EAS |
 |---|---|---|---|
-| `backend/**` | ✅ deploys | CI + **deploy-smoke** (waits for buildId == SHA, then health + 3 logins + dashboard + live-vs-committed OpenAPI additive check; failure opens an issue) | — |
-| `frontend/**`, `shared/**` (web side) | ✅ deploys | CI | — (unless `apps/mobile/**`/`shared/**` also changed → see below) |
-| `apps/mobile/**` or `shared/**` | ❌ never (render.yaml `buildFilter`) | **Mobile** workflow: gates (typecheck · expo lint · contract-check · `expo export` android+ios · bundle ≤ 8 MB) | **EAS Update** (`--auto`) to `production` **and** `preview` branches — reaches every installed build whose runtime fingerprint matches |
-| …and the change is **native-affecting** (`apps/mobile/package.json`/lock, `app.config.ts`, `eas.json`, `assets/`, or `shared/` brand assets) | ❌ | same gates | + **EAS Build** preview profile (internal APK + iOS simulator), `--no-wait`, links in the run summary |
+| `backend/**` | ✅ deploys (**Deploy** workflow when its secrets are set — otherwise the manual `vercel deploy` path) | CI + **deploy-smoke** (waits for buildId == SHA, then health + 3 logins + dashboard + live-vs-committed OpenAPI additive check; failure opens an issue) | — |
+| `frontend/**`, `shared/**` (web side) | ✅ deploys (same as above) | CI | — (unless `apps/mobile/**`/`shared/**` also changed → see below) |
+| `apps/mobile/**` or `shared/**` | ❌ never (`.vercelignore` excludes the app) | **Mobile** workflow: gates (typecheck · expo lint · contract-check · `expo export` android+ios · bundle ≤ 8 MB) · **Android APK** workflow (below) | **EAS Update** (`--auto`) to `production` **and** `preview` branches — reaches every installed build whose runtime fingerprint matches |
+| …and the change is **native-affecting** (`apps/mobile/package.json`/lock, `app.config.ts`, `eas.json`, `assets/`, or `shared/` brand assets) | ❌ | same gates + a fresh direct APK | + **EAS Build** preview profile (internal APK + iOS simulator), `--no-wait`, links in the run summary |
 | `docs/**`, `audits/**`, `*.md` | ❌ | CI only | — |
 
 Channels: `development` (dev-client) · `preview` (internal APK/simulator) ·
@@ -19,13 +19,40 @@ native dependency/plugin/config change silently produces a new fingerprint:
 OTA updates then wait for the matching build (the workflow queues it
 automatically).
 
-## Keep-warm (free tier)
+## Neon cold start (free tier)
 
-Render's free plan sleeps the web service after ~15 idle minutes;
-`.github/workflows/keep-warm.yml` pings `GET /api/v1/health` every 10
-minutes so visitors never pay the 30–60s cold boot. Upgrading the
-Render service to **Starter** removes the sleep behaviour entirely —
-then delete the workflow.
+The web service is always-on on Vercel; the database is Neon free tier —
+it scales compute to zero after idle. The first request after a pause
+pays a sub-second wake (the migrate-deploy script already retries until
+Neon is warm). Nothing to keep warm on the web side since the Render
+retirement.
+
+## The direct Android channel (Phase Ω — android-apk.yml)
+
+A REAL, signed, installable release APK — built on GitHub's own runners
+(no EAS quota, no external account) and published to the rolling
+**`latest`** GitHub Release. Two URLs, both always the newest build:
+
+- `https://github.com/ahmadmedo1012/Tadmora/releases/latest/download/tadmora.apk`
+- `https://github.com/ahmadmedo1012/Tadmora/releases/download/latest/tadmora.apk`
+
+- **Recipe:** the repo's own `scripts/build-android-local.sh`
+  (expo prebuild → key.properties + release signingConfig patch →
+  `gradlew assembleRelease`) driven with repository-secret credentials.
+- **Signing key:** a dedicated direct-channel keystore, stored as the
+  Actions secrets `ANDROID_KEYSTORE_B64` · `ANDROID_KEYSTORE_PASSWORD` ·
+  `ANDROID_KEY_ALIAS` · `ANDROID_KEY_PASSWORD`. It is deliberately
+  SEPARATE from any future Play upload key (that one stays in EAS
+  credentials). The stable signature means each new APK installs as an
+  **update** over previous direct installs — no uninstall/reinstall.
+- **Rebuild cadence:** every push touching `apps/mobile/**` or
+  `shared/**` (JS changes ship a new APK too — the bundle is embedded),
+  plus manual dispatch.
+- **If the direct-channel key is ever lost:** a new keystore means a new
+  direct-channel identity — direct installs would need one
+  uninstall/reinstall. The Play channel is unaffected (separate key).
+- The `/app` distribution page links the stable URL and stays the
+  app-facing source (the backend serves it as `updateUrl`).
 
 ## The one-time setup that is already done
 
@@ -35,7 +62,15 @@ then delete the workflow.
   update the secret.
 - `app.config.ts` carries `updates.url` (NEW EAS project pending `eas init`) +
   `runtimeVersion: { policy: "fingerprint" }` + `checkAutomatically: ON_LOAD`.
-- Render `buildFilter` excludes mobile/docs commits.
+- `.vercelignore` pins the Vercel upload context to the web surface
+  (backend + frontend + api adapter); mobile/docs never ship with it.
+- **Deploy automation (deploy.yml):** to let GitHub Actions deploy to
+  Vercel, set THREE repository secrets — `VERCEL_TOKEN` (vercel.com →
+  Settings → Tokens), `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` (both from
+  `.vercel/project.json` on the machine that ran the original `vercel
+  link`; the ids pin deploys to the EXISTING project). Until they are
+  set the workflow skips with a notice and the manual path
+  (`npx vercel deploy --prod --regions fra1`) keeps working unchanged.
 
 ## R327 D2/D3 — the store-prep state of the world
 
@@ -61,6 +96,8 @@ generated — was regenerated byte-honest with the pinned toolchain).
 - EAS **auto-generates and stores** an upload keystore on the account's
   first `production` Android build if none exists
   (expo.dev → the NEW Tadmora project → Credentials → Android).
+  This is the STORE key only — the direct APK channel signs with its own
+  dedicated key (see §the direct Android channel above).
 - **Back it up once** after that first build: Credentials → the keystore →
   download the `.jks` + note its passwords somewhere safe (password
   manager). A lost keystore means a new app identity on Play (a new
@@ -142,8 +179,9 @@ npx eas-cli build --profile preview   --platform all --non-interactive --no-wait
 
 # bump the minimum app version (blocks outdated installs with a blocking
 # «يلزم تحديث التطبيق» screen):
-#   Render dashboard → tadmora → Environment → MIN_APP_VERSION=1.1.0 (+ optional
-#   APP_DOWNLOAD_URL). The app reads /api/v1/status minAppVersion on cold start.
+#   vercel.com → tadmora → Settings → Environment Variables →
+#   MIN_APP_VERSION=1.1.0 (+ optional APP_DOWNLOAD_URL). The app reads
+#   /api/v1/status minAppVersion on cold start.
 ```
 
 ## Backup & restore — the drill record
@@ -173,9 +211,10 @@ blocking update screen with the `/app` download link. Unset → no gate.
 
 ## Distribution page
 
-`/app` on the website: latest APK (EAS artifact URL from
-`docs/releases.json`, updated by the build workflow), QR, changelog,
-«ما الجديد», iOS status. Link lives in the landing footer + help.
+`/app` on the website: the direct APK (the rolling `latest` GitHub
+Release — one URL, always the newest build), the releases page (history
++ checksums), «ما الجديد», iOS status. Link lives in the landing footer
++ help; the backend serves this page as `updateUrl` in `/api/v1/status`.
 
 ## In-app update UX
 

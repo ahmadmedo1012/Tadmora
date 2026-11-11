@@ -22,9 +22,11 @@ import '../styles/app.css';
  *
  * The distribution sheet in the public grammar (hairline cells · [nn]
  * bars · paper/ink). EVERY claim is honest:
- *   · the APK link is the REAL preview-channel artifact (EAS),
- *     regenerated per native build — the durable source is the project's
- *     builds page, linked beside it;
+ *   · the APK link is the DIRECT-CHANNEL artifact — a release APK built
+ *     and signed by GitHub Actions (android-apk.yml) from the latest
+ *     main, published to the rolling «latest» release: one URL that
+ *     always serves the newest build, and a stable signature so new
+ *     installs upgrade in place;
  *   · TestFlight is PENDING (needs the owner's Apple Developer account —
  *     RELEASE.md documents the exact owner steps);
  *   · the minimum-version floor is read LIVE from /api/v1/status — the
@@ -35,14 +37,14 @@ import '../styles/app.css';
  * screen lands here.
  */
 
-/* The latest preview-channel artifacts (EAS Build, A3 evidence). The iOS
- * simulator tar.gz is for DEVELOPERS; the Android APK installs directly
- * on devices. Both regenerate on native-affecting merges — the builds
- * page is the durable source of truth. */
+/* The direct Android channel (Phase Ω): the rolling «latest» GitHub
+ * Release, rebuilt automatically whenever apps/mobile or shared/ change
+ * — the URL below is ALWAYS the newest build. The releases page is the
+ * durable source of truth (history + checksums). */
 const ANDROID_APK_URL =
-  'https://expo.dev/artifacts/eas/5XTynelLCXq0ihxCSSNxbl-r-iNDdEpfEFA4MCXj390.tar.gz';
+  'https://github.com/ahmadmedo1012/Tadmora/releases/latest/download/tadmora.apk';
 const BUILDS_PAGE_URL =
-  'https://expo.dev/accounts/rh2011/projects/tadmora-mobile/builds';
+  'https://github.com/ahmadmedo1012/Tadmora/releases';
 const APP_VERSION = '1.0.0';
 
 interface StatusShape {
@@ -130,21 +132,23 @@ export function AppDownloadPage() {
             <div className="ap-cell">
               <p className="ap-p">
                 النسخة الحالية <span className="ap-mono" dir="ltr">{APP_VERSION}</span> من قناة
-                المعاينة — ملفّ APK واحد يُثبَّت مباشرة (اسمح بـ«التثبيت من مصادر غير معروفة» عند
-                سؤال النظام أول مرة).
+                التنزيل المباشر — ملفّ APK واحد يُبنى ويُوقَّع تلقائيًا من أحدث شيفرة عبر
+                GitHub Actions، فيقدّم الرابط أدناه دائمًا أحدث بناء (اسمح بـ«التثبيت من
+                مصادر غير معروفة» عند سؤال النظام أول مرة).
               </p>
               <p className="ap-p ap-actions">
                 <a className="btn primary sm" href={ANDROID_APK_URL} dir="ltr">
                   تنزيل APK
                 </a>
                 <a className="btn ghost sm" href={BUILDS_PAGE_URL} target="_blank" rel="noreferrer" dir="ltr">
-                  كلّ البناءات (EAS)
+                  صفحة الإصدارات
                 </a>
               </p>
               <p className="ap-p ap-p-note">
-                ملاحظة صادقة: رابط APK أعلاه يتجدّد مع كلّ بناء أصلي جديد — إن لم يعمل، فالصفحة
-                الدائمة للبناءات بجانبه هي المرجع. نسخة متجر Google Play (AAB) قيد الإعداد
-                وتحتاج خطوة واحدة من المالك (مفتاح الخدمة — موثّقة في RELEASE.md).
+                ملاحظة صادقة: رابط APK أعلاه يتجدّد تلقائيًا مع كلّ دفعة جديدة للفرع الرئيسي —
+                توقيع البناءات ثابت فتُثبَّت التحديثات فوق النسخ السابقة، وصفحة الإصدارات
+                بجانبه هي المرجع الدائم (السجل والبصمات). نسخة متجر Google Play (AAB) قيد
+                الإعداد وتحتاج خطوة واحدة من المالك (مفتاح الخدمة — موثّقة في RELEASE.md).
               </p>
             </div>
           </section>

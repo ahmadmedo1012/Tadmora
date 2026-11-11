@@ -221,7 +221,7 @@ jobs:
       # resolves that copy, not a registry download.
       - name: Install Playwright chromium
         working-directory: frontend
-        run: npx playwright install chromium --with-deps
+        run: npx playwright install chromium
       - run: npm --prefix frontend run test:e2e
       # r305-final: the A9 cross-route QA belt (frontend/tests/r305/*.e2e.ts,
       # 73 specs) — same hermetic model (own qa-transport page.route mocks,
@@ -366,7 +366,7 @@ jobs:
       # no-counterpart instead of being silently dropped).
       - name: Install Playwright chromium
         working-directory: frontend
-        run: npx playwright install chromium --with-deps
+        run: npx playwright install chromium
       - name: Boot Vite dev server
         working-directory: frontend
         run: nohup npx vite --port 5173 --strictPort > /tmp/vite.log 2>&1 &
@@ -419,7 +419,7 @@ jobs:
       - name: Install chromium (audit sweep browser)
         if: steps.baseline.outputs.captures != '0'
         working-directory: frontend
-        run: npx playwright install chromium --with-deps
+        run: npx playwright install chromium
       - name: Fresh capture + drift detection (hard gate)
         if: steps.baseline.outputs.captures != '0'
         working-directory: frontend
