@@ -66,7 +66,7 @@ describe('r177 — public metadata is platform-neutral (index.html)', () => {
     // r188: the retired real-university `about` node is GONE — the only
     // demo-data mention is the fictional tenant, inside the description.
     expect(data['about']).toBeUndefined();
-    expect(data['description']).toContain('جامعة تادمورا التجريبية');
+    expect(data['description']).toContain('مساحة عمل تادمورا التجريبية');
     expect(data['description']).toContain('اصطناعية');
   });
 
@@ -100,9 +100,10 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
       expect(code, `landing still carries: ${claim}`).not.toContain(claim);
     }
     expect(landing).toContain('مستقلّة');
-    // r188: the only sample-data story is the FICTIONAL demo tenant,
-    // stated in the independence manifesto with its synthetic label.
-    expect(landing).toContain('جامعة تادمورا التجريبية');
+    // Phase Ω: the only sample-data story is the LABELED demo
+    // workspace, stated in the independence manifesto with its
+    // synthetic label (a workspace, never a university).
+    expect(landing).toContain('مساحة عمل تادمورا التجريبية');
     expect(landing).toContain('اصطناعية بالكامل');
     expect(landing).not.toContain('جامعة الزاوية');
     // brand subtitle is a product descriptor, not a university
@@ -171,9 +172,9 @@ describe('r182 — the docs center intro stays affiliation-free', () => {
     const docsIndex = readRepo('docs/README.md');
     expect(docsIndex).toContain('منصّة تعليم');
     expect(docsIndex).toContain('مستقلّة');
-    // r188: the demo tenant is the fictional «جامعة تادمورا التجريبية» —
-    // synthetic data, never a real-university showcase framing.
-    expect(docsIndex).toContain('جامعة تادمورا التجريبية');
+    // Phase Ω: the demo tenant is the labeled «مساحة عمل تادمورا
+    // التجريبية» — synthetic data, never a university.
+    expect(docsIndex).toContain('مساحة عمل تادمورا التجريبية');
     expect(docsIndex).toContain('اصطناعية');
     expect(docsIndex).not.toContain('مؤسّسة العرض المرجعية');
     expect(docsIndex).not.toContain('منصة التعلم الذكية\nلجامعة الزاوية');

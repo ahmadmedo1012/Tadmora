@@ -3,7 +3,7 @@
  *
  * The R188 brand reset removed the real University of Zawia identity
  * from every ACTIVE product surface, replacing it with the explicitly
- * fictional demonstration tenant (جامعة تادمورا التجريبية). This gate
+ * labeled demonstration workspace (مساحة عمل تادمورا التجريبية). This gate
  * fails loudly if that identity — or any real-university imagery or
  * claim — re-appears where users can see it.
  *
@@ -124,7 +124,7 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
     // positive pins: the new identity exists where users see it.
     const seed = readFileSync(path.join(root, 'backend/prisma/seed.ts'), 'utf8');
     expect(seed).toContain("slug: 'tadmora-demo'");
-    expect(seed).toContain("name: 'جامعة تادمورا التجريبية'");
+    expect(seed).toContain("name: 'مساحة عمل تادمورا التجريبية'");
     /* P2-0 (r335 split): the demo-tenant copy rides the guest surface
      * (LandingPage + the nine section bands) — the pin reads all of it. */
     const landing = [
@@ -139,7 +139,7 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
       'frontend/src/components/landing/sections/Vision.tsx',
       'frontend/src/components/landing/sections/Footer.tsx',
     ].map((p) => readFileSync(path.join(root, p), 'utf8')).join('\n');
-    expect(landing).toContain('جامعة تادمورا التجريبية');
+    expect(landing).toContain('مساحة عمل تادمورا التجريبية');
     expect(landing).toContain('اصطناعية بالكامل');
   });
 

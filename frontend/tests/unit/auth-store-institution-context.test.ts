@@ -40,7 +40,7 @@ const MEMBERSHIPS: MembershipInfo[] = [
   },
   {
     institutionId: 'inst-alandalus-demo',
-    name: 'مؤسسة الأندلس التعليمية',
+    name: 'مساحة عمل تجريبية ثانية',
     nameEn: 'Al-Andalus Education Institute',
     slug: 'alandalus-demo',
     role: 'ADMIN',

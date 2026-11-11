@@ -80,7 +80,7 @@ test.describe('الزائر — فيض أفقي صفري', () => {
 
       test('/colleges (قناة الزائر) بلا فيض', async ({ page }) => {
         await page.goto('/colleges');
-        await expect(page.getByRole('group', { name: 'كلّيّات حرم المعرفة' })).toBeVisible();
+        await expect(page.getByText('كليّات مساحة العمل')).toBeVisible();
         await expectNoHorizontalOverflow(page, GUEST_COLLEGES_LANDMARKS);
       });
     });

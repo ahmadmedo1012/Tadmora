@@ -119,32 +119,28 @@ describe('r183-B8 — CollegesLayout skip link (A10 finding 3)', () => {
 });
 
 /* ── fix 2: the chip-strip edge fade ─────────────────────────────── */
-describe('r183-B8 — campus-filter scroller affordance (A10 finding 4)', () => {
+describe('r183-B8 → Ω — the campus-filter scroller is retired with the campuses', () => {
   const css = read('src/styles/colleges.css');
 
-  it('the ≤768 chip strip gains an inline-end edge fade over the scrolled content', () => {
-    // Mask, not paint: the fade composes with the toolbar's
-    // translucent surface and can never introduce a second background.
-    expect(css).toContain(
+  it('the retired chip strip leaves NO dead fade rules behind (Phase Ω)', () => {
+    // The campus dimension is retired — the strip's mask rules (and
+    // their prefixed twin) are dead selectors now, and dead selectors
+    // are how the sheet rots (the css-dead census law). The retirement
+    // must be total: no rule, no comment anchor, no orphan class.
+    expect(css).not.toContain('gallery-chip-strip');
+    expect(css).not.toContain(
       'mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px)',
     );
-    // Prefixed twin for older Safari (backdrop-filter precedent).
-    expect(css).toContain(
-      '-webkit-mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px)',
-    );
+    expect(css).not.toContain('r183-B8 (A10 finding 4)');
   });
 
-  it('the fade is token-compliant — no raw color literal in the rule (color-gate parity)', () => {
-    const start = css.indexOf('r183-B8 (A10 finding 4)');
-    expect(start).toBeGreaterThanOrEqual(0);
-    // (G final sweep re-anchor: the trailing .college-grid rule the
-    // slice used to stop at is deleted — the strip's mask block is the
-    // end of the ≤768 media now.)
-    const end = css.indexOf('.college-stat-chip', start);
-    const rule = css.slice(start, end);
-    expect(rule).not.toMatch(/#[0-9a-fA-F]{3,8}\b|\brgb\(|\bhsl\(|\boklch\(/);
-    // The opaque stop consumes a design token.
-    expect(rule).toContain('var(--surface)');
+  it('the sheet still keeps its other mask usage token-compliant (color-gate parity)', () => {
+    // Any remaining mask-image rule (if the sheet grows one again)
+    // must consume design tokens, never raw color literals.
+    const rules = css.match(/-?mask-image:[^;]+;/g) ?? [];
+    for (const rule of rules) {
+      expect(rule, rule).not.toMatch(/#[0-9a-fA-F]{3,8}\b|\brgb\(|\bhsl\(|\boklch\(/);
+    }
   });
 });
 

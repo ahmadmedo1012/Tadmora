@@ -45,7 +45,7 @@ const ZAWIA = {
 
 const ALANDALUS = {
   id: 'inst-alandalus-demo',
-  name: 'مؤسسة الأندلس التعليمية',
+  name: 'مساحة عمل تجريبية ثانية',
   nameEn: 'Al-Andalus Education Institute',
   slug: 'alandalus-demo',
   status: 'SUSPENDED',
@@ -148,7 +148,7 @@ describe('OwnerInstitutionsPage — listing (r178)', () => {
     expect(screen.getByText('جامعة الزاوية')).toBeInTheDocument();
     expect(screen.getByText('University of Zawia')).toBeInTheDocument();
     expect(screen.getByText('zawia-showcase')).toBeInTheDocument();
-    expect(screen.getByText('مؤسسة الأندلس التعليمية')).toBeInTheDocument();
+    expect(screen.getByText('مساحة عمل تجريبية ثانية')).toBeInTheDocument();
 
     // Status badges — the Arabic status vocabulary, not raw enum values.
     expect(screen.getByText('نشطة')).toBeInTheDocument();

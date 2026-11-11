@@ -377,33 +377,36 @@ describe('r306 — the funnel/a11y contracts carried forward', () => {
     expect(liveTsx).not.toContain('ch-${ch.num}-title');
   });
 
-  it('the colleges registry keeps the accessible strip contract (the #colleges anchor + the public link + the disclosure)', () => {
+  it('the registry strip keeps the accessible contract (the #colleges anchor + the public link + the disclosure)', () => {
     /* R313 override (WP-A1 · D7): the interactive chip registry moved
      * off the landing — the registry itself lives on /colleges and the
      * capability/status ledgers on /capabilities. The #colleges anchor
-     * survives as the ruled registry strip at the sheet's close: the
-     * 25-college count + the demo-data disclosure + the public
+     * survives as the ruled registry strip at the sheet's close.
+     * Phase Ω: the fixed 25-college catalogue is retired — the strip
+     * carries the workspace truth (3 demo faculties, every institution
+     * builds its own) + the demo-data disclosure + the public
      * /colleges link + the login affordance (the funnel's 5th). */
     expect(liveTsx).toMatch(/className="cg-strip"/);
     expect(liveTsx).toContain('id="colleges"');
     expect(liveTsx).toContain('to="/colleges"');
-    expect(liveTsx).toContain('formatInt(colleges.length)');
-    // the demo-data disclosure rides the strip (never a tooltip)
-    expect(liveTsx).toContain('اصطناعية بالكامل');
+    // the demo-workspace disclosure rides the strip (never a tooltip)
+    expect(liveTsx).toContain('مساحة العمل التجريبية');
+    expect(liveTsx).toContain('لا جامعة ولا انتماء');
   });
 
-  it('the honest numbers still compute from the registry (no invented adoption)', () => {
-    /* P2-0 (r335 split): the registry import rides sections/Vision.tsx
-     * (depth-correct relative path from its new home). */
-    expect(liveTsx).toContain("data/colleges.config'");
-    // R322 override (2-b): the landing's marquee rides HERO_WORK_ITEMS
-    // (the live-capability ledger's own short work labels — same
-    // registry truth, shorter strings); the honest COUNT still
-    // computes from LIVE_CAPABILITIES (LIVE_COUNT, the meta grid's
-    // [NN] cell) — the no-invented-numbers contract is unchanged.
+  it('the honest numbers still compute from live registries (no invented adoption)', () => {
+    /* P2-0 (r335 split): the marquee + counts ride sections/Vision.tsx.
+     * Phase Ω: the fixed colleges registry is retired — the ONLY
+     * structural count left on the landing is the live-capability
+     * ledger (LIVE_CAPABILITIES → LIVE_COUNT, the meta grid's [NN]
+     * cell); the demo-faculty count on the registry strip is the
+     * workspace's real three, stated as a literal with the workspace
+     * label (it is demo data, not an adoption claim). */
     expect(liveTsx).toContain('HERO_WORK_ITEMS');
     expect(liveTsx).toContain('LIVE_COUNT');
-    expect(liveTsx).toContain('formatInt(colleges.length)');
+    // the retired catalogue must NOT come back
+    expect(liveTsx).not.toContain("data/colleges.config'");
+    expect(liveTsx).not.toContain('formatInt(colleges.length)');
   });
 });
 

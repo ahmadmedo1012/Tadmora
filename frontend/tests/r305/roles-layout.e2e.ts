@@ -57,9 +57,9 @@ test.describe('الزائر — الأسطح العامة', () => {
     await expect(page.getByRole('link', { name: 'العودة إلى الصفحة الرئيسية' })).toBeVisible();
     await expect(page.locator('main#main')).toBeVisible();
     // The public gallery renders REAL payload rows (mock /colleges),
-    // grouped per canonical campus — the mock rows all ride «حرم المعرفة».
-    await expect(page.locator('h1.pf-page-title')).toContainText('جامعة تادمورا التجريبية');
-    const zawiaGroup = page.getByRole('group', { name: 'كلّيّات حرم المعرفة' });
+    // the workspace card lists every faculty equally (Phase Ω — no campus split).
+    await expect(page.locator('h1.pf-page-title')).toContainText('مساحة عمل تادمورا التجريبية');
+    const zawiaGroup = page.getByText('كليّات مساحة العمل');
     await expect(zawiaGroup).toBeVisible();
     await expect(zawiaGroup).toContainText('كلية الهندسة');
     await expect(zawiaGroup).toContainText('كلية العلوم');

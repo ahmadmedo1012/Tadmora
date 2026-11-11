@@ -1,45 +1,34 @@
 /**
- * r307 — the landing media layer contract.
+ * r307→Ω — the landing media layer contract.
  *
- * The r306 sheet («لوحة تادمورا») gained its documentary media layer in
- * R307 (DESIGN.md §6a-6c): Commons-licensed university photography,
- * official-channel documentaries behind click-to-load facades, and
- * real product captures. This sheet pins what interaction tests
- * cannot see cheaply:
- *   · the media registry ↔ the manifest ↔ the bytes on disk agree
- *     (every derivative the srcset promises actually ships);
- *   · every photo carries licence + author + source (attribution is
- *     structural, never an afterthought);
- *   · every video has verified official-channel identity evidence and
- *     NO thumbnail hotlink (img-src stays self-only);
- *   · the CSP admits exactly the two embed hosts and nothing wider;
- *   · the funnel counts survive the media layer untouched (the 5+5
- *     contract stays pinned by landing-funnel.test.tsx — this sheet
- *     pins that the new sections added ZERO new auth links).
+ * Phase Ω (identity purity) retires the real-university media
+ * programme whole: no Commons university photography, no
+ * official-channel video embeds, no university line-art cards. The
+ * landing's media layer is now the platform's OWN production only.
+ * This sheet pins what interaction tests cannot see cheaply:
+ *   · the product-capture registry ↔ the manifest ↔ the bytes on disk
+ *     agree (every derivative the srcset promises actually ships);
+ *   · the retired programme leaves NOTHING behind: no embed hosts in
+ *     the CSP, no hotlink patterns, no university-media imports;
+ *   · the funnel counts survive the media rework untouched (the 5+6
+ *     contract stays pinned here — the rework added ZERO new auth
+ *     links).
  *
- * Pure fs + one rendered-DOM check (the facade mounts no iframe until
- * the visitor asks) — the landing-funnel convention.
+ * Pure fs + source contracts — the landing-funnel convention.
  */
 import { describe, expect, it, beforeAll } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { readFileSync, existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-
-import { VideoCard } from '../../src/components/landing/VideoCard';
-import { universityVideosFixture } from './fixtures/r307-media-fixtures';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (p: string) => readFileSync(path.join(root, p), 'utf8');
 const stripComments = (src: string) => src.replace(/\/\*[\s\S]*?\*\//g, '');
 const stripLineComments = (src: string) => src.replace(/^\s*\/\/.*$/gm, '');
 
-/* P2-0 (r335 split): the product band moved to sections/Product.tsx —
- * the product-block extraction below reads its new home. */
+/* P2-0 (r335 split): the product band lives in sections/Product.tsx. */
 const productTsx = read('src/components/landing/sections/Product.tsx');
-/* R331 split: the guest surface = LandingPage + chrome/SheetNav + hero/Hero.
- * P2-0 (r335 split): + the nine section bands (same surface, new layout). */
+/* R331 split: the guest surface = LandingPage + chrome/SheetNav + hero/Hero. */
 const surfaceTsx = [
   'src/pages/LandingPage.tsx',
   'src/components/landing/chrome/SheetNav.tsx',
@@ -56,9 +45,8 @@ const surfaceTsx = [
 ].map(read).join('\n');
 const liveTsx = stripLineComments(stripComments(surfaceTsx));
 const manifest = JSON.parse(read('public/media/manifest.json')) as {
-  photos: Array<{ id: string; derivativeWidths: number[]; source: { license: string; licenseUrl: string | null; author: string } }>;
   products: Array<{ id: string; derivativeWidths: number[] }>;
-  videos: Array<{ videoId: string; identityEvidence: string; channelUrl: string }>;
+  illustrations?: Array<{ id: string }>;
 };
 
 beforeAll(() => {
@@ -76,30 +64,9 @@ beforeAll(() => {
   }
 });
 
-describe('r307 — the media registry agrees with the manifest and the bytes', () => {
-  it('every manifest photo ships every promised derivative', () => {
-    for (const photo of manifest.photos) {
-      for (const w of photo.derivativeWidths) {
-        const file = `public/media/universities/${photo.id}-${w}.webp`;
-        expect(existsSync(path.join(root, file)), `${file} missing`).toBe(true);
-      }
-    }
-  });
-
-  it('R343 — every documented university seat renders an ORIGINAL card (registry parity)', async () => {
-    const manifest = JSON.parse(read('public/media/manifest.json'));
-    const cardsSrc = read('../shared/media/university-cards.ts');
-    for (const c of manifest.cards.items) {
-      expect(cardsSrc, `the card ${c.id} must live in the ONE shared geometry source`).toContain(`id: '${c.id}'`);
-      expect(c.composition, 'the four original compositions only').toMatch(/^(arcade|courtyard|tower|hall)$/);
-    }
-    // the retired photo derivatives are gone from disk except the mobile -800 seats
-    for (const photo of manifest.photos) {
-      expect(existsSync(path.join(root, `public/media/universities/${photo.id}-800.webp`)), '-800 mobile seat').toBe(true);
-    }
-  });
-
+describe('Ω — the product-capture registry agrees with the manifest and the bytes', () => {
   it('every manifest product capture ships every promised derivative', () => {
+    expect(manifest.products.length).toBeGreaterThan(0);
     for (const prod of manifest.products) {
       for (const w of prod.derivativeWidths) {
         const file = `public/media/product/${prod.id}-${w}.webp`;
@@ -108,63 +75,57 @@ describe('r307 — the media registry agrees with the manifest and the bytes', (
     }
   });
 
-  it('every photo carries licence + author + source — attribution is structural', () => {
-    expect(manifest.photos.length).toBeGreaterThanOrEqual(8);
-    const institutions = new Set(manifest.photos.map((p) => (p as unknown as { institution: string }).institution));
-    expect(institutions.size).toBeGreaterThanOrEqual(3);
-    for (const photo of manifest.photos) {
-      expect(photo.source.license, `${photo.id} licence`).toMatch(/Public domain|CC BY/);
-      expect(photo.source.author, `${photo.id} author`).toBeTruthy();
-    }
+  it('every capture carries the demo-data disclosure (the labeled workspace, never a university)', () => {
+    const registry = read('src/data/product-media.ts');
+    const disclosures = (registry.match(/بيانات العرض التجريبية/g) ?? []).length;
+    expect(disclosures, 'the alt/caption lines disclose the demo data').toBeGreaterThan(0);
+    expect(registry).not.toMatch(/جامع/);
+    expect(registry).not.toContain('بنغازي');
+    expect(registry).not.toContain('طرابلس');
   });
 });
 
-describe('r307 — the videos are official-channel documentaries, never hotlinked', () => {
-  it('every video has identity evidence + a channel URL', () => {
-    expect(manifest.videos.length).toBeGreaterThanOrEqual(2);
-    for (const v of manifest.videos) {
-      expect(v.videoId).toMatch(/^[\w-]{11}$/);
-      expect(v.identityEvidence, `${v.videoId} evidence`).toContain('قناة');
-      expect(v.channelUrl).toMatch(/^https:\/\/(www\.)?youtube/);
-    }
+describe('Ω — the retired university-media programme leaves NOTHING behind', () => {
+  it('the retired registries and components are gone from the tree', () => {
+    expect(existsSync(path.join(root, 'src/data/university-media.ts'))).toBe(false);
+    expect(existsSync(path.join(root, 'src/data/university.facts.ts'))).toBe(false);
+    expect(existsSync(path.join(root, 'src/data/colleges.config.ts'))).toBe(false);
+    expect(existsSync(path.join(root, 'src/components/landing/VideoCard.tsx'))).toBe(false);
+    expect(existsSync(path.join(root, 'src/components/landing/MediaFrame.tsx'))).toBe(false);
+    expect(existsSync(path.join(root, 'src/components/illustrations/UniversityCard.tsx'))).toBe(false);
+    expect(existsSync(path.join(root, '../shared/media/university-cards.ts'))).toBe(false);
+    expect(existsSync(path.join(root, 'public/media/universities'))).toBe(false);
   });
 
-  it('no i.ytimg.com thumbnail hotlink anywhere in the frontend source', () => {
-    expect(read('src/pages/LandingPage.tsx')).not.toContain('i.ytimg.com');
-    expect(read('src/components/landing/VideoCard.tsx')).not.toContain('i.ytimg.com');
-    expect(read('src/data/university-media.ts')).not.toContain('i.ytimg.com');
+  it('the manifest documents the retirement honestly (policy, no photos/videos rows)', () => {
+    const m = JSON.parse(read('public/media/manifest.json'));
+    expect(m.retiredProgrammes, 'the retirement is on record').toBeTruthy();
+    expect(m.retiredProgrammes.photos).toBeTruthy();
+    expect(m.retiredProgrammes.videos).toBeTruthy();
+    expect(m.retiredProgrammes.universityCards).toBeTruthy();
+    expect(m.photos, 'no photo rows remain').toBeUndefined();
+    expect(m.videos, 'no video rows remain').toBeUndefined();
   });
 
-  it('the facade mounts NO iframe until the visitor clicks (rendered DOM)', () => {
-    const { container, getByRole } = render(
-      <MemoryRouter>
-        <VideoCard video={universityVideosFixture} />
-      </MemoryRouter>,
-    );
-    expect(container.querySelector('iframe')).toBeNull();
-    expect(getByRole('button', { name: /شاهد الفيديو/ })).toBeTruthy();
-    fireEvent.click(getByRole('button', { name: /شاهد الفيديو/ }));
-    const iframe = container.querySelector<HTMLIFrameElement>('iframe');
-    expect(iframe).not.toBeNull();
-    expect(iframe?.src).toContain('youtube-nocookie.com/embed/');
-    // close returns to the facade (and focus moves back to the trigger)
-    fireEvent.click(getByRole('button', { name: 'إغلاق الفيديو' }));
-    expect(container.querySelector('iframe')).toBeNull();
+  it('no youtube embed host survives anywhere in the frontend source', () => {
+    expect(liveTsx).not.toContain('youtube-nocookie');
+    expect(liveTsx).not.toContain('i.ytimg.com');
+    expect(read('src/pages/campus/CampusPages.tsx')).not.toContain('youtube');
   });
 });
 
-describe('r307 — the CSP admits exactly the two embed hosts', () => {
-  it('frame-src lists youtube-nocookie + youtube and nothing wider', () => {
+describe('Ω — the CSP admits nothing external (the embed programme is retired)', () => {
+  it('frame-src is self-only — no embed hosts at all', () => {
     const app = read('../backend/src/app.ts');
     const m = app.match(/'frame-src':\s*\[([\s\S]*?)\],/);
     expect(m, 'frame-src directive present').toBeTruthy();
     const body = m?.[1] ?? '';
-    expect(body).toContain('youtube-nocookie.com');
-    expect(body).toContain('youtube.com');
-    expect(body).not.toMatch(/https?:\/\/(?!www\.youtube)(?![^']*'self')/);
+    expect(body).toContain("'self'");
+    expect(body).not.toContain('youtube');
+    expect(body).not.toMatch(/https?:\/\//);
   });
 
-  it('img-src stays self-only — no remote image hosts were added', () => {
+  it('img-src stays self-only — no remote image hosts', () => {
     const app = read('../backend/src/app.ts');
     const m = app.match(/'img-src':\s*\[([^\]]*)\],/);
     const imgSrc = m?.[1] ?? '';
@@ -175,28 +136,21 @@ describe('r307 — the CSP admits exactly the two embed hosts', () => {
   });
 });
 
-describe('r307 — the media layer added ZERO new funnel links', () => {
-  it('the 5+5 register/login counts survive untouched (R331: login 6 — the hero secondary joined the register)', () => {
+describe('Ω — the media rework added ZERO new funnel links', () => {
+  it('the 5+6 register/login counts survive untouched (R331: login 6 — the hero secondary joined the register)', () => {
     expect((liveTsx.match(/to="\/auth\/register"/g) ?? []).length).toBe(5);
     expect((liveTsx.match(/to="\/auth"/g) ?? []).length).toBe(6);
   });
 
-  it('the new sections route to anchors and app routes only', () => {
-    /* R313 override (WP-A1 · D7): the media rail (#campus-life) and the
-     * video facades (#videos) moved OFF the landing onto /campus; their
-     * ids + licence captions moved WITH the media (checked on the
-     * sub-page below). The landing keeps #product + #cta anchors. */
+  it('the sections route to anchors and app routes only', () => {
+    /* The /campus sub-page keeps its #campus-life anchor for deep
+     * links; the video facades are retired with the programme. */
     const campusSrc = read('src/pages/campus/CampusPages.tsx');
-    for (const id of ['campus-life', 'videos']) {
-      expect(campusSrc, `${id} must live on /campus now`).toContain(id);
-    }
+    expect(campusSrc, 'the #campus-life anchor must survive for deep links').toContain('campus-life');
     for (const id of ['product', 'cta']) {
       expect(liveTsx).toContain(`id="${id}"`);
     }
     // the product CTA scrolls to the conversion row — never an auth link
-    // (R313: the section ends at the why-section now, not #videos.
-    //  r324 X3: the CTA rides the section's row-2 .pr-note line —
-    //  a direct href="#cta" anchor, still never an auth route.)
     const productAt = productTsx.indexOf('id="product"');
     const productBlock = stripComments(productTsx.slice(productAt, productTsx.indexOf('className="wy-section"')));
     expect(productBlock).toContain('href="#cta"');

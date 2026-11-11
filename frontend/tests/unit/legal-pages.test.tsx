@@ -276,7 +276,7 @@ describe('R320 §D — the real facts (every sentence from real code)', () => {
     expect(text).toContain('72');
     expect(text).toContain('@test.ly');
     expect(text).toContain('كما هي');
-    expect(text).toContain('جامعة تادمورا التجريبية');
+    expect(text).toContain('مساحة عمل تادمورا التجريبية');
   });
 
   it('cookies: the ONE cookie with its REAL attributes (httpOnly · strict · path · 7d)', () => {

@@ -480,8 +480,8 @@ describe('Topbar — institution context chip (r178)', () => {
           },
           {
             institutionId: 'inst-alandalus-demo',
-            name: 'مؤسسة الأندلس التعليمية',
-            nameEn: 'Al-Andalus Education Institute',
+            name: 'مساحة عمل تجريبية ثانية',
+            nameEn: 'Second Experimental Workspace',
             slug: 'alandalus-demo',
             role: 'ADMIN',
             isActive: true,
@@ -502,7 +502,7 @@ describe('Topbar — institution context chip (r178)', () => {
     expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
     fireEvent.click(trigger);
     const menu = screen.getByRole('menu', { name: 'تبديل المؤسسة' });
-    expect(menu.textContent).toContain('مؤسسة الأندلس التعليمية');
+    expect(menu.textContent).toContain('مساحة عمل تجريبية ثانية');
   });
 
   it('offers selection when a multi-membership session lost its context (refresh re-resolution)', () => {
@@ -520,8 +520,8 @@ describe('Topbar — institution context chip (r178)', () => {
           },
           {
             institutionId: 'inst-alandalus-demo',
-            name: 'مؤسسة الأندلس التعليمية',
-            nameEn: 'Al-Andalus Education Institute',
+            name: 'مساحة عمل تجريبية ثانية',
+            nameEn: 'Second Experimental Workspace',
             slug: 'alandalus-demo',
             role: 'ADMIN',
             isActive: true,

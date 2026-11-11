@@ -112,7 +112,7 @@ const membership = (over: Partial<MembershipInfo>): MembershipInfo => ({
 });
 
 const INST_A = membership({ institutionId: 'inst-a', name: 'جامعة الزاوية', nameEn: 'University of Zawia', slug: 'zawia' });
-const INST_B = membership({ institutionId: 'inst-b', name: 'مؤسسة الأندلس التعليمية', nameEn: 'Al-Andalus Education Institute', slug: 'andalus', role: 'ADMIN' });
+const INST_B = membership({ institutionId: 'inst-b', name: 'مساحة عمل تجريبية ثانية', nameEn: 'Second Experimental Workspace', slug: 'andalus', role: 'ADMIN' });
 
 const contextFor = (inst: MembershipInfo) => ({
   id: inst.institutionId,
@@ -215,7 +215,7 @@ describe('InstitutionChip — passive pill vs switcher', () => {
     const { onSuccess } = state.selectMutate.mock.calls[0]![1] as { onSuccess: () => void };
     act(() => onSuccess());
     expect(state.toastSuccess).toHaveBeenCalledWith(
-      'أنت الآن ضمن «مؤسسة الأندلس التعليمية».',
+      'أنت الآن ضمن «مساحة عمل تجريبية ثانية».',
       { title: 'تمّ تبديل المؤسسة' },
     );
   });

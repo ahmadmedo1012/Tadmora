@@ -84,7 +84,7 @@ test.describe('أزرار التصفية المضغوطة على /training', () 
 test.describe('تغذية راجعة للروابط', () => {
   test('صفوف الكلّيّات للزائر: مؤشر اليد وخلفية التحويم الحقيقية', async ({ page }) => {
     await page.goto('/colleges');
-    const row = page.getByRole('group', { name: 'كلّيّات حرم المعرفة' }).locator('a.pf-row-link').first();
+    const row = page.getByText('كليّات مساحة العمل').locator('a.pf-row-link').first();
     await expect(row).toBeVisible();
 
     const readHoverBg = () =>
@@ -102,7 +102,7 @@ test.describe('تغذية راجعة للروابط', () => {
     // absorbs the themed transition; comparing against the RESTING
     // value read from the same element family (a non-hovered sibling).
     const resting = await page
-      .getByRole('group', { name: 'كلّيّات حرم المعرفة' })
+      .getByText('كليّات مساحة العمل')
       .locator('a.pf-row-link')
       .nth(1)
       .evaluate((el) => getComputedStyle(el).backgroundColor);

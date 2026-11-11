@@ -1,69 +1,51 @@
 import { describe, expect, it } from 'vitest';
 import { filterColleges, type FilterableCollege } from '../../src/pages/colleges/filter-colleges';
 
-// r188: the fixture uses the fictional demo campuses (حرم المعرفة ·
-// حرم الابتكار · حرم البيان) + an orphan city for the «مناطق أخرى»
-// bucket — same grouping behavior, synthetic registry.
+/**
+ * Phase Ω (identity purity): the campus dimension is retired with the
+ * fixed catalogue — the platform has no campuses and faculties are
+ * grouped by nothing but their institution. What this suite pins is
+ * the honest query filter (the canonical Arabic/English fold), the
+ * behavior the gallery actually renders today.
+ *
+ * The fixtures are neutral workspace faculties (no invented campuses,
+ * no real universities — the retired programme's names are gone).
+ */
 const colleges: FilterableCollege[] = [
-  { city: 'حرم المعرفة', name: 'كلية الهندسة', nameEn: 'College of Engineering' },
-  { city: 'حرم المعرفة', name: 'كلية الطب البشري', nameEn: 'Faculty of Human Medicine' },
-  { city: 'حرم المعرفة', name: 'كلية تقنية المعلومات', nameEn: 'College of IT' },
-  { city: 'حرم الابتكار', name: 'كلية العلوم', nameEn: 'College of Sciences' },
-  { city: 'حرم الابتكار', name: 'كلية الاقتصاد', nameEn: 'College of Economics' },
-  { city: 'حرم البيان', name: 'كلية الآداب', nameEn: 'College of Arts' },
-  { city: 'بئر الغنم', name: 'كلية هندسة الموارد الطبيعية', nameEn: 'Natural Resources Engineering' },
+  { name: 'كلية علوم الحاسوب', nameEn: 'College of Computer Science' },
+  { name: 'كلية الهندسة', nameEn: 'College of Engineering' },
+  { name: 'كلية إدارة الأعمال', nameEn: 'College of Business Administration' },
+  { name: 'كلية الطب البشري', nameEn: 'Faculty of Human Medicine' },
+  { name: 'كلية العلوم', nameEn: 'College of Sciences' },
+  { name: 'كلية التقنى الطبية', nameEn: null },
 ];
 
 describe('filterColleges', () => {
   it('returns empty result for empty input', () => {
-    const out = filterColleges([], { query: '', campus: null });
-    expect(out.byCampus.size).toBe(0);
+    const out = filterColleges([], { query: '' });
+    expect(out.items).toHaveLength(0);
     expect(out.total).toBe(0);
   });
 
-  it('returns full list grouped by canonical campus order when no filters', () => {
-    const out = filterColleges(colleges, { query: '', campus: null });
-    expect(out.total).toBe(7);
-    const keys = Array.from(out.byCampus.keys());
-    expect(keys[0]).toBe('حرم المعرفة');
-    expect(keys[1]).toBe('حرم الابتكار');
-    expect(keys[2]).toBe('حرم البيان');
-    expect(keys[keys.length - 1]).toBe('مناطق أخرى');
-  });
-
-  it('groups orphan cities into "مناطق أخرى"', () => {
-    const out = filterColleges(colleges, { query: '', campus: null });
-    const others = out.byCampus.get('مناطق أخرى');
-    expect(others?.length).toBe(1);
-    expect(others?.[0]?.name).toBe('كلية هندسة الموارد الطبيعية');
-  });
-
-  it('drops empty groups', () => {
-    const out = filterColleges(colleges, { query: '', campus: 'حرم المعرفة' });
-    expect(out.byCampus.has('حرم الابتكار')).toBe(false);
-    expect(out.byCampus.has('حرم البيان')).toBe(false);
-    expect(out.byCampus.has('حرم المعرفة')).toBe(true);
-  });
-
-  it('filters by campus', () => {
-    const out = filterColleges(colleges, { query: '', campus: 'حرم الابتكار' });
-    expect(out.total).toBe(2);
-    expect(out.byCampus.get('حرم الابتكار')?.length).toBe(2);
+  it('returns the full list when no query', () => {
+    const out = filterColleges(colleges, { query: '' });
+    expect(out.total).toBe(6);
+    expect(out.items[0]?.name).toBe('كلية علوم الحاسوب');
   });
 
   it('Arabic substring match (no diacritics typed)', () => {
-    const out = filterColleges(colleges, { query: 'هندس', campus: null });
-    // matches both "كلية الهندسة" and "كلية هندسة الموارد الطبيعية"
-    expect(out.total).toBe(2);
+    const out = filterColleges(colleges, { query: 'هندس' });
+    expect(out.total).toBe(1);
+    expect(out.items[0]?.name).toBe('كلية الهندسة');
   });
 
   it('Arabic substring match strips tatweel + diacritics', () => {
     // "الهَنْـدَسة" — with explicit fatha + sukun + tatweel — should still match
     // since both query and target are normalized.
     const list: FilterableCollege[] = [
-      { city: 'حرم المعرفة', name: 'كلية الهَنْـدَسة', nameEn: null },
+      { name: 'كلية الهَنْـدَسة', nameEn: null },
     ];
-    const out = filterColleges(list, { query: 'هندس', campus: null });
+    const out = filterColleges(list, { query: 'هندس' });
     expect(out.total).toBe(1);
   });
 
@@ -71,57 +53,54 @@ describe('filterColleges', () => {
    * /search/global — a user typing the colloquial spelling «هندسه»
    * (ة→ه) now finds كلية الهندسة on the gallery too, not only in the
    * global search; and alif-maqsura ى in a name matches a query typed
-   * with plain ي. The page-local normalizer this suite used to pin
-   * folded diacritics only. */
+   * with plain ي. */
   it('r146 — colloquial ة→ه and ى→ي spellings match via the canonical fold (parity with /search/global)', () => {
-    const list: FilterableCollege[] = [
-      { city: 'حرم المعرفة', name: 'كلية الهندسة', nameEn: null },
-      { city: 'حرم المعرفة', name: 'كلية التقنى الطبية', nameEn: null },
-    ];
     // ة typed as ه…
-    expect(filterColleges(list, { query: 'هندسه', campus: null }).total).toBe(1);
+    expect(filterColleges(colleges, { query: 'هندسه' }).total).toBe(1);
     // ى in the name matched by a query typed with plain ي.
-    expect(filterColleges(list, { query: 'التقني', campus: null }).total).toBe(1);
+    expect(filterColleges(colleges, { query: 'التقني' }).total).toBe(1);
   });
 
   it('English match is case-insensitive', () => {
-    const out = filterColleges(colleges, { query: 'engineering', campus: null });
-    // "College of Engineering" + "Natural Resources Engineering"
-    expect(out.total).toBe(2);
+    const out = filterColleges(colleges, { query: 'college' });
+    // 4 fixtures carry "College" in nameEn (the Faculty one matches 'faculty' instead)
+    expect(out.total).toBe(4);
   });
 
   it('English match works with mixed case', () => {
-    const out = filterColleges(colleges, { query: 'ECONOM', campus: null });
-    expect(out.total).toBe(1);
-    expect(out.byCampus.get('حرم الابتكار')?.[0]?.nameEn).toContain('Economics');
-  });
-
-  it('combines campus filter with search (logical AND)', () => {
-    const out = filterColleges(colleges, { query: 'هندس', campus: 'حرم المعرفة' });
-    expect(out.total).toBe(1);
-    expect(out.byCampus.get('حرم المعرفة')?.[0]?.name).toBe('كلية الهندسة');
+    const out = filterColleges(colleges, { query: 'ECONOM' });
+    expect(out.total).toBe(0); // no Economics faculty in the neutral set
+    const eng = filterColleges(colleges, { query: 'ENGINEERING' });
+    expect(eng.total).toBe(1);
+    expect(eng.items[0]?.nameEn).toContain('Engineering');
   });
 
   it('returns zero total when query matches nothing', () => {
-    const out = filterColleges(colleges, { query: 'xyzzy', campus: null });
+    const out = filterColleges(colleges, { query: 'xyzzy' });
     expect(out.total).toBe(0);
-    expect(out.byCampus.size).toBe(0);
+    expect(out.items).toHaveLength(0);
   });
 
   it('treats whitespace-only query as no filter', () => {
-    const out = filterColleges(colleges, { query: '   ', campus: null });
-    expect(out.total).toBe(7);
+    const out = filterColleges(colleges, { query: '   ' });
+    expect(out.total).toBe(6);
   });
 
   it('handles colleges with null nameEn', () => {
     const list: FilterableCollege[] = [
-      { city: 'الزاوية', name: 'كلية الصيدلة', nameEn: null },
-      { city: 'الزاوية', name: 'كلية التمريض', nameEn: undefined },
+      { name: 'كلية الصيدلة', nameEn: null },
+      { name: 'كلية التمريض', nameEn: undefined },
     ];
-    const out = filterColleges(list, { query: 'صيدل', campus: null });
+    const out = filterColleges(list, { query: 'صيدلة' });
     expect(out.total).toBe(1);
-    // English query against null nameEn is fine — Arabic name doesn't match either.
-    const enOut = filterColleges(list, { query: 'pharm', campus: null });
-    expect(enOut.total).toBe(0);
+    expect(out.items[0]?.name).toBe('كلية الصيدلة');
+  });
+
+  it('Arabic query never leaks into the English field match when nameEn is null', () => {
+    const list: FilterableCollege[] = [
+      { name: 'كلية العلوم', nameEn: null },
+    ];
+    const out = filterColleges(list, { query: 'علوم' });
+    expect(out.total).toBe(1);
   });
 });

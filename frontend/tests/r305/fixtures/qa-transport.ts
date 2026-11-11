@@ -63,7 +63,7 @@ export interface FixtureUser {
 
 export const STUDENT_USER: FixtureUser = {
   id: 'usr_qa_student',
-  email: 'student@zu.edu.ly',
+  email: 'student@qa.tadmora.app',
   firstName: 'أحمد',
   lastName: 'الزاوي',
   role: 'STUDENT',
@@ -75,7 +75,7 @@ export const STUDENT_USER: FixtureUser = {
 /** Credentials the dynamic login endpoint accepts (backend seed twin). */
 export const VALID_LOGIN = { email: STUDENT_USER.email, password: TEST_PASSWORD } as const;
 export const WRONG_LOGIN = { email: STUDENT_USER.email, password: 'wrong-password' } as const;
-export const LOCKED_EMAIL = 'locked@zu.edu.ly';
+export const LOCKED_EMAIL = 'locked@qa.tadmora.app';
 export const LOGIN_FAILED_MESSAGE = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
 export const LOGIN_LOCKED_MESSAGE = 'محاولات دخول كثيرة — انتظر قليلاً ثم أعد المحاولة.';
 
@@ -129,28 +129,28 @@ function meProfile(user: FixtureUser): Record<string, unknown> {
 /** GET /colleges — public gallery rows (backend records match the
  *  identity bridge on (name, city); see the e2e transport twin). */
 export const COLLEGES = [
-  { id: 'clg_qa_eng', name: 'كلية الهندسة', nameEn: 'Engineering', iconEmoji: null, city: 'حرم المعرفة', departmentCount: 3, studentCount: 420, teacherCount: 28, courseCount: 12 },
-  { id: 'clg_qa_sci', name: 'كلية العلوم', nameEn: 'Sciences', iconEmoji: null, city: 'حرم المعرفة', departmentCount: 2, studentCount: 310, teacherCount: 19, courseCount: 9 },
-  { id: 'clg_qa_arts', name: 'كلية الآداب', nameEn: 'Arts', iconEmoji: null, city: 'حرم المعرفة', departmentCount: 2, studentCount: 260, teacherCount: 15, courseCount: 7 },
+  { id: 'clg_qa_eng', name: 'كلية الهندسة', nameEn: 'Engineering', iconEmoji: null, city: 'افتراضي', departmentCount: 3, studentCount: 420, teacherCount: 28, courseCount: 12 },
+  { id: 'clg_qa_sci', name: 'كلية العلوم', nameEn: 'Sciences', iconEmoji: null, city: 'افتراضي', departmentCount: 2, studentCount: 310, teacherCount: 19, courseCount: 9 },
+  { id: 'clg_qa_arts', name: 'كلية الآداب', nameEn: 'Arts', iconEmoji: null, city: 'افتراضي', departmentCount: 2, studentCount: 260, teacherCount: 15, courseCount: 7 },
 ];
 
 /** GET /colleges/leaderboard — LeaderboardData (CollegePages.tsx). */
 export const COLLEGE_LEADERBOARD = {
   colleges: [
     {
-      id: 'clg_qa_eng', name: 'كلية الهندسة', iconEmoji: null, city: 'حرم المعرفة',
+      id: 'clg_qa_eng', name: 'كلية الهندسة', iconEmoji: null, city: 'افتراضي',
       studentCount: 420, teacherCount: 28, totalXp: 18400, avgXp: 43.8, avgGpa: 3.21,
       publishedPapers: 14, examAttempts: 380, labSessions: 96, completedEnrollments: 210,
       ranks: { totalXp: 1, avgGpa: 2, publishedPapers: 1, examAttempts: 1, labSessions: 1, completedEnrollments: 1 },
     },
     {
-      id: 'clg_qa_sci', name: 'كلية العلوم', iconEmoji: null, city: 'حرم المعرفة',
+      id: 'clg_qa_sci', name: 'كلية العلوم', iconEmoji: null, city: 'افتراضي',
       studentCount: 310, teacherCount: 19, totalXp: 14200, avgXp: 45.8, avgGpa: 3.34,
       publishedPapers: 9, examAttempts: 260, labSessions: 120, completedEnrollments: 150,
       ranks: { totalXp: 2, avgGpa: 1, publishedPapers: 2, examAttempts: 2, labSessions: 2, completedEnrollments: 2 },
     },
     {
-      id: 'clg_qa_arts', name: 'كلية الآداب', iconEmoji: null, city: 'حرم المعرفة',
+      id: 'clg_qa_arts', name: 'كلية الآداب', iconEmoji: null, city: 'افتراضي',
       studentCount: 260, teacherCount: 15, totalXp: 9800, avgXp: 37.7, avgGpa: 3.05,
       publishedPapers: 4, examAttempts: 180, labSessions: 12, completedEnrollments: 110,
       ranks: { totalXp: 3, avgGpa: 3, publishedPapers: 3, examAttempts: 3, labSessions: 3, completedEnrollments: 3 },

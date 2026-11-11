@@ -77,20 +77,14 @@ describe('r166a → G final sweep — colleges gallery is a row list (retired ca
     expect(colleges).toMatch(/\.college-card-arrow \{/);
   });
 
-  it('the campus chip strip keeps its mobile snap + edge fade contract (r183-B8)', () => {
-    // G restored the strip to live service inside the FilterBar's
-    // filters group (CollegePages renders className="gallery-chip-strip")
-    // after the r264 migration left the class without a consumer.
-    const strip = colleges.match(/@media \(max-width: 768px\) \{[\s\S]*?\}/)?.[0] ?? '';
-    expect(strip).toContain('.gallery-chip-strip');
-    expect(strip).toContain('flex-wrap: nowrap');
-    expect(strip).toContain('scroll-snap-type: x mandatory');
-    expect(colleges).toContain(
-      'mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px)',
-    );
-    // The TSX actually mounts the strip class in the FilterBar filters.
+  it('the retired campus chip strip leaves NO dead CSS behind (Phase Ω)', () => {
+    // The campus dimension is retired with the invented campuses —
+    // the chip strip (its class, its mobile snap + edge-fade rules)
+    // must be gone from BOTH the sheet and the TSX: dead selectors
+    // are how the sheet rots (the css-dead census law).
+    expect(colleges).not.toContain('.gallery-chip-strip');
     const tsx = read('src/pages/colleges/CollegePages.tsx');
-    expect(tsx).toContain('<div className="gallery-chip-strip" role="group" aria-label=');
+    expect(tsx).not.toContain('gallery-chip-strip');
   });
 });
 
