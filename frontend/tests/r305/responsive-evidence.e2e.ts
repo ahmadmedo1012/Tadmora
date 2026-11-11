@@ -60,7 +60,7 @@ test.describe('أدلة الاستجابة — أسطح الزائر', () => {
 
       test(`/colleges — ${vp.name}`, async ({ page }) => {
         await page.goto('/colleges');
-        await expect(page.getByText('كليّات مساحة العمل')).toBeVisible();
+        await expect(page.getByRole('heading', { level: 1, name: 'مؤسستك، كلياتك… على تادمورا' })).toBeVisible();
         await page.screenshot({
           ...(CAPTURE ? { path: `tests/r305/__evidence__/colleges-${vp.name}.png` } : {}),
           ...SHOT_OPTIONS,

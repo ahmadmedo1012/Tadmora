@@ -56,13 +56,14 @@ test.describe('الزائر — الأسطح العامة', () => {
     await expect(page.locator('a.skip-link')).toHaveText('تخطَّ إلى المحتوى');
     await expect(page.getByRole('link', { name: 'العودة إلى الصفحة الرئيسية' })).toBeVisible();
     await expect(page.locator('main#main')).toBeVisible();
-    // The public gallery renders REAL payload rows (mock /colleges),
-    // the workspace card lists every faculty equally (Phase Ω — no campus split).
-    await expect(page.locator('h1.pf-page-title')).toContainText('مساحة عمل تادمورا التجريبية');
-    const zawiaGroup = page.getByText('كليّات مساحة العمل');
-    await expect(zawiaGroup).toBeVisible();
-    await expect(zawiaGroup).toContainText('كلية الهندسة');
-    await expect(zawiaGroup).toContainText('كلية العلوم');
+    // Phase Ω: the public gallery is the multi-tenancy pitch — its h1
+    // states the platform truth and the rows list the workspace's REAL
+    // faculties (mock /colleges payload), no campus grouping at all.
+    await expect(page.locator('h1.pf-page-title')).toContainText('مؤسستك، كلياتك… على تادمورا');
+    const gallery = page.getByRole('group', { name: 'كليات مساحة العرض' });
+    await expect(gallery).toBeVisible();
+    await expect(gallery).toContainText('كلية الهندسة');
+    await expect(gallery).toContainText('كلية العلوم');
   });
 
   test('لوحة منافسة الكلّيّات للزائر: جدول المتصدّرين ببيانات حقيقية', async ({ page }) => {

@@ -121,9 +121,10 @@ const THEME_BOOTSTRAP_SHA256 = 'tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=';
  * `about` node is gone — the only demo-data story is the labeled neutral
  * workspace «مساحة عمل تادمورا التجريبية», clearly marked as demo data,
  * never as affiliation). Verified by check-csp-hash.sh. */
-// r191: pin refreshed — the JSON-LD description dropped the rejected
-// provenance slogan with the meta copy fix.
-const JSON_LD_SHA256 = 'iuL/6zJA7tueoBlf/WhDgsHDQEsvQOBerb8PIlbx7Dw=';
+// Phase Ω: pin refreshed — the JSON-LD description now names the demo
+// WORKSPACE (مساحة عمل تادمورا التجريبية) instead of the retired
+// fictional-university tenant.
+const JSON_LD_SHA256 = 'Ru8IOrDGXkoTglyzfyKp5XtbFhETSRrsHAbdeclhjm4=';
 
 export function createApp() {
   const app = express();
