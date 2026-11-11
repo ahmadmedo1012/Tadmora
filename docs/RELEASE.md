@@ -9,7 +9,7 @@
 |---|---|---|---|
 | `backend/**` | ✅ deploys (**Deploy** workflow when its secrets are set — otherwise the manual `vercel deploy` path) | CI + **deploy-smoke** (waits for buildId == SHA, then health + 3 logins + dashboard + live-vs-committed OpenAPI additive check; failure opens an issue) | — |
 | `frontend/**`, `shared/**` (web side) | ✅ deploys (same as above) | CI | — (unless `apps/mobile/**`/`shared/**` also changed → see below) |
-| `apps/mobile/**` or `shared/**` | ❌ never (`.vercelignore` excludes the app) | **Mobile** workflow: gates (typecheck · expo lint · contract-check · `expo export` android+ios · bundle ≤ 8 MB) · **Android APK** workflow (below) | **EAS Update** (`--auto`) to `production` **and** `preview` branches — reaches every installed build whose runtime fingerprint matches |
+| `apps/mobile/**` or `shared/**` | ❌ never (`.vercelignore` excludes the app) | **Mobile** workflow: gates (typecheck · expo lint · contract-check · `expo export` android+ios · bundle ≤ 8 MB) · **Android APK** workflow (below) | **EAS Update** (`--auto`) to `production` **and** `preview` branches — reaches every installed build whose runtime fingerprint matches. **Currently DORMANT:** the job skips with a notice until the OTA owner steps (§OTA re-activation) are done |
 | …and the change is **native-affecting** (`apps/mobile/package.json`/lock, `app.config.ts`, `eas.json`, `assets/`, or `shared/` brand assets) | ❌ | same gates + a fresh direct APK | + **EAS Build** preview profile (internal APK + iOS simulator), `--no-wait`, links in the run summary |
 | `docs/**`, `audits/**`, `*.md` | ❌ | CI only | — |
 
@@ -56,21 +56,52 @@ A REAL, signed, installable release APK — built on GitHub's own runners
 
 ## The one-time setup that is already done
 
-- `EXPO_TOKEN` is set as the GitHub Actions secret `EXPO_TOKEN`
-  (repo → Settings → Secrets and variables → Actions). Rotation: create a
-  new token at expo.dev/accounts/rh2011/settings/access-tokens, then
-  update the secret.
-- `app.config.ts` carries `updates.url` (NEW EAS project pending `eas init`) +
-  `runtimeVersion: { policy: "fingerprint" }` + `checkAutomatically: ON_LOAD`.
 - `.vercelignore` pins the Vercel upload context to the web surface
   (backend + frontend + api adapter); mobile/docs never ship with it.
-- **Deploy automation (deploy.yml):** to let GitHub Actions deploy to
-  Vercel, set THREE repository secrets — `VERCEL_TOKEN` (vercel.com →
-  Settings → Tokens), `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` (both from
-  `.vercel/project.json` on the machine that ran the original `vercel
-  link`; the ids pin deploys to the EXISTING project). Until they are
-  set the workflow skips with a notice and the manual path
-  (`npx vercel deploy --prod --regions fra1`) keeps working unchanged.
+- **Deploy automation (deploy.yml):** the three repository secrets
+  (`VERCEL_TOKEN` / `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID`) are set and the
+  workflow deploys on every `backend/**` push (evidence: Deploy run #2 at
+  `be2b859` → production deployment `dpl_8fyR`, 2026-11-11).
+- `app.config.ts` carries `runtimeVersion: { policy: "fingerprint" }` +
+  `checkAutomatically: ON_LOAD` — the OTA client wiring is complete and
+  tested; only the project id + token are pending (next section).
+
+## OTA re-activation — honest status + the owner runbook
+
+**Status (evidence, 2026-11-11):** the OTA channel is WIRED but DORMANT.
+The `eas-ota` job in mobile.yml is fully automated, but its credential
+gate reports `EXPO_TOKEN is not configured — OTA publish skipped` (Mobile
+run #6 at `be2b859`), and `app.config.ts` `updates.url` /
+`extra.eas.projectId` are the zero placeholder `00000000-…` because the
+NEW EAS project has not been created yet (`eas init` pending). Nothing
+publishes until both are done — that is why §"In-app update UX" below is
+described as pending on the `/app` page.
+
+**The owner runbook (two steps, ~5 minutes):**
+
+1. **Create the EAS project:** from `apps/mobile` run
+   `npx eas-cli init` (sign in with the Expo account that will own the
+   app; answer "yes" to creating a new project). It writes the REAL
+   project id into `app.config.ts` (`extra.eas.projectId` + `updates.url`)
+   — commit that change and push. (Fingerprint policy means the first
+   publish afterwards arms the channel for every future build of that
+   fingerprint.)
+2. **Set the token:** expo.dev → the account → Settings → Access tokens →
+   Create (robot-style, no expiry or long), then repo → Settings →
+   Secrets and variables → Actions → `EXPO_TOKEN` = the token value.
+   The next push touching `apps/mobile/**` publishes the first OTA
+   update automatically (mobile.yml `eas-ota`, `--auto`).
+
+**The stranded-install truth (say it plainly):** installs built from the
+OLD EAS project (`rh2011/tadmora-mobile`, runtime `6288933f…`, last OTA
+`b8ee635b…` @ `bcd7b736`, 2026-11-07) can never receive updates from the
+NEW project — different project, and the changed `projectId` produces a
+new fingerprint. Their upgrade path is the direct APK from `/app`:
+Android refuses cross-signature in-place updates, so the ONE-TIME move
+from an EAS-signed build to the direct channel needs a single
+uninstall + reinstall. Direct→direct updates after that are in-place
+(stable key). The `MIN_APP_VERSION` floor (§the min-version gate) stays
+the hard catch-all for any straggler.
 
 ## R327 D2/D3 — the store-prep state of the world
 
@@ -143,8 +174,9 @@ generated — was regenerated byte-honest with the pinned toolchain).
 1. **Rotate the GitHub PAT + Expo token if they were ever exposed** (both
    were pasted in chat during R326 setup):
    - PAT: github.com → Settings → Developer settings → Fine-grained tokens.
-   - Expo: expo.dev/accounts/rh2011/settings/access-tokens → then update
-     the `EXPO_TOKEN` Actions secret.
+   - Expo: expo.dev → the account that will own the NEW project (§OTA
+     re-activation) → Settings → Access tokens → then update the
+     `EXPO_TOKEN` Actions secret.
 2. **Apple side (iOS)**: no Apple Developer account is linked yet. To ship
    TestFlight/App Store the owner must provide an **Apple team id** + an
    **App Store Connect API key** (`eas credentials` → sign in with Apple;
@@ -222,3 +254,7 @@ Cold start + foreground: `expo-updates` checks silently (ON_LOAD) →
 downloads → toast «تحديث جاهز — أعد التشغيل» → reload. The feedback
 payload and `/client-errors` telemetry carry the running `updateId`, so
 the owner inbox shows exactly which OTA a crash came from.
+
+**Dormant until the OTA re-activation steps above are done** — the code
+path is complete and the `/app` page says «قيد التفعيل» in Arabic; the
+first `eas update` after activation is what turns this section live.
