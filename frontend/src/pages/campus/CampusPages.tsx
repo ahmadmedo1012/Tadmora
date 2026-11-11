@@ -3,40 +3,30 @@ import { ArrowRight } from 'lucide-react';
 import { Icon } from '../../components/Icon';
 import { Logo } from '../../brand';
 import { useThemeSync } from '../../components/layout/ThemeToggle';
-import {
-  HERO_PHOTOS, RAIL_PHOTOS, UNIVERSITY_VIDEOS,
-} from '../../data/university-media';
-import { MediaFrame } from '../../components/landing/MediaFrame';
-import { VideoCard } from '../../components/landing/VideoCard';
-import { InkSketch } from '../../components/landing/journey/InkSketch';
+import { PRODUCT_CAPTURES } from '../../data/product-media';
+import { ProductFrame } from '../../components/landing/ProductFrame';
 import { RevealCssClass } from '../../hooks/useReveal';
 /* c3-W6 (K-I extension): the guest sheet chrome (fixed frame + corner
  * marks + grain film) — the /auth pages' drawing-sheet grammar on this
  * chrome-less guest surface. */
 import { GuestSheetChrome } from '../../components/layout/GuestSheetChrome';
-import '../../styles/campus-media.css'; // r341 D9 flat-paper law: the 3 gradient devices stay page-scoped
-// patterns.css §10 (r341/D9) — the guest sub-page sheet (ex
-// campus.css, deleted): the landing's documentary media rail (الحياة
-// الجامعية) + the video facades (مشاهد جامعية) live here VERBATIM —
-// every Commons licence, author credit and honesty caption moved WITH
-// its media (the r307 media contract). The sheet grammar is the
-// landing's own (paper, hairlines, mono indices); patterns.css rides
-// the global chunk, so the landing sheet never loads here.
+import '../../styles/campus-media.css'; // the page-scoped capture-grid sheet
 
 /**
- * /campus — «الحياة الجامعية» (R313 · WP-A1).
+ * /campus — «بيئة العمل الرقمية» (Phase Ω).
  *
- * The landing re-composition (D7) removed the media rail + videos from
- * the sheet (Heron's 9 sections carry no photo mosaic); the documentary
- * layer lives here as a guest sub-page — same chrome-less public
- * pattern as /colleges, same honesty contracts:
- *   · every photo is Commons-licensed (PD / CC BY / CC BY-SA) with
- *     per-image attribution on its frame (MediaFrame);
- *   · videos embed ONLY from official university channels via
- *     youtube-nocookie, click-to-load (VideoCard) — «توثيقي» is the
- *     label, and it is the truth;
- *   · a university appearing here is documentation, not endorsement —
- *     «تادمورا مستقلّة» stays on the page.
+ * The retired page was the real-university documentary gallery (Commons
+ * photographs + official-channel videos of public universities). Phase Ω
+ * (identity purity) retires it whole: TADMORA is an independent
+ * multi-tenant University Operating System — no campus, no university
+ * photography, no institutional references. What lives here instead is
+ * the platform's OWN environment, honestly:
+ *   · real product captures of the running surfaces (the labeled demo
+ *     workspace «مساحة عمل تادمورا التجريبية» — every frame carries the
+ *     demo-data disclosure);
+ *   · the honest statement that every institution's environment is
+ *     built from its own data after onboarding — there is no campus to
+ *     document because there is no university.
  */
 export function CampusLifePage() {
   useThemeSync();
@@ -60,75 +50,63 @@ export function CampusLifePage() {
       </header>
 
       <main id="main" tabIndex={-1} className="cu-main pf-page">
-        {/* ── الحياة الجامعية — the documentary photography rail. The
+        {/* ── بيئة العمل الرقمية — the platform's own surfaces. The
             section keeps the landing's old #campus-life anchor: deep
             links from the pre-R313 sheet resolve here now. ── */}
         <section id="campus-life" aria-labelledby="cu-photos-title">
           <div className="cu-head pf-page-header-text">
-            <span className="fo-eyebrow"><span className="fo-mono" dir="ltr">[01]</span> الحياة الجامعية</span>
+            <span className="fo-eyebrow"><span className="fo-mono" dir="ltr">[01]</span> بيئة العمل الرقمية</span>
             <RevealCssClass as="h1" className="cu-title" delay={1} id="cu-photos-title">
-              من داخل الجامعات الليبية
+              لا حرمَ جامعيًّا — <em>بيئة تُبنى من بياناتك</em>
             </RevealCssClass>
             <RevealCssClass as="p" className="cu-lede" delay={2}>
-              صور حقيقية لحرم جامعات ليبية عامة، بتراخيص مفتوحة من ويكيميديا كومنز —
-              توثيقٌ للحياة الجامعية، لا زخرفة: كل إطار يحمل اسم جامعته ونسب مصوّره.
+              تادمورا منصّة مستقلة متعددة المستأجرين: لا جامعة ولا حرم ولا صور جامعات.
+              ما تراه هنا لقطات حقيقية من واجهات المنصّة نفسها — وبيئة مؤسستك تكتمل من بياناتها بعد انضمامها.
             </RevealCssClass>
-            {/* D9: the honest in-page nav pair on the library's actions row
-                (the D7c measured seat) — the page's two acts + the sister
-                sub-page, reachable without scrolling to the rail's end. */}
+            {/* D9: the honest in-page nav pair on the actions row — the
+                page's two acts + the sister sub-page. */}
             <RevealCssClass as="div" className="pf-page-actions" delay={3}>
-              <a href="#videos" className="btn accent">مشاهد جامعية</a>
+              <Link to="/colleges" className="btn accent">كيف تُبنى الكليات</Link>
               <Link to="/capabilities" className="btn ghost">ما يعمل اليوم</Link>
             </RevealCssClass>
           </div>
 
-          {/* the photo band (the landing's ex-hero media band, eager lead) */}
-          <RevealCssClass as="div" className="cu-band" delay={2}>
-            <MediaFrame photo={HERO_PHOTOS[0]} variant="hero-lead" eager />
-            <MediaFrame photo={HERO_PHOTOS[1]} variant="hero-mid" />
-            <MediaFrame photo={HERO_PHOTOS[2]} variant="hero-tall" />
+          {/* the capture band — the student surfaces (lead + two seats) */}
+          <RevealCssClass as="div" className="cw-band" delay={2}>
+            <ProductFrame capture={PRODUCT_CAPTURES[0]} variant="lead" />
+            <ProductFrame capture={PRODUCT_CAPTURES[2]} variant="std" />
+            <ProductFrame capture={PRODUCT_CAPTURES[3]} variant="std" />
           </RevealCssClass>
 
-          {/* the rail: the panorama band leads, the mosaic carries the rest */}
-          <RevealCssClass as="div" className="um-rail" delay={2}>
-            <MediaFrame photo={RAIL_PHOTOS[0]} variant="panorama" />
-            <div className="um-mosaic">
-              <MediaFrame photo={RAIL_PHOTOS[1]} variant="large" overlay={<InkSketch />} />
-              <MediaFrame photo={RAIL_PHOTOS[2]} variant="std" overlay={<InkSketch />} />
-              <MediaFrame photo={RAIL_PHOTOS[3]} variant="std" overlay={<InkSketch />} />
-              <MediaFrame photo={RAIL_PHOTOS[4]} variant="std" overlay={<InkSketch />} />
-              <MediaFrame photo={RAIL_PHOTOS[5]} variant="std" overlay={<InkSketch />} />
-            </div>
+          {/* the rail: the remaining student surfaces (library) */}
+          <RevealCssClass as="div" className="cw-rail" delay={2}>
+            <ProductFrame capture={PRODUCT_CAPTURES[1]} variant="std" />
           </RevealCssClass>
 
           <RevealCssClass as="p" className="cu-foot" delay={3}>
-            المصدر: ويكيميديا كومنز — تراخيص PD / CC BY / CC BY-SA، ونسب كل مصوّر مرفقة بإطاره.
-            أعيد تحجيم الصور وقصّها للعرض. ظهور جامعة هنا توثيقٌ لحقيقتها، لا تبنّيًا ولا شراكة — تادمورا مستقلّة.
+            كل إطار هنا لقطة من المنصّة تعمل فعلاً — ببيانات مساحة العرض التجريبية الموسومة بوضوح.
+            لا جامعة في هذه الصور ولا انتماء: تادمورا مستقلّة، وبيئة كل مؤسسة تُبنى من بياناتها.
           </RevealCssClass>
         </section>
 
-        {/* ── مشاهد جامعية — the official-channel documentaries (the
-            landing's old #videos anchor resolves here). ── */}
-        <section id="videos" aria-labelledby="cu-videos-title">
+        {/* ── لكل دور واجهة — the honest close: the platform serves every
+            role inside one institution; the role dashboards live on the
+            landing's why stage and are linked, not duplicated. ── */}
+        <section id="roles" aria-labelledby="cu-roles-title">
           <div className="cu-head pf-page-header-text">
-            <span className="fo-eyebrow"><span className="fo-mono" dir="ltr">[02]</span> مشاهد جامعية</span>
-            <RevealCssClass as="h2" className="cu-title" delay={1} id="cu-videos-title">
-              الحياة الجامعية <em>بالفيديو</em>
+            <span className="fo-eyebrow"><span className="fo-mono" dir="ltr">[02]</span> لكل دور واجهته</span>
+            <RevealCssClass as="h2" className="cu-title" delay={1} id="cu-roles-title">
+              منصّة واحدة <em>بأدوار متكاملة</em>
             </RevealCssClass>
             <RevealCssClass as="p" className="cu-lede" delay={2}>
-              تسجيلات توثيقية من القنوات الرسمية للجامعات — تُحمَّل عند الطلب فقط،
-              وبلا أي بايتات خارجية قبل نقرك.
+              الطالب والأستاذ والمسجل وضمان الجودة ومالك المنصّة — كلٌّ يعمل في بيئته داخل مؤسسته،
+              وبعزل كامل بين المؤسسات.
             </RevealCssClass>
           </div>
 
-          <RevealCssClass as="div" className="vd-grid" delay={2}>
-            <VideoCard video={UNIVERSITY_VIDEOS[0]} variant="primary" />
-            <VideoCard video={UNIVERSITY_VIDEOS[1]} variant="secondary" />
-          </RevealCssClass>
-
           <RevealCssClass as="p" className="cu-foot" delay={3}>
-            الفيديوهات من القنوات الرسمية لجامعتي مصراتة وسبها، عبر آلية التضمين المسموحة —
-            والمشغّل لا يُحمَّل إلا بعد نقر «شاهد الفيديو».
+            جوّز الأدوار الخمسة يُعرض على الصفحة الرئيسية في مقطع «لماذا تادمورا» —
+            <Link to="/" className="fo-text-link"> من هنا</Link>.
           </RevealCssClass>
         </section>
       </main>

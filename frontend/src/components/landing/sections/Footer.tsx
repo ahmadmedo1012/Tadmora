@@ -187,7 +187,7 @@ export function Footer({ year }: { year: number }) {
                     بالكامل» stays contiguous on one source line — the
                     brand-integrity gate). R342-07: it rides INSIDE the brand
                     block as the census's third 27px row family. */}
-                <p className="fo-footer-about">منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل لأغراض العرض.</p>
+                <p className="fo-footer-about">منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «مساحة عمل تادمورا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.</p>
               </div>
               {BRAND_ROWS.map((row, i) => (
                 <div className="fo-brow" key={i} data-spec={`footer.brow.${i + 1}`}>
@@ -344,10 +344,10 @@ export function Footer({ year }: { year: number }) {
                 </div>
                 <div className="fo-lgroup" data-spec="footer.bgroup.2">
                   <ML s="footer.bg2label.1" ts="footer.bg2labelt.1" t="ADDRESS" />
-                  <A to="/about" cls="fo-link" t="جامعة تادمورا التجريبية" ds="footer.b2link.1" tds="footer.b2linkt.1" />
+                  <A to="/about" cls="fo-link" t="مساحة عمل تادمورا التجريبية" ds="footer.b2link.1" tds="footer.b2linkt.1" />
                   <R c="fo-rule fo-rule-h fo-rule-g" s="footer.b2rule" />
                   <ML s="footer.bg2label.2" ts="footer.bg2labelt.2" t="REGION" />
-                  <A to="/about" cls="fo-link" t="طرابلس، ليبيا" ds="footer.b2link.2" tds="footer.b2linkt.2" />
+                  <A to="/about" cls="fo-link" t="منصّة مستقلّة — لا تنتمي لأي جهة" ds="footer.b2link.2" tds="footer.b2linkt.2" />
                 </div>
                 <div className="fo-lgroup" data-spec="footer.bgroup.3">
                   <ML s="footer.bg3label" ts="footer.bg3labelt" t="CHANNELS" />

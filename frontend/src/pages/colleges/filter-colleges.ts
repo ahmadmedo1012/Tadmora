@@ -1,8 +1,10 @@
 /**
- * filterColleges — pure, synchronous filter for the gallery.
+ * filterColleges — pure, synchronous query filter for the gallery.
  *
- * See specs/004-colleges-gallery/contracts/gallery-state.md
- * and specs/004-colleges-gallery/data-model.md.
+ * Phase Ω (identity purity): the campus dimension is retired — the
+ * platform has no campuses, and faculties are grouped by nothing but
+ * their institution. What survives is the honest query filter (the
+ * canonical Arabic/English fold).
  *
  * No DOM, no network, no React. Trivially testable in isolation.
  */
@@ -16,43 +18,18 @@
 // between two surfaces of the same product.
 import { normalizeArabicSearch } from '../../lib/search';
 
-export type CityName =
-  | 'حرم المعرفة'
-  | 'حرم الابتكار'
-  | 'حرم البيان'
-  | 'أبو عيسى'
-  | 'ناصر'
-  | 'مناطق أخرى';
-
 export type FilterState = {
   query: string;
-  campus: CityName | null;
 };
 
 export type FilterResult<T> = {
-  byCampus: Map<CityName, T[]>;
+  items: T[];
   total: number;
 };
-
-/** Canonical campus order — main campus first, orphans last. */
-export const CAMPUS_ORDER: ReadonlyArray<CityName> = [
-  'حرم المعرفة',
-  'حرم الابتكار',
-  'حرم البيان',
-  'أبو عيسى',
-  'ناصر',
-  'مناطق أخرى',
-];
 
 /** r146: canonical folding (NFC + lowercase + diacritics/tatweel strip
  *  + alif/hamza/ة/ى folds) — see lib/search.ts; covers Latin case too. */
 const normalizeQuery = normalizeArabicSearch;
-
-/** Normalize an unknown city name to a canonical CityName, or fall back. */
-function normalizeCity(city: string | null | undefined): CityName {
-  const known = (CAMPUS_ORDER as ReadonlyArray<string>).indexOf(city ?? '');
-  return known >= 0 ? (CAMPUS_ORDER[known]!) : 'مناطق أخرى';
-}
 
 /**
  * The minimum shape filterColleges needs from a college.
@@ -60,53 +37,31 @@ function normalizeCity(city: string | null | undefined): CityName {
  * without importing that interface here.
  */
 export type FilterableCollege = {
-  city: string;
   name: string;
   nameEn?: string | null;
 };
 
 /**
- * Filter + group colleges by campus.
+ * Filter colleges by the search query.
  *
- * @param list  - the full college list (cached from /api/colleges)
+ * @param list  - the full faculty list (cached from /api/colleges — the
+ *                institution's OWN structure, never a platform catalogue)
  * @param state - current filter state
- * @returns     - { byCampus: Map<CityName, T[]> in canonical order, total }
+ * @returns     - { items, total }
  */
 export function filterColleges<T extends FilterableCollege>(
   list: ReadonlyArray<T>,
   state: FilterState,
 ): FilterResult<T> {
   const trimmedQuery = state.query.trim();
-  const queryAr = trimmedQuery ? normalizeQuery(trimmedQuery) : '';
-  const queryEn = queryAr; // one canonical fold covers both scripts
+  if (!trimmedQuery) return { items: [...list], total: list.length };
 
-  // 1 + 2: campus + query filter in a single pass.
+  const queryAr = normalizeQuery(trimmedQuery); // one canonical fold covers both scripts
   const survivors: T[] = [];
   for (const c of list) {
-    const cityNorm = normalizeCity(c.city);
-    if (state.campus !== null && cityNorm !== state.campus) continue;
-
-    if (trimmedQuery) {
-      const arHit = normalizeQuery(c.name).includes(queryAr);
-      const enHit = c.nameEn ? normalizeQuery(c.nameEn).includes(queryEn) : false;
-      if (!arHit && !enHit) continue;
-    }
-
-    survivors.push(c);
+    const arHit = normalizeQuery(c.name).includes(queryAr);
+    const enHit = c.nameEn ? normalizeQuery(c.nameEn).includes(queryAr) : false;
+    if (arHit || enHit) survivors.push(c);
   }
-
-  // 3 + 4 + 5: group by city, preserve canonical order, drop empty groups.
-  const byCampus = new Map<CityName, T[]>();
-  // Seed map in canonical order so iteration order is predictable.
-  for (const city of CAMPUS_ORDER) byCampus.set(city, []);
-  for (const c of survivors) {
-    const city = normalizeCity(c.city);
-    byCampus.get(city)!.push(c);
-  }
-  // Drop empty groups.
-  for (const [city, items] of byCampus) {
-    if (items.length === 0) byCampus.delete(city);
-  }
-
-  return { byCampus, total: survivors.length };
+  return { items: survivors, total: survivors.length };
 }

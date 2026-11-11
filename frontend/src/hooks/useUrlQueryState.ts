@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { CityName, FilterState } from '../pages/colleges/filter-colleges';
-import { CAMPUS_ORDER } from '../pages/colleges/filter-colleges';
+import type { FilterState } from '../pages/colleges/filter-colleges';
 
 /**
  * useUrlQueryState — two-way binding between the URL search params
  * and the gallery's FilterState.
  *
- * See specs/004-colleges-gallery/contracts/gallery-state.md
+ * Phase Ω (identity purity): the campus param is retired with the
+ * invented campuses — the hook now binds ONLY the search query.
  *
  * Reads are constant-time via useSearchParams().
  * Search-input writes are debounced 100 ms before they hit the URL
@@ -16,14 +16,9 @@ import { CAMPUS_ORDER } from '../pages/colleges/filter-colleges';
 
 const DEBOUNCE_MS = 100;
 
-function isCityName(v: string | null): v is CityName {
-  return v !== null && (CAMPUS_ORDER as ReadonlyArray<string>).indexOf(v) >= 0;
-}
-
 export function useUrlQueryState(): {
   state: FilterState;
   setQuery: (q: string) => void;
-  setCampus: (c: CityName | null) => void;
   clear: () => void;
 } {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,8 +26,6 @@ export function useUrlQueryState(): {
   // The "live" search value (what the input shows) is local;
   // the URL is the eventually-consistent debounced source of truth.
   const urlQuery = searchParams.get('q') ?? '';
-  const urlCampusRaw = searchParams.get('campus');
-  const urlCampus: CityName | null = isCityName(urlCampusRaw) ? urlCampusRaw : null;
 
   const [liveQuery, setLiveQuery] = useState<string>(urlQuery);
 
@@ -64,32 +57,19 @@ export function useUrlQueryState(): {
     setLiveQuery(q);
   }, []);
 
-  const setCampus = useCallback(
-    (c: CityName | null) => {
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev);
-        if (c === null) next.delete('campus');
-        else next.set('campus', c);
-        return next;
-      });
-    },
-    [setSearchParams],
-  );
-
   const clear = useCallback(() => {
     setLiveQuery('');
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       next.delete('q');
-      next.delete('campus');
       return next;
     });
   }, [setSearchParams]);
 
   const state = useMemo<FilterState>(
-    () => ({ query: liveQuery, campus: urlCampus }),
-    [liveQuery, urlCampus],
+    () => ({ query: liveQuery }),
+    [liveQuery],
   );
 
-  return { state, setQuery, setCampus, clear };
+  return { state, setQuery, clear };
 }

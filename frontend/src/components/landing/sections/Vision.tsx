@@ -3,18 +3,15 @@
  * grid: top ledger band (three mono-labelled cells), title band (kicker
  * rail + centered resolve + flank rule), sketch band (AUTHORED inline-SVG
  * line-art — the registration path as a drafting sketch; no reference
- * assets), joined by 1px column rules. The true numbers (colleges,
- * campuses, live capabilities) still ride the registry strip below,
- * computed from the real config. Debug text is not content. */
+ * assets), joined by 1px column rules. Phase Ω: the registry strip at the
+ * close carries the honest workspace truth (three faculties for the
+ * demo, every institution builds its own) — never a university count.
+ * Debug text is not content. */
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import { Icon } from '../../Icon';
-import { colleges } from '../../../data/colleges.config';
 import { LIVE_COUNT } from '../../../data/landing-ledger';
-import { formatInt } from '../../../utils/numbers';
 import { LOGIN, REGISTER } from '../copy';
-
-const CAMPUS_COUNT = new Set(colleges.map((c) => c.cityAr ?? '')).size;
 
 /* T-10f: heron's resolve label is a TWO-LINE stack inside a fixed label
  * column (w80 @phone) — the register copy splits on its natural Arabic
@@ -56,9 +53,30 @@ function SketchArt() {
 }
 
 /* T-13: the registry cloud's ordinal binding — the frozen spec's cta
- * hover records (ordinals 2·14 + the mobile-only set). Each seat links
- * the registry's own /colleges page under the college's real name. */
+ * hover records (ordinals 2·14 + the mobile-only set). Phase Ω: each seat
+ * is an honest door — the demo workspace's three faculties + the
+ * platform's own value statements, every one a real route. */
 const CTA_CLOUD_ORD = [2, 14, 3, 5, 7, 8, 10, 11, 12, 13, 15, 16, 17, 18];
+
+/* The honest index — the demo workspace's real faculties first, then the
+ * platform's own value statements (the same phrases the landing's crawl
+ * carries). No university names, no invented registry. */
+const CLOUD_ITEMS: readonly string[] = [
+  'كلية علوم الحاسوب',
+  'كلية الهندسة',
+  'كلية إدارة الأعمال',
+  'مؤسستك تملك بياناتها',
+  'كلياتك… أنت من يبنيها',
+  'منصّة واحدة… أدوار متكاملة',
+  'عربية أولًا',
+  'تعليم أفضل',
+  'عزل كامل بين المؤسسات',
+  'بيانات موسومة بوضوح',
+  'لا جامعة ولا انتماء',
+  'سجلّ واحد للقسم والكلية',
+  'يعمل اليوم',
+  'يكبر مع كل فصل',
+] as const;
 
 export function Vision({ year }: { year: number }) {
   return (
@@ -190,31 +208,30 @@ export function Vision({ year }: { year: number }) {
         تادمورا · {year} · منصّة تعليمية مستقلّة
       </p>
 
-      {/* [8] the colleges registry strip — the ruled hairline row
-          linking the public registry (the funnel's 5th login
-          affordance lives here; the demo-data disclosure rides the
-          row, never a tooltip). The TRUE numbers (colleges,
-          campuses, the live-capability count) ride HERE, computed
-          from the real config/data — never invented. */}
+      {/* [8] the registry strip — the ruled hairline row linking the
+          public pitch page (the funnel's 5th login affordance lives
+          here; the demo-data disclosure rides the row, never a
+          tooltip). Phase Ω: the honest workspace truth — three
+          faculties for the demo, every institution builds its own. */}
       <div className="cg-strip" id="colleges" data-spec="cta.registry">
         <span className="cg-strip-label fo-mono" dir="ltr" data-spec="cta.registry-label">[08] · REGISTRY</span>
         <p className="cg-strip-text" data-spec="cta.registry-text">
-          <strong><span className="fo-mono" dir="ltr">{formatInt(colleges.length)}</span> كلية</strong> في{' '}
-          <span className="fo-mono" dir="ltr">{formatInt(CAMPUS_COUNT)}</span> أحرام —{' '}
+          <strong><span className="fo-mono" dir="ltr">3</span> كليات للعرض</strong> في مساحة العمل التجريبية —{' '}
           <span className="fo-mono" dir="ltr">[{String(LIVE_COUNT).padStart(2, '0')}]</span> قدرات تعمل اليوم.
-          بيانات «جامعة تادمورا التجريبية»: اصطناعية بالكامل لأغراض العرض.
+          كليات مؤسستك تُبنى من بياناتها بعد انضمامها — لا جامعة ولا انتماء.
         </p>
         <div className="cg-strip-links" data-spec="cta.registry-links">
-          <Link to="/colleges" className="btn ghost sm" data-spec-hover="6">تصفح الكليات التجريبية</Link>
-          <Link to="/auth" className="fo-text-link" data-spec-hover="9">سجل الدخول لاستعراض كليتك داخل المنصّة</Link>
+          <Link to="/colleges" className="btn ghost sm" data-spec-hover="6">كيف تُبنى الكليات</Link>
+          <Link to="/auth" className="fo-text-link" data-spec-hover="9">سجل الدخول لاستعراض هيكل مؤسستك داخل المنصّة</Link>
         </div>
         {/* T-13: the registry index cloud — the recorded cta interaction
-            seats. Honest counterparts: the registry's OWN college names,
-            each a real door to /colleges (no invented labels). */}
-        <div className="cg-cloud" aria-label="فهرس الكليات التجريبية">
-          {colleges.slice(0, 14).map((c, i) => (
-            <Link key={c.slug} to="/colleges" className="cg-cloud-link" data-spec-hover={CTA_CLOUD_ORD[i]}>
-              {c.nameAr}
+            seats. Honest counterparts: the workspace's real faculties +
+            the platform's value statements, each a real door to
+            /colleges (no invented labels). */}
+        <div className="cg-cloud" aria-label="فهرس مساحة العرض وقدرات المنصّة">
+          {CLOUD_ITEMS.map((label, i) => (
+            <Link key={label} to="/colleges" className="cg-cloud-link" data-spec-hover={CTA_CLOUD_ORD[i]}>
+              {label}
             </Link>
           ))}
         </div>

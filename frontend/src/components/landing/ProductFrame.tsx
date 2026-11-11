@@ -3,8 +3,8 @@
  * on the landing sheet (DESIGN.md §6c, r307).
  *
  * A flat hairline frame around an authentic capture of the running
- * application (seeded demo environment — fully synthetic «جامعة تادمورا
- * التجريبية» data). Every frame carries:
+ * application (the labeled demo workspace «مساحة عمل تادمورا
+ * التجريبية» — clearly-marked demo data). Every frame carries:
  *   · the demo-data disclosure — the honest «بيانات العرض
  *     التجريبية» line (the r324 X4 sweep retired the «real-ui»
  *     tag: debug chrome, not content). A real interface, honestly
@@ -19,7 +19,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Icon } from '../Icon';
-import type { ProductCapture } from '../../data/university-media';
+import type { ProductCapture } from '../../data/product-media';
 import '../../styles/landing/product-frame.css';
 
 export interface ProductFrameProps {
