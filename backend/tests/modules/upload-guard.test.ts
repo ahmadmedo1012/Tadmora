@@ -32,6 +32,13 @@ import {
   parseRangeHeader,
   USER_PAPER_QUOTA_BYTES,
 } from '../../src/http/routes/files.routes.js';
+import {
+  effectivePdfMaxBytes,
+  isVercelRuntime,
+  PDF_PRODUCT_MAX_BYTES,
+  RUNTIME_PDF_MAX_BYTES,
+  VERCEL_PDF_MAX_BYTES,
+} from '../../src/lib/pdf-limits.js';
 import { materialFileQuerySchema } from '../../src/http/routes/offerings.routes.js';
 
 const filesRouteSource = readFileSync(
@@ -63,18 +70,37 @@ describe('isPdfMagicBytes (Content-Type lies; bytes do not)', () => {
   });
 });
 
-describe('isUploadSizeOk (20 MB cap)', () => {
-  it('pins the cap constant to 20 MB', () => {
+describe('isUploadSizeOk (the host-honest cap)', () => {
+  it('pins the cap constant to the runtime-resolved ceiling (20 MiB in this non-Vercel test env)', () => {
     expect(MAX_UPLOAD_PDF_BYTES).toBe(20 * 1024 * 1024);
+    expect(MAX_UPLOAD_PDF_BYTES).toBe(RUNTIME_PDF_MAX_BYTES);
   });
 
-  it('accepts (0, 20MB] and rejects 0 / over-cap / negative / non-integer', () => {
+  it('accepts (0, cap] and rejects 0 / over-cap / negative / non-integer', () => {
     expect(isUploadSizeOk(0)).toBe(false); // empty upload → 413, per contract
     expect(isUploadSizeOk(1)).toBe(true);
     expect(isUploadSizeOk(MAX_UPLOAD_PDF_BYTES)).toBe(true); // boundary inclusive
     expect(isUploadSizeOk(MAX_UPLOAD_PDF_BYTES + 1)).toBe(false);
     expect(isUploadSizeOk(-5)).toBe(false);
     expect(isUploadSizeOk(3.5)).toBe(false);
+  });
+});
+
+describe('lib/pdf-limits (Ω+2.0 — the host-honest ceiling)', () => {
+  it('the product cap stays 20 MiB; the Vercel ceiling is 4 MiB — under the 4.5 MB platform wall', () => {
+    expect(PDF_PRODUCT_MAX_BYTES).toBe(20 * 1024 * 1024);
+    expect(VERCEL_PDF_MAX_BYTES).toBe(4 * 1024 * 1024);
+    expect(VERCEL_PDF_MAX_BYTES).toBeLessThan(Math.round(4.5 * 1024 * 1024));
+  });
+
+  it('the pure decision: Vercel runs cap at 4 MiB, everything else keeps the product cap', () => {
+    expect(effectivePdfMaxBytes(true)).toBe(VERCEL_PDF_MAX_BYTES);
+    expect(effectivePdfMaxBytes(false)).toBe(PDF_PRODUCT_MAX_BYTES);
+  });
+
+  it('this test env is not a Vercel runtime — the resolved ceiling is the product cap', () => {
+    expect(isVercelRuntime()).toBe(false);
+    expect(RUNTIME_PDF_MAX_BYTES).toBe(PDF_PRODUCT_MAX_BYTES);
   });
 });
 
@@ -191,10 +217,12 @@ describe('materialFileQuerySchema (metadata rides the query string)', () => {
 // ─── Wiring pins (source-scan — the file is the contract) ─────────
 
 describe('POST /files/papers wiring (STUDENT upload)', () => {
-  it('registers the route with role gate BEFORE raw body + limiter + express.raw(20mb)', () => {
+  it('registers the route with role gate BEFORE raw body + limiter + express.raw(the host-honest limit)', () => {
     // Role first: a teacher's oversized body is 403'd before buffering.
+    // Ω+2.0: the raw limit rides MAX_UPLOAD_PDF_BYTES (lib/pdf-limits.ts —
+    // 20 MiB self-hosted, 4 MiB on Vercel), never a hand-typed '20mb'.
     expect(filesRouteSource).toMatch(
-      /router\.post\(\s*'\/papers',\s*requireRole\(Role\.STUDENT\),\s*paperUploadLimiter,\s*express\.raw\(\{ type: 'application\/pdf', limit: '20mb' \}\),/,
+      /router\.post\(\s*'\/papers',\s*requireRole\(Role\.STUDENT\),\s*paperUploadLimiter,\s*express\.raw\(\{ type: 'application\/pdf', limit: MAX_UPLOAD_PDF_BYTES \}\),/,
     );
   });
 
@@ -261,9 +289,9 @@ describe('POST /files/papers wiring (STUDENT upload)', () => {
 });
 
 describe('POST /offerings/:id/materials/file wiring (TEACHER/ADMIN/OWNER upload)', () => {
-  it('registers the route with role gate, limiter, zod query validation, and express.raw', () => {
+  it('registers the route with role gate, limiter, zod query validation, and express.raw(the host-honest limit)', () => {
     expect(offeringsRouteSource).toMatch(
-      /router\.post\(\s*'\/:id\/materials\/file',\s*requireRole\(Role\.TEACHER, Role\.ADMIN, Role\.OWNER\),\s*materialUploadLimiter,\s*validate\(materialFileQuerySchema, 'query'\),\s*express\.raw\(\{ type: 'application\/pdf', limit: '20mb' \}\),/,
+      /router\.post\(\s*'\/:id\/materials\/file',\s*requireRole\(Role\.TEACHER, Role\.ADMIN, Role\.OWNER\),\s*materialUploadLimiter,\s*validate\(materialFileQuerySchema, 'query'\),\s*express\.raw\(\{ type: 'application\/pdf', limit: MAX_UPLOAD_PDF_BYTES \}\),/,
     );
   });
 

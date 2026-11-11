@@ -18,10 +18,10 @@
 |----------|---------|
 | `NODE_ENV` | `production` enables static serving + secure cookies + `info` log level |
 | `PORT` | Listen port (default: 4000) |
-| `CORS_ORIGINS` | Comma-separated CORS origin allow-list (e.g. `"https://tadmora.onrender.com,https://staging.example.com"`). Trailing slashes are stripped, empty entries dropped; unset/empty → default list (`https://tadmora.onrender.com`, `http://localhost:5173`). Wildcards are deliberately unsupported because credentials are enabled |
+| `CORS_ORIGINS` | Comma-separated CORS origin allow-list (e.g. `"https://tadmora.vercel.app,https://staging.example.com"`). Trailing slashes are stripped, empty entries dropped; unset/empty → default list (`https://tadmora.vercel.app`, `http://localhost:5173`). Wildcards are deliberately unsupported because credentials are enabled |
 | `INTERNAL_SERVICE_TOKEN` | Service-to-service auth for `POST /api/v1/me/milestones/:id/fire` (≥16 chars; **fail-closed when unset** — every call is rejected). Comparison is constant-time: both sides are SHA-256-hashed to fixed-length digests, then compared with `crypto.timingSafeEqual`, so attackers cannot probe the token length via response timing. A user JWT never authenticates this endpoint |
 | `DIRECT_DATABASE_URL` | Neon **direct** (non-pooled) connection. When set, `prisma migrate deploy` uses it directly. When unset, the migrate script derives it from `DATABASE_URL` by stripping the `-pooler` hostname suffix + `pgbouncer`/`connection_limit` query params. |
-| `STORAGE_DRIVER` | Upload storage driver: `local` (default, filesystem — **ephemeral on Render**) or `s3` (persistent object storage). See `docs/12-deployment.md` |
+| `STORAGE_DRIVER` | Upload storage driver: `local` (default, filesystem — **ephemeral on serverless/Vercel**), `postgres` (BYTEA rows in the app DB — the current pilot choice), or `s3` (persistent object storage, enables presigned direct video uploads). See `docs/12-deployment.md` |
 | `S3_ENDPOINT` / `S3_REGION` / `S3_BUCKET` / `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | S3-compatible object storage (AWS S3 / Cloudflare R2 / MinIO) for uploaded PDFs. Create a bucket-scoped API token from your provider's dashboard (R2: Manage API Tokens → Object Storage scope). When `STORAGE_DRIVER=s3`, the four marked vars are REQUIRED (boot fails closed naming any missing one) |
 | `AI_PROVIDER` / `AI_BASE_URL` / `AI_API_KEY` / `AI_MODEL` | AI chat provider: `local` (default — in-process composer, no external calls) or `openai` (any OpenAI-compatible LLM: OpenAI, Groq, OpenRouter, DeepSeek, vLLM, Ollama). When `AI_PROVIDER=openai`, `AI_API_KEY` + `AI_MODEL` are REQUIRED (boot fails closed naming any missing one). See `docs/12-deployment.md` |
 
@@ -96,8 +96,8 @@ To rotate again: `npm run db:rotate-password -- --email <account> --new-password
 
 ## Production URLs
 
-- **App:** https://tadmora.onrender.com
-- **Health:** https://tadmora.onrender.com/api/v1/health
+- **App:** https://tadmora.vercel.app
+- **Health:** https://tadmora.vercel.app/api/v1/health
 - **GitHub:** <repository-url>
 
 ## Database Connection (Neon)

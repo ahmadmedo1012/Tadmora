@@ -12,6 +12,7 @@ import { Router } from 'express';
 import { prisma } from '../../db.js';
 import { env } from '../../env.js';
 import { buildIdFromEnv } from '../../lib/build-id.js';
+import { RUNTIME_PDF_MAX_BYTES } from '../../lib/pdf-limits.js';
 import { logger } from '../../logger.js';
 
 const router = Router();
@@ -46,6 +47,12 @@ router.get('/status', async (_req, res) => {
       mailProvider: env.MAIL_PROVIDER,
       buildId: BUILD_ID,
       serverTime: new Date().toISOString(),
+      // Ω+2.0 — the host-honest PDF transfer ceiling (lib/pdf-limits.ts):
+      // 4 MiB on Vercel (the platform's 4.5 MB function-body wall), the
+      // full 20 MiB product cap elsewhere. Clients mirror this instead
+      // of hardcoding (frontend pdfUpload.ts derives it from the
+      // same-origin host; the mobile app from its API base).
+      maxPdfUploadBytes: RUNTIME_PDF_MAX_BYTES,
       // r326 M0.7 — the mobile minimum-version gate: the native app
       // compares its semver on cold start; below minAppVersion it shows
       // the blocking «يلزم تحديث التطبيق» screen pointing at updateUrl.

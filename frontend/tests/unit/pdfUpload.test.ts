@@ -30,8 +30,12 @@ import {
   PDF_MAX_MB,
   PDF_MAGIC_PREFIX,
   PDF_SIZE_LIMIT_MESSAGE,
+  VERCEL_PDF_MAX_BYTES,
+  effectivePdfMaxBytes,
   isPdfFile,
   isPayloadTooLargeResponse,
+  pdfMaxMb,
+  pdfSizeLimitMessage,
   pdfUploadErrorMessage,
   sniffPdfMagicBytes,
   validatePdfFile,
@@ -48,9 +52,33 @@ function pdfFile(name = 'report.pdf', size = 1024): File {
 }
 
 describe('lib/pdfUpload — PDF_MAX_BYTES', () => {
-  it('is exactly 20 MiB — the byte ceiling both server routes enforce', () => {
+  it('is exactly 20 MiB — the PRODUCT ceiling the backend enforces on non-Vercel hosts', () => {
     expect(PDF_MAX_BYTES).toBe(20 * MI);
     expect(PDF_MAX_BYTES).toBe(20971520);
+  });
+});
+
+describe('lib/pdfUpload — effectivePdfMaxBytes (Ω+2.0: the host-honest ceiling)', () => {
+  it("VERCEL_PDF_MAX_BYTES is 4 MiB — under the platform's 4.5 MB function-body wall", () => {
+    expect(VERCEL_PDF_MAX_BYTES).toBe(4 * MI);
+    expect(VERCEL_PDF_MAX_BYTES).toBeLessThan(4.5 * MI);
+  });
+
+  it("a *.vercel.app host caps at 4 MiB — the deployment's real transfer limit", () => {
+    expect(effectivePdfMaxBytes('tadmora.vercel.app')).toBe(VERCEL_PDF_MAX_BYTES);
+    expect(effectivePdfMaxBytes('anything.vercel.app')).toBe(VERCEL_PDF_MAX_BYTES);
+    expect(pdfMaxMb('tadmora.vercel.app')).toBe(4);
+  });
+
+  it('every other host keeps the full 20 MiB product cap', () => {
+    expect(effectivePdfMaxBytes('localhost')).toBe(PDF_MAX_BYTES);
+    expect(effectivePdfMaxBytes('tadmora.example.edu')).toBe(PDF_MAX_BYTES);
+    expect(effectivePdfMaxBytes('')).toBe(PDF_MAX_BYTES);
+    expect(pdfMaxMb('localhost')).toBe(20);
+  });
+
+  it("the oversize copy names the deployment's number — 4 on Vercel, 20 self-hosted", () => {
+    expect(pdfMaxMb('tadmora.vercel.app')).not.toBe(pdfMaxMb('localhost'));
   });
 });
 
@@ -107,7 +135,7 @@ describe('lib/pdfUpload — validatePdfFile (the submit guard)', () => {
     );
   });
 
-  it('pins the exact Arabic oversize message (message identical to the modals\' FormField alerts)', () => {
+  it('pins the exact Arabic oversize message (this jsdom host is localhost — the 20 MiB product cap names the number)', () => {
     expect(validatePdfFile(pdfFile('big.pdf', PDF_MAX_BYTES + 1))).toBe(
       'حجم الملف يتجاوز الحد الأقصى المسموح (20 ميغابايت).',
     );
@@ -218,6 +246,11 @@ describe('lib/pdfUpload — r327 Y8: the numbered 413 copy', () => {
     expect(PDF_SIZE_LIMIT_MESSAGE).toBe(
       'حجم الملف يتجاوز الحد المسموح (20 ميغابايت) — اضغط الملف أو اختر ملفاً أصغر.',
     );
+  });
+
+  it('pdfSizeLimitMessage() equals the product-cap constant on this localhost host', () => {
+    expect(pdfSizeLimitMessage()).toBe(PDF_SIZE_LIMIT_MESSAGE);
+    expect(pdfSizeLimitMessage()).toContain('20 ميغابايت');
   });
 });
 

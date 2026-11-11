@@ -216,6 +216,38 @@ npx eas-cli build --profile preview   --platform all --non-interactive --no-wait
 #   /api/v1/status minAppVersion on cold start.
 ```
 
+## Storage & file transfer — the honest limits (Ω+2.0)
+
+**Verified live (2026-11-11):** Vercel Functions cap any request/response
+body at **4.5 MB** — a 5 MB POST to the deployed API dies at the platform
+edge with an opaque 413 before the app sees a byte. The platform wall
+applies to BOTH directions (upload bodies and download responses).
+
+The product's PDF cap is therefore **host-honest** (`lib/pdf-limits.ts`):
+**4 MiB on Vercel** (a deliberate margin under the wall so the APP's
+Arabic 413 envelope answers, never the platform's opaque error) and the
+full **20 MiB product cap on self-hosted deployments**. The effective
+number is advertised at `GET /api/v1/status` → `data.maxPdfUploadBytes`,
+and all three clients enforce the same value (web `pdfUpload.ts` derives
+it from the same-origin host; mobile `api/pdf.ts` from its API base;
+backend from the Vercel runtime detection). Serving mirrors the guard: a
+plain GET of a stored file larger than the host ceiling answers the
+honest Arabic 413 pointing at the in-app viewer (which ranges
+automatically); RANGE requests keep slicing under the wall.
+
+- Video (lectures) already rides the architecture-compatible path:
+  presigned direct-to-S3 uploads (`POST /uploads/presign`, SigV4 +
+  multipart, `storage-presign.ts`) that never pass a video byte through
+  a function. It requires `STORAGE_DRIVER=s3` + the `S3_*` vars; with
+  the current `postgres` driver the presign route refuses honestly
+  (501).
+- **Unlocking 20 MiB+ PDFs on Vercel** (owner action, ~10 min): set the
+  `S3_*` vars + `STORAGE_DRIVER=s3` in the Vercel project env (an
+  S3-compatible bucket — R2/MinIO/AWS), then extend the presigned flow
+  to the PDF namespaces (planned Ω+2.7 work: uploads PUT directly to
+  the store, downloads via short-lived signed GETs, functions only
+  mint/verify). Until then every surface tells the 4 MiB truth.
+
 ## Backup & restore — the drill record
 
 The DB backup path is a first-class release surface: `npm run db:backup` →

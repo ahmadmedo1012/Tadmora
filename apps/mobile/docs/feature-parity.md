@@ -1,7 +1,7 @@
 # Tadmora Mobile — Feature & API Parity Matrix
 
 **App:** `apps/mobile` (Expo SDK 58 · RN 0.88.1 · expo-router · TypeScript strict)
-**API:** `https://tadmora.vercel.app/api/v1` — deployed `buildId b773b188ce31` (= GitHub `b773b18`, r323 B3.6) at time of writing; the backend continues to evolve on `main` and the deployed service may lag behind source between Render deploys.
+**API:** `https://tadmora.vercel.app/api/v1` — deployed `buildId 74dd870c76d0` (= GitHub `74dd870`, Ω+1) at revalidation time (2026-11-11, Ω+2.0); deploys are Vercel-automatic from `main` (deploy.yml), so the deployed service tracks `main` closely — `GET /api/v1/status` carries the live `buildId` to check against.
 **Sources of truth:** `frontend/src/App.tsx` (113 web routes), `backend/src/app.ts` + `backend/src/http/routes/*` (real contract), `DESIGN.md` + `frontend/src/styles/tokens/tokens.css` (Heron).
 
 **Status legend:**
@@ -34,7 +34,7 @@
 | Achievements | `app/achievements` | `GET /me/achievements`, `GET /training/me/badges`, `GET /training/me/certificates`, `GET /training/leaderboard` | ✅ |
 | Legal pages (6) | `app/legal/[doc].tsx` | — | ✅ |
 | About/Help/Contact | `app/about.tsx`, `app/help.tsx`, `app/contact.tsx` | — | ✅ |
-| Campus life | `app/campus.tsx` | — (documentary) | ✅ |
+| Platform environment (was "campus life") | `app/campus.tsx` | — | ✅ Phase Ω rework: the real-university documentary rail retired; the screen now shows the platform's own environment («لا حرمَ جامعيًّا — بيئة تُبنى من بياناتك») with labeled demo-workspace captures |
 | Feedback loop («أبلغ عن مشكلة») | `/report` route from Profile/`/settings` (R331: FAB removed) | `POST /feedback` | ✅ (no screenshot/console tape on mobile — disclosed) |
 | Theme sync (light/dark/system) | settings | `PUT /me/theme` | ✅ |
 | Onboarding/milestones | welcome + role home | `POST /me/onboarding/complete` fired on first role-home | ✅ (4-frame tour & milestone scenes are web instruments, not ported) |
@@ -57,7 +57,7 @@
 | Results | `results` | `GET /me/results` | ✅ |
 | Online exams list | `online-exams` | `GET /exams/me` | ✅ |
 | Exam taker (timer, autosave, auto-submit) | `online-exams/[templateId]` | `POST /exams/templates/:id/start`, `POST /exams/attempts/:id/answer`, `POST /exams/attempts/:id/submit`, `GET /exams/attempts/:id/review` | ✅ |
-| Research submission (PDF) | `research` | `POST /files/papers` (raw ≤20MB + `%PDF-` magic), `POST /me/research`, `POST /research/:id/scan` | ✅ progress via FileSystem.uploadAsync |
+| Research submission (PDF) | `research` | `POST /files/papers` (raw, host-honest ceiling — 4 MiB against the vercel API / 20 MiB self-hosted, derived in `api/pdf.ts`; `%PDF-` magic), `POST /me/research`, `POST /research/:id/scan` | ✅ progress via FileSystem.uploadAsync |
 | Research library + search | `library` | `GET /library/books`, `POST /library/loans`, `POST /library/loans/:id/return`, `GET /research/published`, `GET /research/search`, `GET /me/loans` | ✅ |
 | Plagiarism/AI scan | research + document viewer | deterministic simulated percentages | ⚠️ «محاكاة» preserved (thresholds 15/25 · 25/40) |
 | Training lessons + quiz | `training/[slug]/lesson/[lessonId]` | `POST /training/lessons/:id/complete {quizAnswer}` | ✅ |
@@ -87,7 +87,7 @@
 | Students roster + risk | `(tabs)/students`, `students/[offeringId]` | `GET /teacher/offerings/:id/students`, `GET /teacher/risks` | ✅ |
 | Attendance | `attendance` | `POST /teacher/offerings/:id/attendance` | ✅ |
 | Grades upsert | `grades` | `POST /offerings/:id/grades` | ✅ |
-| Materials (JSON + PDF file) | `materials` | `POST /offerings/:id/materials`, `POST /offerings/:id/materials/file?name=&type=PDF` (raw ≤20MB) | ✅ |
+| Materials (JSON + PDF file) | `materials` | `POST /offerings/:id/materials`, `POST /offerings/:id/materials/file?name=&type=PDF` (raw, the same host-honest ceiling) | ✅ |
 | Assignments + submissions | `assignments` | `GET /teacher/me/assignments`, `GET /teacher/me/pending-submissions`, `POST /offerings/:id/assignments`, `POST /submissions/:id/grade` | ✅ |
 | Exam authoring + question bank | `exams`, `exams/[templateId]` | `GET/POST /question-bank`, `GET /question-bank/categories`, `GET/POST /exams/templates`, `PATCH /exams/templates/:id`, `POST /exams/templates/:id/clone|publish`, `GET /exams/templates/:id/attempts`, `POST /exams/attempts/:id/grade` | ✅ |
 | Lecture/chapter/checkpoint authoring | `curriculum` | `POST /offerings/:oid/lectures` + `/lectures/:lid/chapters`, `PATCH/DELETE /chapters/:id`, `/checkpoints/:id`, reorder | ✅ |
@@ -163,4 +163,4 @@
 
 ## 8. Deployment mismatch watch
 
-The backend deploys continuously via Render from `main`. Endpoints added in source but not yet deployed return 404 until the next deploy; the client normalizes this honestly rather than fabricating data. At integration time the deployed `buildId` was current with `main` (`b773b18`).
+The web surface + API deploy automatically to Vercel from `main` (deploy.yml, gated on its repository secrets — Deploy run evidence lands in the run summary). Endpoints added in source but not yet deployed return 404 until the next deploy; the client normalizes this honestly rather than fabricating data. At Ω+2.0 revalidation the deployed `buildId` was current with `main` (`74dd870`), and `scripts/contract-check.mjs` (253 routes, 0 drift) runs against backend source on every Mobile workflow run.

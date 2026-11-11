@@ -44,9 +44,13 @@ env:
   NODE_VERSION: "22"
   EXPO_NO_TELEMETRY: "1"
   COCOAPODS_DISABLE_STATS: "true"
-  # Public build-time configuration (the same value as eas.json). This is not
-  # a secret: it is already the default in apps/mobile/app.config.ts.
-  EXPO_PUBLIC_API_BASE_URL: "https://tadmora.onrender.com/api/v1"
+  # Public build-time configuration (the same value as eas.json and the
+  # app.config.ts default). This is not a secret. It MUST stay the current
+  # production API host — the workflow validates the resolved config AND
+  # the URL embedded in the built binary before publishing, so a stale
+  # host here (e.g. the retired tadmora.onrender.com) fails the build
+  # instead of silently shipping an app that talks to a dead server.
+  EXPO_PUBLIC_API_BASE_URL: "https://tadmora.vercel.app/api/v1"
   IPA_NAME: ${{ github.event.inputs.ipa_name || 'Tadmora' }}
 
 jobs:
@@ -115,11 +119,25 @@ jobs:
             fail(`Unexpected iOS bundle id: ${c.ios?.bundleIdentifier}`);
           }
           if (!c.runtimeVersion) fail('runtimeVersion is missing');
+          // The API host this build will talk to. Guarded so an obsolete
+          // hostname can never ship silently (the retired Render host
+          // tadmora.onrender.com must never come back here).
+          const api = c.extra?.apiBaseUrl;
+          const EXPECTED = process.env.EXPO_PUBLIC_API_BASE_URL;
+          if (api !== EXPECTED) {
+            fail(`Resolved extra.apiBaseUrl is ${api} but the workflow expects ${EXPECTED}`);
+          }
+          for (const obsolete of ['onrender.com', 'render.com', 'herokuapp.com', 'localhost']) {
+            if (String(api).includes(obsolete)) {
+              fail(`Resolved extra.apiBaseUrl contains the retired host "${obsolete}": ${api}`);
+            }
+          }
           console.log(`name=${c.name}`);
           console.log(`slug=${c.slug}`);
           console.log(`sdkVersion=${c.sdkVersion}`);
           console.log(`bundleIdentifier=${c.ios.bundleIdentifier}`);
           console.log(`version=${c.version}`);
+          console.log(`apiBaseUrl=${api} (validated: current production host)`);
           NODE
 
       - name: Generate the native iOS project (Expo prebuild)
@@ -402,6 +420,29 @@ jobs:
           (cd build && shasum -a 256 "$IPA_NAME.ipa" > SHA256SUMS.txt)
           cat build/build-info.json
           cat build/SHA256SUMS.txt
+
+      - name: Verify the API URL embedded in the binary
+        working-directory: apps/mobile
+        run: |
+          set -euo pipefail
+          # The jsbundle inlines EXPO_PUBLIC_API_BASE_URL at build time —
+          # prove the packaged app really targets the current production
+          # API, and that no retired host leaked into the binary.
+          APP="build/verify/Payload/$APP_BASENAME"
+          test -f "$APP/main.jsbundle"
+          EXPECTED_HOST=$(printf '%s' "$EXPO_PUBLIC_API_BASE_URL" | sed -E 's#^https?://([^/]+)/.*#\1#')
+          echo "Expected API host in the bundle: $EXPECTED_HOST"
+          if ! strings "$APP/main.jsbundle" | grep -q "$EXPECTED_HOST"; then
+            echo "::error::$EXPECTED_HOST not found in main.jsbundle — the binary does not target the current production API"
+            exit 1
+          fi
+          for OBSOLETE in 'tadmora.onrender.com' '.onrender.com' 'herokuapp.com'; do
+            if strings "$APP/main.jsbundle" | grep -q "$OBSOLETE"; then
+              echo "::error::Retired host \"$OBSOLETE\" found embedded in main.jsbundle"
+              exit 1
+            fi
+          done
+          echo "OK: binary targets $EXPECTED_HOST and carries no retired host"
 
       - name: Upload the unsigned IPA artifact
         uses: actions/upload-artifact@v4

@@ -14,7 +14,7 @@ import { defineConfig } from 'vitest/config';
  * The guard in tests/integration/guard.setup.ts fails closed (exits
  * non-zero) before a single test connects unless DATABASE_URL points
  * at a LOCAL disposable database (localhost/127.0.0.1 only, never
- * onrender/neon hosts) — see docs/11-testing.md.
+ * onrender/vercel/neon hosts) — see docs/11-testing.md.
  */
 export default defineConfig({
   test: {

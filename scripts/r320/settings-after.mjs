@@ -15,7 +15,7 @@
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://tadmora.onrender.com';
+const BASE = process.argv[2] ?? 'https://tadmora.vercel.app';
 const OUT = 'audits/evidence/r320/settings';
 
 const browser = await chromium.launch();

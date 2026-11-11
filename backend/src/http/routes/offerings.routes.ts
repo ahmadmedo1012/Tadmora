@@ -25,7 +25,12 @@ import {
 // Upload guards (magic bytes / size cap) — the files.routes pure layer.
 // Route-module helper import, same precedent as offeringVisibilityFilter
 // above (no cycle: files.routes imports nothing from this file).
-import { isPdfMagicBytes, isUploadSizeOk, assertOfferingInstitutionForUpload } from './files.routes.js';
+import {
+  isPdfMagicBytes,
+  isUploadSizeOk,
+  assertOfferingInstitutionForUpload,
+  MAX_UPLOAD_PDF_BYTES,
+} from './files.routes.js';
 // r323 B3.3 — the academic tell: materials/assignments fire to the
 // offering's active students (payloads pure-tested in notifications/core).
 import { assignmentCreatedPayload, materialCreatedPayload } from '../../modules/notifications/core.js';
@@ -402,7 +407,7 @@ router.post(
   requireRole(Role.TEACHER, Role.ADMIN, Role.OWNER),
   materialUploadLimiter,
   validate(materialFileQuerySchema, 'query'),
-  express.raw({ type: 'application/pdf', limit: '20mb' }),
+  express.raw({ type: 'application/pdf', limit: MAX_UPLOAD_PDF_BYTES }),
   async (req, res, next) => {
     try {
       const offeringId = req.params.id!;
@@ -423,7 +428,11 @@ router.post(
         throw AppError.badRequest('أرسل ملف PDF واحدًا بترميز application/pdf');
       }
       if (!isUploadSizeOk(body.length)) {
-        throw new AppError('PAYLOAD_TOO_LARGE', 'حجم الملف يتجاوز الحد المسموح (20 ميجابايت)', 413);
+        throw new AppError(
+          'PAYLOAD_TOO_LARGE',
+          `حجم الملف يتجاوز الحد المسموح (${Math.round(MAX_UPLOAD_PDF_BYTES / (1024 * 1024))} ميجابايت)`,
+          413,
+        );
       }
       if (!isPdfMagicBytes(body)) {
         throw AppError.badRequest('الملف المرفق ليس ملف PDF صالحاً');

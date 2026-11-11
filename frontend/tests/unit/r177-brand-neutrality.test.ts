@@ -192,13 +192,19 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
    * showcase DATA; what these pins forbid is ZU AS the platform's
    * identity ever coming back. */
 
-  it('LICENSE states the independent platform + showcase-data disclosure (grant intact)', () => {
+  it('LICENSE states the independent platform + demo-workspace disclosure (grant intact)', () => {
     const license = readRepo('LICENSE');
     expect(license).toContain(
       'Tadmora is an independent University Operating System developed by Ahmad Medo',
     );
-    expect(license).toContain('showcase/reference data, not affiliation');
+    // Ω+2.0: the disclosure names the LABELED DEMO-WORKSPACE data (the
+    // Phase Ω identity-purity retirement removed the Zawia showcase —
+    // the license must not name a removed tenant) + the current host.
+    expect(license).toContain('labeled demo-workspace data, not affiliation');
+    expect(license).toContain('deployed at tadmora.vercel.app');
     expect(license).not.toContain('developed and deployed for University of Zawia');
+    expect(license).not.toContain('University of Zawia records');
+    expect(license).not.toContain('tadmora.onrender.com');
     // the proprietary grant itself must stay untouched
     expect(license).toContain('no right to\ndeploy, modify, or redistribute is granted');
   });

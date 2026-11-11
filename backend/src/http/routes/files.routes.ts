@@ -20,6 +20,7 @@ import {
   S3Driver,
 } from '../../lib/storage.js';
 import { MAX_PRESIGN_EXPIRES_SEC } from '../../lib/storage-presign.js';
+import { RUNTIME_PDF_MAX_BYTES, isVercelRuntime } from '../../lib/pdf-limits.js';
 
 const router = Router();
 
@@ -292,8 +293,12 @@ export function isWithinPapersDir(resolved: string, storageRoot: string): boolea
 
 // ─── Upload guard layer (tests/modules/upload-guard.test.ts) ──────
 
-/** Hard ceiling for one uploaded PDF — matches the express.raw limit. */
-export const MAX_UPLOAD_PDF_BYTES = 20 * 1024 * 1024;
+/** Hard ceiling for one uploaded PDF — host-honest (lib/pdf-limits.ts):
+ * the 20 MiB PRODUCT cap on self-hosted/Render-style hosts, 4 MiB on
+ * Vercel (the platform's 4.5 MB function-body wall — verified live
+ * 2026-11-11 — would otherwise turn a >4.5 MB upload into an opaque
+ * edge 413 before the app can answer with its Arabic envelope). */
+export const MAX_UPLOAD_PDF_BYTES = RUNTIME_PDF_MAX_BYTES;
 
 /**
  * Magic-byte gate: every PDF starts with the literal `%PDF-` header.
@@ -304,7 +309,7 @@ export function isPdfMagicBytes(body: Buffer): boolean {
   return body.subarray(0, 5).toString('latin1') === '%PDF-';
 }
 
-/** Size gate: non-empty and within the 20 MB cap (0 → rejected as 413). */
+/** Size gate: non-empty and within the host-honest cap (0 → rejected as 413). */
 export function isUploadSizeOk(length: number): boolean {
   return Number.isInteger(length) && length > 0 && length <= MAX_UPLOAD_PDF_BYTES;
 }
@@ -337,9 +342,10 @@ export function containsPdfActiveContent(body: Uint8Array): boolean {
  * PDFs per student. Rationale for the number: the ResearchPaper row does
  * NOT store a file size, so the worst-case stored footprint of a user's
  * existing papers is count × MAX_UPLOAD_PDF_BYTES (each upload is already
- * capped at 20 MB by isUploadSizeOk) — 200 MB therefore means "at most 10
- * papers". The demo seed student carries 5 papers (worst-case 100 MB) and
- * stays comfortably inside; no single account can pin unbounded storage.
+ * capped by the host-honest ceiling — 20 MB self-hosted, 4 MB on Vercel —
+ * so 200 MB means "at most 10 papers" self-hosted, more on Vercel). The
+ * demo seed student carries 5 papers and stays comfortably inside; no
+ * single account can pin unbounded storage.
  */
 export const USER_PAPER_QUOTA_BYTES = 200 * 1024 * 1024;
 
@@ -410,6 +416,13 @@ export const FILE_NOT_FOUND_MESSAGE = 'الملف غير موجود';
  * stat → 404 when absent; single-range requests get 206 + Content-Range;
  * everything else is a full 200. A driver failure (e.g. S3 transport)
  * throws and maps to 500 through the error handler — never a fake 404.
+ *
+ * Host-honest full-read guard (Ω+2.0): on a Vercel runtime a stored file
+ * larger than the effective ceiling cannot leave in ONE response (the
+ * platform's 4.5 MB body wall — verified live). Refusing the doomed
+ * transfer up front with the app's Arabic envelope beats the platform's
+ * opaque failure; RANGE requests (the in-app pdf.js viewer) still slice
+ * under the ceiling and keep working — the message says exactly that.
  */
 async function servePdfFromStorage(
   req: Request,
@@ -429,6 +442,17 @@ async function servePdfFromStorage(
     res.setHeader('Content-Range', `bytes */${info.size}`);
     res.status(416).end();
     return;
+  }
+  if (
+    range === null &&
+    isVercelRuntime() &&
+    info.size > RUNTIME_PDF_MAX_BYTES
+  ) {
+    throw new AppError(
+      'PAYLOAD_TOO_LARGE',
+      'حجم الملف أكبر من حدّ النقل على هذا المستضيف — افتحه من عارض المنصة (ينزّله مقاطع تلقائيًا) أو استخدم تنزيلًا مقسّمًا.',
+      413,
+    );
   }
   const slice = range === null ? await storage.get(key) : await storage.getRange(key, range.start, range.end);
   if (slice === null) throw AppError.notFound(FILE_NOT_FOUND_MESSAGE);
@@ -482,7 +506,7 @@ router.post(
   '/papers',
   requireRole(Role.STUDENT),
   paperUploadLimiter,
-  express.raw({ type: 'application/pdf', limit: '20mb' }),
+  express.raw({ type: 'application/pdf', limit: MAX_UPLOAD_PDF_BYTES }),
   async (req, res, next) => {
     try {
       const body = req.body;
@@ -490,7 +514,11 @@ router.post(
         throw AppError.badRequest('أرسل ملف PDF واحدًا بترميز application/pdf');
       }
       if (!isUploadSizeOk(body.length)) {
-        throw new AppError('PAYLOAD_TOO_LARGE', 'حجم الملف يتجاوز الحد المسموح (20 ميجابايت)', 413);
+        throw new AppError(
+          'PAYLOAD_TOO_LARGE',
+          `حجم الملف يتجاوز الحد المسموح (${Math.round(MAX_UPLOAD_PDF_BYTES / (1024 * 1024))} ميجابايت)`,
+          413,
+        );
       }
       if (!isPdfMagicBytes(body)) {
         throw AppError.badRequest('الملف المرفق ليس ملف PDF صالحاً');

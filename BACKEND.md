@@ -36,11 +36,11 @@ condensed overview.
 ## 2. Middleware chain (order in `app.ts`)
 
 1. `app.disable('x-powered-by')`
-2. `app.set('trust proxy', 1)` (Render)
+2. `app.set('trust proxy', 1)` (Vercel/Render-style reverse proxy)
 3. **Helmet** — CSP **enabled** (D7 allow-list: `default-src 'self'`, plus a sha256 pin for the inline theme-bootstrap script), `crossOriginResourcePolicy: cross-origin`
-4. **CORS** — allow-list from `CORS_ORIGINS` env (default: `https://tadmora.onrender.com`, `http://localhost:5173`), `credentials: true`
+4. **CORS** — allow-list from `CORS_ORIGINS` env (default: `https://tadmora.vercel.app`, `http://localhost:5173`), `credentials: true`
 5. **gzip compression** middleware (≥1 KB, text/JSON/JS/SVG; `Vary: Accept-Encoding` on all responses)
-6. `express.json({ limit: '1mb' })` + `express.urlencoded({ limit: '1mb' })` — the two PDF upload routes add route-level `express.raw({ type: 'application/pdf', limit: '20mb' })` (JSON/URLENCODED parsers skip non-matching content types, so the 20 MB raw bodies pass through untouched)
+6. `express.json({ limit: '1mb' })` + `express.urlencoded({ limit: '1mb' })` — the two PDF upload routes add route-level `express.raw({ type: 'application/pdf', limit: MAX_UPLOAD_PDF_BYTES })` (JSON/URLENCODED parsers skip non-matching content types, so the raw bodies pass through untouched). The limit is HOST-HONEST (lib/pdf-limits.ts): 20 MiB self-hosted, 4 MiB on Vercel — Vercel Functions cap any body at 4.5 MB (verified live 2026-11-11), so the app's own 4 MiB gate answers oversize uploads with the Arabic envelope BEFORE the platform's opaque 413. Advertised at `/api/v1/status` → `data.maxPdfUploadBytes`
 7. `cookieParser()`
 8. **Global rate limit** on `/api/v1` — **1000 req / 15 min / IP** (raised from 300 — campus users behind shared NAT)
 9. **Auth rate limit** on `/auth/login` + `/auth/register` + `/auth/refresh` + `/auth/change-password` — 10 req / 15 min / IP (skips successes)
@@ -281,7 +281,7 @@ condensed overview.
 | `JWT_REFRESH_SECRET` | ✅ | — | ≥32 chars |
 | `NODE_ENV` | ❌ | `development` | `production` enables static serving + secure cookies |
 | `PORT` | ❌ | `4000` | listen port |
-| `CORS_ORIGINS` | ❌ | tadmora.onrender.com + localhost:5173 | Comma-separated CORS allow-list (no wildcards — credentials are on) |
+| `CORS_ORIGINS` | ❌ | tadmora.vercel.app + localhost:5173 | Comma-separated CORS allow-list (no wildcards — credentials are on) |
 | `INTERNAL_SERVICE_TOKEN` | ❌ | — | Service-to-service auth for `POST /api/v1/me/milestones/:id/fire` (≥16 chars; fail-closed when unset; constant-time compare) |
 | `DIRECT_DATABASE_URL` | ❌ | derived | Neon **direct** (non-pooled) URL for `prisma migrate deploy`; when unset, the deploy script derives it from `DATABASE_URL` (strips `-pooler` + pooling params) |
 | `STORAGE_DRIVER` | ❌ | `local` | Upload storage driver (`lib/storage.ts`): `local` filesystem or `s3` (any S3-compatible store). `s3` without the four `S3_*` vars → boot fails closed naming them; `local` in production logs a one-time ephemeral-disk warning |
@@ -417,7 +417,7 @@ daily wall.
 
 The 4 LLM‑only probes and citation presence on grounded cases are the
 production‑mode acceptance bar for the owner's rerun
-(`BASE_URL=https://tadmora.onrender.com` + eval creds; the bounded r176
+(`BASE_URL=https://tadmora.vercel.app` + eval creds; the bounded r176
 harness `scripts/ai-eval-live.mjs` stays the free‑tier‑respectful
 12‑turn production probe).
 

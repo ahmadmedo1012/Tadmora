@@ -203,8 +203,9 @@ briefs in `docs/redesign/r341/tasks/`.
   with the requested build name symlinked to `chromium-1200`. WebKit is often absent →
   report it as RESIDUAL, never fake the number.
 - Dark cells: measure with `run.mjs --dark` (site's own `html[data-theme=dark]` flip).
-- `tadmora.onrender.com` is NOT reachable from the sandbox — take product-UI crops from
-  the local dev server/build; `heronaiapp.com` IS reachable.
+- Production is `tadmora.vercel.app` (Vercel + Neon). It is reachable for read-only
+  verification, but take product-UI crops from the local dev server/build and never
+  run destructive flows against production.
 - No `gh` CLI, no pnpm/yarn on PATH; GitHub API via `curl` + token header. git identity
   is preset in `/home/z/tadmora` (worktrees inherit it).
 - Commits: `type(rNNN): subject` (feat|fix|chore|docs); section rewrites carry
