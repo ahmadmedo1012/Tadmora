@@ -271,11 +271,11 @@ const STATS = {
  * rows — the directory's institution column reads them, r183-B5). */
 const USERS = {
   data: [
-    { id: 'usr_e2e_owner', email: 'owner@zu.edu.ly', firstName: 'المدير', lastName: 'الأعلى', role: 'OWNER', avatarColor: '#dc2626', avatarInitials: 'مأ', isActive: true, createdAt: hoursAgo(24 * 700), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'جامعة الزاوية', slug: 'zu', status: 'ACTIVE' } }] },
-    { id: 'usr_e2e_admin', email: 'admin@zu.edu.ly', firstName: 'المسجل', lastName: 'العام', role: 'ADMIN', avatarColor: '#0891b2', avatarInitials: 'مع', isActive: true, createdAt: hoursAgo(24 * 300), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'جامعة الزاوية', slug: 'zu', status: 'ACTIVE' } }] },
-    { id: 'usr_e2e_teacher', email: 'teacher@zu.edu.ly', firstName: 'أستاذ', lastName: 'الرياضيات', role: 'TEACHER', avatarColor: '#7c3aed', avatarInitials: 'أر', isActive: true, createdAt: hoursAgo(24 * 90), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'جامعة الزاوية', slug: 'zu', status: 'ACTIVE' } }] },
-    { id: 'usr_e2e_student', email: 'student@zu.edu.ly', firstName: 'طالب', lastName: 'السنة الثالثة', role: 'STUDENT', avatarColor: '#15803d', avatarInitials: 'طس', isActive: true, createdAt: hoursAgo(24 * 60), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'جامعة الزاوية', slug: 'zu', status: 'ACTIVE' } }] },
-    { id: 'usr_e2e_quality', email: 'quality@zu.edu.ly', firstName: 'أخصائي', lastName: 'الجودة', role: 'QUALITY', avatarColor: '#b45309', avatarInitials: 'أج', isActive: false, createdAt: hoursAgo(24 * 40), memberships: [] },
+    { id: 'usr_e2e_owner', email: 'owner@e2e.tadmora.app', firstName: 'المدير', lastName: 'الأعلى', role: 'OWNER', avatarColor: '#dc2626', avatarInitials: 'مأ', isActive: true, createdAt: hoursAgo(24 * 700), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'مؤسسة الفحص التجريبية', slug: 'zu', status: 'ACTIVE' } }] },
+    { id: 'usr_e2e_admin', email: 'admin@e2e.tadmora.app', firstName: 'المسجل', lastName: 'العام', role: 'ADMIN', avatarColor: '#0891b2', avatarInitials: 'مع', isActive: true, createdAt: hoursAgo(24 * 300), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'مؤسسة الفحص التجريبية', slug: 'zu', status: 'ACTIVE' } }] },
+    { id: 'usr_e2e_teacher', email: 'teacher@e2e.tadmora.app', firstName: 'أستاذ', lastName: 'الرياضيات', role: 'TEACHER', avatarColor: '#7c3aed', avatarInitials: 'أر', isActive: true, createdAt: hoursAgo(24 * 90), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'مؤسسة الفحص التجريبية', slug: 'zu', status: 'ACTIVE' } }] },
+    { id: 'usr_e2e_student', email: 'student@e2e.tadmora.app', firstName: 'طالب', lastName: 'السنة الثالثة', role: 'STUDENT', avatarColor: '#15803d', avatarInitials: 'طس', isActive: true, createdAt: hoursAgo(24 * 60), memberships: [{ institution: { id: 'inst_e2e_zu', name: 'مؤسسة الفحص التجريبية', slug: 'zu', status: 'ACTIVE' } }] },
+    { id: 'usr_e2e_quality', email: 'quality@e2e.tadmora.app', firstName: 'أخصائي', lastName: 'الجودة', role: 'QUALITY', avatarColor: '#b45309', avatarInitials: 'أج', isActive: false, createdAt: hoursAgo(24 * 40), memberships: [] },
   ],
   meta: { page: 1, limit: 20, total: 5, totalPages: 1 },
 };
@@ -283,11 +283,11 @@ const USERS = {
 /* GET /owner/activity — PaginatedResponse<AuditLogEntry>. */
 const ACTIVITY = {
   data: [
-    { id: 'aud_e2e_1', action: 'COURSE_CREATED', resourceType: 'Course', resourceId: 'crs_e2e_stats', userId: 'usr_e2e_admin', metadata: null, createdAt: hoursAgo(2), user: { firstName: 'المسجل', lastName: 'العام', email: 'admin@zu.edu.ly' } },
-    { id: 'aud_e2e_2', action: 'ROLE_CHANGE', resourceType: 'User', resourceId: 'usr_e2e_teacher', userId: 'usr_e2e_owner', metadata: null, createdAt: hoursAgo(6), user: { firstName: 'المدير', lastName: 'الأعلى', email: 'owner@zu.edu.ly' } },
-    { id: 'aud_e2e_3', action: 'user.login', resourceType: 'User', resourceId: null, userId: 'usr_e2e_student', metadata: null, createdAt: hoursAgo(26), user: { firstName: 'طالب', lastName: 'السنة الثالثة', email: 'student@zu.edu.ly' } },
-    { id: 'aud_e2e_4', action: 'SETTING_UPDATED', resourceType: 'PlatformSetting', resourceId: 'set_maintenance', userId: 'usr_e2e_owner', metadata: null, createdAt: hoursAgo(50), user: { firstName: 'المدير', lastName: 'الأعلى', email: 'owner@zu.edu.ly' } },
-    { id: 'aud_e2e_5', action: 'ALERT_RESOLVED', resourceType: 'OperationalAlert', resourceId: 'alr_e2e_1', userId: 'usr_e2e_owner', metadata: null, createdAt: hoursAgo(78), user: { firstName: 'المدير', lastName: 'الأعلى', email: 'owner@zu.edu.ly' } },
+    { id: 'aud_e2e_1', action: 'COURSE_CREATED', resourceType: 'Course', resourceId: 'crs_e2e_stats', userId: 'usr_e2e_admin', metadata: null, createdAt: hoursAgo(2), user: { firstName: 'المسجل', lastName: 'العام', email: 'admin@e2e.tadmora.app' } },
+    { id: 'aud_e2e_2', action: 'ROLE_CHANGE', resourceType: 'User', resourceId: 'usr_e2e_teacher', userId: 'usr_e2e_owner', metadata: null, createdAt: hoursAgo(6), user: { firstName: 'المدير', lastName: 'الأعلى', email: 'owner@e2e.tadmora.app' } },
+    { id: 'aud_e2e_3', action: 'user.login', resourceType: 'User', resourceId: null, userId: 'usr_e2e_student', metadata: null, createdAt: hoursAgo(26), user: { firstName: 'طالب', lastName: 'السنة الثالثة', email: 'student@e2e.tadmora.app' } },
+    { id: 'aud_e2e_4', action: 'SETTING_UPDATED', resourceType: 'PlatformSetting', resourceId: 'set_maintenance', userId: 'usr_e2e_owner', metadata: null, createdAt: hoursAgo(50), user: { firstName: 'المدير', lastName: 'الأعلى', email: 'owner@e2e.tadmora.app' } },
+    { id: 'aud_e2e_5', action: 'ALERT_RESOLVED', resourceType: 'OperationalAlert', resourceId: 'alr_e2e_1', userId: 'usr_e2e_owner', metadata: null, createdAt: hoursAgo(78), user: { firstName: 'المدير', lastName: 'الأعلى', email: 'owner@e2e.tadmora.app' } },
   ],
   meta: { page: 1, limit: 20, total: 5, totalPages: 1 },
 };
@@ -401,11 +401,11 @@ const GOVERNANCE = {
  * suspended institution's memberships are deactivated). */
 const INSTITUTIONS = [
   {
-    id: 'inst_e2e_zu', slug: 'zu', name: 'جامعة الزاوية', nameEn: 'Zawia University', status: 'ACTIVE',
+    id: 'inst_e2e_zu', slug: 'zu', name: 'مؤسسة الفحص التجريبية', nameEn: 'E2E Test Institution', status: 'ACTIVE',
     createdAt: '2024-09-01T08:00:00.000Z', updatedAt: '2026-03-01T09:00:00.000Z',
     activeMembershipCount: 3, facultyCount: 2,
     admins: [
-      { id: 'mem_1', membershipId: 'mem_1', userId: 'usr_e2e_admin', name: 'المسجل العام', email: 'admin@zu.edu.ly', isActive: true, revokedAt: null },
+      { id: 'mem_1', membershipId: 'mem_1', userId: 'usr_e2e_admin', name: 'المسجل العام', email: 'admin@e2e.tadmora.app', isActive: true, revokedAt: null },
     ],
   },
   {
@@ -465,7 +465,7 @@ const FEEDBACK = {
 /* GET /client-errors — the telemetry rows (ClientErrorRow shape). */
 const CLIENT_ERRORS = {
   data: [
-    { id: 'ce_1', kind: 'js_error', message: 'TypeError: rows.map is not a function', stack: null, route: '/owner/users', role: 'OWNER', breadcrumbs: null, appVersion: null, updateId: null, runtimeVersion: null, deviceModel: null, osName: null, osVersion: null, reviewedAt: null, createdAt: hoursAgo(9), user: { id: 'usr_e2e_owner', firstName: 'المدير', lastName: 'الأعلى', email: 'owner@zu.edu.ly' } },
+    { id: 'ce_1', kind: 'js_error', message: 'TypeError: rows.map is not a function', stack: null, route: '/owner/users', role: 'OWNER', breadcrumbs: null, appVersion: null, updateId: null, runtimeVersion: null, deviceModel: null, osName: null, osVersion: null, reviewedAt: null, createdAt: hoursAgo(9), user: { id: 'usr_e2e_owner', firstName: 'المدير', lastName: 'الأعلى', email: 'owner@e2e.tadmora.app' } },
   ],
   meta: { total: 1, totalPages: 1, page: 1, unreviewed: 1 },
 };
