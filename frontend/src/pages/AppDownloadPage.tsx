@@ -29,6 +29,10 @@ import '../styles/app.css';
  *     installs upgrade in place;
  *   · TestFlight is PENDING (needs the owner's Apple Developer account —
  *     RELEASE.md documents the exact owner steps);
+ *   · the OTA channel is WIRED but PENDING ACTIVATION (the new EAS
+ *     project + the EXPO_TOKEN secret — §04 says so in Arabic, RELEASE.md
+ *     carries the re-activation runbook). Until then every update is a
+ *     fresh direct APK from this page (stable signature → in-place);
  *   · the minimum-version floor is read LIVE from /api/v1/status — the
  *     same endpoint the app's blocking gate consumes (M0.7).
  *
@@ -66,7 +70,7 @@ export function AppDownloadPage() {
     title: 'تطبيق تادمورا — التنزيل والتحديث',
     path: '/app',
     description:
-      'تنزيل تطبيق تادمورا لأندرويد، حالة iOS، قنوات التحديث التلقائي، والحد الأدنى للإصدار — مباشرة وبدون وسيط.',
+      'تنزيل تطبيق تادمورا لأندرويد، حالة iOS، قنوات التحديث، والحد الأدنى للإصدار — مباشرة وبدون وسيط.',
   });
 
   // The live floor — the same status the app's version gate reads (M0.7).
@@ -206,15 +210,23 @@ export function AppDownloadPage() {
             </div>
             <div className="ap-cell">
               <p className="ap-p">
-                التطبيق يفحص التحديث تلقائيًا عند كلّ فتح: تغيّرات الواجهة والشاشات تصل
-                <strong> دون إعادة تثبيت</strong> (تحديث فوري — OTA)، بينما التغيّرات الأصلية
-                (أذونات، مكتبات النظام) تصلك كملف تثبيت جديد من هذه الصفحة.
+                اليوم تصل التحديثات عبر هذه الصفحة: كلّ دفعة جديدة للفرع الرئيسي تُبنى
+                وتُوقَّع تلقائيًا وتحلّ محلّ السابقة في الرابط نفسه — والتوقيع ثابت، فتُثبَّت
+                النسخة الجديدة فوق نسختك الحالية مباشرة.
               </p>
               <p className="ap-p">
-                ثلاث قنوات مفتوحة اليوم: <span className="ap-mono" dir="ltr">production</span> للنسخة
-                العامة، <span className="ap-mono" dir="ltr">preview</span> للمعاينة قبل النشر،
+                أمّا التحديث الفوري داخل التطبيق <span className="ap-mono" dir="ltr">(OTA)</span>
+                فمبنيّ في التطبيق نفسه لكنه <strong>قيد التفعيل</strong>
+                <AppPendingTag /> — خطوة تهيئة واحدة من المالك (مشروع EAS الجديد —
+                موثّقة خطوةً خطوة في RELEASE.md). عند تفعيله ستصل تغيّرات الواجهة والشاشات
+                <strong> دون إعادة تثبيت</strong>، وتبقى التغيّرات الأصلية (أذونات، مكتبات
+                النظام) ملفّ تثبيت جديدًا من هذه الصفحة.
+              </p>
+              <p className="ap-p">
+                قنوات التحديث في التطبيق ثلاث: <span className="ap-mono" dir="ltr">production</span>
+                للنسخة العامة، <span className="ap-mono" dir="ltr">preview</span> للمعاينة قبل النشر،
                 و<span className="ap-mono" dir="ltr">development</span> للتطوير — تحديث كلّ قناة
-                مستقلّ، وجهازك يسحب من قناته فقط.
+                مستقلّ، وجهازك يسحب من قناته فقط، وتُفتَح القنوات مع تفعيل التحديث الفوري أعلاه.
               </p>
             </div>
           </section>
@@ -283,7 +295,7 @@ export function AppDownloadPage() {
           <footer className="ap-colophon">
             <p className="ap-colophon-line">منصّة مستقلّة · عربية أولًا · بيانات العرض اصطناعية بالكامل</p>
             <p className="ap-colophon-stamp">
-              آخر تحديث: <span className="ap-mono" dir="ltr">2026-10-31</span>
+              آخر تحديث: <span className="ap-mono" dir="ltr">2026-11-11</span>
             </p>
           </footer>
         </div>
