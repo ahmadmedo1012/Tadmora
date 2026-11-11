@@ -49,7 +49,7 @@ import {
 describe('shortAnswerMatches', () => {
   it('matches exact answers', () => {
     expect(shortAnswerMatches('HTML', 'HTML')).toBe(true);
-    expect(shortAnswerMatches('الزاوية', 'الزاوية')).toBe(true);
+    expect(shortAnswerMatches('الخوارزمية', 'الخوارزمية')).toBe(true);
   });
 
   it('matches case-insensitively', () => {
@@ -80,7 +80,7 @@ describe('shortAnswerMatches', () => {
   it('requires exact equality — punctuation and internal spacing are significant', () => {
     expect(shortAnswerMatches('HTML5', 'HTML 5')).toBe(false);
     expect(shortAnswerMatches('a b', 'a  b')).toBe(false);
-    expect(shortAnswerMatches('الزاوية', 'az-zawiya')).toBe(false);
+    expect(shortAnswerMatches('الخوارزمية', 'algorithm')).toBe(false);
   });
 
   it('rejects empty, blank and missing answers', () => {

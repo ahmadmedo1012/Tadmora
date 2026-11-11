@@ -5,8 +5,8 @@
  * assignments, ≥ 2 exams, ≥ 3 lectures each with chapters +
  * checkpoints, 30 sample students with plausible activity — clearly
  * flagged demo, removable by one registrar action». seed.ts already
- * ships the two institutions, the 25-faculty skeleton, SE301's rich
- * lectures and the exam pair; this module completes the pack:
+ * ships the two workspaces, the honest three-faculty skeleton, SE301's
+ * rich lectures and the exam pair; this module completes the pack:
  *
  *   - the 8th-course floor (DB302 + DS302 join the six 301 codes)
  *   - ≥ 3 lectures (3 chapters + 1 checkpoint each) per course that
@@ -429,8 +429,8 @@ export async function seedPilotCohort(prisma: PrismaClient): Promise<{ students:
 
   // r324 P7.0 — the FIRST-LIVE-RUN bug this fixes: the old guard took
   // the institution's FIRST faculty (createdAt asc) and required
-  // «علوم الحاسوب» inside it — but that department lives under كلية
-  // تقنية المعلومات, so findFirst returned null and the WHOLE pilot
+  // «علوم الحاسوب» inside it — but that department lives under its own
+  // faculty, so findFirst returned null and the WHOLE pilot
   // pack silently returned { students: 0, lectures: 0 } on every seed
   // (the exact never-ran-against-a-live-DB failure the R324 brief
   // P7.0 predicted). The department is now found by NAME across the

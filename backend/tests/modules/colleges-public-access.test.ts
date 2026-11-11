@@ -124,14 +124,14 @@ const FACULTY_ID = 'fac-arts';
 function mockDetailBundle() {
   vi.mocked(prisma.faculty.findUnique).mockResolvedValue({
     id: FACULTY_ID,
-    name: 'كلية الآداب',
-    nameEn: 'Faculty of Arts',
-    iconEmoji: '📚',
-    city: 'الزاوية',
+    name: 'كلية علوم الحاسوب',
+    nameEn: 'Computer Science',
+    iconEmoji: '💻',
+    city: 'افتراضي',
     // r179 (phase-5): the bundle's events/competitions are scoped to
     // the faculty's institution — the mock carries it like the real
     // include does.
-    institution: { id: 'inst-showcase', name: 'جامعة تادمورا التجريبية', nameEn: 'Tadmora Demo University', slug: 'tadmora-demo' },
+    institution: { id: 'inst-showcase', name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', slug: 'tadmora-demo' },
     departments: [
       { id: 'dep-1', name: 'قسم اللغة العربية', _count: { students: 40, teachers: 3, courses: 6 } },
     ],
@@ -142,7 +142,7 @@ function mockDetailBundle() {
       appointedAt: new Date('2024-01-01'),
       user: { id: 'dean-1', firstName: 'خالد', lastName: 'العمروني', avatarColor: null, avatarInitials: null },
       positionDepartment: null,
-      positionFaculty: { id: FACULTY_ID, name: 'كلية الآداب' },
+      positionFaculty: { id: FACULTY_ID, name: 'كلية علوم الحاسوب' },
     },
   ] as never);
   vi.mocked(prisma.studentProfile.findMany).mockResolvedValue([
@@ -175,7 +175,7 @@ describe('GET /api/v1/colleges/:id — guest funnel open with PII narrowing', ()
     const res = await get(`/api/v1/colleges/${FACULTY_ID}`);
     expect(res.status).toBe(200);
     const body = (await res.json()) as { data: { name: string } };
-    expect(body.data.name).toBe('كلية الآداب');
+    expect(body.data.name).toBe('كلية علوم الحاسوب');
   });
 
   it('anonymizes student family names for guests (given name + initial only)', async () => {
@@ -217,7 +217,7 @@ describe('GET /api/v1/colleges/:id — guest funnel open with PII narrowing', ()
 
 function mockLeaderboardBundle() {
   vi.mocked(prisma.faculty.findMany).mockResolvedValue([
-    { id: FACULTY_ID, name: 'كلية الآداب', iconEmoji: '📚', city: 'الزاوية', departments: [{ id: 'dep-1' }] },
+    { id: FACULTY_ID, name: 'كلية علوم الحاسوب', iconEmoji: '💻', city: 'افتراضي', departments: [{ id: 'dep-1' }] },
   ] as never);
   vi.mocked(prisma.studentProfile.groupBy).mockResolvedValue([
     {

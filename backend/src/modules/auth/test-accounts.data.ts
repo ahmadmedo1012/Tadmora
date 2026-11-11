@@ -72,7 +72,7 @@ export const TEST_ACCOUNTS: readonly TestAccount[] = [
     password: TEST_PASSWORD,
     role: 'STUDENT',
     group: 'التعليم',
-    note: 'مؤسسة الأندلس — لإثبات العزل بين المؤسسات وللرسائل والمجتمع',
+    note: 'مساحة العمل الثانية — لإثبات العزل بين المؤسسات وللرسائل والمجتمع',
   },
   { job: 'أستاذ', email: 'teacher@test.ly', password: TEST_PASSWORD, role: 'TEACHER', group: 'التعليم' },
   {

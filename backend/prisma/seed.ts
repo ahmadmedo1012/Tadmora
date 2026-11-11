@@ -1,22 +1,36 @@
 /**
- * Seed script — populates the database with the same demo data
- * the original HTML prototype hard-coded in JavaScript.
+ * Seed script — populates the database with the demo data the
+ * platform ships for tests and tours.
  *
  * Run:  npm run db:seed
  *
- * r178 (multi-institution foundation): the demo data now spans TWO
- * institutions — جامعة تادمورا التجريبية (slug tadmora-demo, the
- * r188 FICTIONAL demonstration institution that owns the 25-faculty
- * synthetic catalogue + all academic demo content — renamed from the
- * retired real-university showcase; the row keeps its stable id
- * inst-zawia-showcase, a legacy identifier, not identity) and مؤسسة
- * الأندلس التعليمية (slug alandalus-demo, a generic demo institution,
- * NOT a real-university claim). The Al-Andalus demo
- * course reuses the SAME code as the demo university's CS course and its
- * student reuses the SAME reg-number — both now institution-scoped
- * (unique per institution), which is exactly what the second institution
- * proves. Demo users carry Membership rows per institution; the platform
- * OWNER deliberately has NO membership (platform scope, never a member).
+ * Phase Ω (identity purity): TADMORA is an independent multi-tenant
+ * University Operating System — it is NOT any university's website and
+ * has NO institutional affiliations. The demo data therefore lives in
+ * clearly-labeled NEUTRAL WORKSPACES, never in fictional universities
+ * or invented campuses:
+ *
+ *   · مساحة عمل تادمورا التجريبية (slug tadmora-demo) — the labeled
+ *     demo workspace that owns the academic demo content. The row
+ *     keeps its stable id inst-zawia-showcase, a legacy identifier
+ *     from the retired showcase era, not identity.
+ *   · مساحة عمل تجريبية ثانية (slug alandalus-demo) — the second
+ *     labeled demo workspace. Its course reuses the SAME code as the
+ *     first workspace's CS course and its student reuses the SAME
+ *     reg-number — both institution-scoped (unique per institution),
+ *     which is exactly what the second workspace proves.
+ *
+ * The second workspace exists because the multi-tenant proofs (reg-number
+ * and course-code isolation, feed/material/dashboard separation) are
+ * load-bearing for the product's tests; both rows are workspaces, not
+ * universities. Demo users carry Membership rows per institution; the
+ * platform OWNER deliberately has NO membership (platform scope, never
+ * a member).
+ *
+ * The academic structure is an honest minimal set — three generic
+ * faculties (علوم الحاسوب · الهندسة · إدارة الأعمال), no campus names,
+ * no per-college identity profiles: real institutions self-onboard and
+ * build their own faculties from the admin workflow.
  *
  * Test accounts (R320 §C — ONE easy account per job; the single source
  * of truth is src/modules/auth/test-accounts.data.ts, re-exported at
@@ -28,7 +42,7 @@
  *   quality@test.ly   → QUALITY (ضمان الجودة) — membership in tadmora-demo
  *   owner@test.ly     → OWNER   (مالك المنصة) — NO membership (platform owner)
  *   teacher2@test.ly  → TEACHER (خالد التربلسي) — membership in alandalus-demo
- *   admin2@test.ly    → ADMIN   (مسجل عام — الأندلس) — membership in alandalus-demo
+ *   admin2@test.ly    → ADMIN   (مسجل عام) — membership in alandalus-demo
  * Password for ALL seeded accounts: "12345678" (TEST_PASSWORD — the
  * pre-R320 demo domain/password pair is retired).
  *
@@ -50,7 +64,7 @@
  * r180 — DEPLOY-TIME SEEDING + r183 — ESTABLISHED-DB GUARD: the root
  * `npm run build` chains `db:seed` after `db:deploy` (Render runs it in
  * the service's build environment), so a FRESH install migrates then
- * self-initializes the two-institution demo data. Since r183 a NORMAL
+ * self-initializes the two-workspace demo data. Since r183 a NORMAL
  * redeploy of an ESTABLISHED database (any users exist) SKIPS the seed
  * entirely — zero writes: passwords, settings and academic records are
  * not even read for update. The deliberate demo-reset path is explicit
@@ -72,7 +86,7 @@
  * metadata are refreshed (deliberate demo freshness).
  *
  * NOTE (r183 brand voice): all seed copy speaks in the Tadmora
- * platform voice («منصّة تادمورا») — the showcase university is DATA
+ * platform voice («منصّة تادمورا») — the demo workspace is DATA
  * (organizer/institution context), never the platform's identity.
  */
 
@@ -126,88 +140,61 @@ async function main() {
   }
   console.log('🌱 Seeding database...');
 
-  // ─── Institutions (r178 → r188) ───────────────────────────
-  // Upsert by slug. The demonstration tenant is جامعة تادمورا التجريبية —
-  // fully FICTIONAL (r188). The row is created with the FIXED literal
-  // id 'inst-zawia-showcase' — a LEGACY stable identifier carried from
-  // the pre-r188 era (renaming ids would churn every FK for zero
-  // product value; the string is internal, never public identity) —
-  // the same id the migration backfill used, so migrated databases and
-  // fresh seeded databases agree on the reference id (tests rely on
-  // it). The r188 migration renames an existing zawia-showcase row to
-  // this slug/name; fresh installs create it directly.
+  // ─── Workspaces (r178 → r188 → Phase Ω) ─────────────────────
+  // Upsert by slug. The labeled demo workspace is مساحة عمل تادمورا
+  // التجريبية — a NEUTRAL workspace, not a university (Phase Ω: the
+  // platform has no institutional affiliations; institutions self-
+  // onboard and own their data). The row is created with the FIXED
+  // literal id 'inst-zawia-showcase' — a LEGACY stable identifier
+  // carried from the pre-r188 era (renaming ids would churn every FK
+  // for zero product value; the string is internal, never public
+  // identity) — the same id the migration backfill used, so migrated
+  // databases and fresh seeded databases agree on the reference id
+  // (tests rely on it). The r188 migration renamed an existing
+  // zawia-showcase row to this slug; the Phase Ω migration renames the
+  // r188 university label to the workspace label; fresh installs
+  // create it directly.
   const zawia = await prisma.institution.upsert({
     where: { slug: 'tadmora-demo' },
-    update: { name: 'جامعة تادمورا التجريبية', nameEn: 'Tadmora Demo University', status: 'ACTIVE' },
+    update: { name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', status: 'ACTIVE' },
     create: {
       id: 'inst-zawia-showcase',
-      name: 'جامعة تادمورا التجريبية',
-      nameEn: 'Tadmora Demo University',
+      name: 'مساحة عمل تادمورا التجريبية',
+      nameEn: 'Tadmora Experimental Workspace',
       slug: 'tadmora-demo',
       status: 'ACTIVE',
     },
   });
-  // Generic demo institution — a context label, not a real-university
-  // claim (all demo users live on the test.ly domain — R320 §C).
+  // The second labeled demo workspace — the multi-tenant proof tenant
+  // (all demo users live on the test.ly domain — R320 §C).
   const alandalus = await prisma.institution.upsert({
     where: { slug: 'alandalus-demo' },
-    update: { name: 'مؤسسة الأندلس التعليمية', nameEn: 'Al-Andalus Education Institute', status: 'ACTIVE' },
+    update: { name: 'مساحة عمل تجريبية ثانية', nameEn: 'A Second Experimental Workspace', status: 'ACTIVE' },
     create: {
-      name: 'مؤسسة الأندلس التعليمية',
-      nameEn: 'Al-Andalus Education Institute',
+      name: 'مساحة عمل تجريبية ثانية',
+      nameEn: 'A Second Experimental Workspace',
       slug: 'alandalus-demo',
       status: 'ACTIVE',
     },
   });
 
-  // ─── Faculties & Departments (جامعة تادمورا التجريبية) ───
-  // r188: the FICTIONAL demonstration catalogue — 25 faculties across
-  // three synthetic knowledge-named campuses (حرم المعرفة · حرم
-  // الابتكار · حرم البيان). Same name CAN repeat across campuses
-  // (Economics in المعرفة AND الابتكار are two separate faculties) —
-  // the composite unique key stays (institutionId, name, city). No
-  // real-university registry is transcribed here anymore.
+  // ─── Faculties & Departments (مساحة عمل تادمورا التجريبية) ───
+  // Phase Ω (identity purity): an honest MINIMAL set — three generic
+  // faculties, no campus names, no per-college identity profiles. No
+  // real or invented university registry is transcribed here: real
+  // institutions build their own faculties after onboarding. The
+  // composite unique key stays (institutionId, name, city).
   //
-  // Order of the first 4 entries (IT, Engineering, Sciences, Medicine) is
-  // load-bearing — index references later in this file assume it.
-
-  // One-time rename: legacy "كلية الطب" row → source-correct name (kept
-  // idempotent — modern databases already match).
-  await prisma.faculty.updateMany({
-    where: { name: 'كلية الطب', institutionId: zawia.id },
-    data: { name: 'كلية الطب البشري', nameEn: 'Human Medicine', iconEmoji: '⚕️' },
-  });
+  // The order (Computer Science, Engineering, Business Administration)
+  // is load-bearing — index references later in this file assume it.
+  // city 'افتراضي' marks every demo-workspace faculty: the workspaces
+  // are virtual — no city, no campus, no location claim.
 
   const faculties = await Promise.all(
     [
-      // ── حرم المعرفة (main campus, 13 faculties) ─────────────
-      { name: 'كلية تقنية المعلومات', nameEn: 'Information Technology', iconEmoji: '💻', city: 'حرم المعرفة' },
-      { name: 'كلية الهندسة', nameEn: 'Engineering', iconEmoji: '⚙️', city: 'حرم المعرفة' },
-      { name: 'كلية العلوم', nameEn: 'Sciences', iconEmoji: '🔬', city: 'حرم المعرفة' },
-      { name: 'كلية الطب البشري', nameEn: 'Human Medicine', iconEmoji: '⚕️', city: 'حرم المعرفة' },
-      { name: 'كلية الآداب', nameEn: 'Arts', iconEmoji: '📚', city: 'حرم المعرفة' },
-      { name: 'كلية الاقتصاد', nameEn: 'Economics', iconEmoji: '💼', city: 'حرم المعرفة' },
-      { name: 'كلية التربية', nameEn: 'Education', iconEmoji: '🎓', city: 'حرم المعرفة' },
-      { name: 'كلية القانون', nameEn: 'Law', iconEmoji: '⚖️', city: 'حرم المعرفة' },
-      { name: 'كلية الصيدلة', nameEn: 'Pharmacy', iconEmoji: '💊', city: 'حرم المعرفة' },
-      { name: 'كلية طب وجراحة الفم والأسنان', nameEn: 'Dentistry & Oral Surgery', iconEmoji: '🦷', city: 'حرم المعرفة' },
-      { name: 'كلية التقنية الطبية', nameEn: 'Medical Technology', iconEmoji: '🩺', city: 'حرم المعرفة' },
-      { name: 'كلية الرياضة والتربية البدنية', nameEn: 'Physical Education & Sports', iconEmoji: '⚽', city: 'حرم المعرفة' },
-      { name: 'كلية التمريض', nameEn: 'Nursing', iconEmoji: '👩‍⚕️', city: 'حرم المعرفة' },
-      // ── حرم الابتكار (8 faculties) ──────────────────────────────────
-      { name: 'كلية الاقتصاد', nameEn: 'Economics', iconEmoji: '💼', city: 'حرم الابتكار' },
-      { name: 'كلية البيطرة والعلوم الزراعية', nameEn: 'Veterinary & Agricultural Sciences', iconEmoji: '🌾', city: 'حرم الابتكار' },
-      { name: 'كلية التربية', nameEn: 'Education', iconEmoji: '🎓', city: 'حرم الابتكار' },
-      { name: 'كلية الشريعة والقانون', nameEn: 'Sharia & Law', iconEmoji: '⚖️', city: 'حرم الابتكار' },
-      { name: 'كلية العلوم', nameEn: 'Sciences', iconEmoji: '🔬', city: 'حرم الابتكار' },
-      { name: 'كلية الصحة العامة', nameEn: 'Public Health', iconEmoji: '🏥', city: 'حرم الابتكار' },
-      { name: 'كلية هندسة الموارد الطبيعية', nameEn: 'Natural Resources Engineering', iconEmoji: '⛰️', city: 'حرم الابتكار' },
-      { name: 'كلية هندسة النفط والغاز', nameEn: 'Oil & Gas Engineering', iconEmoji: '⛽', city: 'حرم الابتكار' },
-      // ── حرم البيان (4 faculties) ─────────────────────────────────────
-      { name: 'كلية الآداب', nameEn: 'Arts', iconEmoji: '📚', city: 'حرم البيان' },
-            { name: 'كلية التربية', nameEn: 'Education', iconEmoji: '🎓', city: 'أبو عيسى' },
-      { name: 'كلية التربية', nameEn: 'Education', iconEmoji: '🎓', city: 'ناصر' },
-      { name: 'كلية الموارد الطبيعية', nameEn: 'Natural Resources', iconEmoji: '⛰️', city: 'مناطق أخرى' },
+      { name: 'كلية علوم الحاسوب', nameEn: 'Computer Science', iconEmoji: '💻', city: 'افتراضي' },
+      { name: 'كلية الهندسة', nameEn: 'Engineering', iconEmoji: '⚙️', city: 'افتراضي' },
+      { name: 'كلية إدارة الأعمال', nameEn: 'Business Administration', iconEmoji: '💼', city: 'افتراضي' },
     ].map((f) => prisma.faculty.upsert({
       where: { institutionId_name_city: { institutionId: zawia.id, name: f.name, city: f.city } },
       create: { ...f, institutionId: zawia.id },
@@ -215,15 +202,15 @@ async function main() {
     })),
   );
 
-  const itFaculty = faculties[0]!;
+  const csFaculty = faculties[0]!;
   const csDept = await prisma.department.upsert({
-    where: { facultyId_name: { facultyId: itFaculty.id, name: 'علوم الحاسوب' } },
-    create: { name: 'علوم الحاسوب', nameEn: 'Computer Science', facultyId: itFaculty.id },
+    where: { facultyId_name: { facultyId: csFaculty.id, name: 'علوم الحاسوب' } },
+    create: { name: 'علوم الحاسوب', nameEn: 'Computer Science', facultyId: csFaculty.id },
     update: {},
   });
   const isDept = await prisma.department.upsert({
-    where: { facultyId_name: { facultyId: itFaculty.id, name: 'نظم المعلومات' } },
-    create: { name: 'نظم المعلومات', nameEn: 'Information Systems', facultyId: itFaculty.id },
+    where: { facultyId_name: { facultyId: csFaculty.id, name: 'نظم المعلومات' } },
+    create: { name: 'نظم المعلومات', nameEn: 'Information Systems', facultyId: csFaculty.id },
     update: {},
   });
 
@@ -240,31 +227,11 @@ async function main() {
     update: {},
   });
 
-  // Sciences — full department list (a coherent synthetic set:
-  //  botany, zoology, chemistry, mathematics, geology, physics,
-  //  statistics, computer science).
-  const sciFaculty = faculties[2]!;
-  for (const dept of [
-    { name: 'قسم النبات', nameEn: 'Botany' },
-    { name: 'قسم الحيوان', nameEn: 'Zoology' },
-    { name: 'قسم الكيمياء', nameEn: 'Chemistry' },
-    { name: 'قسم الرياضيات', nameEn: 'Mathematics' },
-    { name: 'قسم الجيولوجيا', nameEn: 'Geology' },
-    { name: 'قسم الفيزياء', nameEn: 'Physics' },
-    { name: 'قسم الإحصاء', nameEn: 'Statistics' },
-    { name: 'قسم علم الحاسوب', nameEn: 'Computer Science' },
-  ]) {
-    await prisma.department.upsert({
-      where: { facultyId_name: { facultyId: sciFaculty.id, name: dept.name } },
-      create: { name: dept.name, nameEn: dept.nameEn, facultyId: sciFaculty.id },
-      update: {},
-    });
-  }
-
-  const medFaculty = faculties[3]!;
+  // Business Administration — the shared-services department.
+  const bizFaculty = faculties[2]!;
   await prisma.department.upsert({
-    where: { facultyId_name: { facultyId: medFaculty.id, name: 'الطب البشري' } },
-    create: { name: 'الطب البشري', nameEn: 'Human Medicine', facultyId: medFaculty.id },
+    where: { facultyId_name: { facultyId: bizFaculty.id, name: 'إدارة الأعمال' } },
+    create: { name: 'إدارة الأعمال', nameEn: 'Business Administration', facultyId: bizFaculty.id },
     update: {},
   });
 
@@ -315,13 +282,13 @@ async function main() {
   // membershipId points at the same membership upserted above).
   await prisma.studentProfile.upsert({
     where: { institutionId_universityId: { institutionId: zawia.id, universityId: DEMO_REG_NUMBER } },
-    update: { membershipId: studentMembership.id, facultyId: itFaculty.id, departmentId: csDept.id },
+    update: { membershipId: studentMembership.id, facultyId: csFaculty.id, departmentId: csDept.id },
     create: {
       userId: student.id,
       membershipId: studentMembership.id,
       institutionId: zawia.id,
       universityId: DEMO_REG_NUMBER,
-      facultyId: itFaculty.id,
+      facultyId: csFaculty.id,
       departmentId: csDept.id,
       year: 3,
       gpa: 3.4,
@@ -371,7 +338,7 @@ async function main() {
       passwordHash: password,
       role: Role.ADMIN,
       /* R320 §B (c1-RENAME): the demo ADMIN account's display name is the
-         role's canonical name — «المسجل العام» (was «إدارة الجامعة»). */
+         role's canonical name — «المسجل العام» (the retired office label). */
       firstName: 'المسجل',
       lastName: 'العام',
       avatarInitials: 'مع',
@@ -418,20 +385,20 @@ async function main() {
     },
   });
 
-  // ─── Second institution demo (مؤسسة الأندلس التعليمية) ───
+  // ─── Second workspace demo (مساحة عمل تجريبية ثانية) ───
   // One faculty + one department + (later below) one course whose code
-  // deliberately collides with the demo university's course code, plus a student whose
-  // reg-number deliberately collides with the demo student's — the
+  // deliberately collides with the first workspace's course code, plus a student whose
+  // reg-number deliberately collides with the first student's — the
   // two institution-scoped-uniqueness proofs of the r178 seed.
   const aaFaculty = await prisma.faculty.upsert({
     where: {
-      institutionId_name_city: { institutionId: alandalus.id, name: 'كلية تقنية المعلومات', city: 'طرابلس' },
+      institutionId_name_city: { institutionId: alandalus.id, name: 'كلية تقنية المعلومات', city: 'افتراضي' },
     },
     create: {
       name: 'كلية تقنية المعلومات',
       nameEn: 'Information Technology',
       iconEmoji: '💻',
-      city: 'طرابلس',
+      city: 'افتراضي',
       institutionId: alandalus.id,
     },
     update: {},
@@ -482,8 +449,8 @@ async function main() {
       email: 'admin2@test.ly',
       passwordHash: password,
       role: Role.ADMIN,
-      /* R320 §B (c1-RENAME): same role, second institution — the display
-         name is the role's canonical name (was «إدارة الأندلس»). */
+      /* R320 §B (c1-RENAME): same role, second workspace — the display
+         name is the role's canonical name (the retired office label). */
       firstName: 'المسجل',
       lastName: 'العام',
       avatarInitials: 'مع',
@@ -493,10 +460,10 @@ async function main() {
   });
   await ensureMembership(admin2.id, alandalus.id, Role.ADMIN);
 
-  // ─── r179 (phase-5): Al-Andalus full academic + community demo ──
-  // The second institution gets a TEACHER, an offering of its SE301
+  // ─── r179 (phase-5): second-workspace full academic + community demo ──
+  // The second workspace gets a TEACHER, an offering of its SE301
   // course, an enrollment for its student, community posts, and its
-  // own announcement/competition/event — the two-institution demo the
+  // own announcement/competition/event — the two-workspace demo the
   // product is proven with (feeds, materials, and dashboards separate
   // by the verified institution context).
   const teacher2 = await prisma.user.upsert({
@@ -528,8 +495,8 @@ async function main() {
       },
     });
   }
-  // Al-Andalus course — code 'SE301': the SAME literal as the demo
-  // هندسة البرمجيات course (the collision itself is the point:
+  // Second-workspace course — code 'SE301': the SAME literal as the first
+  // workspace's هندسة البرمجيات course (the collision itself is the point:
   // identical code, different institution, both rows coexist under
   // @@unique(institutionId, code)). Created HERE — before the offering
   // below needs it — so a fresh database (no prior seed) resolves it
@@ -554,7 +521,7 @@ async function main() {
       courseId: aaCourse.id,
       teacherId: teacher2.id,
       term: '2024-FALL',
-      room: 'قاعة الأندلس أ',
+      room: 'قاعة تجريبية أ',
       capacity: 30,
     },
   });
@@ -579,10 +546,10 @@ async function main() {
       },
     });
   }
-  // Al-Andalus community posts (guarded on (authorId, body)).
+  // Second-workspace community posts (guarded on (authorId, body)).
   const aaPostDefs = [
     { authorId: student2.id, body: 'من لديه تمارين إضافية لمقرر مقدمة إلى البرمجة؟', hashtags: ['برمجة'] },
-    { authorId: teacher2.id, body: 'فتحت ساعات الدعم لمقرر البرمجة يوم الخميس', hashtags: ['الأندلس'] },
+    { authorId: teacher2.id, body: 'فتحت ساعات الدعم لمقرر البرمجة يوم الخميس', hashtags: ['دعم'] },
   ];
   for (const p of aaPostDefs) {
     const existing = await prisma.post.findFirst({ where: { authorId: p.authorId, body: p.body } });
@@ -764,8 +731,8 @@ async function main() {
   const moocs = [
     { title: 'Python للبيانات والذكاء الاصطناعي', organization: 'منصة تادمورا', iconEmoji: '🐍', category: 'prog', durationHours: 40, level: 'متوسط', rating: 4.8, enrolled: 1240 },
     { title: 'تصميم قواعد البيانات المتقدمة', organization: 'منصة تادمورا', iconEmoji: '🗄️', category: 'data', durationHours: 25, level: 'متقدم', rating: 4.6, enrolled: 840 },
-    { title: 'تسويق رقمي شامل', organization: 'شراكة Coursera', iconEmoji: '📱', category: 'business', durationHours: 30, level: 'مبتدئ', rating: 4.7, enrolled: 2100 },
-    { title: 'تصميم UI/UX من الصفر', organization: 'شراكة Udemy', iconEmoji: '🎨', category: 'design', durationHours: 35, level: 'مبتدئ', rating: 4.9, enrolled: 3400 },
+    { title: 'تسويق رقمي شامل', organization: 'مزوّد دورات مفتوحة', iconEmoji: '📱', category: 'business', durationHours: 30, level: 'مبتدئ', rating: 4.7, enrolled: 2100 },
+    { title: 'تصميم UI/UX من الصفر', organization: 'مزوّد دورات مفتوحة', iconEmoji: '🎨', category: 'design', durationHours: 35, level: 'مبتدئ', rating: 4.9, enrolled: 3400 },
   ];
   // MoocCourse has no unique constraint — guard on title.
   for (const m of moocs) {
@@ -775,9 +742,9 @@ async function main() {
 
   // ─── Jobs ───────────────────────────────────────────────────
   const jobs = [
-    { title: 'مطور ويب Full Stack', company: 'شركة تقنية المعرفة', location: 'حرم المعرفة · حضوري', type: JobType.FULL_TIME, salary: '2.500 ل.د', category: 'tech', iconEmoji: '💻' },
-    { title: 'محلل بيانات Data Analyst', company: 'البنك التجاري الليبي', location: 'طرابلس · هجين', type: JobType.FULL_TIME, salary: '3.200 ل.د', category: 'tech', iconEmoji: '📊' },
-    { title: 'تدريب صيفي — برمجة Python', company: 'ليبيا تك هاب', location: 'مصراتة · عن بُعد', type: JobType.INTERNSHIP, salary: 'مدفوع', category: 'intern', iconEmoji: '🐍' },
+    { title: 'مطور ويب Full Stack', company: 'شركة تقنية المعرفة', location: 'عن بُعد', type: JobType.FULL_TIME, salary: '2,500$', category: 'tech', iconEmoji: '💻' },
+    { title: 'محلل بيانات Data Analyst', company: 'بنك تجاري — بيانات عرض', location: 'هجين', type: JobType.FULL_TIME, salary: '3,200$', category: 'tech', iconEmoji: '📊' },
+    { title: 'تدريب صيفي — برمجة Python', company: 'حاضنة تقنية — بيانات عرض', location: 'عن بُعد', type: JobType.INTERNSHIP, salary: 'مدفوع', category: 'intern', iconEmoji: '🐍' },
     { title: 'مصمم UI/UX', company: 'وكالة إبداع رقمي', location: 'عن بُعد', type: JobType.FREELANCE, salary: 'بالمشروع', category: 'remote', iconEmoji: '🎨' },
   ];
   // Job has no unique constraint — guard on the (title, company) pair,
@@ -834,13 +801,13 @@ async function main() {
   const notifications = [
     // Most recent — unread
     { id: 'seed-notif-01', userId: student.id, type: NotificationType.URGENT, icon: '⚠️', title: 'موعد تسليم بحث هندسة البرمجيات', body: 'يجب رفع البحث قبل نهاية يوم الخميس', createdAt: D(0, 1) },
-    { id: 'seed-notif-02', userId: student.id, type: NotificationType.ACADEMIC, icon: '🎓', title: 'تم نشر بحثك في مكتبة الجامعة', body: '«تطبيق أنماط التصميم في مشاريع الويب الحديثة» متاح الآن للزملاء', createdAt: D(0, 4) },
+    { id: 'seed-notif-02', userId: student.id, type: NotificationType.ACADEMIC, icon: '🎓', title: 'تم نشر بحثك في مكتبة مساحة العمل', body: '«تطبيق أنماط التصميم في مشاريع الويب الحديثة» متاح الآن للزملاء', createdAt: D(0, 4) },
     { id: 'seed-notif-03', userId: student.id, type: NotificationType.ACADEMIC, icon: '📊', title: 'فجوة معرفية جديدة', body: 'تم رصد ضعف في مفهوم «التعقيد الزمني» — اطّلع على الفيديو المقترح', createdAt: D(0, 7) },
     { id: 'seed-notif-04', userId: student.id, type: NotificationType.SOCIAL, icon: '💬', title: 'رد جديد من د. سالم البوسيفي', body: 'علّق على سؤالك في حلقة النقاش', createdAt: D(1) },
     // Older — some read
     { id: 'seed-notif-05', userId: student.id, type: NotificationType.ACADEMIC, icon: '📅', title: 'محاضرة شبكات الحاسوب', body: 'الأحد 8:00 صباحاً — قاعة A-301', createdAt: D(1, 5), readAt: D(1, 4) },
     { id: 'seed-notif-06', userId: student.id, type: NotificationType.SYSTEM, icon: '✨', title: 'ميزة جديدة: تحليل الامتحانات', body: 'يمكنك الآن مراجعة كل امتحان أديتَه ومعرفة فجواتك المعرفية', createdAt: D(2), readAt: D(2) },
-    { id: 'seed-notif-07', userId: student.id, type: NotificationType.ACADEMIC, icon: '🎤', title: 'ندوة دولية: مستقبل AI في التعليم', body: 'انضم إلى الندوة يوم 12 يونيو مع متحدثين من Stanford', createdAt: D(3), readAt: D(3) },
+    { id: 'seed-notif-07', userId: student.id, type: NotificationType.ACADEMIC, icon: '🎤', title: 'ندوة دولية: مستقبل AI في التعليم', body: 'انضم إلى الندوة يوم 12 يونيو مع نخبة من خبراء التقنية', createdAt: D(3), readAt: D(3) },
     { id: 'seed-notif-08', userId: student.id, type: NotificationType.URGENT, icon: '⏰', title: 'تذكير — اختبار قواعد البيانات', body: 'بعد 5 أيام · القاعة الرئيسية', createdAt: D(4), readAt: D(4) },
     { id: 'seed-notif-09', userId: student.id, type: NotificationType.ACADEMIC, icon: '🏆', title: 'حصلت على شارة جديدة', body: '«مساهم نشط» — أكملتَ 5 محاضرات هذا الأسبوع', createdAt: D(5), readAt: D(5) },
     { id: 'seed-notif-10', userId: student.id, type: NotificationType.SYSTEM, icon: '📚', title: 'تم تحديث المكتبة الإلكترونية', body: 'أضيف 4 بحوث جديدة في تخصصك', createdAt: D(7), readAt: D(7) },
@@ -1200,7 +1167,7 @@ async function main() {
       studentId: student.id,
       reviewerId: teacher.id,
       offeringId: seOffering.id,
-      title: 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في جامعة تادمورا التجريبية',
+      title: 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في مساحة عمل تادمورا التجريبية',
       abstract:
         'دراسة شبه تجريبية على 84 طالباً من أقسام الهندسة، تقارن متوسط التحصيل بين فصلين أحدهما اعتمد الصف المعكوس مدعوماً بمنصة تادمورا. النتائج تُظهر فرقاً ذا دلالة إحصائية لصالح المجموعة التجريبية.',
       status: ResearchPaperStatus.PUBLISHED,
@@ -1218,9 +1185,9 @@ async function main() {
       studentId: student.id,
       reviewerId: teacher.id,
       offeringId: seOffering.id,
-      title: 'تحليل أمن تطبيقات الجوّال المصرفية الليبية',
+      title: 'تحليل أمن تطبيقات الجوّال المصرفية',
       abstract:
-        'فحص أمني لأبرز ثلاثة تطبيقات مصرفية محلية، تحت أربعة محاور: تشفير الاتصال، إدارة الجلسة، تخزين البيانات الحساسة، ومقاومة الهندسة العكسية. تقدّم الدراسة توصيات عملية لرفع المستوى الأمني.',
+        'فحص أمني لأبرز ثلاثة تطبيقات مصرفية تجريبية، تحت أربعة محاور: تشفير الاتصال، إدارة الجلسة، تخزين البيانات الحساسة، ومقاومة الهندسة العكسية. تقدّم الدراسة توصيات عملية لرفع المستوى الأمني.',
       status: ResearchPaperStatus.PUBLISHED,
       fileUrl: '/api/v1/files/papers/sample.pdf',
       plagiarismPct: 3.8,
@@ -1344,7 +1311,7 @@ async function main() {
       slug: 'flipped-classroom',
       title: 'استراتيجية الصف المعكوس',
       titleEn: 'Flipped Classroom Mastery',
-      summary: 'كيف تستفيد من نموذج الصف المعكوس الذي تعتمده الجامعة لرفع التحصيل.',
+      summary: 'كيف تستفيد من نموذج الصف المعكوس الذي تعتمده المنصّة لرفع التحصيل.',
       category: 'FLIPPED', level: 'BEGINNER', iconEmoji: '🔄', themeColor: '#7B3AED',
       estMinutes: 30, pointsAward: 150, order: 3,
       lessons: [
@@ -1366,7 +1333,7 @@ async function main() {
         { title: 'تقنية بومودورو', summary: '25 دقيقة تركيز + 5 دقائق راحة', content: 'تقنية بومودورو ابتكرها فرانشيسكو شيريلو. تعمل على دورات: 25 دقيقة عمل مركز، ثم 5 دقائق راحة. بعد 4 دورات خذ راحة أطول (15-30 دقيقة). تساعد على مكافحة التشتت والإرهاق.', quiz: { q: 'كم دقيقة تركيز في كل دورة بومودورو؟', a: '25' } },
         { title: 'التكرار المتباعد', summary: 'كيف تتذكر للأبد وليس للامتحان فقط', content: 'منحنى النسيان لإبنغهاوس يقول: ننسى 70% من المعلومة خلال 24 ساعة بدون مراجعة. التكرار المتباعد يعكس هذا: راجع بعد يوم، 3 أيام، أسبوع، شهر. أدوات مثل Anki تؤتمت العملية.' },
         { title: 'قانون باريتو في الدراسة', summary: '20% من الجهد = 80% من النتيجة', content: 'في كل مادة هناك 20% من المفاهيم تشكل 80% من الامتحان. حدد هذه المفاهيم بالنظر في الامتحانات السابقة وأسئلة الأستاذ المتكررة، وركز جهدك عليها.' },
-        { title: 'الكتابة اليدوية vs الطباعة', summary: 'لماذا الكتابة بخط اليد أفضل للتذكر', content: 'دراسات جامعة برينستون أثبتت: الطلاب الذين يدوّنون ملاحظاتهم بخط اليد يتذكرون 30% أكثر من الذين يكتبون على اللابتوب. الكتابة اليدوية تجبر الدماغ على معالجة المعلومة وإعادة صياغتها.' },
+        { title: 'الكتابة اليدوية vs الطباعة', summary: 'لماذا الكتابة بخط اليد أفضل للتذكر', content: 'دراسات علمية أثبتت: الطلاب الذين يدوّنون ملاحظاتهم بخط اليد يتذكرون 30% أكثر من الذين يكتبون على اللابتوب. الكتابة اليدوية تجبر الدماغ على معالجة المعلومة وإعادة صياغتها.' },
       ],
       badge: { slug: 'badge-disciplined', title: 'منظِّم الوقت', description: 'أتقنت مهارات الدراسة الفعّالة', iconEmoji: '⏱️', rarity: 'COMMON' },
     },
@@ -1428,7 +1395,7 @@ async function main() {
         { title: 'قراءة البحث العلمي', summary: 'استراتيجية القراءة الذكية', content: 'لا تقرأ البحث من البداية للنهاية. ابدأ بـ Abstract، ثم Conclusion، ثم Figures، ثم Methods فقط إذا كان البحث ذا صلة. هذا يوفر 70% من وقتك.' },
         { title: 'مصطلحات أكاديمية شائعة', summary: 'Methodology, Hypothesis, Significant', content: 'تعلم المصطلحات الأكاديمية الأساسية: Methodology (المنهجية)، Hypothesis (الفرضية)، Significant (ذو دلالة إحصائية). ميِّز بين Significant و"important" في السياق العلمي.', quiz: { q: 'بالإنجليزية: ما المصطلح المرادف للفرضية؟', a: 'Hypothesis' } },
         { title: 'الكتابة بأسلوب أكاديمي', summary: 'موضوعي، واضح، بصيغة المبني للمجهول حين يلزم', content: 'الكتابة الأكاديمية موضوعية: استخدم "The study found..." بدلاً من "I think...". تجنب الجمل الطويلة وعبارات اللغة العامية. المبني للمجهول مناسب لوصف المنهجية.' },
-        { title: 'تجربتنا مع الإنجليزية في جنوب ليبيا', summary: '40% تحسن في الاستيعاب', content: 'في تجربتنا مع طلاب جنوب ليبيا باستخدام استراتيجية الصف المعكوس، حقق الطلاب: 40% تحسن في الاستيعاب، 70% زيادة في المشاركة، 90% تحقيق لأهداف التعلم. الالتزام بالمنهج هو المفتاح.' },
+        { title: 'تجربتنا مع الإنجليزية في بيئة العرض', summary: '40% تحسن في الاستيعاب', content: 'في تجارب العرض على المنصة باستخدام استراتيجية الصف المعكوس، حقق الطلاب: 40% تحسنًا في الاستيعاب، 70% زيادة في المشاركة، 90% تحقيقًا لأهداف التعلم. الالتزام بالمنهج هو المفتاح.' },
       ],
       badge: { slug: 'badge-english', title: 'إنجليزية أكاديمية', description: 'أتقنت أساسيات الإنجليزية الأكاديمية', iconEmoji: '🌍', rarity: 'EPIC' },
     },
@@ -1467,7 +1434,7 @@ async function main() {
       slug: 'vision-ai-data',
       title: 'الذكاء الاصطناعي وعلم البيانات',
       titleEn: 'AI & Data Science (Vision Track)',
-      summary: 'مسار متخصص ضمن رؤية الجامعة التجريبية المستقبلية.',
+      summary: 'مسار متخصص ضمن مسارات العرض المتقدمة.',
       category: 'VISION', level: 'ADVANCED', iconEmoji: '🤖', themeColor: '#7B3AED',
       estMinutes: 70, pointsAward: 400, order: 11,
       lessons: [
@@ -1621,9 +1588,9 @@ async function main() {
       degreeLevel: 'PHD',
       yearsExperience: 12,
       certifications: [
-        { title: 'دكتوراه في علوم الحاسوب', issuer: 'جامعة مانشستر', year: 2014 },
-        { title: 'شهادة Oracle Certified Professional', issuer: 'Oracle', year: 2018 },
-        { title: 'تدريب الذكاء الاصطناعي للتعليم', issuer: 'Stanford Online', year: 2023 },
+        { title: 'دكتوراه في علوم الحاسوب', issuer: 'جهة منح أكاديمية — بيانات عرض', year: 2014 },
+        { title: 'Oracle Certified Professional', issuer: 'جهة اعتماد تقني — بيانات عرض', year: 2018 },
+        { title: 'تدريب الذكاء الاصطناعي للتعليم', issuer: 'برنامج تدريب — بيانات عرض', year: 2023 },
       ],
       subjectKeywords: ['Software Engineering', 'AI', 'Machine Learning', 'Database Systems', 'هندسة البرمجيات', 'الذكاء الاصطناعي'],
       verifiedAt: new Date(),
@@ -1640,8 +1607,8 @@ async function main() {
     create: {
       slug: 'software-engineering',
       title: 'هندسة البرمجيات',
-      description: 'بنك أسئلة هندسة البرمجيات — موحد لكليات الهندسة وتقنية المعلومات',
-      facultyId: faculties[0]!.id, // IT
+      description: 'بنك أسئلة هندسة البرمجيات — موحد لكليات الهندسة وعلوم الحاسوب',
+      facultyId: faculties[0]!.id, // Computer Science
       isShared: true,
       iconEmoji: '💻',
     },
@@ -1753,7 +1720,7 @@ async function main() {
     await prisma.examTemplate.create({
       data: {
         facultyId: faculties[0]!.id,
-        title: 'اختبار موحد — أساسيات هندسة البرمجيات (كلية تقنية المعلومات)',
+        title: 'اختبار موحد — أساسيات هندسة البرمجيات (كلية علوم الحاسوب)',
         kind: 'MIDTERM',
         description: 'اختبار نصفي موحد على مستوى الكلية — في انتظار مراجعة مكتب الجودة.',
         durationMin: 60,
@@ -1777,17 +1744,17 @@ async function main() {
   //  re-run; each seed row is guarded on (author/organizer, title).
   // ════════════════════════════════════════════════════════════════
 
-  // r179: the Al-Andalus-scoped announcement (create-once, r180).
+  // r179: the second-workspace announcement (create-once, r180).
   const aaAnnouncementSeeded = await prisma.announcement.findFirst({
-    where: { authorId: admin2.id, title: 'بدء التسجيل في دورات الأندلس الصيفية' },
+    where: { authorId: admin2.id, title: 'بدء التسجيل في الدورات الصيفية' },
     select: { id: true },
   });
   if (!aaAnnouncementSeeded) {
   await prisma.announcement.create({
     data: {
       authorId: admin2.id, scope: 'FACULTY', scopeId: aaFaculty.id,
-      title: 'بدء التسجيل في دورات الأندلس الصيفية',
-      body: 'يفتح قسم علوم الحاسوب بكلية تقنية المعلومات التسجيل في الدورات الصيفية اعتبارًا من الأسبوع القادم. المقاعد محدودة.',
+      title: 'بدء التسجيل في الدورات الصيفية',
+      body: 'يفتح قسم علوم الحاسوب التسجيل في الدورات الصيفية اعتبارًا من الأسبوع القادم. المقاعد محدودة.',
       iconEmoji: '🎓',
     },
   });
@@ -1809,7 +1776,7 @@ async function main() {
       {
         authorId: teacher.id, scope: 'FACULTY', scopeId: faculties[0]!.id,
         title: 'محاضرة افتراضية مع خبير عالمي في الذكاء الاصطناعي',
-        body: 'تستضيف كلية تقنية المعلومات محاضرة عن بُعد مع البروفيسور أندرو نج يوم الخميس عبر منصّة تادمورا. الحضور مفتوح لجميع طلاب الكلية.',
+        body: 'تستضيف كلية علوم الحاسوب محاضرة عن بُعد مع أحد خبراء الذكاء الاصطناعي يوم الخميس عبر منصّة تادمورا. الحضور مفتوح لجميع طلاب الكلية.',
         iconEmoji: '🎤',
       },
       {
@@ -1827,15 +1794,15 @@ async function main() {
   const competitionDefs = [
       {
         title: 'مسابقة أفضل بحث طلابي في الذكاء الاصطناعي',
-        description: 'تستقبل الجامعة البحوث الطلابية في مجال الذكاء الاصطناعي وتطبيقاته. الفائز يحصل على منحة لحضور مؤتمر دولي.',
-        category: 'بحث', prize: 'منحة مؤتمر دولي + 2,000 د.ل',
+        description: 'تستقبل مساحة العمل البحوث الطلابية في مجال الذكاء الاصطناعي وتطبيقاته. الفائز يحصل على منحة لحضور مؤتمر دولي.',
+        category: 'بحث', prize: 'منحة مؤتمر دولي + 2,000$',
         deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '🔬', themeColor: '#7B3AED',
       },
       {
         title: 'هاكاثون تادمورا الأول',
         description: 'هاكاثون 48 ساعة لتطوير حلول رقمية لتحديات المؤسسات التعليمية. مفتوح لجميع الطلاب من جميع الكليات.',
-        category: 'برمجة', prize: '5,000 د.ل + فرصة تدريب',
+        category: 'برمجة', prize: '5,000$ + فرصة تدريب',
         deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
         organizerId: admin.id, institutionId: zawia.id, iconEmoji: '💻', themeColor: '#2952C8',
       },
@@ -1847,8 +1814,8 @@ async function main() {
         organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '🎤', themeColor: '#D4A537',
       },
       {
-        title: 'تحدي الأندلس للبرمجة الأول',
-        description: 'مسابقة برمجة لمتدربي مؤسسة الأندلس التعليمية — حل ثلاث مسائل خوارزمية خلال 48 ساعة. الفائز يحصل على شهادة تفوق ودورة متقدمة مجانية.',
+        title: 'تحدي البرمجة الثاني',
+        description: 'مسابقة برمجة لمتدربي مساحة العمل الثانية — حل ثلاث مسائل خوارزمية خلال 48 ساعة. الفائز يحصل على شهادة تفوق ودورة متقدمة مجانية.',
         category: 'برمجة', prize: 'دورة متقدمة مجانية',
         deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
         organizerId: teacher2.id, institutionId: alandalus.id, iconEmoji: '🏁', themeColor: '#2EC4B6',
@@ -1862,26 +1829,26 @@ async function main() {
   const campusEventDefs = [
       {
         title: 'يوم المهنة 2026', description: 'فعالية يوم كامل تجمع الطلاب بأكثر من 30 شركة ومؤسسة وطنية. فرص توظيف وتدريب للخريجين والطلاب في السنوات النهائية.',
-        location: 'القاعة الكبرى — الحرم الجامعي الرئيسي', startsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        location: 'القاعة الكبرى — بث مباشر', startsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000),
         capacity: 500, organizerId: admin.id, institutionId: zawia.id, iconEmoji: '💼', themeColor: '#0E5C2F',
       },
       {
-        title: 'ندوة: مستقبل التعليم في ليبيا', description: 'ندوة حوارية مع وزارة التعليم العالي والبحث العلمي حول رؤية التعليم 2030.',
+        title: 'ندوة: مستقبل التعليم الرقمي', description: 'ندوة حوارية حول رؤية التعليم 2030 وكيف تبني المؤسسات مسارها الخاص على منصّة تادمورا.',
         location: 'مدرج كلية الهندسة', startsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000),
         capacity: 200, organizerId: quality.id, institutionId: zawia.id, iconEmoji: '🎓', themeColor: '#2952C8',
       },
       {
         title: 'ورشة عمل: مهارات البحث العلمي', description: 'ورشة عملية لمدة 4 ساعات تغطي صياغة سؤال البحث، البحث في قواعد البيانات، والاقتباس الصحيح.',
-        location: 'مكتبة الجامعة المركزية', startsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+        location: 'المكتبة المركزية — بيانات عرض', startsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000),
         capacity: 60, organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '📚', themeColor: '#7B3AED',
       },
       {
-        title: 'ملتقى الأندلس التقني',
-        description: 'ملتقى نصف يوم يعرض مشاريع متدربي الأندلس في البرمجة وتحليل البيانات، مع جلسة أسئلة وأجوبة مع مدرّبي القسم.',
-        location: 'قاعة الأندلس الرئيسية — طرابلس',
+        title: 'ملتقى تقني تجريبي',
+        description: 'ملتقى نصف يوم يعرض مشاريع متدربي مساحة العمل الثانية في البرمجة وتحليل البيانات، مع جلسة أسئلة وأجوبة مع مدرّبي القسم.',
+        location: 'قاعة رئيسية — بيانات عرض',
         startsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000),
         capacity: 80, organizerId: admin2.id, institutionId: alandalus.id, iconEmoji: '🧑‍💻', themeColor: '#2EC4B6',

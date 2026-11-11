@@ -137,7 +137,7 @@ describe('normalizeStudentAggregate (group → wire numbers)', () => {
 // ── buildLeaderboardRow ────────────────────────────────────────────
 
 describe('buildLeaderboardRow (wire shape + zero defaults)', () => {
-  const faculty = { id: 'f1', name: 'كلية الهندسة', iconEmoji: '🏗️', city: 'الزاوية' };
+  const faculty = { id: 'f1', name: 'كلية الهندسة', iconEmoji: '⚙️', city: 'افتراضي' };
 
   it('emits the exact field set the frontend LeaderboardCollege type consumes', () => {
     const row = buildLeaderboardRow(faculty, {
@@ -155,7 +155,7 @@ describe('buildLeaderboardRow (wire shape + zero defaults)', () => {
       'publishedPapers', 'examAttempts', 'labSessions', 'completedEnrollments',
     ]);
     expect(row).toEqual({
-      id: 'f1', name: 'كلية الهندسة', iconEmoji: '🏗️', city: 'الزاوية',
+      id: 'f1', name: 'كلية الهندسة', iconEmoji: '⚙️', city: 'افتراضي',
       studentCount: 90, teacherCount: 12,
       totalXp: 12_000, avgXp: 133, avgGpa: 2.9,
       publishedPapers: 7, examAttempts: 340, labSessions: 56, completedEnrollments: 23,
@@ -166,7 +166,7 @@ describe('buildLeaderboardRow (wire shape + zero defaults)', () => {
     // Empty college: the N+1 version's per-faculty count() calls returned
     // 0s; the rollup version returns "no entry" — the row must be identical.
     expect(
-      buildLeaderboardRow({ id: 'f2', name: 'كلية جديدة', iconEmoji: null, city: 'صبراتة' }, {
+      buildLeaderboardRow({ id: 'f2', name: 'كلية جديدة', iconEmoji: null, city: 'مدينة جديدة' }, {
         students: undefined,
         teacherCount: undefined,
         publishedPapers: undefined,
@@ -175,7 +175,7 @@ describe('buildLeaderboardRow (wire shape + zero defaults)', () => {
         completedEnrollments: undefined,
       }),
     ).toEqual({
-      id: 'f2', name: 'كلية جديدة', iconEmoji: null, city: 'صبراتة',
+      id: 'f2', name: 'كلية جديدة', iconEmoji: null, city: 'مدينة جديدة',
       studentCount: 0, teacherCount: 0,
       totalXp: 0, avgXp: 0, avgGpa: 0,
       publishedPapers: 0, examAttempts: 0, labSessions: 0, completedEnrollments: 0,
@@ -204,7 +204,7 @@ describe('buildLeaderboardRow (wire shape + zero defaults)', () => {
 
 describe('parseInstitutionSlug + resolveCollegesTarget (public colleges funnel)', () => {
   it('parses ?institution= only when it is a non-empty string (trimmed)', () => {
-    expect(parseInstitutionSlug({ institution: 'zawia-showcase' })).toBe('zawia-showcase');
+    expect(parseInstitutionSlug({ institution: 'tenant-a' })).toBe('tenant-a');
     expect(parseInstitutionSlug({ institution: '  alandalus-demo  ' })).toBe('alandalus-demo');
     expect(parseInstitutionSlug({ institution: '' })).toBeUndefined();
     expect(parseInstitutionSlug({ institution: '   ' })).toBeUndefined();
