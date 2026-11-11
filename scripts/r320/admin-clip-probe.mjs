@@ -14,11 +14,11 @@
  *
  * Usage:
  *   node scripts/r320/admin-clip-probe.mjs [baseURL]
- *   (default https://tadmora.onrender.com)
+ *   (default https://tadmora.vercel.app)
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://tadmora.onrender.com';
+const BASE = process.argv[2] ?? 'https://tadmora.vercel.app';
 const OUT = 'audits/evidence/r320/accounts-production';
 
 const EMAIL = 'registrar@test.ly';

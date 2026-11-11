@@ -17,7 +17,7 @@
  *
  * Production run (§C-7 "after deploy" leg): 
  *   npx tsx scripts/r320/login-proof.ts \
- *     --api https://tadmora.onrender.com --web https://tadmora.onrender.com \
+ *     --api https://tadmora.vercel.app --web https://tadmora.vercel.app \
  *     --out audits/evidence/r320/accounts-production
  * — also proves the demo panel itself on the target env: the reopen
  * chip opens it, 10 rows render, and the registrar logs in THROUGH

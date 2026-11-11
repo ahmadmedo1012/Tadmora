@@ -36,7 +36,7 @@
  *
  * Run (from the repo root):
  *   npx tsx scripts/r321/prod-proof.ts \
- *     [--base https://tadmora.onrender.com] \
+ *     [--base https://tadmora.vercel.app] \
  *     [--out audits/evidence/r321/prod] \
  *     [--phases health,accounts,pages,statics,landing]
  *
@@ -64,7 +64,7 @@ const argv = new Map<string, string>();
 for (let i = 2; i < process.argv.length; i += 2) {
   argv.set(process.argv[i]!.replace(/^--/, ''), process.argv[i + 1]!);
 }
-const BASE = (argv.get('base') ?? 'https://tadmora.onrender.com').replace(/\/$/, '');
+const BASE = (argv.get('base') ?? 'https://tadmora.vercel.app').replace(/\/$/, '');
 const OUT_DIR = path.isAbsolute(argv.get('out') ?? '')
   ? (argv.get('out') as string)
   : path.join(REPO_ROOT, argv.get('out') ?? path.join('audits', 'evidence', 'r321', 'prod'));
