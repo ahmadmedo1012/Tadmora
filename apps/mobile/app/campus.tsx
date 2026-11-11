@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
-import Monitor from "lucide-react-native/icons/monitor";
-import Building2 from "lucide-react-native/icons/building-2";
+import Monitor from "lucide-react-native/icons/monitor-check";
+import Building2 from "lucide-react-native/icons/building";
 import { API_BASE } from "@/api/client";
 import { usePalette, useSemanticTheme } from "@/design/theme";
 import { sp } from "@/design/tokens";
