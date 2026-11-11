@@ -1,13 +1,31 @@
 /**
  * PDF + file transport — preserves the backend's raw-bytes contract exactly:
  * POST /files/papers (and materials/file) expect `Content-Type: application/pdf`
- * with raw PDF bytes — NOT multipart. ≤20MB, `%PDF-` magic bytes, per-user quota.
+ * with raw PDF bytes — NOT multipart. PDF-only, `%PDF-` magic bytes, per-user
+ * quota, and the HOST-HONEST size ceiling (Ω+2.0): the product cap is 20 MiB,
+ * but *.vercel.app APIs ride Vercel Functions whose bodies cap at 4.5 MB
+ * (verified live 2026-11-11) — the backend enforces/advertises 4 MiB there
+ * (/api/v1/status → data.maxPdfUploadBytes) and this mirror derives the same
+ * number from the API base so the app never names a limit the host refuses.
  */
 import { File, Paths, UploadType } from "expo-file-system";
 import { API_BASE, ApiError, absoluteUrl } from "./client";
 import { useSession } from "@/auth/session";
 
+/** 20 MiB — the PRODUCT cap (self-hosted / non-Vercel backends). */
 export const PDF_MAX_BYTES = 20 * 1024 * 1024;
+
+/** 4 MiB — the Vercel Functions transfer ceiling (under the 4.5 MB wall). */
+export const VERCEL_PDF_MAX_BYTES = 4 * 1024 * 1024;
+
+/** The effective ceiling for the CONFIGURED API host — derived, never hand-typed. */
+export function effectivePdfMaxBytes(apiBase: string = API_BASE): number {
+  return apiBase.includes(".vercel.app") ? VERCEL_PDF_MAX_BYTES : PDF_MAX_BYTES;
+}
+
+function pdfMaxMb(apiBase: string = API_BASE): number {
+  return Math.round(effectivePdfMaxBytes(apiBase) / (1024 * 1024));
+}
 
 /** Pick a single PDF via the system document picker (null when canceled). */
 export async function pickPdf(): Promise<File | null> {
@@ -27,8 +45,12 @@ export async function validatePdf(file: File): Promise<void> {
   if (!mimeOk) {
     throw new ApiError("PDF_ONLY", "الملف يجب أن يكون بصيغة PDF فقط.", 400);
   }
-  if (file.size > PDF_MAX_BYTES) {
-    throw new ApiError("PAYLOAD_TOO_LARGE", "حجم الملف يتجاوز الحد الأقصى المسموح (20 ميغابايت).", 413);
+  if (file.size > effectivePdfMaxBytes()) {
+    throw new ApiError(
+      "PAYLOAD_TOO_LARGE",
+      `حجم الملف يتجاوز الحد الأقصى المسموح (${pdfMaxMb()} ميغابايت).`,
+      413,
+    );
   }
   if (file.size <= 0) {
     throw new ApiError("EMPTY", "محتوى الملف فارغ.", 400);

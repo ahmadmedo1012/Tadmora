@@ -28,8 +28,38 @@
 
 import { apiErrorMessage } from './format';
 
-/** 20 MiB — the byte ceiling both upload routes enforce server-side. */
+/** 20 MiB — the PRODUCT byte ceiling both upload routes enforce on
+ * self-hosted / non-Vercel hosts (files.routes.ts MAX_UPLOAD_PDF_BYTES
+ * mirrors this on the non-Vercel branch). */
 export const PDF_MAX_BYTES = 20 * 1024 * 1024;
+
+/** 4 MiB — the transfer ceiling on Vercel Functions: the platform caps
+ * any function body at 4.5 MB (verified live 2026-11-11: a 5 MB POST to
+ * the deployed API dies at the edge with an opaque 413 before the app
+ * answers). The backend enforces the SAME number on Vercel runs and
+ * advertises it at /api/v1/status → data.maxPdfUploadBytes. */
+export const VERCEL_PDF_MAX_BYTES = 4 * 1024 * 1024;
+
+/**
+ * The effective ceiling for THIS deployment. The web app is always
+ * served from the SAME origin as its API (both ship together), so the
+ * browser hostname IS the API host: *.vercel.app deployments ride
+ * Vercel Functions and cap at 4 MiB; everything else (self-hosted
+ * Express, Render-style) keeps the full 20 MiB product cap.
+ *
+ * Honest limitation: a FUTURE custom domain served by Vercel would not
+ * match '.vercel.app' and would report 20 — when that day comes, read
+ * data.maxPdfUploadBytes from /api/v1/status instead (already served).
+ */
+export function effectivePdfMaxBytes(hostname?: string): number {
+  const host = hostname ?? (typeof window !== 'undefined' ? window.location.hostname : '');
+  return host.endsWith('.vercel.app') ? VERCEL_PDF_MAX_BYTES : PDF_MAX_BYTES;
+}
+
+/** The effective cap in whole megabytes — derived, never hand-typed. */
+export function pdfMaxMb(hostname?: string): number {
+  return Math.round(effectivePdfMaxBytes(hostname) / (1024 * 1024));
+}
 
 /** PDF-only check: the declared MIME type OR the .pdf extension. */
 export function isPdfFile(file: File): boolean {
@@ -47,8 +77,8 @@ export function validatePdfFile(file: File): string | null {
   if (!isPdfFile(file)) {
     return 'الملف يجب أن يكون بصيغة PDF فقط.';
   }
-  if (file.size > PDF_MAX_BYTES) {
-    return 'حجم الملف يتجاوز الحد الأقصى المسموح (20 ميغابايت).';
+  if (file.size > effectivePdfMaxBytes()) {
+    return `حجم الملف يتجاوز الحد الأقصى المسموح (${pdfMaxMb()} ميغابايت).`;
   }
   return null;
 }
@@ -140,12 +170,21 @@ export async function validatePdfFileDeep(file: File): Promise<string | null> {
  * the shared cap constant — never an invented digit.
  */
 
-/** The cap in whole megabytes — derived from PDF_MAX_BYTES so a future
- *  cap change updates the Arabic copy with the constant, not by hand. */
+/** The cap in whole megabytes — derived from the PRODUCT byte cap
+ * (the self-hosted ceiling). Vercel-hosted deployments report their own
+ * tighter number via pdfMaxMb(). */
 export const PDF_MAX_MB = Math.round(PDF_MAX_BYTES / (1024 * 1024));
 
 /** The numbered, actionable size-refusal copy both upload modals render
- *  on a 413 (Y8): names the limit, then the two real ways out. */
+ *  on a 413 (Y8): names THIS deployment's real limit, then the two real
+ *  ways out. Derived at call time so a *.vercel.app deployment names 4,
+ *  a self-hosted one names 20 — never a hand-typed digit. */
+export function pdfSizeLimitMessage(): string {
+  return `حجم الملف يتجاوز الحد المسموح (${pdfMaxMb()} ميغابايت) — اضغط الملف أو اختر ملفاً أصغر.`;
+}
+
+/** The product-cap twin (20) — kept for callers that must show the
+ * self-hosted ceiling regardless of host (docs, help copy). */
 export const PDF_SIZE_LIMIT_MESSAGE =
   `حجم الملف يتجاوز الحد المسموح (${PDF_MAX_MB} ميغابايت) — اضغط الملف أو اختر ملفاً أصغر.`;
 
@@ -167,10 +206,10 @@ export function isPayloadTooLargeResponse(error: unknown): boolean {
  * The upload-error mapper both modals render on a FAILED REQUEST (the
  * pick-time guards above own the pre-request rejections):
  *   · a 413 that is NOT the per-user quota refusal → the numbered
- *     size-cap message (PDF_SIZE_LIMIT_MESSAGE);
+ *     size-cap message (pdfSizeLimitMessage — THIS deployment's limit);
  *   · the quota 413 («تجاوزت حصة التخزين الخاصة بك», r170g
  *     files.routes.ts) keeps its own honest backend copy — mapping it
- *     to «20 ميغابايت» would lie about which limit was hit;
+ *     to a size message would lie about which limit was hit;
  *   · everything else → the apiErrorMessage contract (the API's own
  *     Arabic message when present, else the caller's fallback).
  */
@@ -178,7 +217,7 @@ export function pdfUploadErrorMessage(error: unknown, fallback: string): string 
   if (isPayloadTooLargeResponse(error)) {
     const apiMsg = (error as HttpErrorLike).response?.data?.error?.message;
     if (typeof apiMsg === 'string' && apiMsg.includes('حصة')) return apiMsg;
-    return PDF_SIZE_LIMIT_MESSAGE;
+    return pdfSizeLimitMessage();
   }
   return apiErrorMessage(error, fallback);
 }
