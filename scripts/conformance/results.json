@@ -1,22 +1,22 @@
 {
- "generatedAt": "2026-11-08T21:23:04.911Z",
+ "generatedAt": "2026-11-11T16:38:38.211Z",
  "engine": "chromium",
  "url": "http://localhost:5173/",
- "specDir": "/home/z/wt/r342-integration/docs/redesign/r335/heron-spec",
+ "specDir": "/home/z/my-project/tadmora-repo/docs/redesign/r335/heron-spec",
  "summary": {
-  "total": 75515,
-  "pass": 70415,
-  "fail": 5100,
-  "passRate": 93.2,
-  "exceptionUses": 195,
+  "total": 75405,
+  "pass": 70319,
+  "fail": 5086,
+  "passRate": 93.3,
+  "exceptionUses": 190,
   "exceptionRate": 0.3,
   "exceptionCap": "<5%",
   "exceptionRules": {
-   "ar-text-length-class": 195
+   "ar-text-length-class": 190
   },
   "unmatchedFailures": 98,
   "gate": "PASS",
-  "ratchet": 91.8,
+  "ratchet": 93.1,
   "coverage": {
    "formula": "coverage = measured / (measured + offBookEst); offBookEst = suppressedChecks + excusedElements × 12 (GROUP_CHECKS sum = checks per fully-measured element; conservative — the 5 unskippable per-element checks are not counted). Section cells only; scroll/interact extensions are not coverage-scored.",
    "thresholds": {
@@ -25,8 +25,8 @@
     "heuristicShareCap": "50% of pairs (FAIL(heuristic))"
    },
    "overall": {
-    "measured": 74415,
-    "offBookEst": 59081,
+    "measured": 74305,
+    "offBookEst": 59090,
     "coveragePct": 55.7,
     "offBookPct": 44.3
    },
@@ -43,15 +43,15 @@
      "heurPct": 12.5
     },
     "footer": {
-     "measured": 6974,
-     "skipped": 2112,
-     "excused": 649,
-     "offBookEst": 9900,
-     "pairs": 691,
-     "heur": 176,
-     "coverage": 41.3,
-     "offBookPct": 58.7,
-     "heurPct": 25.5
+     "measured": 6902,
+     "skipped": 2058,
+     "excused": 658,
+     "offBookEst": 9954,
+     "pairs": 676,
+     "heur": 161,
+     "coverage": 40.9,
+     "offBookPct": 59.1,
+     "heurPct": 23.8
     },
     "home-cta-wrap": {
      "measured": 4264,
@@ -76,15 +76,15 @@
      "heurPct": 15.6
     },
     "home-intro-wrap": {
-     "measured": 10736,
-     "skipped": 4237,
-     "excused": 936,
-     "offBookEst": 15469,
-     "pairs": 1059,
-     "heur": 6,
-     "coverage": 41,
-     "offBookPct": 59,
-     "heurPct": 0.6
+     "measured": 10657,
+     "skipped": 4104,
+     "excused": 948,
+     "offBookEst": 15480,
+     "pairs": 1042,
+     "heur": 11,
+     "coverage": 40.8,
+     "offBookPct": 59.2,
+     "heurPct": 1.1
     },
     "home-map-wrap": {
      "measured": 10402,
@@ -98,15 +98,15 @@
      "heurPct": 47.4
     },
     "home-platform-wrap": {
-     "measured": 3498,
-     "skipped": 3818,
+     "measured": 3539,
+     "skipped": 3762,
      "excused": 31,
-     "offBookEst": 4190,
+     "offBookEst": 4134,
      "pairs": 516,
-     "heur": 111,
-     "coverage": 45.5,
-     "offBookPct": 54.5,
-     "heurPct": 21.5
+     "heur": 108,
+     "coverage": 46.1,
+     "offBookPct": 53.9,
+     "heurPct": 20.9
     },
     "home-problem-wrap": {
      "measured": 7807,
@@ -114,10 +114,10 @@
      "excused": 508,
      "offBookEst": 6096,
      "pairs": 549,
-     "heur": 51,
+     "heur": 50,
      "coverage": 56.2,
      "offBookPct": 43.8,
-     "heurPct": 9.3
+     "heurPct": 9.1
     },
     "home-usecase-wrap": {
      "measured": 9490,
@@ -145,9 +145,9 @@
    "gateFailures": [],
    "reviewedEscapes": []
   },
-  "unmatchedOmitted": 2939,
-  "skippedOmitted": 6654,
-  "totalSkipped": 20213,
+  "unmatchedOmitted": 2960,
+  "skippedOmitted": 6569,
+  "totalSkipped": 19970,
   "edge390": {
    "fails": 0,
    "tolerance": "±2px vs the spec's recorded 390 section-root gutter",
@@ -229,73 +229,73 @@
   },
   "footer": {
    "390": {
-    "passRate": 89.2,
-    "n": 1347,
-    "pass": 1202,
-    "fail": 145,
-    "exceptions": 4,
+    "passRate": 89.4,
+    "n": 1339,
+    "pass": 1197,
+    "fail": 142,
+    "exceptions": 6,
     "explicit": 0,
     "dataSpec": 112,
-    "heuristic": 30,
+    "heuristic": 27,
     "unmatched": 0,
-    "excused": 64,
-    "skipped": 400,
+    "excused": 65,
+    "skipped": 394,
     "missing": null
    },
    "768": {
     "passRate": 86.8,
-    "n": 1565,
-    "pass": 1358,
-    "fail": 207,
+    "n": 1541,
+    "pass": 1337,
+    "fail": 204,
     "exceptions": 19,
     "explicit": 0,
     "dataSpec": 113,
-    "heuristic": 29,
+    "heuristic": 26,
     "unmatched": 0,
-    "excused": 201,
-    "skipped": 498,
+    "excused": 204,
+    "skipped": 480,
     "missing": null
    },
    "1024": {
-    "passRate": 89.9,
-    "n": 1209,
-    "pass": 1087,
-    "fail": 122,
+    "passRate": 90.3,
+    "n": 1201,
+    "pass": 1084,
+    "fail": 117,
     "exceptions": 4,
     "explicit": 0,
     "dataSpec": 91,
-    "heuristic": 39,
+    "heuristic": 36,
     "unmatched": 0,
-    "excused": 97,
-    "skipped": 348,
+    "excused": 98,
+    "skipped": 342,
     "missing": null
    },
    "1440": {
     "passRate": 89.4,
-    "n": 1644,
-    "pass": 1469,
-    "fail": 175,
-    "exceptions": 24,
+    "n": 1620,
+    "pass": 1448,
+    "fail": 172,
+    "exceptions": 22,
     "explicit": 0,
     "dataSpec": 116,
-    "heuristic": 31,
+    "heuristic": 28,
     "unmatched": 0,
-    "excused": 190,
-    "skipped": 518,
+    "excused": 193,
+    "skipped": 500,
     "missing": null
    },
    "1920": {
-    "passRate": 88.8,
-    "n": 1209,
-    "pass": 1074,
-    "fail": 135,
+    "passRate": 89.3,
+    "n": 1201,
+    "pass": 1072,
+    "fail": 129,
     "exceptions": 4,
     "explicit": 0,
     "dataSpec": 83,
-    "heuristic": 47,
+    "heuristic": 44,
     "unmatched": 0,
-    "excused": 97,
-    "skipped": 348,
+    "excused": 98,
+    "skipped": 342,
     "missing": null
    }
   },
@@ -445,73 +445,73 @@
   },
   "home-intro-wrap": {
    "390": {
-    "passRate": 96.5,
-    "n": 1522,
-    "pass": 1469,
-    "fail": 53,
-    "exceptions": 3,
+    "passRate": 95.3,
+    "n": 1548,
+    "pass": 1476,
+    "fail": 72,
+    "exceptions": 2,
     "explicit": 0,
-    "dataSpec": 145,
-    "heuristic": 1,
+    "dataSpec": 141,
+    "heuristic": 2,
     "unmatched": 0,
-    "excused": 141,
-    "skipped": 476,
+    "excused": 139,
+    "skipped": 474,
     "missing": null
    },
    "768": {
-    "passRate": 99.2,
-    "n": 2248,
-    "pass": 2230,
-    "fail": 18,
-    "exceptions": 7,
+    "passRate": 97.9,
+    "n": 2254,
+    "pass": 2206,
+    "fail": 48,
+    "exceptions": 6,
     "explicit": 0,
-    "dataSpec": 221,
-    "heuristic": 2,
+    "dataSpec": 219,
+    "heuristic": 3,
     "unmatched": 1,
-    "excused": 198,
-    "skipped": 897,
+    "excused": 199,
+    "skipped": 873,
     "missing": null
    },
    "1024": {
-    "passRate": 98.3,
-    "n": 2322,
-    "pass": 2283,
-    "fail": 39,
-    "exceptions": 7,
-    "explicit": 0,
-    "dataSpec": 229,
-    "heuristic": 1,
+    "passRate": 97.7,
+    "n": 2329,
+    "pass": 2275,
+    "fail": 54,
+    "exceptions": 6,
+    "explicit": 1,
+    "dataSpec": 226,
+    "heuristic": 2,
     "unmatched": 0,
-    "excused": 199,
-    "skipped": 956,
+    "excused": 200,
+    "skipped": 927,
     "missing": null
    },
    "1440": {
     "passRate": 98.4,
-    "n": 2322,
-    "pass": 2286,
+    "n": 2263,
+    "pass": 2227,
     "fail": 36,
-    "exceptions": 7,
+    "exceptions": 6,
     "explicit": 0,
-    "dataSpec": 229,
-    "heuristic": 1,
+    "dataSpec": 222,
+    "heuristic": 2,
     "unmatched": 0,
-    "excused": 199,
-    "skipped": 956,
+    "excused": 205,
+    "skipped": 915,
     "missing": null
    },
    "1920": {
-    "passRate": 98.7,
-    "n": 2322,
-    "pass": 2292,
-    "fail": 30,
-    "exceptions": 7,
+    "passRate": 98.4,
+    "n": 2263,
+    "pass": 2227,
+    "fail": 36,
+    "exceptions": 6,
     "explicit": 0,
-    "dataSpec": 229,
-    "heuristic": 1,
+    "dataSpec": 222,
+    "heuristic": 2,
     "unmatched": 0,
-    "excused": 199,
-    "skipped": 952,
+    "excused": 205,
+    "skipped": 915,
     "missing": null
    }
   },
@@ -589,10 +589,10 @@
   },
   "home-platform-wrap": {
    "390": {
-    "passRate": 90.3,
+    "passRate": 91,
     "n": 575,
-    "pass": 519,
-    "fail": 56,
+    "pass": 523,
+    "fail": 52,
     "exceptions": 0,
     "explicit": 0,
     "dataSpec": 78,
@@ -603,10 +603,10 @@
     "missing": null
    },
    "768": {
-    "passRate": 90.9,
-    "n": 639,
-    "pass": 581,
-    "fail": 58,
+    "passRate": 91.8,
+    "n": 637,
+    "pass": 585,
+    "fail": 52,
     "exceptions": 0,
     "explicit": 0,
     "dataSpec": 78,
@@ -617,45 +617,45 @@
     "missing": null
    },
    "1024": {
-    "passRate": 92.3,
-    "n": 764,
-    "pass": 705,
-    "fail": 59,
+    "passRate": 93,
+    "n": 775,
+    "pass": 721,
+    "fail": 54,
     "exceptions": 0,
-    "explicit": 0,
+    "explicit": 1,
     "dataSpec": 83,
-    "heuristic": 24,
+    "heuristic": 23,
     "unmatched": 0,
     "excused": 8,
-    "skipped": 754,
+    "skipped": 738,
     "missing": null
    },
    "1440": {
-    "passRate": 92.3,
-    "n": 755,
-    "pass": 697,
-    "fail": 58,
+    "passRate": 93,
+    "n": 767,
+    "pass": 713,
+    "fail": 54,
     "exceptions": 0,
-    "explicit": 0,
+    "explicit": 1,
     "dataSpec": 83,
-    "heuristic": 24,
+    "heuristic": 23,
     "unmatched": 0,
     "excused": 8,
-    "skipped": 762,
+    "skipped": 746,
     "missing": null
    },
    "1920": {
-    "passRate": 92.4,
-    "n": 765,
-    "pass": 707,
-    "fail": 58,
+    "passRate": 93.5,
+    "n": 785,
+    "pass": 734,
+    "fail": 51,
     "exceptions": 0,
-    "explicit": 0,
+    "explicit": 1,
     "dataSpec": 83,
-    "heuristic": 25,
+    "heuristic": 24,
     "unmatched": 0,
     "excused": 7,
-    "skipped": 766,
+    "skipped": 742,
     "missing": null
    }
   },
@@ -717,14 +717,14 @@
     "missing": null
    },
    "1920": {
-    "passRate": 98,
+    "passRate": 98.2,
     "n": 1521,
-    "pass": 1491,
-    "fail": 30,
+    "pass": 1493,
+    "fail": 28,
     "exceptions": 5,
-    "explicit": 0,
+    "explicit": 1,
     "dataSpec": 97,
-    "heuristic": 10,
+    "heuristic": 9,
     "unmatched": 0,
     "excused": 103,
     "skipped": 0,
@@ -805,10 +805,10 @@
   },
   "home-why-wrap": {
    "390": {
-    "passRate": 94.7,
+    "passRate": 95.1,
     "n": 1921,
-    "pass": 1820,
-    "fail": 101,
+    "pass": 1827,
+    "fail": 94,
     "exceptions": 1,
     "explicit": 171,
     "dataSpec": 11,
@@ -819,10 +819,10 @@
     "missing": null
    },
    "768": {
-    "passRate": 94.6,
+    "passRate": 94.8,
     "n": 1941,
-    "pass": 1836,
-    "fail": 105,
+    "pass": 1840,
+    "fail": 101,
     "exceptions": 1,
     "explicit": 170,
     "dataSpec": 12,
@@ -833,10 +833,10 @@
     "missing": null
    },
    "1024": {
-    "passRate": 96.1,
+    "passRate": 96.5,
     "n": 1982,
-    "pass": 1905,
-    "fail": 77,
+    "pass": 1912,
+    "fail": 70,
     "exceptions": 2,
     "explicit": 180,
     "dataSpec": 14,
@@ -847,10 +847,10 @@
     "missing": null
    },
    "1440": {
-    "passRate": 95,
+    "passRate": 95.5,
     "n": 1986,
-    "pass": 1887,
-    "fail": 99,
+    "pass": 1896,
+    "fail": 90,
     "exceptions": 2,
     "explicit": 179,
     "dataSpec": 14,
@@ -861,10 +861,10 @@
     "missing": null
    },
    "1920": {
-    "passRate": 95.2,
+    "passRate": 95.6,
     "n": 1986,
-    "pass": 1890,
-    "fail": 96,
+    "pass": 1899,
+    "fail": 87,
     "exceptions": 2,
     "explicit": 179,
     "dataSpec": 14,
@@ -3209,8 +3209,8 @@
    "oursSelector": "#hm:div.none",
    "mode": "heuristic",
    "expected": 680,
-   "actual": 1759,
-   "delta": 1079
+   "actual": 1760,
+   "delta": 1080
   },
   {
    "section": "home-map-wrap",
@@ -3598,6 +3598,17 @@
    "delta": 946
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "1920",
+   "kind": "h",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 963,
+   "actual": 23,
+   "delta": 940
+  },
+  {
    "section": "home-map-wrap",
    "bp": "1920",
    "kind": "h",
@@ -3618,6 +3629,17 @@
    "expected": 943,
    "actual": 7,
    "delta": 936
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "1920",
+   "kind": "w",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 951,
+   "actual": 23,
+   "delta": 928
   },
   {
    "section": "footer",
@@ -3946,8 +3968,8 @@
    "oursSelector": "#hm:div.none",
    "mode": "heuristic",
    "expected": 510,
-   "actual": 1319,
-   "delta": 809
+   "actual": 1320,
+   "delta": 810
   },
   {
    "section": "home-hero-wrap",
@@ -4587,6 +4609,17 @@
    "delta": 707
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "1440",
+   "kind": "h",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 723,
+   "actual": 17,
+   "delta": 706
+  },
+  {
    "section": "home-cta-wrap",
    "bp": "1920",
    "kind": "y",
@@ -4705,6 +4738,17 @@
    "expected": 8,
    "actual": 704,
    "delta": 696.5
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "1440",
+   "kind": "w",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 713,
+   "actual": 17,
+   "delta": 696
   },
   {
    "section": "home-map-wrap",
@@ -5201,6 +5245,17 @@
    "delta": 639
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "390",
+   "kind": "y",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 0,
+   "actual": 639,
+   "delta": 639
+  },
+  {
    "section": "home-map-wrap",
    "bp": "1920",
    "kind": "w",
@@ -5318,6 +5373,17 @@
    "mode": "heuristic",
    "expected": 633,
    "actual": 10,
+   "delta": 623
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "1024",
+   "kind": "x-mirror",
+   "heronPath": "home-intro-wrap > div[2] > div[1] > div[1] > div[2] > div[1] > img[1]",
+   "oursSelector": "#ds:intro.dupcard.5",
+   "mode": "data-spec",
+   "expected": 57,
+   "actual": 680,
    "delta": 623
   },
   {
@@ -5471,8 +5537,8 @@
    "oursSelector": "#hm:div.none",
    "mode": "heuristic",
    "expected": 1219,
-   "actual": 641,
-   "delta": 578
+   "actual": 642,
+   "delta": 577
   },
   {
    "section": "home-hero-wrap",
@@ -6110,6 +6176,17 @@
    "delta": 507
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "1024",
+   "kind": "h",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 514,
+   "actual": 12,
+   "delta": 502
+  },
+  {
    "section": "home-map-wrap",
    "bp": "1440",
    "kind": "w",
@@ -6185,6 +6262,17 @@
    "expected": 681,
    "actual": 185,
    "delta": 495.5
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "1024",
+   "kind": "w",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 507,
+   "actual": 12,
+   "delta": 495
   },
   {
    "section": "footer",
@@ -6415,6 +6503,17 @@
    "expected": 483,
    "actual": 3,
    "delta": 480
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "1920",
+   "kind": "y",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 0,
+   "actual": 479,
+   "delta": 479
   },
   {
    "section": "footer",
@@ -6787,8 +6886,8 @@
    "oursSelector": "#ds:footer.bgroup.2",
    "mode": "data-spec",
    "expected": 151,
-   "actual": 594,
-   "delta": 443
+   "actual": 595,
+   "delta": 444
   },
   {
    "section": "home-why-wrap",
@@ -7231,6 +7330,17 @@
    "delta": 419.5
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "1024",
+   "kind": "x-mirror",
+   "heronPath": "home-intro-wrap > div[2] > div[2] > div[1] > div[1] > div[2] > div[1]",
+   "oursSelector": "#ds:intro.dupcard.4",
+   "mode": "data-spec",
+   "expected": 57,
+   "actual": 476,
+   "delta": 419
+  },
+  {
    "section": "home-problem-wrap",
    "bp": "1440",
    "kind": "y",
@@ -7286,17 +7396,6 @@
    "delta": 414
   },
   {
-   "section": "home-why-wrap",
-   "bp": "1920",
-   "kind": "w",
-   "heronPath": "home-why-wrap > div[2] > div[1] > div[1] > div[2] > div[3] > div[2]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 18,
-   "actual": 431,
-   "delta": 413
-  },
-  {
    "section": "footer",
    "bp": "1440",
    "kind": "x-mirror",
@@ -7317,6 +7416,17 @@
    "expected": -304,
    "actual": -716,
    "delta": 412
+  },
+  {
+   "section": "home-why-wrap",
+   "bp": "1920",
+   "kind": "w",
+   "heronPath": "home-why-wrap > div[2] > div[1] > div[1] > div[2] > div[3] > div[2]",
+   "oursSelector": "#hm:div.none",
+   "mode": "heuristic",
+   "expected": 18,
+   "actual": 429,
+   "delta": 411
   },
   {
    "section": "home-why-wrap",
@@ -7814,17 +7924,6 @@
    "delta": 376.5
   },
   {
-   "section": "footer",
-   "bp": "1920",
-   "kind": "w",
-   "heronPath": "footer > div[1] > div[1] > div[1] > div[1] > div[1] > div[1]",
-   "oursSelector": "#ds:footer.brandname",
-   "mode": "data-spec",
-   "expected": 441,
-   "actual": 65,
-   "delta": 376
-  },
-  {
    "section": "home-problem-wrap",
    "bp": "390",
    "kind": "w",
@@ -7966,6 +8065,17 @@
    "expected": 4,
    "actual": 376,
    "delta": 371.5
+  },
+  {
+   "section": "footer",
+   "bp": "1920",
+   "kind": "w",
+   "heronPath": "footer > div[1] > div[1] > div[1] > div[1] > div[1] > div[1]",
+   "oursSelector": "#ds:footer.brandname",
+   "mode": "data-spec",
+   "expected": 441,
+   "actual": 70,
+   "delta": 371
   },
   {
    "section": "home-hero-wrap",
@@ -8243,6 +8353,17 @@
    "delta": 360
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "1440",
+   "kind": "y",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 0,
+   "actual": 359,
+   "delta": 359
+  },
+  {
    "section": "home-map-wrap",
    "bp": "1024",
    "kind": "w",
@@ -8263,6 +8384,28 @@
    "expected": 4220,
    "actual": 4579,
    "delta": 359
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "768",
+   "kind": "w",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 377,
+   "actual": 19,
+   "delta": 358
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "768",
+   "kind": "h",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 377,
+   "actual": 19,
+   "delta": 358
   },
   {
    "section": "home-cta-wrap",
@@ -8386,6 +8529,39 @@
    "delta": 354
   },
   {
+   "section": "home-intro-wrap",
+   "bp": "390",
+   "kind": "x-mirror",
+   "heronPath": "home-intro-wrap > div[2] > div[1] > div[1] > div[2] > div[1] > img[1]",
+   "oursSelector": "#ds:intro.dupcard.3",
+   "mode": "data-spec",
+   "expected": 455,
+   "actual": 101,
+   "delta": 354
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "390",
+   "kind": "w",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 374,
+   "actual": 20,
+   "delta": 354
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "390",
+   "kind": "h",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > svg[1]",
+   "oursSelector": "#hm:svg.none",
+   "mode": "heuristic",
+   "expected": 374,
+   "actual": 20,
+   "delta": 354
+  },
+  {
    "section": "home-why-wrap",
    "bp": "1024",
    "kind": "y",
@@ -8472,6 +8648,17 @@
    "expected": 0,
    "actual": 350,
    "delta": 350
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "390",
+   "kind": "x-mirror",
+   "heronPath": "home-intro-wrap > div[2] > div[2] > div[1] > div[1] > div[2] > div[1]",
+   "oursSelector": "#ds:intro.dupcard.2",
+   "mode": "data-spec",
+   "expected": 455,
+   "actual": 107,
+   "delta": 348
   },
   {
    "section": "home-map-wrap",
@@ -9473,193 +9660,6 @@
    "expected": 489,
    "actual": 802,
    "delta": 313
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "390",
-   "kind": "y",
-   "heronPath": "home-map-wrap > div[1] > div[1] > div[1] > div[2] > div[1] > div[2]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 4267,
-   "actual": 4580,
-   "delta": 313
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "390",
-   "kind": "y",
-   "heronPath": "home-map-wrap > div[1] > div[1] > div[2] > div[1] > div[2] > div[1]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 4267,
-   "actual": 4580,
-   "delta": 313
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "390",
-   "kind": "y",
-   "heronPath": "home-map-wrap > section[1] > div[1] > div[1] > div[1] > div[2] > div[1]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 4220,
-   "actual": 4532,
-   "delta": 312
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "390",
-   "kind": "y",
-   "heronPath": "home-map-wrap > div[1] > div[1] > div[1] > div[2] > div[1] > div[1]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 4220,
-   "actual": 4532,
-   "delta": 312
-  },
-  {
-   "section": "footer",
-   "bp": "1440",
-   "kind": "x-mirror",
-   "heronPath": "footer > div[1] > div[1] > div[2] > div[2] > div[1] > div[2]",
-   "oursSelector": "#ds:footer.bgroup.2",
-   "mode": "data-spec",
-   "expected": 542,
-   "actual": 231,
-   "delta": 311
-  },
-  {
-   "section": "chrome",
-   "bp": "768",
-   "kind": "x-mirror",
-   "heronPath": "chrome > div[1] > div[2] > div[2] > div[1] > a[1] > div[1]",
-   "oursSelector": "chrome > header[1] > div[1] > div[1] > button[5] > span[1]",
-   "mode": "explicit",
-   "expected": 20,
-   "actual": 331,
-   "delta": 311
-  },
-  {
-   "section": "home-why-wrap",
-   "bp": "1440",
-   "kind": "w",
-   "heronPath": "home-why-wrap > div[2] > div[1] > div[1] > div[2] > div[3] > div[2]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 13,
-   "actual": 323,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[2] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.2",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[3] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.3",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[4] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.4",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[5] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.5",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[6] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.6",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[7] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.7",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-usecase-wrap",
-   "bp": "1024",
-   "kind": "h",
-   "heronPath": "home-usecase-wrap > div[3] > div[1] > div[2] > div[1] > div[8] > img[1]",
-   "oursSelector": "#ds:roles.slideimg.8",
-   "mode": "data-spec",
-   "expected": 815,
-   "actual": 505,
-   "delta": 310
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "390",
-   "kind": "w",
-   "heronPath": "home-map-wrap > div[1] > section[1] > div[1] > div[1] > div[1] > div[2]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 374,
-   "actual": 64,
-   "delta": 310
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "390",
-   "kind": "w",
-   "heronPath": "home-map-wrap > div[1] > div[1] > div[1] > div[2] > div[1] > div[3]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 374,
-   "actual": 64,
-   "delta": 310
-  },
-  {
-   "section": "home-map-wrap",
-   "bp": "768",
-   "kind": "x-mirror",
-   "heronPath": "home-map-wrap > div[1] > div[1] > div[1] > div[1] > div[2] > div[3]",
-   "oursSelector": "#hm:div.none",
-   "mode": "heuristic",
-   "expected": 8,
-   "actual": 317,
-   "delta": 309.5
   }
  ],
  "unmatchedReport": [
@@ -9807,20 +9807,6 @@
    "section": "footer",
    "bp": "1920",
    "heronPath": "footer > div[1] > div[2] > div[1] > div[2] > div[1] > div[2]",
-   "excused": true,
-   "reason": "ar-char-split: tween char-scaffolding — Arabic word-split law (joining forbids per-character boxes); container carries no text counterpart"
-  },
-  {
-   "section": "footer",
-   "bp": "1920",
-   "heronPath": "footer > div[1] > div[2] > div[1] > div[2] > svg[1] > defs[1]",
-   "excused": true,
-   "reason": "ar-char-split: tween char-scaffolding — Arabic word-split law (joining forbids per-character boxes); container carries no text counterpart"
-  },
-  {
-   "section": "footer",
-   "bp": "1920",
-   "heronPath": "footer > div[1] > div[2] > div[1] > div[2] > svg[1] > filter[2]",
    "excused": true,
    "reason": "ar-char-split: tween char-scaffolding — Arabic word-split law (joining forbids per-character boxes); container carries no text counterpart"
   },
@@ -10198,7 +10184,28 @@
   {
    "section": "footer",
    "bp": "1920",
+   "heronPath": "footer > div[1] > div[2] > div[1] > div[2] > svg[1] > defs[1]",
+   "excused": true,
+   "reason": "SVG defs/filter plumbing inside the reference grayscale tonal twin (0x0, non-visual)"
+  },
+  {
+   "section": "footer",
+   "bp": "1920",
    "heronPath": "footer > div[2] > div[1] > div[2] > svg[1] > defs[1] > mask[1]",
+   "excused": true,
+   "reason": "SVG defs/filter plumbing inside the reference grayscale tonal twin (0x0, non-visual)"
+  },
+  {
+   "section": "footer",
+   "bp": "1920",
+   "heronPath": "footer > div[1] > div[2] > div[1] > div[2] > svg[1] > filter[2]",
+   "excused": true,
+   "reason": "SVG defs/filter plumbing inside the reference grayscale tonal twin (0x0, non-visual)"
+  },
+  {
+   "section": "footer",
+   "bp": "1920",
+   "heronPath": "footer > div[2] > div[1] > div[2] > svg[1] > filter[2] > fecomponenttransfer[4]",
    "excused": true,
    "reason": "SVG defs/filter plumbing inside the reference grayscale tonal twin (0x0, non-visual)"
   },
@@ -10964,6 +10971,13 @@
    "heronPath": "home-intro-wrap > div[1] > div[1] > div[2] > svg[1] > filter[2] > fecomponenttransfer[4]",
    "excused": true,
    "reason": "0x0 tween-residue box (the roll pair's parked copy mid-tween); our parked copy is a real off-stage box"
+  },
+  {
+   "section": "home-intro-wrap",
+   "bp": "1920",
+   "heronPath": "home-intro-wrap > div[1] > div[1] > div[1] > div[2] > svg[1] > image[3]",
+   "excused": true,
+   "reason": "deep-window residue: the reference's tween/roll plumbing below the bound containers (window paths truncated by the walk); our equivalent renders inside the explicitly-bound conforming containers."
   },
   {
    "section": "home-intro-wrap",
@@ -11746,20 +11760,6 @@
    "section": "home-intro-wrap",
    "bp": "1920",
    "heronPath": "home-intro-wrap > div[7] > div[1] > div[1] > div[3] > div[3] > div[1]",
-   "excused": true,
-   "reason": "deep-window residue: the reference's tween/roll plumbing below the bound containers (window paths truncated by the walk); our equivalent renders inside the explicitly-bound conforming containers."
-  },
-  {
-   "section": "home-intro-wrap",
-   "bp": "1920",
-   "heronPath": "home-intro-wrap > div[7] > div[1] > div[1] > div[4] > div[1] > div[1]",
-   "excused": true,
-   "reason": "deep-window residue: the reference's tween/roll plumbing below the bound containers (window paths truncated by the walk); our equivalent renders inside the explicitly-bound conforming containers."
-  },
-  {
-   "section": "home-intro-wrap",
-   "bp": "1920",
-   "heronPath": "home-intro-wrap > div[7] > div[1] > div[1] > div[4] > div[2] > div[1]",
    "excused": true,
    "reason": "deep-window residue: the reference's tween/roll plumbing below the bound containers (window paths truncated by the walk); our equivalent renders inside the explicitly-bound conforming containers."
   }
@@ -12605,22 +12605,6 @@
    "section": "footer",
    "bp": "1920",
    "heronPath": "footer > footer[1] > div[1] > div[2] > div[1] > div[2]",
-   "group": "color",
-   "checks": 2,
-   "reason": "T-06j plumbing: 0-area tween-residue/hidden capture box — geometry/color of the glue pair is meaningless (r337 T-05c/T-06f precedent)"
-  },
-  {
-   "section": "footer",
-   "bp": "1920",
-   "heronPath": "footer > div[2] > div[1] > div[2] > svg[1] > filter[2] > fecomponenttransfer[4]",
-   "group": "geometry",
-   "checks": 4,
-   "reason": "T-06j plumbing: 0-area tween-residue/hidden capture box — geometry/color of the glue pair is meaningless (r337 T-05c/T-06f precedent)"
-  },
-  {
-   "section": "footer",
-   "bp": "1920",
-   "heronPath": "footer > div[2] > div[1] > div[2] > svg[1] > filter[2] > fecomponenttransfer[4]",
    "group": "color",
    "checks": 2,
    "reason": "T-06j plumbing: 0-area tween-residue/hidden capture box — geometry/color of the glue pair is meaningless (r337 T-05c/T-06f precedent)"
@@ -13712,6 +13696,22 @@
    "group": "type",
    "checks": 4,
    "reason": "plumbing-skip (mirrors documented no-counterpart excuse): drafting grid hairline - per-div counterpart built + bound at 1440 (R341 H1-a); this bp's grid geometry not yet matched - H1-d sweep — heuristic tag|tc pairing currently binds these to our authored ink-SVG/CSS-seat internals; measured groups skipped (counted) until explicit wrapper rebind"
+  },
+  {
+   "section": "home-hero-wrap",
+   "bp": "1920",
+   "heronPath": "home-hero-wrap > div[1] > div[2] > div[2] > div[2] > div[2] > div[3]",
+   "group": "color",
+   "checks": 2,
+   "reason": "plumbing-skip (mirrors documented no-counterpart excuse): drafting grid hairline - per-div counterpart built + bound at 1440 (R341 H1-a); this bp's grid geometry not yet matched - H1-d sweep — heuristic tag|tc pairing currently binds these to our authored ink-SVG/CSS-seat internals; measured groups skipped (counted) until explicit wrapper rebind"
+  },
+  {
+   "section": "home-hero-wrap",
+   "bp": "1920",
+   "heronPath": "home-hero-wrap > div[1] > div[2] > div[2] > div[2] > div[2] > div[4]",
+   "group": "geometry",
+   "checks": 4,
+   "reason": "plumbing-skip (mirrors documented no-counterpart excuse): drafting grid hairline - per-div counterpart built + bound at 1440 (R341 H1-a); this bp's grid geometry not yet matched - H1-d sweep — heuristic tag|tc pairing currently binds these to our authored ink-SVG/CSS-seat internals; measured groups skipped (counted) until explicit wrapper rebind"
   }
  ],
  "darkInkReport": [],
@@ -14052,6 +14052,11 @@
     "found": 2,
     "excluded": 2
    },
+   "home-intro-wrap@390": {
+    "bp": "390",
+    "found": 3,
+    "excluded": 3
+   },
    "home-problem-wrap@390": {
     "bp": "390",
     "found": 4,
@@ -14068,11 +14073,6 @@
     "excluded": 0
    },
    "home-cta-wrap@390": {
-    "bp": "390",
-    "found": 0,
-    "excluded": 0
-   },
-   "home-intro-wrap@390": {
     "bp": "390",
     "found": 0,
     "excluded": 0
@@ -14097,6 +14097,11 @@
     "found": 1,
     "excluded": 1
    },
+   "home-intro-wrap@768": {
+    "bp": "768",
+    "found": 2,
+    "excluded": 2
+   },
    "home-map-wrap@768": {
     "bp": "768",
     "found": 8,
@@ -14108,11 +14113,6 @@
     "excluded": 0
    },
    "home-cta-wrap@768": {
-    "bp": "768",
-    "found": 0,
-    "excluded": 0
-   },
-   "home-intro-wrap@768": {
     "bp": "768",
     "found": 0,
     "excluded": 0
@@ -14137,6 +14137,11 @@
     "found": 0,
     "excluded": 0
    },
+   "home-intro-wrap@1440": {
+    "bp": "1440",
+    "found": 2,
+    "excluded": 2
+   },
    "footer@1440": {
     "bp": "1440",
     "found": 0,
@@ -14148,11 +14153,6 @@
     "excluded": 0
    },
    "home-hero-wrap@1440": {
-    "bp": "1440",
-    "found": 0,
-    "excluded": 0
-   },
-   "home-intro-wrap@1440": {
     "bp": "1440",
     "found": 0,
     "excluded": 0
@@ -14366,7 +14366,7 @@
   "skipped": []
  },
  "provenance": {
-  "file": "chromium-20261108-212849-full.json",
+  "file": "chromium-20261111-164422-full.json",
   "scope": "full",
   "fullMatrix": true,
   "sections": "10/10",
