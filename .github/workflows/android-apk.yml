@@ -70,8 +70,13 @@ jobs:
         # Expo SDK 58 / RN 0.88 exact requirements — the same pins the
         # local build script checks for (scripts/build-android-local.sh §0c).
         run: |
-          yes | sdkmanager --licenses > /dev/null || true
-          sdkmanager --install \
+          # ubuntu-24.04 images don't always put cmdline-tools on PATH —
+          # resolve the binary from ANDROID_HOME, falling back to PATH.
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          [ -x "$SDKMANAGER" ] || SDKMANAGER="$(command -v sdkmanager)"
+          [ -n "$SDKMANAGER" ] || { echo "::error::sdkmanager not found under ANDROID_HOME=$ANDROID_HOME"; exit 1; }
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" --install \
             "platform-tools" \
             "platforms;android-37" \
             "build-tools;37.0.0" \
