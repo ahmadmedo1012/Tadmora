@@ -2,7 +2,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
-  Building2, Users, BookOpen, GraduationCap, Trophy, Megaphone,
+  Building2, Users, BookOpen, GraduationCap, Trophy, Megaphone, ShieldCheck,
   Calendar, Radio, Award, ArrowLeft, MapPin, Clock,
   FlaskConical, Microscope, ClipboardCheck, Medal, BarChart3,
  X, ChevronRight, ChevronDown, ChevronUp, ArrowUpDown,
@@ -18,18 +18,13 @@ import { EmptyState, ErrorState, DetailSkeleton, TableSkeleton } from '../../com
 import { Reveal, Skeleton } from '../../components/motion';
 import { SectionAccent } from '../../components/motion/SectionAccent';
 /* r264 (4E — اتجاه Superlist): ترويسة وترحيب patterns هادئة بدل المسرح
-   الملوّن، شريط FilterBar موحّد للبحث والحرم، وصفوف كلية بدل شبكة
+   الملوّن، شريط FilterBar موحّد للبحث، وصفوف كلية بدل شبكة
    بطاقات (التفصيل على الصف، الشارات في الطرف). */
 import { PageFrame, PageHeader, RowList, RowItem, FilterBar } from '../../components/patterns';
 import { api, unwrap } from '../../lib/api';
 import { formatDateTimeAr, countAr } from '../../lib/format';
 import { formatNum } from '../../utils/numbers';
-import {
-  colleges, getCollegeIdentityByRecord,
-} from '../../data/colleges.config';
-import { gateCollegeAccent } from '../../lib/theme';
-import { useThemeStore, resolveTheme } from '../../stores/theme.store';
-import { filterColleges, CAMPUS_ORDER, type CityName } from './filter-colleges';
+import { filterColleges } from './filter-colleges';
 import { useUrlQueryState } from '../../hooks/useUrlQueryState';
 import { useAuthStore, type AcademicPosition } from '../../stores/auth.store';
 /* c3-W6 (K-I extension): the guest drawing-sheet chrome (fixed frame +
@@ -218,9 +213,9 @@ function GuestJoinRow() {
   const from = { from: { pathname } };
   return (
     <div className="guest-join-row">
-      <span className="guest-join-note">طالب جديد في الجامعة؟</span>
+      <span className="guest-join-note">مؤسستك على تادمورا؟</span>
       <Link to="/auth" state={from} className="btn ghost sm">تسجيل الدخول</Link>
-      <Link to="/auth/register" state={from} className="btn primary sm">أنشئ حسابك الجامعي</Link>
+      <Link to="/auth/register" state={from} className="btn primary sm">أنشئ حسابك</Link>
     </div>
   );
 }
@@ -234,12 +229,12 @@ function GuestClosingBand() {
   const from = { from: { pathname } };
   return (
     <section className="guest-cta-band" aria-labelledby="guest-cta-title">
-      <h2 id="guest-cta-title" className="guest-cta-title">هل هذه كلّيتك؟</h2>
+      <h2 id="guest-cta-title" className="guest-cta-title">مؤسستك، كلياتك… على تادمورا</h2>
       <p className="guest-cta-note">
-        أنشئ حسابك الجامعي وابدأ رحلتك الأكاديميّة على منصّة تادمورا.
+        انضم بمنصّة تادمورا وابنِ الهيكل الأكاديمي الذي يناسب مؤسستك — كلية، قسمًا، مقرّرًا.
       </p>
       <div className="guest-cta-actions">
-        <Link to="/auth/register" state={from} className="btn primary">أنشئ حسابك الجامعي</Link>
+        <Link to="/auth/register" state={from} className="btn primary">أنشئ حسابك</Link>
         <Link to="/auth" state={from} className="btn ghost">تسجيل الدخول</Link>
       </div>
     </section>
@@ -249,14 +244,14 @@ function GuestClosingBand() {
 export function CollegesIndexPage() {
   const user = useAuthStore((s) => s.user);
   // Public-zeros ruling (A8 P2-6): for guests, a «0 طالب / 0 عضو هيئة»
-  // chip on 24 of 25 cards reads as a dead campus, not as honesty
+  // chip on a thin faculty reads as a dead structure, not as honesty
   // about internal data (FR-010 keeps rendering genuine zeros for
-  // authed roles, who see the working university tool).
+  // authed roles, who see the working institution tool).
   const isGuest = !user;
   // Guests get no AppShell → no docTitle effect (A12 P2-6). Authed
   // visitors keep the shell's own resolution (NAV_TITLES carries
   // /colleges — same label, one source in nav.ts).
-  useDocTitle(isGuest ? 'كلّيّات الجامعة' : null);
+  useDocTitle(isGuest ? 'الكليات' : null);
   const inst = useInstitutionScope(); // r180: scoped key
   const q = useQuery({
     queryKey: withInstitutionScope(['colleges'], inst),
@@ -264,43 +259,15 @@ export function CollegesIndexPage() {
     staleTime: 5 * 60_000,
   });
 
-  const { state, setQuery, setCampus, clear } = useUrlQueryState();
+  const { state, setQuery, clear } = useUrlQueryState();
   const data = q.data ?? [];
-
-  // Pre-compute total per campus for the chip-strip counts.
-  const totalByCampus = useMemo(() => {
-    const counts = new Map<CityName, number>();
-    for (const c of data) {
-      const cityRaw = c.city;
-      const city = (CAMPUS_ORDER as ReadonlyArray<string>).includes(cityRaw)
-        ? (cityRaw as CityName)
-        : ('مناطق أخرى' as CityName);
-      counts.set(city, (counts.get(city) ?? 0) + 1);
-    }
-    return counts;
-  }, [data]);
 
   const result = useMemo(
     () => filterColleges(data, state),
     [data, state],
   );
 
-  const hasActiveFilters = state.query.trim() !== '' || state.campus !== null;
-
-  // Dev-time drift guard (ruling #6 follow-through): the identity registry
-  // and the API faculty list must stay in lock-step — count AND per-record
-  // resolution. DEV-only; compiled out of production builds.
-  useEffect(() => {
-    if (!import.meta.env.DEV || !q.data) return;
-    const unmatched = q.data.filter((c) => !getCollegeIdentityByRecord(c.name, c.city));
-    if (q.data.length === colleges.length && unmatched.length === 0) return;
-    const detail = unmatched.length > 0
-      ? `; unmatched records: ${unmatched.map((c) => `${c.name} (${c.city})`).join('، ')}`
-      : '';
-    console.warn(
-      `[colleges] identity registry drift: ${colleges.length} profiles vs ${q.data.length} API faculties${detail}`,
-    );
-  }, [q.data]);
+  const hasActiveFilters = state.query.trim() !== '';
 
   return (
     <PageFrame>
@@ -310,26 +277,24 @@ export function CollegesIndexPage() {
           header note) + the registry's mono identity line over the
           header. Authed visitors keep the shell untouched. */}
       {isGuest && <GuestSheetChrome portal />}
-      {/* r264: ترويسة patterns هادئة — «المسرح الملوّن» (SectionAccent
-          scene-paint) يتقاعد مع اتجاه Superlist: الهرمية عبر السطوح
-          لا عبر الطلاء. ضيف الزائر يبقى فوق الترويسة كإجراء صفحة. */}
+      {/* r264: ترويسة patterns هادئة. Phase Ω: /colleges هو صفحة عرض
+          تعدّد المستأجرين — لا كتالوج جامعات. */}
       {/* R332 W10b — .inx-head: the page-opening hairline + d2 display
           title + [01] gutter index (the inner-public sheet bridge). */}
       <div className="inx-head">
         <PageHeader
-          title="البنية الأكاديمية التجريبية — جامعة تادمورا التجريبية"
-          description="استكشف الكلّيّات والأقسام في سجلّ المؤسّسة المرجعية للعرض، وقادة كلّ كلّيّة، وأبرز طلّابها وأنشطها."
+          title="مؤسستك، كلياتك… على تادمورا"
+          description="تادمورا منصّة مستقلة متعددة المستأجرين: كل مؤسسة تبني هيكلها الأكاديمي بنفسها — من لوحة المسجّل تُنشأ الكلية، ثم القسم، ثم المقرّرات — وتمتلك المؤسسة بياناتها بعزل كامل. ما تراه هنا هيكل مساحة العرض الموسومة، لا كتالوج جامعات."
           actions={isGuest ? <GuestJoinRow /> : undefined}
           index="01"
         />
       </div>
 
       {q.isLoading && (
-        /* r305: row-shaped placeholder — the gallery renders campus
-           sections of RowList rows (r264), so the skeleton previews THAT
-           anatomy (title bar + bordered row stack per campus), not the
-           retired card grid. Decorative only (aria-hidden), per the
-           shared skeleton contract. */
+        /* r305: row-shaped placeholder — the gallery renders a flat
+           RowList, so the skeleton previews THAT anatomy (title bar +
+           bordered row stack), not the retired card grid. Decorative
+           only (aria-hidden), per the shared skeleton contract. */
         <div className="gallery-skeleton" aria-hidden>
           {[0, 1].map((s) => (
             <section key={s} className="gallery-skeleton-section">
@@ -351,51 +316,21 @@ export function CollegesIndexPage() {
       )}
       {q.isError && <ErrorState error={q.error} onRetry={() => q.refetch()} />}
       {q.data && q.data.length === 0 && (
-        <EmptyState illustration="empty-list" title="لا توجد كلّيّات بعد" description="ستظهر الكلّيّات هنا حين يضيفها المسجل العام." />
+        <EmptyState
+          illustration="empty-list"
+          title="لا توجد كليات بعد"
+          description="كل مؤسسة تبني كلياتها بعد انضمامها — يضيفها المسجّل العام من «الهيكل الأكاديمي» في لوحة المسجل العام."
+        />
       )}
 
       {q.data && q.data.length > 0 && (
         <>
           {/* r264: شريط التصفية الموحّد (FilterBar — عقد Agent S):
-              بحث زجاجي + رقائق الحرم (role=group + aria-pressed كما
-              كانت — r157) + زرّ الإعادة في الطرف. لاصق بأعلى حاوية
+              بحث زجاجي + زرّ الإعادة في الطرف. لاصق بأعلى حاوية
               التمرير حتى تبقى التصفية مرئية في القائمة الطويلة. */}
           <FilterBar
             sticky
             search={{ value: state.query, onChange: setQuery, placeholder: 'ابحث عن كلّيّة…' }}
-            filters={(
-              /* G: فئة .gallery-chip-strip تعود إلى موضعه المصمَّم (r183-B8)
-                 — على الهاتف يصبح الشريط تمريرًا أفقيًا بمحاذاة انطلاق
-                 وقناع تلاشٍ عند الطرف بدل التفاف رقائق متعدد الأسطر. */
-              <div className="gallery-chip-strip" role="group" aria-label="فلترة حسب الحرم">
-                <button
-                  type="button"
-                  aria-pressed={state.campus === null}
-                  className={`gallery-chip${state.campus === null ? ' gallery-chip-on' : ''}`}
-                  onClick={() => setCampus(null)}
-                >
-                  <span>الكل</span>
-                  <span className="gallery-chip-count">{data.length}</span>
-                </button>
-                {CAMPUS_ORDER.map((city) => {
-                  const count = totalByCampus.get(city) ?? 0;
-                  if (count === 0) return null;
-                  const active = state.campus === city;
-                  return (
-                    <button
-                      key={city}
-                      type="button"
-                      aria-pressed={active}
-                      className={`gallery-chip${active ? ' gallery-chip-on' : ''}`}
-                      onClick={() => setCampus(active ? null : city)}
-                    >
-                      <span>{city}</span>
-                      <span className="gallery-chip-count">{count}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
             trailing={hasActiveFilters ? (
               <button type="button" className="gallery-clear" onClick={clear}>
                 <Icon icon={X} size={14} />
@@ -412,7 +347,7 @@ export function CollegesIndexPage() {
           {result.total === 0 ? (
             <EmptyState
               title="لم نعثر على نتائج"
-              description="جرّب كلمة بحث مختلفة أو غيّر الحرم الجامعي."
+              description="جرّب كلمة بحث مختلفة."
               action={
                 <button type="button" className="btn primary" onClick={clear}>
                   <Icon icon={X} size={14} />
@@ -421,68 +356,90 @@ export function CollegesIndexPage() {
               }
             />
           ) : (
-            Array.from(result.byCampus.entries()).map(([city, list]) => (
-              <Reveal as="section" key={city} className="college-city-section" distance="medium">
-                <header className="college-city-header">
-                  <h2 className="college-city-name">{city}</h2>
-                  <span className="college-city-count">{countAr(list.length, ['كلّيّة واحدة', 'كلّيّتان', 'كلّيّات', 'كلّيّة'])}</span>
-                </header>
-                {/* r264: صفوف كلية هادئة (عقد RowList/RowItem) — الاسم هو
-                    باب الصف، الإنجليزية والعدادات سطر ثانوي، شارات
-                    الأعداد في الطرف مع سهم العبور. لهجة الهوية اللونية
-                    تُقرأ من رمز الكلية وصفحة التفصيل (حيث البوابة
-                    gateCollegeAccent تعمل) لا من طلاء الصف. */}
-                <RowList aria-label={`كلّيّات ${city}`}>
-                  {list.map((c) => {
-                    /* r264: العدادات نصّ هادئ في السطر الثانوي لا شارات
-                        في الطرف — الصف يبقى سطرًا واحدًا على كلّ عرض.
-                        Guest zero-suppression (A8 P2-6): كلّ صفر يختفي
-                        عن الضيف؛ الأدوار الداخلية تحتفظ برؤية FR-010
-                        كاملة (الأصفار الحقيقية تُرسم). */
-                    const stats = ([
-                      [Building2, c.departmentCount, 'قسم'],
-                      [GraduationCap, c.studentCount, 'طالب'],
-                      [Users, c.teacherCount, 'عضو هيئة'],
-                      [BookOpen, c.courseCount, 'مقرّر'],
-                    ] as const)
-                      .filter(([, v]) => !isGuest || (typeof v === 'number' && v > 0))
-                      .map(([icon, v, label]) => {
-                        const display = v === null || v === undefined ? '—' : formatNum(v as number);
-                        return (
-                          <span key={label} className="college-stat-chip">
-                            <Icon icon={icon} size={13} />
-                            <strong>{display}</strong>
-                            <span>{label}</span>
-                          </span>
-                        );
-                      });
-                    return (
-                      /* r289: الصف كله الوصلة (RowItem to) — أرضية اللمس
-                         44px+ لكل الصف بدل صندوق نص الاسم. */
-                      <RowItem
-                        key={c.id}
-                        to={`/colleges/${c.id}`}
-                        leading={
-                          <span aria-hidden>
-                            {/* allow-emoji: data-default for admin-chosen icon */}
-                            <EmojiIcon emoji={c.iconEmoji ?? '🏛️'} size={22} />
-                          </span>
-                        }
-                        title={c.name}
-                        meta={
-                          <span className="cp-meta-row">
-                            {c.nameEn && <span title={c.nameEn}>{c.nameEn}</span>}
-                            {stats.length > 0 && <span className="cp-meta-stats">{stats}</span>}
-                          </span>
-                        }
-                        trailing={<span className="college-card-arrow" aria-hidden><Icon icon={ArrowLeft} size={16} /></span>}
-                      />
-                    );
-                  })}
-                </RowList>
-              </Reveal>
-            ))
+            <Reveal as="section" className="college-city-section" distance="medium">
+              <header className="college-city-header">
+                <h2 className="college-city-name">كليات مساحة العرض</h2>
+                <span className="college-city-count">{countAr(result.total, ['كلّيّة واحدة', 'كلّيّتان', 'كلّيّات', 'كلّيّة'])}</span>
+              </header>
+              {/* r264: صفوف كلية هادئة (عقد RowList/RowItem) — الاسم هو
+                  باب الصف، الإنجليزية والعدادات سطر ثانوي، شارات
+                  الأعداد في الطرف مع سهم العبور. */}
+              <RowList aria-label="كليات مساحة العرض">
+                {result.items.map((c) => {
+                  /* r264: العدادات نصّ هادئ في السطر الثانوي لا شارات
+                      في الطرف — الصف يبقى سطرًا واحدًا على كلّ عرض.
+                      Guest zero-suppression (A8 P2-6): كلّ صفر يختفي
+                      عن الضيف؛ الأدوار الداخلية تحتفظ برؤية FR-010
+                      كاملة (الأصفار الحقيقية تُرسم). */
+                  const stats = ([
+                    [Building2, c.departmentCount, 'قسم'],
+                    [GraduationCap, c.studentCount, 'طالب'],
+                    [Users, c.teacherCount, 'عضو هيئة'],
+                    [BookOpen, c.courseCount, 'مقرّر'],
+                  ] as const)
+                    .filter(([, v]) => !isGuest || (typeof v === 'number' && v > 0))
+                    .map(([icon, v, label]) => {
+                      const display = v === null || v === undefined ? '—' : formatNum(v as number);
+                      return (
+                        <span key={label} className="college-stat-chip">
+                          <Icon icon={icon} size={13} />
+                          <strong>{display}</strong>
+                          <span>{label}</span>
+                        </span>
+                      );
+                    });
+                  return (
+                    /* r289: الصف كله الوصلة (RowItem to) — أرضية اللمس
+                       44px+ لكل الصف بدل صندوق نص الاسم. */
+                    <RowItem
+                      key={c.id}
+                      to={`/colleges/${c.id}`}
+                      leading={
+                        <span aria-hidden>
+                          {/* allow-emoji: data-default for admin-chosen icon */}
+                          <EmojiIcon emoji={c.iconEmoji ?? '🏛️'} size={22} />
+                        </span>
+                      }
+                      title={c.name}
+                      meta={
+                        <span className="cp-meta-row">
+                          {c.nameEn && <span title={c.nameEn}>{c.nameEn}</span>}
+                          {stats.length > 0 && <span className="cp-meta-stats">{stats}</span>}
+                        </span>
+                      }
+                      trailing={<span className="college-card-arrow" aria-hidden><Icon icon={ArrowLeft} size={16} /></span>}
+                    />
+                  );
+                })}
+              </RowList>
+            </Reveal>
           )}
+
+          {/* Phase Ω — the multi-tenancy how: the admin faculties
+              workflow, honestly named (no invented registry). */}
+          <Reveal as="section" className="college-city-section" distance="medium">
+            <header className="college-city-header">
+              <h2 className="college-city-name">كيف تُبنى كليات مؤسستك</h2>
+              <span className="college-city-count">ثلاث خطوات</span>
+            </header>
+            <RowList aria-label="كيف تُبنى الكليات">
+              <RowItem
+                leading={<span aria-hidden><Icon icon={Building2} size={22} /></span>}
+                title="١ · الهيكل الأكاديمي"
+                meta={<span className="cp-meta-row">من لوحة المسجّل العام تُنشأ الكليات والأقسام — الاسم واللغة والهيكل قرار مؤسستك، لا قالبًا جاهزًا.</span>}
+              />
+              <RowItem
+                leading={<span aria-hidden><Icon icon={BookOpen} size={22} /></span>}
+                title="٢ · المقرّرات والمحتوى"
+                meta={<span className="cp-meta-row">الأستاذ يبني المحاضرات والاختبارات والمواد داخل كلياته — والبيانات تبقى ملك مؤسستك.</span>}
+              />
+              <RowItem
+                leading={<span aria-hidden><Icon icon={ShieldCheck} size={22} /></span>}
+                title="٣ · العزل والملكية"
+                meta={<span className="cp-meta-row">كل مؤسسة تعمل في فضائها: رموز المقرّرات وأرقام القيد فريدة على مستواها، والبيانات لا تغادر مؤسستها.</span>}
+              />
+            </RowList>
+          </Reveal>
 
           <div className="leaderboard-cta">
             <Link to="/colleges/leaderboard" className="btn primary">
@@ -506,7 +463,6 @@ export function CollegeDetailPage() {
   // React threw "Rendered more hooks than during the previous render"
   // and the detail page crashed on every first visit (audit 0-f
   // P0-1). Every hook must run unconditionally above the gates.
-  const themeMode = useThemeStore((s) => s.mode);
   const user = useAuthStore((s) => s.user);
   /* c3-W6: hoisted above the loading/error gates — the guest sheet chrome
    * (frame + grain) mounts in EVERY branch of this page, including the
@@ -540,15 +496,14 @@ export function CollegeDetailPage() {
 
   const c = q.data;
   /* Public-zeros ruling (A8 P1-2, orchestrator): the college detail is
-   * the university's front door, and 24/25 seeded colleges are
-   * data-thin — a GUEST's first page must not be a wall of «لا توجد…
-   * بعد» internal-workflow empties («لم يتمّ تعيين قيادة…», four zero
-   * KPI tiles). For guests, zero-data sections collapse entirely and
-   * zero stats drop out of the strip; what remains is the college's
-   * real story (name, city, departments, whatever activity exists) +
+   * the institution's front door, and a data-thin faculty page must not
+   * be a wall of «لا توجد… بعد» internal-workflow empties («لم يتمّ تعيين
+   * قيادة…», four zero KPI tiles). For guests, zero-data sections collapse
+   * entirely and zero stats drop out of the strip; what remains is the
+   * faculty's real story (name, departments, whatever activity exists) +
    * ONE honest «قريباً» line when the board is thin. Authed roles keep
    * the full honest view (FR-010 — genuine zeros stay visible to the
-   * people who run the university).
+   * people who run the institution).
    * R190-D3: the strip is the app-wide typographic StatStrip now —
    * auto-fit columns absorb ANY surviving count (the old grid-2/3/4 +
    * solo-span gymnastics existed only to patch empty grid cells). */
@@ -579,75 +534,27 @@ export function CollegeDetailPage() {
   const soloPair2 = showTopStudents !== showAnnouncements;
   const soloPair3 = showEvents !== showLive;
   const soloSpan = { gridColumn: '1 / -1' } as const;
-  // Resolve the college identity profile (accent, hero, icon). The API
-  // record is id-keyed, so the deterministic (nameAr, city) bridge maps it
-  // onto the slug-keyed registry. When no profile matches, the page falls
-  // back to the default Madrak chrome — no synthetic identity is invented.
-  // 012-design-graphics-uplift FR-005: gate the identity colour at
-  // runtime; if it fails AA-large vs the active chrome surface, drop
-  // the inline override so the page falls back to var(--role-accent).
-  const identity = getCollegeIdentityByRecord(c.name, c.city);
-  const activeSurface = resolveTheme(themeMode);
-  const gatedAccent = identity ? gateCollegeAccent(identity.accent, activeSurface) : null;
-  const collegeStyle = gatedAccent
-    ? ({
-        '--college-accent': gatedAccent,
-        '--college-accent-fg': identity?.namedTokens?.['college-accent-fg'] ?? gatedAccent,
-        '--college-accent-soft':
-          identity?.namedTokens?.['college-accent-soft'] ?? `color-mix(in srgb, ${gatedAccent} 12%, transparent)`,
-      } as React.CSSProperties)
-    : undefined;
+  /* Phase Ω (identity purity): the per-college identity profiles are
+   * retired — the page falls back to the default chrome for every
+   * faculty; no synthetic identity is invented. */
 
   return (
-    <div
-      className="page college-detail"
-      data-college={identity?.slug || undefined}
-      style={collegeStyle}
-    >
+    <div className="page college-detail">
       {isGuest && <GuestSheetChrome portal />}
       {/* Back to the gallery (A14 P2-3): the one detail page in the app
           without a back affordance — copies the CourseDetail idiom
           (ghost button, ChevronRight = the RTL back direction). */}
       <Link to="/colleges" className="btn ghost sm" style={{ alignSelf: 'flex-start' }}>
         <Icon icon={ChevronRight} size={13} />
-        كلّيّات الجامعة
+        الكليات
       </Link>
-      {/* Hero / masthead — real photography via identity.heroImage when it
-          lands (Principle III: never synthetic); the API emoji chip is the
-          default treatment. The optional motif renders as a decorative
-          trailing wash behind the titles. Both imgs are dormant today; the
-          width/height attrs are square ratio hints matching the CSS-pinned
-          geometry (72px chip / aspect-ratio:1 wash) so the day real
-          photography lands it reserves layout without CLS (audit 11-g
-          P2-4) — lazy+async keeps the decorative wash off the load path. */}
+      {/* Hero / masthead — the API emoji chip is the default treatment
+          (Phase Ω: the retired per-college identity artwork is gone; no
+          synthetic hero is invented). */}
       <SectionAccent kind="scene-paint" as="header" className="college-hero page-header">
-        {identity?.motif && (
-          <img
-            className="college-hero-motif"
-            src={identity.motif.src}
-            alt={identity.motif.alt}
-            aria-hidden
-            width={512}
-            height={512}
-            loading="lazy"
-            decoding="async"
-          />
-        )}
-        {identity?.heroImage ? (
-          <img
-            className="college-hero-media"
-            src={identity.heroImage.src}
-            alt={identity.heroImage.alt}
-            width={72}
-            height={72}
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <div className="college-hero-emoji" aria-hidden><EmojiIcon emoji={c.iconEmoji ?? '🏛️'} size={36} /></div>
-        )}
+        <div className="college-hero-emoji" aria-hidden><EmojiIcon emoji={c.iconEmoji ?? '🏛️'} size={36} /></div>
         <div className="college-hero-titles">
-          <div className="college-hero-eyebrow">جامعة تادمورا التجريبية · {c.city} · بيانات تجريبية</div>
+          <div className="college-hero-eyebrow">مساحة عمل تادمورا التجريبية · بيانات موسومة للعرض</div>
           <h1 className="page-title college-hero-name">{c.name}</h1>
           {c.nameEn && <div className="college-hero-sub">{c.nameEn}</div>}
         </div>
@@ -664,9 +571,9 @@ export function CollegeDetailPage() {
         />
       )}
 
-      {/* Guests on a college whose OWN four counters are all zero: one
+      {/* Guests on a faculty whose OWN four counters are all zero: one
           honest institutional line replaces the zero strip (A8 P1-2's
-          exact sketch) — university-wide activity below stays visible
+          exact sketch) — institution-wide activity below stays visible
           because it is real. */}
       {isGuest && statCells.length === 0 && (
         <p className="college-coming-soon text-sm text-muted">
@@ -969,7 +876,7 @@ type MetricKey = (typeof METRICS)[number]['key'];
 export function CollegesLeaderboardPage() {
   const user = useAuthStore((s) => s.user);
   // Public-zeros ruling (A8 P2-6): for guests, «٠ طلاب · ٠ أساتذة» on
-  // 24 of 25 rows reads as a dead campus; authed roles keep the full
+  // thin rows reads as a dead structure; authed roles keep the full
   // honest meta (FR-010).
   const isGuest = !user;
   // Guest title (A12 P2-6) — matches AppShell's PAGE_TITLES entry for
@@ -1000,10 +907,10 @@ export function CollegesLeaderboardPage() {
   }, [q.data]);
 
   /* R333 P-G3a (T-G1-01): the all-zero wall — when every metric column
-   * is dead, a 25-row table of «0»s is empty scaffolding, not a
+   * is dead, a table of «0»s is empty scaffolding, not a
    * leaderboard. Guests (the public sheet) get a designed zero-state
    * band instead; authed roles keep the full honest table (FR-010 —
-   * the people who run the university still see genuine zeros). */
+   * the people who run the institution still see genuine zeros). */
   const allZero = METRICS.every((m) => maxByMetric[m.key] === 0);
 
   const sorted = useMemo(() => {
@@ -1021,7 +928,7 @@ export function CollegesLeaderboardPage() {
           out was the landing. Same ghost idiom as the detail page. */}
       <Link to="/colleges" className="btn ghost sm" style={{ alignSelf: 'flex-start' }}>
         <Icon icon={ChevronRight} size={13} />
-        كلّيّات الجامعة
+        الكليات
       </Link>
       {/* G: ترويسة patterns — نفس عقد بقية العائلة (المجتمع/المسابقات/
           الكليات)؛ صفّ الانضمام للضيف في خانة الإجراءات التي كان يشغلها.
@@ -1036,7 +943,7 @@ export function CollegesLeaderboardPage() {
       </div>
 
       {/* Shape-matched skeleton (A9 P2-2, 5-C3 hand-off): the payload
-          is a 25-row × 7-col table — a bare spinner left the page
+          is a rows × cols table — a bare spinner left the page
           structureless until data landed. */}
       {q.isLoading && (
         <Card title="لوحة المتصدّرين" icon={Trophy}>
@@ -1055,7 +962,7 @@ export function CollegesLeaderboardPage() {
           «من يتصدّر؟» when nobody has scored yet: the blueprint motif
           (mono [00] index on a hairline cell), one plain sentence, and
           the one action the page still owns — browsing the colleges
-          themselves. Replaces the 25-row wall of zeros for guests. */}
+          themselves. Replaces the wall of zeros for guests. */}
       {q.data && q.data.colleges.length > 0 && allZero && isGuest && (
         <section className="leaderboard-zero" aria-labelledby="leaderboard-zero-title">
           <span className="leaderboard-zero-index font-mono" dir="ltr" aria-hidden="true">[00]</span>
@@ -1141,7 +1048,6 @@ export function CollegesLeaderboardPage() {
                         <div>
                           <div className="leaderboard-college-name">{c.name}</div>
                           <div className="leaderboard-college-meta">
-                            {c.city}
                             {(!isGuest || c.studentCount > 0) && (
                               <> · {countedGroupedAr(c.studentCount, 'طالب واحد', 'طالبان', 'طلاب', 'طالباً')}</>
                             )}

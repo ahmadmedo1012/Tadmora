@@ -148,7 +148,7 @@ describe('useMe — institution context sync (r178)', () => {
       memberships: [
         {
           institutionId: 'inst-alandalus-demo',
-          name: 'مؤسسة الأندلس التعليمية',
+          name: 'مساحة عمل تجريبية ثانية',
           nameEn: 'Al-Andalus Education Institute',
           slug: 'alandalus-demo',
           role: 'ADMIN',
@@ -157,7 +157,7 @@ describe('useMe — institution context sync (r178)', () => {
       ],
       currentInstitution: {
         id: 'inst-alandalus-demo',
-        name: 'مؤسسة الأندلس التعليمية',
+        name: 'مساحة عمل تجريبية ثانية',
         nameEn: 'Al-Andalus Education Institute',
         slug: 'alandalus-demo',
       },

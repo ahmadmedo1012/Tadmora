@@ -18,7 +18,6 @@ import { EmojiIcon } from '../../components/EmojiIcon';
 import { useMyAchievements, useLeaderboard, useMySkills, useStudentResults, useMyEnrollments, useNotificationsFeed, useMarkNotifRead, useMarkAllNotifsRead, notifDeepLink, useArExperiences, useStudentMaterials, useFaculties, useCurrentInstitutionSlug, useStudentDashboard, useTrainingMe, submissionStatusAr, type StudentMaterial } from '../../hooks/useResources';
 import { materialHref } from '../../lib/materialHref';
 import { usePostsFeed } from '../../components/community/usePostsFeed';
-import { UNIVERSITY_FACTS } from '../../data/university.facts';
 import { formatNum, formatPct1 } from '../../utils/numbers';
 import { useAuthStore, type InstitutionSummary } from '../../stores/auth.store';
 import { cartesianOptions, chartAnimation, chartColors, useChartThemeKey } from '../../lib/chartTheme';
@@ -1740,27 +1739,16 @@ export function UniversityInfoPage() {
   const institution = useAuthStore((s) => s.currentInstitution);
   const facs = useFaculties(useCurrentInstitutionSlug()); // r180: caller-institution scoping
   const faculties = facs.data ?? [];
-  const insideCampus = faculties.filter((f) => f.city === 'حرم المعرفة');
-  const outsideCampus = faculties.filter((f) => f.city !== 'حرم المعرفة');
-  const cityCount = new Set(faculties.map((f) => f.city)).size;
-  /* r183-B3: the outside-branch change line said «في 0 مدينة» whenever
-   * every faculty sat outside the main campus — a self-contradictory KPI (the
-   * alandalus view). Phrase the line ONLY from the real distinct
-   * cities of the outside faculties, and only when there are any. */
-  const outsideCityCount = new Set(outsideCampus.map((f) => f.city)).size;
-
-  /* Null context (the multi-membership pre-selection edge) keeps the
-   * showcase default — the only institution whose facts the platform
-   * curates. A scoped session at any OTHER institution never reads
-   * the ZU identity again. */
+  /* Phase Ω: the campus split (داخل الحرم / فروع خارجية keyed on the
+   * retired invented-campus city) is gone with the invented campuses —
+   * the workspace is one virtual space and every faculty rides it
+   * equally. The real count is the page's only structural KPI. */
+  const facCountNum = faculties.length;
   const isShowcase = !institution || institution.slug === SHOWCASE_INSTITUTION_SLUG;
 
   const facCount = facs.isPending
     ? '…'
     : facs.isError || faculties.length === 0 ? '—' : formatNum(faculties.length);
-  const citiesChange = cityCount > 0
-    ? `موزَّعة على ${countAr(cityCount, ['مدينة واحدة', 'مدينتين', 'مدن', 'مدينة'])}`
-    : undefined;
 
   if (!isShowcase) {
     /* ── The institution's OWN page (r183-B3): name/slug facts + the
@@ -1772,9 +1760,9 @@ export function UniversityInfoPage() {
     return (
       <PageFrame width="default">
         <PatternPageHeader
-          eyebrow="خدمات الجامعة"
+          eyebrow="خدمات المؤسّسة"
           title={inst.name}
-          description="مؤسّسة تعليميّة على منصّة تادمورا — تعرض هذه الصفحة الكليّات المسجَّلة في مؤسّستك."
+          description="مؤسّستك على منصّة تادمورا — تعرض هذه الصفحة الكليّات المسجَّلة في مؤسستك، وهي التي تبنيها من بياناتها."
           /* R342-08 — the header CTA pair rides the masthead (the
              D11/D8 measured seat; the phone band hides the topbar
              «اسأل AI» ≤920, D6): the university-services family's
@@ -1785,7 +1773,7 @@ export function UniversityInfoPage() {
             <>
               <Link to="/student/map" className="btn primary sm">
                 <Icon icon={MapPin} size={13} />
-                دليل الحرم الجامعيّ
+                دليل كليات المؤسّسة
               </Link>
               <Link to="/student/payment" className="btn ghost sm">
                 <Icon icon={Wallet} size={13} />
@@ -1800,7 +1788,7 @@ export function UniversityInfoPage() {
             icon={Building2}
             label="عدد الكليّات"
             value={facCount}
-            change={citiesChange}
+            change="تبنيها مؤسستك من بياناتها"
             color="brand"
           />
         </div>
@@ -1877,32 +1865,24 @@ export function UniversityInfoPage() {
 
   return (
     <PageFrame width="default">
-      {/* r188: the demonstration tenant — the platform's explicitly
-          FICTIONAL reference institution. Every fact below is synthetic
-          demo data (no real founding year, decree, or history); the
-          page labels the tenant as بيانات تجريبية throughout. */}
+      {/* Phase Ω: the demonstration tenant — the platform's explicitly
+          labeled neutral WORKSPACE (not a university). Every fact below is
+          synthetic demo data; the page labels the workspace as بيانات
+          تجريبية throughout. */}
       <PatternPageHeader
-        eyebrow="خدمات الجامعة"
-        title="جامعة تادمورا التجريبية"
-        description="مؤسّسة العرض على منصّة تادمورا — مؤسّسة اصطناعية بالكامل تُظهر سير العمل الأكاديمي ببيانات تجريبية عبر ثلاثة حرَم معرفيّة."
-        meta={outsideCityCount > 0 ? (
-          /* سطر التوزيع الحقيقي للفروع — العدّ من مدن الكليّات الخارجيّة
-             الفعليّة لا من السقّ النظري (عقد r183-B3: لا «في 0 مدينة»). */
-          <span>
-            الفروع الخارجيّة{' '}
-            <span className="metric-change">في {countAr(outsideCityCount, ['مدينة واحدة', 'مدينتين', 'مدن', 'مدينة'])}</span>
-          </span>
-        ) : undefined}
+        eyebrow="خدمات المؤسّسة"
+        title="مساحة عمل تادمورا التجريبية"
+        description="مساحة العرض على منصّة تادمورا — بيئة اصطناعية بالكامل تُظهر سير العمل الأكاديمي ببيانات تجريبية، لا تحاكي أي جامعة ولا تحمل حرَمًا أو فروعًا."
         /* R342-08 — the [01] numeral + eyebrow seat this page on the
            family grammar (map/live's header precedent), and the CTA
            pair rides the masthead (the D11/D8 measured seat; the
            phone band hides the topbar «اسأل AI» ≤920, D6): the
-           university-services family's honest siblings. */
+           workspace-services family's honest siblings. */
         actions={(
           <>
             <Link to="/student/map" className="btn primary sm">
               <Icon icon={MapPin} size={13} />
-              دليل الحرم الجامعيّ
+              دليل كليات المؤسّسة
             </Link>
             <Link to="/student/payment" className="btn ghost sm">
               <Icon icon={Wallet} size={13} />
@@ -1913,29 +1893,25 @@ export function UniversityInfoPage() {
       />
 
       {/* R304 (6-d): حائط بطاقات KPI السابق صار سطر أرقام واحد (StatLine) —
-          نفس الحقائق نفسها الصدق: العدّ الحقيقي من الكليّات المحمّلة،
-          وسطر التجريبيّة يعلن طابع البيانات. */}
+          نفس الصدق: العدّ الحقيقي من الكليّات المحمّلة، وسطر التجريبيّة
+          يعلن طابع البيانات. */}
       <StatLine
         items={[
           {
             label: 'عدد الكليّات',
             value: facCount,
-            hint: citiesChange,
+            hint: 'مساحة عمل افتراضية واحدة',
             tone: 'signal',
           },
           {
-            label: 'داخل الحرم الجامعيّ',
-            value: facs.isPending ? '…' : facs.isError ? '—' : formatNum(insideCampus.length),
-            hint: 'حرم المعرفة',
+            label: 'طابع البيانات',
+            value: 'تجريبية',
+            hint: 'مولَّدة لأغراض العرض',
           },
           {
-            label: 'فروع خارجيّة',
-            value: facs.isPending ? '…' : facs.isError ? '—' : formatNum(outsideCampus.length),
-          },
-          {
-            label: 'الحرَم الأكاديميّة',
-            value: formatNum(3),
-            hint: 'بيانات تجريبية',
+            label: 'النطاق',
+            value: 'مساحة عرض اصطناعية',
+            hint: 'لا تحاكي أي مؤسّسة',
           },
         ]}
       />
@@ -1966,11 +1942,11 @@ export function UniversityInfoPage() {
         <SectionBar index="01" title="بطاقة تعريف" />
         <div className="r305s-band r305s-band--deep">
           <div className="r305u-facts">
-            <FactRow deep label="الاسم الرسميّ" value="جامعة تادمورا التجريبية" />
+            <FactRow deep label="الاسم الرسميّ" value="مساحة عمل تادمورا التجريبية" />
             <FactRow deep label="النطاق" value="بيانات اصطناعية — لا مؤسّسة حقيقية" />
-            <FactRow deep label="النوع" value="مؤسّسة عرض تجريبية (اصطناعية)" />
+            <FactRow deep label="النوع" value="مساحة عرض تجريبية (اصطناعية)" />
             <FactRow deep label="بريد العرض" value="demo.tadmora.ly" mono />
-            <FactRow deep label="الحرم" value="حرم المعرفة · حرم الابتكار · حرم البيان" />
+            <FactRow deep label="الموقع" value="مساحة افتراضية — لا حرَم ولا فروع" />
             <FactRow deep label="طابع البيانات" value="مولَّدة لأغراض العرض" />
           </div>
         </div>
@@ -1989,9 +1965,9 @@ export function UniversityInfoPage() {
       ) : (
         <>
           <Card
-            title="الكليّات داخل الحرم الجامعيّ"
+            title="كليّات مساحة العمل"
             icon={Building2}
-            subtitle={facs.isPending ? 'جارٍ التحميل…' : `${countAr(insideCampus.length, ['كلّيّة واحدة', 'كلّيّتان', 'كلّيّات', 'كلّيّة'])} في الحرم الرئيسي`}
+            subtitle={facs.isPending ? 'جارٍ التحميل…' : `${countAr(facCountNum, ['كلّيّة واحدة', 'كلّيّتان', 'كليّات', 'كلّيّة'])} — تبنيها مؤسستك من بياناتها`}
           >
             {facs.isPending ? (
               <div className="flex-col gap-2" aria-busy="true">
@@ -2003,11 +1979,11 @@ export function UniversityInfoPage() {
                   </div>
                 ))}
               </div>
-            ) : insideCampus.length === 0 ? (
-              <EmptyState illustration="empty-list" title="لا توجد بيانات" description="لم تُسجَّل كلّيّات داخل الحرم بعد." />
+            ) : facCountNum === 0 ? (
+              <EmptyState illustration="empty-list" title="لا توجد بيانات" description="لم تُسجَّل كليّات في هذه المؤسّسة بعد — تُبنى الكليّات من بيانات كل مؤسسة بعد انضمامها." />
             ) : (
               <div className="grid-auto-200" style={{ gap: 'var(--sp-2)' }}>
-                {insideCampus.map((f) => (
+                {faculties.map((f) => (
                   <Link
                     key={f.id}
                     to={`/colleges/${f.id}`}
@@ -2022,70 +1998,33 @@ export function UniversityInfoPage() {
               </div>
             )}
           </Card>
-
-          <Card
-            title="الكليّات الفرعيّة"
-            icon={Building2}
-            subtitle={facs.isPending ? 'جارٍ التحميل…' : `${countAr(outsideCampus.length, ['كلّيّة واحدة', 'كلّيّتان', 'كلّيّات', 'كلّيّة'])} موزَّعة على ${countAr(new Set(outsideCampus.map((c) => c.city)).size, ['مدينة واحدة', 'مدينتين', 'مدن', 'مدينة'])}`}
-          >
-            {facs.isPending ? (
-              <div className="flex-col gap-2" aria-busy="true">
-                {[0, 1, 2, 3].map((i) => (
-                  <div className="campus-skel-row" key={i} aria-hidden>
-                    <Skeleton width={130} height={13} />
-                    <span style={{ flex: 1 }} />
-                    <Skeleton width={54} height={13} />
-                  </div>
-                ))}
-              </div>
-            ) : outsideCampus.length === 0 ? (
-              <EmptyState illustration="empty-list" title="لا توجد فروع خارج الحرم" description="كل الكليّات المسجَّلة داخل الحرم الرئيسي." />
-            ) : (
-              <div className="grid-auto-260" style={{ gap: 'var(--sp-2)' }}>
-                {outsideCampus.map((f) => (
-                  <Link
-                    key={f.id}
-                    to={`/colleges/${f.id}`}
-                    className="faculty-chip-row"
-                  >
-                    <span className="faculty-chip-emoji" aria-hidden>
-                      <EmojiIcon emoji={f.iconEmoji ?? '🏛️'} size={16} />
-                    </span>
-                    <span className="text-sm" style={{ flex: 1, minWidth: 0 }}>{f.name}</span>
-                    <Badge color="purple">{f.city}</Badge>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </Card>
         </>
       )}
 
       <Card title="بطاقة تعريف المؤسّسة" icon={Crown}>
         <div className="r305u-rows">
-          {/* r155b: العضويّات تُقرأ من UNIVERSITY_FACTS (data/university.facts.ts
-              — مصدر الحقيقة الوحيد المعتمد على static-source.ts). النسخة
-              المحليّة السابقة أعادت إنتاج خطأ إعادة الكتابة الموثّق هناك:
-              «اتحاد الجامعات الإسلامية» بدل المتوسطيّة. الشارة تحمل تصنيف
-              العضويّة (label) — الاختصارات اللاتينيّة القديمة لم تكن ضمن
-              المصدر المعتمد أصلاً. */}
+          {/* Phase Ω (identity purity): the memberships registry and the
+              accreditation claim are retired — the platform is an
+              independent multi-tenant OS and claims NO institutional
+              memberships and NO accreditation; both are each
+              institution's own affair. The honest line below mirrors the
+              demo workspace's fact sheet (backend zu-sync
+              static-source.ts — one source, never hand-retyped: the
+              r155b lesson carries over). */}
           {/* R305 Heron: the inline surface-2 wells become hairline ledger
               rows (.r305u-row). The membership Badge drops the gold tone —
               gold is the ACHIEVEMENTS-only signal on the Tadmora canon;
               institutional classifications ride the neutral chip. */}
-          {UNIVERSITY_FACTS.profile.map((m) => (
-            <div key={m.label} className="r305u-row">
-              <span className="text-sm r305u-row-main">{m.full}</span>
-              <Badge>{m.label}</Badge>
-            </div>
-          ))}
+          <div className="r305u-row">
+            <span className="text-sm r305u-row-main">لا عضويّات — مساحة عرض محايدة (بيانات تجريبية)</span>
+            <Badge>بيانات تجريبية</Badge>
+          </div>
         </div>
-        {/* 5-A6 P2-7 — accreditation chip as a class (student.css
-            .uni-accredit): the old inline styles painted --accent on
-            --accent-soft at 11px (measured 3.06:1); the class pairs the
-            pastel with its -deep rung ink. */}
+        {/* 5-A6 P2-7 — the honest ownership note (student.css .uni-accredit
+            as a class): accreditation and memberships belong to each
+            institution; تادمورا claims none. */}
         <div className="uni-accredit">
-          معتمدة من وزارة التعليم العالي والبحث العلميّ — ليبيا
+          الاعتماد والعضويّات شأن مؤسستك — تادمورا منصّة مستقلّة لا تدّعي أي اعتماد
         </div>
       </Card>
 

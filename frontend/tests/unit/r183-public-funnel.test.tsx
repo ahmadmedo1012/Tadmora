@@ -3,7 +3,7 @@
  *
  * r164b rewired the LANDING's primary CTAs to /auth/register (pinned
  * in landing-funnel.test.tsx) — but the public COLLEGE surfaces kept
- * routing their create-account verb «أنشئ حسابك الجامعي» to /auth
+ * routing their create-account verb «أنشئ حسابك» to /auth
  * (the LOGIN form «مرحباً بعودتك»): the label promised account
  * creation, the destination opened the wrong form. The register hop
  * also dropped state.from at AuthPage's register prompt, so a
@@ -149,13 +149,13 @@ describe('r183-B3 — public colleges guest chrome: source contract', () => {
 
   it('GuestJoinRow: the create-account primary routes to /auth/register, the login ghost keeps /auth — both carry state.from', () => {
     const fn = blockOf(live, 'function GuestJoinRow');
-    expect(fn).toContain('<Link to="/auth/register" state={from} className="btn primary sm">أنشئ حسابك الجامعي</Link>');
+    expect(fn).toContain('<Link to="/auth/register" state={from} className="btn primary sm">أنشئ حسابك</Link>');
     expect(fn).toContain('<Link to="/auth" state={from} className="btn ghost sm">تسجيل الدخول</Link>');
   });
 
   it('GuestClosingBand: the same split on the college-detail conversion moment', () => {
     const fn = blockOf(live, 'function GuestClosingBand');
-    expect(fn).toContain('<Link to="/auth/register" state={from} className="btn primary">أنشئ حسابك الجامعي</Link>');
+    expect(fn).toContain('<Link to="/auth/register" state={from} className="btn primary">أنشئ حسابك</Link>');
     expect(fn).toContain('<Link to="/auth" state={from} className="btn ghost">تسجيل الدخول</Link>');
   });
 
@@ -181,7 +181,7 @@ describe('r183-B3 — rendered guest funnel (gallery join row)', () => {
     const primary = container.querySelector<HTMLAnchorElement>(
       '.guest-join-row .btn.primary',
     );
-    expect(primary?.textContent).toContain('أنشئ حسابك الجامعي');
+    expect(primary?.textContent).toContain('أنشئ حسابك');
     expect(primary?.getAttribute('href')).toBe('/auth/register');
 
     fireEvent.click(primary as HTMLAnchorElement);

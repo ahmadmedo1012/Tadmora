@@ -7,7 +7,8 @@
  * filter (the ink bleed) — reference-observations.md §10 / case-study
  * §5. This is the Tadmora translation, composed of original layers:
  *
- *  · Mounted through MediaFrame's `overlay` slot, this covers the
+ *  · Mounted through the landing media layer's `overlay` slot (the retired
+ *   MediaFrame's role), this covers the
  *    PHOTOGRAPH only — the caption/licence row stays visible at all
  *    times (the attribution is part of the composition, never a
  *    reveal gimmick).

@@ -47,7 +47,7 @@
 # (fill="#…"), canvas paints (fillStyle= / addColorStop(…)), and
 # cssVar('--token', '#fallback') calls. Color DATA — tier/subject/
 # college-accent palettes (gamification.ts, vision.ts, courseMeta.ts,
-# colleges.config.ts [gated by validate-college-identity.ts], PDF
+# (Phase Ω: the colleges registry + its validator are retired), PDF
 # annotation inks, owner brand-palette display) and const color MAPS
 # consumed by reference — is content, not styling, and stays out of
 # scope; so do template-literal gradients (interpolation makes a

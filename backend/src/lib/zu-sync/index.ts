@@ -6,9 +6,9 @@ import { raiseOperationalAlert } from '../operational-alerts.js';
 /**
  * Run a sync against the configured source.
  *
- * Currently the only source is `static-markdown` (curated from zu.edu.ly).
- * The function is shape-stable so a future `live-http` source can be
- * dropped in by replacing `loadFacts()`.
+ * Currently the only source is `static-markdown` (the curated demo-
+ * workspace sheet, static-source.ts). The function is shape-stable so a
+ * future `live-http` source can be dropped in by replacing `loadFacts()`.
  *
  * Guarantees:
  *  - Every run creates exactly one `SyncRun` row (status RUNNING → SUCCESS|FAILED).
@@ -48,7 +48,7 @@ async function loadFacts(source: string): Promise<{ facts: FactPatch[]; sourceLa
   if (source === 'static-markdown') {
     return { facts: STATIC_FACTS, sourceLabel: 'static-markdown' };
   }
-  // Future: { source === 'live-http' } → fetch + parse zu.edu.ly
+  // Future: { source === 'live-http' } → fetch + parse a live institutional site
   throw new Error(`Unknown sync source: ${source}`);
 }
 
@@ -73,28 +73,28 @@ function sourceLabelAr(label: string): string {
 }
 
 /**
- * r179 (phase-5) → r188: the sync runs against a SPECIFIC institution.
- * The curated synthetic fact sheet (static-source.ts) is the DEMO
- * institution's configured source — not a global source for every
- * university. A run for one institution never touches another
+ * r179 (phase-5) → r188 → Phase Ω: the sync runs against a SPECIFIC
+ * institution. The curated demo-workspace sheet (static-source.ts) is
+ * the DEMO workspace's configured source — not a global source for
+ * every institution. A run for one institution never touches another
  * institution's facts (upserts, stale-marking, and run history are all
  * keyed by institutionId). The fixed default keeps existing callers
- * (runSync with no opts) on the demonstration tenant.
+ * (runSync with no opts) on the labeled demo workspace.
  */
 export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
 
 /**
- * r179d (phase-5) → r188: the per-institution CONFIGURED sync sources —
- * the registry that decides WHICH institutions the scheduler syncs and
- * WHICH source POST /admin/sync/trigger runs.
+ * r179d (phase-5) → r188 → Phase Ω: the per-institution CONFIGURED sync
+ * sources — the registry that decides WHICH institutions the scheduler
+ * syncs and WHICH source POST /admin/sync/trigger runs.
  *
- * The demonstration tenant's curated synthetic source (static-source.ts,
- * r188 fictional «جامعة تادمورا التجريبية» fact sheet) is the DEMO
- * institution's source, NOT a global source for every university. An
+ * The labeled demo workspace's curated sheet (static-source.ts, Phase Ω
+ * neutral «مساحة عمل تادمورا التجريبية» fact sheet) is the DEMO
+ * workspace's source, NOT a global source for every institution. An
  * institution absent from this registry (today: every institution other
- * than the demo tenant, e.g. alandalus-demo) has NO configured source —
- * the scheduler never syncs it, and a manual trigger for it answers an
- * honest 400.
+ * than the demo workspace, e.g. alandalus-demo) has NO configured
+ * source — the scheduler never syncs it, and a manual trigger for it
+ * answers an honest 400.
  *
  * Matching is by institution id OR slug (both unique in the DB): the
  * demo row keeps the FIXED legacy id `inst-zawia-showcase` (stable FK
@@ -123,10 +123,10 @@ export const INSTITUTION_SYNC_CONFIGS: readonly InstitutionSyncConfig[] = [
 
 /**
  * The institution whose facts the PUBLIC `GET /university/facts`
- * serves when no `?institution=slug` param arrives — the demonstration
- * tenant (the explicitly-fictional reference data). Distinct from the
- * registry on purpose: the public default and the scheduled sources
- * are separate decisions, even though both are the demo tenant today.
+ * serves when no `?institution=slug` param arrives — the labeled demo
+ * workspace (the clearly-marked neutral reference data). Distinct from
+ * the registry on purpose: the public default and the scheduled sources
+ * are separate decisions, even though both are the demo workspace today.
  */
 export const PUBLIC_FACTS_DEFAULT_SLUG = 'tadmora-demo';
 

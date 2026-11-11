@@ -74,69 +74,7 @@
 
 
 
-.gallery-chip-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2);
-  align-items: center;
-}
-
-.gallery-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  padding: var(--sp-2) var(--sp-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--r-full);
-  background: var(--surface);
-  color: var(--text-secondary);
-  font-size: var(--type-label-size);
-  font-weight: var(--type-label-weight);
-  cursor: pointer;
   transition:
-    background var(--motion-duration-short) var(--motion-ease-standard),
-    border-color var(--motion-duration-short) var(--motion-ease-standard),
-    color var(--motion-duration-short) var(--motion-ease-standard);
-  /* r305: the platform's 44px touch floor (was 36px — a chip this
-     central to the gallery's only interaction sat under the canon
-     floor; the 7px/14px pill recipe inside .pf-filterbar got the same
-     lift via .comp-filter-pills). Padding keeps the 36px visual grade
-     at rest — the floor is met by block-size, not by inflating paint. */
-  min-block-size: 44px;
-}
-/* r305 hover belt (r283 parity): the hover wash behind the fine-pointer
-   guard only — a touch tap must not paint a sticky hover state. */
-@media (hover: hover) and (pointer: fine) {
-  .gallery-chip:hover {
-    border-color: var(--rule-strong, var(--rule));
-    color: var(--text);
-  }
-}
-.gallery-chip.gallery-chip-on,
-.gallery-chip[aria-selected="true"] {
-  /* r313: the ACTIVE chip is the ink fill held (the reference's
-     nav-current grammar — dark rect, light label), not a soft tint. */
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--primary-fg);
-  font-weight: var(--fw-semibold);
-}
-.gallery-chip-count {
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-  /* r313: chip counts are mono micro-labels (Latin digits, Geist
-     Mono, tabular — the reference's instrument voice). */
-  font-family: var(--font-mono);
-  font-size: var(--type-label-size-sm);
-}
-/* 21-c (A8 P1-2) → r313 re-key: the ON ground is the ink fill now, so
-   the count joins the light-on-dark pair (color-mix on --primary-fg
-   ≈9:1 both themes — the axe fix survives the re-key). */
-.gallery-chip.gallery-chip-on .gallery-chip-count,
-.gallery-chip[aria-selected="true"] .gallery-chip-count {
-  color: color-mix(in srgb, var(--primary-fg) 85%, transparent);
-}
-
 .gallery-clear {
   display: inline-flex;
   align-items: center;
@@ -291,49 +229,6 @@
 /* Mobile: stack cards single-column, sticky toolbar with backdrop blur. */
 /* r152i (A3): 767→768 — off-by-one vs the 768 family used by the same
    file (:520) and everywhere else; dvh per the iOS URL-bar canon. */
-@media (max-width: 768px) {
-
-
-
-  /* R333 P-G3a (T-G1-02): the strip must never exceed the frame — the
-     scroll ITSELF is the design (the fade mask below is the affordance),
-     the page never widens. max-inline-size clamps the shrink-to-fit
-     line inside .pf-filterbar-filters (whose own min-inline-size:0 —
-     patterns.css — lets the slot reach this clamp). */
-  .gallery-chip-strip {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-block-end: var(--sp-1); /* leave room for the snap */
-    max-inline-size: 100%;
-    -webkit-mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px);
-    mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px);
-  }
-  .gallery-chip-strip::-webkit-scrollbar { display: none; }
-  .gallery-chip { scroll-snap-align: start; flex-shrink: 0; }
-
-  /* r183-B8 (A10 finding 4) — the mask's rationale, kept with the rule
-     it styles: the strip hides its scrollbar entirely (scrollbar-width:
-     none + ::-webkit-scrollbar display:none), so at 320-390 the only
-     continuation cue was a 9px sliver of the next campus chip — 3 of 7
-     filters were effectively undiscoverable. The inline-end edge fade
-     hints the scroll: a mask (not paint) ramps alpha transparent →
-     opaque across the first 24px of the inline end, over the scrolled
-     content. Physical `to left` IS inline-end under the app-wide RTL
-     (the same documented physical↔logical coupling as base.css
-     .skip-link). The opaque stop consumes --surface for token
-     compliance — masks only read the alpha channel, so any opaque
-     token works and NO raw color literal enters the sheet (color
-     gate); masks don't intercept pointer events, so drag/scroll/
-     scroll-snap are untouched. */
-  .gallery-chip-strip {
-    -webkit-mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px);
-    mask-image: linear-gradient(to left, transparent 0, var(--surface) 24px);
-  }
-}
 .college-stat-chip {
   display: inline-flex;
   align-items: center;
@@ -895,7 +790,7 @@ a.comp-card {
    larger grade (scale jump over the fs-sm body): a bordered square,
    tabular mono, with the medal inks already on the page (gold/silver/
    the orange accent) — no new colors enter the sheet. Rank 1 is the
-   ink fill (the .gallery-chip-on grammar: dark rect, light label);
+   ink fill (the nav-current grammar: dark rect, light label);
    2–3 stay outlined. The row keeps its own hairline edge so the
    hierarchy survives a fast scan down the table. */
 .leaderboard-rank {
@@ -1284,7 +1179,7 @@ a.comp-card {
 /* ═══════════════════════════════════════════════════════════════
    wave 6-c — identity registry live (append-only)
 
-   The 25-entry registry in data/colleges.config.ts activates the
+   Phase Ω: the fixed-college registry is retired — /colleges is the
    --college-accent machinery above. This section owns the two OPTIONAL
    profile-driven hero surfaces (contract college-identity-profile.md):
    both stay dormant until real UoZ photography lands under

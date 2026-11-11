@@ -73,10 +73,10 @@ async function seedWorld(): Promise<World> {
   // alpha mirrors prisma/seed.ts: the FIXED showcase id + slug — the
   // registry's configured source applies to it.
   const alpha = await prisma.institution.create({
-    data: { id: 'inst-zawia-showcase', name: 'جامعة تادمورا التجريبية', slug: 'tadmora-demo' },
+    data: { id: 'inst-zawia-showcase', name: 'مساحة عمل تادمورا التجريبية', slug: 'tadmora-demo' },
   });
   const beta = await prisma.institution.create({
-    data: { name: 'مؤسسة الأندلس التجريبية', slug: `alandalus-${uniqueSuffix()}` },
+    data: { name: 'مساحة عمل عزل تجريبية', slug: `alandalus-${uniqueSuffix()}` },
   });
 
   await prisma.universityFact.create({
@@ -94,7 +94,7 @@ async function seedWorld(): Promise<World> {
   });
   await prisma.universityFact.create({
     data: {
-      institutionId: beta.id, key: 'name.ar', value: 'بيانات الأندلس',
+      institutionId: beta.id, key: 'name.ar', value: 'بيانات العزل',
       category: 'identity', source: 'manual',
     },
   });
@@ -102,7 +102,7 @@ async function seedWorld(): Promise<World> {
   // it after A's sync; the institution-scoped one must not.
   await prisma.universityFact.create({
     data: {
-      institutionId: beta.id, key: 'b.custom', value: 'خاص بالأندلس',
+      institutionId: beta.id, key: 'b.custom', value: 'خاص بالعزل',
       category: 'general', source: 'manual',
     },
   });
@@ -145,7 +145,7 @@ describe('S1 — runSync(institution A) never touches institution B', () => {
 
     // A's overlapping key: refreshed + un-staled.
     const aName = await fact(alpha.id, 'name.ar');
-    expect(aName?.value).toBe('جامعة تادمورا التجريبية');
+    expect(aName?.value).toBe('مساحة عمل تادمورا التجريبية');
     expect(aName?.isStale).toBe(false);
 
     // A's own orphan (not in the source) IS stale-marked — scoped to A.
@@ -159,7 +159,7 @@ describe('S1 — runSync(institution A) never touches institution B', () => {
 
     // B is untouched: same key, its own value, never stale-marked.
     const bName = await fact(beta.id, 'name.ar');
-    expect(bName?.value).toBe('بيانات الأندلس');
+    expect(bName?.value).toBe('بيانات العزل');
     expect(bName?.isStale).toBe(false);
     const bCustom = await fact(beta.id, 'b.custom');
     expect(bCustom?.isStale).toBe(false);
@@ -177,7 +177,7 @@ describe('S1 — runSync(institution A) never touches institution B', () => {
 
     // B got the source facts + its own orphans stale-marked.
     const bName = await fact(beta.id, 'name.ar');
-    expect(bName?.value).toBe('جامعة تادمورا التجريبية');
+    expect(bName?.value).toBe('مساحة عمل تادمورا التجريبية');
     expect(await fact(beta.id, 'b.custom')).toMatchObject({ isStale: true });
     // A kept its seeded value and flags.
     expect(await fact(alpha.id, 'name.ar')).toMatchObject({
@@ -218,8 +218,8 @@ describe('S2 — POST /api/v1/admin/sync/trigger (institution rules)', () => {
     expect(body.data.factsAdded).toBe(STATIC_FACTS.length - 1);
 
     // DB state: A synced, B untouched.
-    expect(await fact(alpha.id, 'name.ar')).toMatchObject({ value: 'جامعة تادمورا التجريبية', isStale: false });
-    expect(await fact(beta.id, 'name.ar')).toMatchObject({ value: 'بيانات الأندلس', isStale: false });
+    expect(await fact(alpha.id, 'name.ar')).toMatchObject({ value: 'مساحة عمل تادمورا التجريبية', isStale: false });
+    expect(await fact(beta.id, 'name.ar')).toMatchObject({ value: 'بيانات العزل', isStale: false });
     expect(await db().syncRun.count({ where: { institutionId: alpha.id } })).toBe(1);
   });
 
@@ -281,7 +281,7 @@ describe('S3 — GET /api/v1/admin/sync (scoped views)', () => {
     expect(a.data.runHistory.every((r) => r.institutionId === alpha.id)).toBe(true);
     // A's scoped items never carry another institution's values.
     const values = a.data.categories.flatMap((c) => c.items.map((i) => i.value));
-    expect(values).not.toContain('بيانات الأندلس');
+    expect(values).not.toContain('بيانات العزل');
 
     // B's admin: B's view (their 2 seeded facts, no run history).
     const resB = await get('/api/v1/admin/sync', bearer(adminB.id, Role.ADMIN, beta.id));
@@ -375,7 +375,7 @@ describe('S4 — GET /api/v1/university/facts (public, never blended)', () => {
       };
     };
     expect(body.data.institution.slug).toBe(beta.slug);
-    expect(body.data.categories.identity!['name.ar']).toBe('بيانات الأندلس');
+    expect(body.data.categories.identity!['name.ar']).toBe('بيانات العزل');
     // Only B's two keys — nothing of A's, no blend.
     const keys = Object.values(body.data.categories).flatMap((c) => Object.keys(c));
     expect(keys.sort()).toEqual(['b.custom', 'name.ar']);
@@ -391,11 +391,11 @@ describe('S4 — GET /api/v1/university/facts (public, never blended)', () => {
       data: { institution: { slug: string }; categories: Record<string, Record<string, string>> };
     };
     expect(body.data.institution.slug).toBe('tadmora-demo');
-    expect(body.data.categories.identity!['name.ar']).toBe('جامعة تادمورا التجريبية');
+    expect(body.data.categories.identity!['name.ar']).toBe('مساحة عمل تادمورا التجريبية');
     // Never B's values.
     const values = Object.values(body.data.categories).flatMap((c) => Object.values(c));
-    expect(values).not.toContain('بيانات الأندلس');
-    expect(values).not.toContain('خاص بالأندلس');
+    expect(values).not.toContain('بيانات العزل');
+    expect(values).not.toContain('خاص بالعزل');
   });
 
   it('an unknown institution slug 404s (anonymous)', async () => {

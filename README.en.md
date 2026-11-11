@@ -15,9 +15,11 @@ is the English mirror for international readers and tooling.
 
 **Tadmora** is an **independent** University Operating System (Arabic-first).
 No official adoption or endorsement by any educational
-institution exists — the institutional data currently shown (faculties,
-facts) is showcase/reference data for the University of Zawia, sourced
-from its public website.
+institution exists — the platform is multi-institution: every
+institution that joins builds its own faculties and courses from its own
+data, and the demo data currently shown belongs to the labeled neutral
+demo workspace («مساحة عمل تادمورا التجريبية») — clearly-marked synthetic
+data modeling no university.
 
 ## What it is
 
@@ -106,7 +108,7 @@ npm run typecheck                     # tsc — src + tests, both sides (no DB)
 npm test                              # 1970 FE + 1783 BE (no DB; incl. 7 live S3 tests against s3rver) — npm run test:integration adds 116 DB tests on a local disposable database (14 cross-institution r179 isolation tests + 2 seed repeat-safety r182 tests among them)
 node scripts/verify-parity-export.mjs # design-parity gate 190/190
 bash scripts/check-csp-hash.sh        # CSP pin drift guard (now in CI)
-npm run validate:colleges             # 25 college identities (WCAG AA)
+# (validate:colleges retired with the fixed college catalogue in Phase Ω)
 ```
 
 ## Deploy on Vercel + Neon

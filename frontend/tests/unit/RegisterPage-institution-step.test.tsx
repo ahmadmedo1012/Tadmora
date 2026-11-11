@@ -24,7 +24,7 @@ const mocks = vi.hoisted(() => ({
       },
       {
         id: 'inst-alandalus-demo',
-        name: 'مؤسسة الأندلس التعليمية',
+        name: 'مساحة عمل تجريبية ثانية',
         nameEn: 'Al-Andalus Education Institute',
         slug: 'alandalus-demo',
       },
@@ -108,7 +108,7 @@ afterEach(() => {
     },
     {
       id: 'inst-alandalus-demo',
-      name: 'مؤسسة الأندلس التعليمية',
+      name: 'مساحة عمل تجريبية ثانية',
       nameEn: 'Al-Andalus Education Institute',
       slug: 'alandalus-demo',
     },
@@ -121,7 +121,7 @@ describe('RegisterPage — institution step (r178)', () => {
     chooseStudent();
 
     const options = Array.from(institutionSelect().options).map((o) => o.textContent);
-    expect(options).toEqual(['اختر…', 'جامعة الزاوية', 'مؤسسة الأندلس التعليمية']);
+    expect(options).toEqual(['اختر…', 'جامعة الزاوية', 'مساحة عمل تجريبية ثانية']);
 
     // The institution is the FIRST link of the academic chain — its
     // control must precede the faculty select in the DOM (RTL reading
@@ -162,7 +162,7 @@ describe('RegisterPage — institution step (r178)', () => {
     mocks.institutions.data = [
       {
         id: 'inst-alandalus-demo',
-        name: 'مؤسسة الأندلس التعليمية',
+        name: 'مساحة عمل تجريبية ثانية',
         nameEn: 'Al-Andalus Education Institute',
         slug: 'alandalus-demo',
       },

@@ -9,13 +9,15 @@
  *     /\br\d{3}\b|probe|APP_INTERNAL|SYNC_|test/i   → must NOT match
  *
  * What it seeds (all upsert/guarded-create → re-runs are no-ops):
- *   - reuses the established demo tenant جامعة تادمورا التجريبية
+ *   - reuses the labeled demo workspace مساحة عمل تادمورا التجريبية
  *     (slug tadmora-demo — the same row seed.ts maintains; the fixed
  *     legacy id 'inst-zawia-showcase' is only on the fresh-create
  *     branch so migrated and fresh databases agree on the reference id)
  *   - 8 courses with real Arabic names (codes CS101…NT101 — a fresh
  *     grammar that cannot collide with the 30x codes of seed.ts /
- *     seed-pilot.ts), 38 lectures with sensible durations
+ *     seed-pilot.ts), 38 lectures with sensible durations, all placed
+ *     inside the Phase Ω three-faculty set (علوم الحاسوب · الهندسة ·
+ *     إدارة الأعمال — no campus names, no per-college identity)
  *   - 6 teachers with Arabic names + full TeacherProfiles
  *   - 40 students — emails userNN@demo.tadmora.ly (the SAME demo
  *     domain the registrar's «حذف بيانات العرض» action already sweeps
@@ -76,9 +78,9 @@ const TEACHERS: TeacherSeedDef[] = [
     rank: AcademicRank.PROFESSOR,
     degree: DegreeLevel.PHD,
     specialty: 'علوم الحاسوب',
-    departmentKey: 'كلية تقنية المعلومات::علوم الحاسوب',
+    departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
     years: 22,
-    office: 'مبنى كلية تقنية المعلومات — مكتب 305',
+    office: 'مبنى كلية علوم الحاسوب — مكتب 305',
     officeHours: 'الأحد والثلاثاء 10:00–12:00',
     bio: 'مهتم بتعليم البرمجة من أول سطر، وببناء مناهج تربط النظرية بمشاريع حقيقية صغيرة.',
     color: '#4F8EF7',
@@ -89,12 +91,12 @@ const TEACHERS: TeacherSeedDef[] = [
     lastName: 'بن عيسى',
     rank: AcademicRank.ASSOCIATE_PROFESSOR,
     degree: DegreeLevel.PHD,
-    specialty: 'التشريح البشري',
-    departmentKey: 'كلية الطب البشري::التشريح',
+    specialty: 'الهندسة الكهربائية',
+    departmentKey: 'كلية الهندسة::الهندسة الكهربائية',
     years: 15,
-    office: 'مبنى كلية الطب البشري — مكتب 210',
+    office: 'مبنى كلية الهندسة — مكتب 210',
     officeHours: 'الاثنين والأربعاء 11:00–13:00',
-    bio: 'تؤمن أن فهم البنية يسبق فهم الوظيفة، وأن الرسم باليد أفضل طريق لحفظ التفاصيل.',
+    bio: 'ترى أن قياس الدارة يعلّم أكثر من حفظ قانونها، وأن المختبر هو النصف الآخر من المحاضرة.',
     color: '#3DD68C',
   },
   {
@@ -104,11 +106,11 @@ const TEACHERS: TeacherSeedDef[] = [
     rank: AcademicRank.LECTURER,
     degree: DegreeLevel.MASTERS,
     specialty: 'إدارة الأعمال',
-    departmentKey: 'كلية الاقتصاد::إدارة الأعمال',
+    departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
     years: 9,
-    office: 'مبنى كلية الاقتصاد — مكتب 108',
+    office: 'مبنى كلية إدارة الأعمال — مكتب 108',
     officeHours: 'الأحد 13:00–15:00',
-    bio: 'يحب تحويل مفاهيم الإدارة إلى حالات دراسية من سوق العمل المحلي.',
+    bio: 'يحب تحويل مفاهيم الإدارة وريادة الأعمال إلى حالات دراسية من سوق العمل.',
     color: '#F5A623',
   },
   {
@@ -118,9 +120,9 @@ const TEACHERS: TeacherSeedDef[] = [
     rank: AcademicRank.ASSISTANT_PROFESSOR,
     degree: DegreeLevel.PHD,
     specialty: 'الرياضيات المتقطعة',
-    departmentKey: 'كلية العلوم::قسم الرياضيات',
+    departmentKey: 'كلية علوم الحاسوب::نظم المعلومات',
     years: 12,
-    office: 'مبنى كلية العلوم — مكتب 402',
+    office: 'مبنى كلية علوم الحاسوب — مكتب 402',
     officeHours: 'الثلاثاء والخميس 09:00–11:00',
     bio: 'ترى في الرياضيات المتقطعة لغة الحاسوب الأولى، وتدرّسها بالأمثلة قبل التعريفات.',
     color: '#9B59B6',
@@ -131,12 +133,12 @@ const TEACHERS: TeacherSeedDef[] = [
     lastName: 'ورشفاني',
     rank: AcademicRank.ASSISTANT_PROFESSOR,
     degree: DegreeLevel.PHD,
-    specialty: 'الكيمياء العضوية',
-    departmentKey: 'كلية العلوم::قسم الكيمياء',
+    specialty: 'تحليل البيانات',
+    departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
     years: 11,
-    office: 'مبنى كلية العلوم — مكتب 311',
+    office: 'مبنى كلية علوم الحاسوب — مكتب 311',
     officeHours: 'الأربعاء 10:00–12:00',
-    bio: 'يشرح التفاعلات العضوية كقصص لجزيئات تتبادل الروابط، لا كقوائم تُحفظ.',
+    bio: 'يشرح التحليل كقصصة تُروى بالأرقام: سؤال واضح، بيانات نظيفة، ثم إجابة.',
     color: '#EF6C00',
   },
   {
@@ -145,12 +147,12 @@ const TEACHERS: TeacherSeedDef[] = [
     lastName: 'الأحمر',
     rank: AcademicRank.LECTURER,
     degree: DegreeLevel.MASTERS,
-    specialty: 'التاريخ الحديث',
-    departmentKey: 'كلية الآداب::التاريخ',
+    specialty: 'اللغة الإنجليزية الأكاديمية',
+    departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
     years: 8,
-    office: 'مبنى كلية الآداب — مكتب 115',
+    office: 'مبنى كلية إدارة الأعمال — مكتب 115',
     officeHours: 'الاثنين 12:00–14:00',
-    bio: 'تعيد قراءة تاريخ ليبيا الحديث من شهادات أهلها وأرشيفاتها المحلية.',
+    bio: 'تؤمن أن اللغة الأكاديمية مهارة تُكتسب بالتدريب، مثل أي مهارة أخرى.',
     color: '#2EC4B6',
   },
 ];
@@ -183,7 +185,7 @@ const COURSES: CourseSeedDef[] = [
     credits: 3,
     icon: '🐍',
     color: '#3B82F6',
-    departmentKey: 'كلية تقنية المعلومات::علوم الحاسوب',
+    departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
     teacherEmail: 'khaled.mansouri@demo.tadmora.ly',
     room: 'قاعة 101',
     lectures: [
@@ -195,21 +197,21 @@ const COURSES: CourseSeedDef[] = [
     ],
   },
   {
-    code: 'MD101',
-    name: 'تشريح الإنسان العام',
-    description: 'جولة منظّمية في جسم الإنسان: الأجهزة، بنيتها، وعلاقاتها الوظيفية.',
+    code: 'EE101',
+    name: 'الدوائر الكهربائية',
+    description: 'من الجهد والتيار إلى تحليل الشبكات: أساس الدارة الكهربائية خطوة بخطوة.',
     credits: 4,
-    icon: '🫀',
+    icon: '⚡',
     color: '#EF5350',
-    departmentKey: 'كلية الطب البشري::التشريح',
+    departmentKey: 'كلية الهندسة::الهندسة الكهربائية',
     teacherEmail: 'salma.benissa@demo.tadmora.ly',
-    room: 'قاعة المشرّح 1',
+    room: 'معمل الدوائر',
     lectures: [
-      { title: 'مستويات التنظيم في جسم الإنسان', description: 'من الخلية إلى النسيج إلى العضو إلى الجهاز.', durationSec: 1500 },
-      { title: 'الجهاز الهيكلي: العظام والمفاصل', description: 'أنواع العظام، تركيب المفصل، وأشهر المفاصل في الحركة اليومية.', durationSec: 1680 },
-      { title: 'الجهاز العضلي وآلية الحركة', description: 'العضلات الإرادية وغير الإرادية وكيف يتحول التقلص إلى حركة.', durationSec: 1440 },
-      { title: 'الجهاز الدوري والقلب', description: 'مسار الدم، صمامات القلب، والنبض من منظور تشريحي.', durationSec: 1740 },
-      { title: 'الجهاز العصبي: من العصبون إلى المنعكس', description: 'بنية العصبون، الأعصاب القحفية، وقوس المنعكس.', durationSec: 1620 },
+      { title: 'الجهد والتيار وقانون أوم', description: 'المفاهيم الثلاثة الأولى في الدوائر: فرق الجهد، شدة التيار، والعلاقة بينهما.', durationSec: 1500 },
+      { title: 'توليف المقاومات', description: 'التسلسل والتوازي وكيف تُبسَّط الدارة خطوة بخطوة.', durationSec: 1440 },
+      { title: 'المصادر والقدرة الكهربائية', description: 'قدرة الدارة، وفقد المصدر، وحساب كفاءة التوصيل.', durationSec: 1560 },
+      { title: 'المكثفات والملفات', description: 'عناصر التخزين: كيف يشحن المكثف وكيف يعارض الملف تغيّر التيار.', durationSec: 1620 },
+      { title: 'تحليل العقد والطرق', description: 'قانونا كيرشوف كأداتين لحل أي دارة خطية.', durationSec: 1680 },
     ],
   },
   {
@@ -219,7 +221,7 @@ const COURSES: CourseSeedDef[] = [
     credits: 3,
     icon: '📊',
     color: '#7E57C2',
-    departmentKey: 'كلية الاقتصاد::إدارة الأعمال',
+    departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
     teacherEmail: 'omar.sherif@demo.tadmora.ly',
     room: 'قاعة 204',
     lectures: [
@@ -236,7 +238,7 @@ const COURSES: CourseSeedDef[] = [
     credits: 3,
     icon: '➗',
     color: '#26A69A',
-    departmentKey: 'كلية العلوم::قسم الرياضيات',
+    departmentKey: 'كلية علوم الحاسوب::نظم المعلومات',
     teacherEmail: 'hoda.taher@demo.tadmora.ly',
     room: 'قاعة 305',
     lectures: [
@@ -248,38 +250,38 @@ const COURSES: CourseSeedDef[] = [
     ],
   },
   {
-    code: 'CH101',
-    name: 'الكيمياء العضوية',
-    description: 'كيمياء مركبات الكربون: البنية، التسمية، وتفاعلات المجموعات الوظيفية.',
+    code: 'DA101',
+    name: 'تحليل البيانات بـ Python',
+    description: 'من السؤال إلى الرسم البياني: تنظيف البيانات، وصفها، وقراءتها بأداة واحدة.',
     credits: 4,
-    icon: '⚗️',
+    icon: '📊',
     color: '#00897B',
-    departmentKey: 'كلية العلوم::قسم الكيمياء',
+    departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
     teacherEmail: 'youssef.warshafana@demo.tadmora.ly',
-    room: 'مختبر الكيمياء 2',
+    room: 'معمل الحاسوب 2',
     lectures: [
-      { title: 'الروابط التساهمية والبنية الجزيئية', description: 'هجينة الأوربتالات وأشكال الجزيئات العضوية.', durationSec: 1500 },
-      { title: 'الألكانات والتسمية النظامية', description: 'السلاسل المستقيمة والمتفرعة وقواعد التسمية الدولية.', durationSec: 1560 },
-      { title: 'الألكينات وتفاعلات الإضافة', description: 'الرابطة المزدوجة كموضع نشاط في التفاعلات.', durationSec: 1620 },
-      { title: 'الكحولات والفينولات', description: 'التصنيف حسب موضع مجموعة الهيدروكسيل وأهم التفاعلات.', durationSec: 1440 },
-      { title: 'الأحماض الكربوكسيلية والإسترات', description: 'من الخل إلى العطور: كيف تتكوّن الإسترات.', durationSec: 1560 },
+      { title: 'ما هو تحليل البيانات', description: 'مراحل التحليل وأدواره: من السؤال إلى الإجابة.', durationSec: 1380 },
+      { title: 'التحميل والتنظيف بـ pandas', description: 'قراءة الجداول، معالجة القيم الناقصة، وتوحيد الأنساق.', durationSec: 1560 },
+      { title: 'الإحصاء الوصفي', description: 'المتوسط والوسيط والانحراف: متى يكذب الرقم؟', durationSec: 1440 },
+      { title: 'التصوير البياني', description: 'كيف تختار الرسم الذي يقول ما تعنيه.', durationSec: 1500 },
+      { title: 'قصة مع البيانات', description: 'بناء تقرير تحليلي متكامل من طقم بيانات صغير.', durationSec: 1680 },
     ],
   },
   {
-    code: 'HI101',
-    name: 'تاريخ ليبيا الحديث',
-    description: 'من أواخر العهد العثماني إلى بناء الدولة الحديثة: قراءة في الأحداث والشواهد.',
+    code: 'BU101',
+    name: 'ريادة الأعمال',
+    description: 'من فكرة تحل مشكلة حقيقية إلى نموذج عمل قابل للاختبار أمام السوق.',
     credits: 2,
-    icon: '🏛️',
+    icon: '🚀',
     color: '#8D6E63',
-    departmentKey: 'كلية الآداب::التاريخ',
-    teacherEmail: 'mariam.ahmar@demo.tadmora.ly',
+    departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
+    teacherEmail: 'omar.sherif@demo.tadmora.ly',
     room: 'قاعة 12',
     lectures: [
-      { title: 'ليبيا أواخر العهد العثماني', description: 'الولايات الثلاث والمجتمع والمشهد التعليمي قبل التغيير الكبير.', durationSec: 1440 },
-      { title: 'الاحتلال الإيطالي والمقاومة', description: 'مراحل الاحتلال ومحطات المقاومة وأثرها في المجتمع.', durationSec: 1620 },
-      { title: 'عصر المملكة الليبية', description: 'الاستقلال، بناء المؤسسات، وتحولات الخمسينيات والستينيات.', durationSec: 1500 },
-      { title: 'خطوات بناء الدولة الحديثة', description: 'التعليم والبنية الأساسية ومسار المؤسسات عبر العقود.', durationSec: 1380 },
+      { title: 'من المشكلة إلى الفكرة', description: 'كيف تُكتشف المشكلة الحقيقية قبل اقتراح الحل.', durationSec: 1380 },
+      { title: 'نموذج العمل', description: 'القيمة المضافة، الشرائح، والقنوات: تسع حقائق على صفحة.', durationSec: 1500 },
+      { title: 'التحقق من السوق', description: 'مقابلات قصيرة وتجارب صغيرة قبل الإنفاق الكبير.', durationSec: 1560 },
+      { title: 'العرض الأول', description: 'عرض دقيقتين يفتح الأبواب: بنية واضحة وإيقاع محكم.', durationSec: 1440 },
     ],
   },
   {
@@ -289,7 +291,7 @@ const COURSES: CourseSeedDef[] = [
     credits: 2,
     icon: '🔤',
     color: '#2952C8',
-    departmentKey: 'كلية الآداب::اللغة الإنجليزية',
+    departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
     teacherEmail: 'mariam.ahmar@demo.tadmora.ly',
     room: 'معمل اللغة 1',
     lectures: [
@@ -306,16 +308,16 @@ const COURSES: CourseSeedDef[] = [
     credits: 3,
     icon: '🌐',
     color: '#5C6BC0',
-    departmentKey: 'كلية تقنية المعلومات::علوم الحاسوب',
+    departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
     teacherEmail: 'khaled.mansouri@demo.tadmora.ly',
     room: 'معمل الشبكات',
     lectures: [
-      { title: 'مقدمة في شبكات الحاسوب', description: 'لماذا شبكات؟ أنواعها حسب المدى وأمثلة من الحرم الجامعي.', durationSec: 1320 },
+      { title: 'مقدمة في شبكات الحاسوب', description: 'لماذا شبكات؟ أنواعها حسب المدى وأمثلة من بيئة العمل الرقمية.', durationSec: 1320 },
       { title: 'الطبقات ونموذج الاتصال المرجعي', description: 'رحلة الرسالة من التطبيق إلى الوسط الفيزيائي.', durationSec: 1560 },
       { title: 'العنونة وعناوين الشبكات', description: 'بنية العنوان، القناع، وحساب الشبكات بمثال محلول.', durationSec: 1500 },
       { title: 'الأجهزة الشبكية وتوصيلها', description: 'المبدّل والموجّه ونقطة الوصول: من يفعل ماذا؟', durationSec: 1380 },
       { title: 'بروتوكولات النقل والموثوقية', description: 'مقابل: الموثوقية والسرعة ومتى نفضّل كلًا منهما.', durationSec: 1620 },
-      { title: 'أساسيات أمن الشبكات', description: 'الجدار الناري، التشفير، وممارسات الحرم الجامعي الآمن.', durationSec: 1440 },
+      { title: 'أساسيات أمن الشبكات', description: 'الجدار الناري، التشفير، وممارسات الاستخدام الآمن.', durationSec: 1440 },
     ],
   },
 ];
@@ -369,7 +371,7 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
     notifications: 0,
   };
 
-  // ── 1. the demo tenant — reuse the established row (never rebrand) ──
+  // ── 1. the demo workspace — reuse the established row (never rebrand) ──
   // seed.ts keeps this slug/name; the fixed id appears ONLY on the
   // fresh-create branch so a brand-new database lands on the same
   // reference id the tests (and seed.ts) expect.
@@ -378,28 +380,27 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
     update: {},
     create: {
       id: 'inst-zawia-showcase',
-      name: 'جامعة تادمورا التجريبية',
-      nameEn: 'Tadmora Demo University',
+      name: 'مساحة عمل تادمورا التجريبية',
+      nameEn: 'Tadmora Experimental Workspace',
       slug: INSTITUTION_SLUG,
       status: 'ACTIVE',
     },
   });
 
-  // ── 2. faculties — SAME composite keys seed.ts uses (حرم المعرفة) ──
-  // so existing rows are found rather than duplicated.
+  // ── 2. faculties — SAME composite keys seed.ts uses (city 'افتراضي') ──
+  // so existing rows are found rather than duplicated. Phase Ω: the
+  // honest three-faculty set, no campus names.
   const facultyNames = [
-    { name: 'كلية تقنية المعلومات', nameEn: 'Information Technology', iconEmoji: '💻' },
-    { name: 'كلية الطب البشري', nameEn: 'Human Medicine', iconEmoji: '⚕️' },
-    { name: 'كلية العلوم', nameEn: 'Sciences', iconEmoji: '🔬' },
-    { name: 'كلية الاقتصاد', nameEn: 'Economics', iconEmoji: '💼' },
-    { name: 'كلية الآداب', nameEn: 'Arts', iconEmoji: '📚' },
+    { name: 'كلية علوم الحاسوب', nameEn: 'Computer Science', iconEmoji: '💻' },
+    { name: 'كلية الهندسة', nameEn: 'Engineering', iconEmoji: '⚙️' },
+    { name: 'كلية إدارة الأعمال', nameEn: 'Business Administration', iconEmoji: '💼' },
   ];
   const facultyIds = new Map<string, string>();
   for (const f of facultyNames) {
     const row = await prisma.faculty.upsert({
-      where: { institutionId_name_city: { institutionId: institution.id, name: f.name, city: 'حرم المعرفة' } },
+      where: { institutionId_name_city: { institutionId: institution.id, name: f.name, city: 'افتراضي' } },
       update: { nameEn: f.nameEn, iconEmoji: f.iconEmoji },
-      create: { ...f, city: 'حرم المعرفة', institutionId: institution.id },
+      create: { ...f, city: 'افتراضي', institutionId: institution.id },
     });
     facultyIds.set(f.name, row.id);
   }
@@ -407,13 +408,11 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
   // ── 3. departments — reuse existing names where seed.ts created them ──
   const departmentIds = new Map<string, string>();
   const DEPARTMENT_DEFS = [
-    { facultyName: 'كلية تقنية المعلومات', name: 'علوم الحاسوب', nameEn: 'Computer Science' },
-    { facultyName: 'كلية الطب البشري', name: 'التشريح', nameEn: 'Anatomy' },
-    { facultyName: 'كلية العلوم', name: 'قسم الرياضيات', nameEn: 'Mathematics' },
-    { facultyName: 'كلية العلوم', name: 'قسم الكيمياء', nameEn: 'Chemistry' },
-    { facultyName: 'كلية الاقتصاد', name: 'إدارة الأعمال', nameEn: 'Business Administration' },
-    { facultyName: 'كلية الآداب', name: 'التاريخ', nameEn: 'History' },
-    { facultyName: 'كلية الآداب', name: 'اللغة الإنجليزية', nameEn: 'English Language' },
+    { facultyName: 'كلية علوم الحاسوب', name: 'علوم الحاسوب', nameEn: 'Computer Science' },
+    { facultyName: 'كلية علوم الحاسوب', name: 'نظم المعلومات', nameEn: 'Information Systems' },
+    { facultyName: 'كلية الهندسة', name: 'الهندسة المدنية', nameEn: 'Civil Engineering' },
+    { facultyName: 'كلية الهندسة', name: 'الهندسة الكهربائية', nameEn: 'Electrical Engineering' },
+    { facultyName: 'كلية إدارة الأعمال', name: 'إدارة الأعمال', nameEn: 'Business Administration' },
   ];
   for (const d of DEPARTMENT_DEFS) {
     const facultyId = facultyIds.get(d.facultyName)!;
@@ -697,11 +696,11 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
   const MESSAGES: { id: string; from: string; to: string; body: string; daysAgo: number; read: boolean }[] = [
     { id: 'seed-demo-msg-01', from: stuId(1), to: teacherIds.get(cs.email)!, body: 'دكتور، هل موضوع الدوال مشمول في الاختبار القصير لمقرر البرمجة؟', daysAgo: 3, read: true },
     { id: 'seed-demo-msg-02', from: teacherIds.get(cs.email)!, to: stuId(1), body: 'نعم، حتى نهاية الحلقات التكرارية. ركّز على التمارين الثالثة والرابعة.', daysAgo: 3, read: true },
-    { id: 'seed-demo-msg-03', from: stuId(2), to: teacherIds.get(md.email)!, body: 'تحية طيبة دكتورة، هل يمكن نشر شرائح محاضرة الجهاز الدوري؟', daysAgo: 2, read: true },
+    { id: 'seed-demo-msg-03', from: stuId(2), to: teacherIds.get(md.email)!, body: 'تحية طيبة دكتورة، هل يمكن نشر شرائح محاضرة الدوائر الكهربائية؟', daysAgo: 2, read: true },
     { id: 'seed-demo-msg-04', from: teacherIds.get(md.email)!, to: stuId(2), body: 'نُشرت في صفحة المقرر مع مذكرة الملخص. موفقة.', daysAgo: 2, read: true },
     { id: 'seed-demo-msg-05', from: stuId(3), to: teacherIds.get(ma.email)!, body: 'دكتورة، عندي سؤال في تمرين التراتيب رقم سبعة.', daysAgo: 1, read: true },
     { id: 'seed-demo-msg-06', from: teacherIds.get(ma.email)!, to: stuId(3), body: 'أرسلي محاولتك وسنناقشها في الساعات المكتبية غدًا.', daysAgo: 1, read: true },
-    { id: 'seed-demo-msg-07', from: stuId(5), to: teacherIds.get(hi.email)!, body: 'مساء الخير، هل مرجع تاريخ ليبيا الحديث متوفر في المكتبة؟', daysAgo: 1, read: true },
+    { id: 'seed-demo-msg-07', from: stuId(5), to: teacherIds.get(hi.email)!, body: 'مساء الخير، هل مرجع اللغة الإنجليزية الأكاديمية متوفر في المكتبة؟', daysAgo: 1, read: true },
     { id: 'seed-demo-msg-08', from: teacherIds.get(hi.email)!, to: stuId(5), body: 'متوفر نسخة إلكترونية، ستجد الرابط في مواد المقرر.', daysAgo: 0, read: false },
     { id: 'seed-demo-msg-09', from: stuId(7), to: teacherIds.get(cs.email)!, body: 'شكرًا دكتور على الشرح الواضح في محاضرة اليوم.', daysAgo: 0, read: false },
     { id: 'seed-demo-msg-10', from: teacherIds.get(cs.email)!, to: stuId(7), body: 'عفوًا، سعدت بذلك. أي استفسار أنا هنا.', daysAgo: 0, read: false },
@@ -727,11 +726,11 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
     id: string; userId: string; type: NotificationType; icon: string;
     title: string; body: string; daysAgo: number; read: boolean;
   }[] = [
-    { id: 'seed-demo-ntf-01', userId: stuId(1), type: NotificationType.ACADEMIC, icon: '📝', title: 'تم فتح باب التسجيل لمقرر الكيمياء العضوية', body: 'التسجيل متاح حتى نهاية الأسبوع — المقاعد محدودة', daysAgo: 0, read: false },
+    { id: 'seed-demo-ntf-01', userId: stuId(1), type: NotificationType.ACADEMIC, icon: '📝', title: 'تم فتح باب التسجيل لمقرر تحليل البيانات', body: 'التسجيل متاح حتى نهاية الأسبوع — المقاعد محدودة', daysAgo: 0, read: false },
     { id: 'seed-demo-ntf-02', userId: stuId(2), type: NotificationType.URGENT, icon: '⏰', title: 'تأجلت محاضرة الرياضيات المتقطعة', body: 'أُرجئت محاضرة اليوم إلى الخميس الساعة العاشرة صباحًا', daysAgo: 0, read: false },
     { id: 'seed-demo-ntf-03', userId: stuId(3), type: NotificationType.ACADEMIC, icon: '🎯', title: 'نُشرت درجات الاختبار القصير', body: 'درجتك في الاختبار القصير لمقرر مقدمة في البرمجة بلغة بايثون متاحة الآن', daysAgo: 1, read: false },
-    { id: 'seed-demo-ntf-04', userId: stuId(4), type: NotificationType.URGENT, icon: '⏰', title: 'تذكير بامتحان منتصف الفصل', body: 'امتحان منتصف الفصل لتشريح الإنسان العام يوم الأحد القادم', daysAgo: 1, read: true },
-    { id: 'seed-demo-ntf-05', userId: stuId(5), type: NotificationType.SOCIAL, icon: '💬', title: 'رد جديد من د. مريم الأحمر', body: 'ردّت على رسالتك بخصوص مرجع تاريخ ليبيا الحديث', daysAgo: 2, read: true },
+    { id: 'seed-demo-ntf-04', userId: stuId(4), type: NotificationType.URGENT, icon: '⏰', title: 'تذكير بامتحان منتصف الفصل', body: 'امتحان منتصف الفصل للدوائر الكهربائية يوم الأحد القادم', daysAgo: 1, read: true },
+    { id: 'seed-demo-ntf-05', userId: stuId(5), type: NotificationType.SOCIAL, icon: '💬', title: 'رد جديد من د. مريم الأحمر', body: 'ردّت على رسالتك بخصوص مرجع اللغة الإنجليزية الأكاديمية', daysAgo: 2, read: true },
     { id: 'seed-demo-ntf-06', userId: stuId(6), type: NotificationType.SYSTEM, icon: '🗓️', title: 'صدر جدول الامتحانات النهائي', body: 'اطّلع على جدول امتحانات الفصل الحالي في صفحة الجدول', daysAgo: 3, read: true },
     { id: 'seed-demo-ntf-07', userId: stuId(7), type: NotificationType.SOCIAL, icon: '🎤', title: 'الندوة الأسبوعية: مهارات العرض الأكاديمي', body: 'تنعقد الندوة يوم الثلاثاء في قاعة المؤتمرات — الحضور مفتوح', daysAgo: 4, read: true },
     { id: 'seed-demo-ntf-08', userId: stuId(8), type: NotificationType.SYSTEM, icon: '📚', title: 'اكتمل تحديث مكتبة المقررات', body: 'أُضيفت مراجع جديدة لمقررات الفصل الحالي في المكتبة الإلكترونية', daysAgo: 5, read: true },
@@ -769,7 +768,7 @@ async function main(): Promise<void> {
   try {
     const s = await seedDemoR330(prisma);
     console.log(
-      `🌱 بذرة العرض النظيفة: مؤسسة «جامعة تادمورا التجريبية» — ${s.courses} مقررات، ${s.lectures} محاضرات، ` +
+      `🌱 بذرة العرض النظيفة: «مساحة عمل تادمورا التجريبية» — ${s.courses} مقررات، ${s.lectures} محاضرات، ` +
         `${s.teachers} أساتذة، ${s.students} طلبة، ${s.enrollments} تسجيل، ${s.grades} درجة، ` +
         `${s.examTemplates} نماذج امتحان، ${s.messages} رسائل، ${s.notifications} إشعارات — كل النصوص المعروضة نظيفة (بلا سلاسل فنية).`,
     );

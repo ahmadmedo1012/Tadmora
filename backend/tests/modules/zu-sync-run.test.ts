@@ -37,7 +37,7 @@ vi.mock('../../src/db.js', () => ({
 }));
 vi.mock('../../src/lib/zu-sync/static-source.js', () => ({
   STATIC_FACTS: [
-    { key: 'name.ar', value: 'جامعة الزاوية', category: 'identity', source: 'zu.edu.ly:about' },
+    { key: 'name.ar', value: 'مساحة عمل تادمورا التجريبية', category: 'identity', source: 'demo-source:identity' },
     { key: 'founded', value: '1983', category: 'identity', source: 'zu.edu.ly:about' },
     { key: 'motto', value: 'same-value', category: 'strategic', source: 'zu.edu.ly:about' },
   ] satisfies FactPatch[],
@@ -172,7 +172,7 @@ describe('runSync — fact transitions', () => {
         // Same value as the source, but previously flagged stale.
         return {
           key: 'name.ar',
-          value: 'جامعة الزاوية',
+          value: 'مساحة عمل تادمورا التجريبية',
           category: 'identity',
           source: 'zu.edu.ly:about',
           syncedAt: new Date(),

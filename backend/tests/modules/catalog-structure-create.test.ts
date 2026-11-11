@@ -58,24 +58,24 @@ const SLUG_A = 'zawia-showcase';
 // runs — the IDs must pass z.string().cuid()).
 const FACULTY_A = 'cfaculty0000000000000001';
 // The faculty mock row the department guard resolves (INST_A chain).
-const FACULTY_A_ROW = { id: FACULTY_A, name: 'كلية العلوم', institutionId: INST_A };
+const FACULTY_A_ROW = { id: FACULTY_A, name: 'كلية علوم الحاسوب', institutionId: INST_A };
 // The faculty row the transactional create returns (institution
 // basics included — the wire contract the FE tables group by).
 const CREATED_FACULTY = {
   id: 'fac-new-1',
   name: 'كلية الهندسة',
-  nameEn: 'Faculty of Engineering',
-  iconEmoji: '🏗️',
-  city: 'الزاوية',
+  nameEn: 'Engineering',
+  iconEmoji: '⚙️',
+  city: 'افتراضي',
   institutionId: INST_A,
-  institution: { id: INST_A, name: 'جامعة الزاوية', nameEn: 'University of Zawia', slug: SLUG_A },
+  institution: { id: INST_A, name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', slug: SLUG_A },
 };
 const CREATED_DEPARTMENT = {
   id: 'dep-new-1',
   name: 'قسم الهندسة المدنية',
   nameEn: 'Civil Engineering Dept',
   facultyId: FACULTY_A,
-  faculty: { id: FACULTY_A, name: 'كلية العلوم', city: 'الزاوية' },
+  faculty: { id: FACULTY_A, name: 'كلية علوم الحاسوب', city: 'افتراضي' },
 };
 
 const p2002 = () =>
@@ -132,7 +132,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
       '/api/v1/admin/faculties',
       bearerFor(ADMIN_ID, Role.ADMIN, INST_A),
       // Whitespace on purpose — the schema trims before the write.
-      { name: '  كلية الهندسة  ', nameEn: 'Faculty of Engineering', iconEmoji: '🏗️', city: ' الزاوية ' },
+      { name: '  كلية الهندسة  ', nameEn: 'Engineering', iconEmoji: '⚙️', city: ' افتراضي ' },
     );
     expect(res.status).toBe(201);
     const body = (await res.json()) as { data: typeof CREATED_FACULTY };
@@ -142,9 +142,9 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     expect(prisma.faculty.create).toHaveBeenCalledWith({
       data: {
         name: 'كلية الهندسة',
-        nameEn: 'Faculty of Engineering',
-        iconEmoji: '🏗️',
-        city: 'الزاوية',
+        nameEn: 'Engineering',
+        iconEmoji: '⚙️',
+        city: 'افتراضي',
         institutionId: INST_A,
       },
       include: { institution: { select: { id: true, name: true, nameEn: true, slug: true } } },
@@ -158,7 +158,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
         action: 'FACULTY_CREATED',
         resourceType: 'Faculty',
         resourceId: 'fac-new-1',
-        metadata: { name: 'كلية الهندسة', city: 'الزاوية' },
+        metadata: { name: 'كلية الهندسة', city: 'افتراضي' },
       }),
     });
   });
@@ -167,7 +167,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties',
       bearerFor(ADMIN_ID, Role.ADMIN, null),
-      { name: 'كلية الهندسة', city: 'الزاوية' },
+      { name: 'كلية الهندسة', city: 'افتراضي' },
     );
     expect(res.status).toBe(403);
     expect(((await res.json()) as { error: { code: string } }).error.code).toBe('INSTITUTION_CONTEXT_REQUIRED');
@@ -181,7 +181,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties',
       bearerFor(ADMIN_ID, Role.ADMIN, INST_A),
-      { name: 'كلية الهندسة', city: 'الزاوية' },
+      { name: 'كلية الهندسة', city: 'افتراضي' },
     );
     expect(res.status).toBe(403);
     expect(((await res.json()) as { error: { code: string } }).error.code).toBe('INSTITUTION_CONTEXT_INVALID');
@@ -192,7 +192,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties',
       bearerFor(OWNER_ID, Role.OWNER, null),
-      { name: 'كلية الهندسة', city: 'طرابلس' },
+      { name: 'كلية الهندسة', city: 'مدينة تجريبية' },
     );
     expect(res.status).toBe(400);
     const body = (await res.json()) as { error: { code: string; message: string } };
@@ -209,7 +209,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties?institutionSlug=no-such-inst',
       bearerFor(OWNER_ID, Role.OWNER, null),
-      { name: 'كلية الهندسة', city: 'طرابلس' },
+      { name: 'كلية الهندسة', city: 'مدينة تجريبية' },
     );
     expect(res.status).toBe(400);
     const body = (await res.json()) as { error: { code: string; message: string } };
@@ -230,7 +230,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties?institutionSlug=alandalus-demo',
       bearerFor(OWNER_ID, Role.OWNER, null),
-      { name: 'كلية الهندسة', city: 'طرابلس' },
+      { name: 'كلية الهندسة', city: 'مدينة تجريبية' },
     );
     expect(res.status).toBe(201);
     expect(prisma.institution.findUnique).toHaveBeenCalledWith({
@@ -238,7 +238,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
       select: { id: true, status: true },
     });
     expect(prisma.faculty.create).toHaveBeenCalledWith(
-      expect.objectContaining({ data: expect.objectContaining({ institutionId: INST_B, city: 'طرابلس' }) }),
+      expect.objectContaining({ data: expect.objectContaining({ institutionId: INST_B, city: 'مدينة تجريبية' }) }),
     );
     expect(prisma.auditLog.create).toHaveBeenCalledWith({
       data: expect.objectContaining({ userId: OWNER_ID, institutionId: INST_B, action: 'FACULTY_CREATED' }),
@@ -251,7 +251,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties',
       bearerFor(ADMIN_ID, Role.ADMIN, INST_A),
-      { name: 'كلية العلوم', city: 'الزاوية' },
+      { name: 'كلية علوم الحاسوب', city: 'افتراضي' },
     );
     expect(res.status).toBe(409);
     const body = (await res.json()) as { error: { code: string; message: string } };
@@ -276,7 +276,7 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     const res = await post(
       '/api/v1/admin/faculties',
       bearerFor(STUDENT_ID, Role.STUDENT, INST_A),
-      { name: 'كلية الهندسة', city: 'الزاوية' },
+      { name: 'كلية الهندسة', city: 'افتراضي' },
     );
     expect(res.status).toBe(403);
     expect(prisma.faculty.create).not.toHaveBeenCalled();

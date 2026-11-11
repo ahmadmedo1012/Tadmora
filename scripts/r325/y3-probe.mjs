@@ -85,7 +85,7 @@ for (const { w, h } of BPS) {
 
       // every visible demo-disclosure string inside the section
       // («بيانات العرض التجريبية» = the per-frame caption demo;
-      //  «جامعة تادمورا التجريبية» = the section's own .wy-note wording)
+      //  «مساحة عمل تادمورا التجريبية» = the section's own .wy-note wording)
       const texts = [];
       section?.querySelectorAll('*').forEach((el) => {
         if (el.children.length > 0) return;

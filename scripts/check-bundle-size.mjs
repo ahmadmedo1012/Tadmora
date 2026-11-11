@@ -27,7 +27,7 @@
        r304 raise's reason is VOID: the 3D landing world (three.module
        171.9 KB gz + gsap + the scroll-conductor/story runtime) retired
        with the Heron-only drawing-sheet rebuild. The r307 media layer
-       (MediaFrame/VideoCard/ProductFrame + the registry) measures the
+       (ProductFrame + the product-media registry) measures the
        integrated tree at 668.5 KB gz / 140 chunks — 4.7% headroom keeps
        the gate tight for route-level growth. Entry (73.7 ≤ 80) and pdf
        (95.7 ≤ 110) ceilings unchanged.)

@@ -3,9 +3,7 @@ import { ArrowRight, Check, FlaskConical } from 'lucide-react';
 import { Icon } from '../../components/Icon';
 import { Logo } from '../../brand';
 import { useThemeSync } from '../../components/layout/ThemeToggle';
-import { colleges } from '../../data/colleges.config';
 import { LIVE_CAPABILITIES, LIVE_COUNT, VISION_STATUS } from '../../data/landing-ledger';
-import { formatInt } from '../../utils/numbers';
 import { RevealCssClass } from '../../hooks/useReveal';
 /* c3-W6 (K-I extension): the guest sheet chrome — same grammar as
  * /auth + /campus (fixed frame + corner marks + grain film). */
@@ -24,14 +22,13 @@ import { GuestSheetChrome } from '../../components/layout/GuestSheetChrome';
  *     bracketed count in the footer line — no slab, no inversion;
  *   · إلى أين — the honest status pairs: live / simulated /
  *     in-development, mono-tagged, exactly as the system is today;
- *   · الجامعة التجريبية — the registry summary: the computed college
- *     count + the demo-data disclosure, linking to /colleges for the
- *     full registry (the interactive detail stays where it lives).
+ *   · مساحة العمل التجريبية — the demo-workspace summary: the honest
+ *     three-faculty set + the demo-data disclosure, linking to
+ *     /colleges for the multi-tenancy pitch (Phase Ω: the platform has
+ *     no university registry — institutions build their own).
  */
 export function CapabilitiesPage() {
   useThemeSync();
-
-  const campusCount = new Set(colleges.map((c) => c.cityAr ?? '')).size;
 
   return (
     <div className="cu">
@@ -66,8 +63,8 @@ export function CapabilitiesPage() {
                 seat) — the sister sub-page + the real registry page; the
                 registry section below keeps the data + the disclosure. */}
             <RevealCssClass as="div" className="pf-page-actions" delay={3}>
-              <Link to="/campus" className="btn accent" aria-label="الحياة الجامعية — الصور والفيديو">الحياة الجامعية</Link>
-              <Link to="/colleges" className="btn ghost">بوابة الكليات</Link>
+              <Link to="/campus" className="btn accent" aria-label="بيئة العمل الرقمية — لقطات من المنصّة">بيئة العمل الرقمية</Link>
+              <Link to="/colleges" className="btn ghost">كيف تُبنى الكليات</Link>
             </RevealCssClass>
           </div>
 
@@ -110,15 +107,15 @@ export function CapabilitiesPage() {
           </RevealCssClass>
         </section>
 
-        {/* ── الجامعة التجريبية — the registry summary ── */}
+        {/* ── مساحة العمل التجريبية — the demo-workspace summary ── */}
         <section aria-labelledby="cap-colleges-title">
           <div className="cu-head pf-page-header-text">
-            <span className="fo-eyebrow"><span className="fo-mono" dir="ltr">[03]</span> الجامعة التجريبية</span>
+            <span className="fo-eyebrow"><span className="fo-mono" dir="ltr">[03]</span> مساحة العمل التجريبية</span>
             <RevealCssClass as="h2" className="cu-title" delay={1} id="cap-colleges-title">
-              {formatInt(colleges.length)} كلية في {formatInt(campusCount)} أحرام
+              ثلاث كليات للعرض — <em>وكلياتك تُبنى بعد انضمامك</em>
             </RevealCssClass>
             <RevealCssClass as="p" className="cu-lede" delay={2}>
-              بنية الكليات كاملة معروضة داخل المنصّة — والسجلّ التفاعلي في صفحة الكلّيّات.
+              مساحة العمل موسومة بوضوح ولا تتشبه بجامعة — والبنية الكاملة تُبنى من بيانات مؤسستك.
             </RevealCssClass>
           </div>
 
@@ -126,18 +123,17 @@ export function CapabilitiesPage() {
             <dl className="cu-meta" aria-label="بيانات السجلّ">
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">السجلّ</dt>
-                <dd className="fo-meta-v">جامعة تادمورا التجريبية</dd>
+                <dd className="fo-meta-v">مساحة عمل تادمورا التجريبية</dd>
               </div>
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">الكليات</dt>
                 <dd className="fo-meta-v">
-                  <span className="fo-mono" dir="ltr">{formatInt(colleges.length)}</span> في{' '}
-                  <span className="fo-mono" dir="ltr">{formatInt(campusCount)}</span> أحرام
+                  <span className="fo-mono" dir="ltr">3</span> للعرض — علوم الحاسوب، الهندسة، إدارة الأعمال
                 </dd>
               </div>
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">الحالة</dt>
-                <dd className="fo-meta-v">بيانات اصطناعية بالكامل للعرض</dd>
+                <dd className="fo-meta-v">بيانات موسومة بوضوح لأغراض العرض</dd>
               </div>
             </dl>
             {/* D9: the registry actions moved UP to the page head (the
@@ -146,8 +142,8 @@ export function CapabilitiesPage() {
           </RevealCssClass>
 
           <p className="cu-foot">
-            بيانات العرض تخصّ «جامعة تادمورا التجريبية» — مؤسّسة اصطناعية بالكامل لأغراض العرض،
-            وتادمورا منصّة مستقلّة لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها.
+            بيانات العرض تخصّ «مساحة عمل تادمورا التجريبية» — مساحةً موسومة لأغراض العرض، لا جامعة ولا انتماء،
+            وتادمورا منصّة مستقلّة متعددة المستأجرين لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها.
           </p>
         </section>
       </main>

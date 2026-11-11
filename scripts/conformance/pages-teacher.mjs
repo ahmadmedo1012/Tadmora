@@ -355,8 +355,8 @@ const TPROFILE = {
  * CHECKS_PASSED (awaiting the teacher's grade) + GRADED (awaiting
  * the teacher's publish) — the two halves of the review loop. */
 const RQUEUE = [
-  { id: 'pap_e2e_1', title: 'فهرسة قواعد البيانات الموزعة', abstract: 'دراسة مقارنة لاستراتيجيات الفهرسة في الأنظمة الموزعة.', fileUrl: 'https://cdn.tadmora.dev/papers/indexing.pdf', status: 'CHECKS_PASSED', plagiarismPct: 4, aiContentPct: 9, grade: null, feedback: null, uploadedAt: hoursAgo(20), scannedAt: hoursAgo(18), gradedAt: null, publishedAt: null, student: { id: 'stu_e2e_2', firstName: 'سالم', lastName: 'قدّور', avatarInitials: 'سق', avatarColor: '#059669', email: 'salim@zu.edu.ly' }, reviewer: null, offering: { id: 'offr_e2e_t_db', course: { name: 'قواعد البيانات', code: 'CS-304' } } },
-  { id: 'pap_e2e_2', title: 'الخوارزميات الجشعة في جدولة المهام', abstract: 'تطبيقات الخوارزميات الجشعة على جدولة المهام الزمنية.', fileUrl: null, status: 'GRADED', plagiarismPct: 2, aiContentPct: 6, grade: 17, feedback: 'معالجة جيدة للبنية الفرعية المثلى مع نقص في التحليل التجريبي.', uploadedAt: hoursAgo(96), scannedAt: hoursAgo(94), gradedAt: hoursAgo(30), publishedAt: null, student: { id: 'stu_e2e_1', firstName: 'مروة', lastName: 'البراني', avatarInitials: 'مر', avatarColor: '#0ea5e9', email: 'marwa@zu.edu.ly' }, reviewer: { firstName: 'ليلى', lastName: 'الفيتوري' }, offering: { id: 'offr_e2e_t_algo', course: { name: 'مقدمة في الخوارزميات', code: 'CS-201' } } },
+  { id: 'pap_e2e_1', title: 'فهرسة قواعد البيانات الموزعة', abstract: 'دراسة مقارنة لاستراتيجيات الفهرسة في الأنظمة الموزعة.', fileUrl: 'https://cdn.tadmora.dev/papers/indexing.pdf', status: 'CHECKS_PASSED', plagiarismPct: 4, aiContentPct: 9, grade: null, feedback: null, uploadedAt: hoursAgo(20), scannedAt: hoursAgo(18), gradedAt: null, publishedAt: null, student: { id: 'stu_e2e_2', firstName: 'سالم', lastName: 'قدّور', avatarInitials: 'سق', avatarColor: '#059669', email: 'salim@e2e.tadmora.app' }, reviewer: null, offering: { id: 'offr_e2e_t_db', course: { name: 'قواعد البيانات', code: 'CS-304' } } },
+  { id: 'pap_e2e_2', title: 'الخوارزميات الجشعة في جدولة المهام', abstract: 'تطبيقات الخوارزميات الجشعة على جدولة المهام الزمنية.', fileUrl: null, status: 'GRADED', plagiarismPct: 2, aiContentPct: 6, grade: 17, feedback: 'معالجة جيدة للبنية الفرعية المثلى مع نقص في التحليل التجريبي.', uploadedAt: hoursAgo(96), scannedAt: hoursAgo(94), gradedAt: hoursAgo(30), publishedAt: null, student: { id: 'stu_e2e_1', firstName: 'مروة', lastName: 'البراني', avatarInitials: 'مر', avatarColor: '#0ea5e9', email: 'marwa@e2e.tadmora.app' }, reviewer: { firstName: 'ليلى', lastName: 'الفيتوري' }, offering: { id: 'offr_e2e_t_algo', course: { name: 'مقدمة في الخوارزميات', code: 'CS-201' } } },
 ];
 
 /* ── exam authoring: templates list + question bank. */
@@ -438,7 +438,7 @@ const overrides = [
 
 /* the seeded auth state: TEACHER_USER + the institution context the
  * institution-scoped queries key on (the shape auth.store hydrates). */
-const seededUser = { ...TEACHER_USER, memberships: [], currentInstitution: { id: 'inst_e2e_zu', name: 'جامعة الزاوية', nameEn: 'Zawia University', slug: 'zu' }, membershipRole: 'TEACHER' };
+const seededUser = { ...TEACHER_USER, memberships: [], currentInstitution: { id: 'inst_e2e_zu', name: 'مؤسسة الفحص التجريبية', nameEn: 'E2E Test Institution', slug: 'zu' }, membershipRole: 'TEACHER' };
 
 /* /auth/me is AUTHORITATIVE for the institution context (useAuth.useMe
  * → applySessionExtras: "no context in the payload resets the context")

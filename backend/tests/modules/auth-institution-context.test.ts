@@ -104,8 +104,8 @@ const makeMembership = (overrides: {
     updatedAt: new Date(),
     institution: {
       id: overrides.institutionId,
-      name: 'جامعة الزاوية',
-      nameEn: 'University of Zawia',
+      name: 'مساحة عمل تادمورا التجريبية',
+      nameEn: 'Tadmora Experimental Workspace',
       slug: 'zawia-showcase',
       status: 'ACTIVE',
     },
@@ -138,8 +138,8 @@ describe('loginUser — session institution context', () => {
     expect(user.memberships).toEqual([
       {
         institutionId: 'inst-zawia-showcase',
-        name: 'جامعة الزاوية',
-        nameEn: 'University of Zawia',
+        name: 'مساحة عمل تادمورا التجريبية',
+        nameEn: 'Tadmora Experimental Workspace',
         slug: 'zawia-showcase',
         role: 'STUDENT',
         isActive: true,
@@ -300,8 +300,8 @@ describe('registerUser — institution chain consistency', () => {
     vi.mocked(prisma.user.findUnique).mockResolvedValue(null);
     vi.mocked(prisma.institution.findUnique).mockResolvedValue({
       id: 'inst-zawia-showcase',
-      name: 'جامعة الزاوية',
-      nameEn: 'University of Zawia',
+      name: 'مساحة عمل تادمورا التجريبية',
+      nameEn: 'Tadmora Experimental Workspace',
       slug: 'zawia-showcase',
       status: 'ACTIVE',
     } as never);

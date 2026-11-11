@@ -57,7 +57,7 @@ const GUEST_ROUTES: HealthRoute[] = [
   {
     path: '/colleges',
     ready: async (page) => {
-      await expect(page.getByRole('group', { name: 'كلّيّات حرم المعرفة' })).toBeVisible();
+      await expect(page.getByRole('heading', { level: 1, name: 'مؤسستك، كلياتك… على تادمورا' })).toBeVisible();
     },
   },
   {

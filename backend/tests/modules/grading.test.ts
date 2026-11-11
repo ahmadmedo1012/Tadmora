@@ -30,7 +30,7 @@ import { quizAnswerMatches as trainingRouteMatcher } from '../../src/http/routes
 describe('exactAnswerMatches — shared strict core', () => {
   it('matches exact answers, in Latin and Arabic', () => {
     expect(exactAnswerMatches('HTML', 'HTML')).toBe(true);
-    expect(exactAnswerMatches('الزاوية', 'الزاوية')).toBe(true);
+    expect(exactAnswerMatches('الخوارزمية', 'الخوارزمية')).toBe(true);
   });
 
   it('matches case-insensitively', () => {
@@ -89,7 +89,7 @@ describe('exactAnswerMatches — strict mode', () => {
   });
 
   it('rejects Arabic answers that differ by a word or a translation', () => {
-    expect(exactAnswerMatches('الزاوية', 'az-zawiya')).toBe(false);
+    expect(exactAnswerMatches('الخوارزمية', 'algorithm')).toBe(false);
     expect(exactAnswerMatches('تعلم', 'التعلم')).toBe(false);
   });
 });
@@ -146,7 +146,7 @@ describe('mode relation (D12)', () => {
       ['HTML', 'HTML'],
       ['JavaScript', 'javascript'],
       ['  HTML ', 'html'],
-      ['الزاوية', 'الزاوية'],
+      ['الخوارزمية', 'الخوارزمية'],
       ['a b', 'a b'],
     ];
     for (const [expected, submitted] of bothAccept) {

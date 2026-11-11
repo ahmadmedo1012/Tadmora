@@ -118,12 +118,13 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
 const THEME_BOOTSTRAP_SHA256 = 'tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=';
 /* r188: pin refreshed — the JSON-LD block now describes the INDEPENDENT
  * Tadmora platform alone (WebSite node; the retired University-of-Zawia
- * `about` node is gone — the only demo-data story is the explicitly
- * fictional «جامعة تادمورا التجريبية», named in the description as
- * synthetic data, never as affiliation). Verified by check-csp-hash.sh. */
-// r191: pin refreshed — the JSON-LD description dropped the rejected
-// provenance slogan with the meta copy fix.
-const JSON_LD_SHA256 = 'iuL/6zJA7tueoBlf/WhDgsHDQEsvQOBerb8PIlbx7Dw=';
+ * `about` node is gone — the only demo-data story is the labeled neutral
+ * workspace «مساحة عمل تادمورا التجريبية», clearly marked as demo data,
+ * never as affiliation). Verified by check-csp-hash.sh. */
+// Phase Ω: pin refreshed — the JSON-LD description now names the demo
+// WORKSPACE (مساحة عمل تادمورا التجريبية) instead of the retired
+// fictional-university tenant.
+const JSON_LD_SHA256 = 'Ru8IOrDGXkoTglyzfyKp5XtbFhETSRrsHAbdeclhjm4=';
 
 export function createApp() {
   const app = express();
@@ -153,19 +154,13 @@ export function createApp() {
           'worker-src': ["'self'", 'blob:'],
           'object-src': ["'none'"],
           'base-uri': ["'self'"],
-          /* r307: the landing's official-university documentaries embed
-             via the privacy-enhanced youtube-nocookie mechanism, mounted
-             ONLY after an explicit user click (the facade contract — see
-             frontend/src/components/landing/VideoCard.tsx). frame-src
-             admits exactly the two embed hosts; media-src stays unset
-             (falls back to 'self' — all landing video bytes stay local
-             until the visitor opts in), and img-src stays self-only: no
-             third-party thumbnail hosts, posters are composed in CSS. */
-          'frame-src': [
-            "'self'",
-            'https://www.youtube-nocookie.com',
-            'https://www.youtube.com',
-          ],
+          /* Phase Ω (identity purity): the official-university video
+             embeds (youtube-nocookie, mounted after a click via the
+             retired VideoCard) are gone with the real-university media
+             programme — the platform embeds nothing external anymore.
+             frame-src collapses to 'self'; media-src stays unset
+             (falls back to 'self'), img-src stays self-only. */
+          'frame-src': ["'self'"],
         },
       },
       crossOriginResourcePolicy: { policy: 'cross-origin' },

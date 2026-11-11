@@ -50,7 +50,8 @@ interface AccountProfileData {
   lastName: string;
   avatarInitials: string;
   avatarColor: string;
-  /** Which demo institution this account belongs to ('zawia' | 'alandalus'). */
+  /** Which demo workspace this account belongs to ('zawia' | 'alandalus') —
+   * legacy internal keys (row-identity parity with the seed), Phase Ω. */
   institution: 'zawia' | 'alandalus';
   /** Reg-number candidates, tried in order, ONLY when allocating a new
    * StudentProfile (an existing profile is never renumbered). */
@@ -120,46 +121,49 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
 
 /** Ensure the demo skeleton exists (same natural keys as the seed body,
  * so fresh installs and bare boot-time skeletons converge on the same
- * rows the corpus seed would create). */
+ * rows the corpus seed would create). Phase Ω: neutral workspaces — the
+ * faculty rows carry city 'افتراضي' (virtual workspaces, no campus/city
+ * claim) and the first workspace's CS faculty matches the seed's
+ * composite key exactly. */
 async function ensureSkeleton(prisma: PrismaClient) {
   const zawia = await prisma.institution.upsert({
     where: { slug: 'tadmora-demo' },
-    update: { name: 'جامعة تادمورا التجريبية', nameEn: 'Tadmora Demo University', status: 'ACTIVE' },
+    update: { name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', status: 'ACTIVE' },
     create: {
       id: 'inst-zawia-showcase',
-      name: 'جامعة تادمورا التجريبية',
-      nameEn: 'Tadmora Demo University',
+      name: 'مساحة عمل تادمورا التجريبية',
+      nameEn: 'Tadmora Experimental Workspace',
       slug: 'tadmora-demo',
       status: 'ACTIVE',
     },
   });
   const alandalus = await prisma.institution.upsert({
     where: { slug: 'alandalus-demo' },
-    update: { name: 'مؤسسة الأندلس التعليمية', nameEn: 'Al-Andalus Education Institute', status: 'ACTIVE' },
+    update: { name: 'مساحة عمل تجريبية ثانية', nameEn: 'A Second Experimental Workspace', status: 'ACTIVE' },
     create: {
-      name: 'مؤسسة الأندلس التعليمية',
-      nameEn: 'Al-Andalus Education Institute',
+      name: 'مساحة عمل تجريبية ثانية',
+      nameEn: 'A Second Experimental Workspace',
       slug: 'alandalus-demo',
       status: 'ACTIVE',
     },
   });
   const zawiaItFaculty = await prisma.faculty.upsert({
     where: {
-      institutionId_name_city: { institutionId: zawia.id, name: 'كلية تقنية المعلومات', city: 'حرم المعرفة' },
+      institutionId_name_city: { institutionId: zawia.id, name: 'كلية علوم الحاسوب', city: 'افتراضي' },
     },
     create: {
-      name: 'كلية تقنية المعلومات', nameEn: 'Information Technology', iconEmoji: '💻',
-      city: 'حرم المعرفة', institutionId: zawia.id,
+      name: 'كلية علوم الحاسوب', nameEn: 'Computer Science', iconEmoji: '💻',
+      city: 'افتراضي', institutionId: zawia.id,
     },
     update: {},
   });
   const aaFaculty = await prisma.faculty.upsert({
     where: {
-      institutionId_name_city: { institutionId: alandalus.id, name: 'كلية تقنية المعلومات', city: 'طرابلس' },
+      institutionId_name_city: { institutionId: alandalus.id, name: 'كلية تقنية المعلومات', city: 'افتراضي' },
     },
     create: {
       name: 'كلية تقنية المعلومات', nameEn: 'Information Technology', iconEmoji: '💻',
-      city: 'طرابلس', institutionId: alandalus.id,
+      city: 'افتراضي', institutionId: alandalus.id,
     },
     update: {},
   });

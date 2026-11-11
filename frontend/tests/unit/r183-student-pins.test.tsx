@@ -199,36 +199,36 @@ const STUDENT = {
   role: 'STUDENT',
 } as const;
 
-const ZAWIA: InstitutionSummary = {
-  // r188: the demonstration tenant — fictional identity, legacy id kept.
+const WORKSPACE: InstitutionSummary = {
+  // Phase Ω: the demonstration workspace — labeled, synthetic, legacy id kept.
   id: 'inst-zawia-showcase',
-  name: 'جامعة تادمورا التجريبية',
-  nameEn: 'Tadmora Demo University',
+  name: 'مساحة عمل تادمورا التجريبية',
+  nameEn: 'Tadmora Experimental Workspace',
   slug: 'tadmora-demo',
 };
 
-const ANDALUS: InstitutionSummary = {
+const WORKSPACE2: InstitutionSummary = {
   id: 'inst-alandalus-demo',
-  name: 'مؤسّسة الأندلس التعليميّة',
+  name: 'مساحة عمل تجريبية ثانية',
   nameEn: null,
   slug: 'alandalus-demo',
 };
 
-const ZAWIA_FACULTIES = [
-  { id: 'f1', name: 'كلية الآداب', city: 'حرم المعرفة', iconEmoji: null },
-  { id: 'f2', name: 'كلية العلوم', city: 'حرم المعرفة', iconEmoji: null },
-  { id: 'f3', name: 'كلية التربية', city: 'حرم الابتكار', iconEmoji: null },
+const WORKSPACE_FACULTIES = [
+  { id: 'f1', name: 'كلية علوم الحاسوب', city: 'افتراضي', iconEmoji: null },
+  { id: 'f2', name: 'كلية الهندسة', city: 'افتراضي', iconEmoji: null },
+  { id: 'f3', name: 'كلية إدارة الأعمال', city: 'افتراضي', iconEmoji: null },
 ];
 
-const ANDALUS_FACULTIES = [
-  { id: 'g1', name: 'كلية الأندلس للعلوم', city: 'طرابلس', iconEmoji: null },
+const WORKSPACE2_FACULTIES = [
+  { id: 'g1', name: 'كلية العلوم التطبيقية', city: 'افتراضي', iconEmoji: null },
 ];
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
 });
 
-function renderUniversity(institution: InstitutionSummary | null, faculties: typeof ZAWIA_FACULTIES) {
+function renderUniversity(institution: InstitutionSummary | null, faculties: typeof WORKSPACE_FACULTIES) {
   uni.faculties = faculties;
   uni.slug = institution?.slug;
   act(() => {
@@ -250,30 +250,32 @@ function changeLines(container: HTMLElement): string[] {
   );
 }
 
-describe('r183-B3 — /student/university derives its identity from the session institution (A6 P2)', () => {
-  it('tadmora-demo session: the fictional demo facts stay, labeled as the demonstration institution', () => {
-    const { container } = renderUniversity(ZAWIA, ZAWIA_FACULTIES);
+describe('r183-B3 → Ω — /student/university derives its identity from the session institution (A6 P2)', () => {
+  it('tadmora-demo session: the workspace facts stay, labeled as the demonstration workspace', () => {
+    const { container } = renderUniversity(WORKSPACE, WORKSPACE_FACULTIES);
 
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('جامعة تادمورا التجريبية');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مساحة عمل تادمورا التجريبية');
     // r188: the real-university facts (1988/decree/memberships) are GONE —
-    // the demo tenant's synthetic profile is the only fact story.
+    // the demo workspace's synthetic profile is the only fact story.
     expect(screen.queryByText('1988')).toBeNull();
     expect(screen.queryAllByText(/بقرار رقم/)).toHaveLength(0);
     expect(screen.queryByText('العضويّات الدوليّة')).toBeNull();
     expect(screen.getByText('بطاقة تعريف المؤسّسة')).toBeInTheDocument();
-    // The campus-split cards.
-    expect(screen.getByText('داخل الحرم الجامعيّ')).toBeInTheDocument();
-    expect(screen.getByText('فروع خارجيّة')).toBeInTheDocument();
+    // Phase Ω: the campus split is retired — ONE card lists every
+    // faculty of the workspace equally.
+    expect(screen.getByText('كليّات مساحة العمل')).toBeInTheDocument();
+    expect(screen.queryByText('داخل الحرم الجامعيّ')).toBeNull();
+    expect(screen.queryByText('فروع خارجيّة')).toBeNull();
     expect(container.querySelectorAll('.faculty-chip-row').length).toBe(3);
   });
 
-  it("alandalus-demo session: the page carries the institution's OWN name — no ZU facts anywhere", () => {
-    renderUniversity(ANDALUS, ANDALUS_FACULTIES);
+  it("alandalus-demo session: the page carries the institution's OWN name — no showcase facts anywhere", () => {
+    renderUniversity(WORKSPACE2, WORKSPACE2_FACULTIES);
 
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مؤسّسة الأندلس التعليميّة');
-    expect(screen.getByText(/مؤسّسة تعليميّة على منصّة تادمورا/)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مساحة عمل تجريبية ثانية');
+    expect(screen.getByText(/مؤسّستك على منصّة تادمورا/)).toBeInTheDocument();
 
-    // The ZU-specific facts are dropped, never re-attributed.
+    // The showcase-specific facts are dropped, never re-attributed.
     expect(screen.queryByText('سنة التأسيس')).toBeNull();
     expect(screen.queryByText('1988')).toBeNull();
     expect(screen.queryAllByText(/بقرار رقم 135/)).toHaveLength(0);
@@ -287,25 +289,25 @@ describe('r183-B3 — /student/university derives its identity from the session 
     // Its own facts: the platform identifier + the scoped faculties.
     expect(screen.getByText('المعرّف على المنصّة')).toBeInTheDocument();
     expect(screen.getByText('alandalus-demo')).toBeInTheDocument();
-    expect(screen.getByText('كلية الأندلس للعلوم')).toBeInTheDocument();
+    expect(screen.getByText('كلية العلوم التطبيقية')).toBeInTheDocument();
   });
 
-  it('the «فروع خارجيّة» cities line counts the REAL outside cities (was «1 في 0 مدينة»)', () => {
-    // All faculties outside حرم المعرفة: 1 faculty, 1 distinct campus.
-    const outside = [{ id: 'g1', name: 'كلية الأندلس للعلوم', city: 'طرابلس', iconEmoji: null }];
-    const { container } = renderUniversity(ZAWIA, outside);
-    const lines = changeLines(container);
-    expect(lines).toContain('في مدينة واحدة');
-    expect(lines.some((l) => l.includes('0 مدينة'))).toBe(false);
-  });
-
-  it('zero outside faculties: no cities line at all (the old code said «في 0 مدينة» here)', () => {
-    const inside = [
-      { id: 'f1', name: 'كلية الآداب', city: 'حرم المعرفة', iconEmoji: null },
-      { id: 'f2', name: 'كلية العلوم', city: 'حرم المعرفة', iconEmoji: null },
+  it('Phase Ω: no cities/distribution line ever renders — the campus dimension is retired', () => {
+    // Whatever the faculties' cities are, the page never emits a
+    // «موزَّعة على … مدن» metric-change line anymore.
+    const mixed = [
+      { id: 'g1', name: 'كلية العلوم التطبيقية', city: 'افتراضي', iconEmoji: null },
+      { id: 'g2', name: 'كلية الهندسة', city: 'أي مدينة', iconEmoji: null },
     ];
-    const { container } = renderUniversity(ZAWIA, inside);
-    expect(changeLines(container).some((l) => l.startsWith('في '))).toBe(false);
+    const { container } = renderUniversity(WORKSPACE, mixed);
+    expect(changeLines(container).some((l) => l.includes('مدينة'))).toBe(false);
+    // every faculty rides the ONE card
+    expect(container.querySelectorAll('.faculty-chip-row').length).toBe(2);
+  });
+
+  it('empty faculties: the honest empty state says the structure is built by the institution', () => {
+    renderUniversity(WORKSPACE, []);
+    expect(screen.getByText('لا توجد بيانات')).toBeInTheDocument();
   });
 });
 

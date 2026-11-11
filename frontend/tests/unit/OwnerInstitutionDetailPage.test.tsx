@@ -37,8 +37,8 @@ const ZAWIA = {
 const ALANDALUS = {
   ...ZAWIA,
   id: 'inst-alandalus-demo',
-  name: 'مؤسسة الأندلس التعليمية',
-  nameEn: 'Al-Andalus Education Institute',
+  name: 'مساحة عمل تجريبية ثانية',
+  nameEn: 'Second Experimental Workspace',
   slug: 'alandalus-demo',
   status: 'SUSPENDED',
   activeMembershipCount: 2,

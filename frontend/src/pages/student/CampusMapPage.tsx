@@ -1,15 +1,12 @@
-import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ArrowLeft, Info, Building2, Download } from 'lucide-react';
+import { ArrowLeft, Info, Building2, Download } from 'lucide-react';
 /* R321 (c1 · WP-B2) — the §B2 kit: the mono-indexed section title
  * bar, the honest mono count + the hatched empty cell. */
 import { SectionBar, BarCount, EmptyCell } from '../../components/student';
-import { ErrorState, Skeleton } from '../../components/primitives/States';
 import { PageFrame, PageHeader, RowList, RowItem } from '../../components/patterns';
 import { Icon } from '../../components/Icon';
 import { EmojiIcon } from '../../components/EmojiIcon';
 import { useFaculties, useCurrentInstitutionSlug } from '../../hooks/useResources';
-import { formatNum } from '../../utils/numbers';
 
 /* R305 Heron: the shared student vocabulary + this family's refinements. */
 import '../../styles/student/heron.css';
@@ -24,20 +21,17 @@ import '../../styles/student/pages.css';
 import '../../styles/student/map-live.css';
 
 /**
- * Honest campus directory.
+ * Honest institution directory (Phase Ω — identity purity).
  *
- * The previous CampusMapPage rendered 8 invented buildings with fake
- * x/y coordinates (removed in the honesty purge — a pan/zoom campus
- * map needs building data the platform does not track). The "map"
- * moment is the city-footprint band below: real faculty counts per
- * city derived from the /faculties payload, doubling as the directory
- * filter. A true interactive campus map remains a facilities-data
- * follow-up (see the note at the bottom of the page).
- *
- * R321 (c1 · WP-B2) — the page joins the sheet system: the Card walls
- * are gone (the band/contact boards are §B2 title bars + rows on the
- * page paper); the campus-city-* band ART keeps its student.css
- * anatomy verbatim — only the frame around it converted.
+ * The platform has NO campus: there is no map to draw and no city
+ * footprint to chart — every institution's structure is built from its
+ * OWN data after onboarding. What this page renders:
+ *   · the honest statement (the map is built from YOUR institution's
+ *     data — the registrar authors the structure, this directory reads
+ *     it live from the institution's records);
+ *   · the DB-driven faculty directory (real /faculties payload, every
+ *     row a door to the faculty's page);
+ *   · the obviously-synthetic demo contact details (clearly labeled).
  */
 
 /** Arabic counted-noun forms for the counts on this page:
@@ -45,28 +39,13 @@ import '../../styles/student/map-live.css';
 function arCount(n: number, one: string, two: string, few: string, many: string): string {
   if (n === 1) return one;
   if (n === 2) return two;
-  if (n <= 10) return `${formatNum(n)} ${few}`;
-  return `${formatNum(n)} ${many}`;
+  if (n <= 10) return `${n} ${few}`;
+  return `${n} ${many}`;
 }
 
 export default function CampusMapPage() {
   const facs = useFaculties(useCurrentInstitutionSlug()); // r180: caller-institution scoping
   const faculties = facs.data ?? [];
-  const [city, setCity] = useState<string>('all');
-
-  /* City footprint — real counts from the faculties payload, sorted by
-     actual footprint size (the old page sorted cities by a hardcoded
-     list; every value below is derived from live data). */
-  const cityStats = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const f of facs.data ?? []) counts.set(f.city, (counts.get(f.city) ?? 0) + 1);
-    return [...counts.entries()]
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'ar'));
-  }, [facs.data]);
-  const maxCount = cityStats[0]?.count ?? 1;
-
-  const visible = city === 'all' ? faculties : faculties.filter((f) => f.city === city);
 
   return (
     /* R321 (c1 · WP-B2) — the page joins the sheet system: ONE
@@ -78,21 +57,20 @@ export default function CampusMapPage() {
     <PageFrame width="default">
       <PageHeader
         index="01"
-        eyebrow="خدمات الجامعة"
-        title="دليل الحرم الجامعيّ"
+        eyebrow="خدمات المؤسّسة"
+        title="دليل كليات مؤسستك"
         description={
-          'كلّيّات جامعة تادمورا التجريبية بحسب الحرم، مع روابط لصفحاتها التفصيليّة — بيانات عرض اصطناعية.'
+          'لا خريطة جاهزة على تادمورا — الدليل يُقرأ مباشرة من بيانات مؤسستك: الهيكل الأكاديمي (كليات، أقسام، مقرّرات) ينشئه المسجّل العام، وهذه الصفحة تعرضه كما هو في قاعدة بياناتك.'
         }
         /* R342-08 — the header CTA pair (the D11/D8 measured seat;
            the phone band hides the topbar «اسأل AI» ≤920, D6):
-           «الجامعة التجريبية» is the campus's fact sheet (the
-           bottom rail keeps its fuller «الصفحة الكاملة» label),
-           «مركز التحميلات» is the university-services sibling. */
+           «بطاقة المؤسّسة» is the workspace's fact sheet, «مركز
+           التحميلات» is the institution-services sibling. */
         actions={(
           <>
             <Link to="/student/university" className="btn primary sm">
               <Icon icon={Building2} size={13} />
-              الجامعة التجريبية
+              بطاقة المؤسّسة
             </Link>
             <Link to="/student/downloads" className="btn ghost sm">
               <Icon icon={Download} size={13} />
@@ -102,18 +80,13 @@ export default function CampusMapPage() {
         )}
       />
 
-      {/* [02] the campus "map" — an honest footprint band (real counts
-          per city; the bar length is proportional to the faculty
-          count) that doubles as the directory filter. This band is
-          the page's authored moment: the bars grow in on entrance.
-          R321 B2: only the Card WALL around it retired — the band sits
-          on the page paper under its own §B2 bar, its campus-city-*
-          ART untouched. */}
-      <section className="ml-sec" aria-labelledby="map-sec-footprint">
+      {/* [02] the honest statement — the map is built from YOUR data.
+          R321 B2: the §B2 title bar + the note on the page paper. */}
+      <section className="ml-sec" aria-labelledby="map-sec-built">
         <SectionBar
           index="02"
-          title="انتشار الكليّات على المدن"
-          id="map-sec-footprint"
+          title="الخريطة تُبنى من بيانات مؤسستك"
+          id="map-sec-built"
           meta={
             !facs.isPending && !facs.isError && faculties.length > 0 ? (
               <BarCount
@@ -123,80 +96,27 @@ export default function CampusMapPage() {
             ) : undefined
           }
         />
-        <p className="ml-sec-note">طول كل شريط يتناسب مع عدد الكليّات المسجَّلة في المدينة — انقر مدينة لتصفية الدليل.</p>
-        {facs.isPending ? (
-          <div className="flex-col gap-2" aria-busy="true">
-            {[0, 1, 2, 3].map((i) => (
-              <div className="campus-skel-row" key={i} aria-hidden>
-                <Skeleton width={84} height={13} />
-                <Skeleton width={`${72 - i * 14}%`} height={8} rounded="var(--r-full)" />
-                <Skeleton width={26} height={13} />
-              </div>
-            ))}
-          </div>
-        ) : facs.isError ? (
-          <ErrorState
-            message="تعذَّر تحميل قائمة الكليّات"
-            error={facs.error}
-            onRetry={() => facs.refetch()}
-          />
-        ) : (
-          <div className="campus-city-list" role="group" aria-label="تصفية الكليّات حسب المدينة">
-            <button
-              type="button"
-              className={`campus-city-row${city === 'all' ? ' on' : ''}`}
-              aria-pressed={city === 'all'}
-              onClick={() => setCity('all')}
-            >
-              <span className="campus-city-name">جميع المدن</span>
-              <span className="campus-city-track" aria-hidden>
-                <span className="campus-city-fill" style={{ inlineSize: '100%' }} />
-              </span>
-              <span className="campus-city-count">{formatNum(faculties.length)}</span>
-            </button>
-            {cityStats.map((c, i) => (
-              <button
-                key={c.name}
-                type="button"
-                className={`campus-city-row${city === c.name ? ' on' : ''}`}
-                aria-pressed={city === c.name}
-                style={{ ['--city-i' as never]: i + 1 }}
-                onClick={() => setCity(c.name)}
-              >
-                <span className="campus-city-name">{c.name}</span>
-                <span className="campus-city-track" aria-hidden>
-                  <span
-                    className="campus-city-fill"
-                    style={{ inlineSize: `${Math.max(8, Math.round((c.count / maxCount) * 100))}%` }}
-                  />
-                </span>
-                <span className="campus-city-count">{formatNum(c.count)}</span>
-              </button>
-            ))}
-          </div>
-        )}
+        <p className="ml-sec-note">
+          تادمورا منصّة مستقلة متعددة المستأجرين ولا تحمل حرمًا جامعيًّا ولا خريطة جاهزة:
+          كليات مؤسستك تُنشأ من لوحة المسجل العام، وهذا الدليل يقرأها من قاعدة بيانات مؤسستك مباشرة —
+          بلا قوالب مفروضة وبلا محتوى مُختلق.
+        </p>
       </section>
 
-      {/* [03] Directory — the band above owns the error state, so this
-          section only renders its honest empty state with data loaded.
-          R304: the grid of link tiles became a RowList of whole-row
-          links (`to` — the 44px row IS the tap target; the city and
-          department count ride the meta line, never nested
-          interactives). R321 B2: the SectionHeader became the §B2
-          title bar (the honest filtered count as mono meta), and the
-          city rides a bdi-isolated text run with hairline separators
-          (the purple Badge pill retired with the Card walls). */}
+      {/* [03] Directory — DB-driven, every row a door. R304: the RowList
+          of whole-row links (`to` — the 44px row IS the tap target);
+          R321 B2: the §B2 title bar (the honest count as mono meta). */}
       {facs.isError ? null : (
         <section className="ml-sec" aria-labelledby="map-sec-directory">
           <SectionBar
             index="03"
-            title={city === 'all' ? 'جميع الكليّات' : `كلّيّات ${city}`}
+            title="كليات مؤسستك"
             id="map-sec-directory"
             meta={
               facs.isSuccess ? (
                 <BarCount
-                  n={visible.length}
-                  srLabel={arCount(visible.length, 'كلّيّة واحدة', 'كلّيّتان', 'كليّات', 'كلّيّة')}
+                  n={faculties.length}
+                  srLabel={arCount(faculties.length, 'كلّيّة واحدة', 'كلّيّتان', 'كليّات', 'كلّيّة')}
                 />
               ) : undefined
             }
@@ -205,16 +125,15 @@ export default function CampusMapPage() {
             loading={facs.isPending}
             aria-label="دليل الكليّات"
             empty={
-              /* R321 B2 — the empty filter bucket is the sheet's
-                 reserved-but-empty region: the hatched EmptyCell, same
-                 honest copy. */
+              /* R321 B2 — the honest empty bucket is the sheet's
+                 reserved-but-empty region: the hatched EmptyCell. */
               <EmptyCell
-                label="لا توجد كلّيّات في هذه المدينة"
-                note="جرِّب اختيار مدينة أخرى من انتشار الكليّات الأعلى."
+                label="لا توجد كليّات بعد"
+                note="ينشئ المسجّل العام كليات مؤسستك من «الهيكل الأكاديمي» في لوحة المسجل العام."
               />
             }
           >
-            {visible.map((f) => (
+            {faculties.map((f) => (
               <RowItem
                 key={f.id}
                 to={`/colleges/${f.id}`}
@@ -226,8 +145,6 @@ export default function CampusMapPage() {
                 title={f.name}
                 meta={
                   <span className="r305s-meta-row">
-                    <bdi>{f.city}</bdi>
-                    <span className="r305s-meta-sep" aria-hidden />
                     {arCount(f.departments.length, 'قسم واحد', 'قسمان', 'أقسام', 'قسماً')}
                   </span>
                 }
@@ -237,24 +154,22 @@ export default function CampusMapPage() {
         </section>
       )}
 
-      {/* [04] Contact — the fact-tile wall became hairline rows on the
-          page paper (label rung + mono LTR values); the honest
-          map-in-development note keeps its campus-map-note family. */}
+      {/* [04] Contact — hairline rows on the page paper (label rung +
+          mono LTR values); the obviously-synthetic demo details, clearly
+          labeled (the r307 demo-contact contract). */}
       <section className="ml-sec" aria-labelledby="map-sec-contact">
         <SectionBar index="04" title="معلومات التواصل" id="map-sec-contact" />
         <div className="ml-facts">
           <div className="ml-fact">
             <span className="ml-fact-label">الهاتف</span>
             <span className="ml-fact-values">
-              <bdi dir="ltr" className="font-mono text-sm">+218 23 762659</bdi>
-              <bdi dir="ltr" className="font-mono text-sm">+218 23 762882</bdi>
+              <bdi dir="ltr" className="font-mono text-sm">+218 00 000000</bdi>
             </span>
           </div>
           <div className="ml-fact">
             <span className="ml-fact-label">البريد الإلكتروني</span>
             <span className="ml-fact-values">
               <bdi dir="ltr" className="font-mono text-sm">info@demo.tadmora.ly</bdi>
-              <bdi dir="ltr" className="font-mono text-sm">ico@demo.tadmora.ly</bdi>
             </span>
           </div>
         </div>
@@ -262,11 +177,8 @@ export default function CampusMapPage() {
         <div className="campus-map-note">
           <Icon icon={Info} size={14} style={{ flexShrink: 0, marginBlockStart: 'var(--sp-0-5)' }} />
           <span>
-            خريطة الحرم التفاعليّة قيد التطوير. حاليّاً يمكنك الاطّلاع على المواقع الفعليّة عبر الموقع
-            الرسميّ:{' '}
-            <a href="https://demo.tadmora.ly" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>
-              demo.tadmora.ly <Icon icon={ExternalLink} size={11} />
-            </a>
+            بيانات التواصل أعلاه بيانات عرض تجريبية بادية الصناعة — كل مؤسسة تحمل بياناتها الحقيقية
+            بعد انضمامها.
           </span>
         </div>
       </section>
@@ -276,7 +188,7 @@ export default function CampusMapPage() {
       <div className="r305s-next r305p-rail">
         <Link to="/student/university" className="btn primary sm">
           <Icon icon={ArrowLeft} size={13} />
-          صفحة الجامعة التجريبية الكاملة
+          بطاقة المؤسّسة الكاملة
         </Link>
       </div>
     </PageFrame>

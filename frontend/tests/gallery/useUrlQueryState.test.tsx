@@ -4,6 +4,12 @@ import { MemoryRouter, useSearchParams } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { useUrlQueryState } from '../../src/hooks/useUrlQueryState';
 
+/**
+ * Phase Ω (identity purity): the campus param is retired with the
+ * invented campuses — the hook binds ONLY the search query. This suite
+ * pins the query-only contract: URL reads, the debounced write, and
+ * the clear path.
+ */
 function makeWrapper(initialEntries: string[]) {
   return function Wrapper({ children }: { children: ReactNode }) {
     return <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>;
@@ -11,46 +17,25 @@ function makeWrapper(initialEntries: string[]) {
 }
 
 describe('useUrlQueryState', () => {
-  it('reads initial state from the URL', () => {
+  it('reads the initial query from the URL', () => {
     const { result } = renderHook(() => useUrlQueryState(), {
-      wrapper: makeWrapper(['/colleges?q=هندس&campus=حرم المعرفة']),
+      wrapper: makeWrapper(['/colleges?q=هندس']),
     });
     expect(result.current.state.query).toBe('هندس');
-    expect(result.current.state.campus).toBe('حرم المعرفة');
   });
 
-  it('falls back to default state on a clean URL', () => {
+  it('falls back to an empty query on a clean URL', () => {
     const { result } = renderHook(() => useUrlQueryState(), {
       wrapper: makeWrapper(['/colleges']),
     });
     expect(result.current.state.query).toBe('');
-    expect(result.current.state.campus).toBeNull();
   });
 
-  it('normalizes unknown campus values to null', () => {
+  it('ignores retired params (campus no longer exists)', () => {
     const { result } = renderHook(() => useUrlQueryState(), {
-      wrapper: makeWrapper(['/colleges?campus=NotARealCity']),
+      wrapper: makeWrapper(['/colleges?campus=أي-شيء']),
     });
-    expect(result.current.state.campus).toBeNull();
-  });
-
-  it('setCampus updates the URL immediately', async () => {
-    type Hooks = {
-      hook: ReturnType<typeof useUrlQueryState>;
-      params: ReturnType<typeof useSearchParams>[0];
-    };
-    const { result } = renderHook<Hooks, void>(() => ({
-      hook: useUrlQueryState(),
-      params: useSearchParams()[0],
-    }), {
-      wrapper: makeWrapper(['/colleges']),
-    });
-
-    act(() => result.current.hook.setCampus('حرم الابتكار'));
-    expect(result.current.params.get('campus')).toBe('حرم الابتكار');
-
-    act(() => result.current.hook.setCampus(null));
-    expect(result.current.params.get('campus')).toBeNull();
+    expect(result.current.state.query).toBe('');
   });
 
   it('setQuery debounces the URL write', async () => {
@@ -65,18 +50,17 @@ describe('useUrlQueryState', () => {
       wrapper: makeWrapper(['/colleges']),
     });
 
-    act(() => result.current.hook.setQuery('هندس'));
-    // Local state updates instantly:
-    expect(result.current.hook.state.query).toBe('هندس');
+    // the live state updates immediately…
+    act(() => result.current.hook.setQuery('حاسوب'));
+    expect(result.current.hook.state.query).toBe('حاسوب');
+    // …but the URL write is debounced (not yet at 0 ms)
+    expect(result.current.params.get('q')).toBeNull();
 
-    // Wait for the 100ms debounce.
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 150));
-    });
-    expect(result.current.params.get('q')).toBe('هندس');
+    await act(async () => { await new Promise((r) => setTimeout(r, 160)); });
+    expect(result.current.params.get('q')).toBe('حاسوب');
   });
 
-  it('clear strips both params', async () => {
+  it('clear wipes both the live state and the URL immediately', async () => {
     type Hooks = {
       hook: ReturnType<typeof useUrlQueryState>;
       params: ReturnType<typeof useSearchParams>[0];
@@ -85,17 +69,15 @@ describe('useUrlQueryState', () => {
       hook: useUrlQueryState(),
       params: useSearchParams()[0],
     }), {
-      wrapper: makeWrapper(['/colleges?q=هندس&campus=حرم المعرفة']),
+      wrapper: makeWrapper(['/colleges?q=هندس']),
     });
 
     act(() => result.current.hook.clear());
-    expect(result.current.params.get('q')).toBeNull();
-    expect(result.current.params.get('campus')).toBeNull();
     expect(result.current.hook.state.query).toBe('');
-    expect(result.current.hook.state.campus).toBeNull();
+    expect(result.current.params.get('q')).toBeNull();
   });
 
-  it('empty / whitespace query strips q from URL', async () => {
+  it('whitespace-only writes remove the param from the URL', async () => {
     type Hooks = {
       hook: ReturnType<typeof useUrlQueryState>;
       params: ReturnType<typeof useSearchParams>[0];
@@ -108,9 +90,7 @@ describe('useUrlQueryState', () => {
     });
 
     act(() => result.current.hook.setQuery('   '));
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 150));
-    });
+    await act(async () => { await new Promise((r) => setTimeout(r, 160)); });
     expect(result.current.params.get('q')).toBeNull();
   });
 });

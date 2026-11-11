@@ -21,7 +21,7 @@ test.describe('الصفحة العامة للزوار', () => {
     await expect(page.locator('.fo-header-actions')).toBeVisible();
     await expect(page.getByText('نظام تشغيل الجامعة').first()).toBeVisible();
     // بيان الاستقلالية يسمّي المؤسّسة التجريبية الاصطناعية بالاسم
-    await expect(page.getByText('جامعة تادمورا التجريبية').first()).toBeVisible();
+    await expect(page.getByText('مساحة عمل تادمورا التجريبية').first()).toBeVisible();
     // دفتر الصدق بعد r191: القسم يسمّي مصدر أرقامه (ما يعمل اليوم بدل ما يُشحن اليوم)
     await expect(page.getByText('ما يعمل اليوم').first()).toBeVisible();
     // RTL بالهيكل — التطبيق عربي بالكامل (قفل index.html)

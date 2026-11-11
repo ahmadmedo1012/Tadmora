@@ -453,7 +453,7 @@ export function GlobalSearch({ onOpenCommandPalette }: { onOpenCommandPalette?: 
                 جرّب: <button type="button" className="search-tip-pill" onClick={() => setQuery('هندسة')}>هندسة</button>
                 <button type="button" className="search-tip-pill" onClick={() => setQuery('بحث')}>بحث</button>
                 <button type="button" className="search-tip-pill" onClick={() => setQuery('برمجة')}>برمجة</button>
-                <button type="button" className="search-tip-pill" onClick={() => setQuery('حرم المعرفة')}>حرم المعرفة</button>
+                <button type="button" className="search-tip-pill" onClick={() => setQuery('كلية علوم الحاسوب')}>كلية علوم الحاسوب</button>
               </div>
               <div className="search-empty-hint">
                 البحث يشمل المقرّرات والمحاضرات والبحوث المنشورة ومسارات التدريب.

@@ -20,7 +20,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { OwnerUsersPage } from '../../src/pages/owner/OwnerUsersPage';
 
 const ZAWIA = { id: 'inst-zawia', name: 'جامعة الزاوية', slug: 'zawia-showcase', status: 'ACTIVE' };
-const ALANDALUS = { id: 'inst-alandalus', name: 'مؤسسة الأندلس التعليمية', slug: 'alandalus-demo', status: 'SUSPENDED' };
+const ALANDALUS = { id: 'inst-alandalus', name: 'مساحة عمل تجريبية ثانية', slug: 'alandalus-demo', status: 'SUSPENDED' };
 
 const mocks = vi.hoisted(() => ({
   stats: { data: null, isPending: false, isError: false },
@@ -98,7 +98,7 @@ describe('OwnerUsersPage — the المؤسسات scope (r183-B5, A9 P2 · r252 
     // with the table) — same chips, same suspended annotation.
     expect(screen.getByText('جامعة الزاوية')).toBeInTheDocument();
     // The suspended institution stays visible — annotated, never dropped.
-    expect(screen.getByText(/مؤسسة الأندلس التعليمية · معلّقة/)).toBeInTheDocument();
+    expect(screen.getByText(/مساحة عمل تجريبية ثانية · معلّقة/)).toBeInTheDocument();
   });
 
   it('a membership-less row renders the honest «بلا مؤسسة» — never a fabricated chip', () => {

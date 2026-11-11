@@ -1,22 +1,22 @@
 /**
- * r188 — UniversityInfoPage demo-profile source-of-truth pin.
+ * Phase Ω — UniversityInfoPage identity-purity pin.
  *
- * The retired real-university memberships card (r155b: the
- * MEDITERRANEAN/ARAB/AFRICAN unions list — real-institution claims)
- * is gone with the brand reset. The card now renders the demo
- * tenant's SYNTHETIC profile from UNIVERSITY_FACTS.profile: the
- * r155b retyping-error lesson (never hand-retype the fact list)
- * carries over — the render still reads the single source module.
+ * The retired memberships card (real-institution claims, then the
+ * fictional-university profile from UNIVERSITY_FACTS) is gone with the
+ * identity reset: the platform claims NO institutional memberships and
+ * NO accreditation — both are each institution's own affair. The card
+ * now renders the honest workspace line, mirrored from the demo fact
+ * sheet (backend zu-sync static-source.ts — one source, never
+ * hand-retyped: the r155b lesson carries over).
  *
  * useFaculties mocked at the module boundary (the ...actual spread
- * pattern); the profile card itself is static data.
+ * pattern); the card itself is static data.
  */
 import { describe, expect, it, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UniversityInfoPage } from '../../src/pages/student/MorePages';
-import { UNIVERSITY_FACTS } from '../../src/data/university.facts';
 
 vi.mock('../../src/hooks/useResources', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../src/hooks/useResources')>();
@@ -42,20 +42,18 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('UniversityInfoPage — بطاقة تعريف المؤسّسة (r188)', () => {
-  it('renders the demo-tenant profile straight from UNIVERSITY_FACTS (no hand-retyped list)', () => {
+describe('UniversityInfoPage — بطاقة تعريف المؤسّسة (Phase Ω)', () => {
+  it('renders the honest no-memberships line (the fact sheet mirrored, no hand-retyped list)', () => {
     renderPage();
 
-    // the synthetic profile's three entries, in module order
-    for (const entry of UNIVERSITY_FACTS.profile) {
-      expect(screen.getAllByText(entry.full).length).toBeGreaterThan(0);
-    }
+    // the workspace's own truth, one line — no institutional claims
+    expect(screen.getAllByText('لا عضويّات — مساحة عرض محايدة (بيانات تجريبية)').length).toBeGreaterThan(0);
     // the card title states what this is
     expect(screen.getByText('بطاقة تعريف المؤسّسة')).toBeInTheDocument();
   });
 
-  it('the fictional institution name is the one the page carries', () => {
+  it('claims NO accreditation — the ownership note states whose affair it is', () => {
     renderPage();
-    expect(screen.getAllByText('جامعة تادمورا التجريبية').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('الاعتماد والعضويّات شأن مؤسستك — تادمورا منصّة مستقلّة لا تدّعي أي اعتماد').length).toBeGreaterThan(0);
   });
 });

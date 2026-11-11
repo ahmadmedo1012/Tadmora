@@ -940,7 +940,7 @@ export function AdminFacultiesPage() {
               className="input"
               value={facultyForm.city}
               onChange={(e) => setFacultyForm({ ...facultyForm, city: e.target.value })}
-              placeholder="حرم المعرفة"
+              placeholder="كلية العلوم"
             />
           </FormField>
           <FormField label="رمز تعبيري (اختياري)" id="faculty-icon" hint="يظهر مكان الأيقونة الافتراضية بجانب اسم الكلّيّة">

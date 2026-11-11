@@ -362,7 +362,7 @@ describe('R320 §C — ensureTestAccounts (idempotent upsert)', () => {
     );
     // student2's first candidate (UZ-2024-00001) is taken in the OTHER
     // institution — institution-scoped uniqueness means it is free for
-    // مؤسسة الأندلس (the corpus seed relies on exactly this).
+    // مساحة العمل الثانية (the corpus seed relies on exactly this).
     expect(created).toContainEqual(
       expect.objectContaining({ universityId: 'UZ-2024-00001', institutionId: 'inst-alandalus-demo' }),
     );

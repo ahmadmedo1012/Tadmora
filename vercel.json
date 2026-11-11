@@ -19,7 +19,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self';script-src 'self' 'sha256-tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=' 'sha256-iuL/6zJA7tueoBlf/WhDgsHDQEsvQOBerb8PIlbx7Dw=';style-src 'self' 'unsafe-inline';img-src 'self' data: blob:;font-src 'self';connect-src 'self';worker-src 'self' blob:;object-src 'none';base-uri 'self';frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com"
+          "value": "default-src 'self';script-src 'self' 'sha256-tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=' 'sha256-Ru8IOrDGXkoTglyzfyKp5XtbFhETSRrsHAbdeclhjm4=';style-src 'self' 'unsafe-inline';img-src 'self' data: blob:;font-src 'self';connect-src 'self';worker-src 'self' blob:;object-src 'none';base-uri 'self';frame-src 'self'"
         },
         { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
         { "key": "Cross-Origin-Resource-Policy", "value": "cross-origin" },

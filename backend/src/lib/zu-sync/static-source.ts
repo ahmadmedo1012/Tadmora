@@ -1,20 +1,22 @@
 /**
- * Demonstration-institution data sync — static source (r188).
+ * Demo-workspace data sync — static source (r188 → Phase Ω).
  *
  * The PRD's daily institutional-data synchronization is demonstrated
  * with a curated static source. A live HTML scraper would be fragile
  * (no public API, structure can change without notice); instead the
- * demonstration tenant's fact sheet is curated here and synced from
+ * labeled demo workspace's fact sheet is curated here and synced from
  * it. The sync pipeline itself (fetcher-pluggable architecture, run
  * history, stale marking, per-institution scoping) is the REAL
  * product capability being demonstrated.
  *
- * r188 — FICTIONAL SOURCE: every fact below belongs to «جامعة تادمورا
- * التجريبية», the platform's explicitly-synthetic demonstration
- * institution. Nothing here transcribes a real university: the
- * identity, contacts, strategy and grading values are coherent demo
- * fabrications (obviously-demo contact details, synthetic founding
- * year, concept campuses). Replaces the retired zu.edu.ly snapshot.
+ * Phase Ω — NEUTRAL WORKSPACE SOURCE: every fact below belongs to
+ * «مساحة عمل تادمورا التجريبية», the platform's clearly-labeled neutral
+ * demonstration workspace (NOT a university: no campus names, no
+ * affiliation claims, no invented identity). The values are coherent
+ * demo fabrications — obviously-demo contact details, the honest
+ * three-faculty set real institutions replace with their own after
+ * onboarding. Replaces the retired zu.edu.ly snapshot (r188) and the
+ * r188 fictional-university sheet.
  *
  * Architecture: the sync system is fetcher-pluggable. To replace this
  * with a live HTTP fetcher later, implement a new module that exposes
@@ -40,27 +42,27 @@ export interface FactPatch {
 }
 
 /**
- * Curated facts for the fictional demonstration tenant
- * (جامعة تادمورا التجريبية). Synthetic by design — demo contact
- * details, demo identity, demo structure.
+ * Curated facts for the labeled neutral demo workspace
+ * (مساحة عمل تادمورا التجريبية). Demo by design — demo contact
+ * details, demo structure, the honest three-faculty set.
  */
 export const STATIC_FACTS: FactPatch[] = [
   // ─── Identity ────────────────────────────────────────────
-  { key: 'name.ar', value: 'جامعة تادمورا التجريبية', category: 'identity', source: 'demo-source:identity' },
-  { key: 'name.en', value: 'Tadmora Demo University', category: 'identity', source: 'demo-source:identity' },
+  { key: 'name.ar', value: 'مساحة عمل تادمورا التجريبية', category: 'identity', source: 'demo-source:identity' },
+  { key: 'name.en', value: 'Tadmora Experimental Workspace', category: 'identity', source: 'demo-source:identity' },
   { key: 'foundingYear', value: '2015', category: 'identity', source: 'demo-source:identity' },
   { key: 'foundingDecree', value: 'سجلّ عرض تجريبي — لا قرار حقيقي (بيانات اصطناعية)', category: 'identity', source: 'demo-source:identity' },
-  { key: 'collegeCount', value: '25', category: 'identity', source: 'demo-source:colleges' },
+  { key: 'collegeCount', value: '3', category: 'identity', source: 'demo-source:colleges' },
   { key: 'website', value: 'https://demo.tadmora.ly', category: 'identity', source: 'demo-source:identity' },
 
   // ─── Contact (obviously-synthetic demo details) ──────────
-  { key: 'address.ar', value: 'حرم المعرفة · حرم الابتكار · حرم البيان — بيانات عرض', category: 'contact', source: 'demo-source:contact' },
+  { key: 'address.ar', value: 'مساحة افتراضية — بيانات عرض (لا موقع جغرافي)', category: 'contact', source: 'demo-source:contact' },
   { key: 'phone.primary', value: '+218 00 000000', category: 'contact', source: 'demo-source:contact' },
   { key: 'postBox', value: '00000', category: 'contact', source: 'demo-source:contact' },
   { key: 'email.primary', value: 'info@demo.tadmora.ly', category: 'contact', source: 'demo-source:contact' },
 
   // ─── Structure ───────────────────────────────────────────
-  { key: 'memberships', value: 'لا عضويّات — مؤسّسة عرض اصطناعية (بيانات تجريبية)', category: 'memberships', source: 'demo-source:identity' },
+  { key: 'memberships', value: 'لا عضويّات — مساحة عرض محايدة (بيانات تجريبية)', category: 'memberships', source: 'demo-source:identity' },
 
   // ─── Strategic plan (synthetic) ──────────────────────────
   { key: 'strategicPlan.years', value: '2025 – 2029', category: 'strategic', source: 'demo-source:strategy' },
@@ -79,12 +81,12 @@ export const STATIC_FACTS: FactPatch[] = [
   { key: 'grade.passing.medical', value: '60%', category: 'grading', source: 'demo-source:rules' },
   { key: 'grade.passing.graduate', value: '65%', category: 'grading', source: 'demo-source:rules' },
 
-  // ─── Programs (synthetic structure) ──────────────────────
-  { key: 'program.duration.4y', value: 'الآداب، الاقتصاد، التربية البدنية، العلوم، البيطرة، التقنية الطبية، التربية، تقنية المعلومات', category: 'programs', source: 'demo-source:rules' },
-  { key: 'program.duration.5y', value: 'الصيدلة، الهندسة، طب الأسنان، الصحة العامة', category: 'programs', source: 'demo-source:rules' },
-  { key: 'program.duration.6y', value: 'الطب البشري', category: 'programs', source: 'demo-source:rules' },
+  // ─── Programs (the honest three-faculty set) ─────────────
+  { key: 'program.duration.4y', value: 'علوم الحاسوب، إدارة الأعمال', category: 'programs', source: 'demo-source:rules' },
+  { key: 'program.duration.5y', value: 'الهندسة', category: 'programs', source: 'demo-source:rules' },
+  { key: 'program.duration.6y', value: 'لا يوجد — بيانات تجريبية', category: 'programs', source: 'demo-source:rules' },
   { key: 'language.primary', value: 'العربية', category: 'programs', source: 'demo-source:rules' },
-  { key: 'language.secondary', value: 'الإنجليزية (لكليات الطب)', category: 'programs', source: 'demo-source:rules' },
+  { key: 'language.secondary', value: 'الإنجليزية (بعض المقررات)', category: 'programs', source: 'demo-source:rules' },
   { key: 'degree.bachelor.science', value: 'البكالوريوس', category: 'programs', source: 'demo-source:rules' },
   { key: 'degree.bachelor.humanities', value: 'الليسانس', category: 'programs', source: 'demo-source:rules' },
   { key: 'degree.master', value: 'الإجازة العالية (الماجستير)', category: 'programs', source: 'demo-source:rules' },
