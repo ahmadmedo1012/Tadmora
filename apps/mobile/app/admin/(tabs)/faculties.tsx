@@ -93,7 +93,7 @@ export default function AdminFaculties() {
               الكلّيّات والأقسام
             </T>
             <T variant="body" color="muted">
-              جميع كلّيّات الجامعة وأقسامها مع إحصائيات حية.
+              جميع كليات المؤسسة وأقسامها مع إحصائيات حية.
             </T>
           </View>
           <Button
@@ -227,7 +227,7 @@ export default function AdminFaculties() {
             label="المدينة"
             value={fCity}
             onChangeText={setFCity}
-            placeholder="حرم المعرفة"
+            placeholder="كلية العلوم"
             hint="الكلّيّات تتميّز بالاسم داخل كل مدينة — الاسم نفسه في مدينة أخرى لا يُعدّ تكرارًا"
           />
           <Field
