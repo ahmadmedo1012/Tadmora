@@ -8,6 +8,9 @@ this is the escape hatch.
 - Script: `scripts/build-android-local.sh` (repo root, idempotent, fails loud)
 - Quick start (prereqs met + keystore in env): `scripts/build-android-local.sh`
 - Artifact: `apps/mobile/android/app/build/outputs/apk/release/app-release.apk`
+- CI drives THIS SAME SCRIPT: `.github/workflows/android-apk.yml` builds + signs
+  the APK on GitHub runners and publishes the rolling `latest` release
+  (the direct-download channel — RELEASE.md).
 
 Verification labels: script phases 0–2 **sandbox-verified** (JDK/SDK gates,
 prebuild, key.properties, gradle patch, loud aborts); the gradle
