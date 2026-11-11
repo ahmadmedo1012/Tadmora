@@ -2,7 +2,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import {
-  Building2, Users, BookOpen, GraduationCap, Trophy, Megaphone,
+  Building2, Users, BookOpen, GraduationCap, Trophy, Megaphone, ShieldCheck,
   Calendar, Radio, Award, ArrowLeft, MapPin, Clock,
   FlaskConical, Microscope, ClipboardCheck, Medal, BarChart3,
  X, ChevronRight, ChevronDown, ChevronUp, ArrowUpDown,
@@ -424,17 +424,17 @@ export function CollegesIndexPage() {
             </header>
             <RowList aria-label="كيف تُبنى الكليات">
               <RowItem
-                leading={<span aria-hidden><EmojiIcon emoji="🏛️" size={22} /></span>}
+                leading={<span aria-hidden><Icon icon={Building2} size={22} /></span>}
                 title="١ · الهيكل الأكاديمي"
                 meta={<span className="cp-meta-row">من لوحة الإدارة ينشئ المسجّل العام الكليات والأقسام — الاسم واللغة والهيكل قرار مؤسستك، لا قالبًا جاهزًا.</span>}
               />
               <RowItem
-                leading={<span aria-hidden><EmojiIcon emoji="📘" size={22} /></span>}
+                leading={<span aria-hidden><Icon icon={BookOpen} size={22} /></span>}
                 title="٢ · المقرّرات والمحتوى"
                 meta={<span className="cp-meta-row">الأستاذ يبني المحاضرات والاختبارات والمواد داخل كلياته — والبيانات تبقى ملك مؤسستك.</span>}
               />
               <RowItem
-                leading={<span aria-hidden><EmojiIcon emoji="🔐" size={22} /></span>}
+                leading={<span aria-hidden><Icon icon={ShieldCheck} size={22} /></span>}
                 title="٣ · العزل والملكية"
                 meta={<span className="cp-meta-row">كل مؤسسة تعمل في فضائها: رموز المقرّرات وأرقام القيد فريدة على مستواها، والبيانات لا تغادر مؤسستها.</span>}
               />
