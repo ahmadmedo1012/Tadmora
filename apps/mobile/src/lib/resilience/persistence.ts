@@ -31,6 +31,7 @@
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { dehydrate, hydrate, type DehydratedState, type QueryClient } from "@tanstack/react-query";
+import { renamedAsyncStorage } from "@/lib/storageRename";
 
 /* ── contract types (mirrors @tanstack/query-persist-client-core) ────── */
 
@@ -73,7 +74,7 @@ export function createAsyncStoragePersister(
   options: AsyncStoragePersisterOptions = {},
 ): Persister {
   const storage: AsyncStorageLike = options.storage ?? AsyncStorage;
-  const key = options.key ?? "tadmora-mobile-query-cache";
+  const key = options.key ?? "ula-mobile-query-cache";
   const throttleTime = options.throttleTime ?? 1000;
 
   let lastWrite = 0;
@@ -209,8 +210,13 @@ export function persistQueryClient(config: PersistQueryClientConfig): PersistQue
 
 /* ── module-level defaults (the app-root wiring) ─────────────────────── */
 
-/** Storage key for the persisted query cache. */
-export const QUERY_CACHE_STORAGE_KEY = "tadmora-mobile-query-cache";
+/** Storage key for the persisted query cache.
+ * §1.1 rename: the persister below reads the retired identity's cache as
+ * a fallback (adopt + write-through) — a 24h-maxAge offline cache that
+ * survives the app update instead of a cold re-fetch. */
+export const QUERY_CACHE_STORAGE_KEY = "ula-mobile-query-cache";
+/** The retired identity's cache key — read-fallback + cleared on evict. */
+const LEGACY_QUERY_CACHE_KEY = "tadmora-mobile-query-cache";
 /** Persisted cache lifetime — 24h (older caches are deleted on restore). */
 export const QUERY_CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 /**
@@ -222,5 +228,6 @@ export const QUERY_CACHE_BUSTER = "r334-v1";
 /** The preconfigured persister the lead passes at the app root. */
 export const queryCachePersister: Persister = createAsyncStoragePersister({
   key: QUERY_CACHE_STORAGE_KEY,
+  storage: renamedAsyncStorage(QUERY_CACHE_STORAGE_KEY, LEGACY_QUERY_CACHE_KEY),
   throttleTime: 1000,
 });

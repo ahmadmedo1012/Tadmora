@@ -1,13 +1,21 @@
 /**
- * Tadmora API client — typed transport for https://tadmora.vercel.app/api/v1.
+ * Ulara API client — typed transport for https://ulara.vercel.app/api/v1.
  *
  * Backend contract (backend/src/app.ts + lib/errors.ts):
  *   success:   { data: T }            paginated: { data: T[], meta }
  *   error:     { error: { code, message, details? } }
  *   auth:      Authorization: Bearer <accessToken> (15-min JWT)
- *   refresh:   POST /auth/refresh with Cookie: tdmr_refresh=<token>
+ *   refresh:   POST /auth/refresh with Cookie: ulara_refresh=<token>
  *              (httpOnly on web; the native client captures Set-Cookie and
  *               persists the value via SecureStore — no backend change needed).
+ *
+ * Cookie transition (ULARA codemod §1.2): the refresh cookie was renamed
+ * from the retired identity's name to `ulara_refresh`. The Set-Cookie
+ * capture parses the NEW name first and falls back to the legacy name
+ * until every installed client has re-logged-in once (a fresh login sets
+ * ONLY the new name). The replay header always carries the new name —
+ * the backend reads it first and falls back to the legacy name, so both
+ * pre- and post-rename captured values authenticate.
  *
  * CORS: native requests carry no Origin header → allowed by the backend
  * allow-list policy (origin omitted ⇒ pass).
@@ -16,7 +24,13 @@ import { AppNotification, PageMeta, Paginated } from "./types";
 
 export const API_BASE =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-  "https://tadmora.vercel.app/api/v1";
+  "https://ulara.vercel.app/api/v1";
+
+/** The refresh cookie's name (ULARA codemod §1.2 rename). */
+const REFRESH_COOKIE = "ulara_refresh";
+/** The legacy cookie name — read-only fallback during the transition
+ * window; a fresh login re-issues only the new name. */
+const LEGACY_REFRESH_COOKIE = "tdmr_refresh";
 
 export class ApiError extends Error {
   code: string;
@@ -78,8 +92,13 @@ function extractRefreshCookie(res: Response): string | null {
     (res.headers as unknown as Record<string, string>)["Set-Cookie"] ??
     "";
   if (!raw) return null;
-  const m = /tdmr_refresh=([^;]+)/.exec(Array.isArray(raw) ? raw.join("; ") : raw);
-  return m ? m[1] : null;
+  const header = Array.isArray(raw) ? raw.join("; ") : raw;
+  // New name first; the legacy name only appears until the user's first
+  // re-login after the rename (§1.2 transition window).
+  const fresh = new RegExp(`${REFRESH_COOKIE}=([^;]+)`).exec(header);
+  if (fresh) return fresh[1];
+  const legacy = new RegExp(`${LEGACY_REFRESH_COOKIE}=([^;]+)`).exec(header);
+  return legacy ? legacy[1] : null;
 }
 
 async function parseEnvelope<T>(res: Response): Promise<T> {
@@ -127,7 +146,7 @@ async function tryRefresh(): Promise<boolean> {
       try {
         const res = await fetch(`${API_BASE}/auth/refresh`, {
           method: "POST",
-          headers: { "Content-Type": "application/json", Cookie: `tdmr_refresh=${cookie}` },
+          headers: { "Content-Type": "application/json", Cookie: `${REFRESH_COOKIE}=${cookie}` },
           body: "{}",
         });
         if (!res.ok) return false;
@@ -158,7 +177,7 @@ export async function api<T>(path: string, opts: RequestOptions = {}): Promise<T
   // Replay the refresh cookie on auth-family requests (login/refresh benefit;
   // harmless elsewhere, and refresh REQUIRES it).
   const refreshCookie = authBridge?.getRefreshCookie();
-  if (refreshCookie) headers["Cookie"] = `tdmr_refresh=${refreshCookie}`;
+  if (refreshCookie) headers["Cookie"] = `${REFRESH_COOKIE}=${refreshCookie}`;
 
   try {
     const res = await fetch(url, {
@@ -198,7 +217,7 @@ export async function apiWithCookieCapture<T>(path: string, opts: RequestOptions
   const token = authBridge?.getAccessToken();
   if (token && !opts._skipAuth) headers["Authorization"] = `Bearer ${token}`;
   const cookie = authBridge?.getRefreshCookie();
-  if (cookie) headers["Cookie"] = `tdmr_refresh=${cookie}`;
+  if (cookie) headers["Cookie"] = `${REFRESH_COOKIE}=${cookie}`;
   try {
     const res = await fetch(url, {
       method: opts.method ?? "GET",

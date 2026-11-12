@@ -16,7 +16,7 @@ import { Boot, resolveEntryDestination } from "@/components/ui/boot";
  * The handoff is deterministic (resolveEntryDestination — pinned by
  * boot.test.ts):
  *   · session still hydrating → honest cold-wait copy «نستعد لتحميل
- *     تادمورا…» (the 6s slow label «الخادم يستيقظ…» + retry lives in Boot);
+ *     أُلارا…» (the 6s slow label «الخادم يستيقظ…» + retry lives in Boot);
  *   · a cached session → its role home (the /auth/me refresh rides the
  *     background — the cached user routes immediately, no dead wait on a
  *     cold Render);
@@ -64,7 +64,7 @@ export default function BootScreen() {
       {user ? (
         <Boot label="جارٍ الدخول…" />
       ) : (
-        <Boot label="نستعد لتحميل تادمورا…" />
+        <Boot label="نستعد لتحميل أُلارا…" />
       )}
     </>
   );

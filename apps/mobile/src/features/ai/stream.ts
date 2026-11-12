@@ -322,7 +322,7 @@ export function streamAiChat(req: AiStreamRequest): Promise<AiStreamDone> {
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.setRequestHeader("Accept", "text/event-stream");
       if (session.accessToken) xhr.setRequestHeader("Authorization", `Bearer ${session.accessToken}`);
-      if (session.refreshCookie) xhr.setRequestHeader("Cookie", `tdmr_refresh=${session.refreshCookie}`);
+      if (session.refreshCookie) xhr.setRequestHeader("Cookie", `ulara_refresh=${session.refreshCookie}`);
       xhr.send(JSON.stringify({ conversationId: req.conversationId, message: req.message }));
     } catch (err) {
       settle(() => reject(makeError("NETWORK", "تعذّر الاتصال بالخادم — تحقّق من اتصالك بالإنترنت ثم أعد المحاولة.", 0, err)));

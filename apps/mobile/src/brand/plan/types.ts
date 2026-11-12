@@ -1,6 +1,6 @@
 /**
  * plan/types — the shared contract of the R330 signature plan-drawing
- * library (توقيع تادمورا البصري).
+ * library (توقيع أُلارا البصري).
  *
  * The app's signature is the WEBSITE's drafted-architectural-plan
  * language, translated to native: hairline ink structures (stroke

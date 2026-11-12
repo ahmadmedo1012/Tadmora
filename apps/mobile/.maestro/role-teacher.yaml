@@ -1,6 +1,6 @@
 # role-teacher — أستاذ: دخول ← تبويبات ← خروج.
 # Full cycle for the TEACHER role.
-appId: ly.tadmora.mobile
+appId: ly.ulara.app
 name: "03 — أستاذ: دخول، تبويبات، خروج"
 ---
 - launchApp

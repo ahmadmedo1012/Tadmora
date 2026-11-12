@@ -1,9 +1,9 @@
 import type { ExpoConfig } from "expo/config";
 
 /**
- * تادمورا — Tadmora mobile (Expo / React Native).
+ * أُلارا — Ulara mobile (Expo / React Native).
  *
- * Brand: the TADMORA system — paper #F6F6EE · ink #282828 · orange #FA3600.
+ * Brand: the ULARA system — paper #F5F1E8 · ink #262019 · sienna #C43E16.
  * The API base URL is public configuration (EXPO_PUBLIC_API_BASE_URL);
  * secrets never belong in this file or in the app bundle.
  */
@@ -50,21 +50,21 @@ const easUpdatesBlock = {
 };
 
 const config: ExpoConfig = {
-  name: "تادمورا",
-  slug: "tadmora",
+  name: "أُلارا",
+  slug: "ulara",
   version: "1.0.0",
-  scheme: "tadmora",
+  scheme: "ulara",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   userInterfaceStyle: "automatic",
-  description: "تادمورا — نظام تشغيل الجامعة (تطبيق الجوال الرسمي)",
-  backgroundColor: "#F6F6EE",
-  primaryColor: "#FA3600",
+  description: "أُلارا — نظام تشغيل الجامعة (تطبيق الجوال الرسمي)",
+  backgroundColor: "#F5F1E8",
+  primaryColor: "#C43E16",
   ios: {
-    bundleIdentifier: "ly.tadmora.mobile",
+    bundleIdentifier: "ly.ulara.app",
     supportsTablet: true,
     infoPlist: {
-      CFBundleDisplayName: "تادمورا",
+      CFBundleDisplayName: "أُلارا",
       CFBundleLocalizations: ["ar"],
       CFBundleDevelopmentRegion: "ar",
       SupportsRTL: true,
@@ -72,7 +72,7 @@ const config: ExpoConfig = {
     },
   },
   android: {
-    package: "ly.tadmora.mobile",
+    package: "ly.ulara.app",
     adaptiveIcon: {
       foregroundImage: "./assets/images/adaptive-foreground.png",
       backgroundImage: "./assets/images/adaptive-background.png",
@@ -95,20 +95,20 @@ const config: ExpoConfig = {
     [
       "expo-splash-screen",
       {
-        backgroundColor: "#F6F6EE",
-        dark: { backgroundColor: "#282828" },
+        backgroundColor: "#F5F1E8",
+        dark: { backgroundColor: "#262019" },
         image: "./assets/images/splash-icon.png",
         imageWidth: 120,
       },
     ],
     ["expo-secure-store", {}],
     // R327 C3 — the push notification icon (the brand's white silhouette)
-    // + the orange accent for the Android status-bar tint.
+    // + the sienna accent for the Android status-bar tint.
     [
       "expo-notifications",
       {
         icon: "./assets/images/notification-icon.png",
-        color: "#FA3600",
+        color: "#C43E16",
       },
     ],
     // R340 T-M5 (LR-001) — expo-navigation-bar for Android gesture-handle
@@ -160,7 +160,7 @@ const config: ExpoConfig = {
     // Public configuration — safe to inline. The default targets the deployed
     // production API at all times so a bare clone works out of the box.
     apiBaseUrl:
-      process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://tadmora.vercel.app/api/v1",
+      process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://ulara.vercel.app/api/v1",
     eas: {
       // Single source of truth: the resolved EAS_PROJECT_ID (env override,
       // else the placeholder literal). With no real project the id stays the

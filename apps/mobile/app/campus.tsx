@@ -16,12 +16,12 @@ import { StackHeader } from "@/components/shell/AppTopBar";
  *
  * The retired screen was the real-university documentary rail (Commons
  * photographs + official-channel videos of public universities). Phase Ω
- * (identity purity) retires it whole: TADMORA is an independent
+ * (identity purity) retires it whole: ULARA is an independent
  * multi-tenant University Operating System — no campus to document, no
  * university affiliation to imply. What lives here instead is the
  * platform's OWN environment, honestly:
  *   · real product captures of the running surfaces (the labeled demo
- *     workspace «مساحة عمل تادمورا التجريبية» — every frame carries the
+ *     workspace «مساحة عمل أُلارا التجريبية» — every frame carries the
  *     demo-data disclosure);
  *   · the honest statement that every institution's environment is built
  *     from its own data after onboarding.
@@ -43,49 +43,49 @@ const PRODUCT_CAPTURES: CaptureRow[] = [
     id: "student-dashboard",
     name: "لوحة الطالب",
     caption: "المقررات والواجبات والتقدّم — نظرة واحدة",
-    alt: "لقطة حقيقية للوحة الطالب في تادمورا مع بطاقات المقررات والواجبات القادمة — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية للوحة الطالب في أُلارا مع بطاقات المقررات والواجبات القادمة — بيانات العرض التجريبية",
   },
   {
     id: "student-lecture-player",
     name: "المحاضرة التفاعلية",
     caption: "مشغّل المحاضرة مع نقطة فحص تُصحّح فورًا",
-    alt: "لقطة حقيقية لمشغّل المحاضرة التفاعلية في تادمورا مع بطاقة نقطة الفحص — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية لمشغّل المحاضرة التفاعلية في أُلارا مع بطاقة نقطة الفحص — بيانات العرض التجريبية",
   },
   {
     id: "student-matrix",
     name: "مصفوفة الإتقان",
     caption: "درجة إتقان لكل مفهوم، وربطها بالدرس المناسب",
-    alt: "لقطة حقيقية لمصفوفة الإتقان في تادمورا — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية لمصفوفة الإتقان في أُلارا — بيانات العرض التجريبية",
   },
   {
     id: "student-library",
     name: "المكتبة البحثية",
     caption: "قارئ PDF مع البحث والشروح داخل المستند",
-    alt: "لقطة حقيقية للمكتبة البحثية وقارئ PDF في تادمورا — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية للمكتبة البحثية وقارئ PDF في أُلارا — بيانات العرض التجريبية",
   },
   {
     id: "teacher-dashboard",
     name: "لوحة الأستاذ",
     caption: "الشعب، التقدّم، والتصحيح — من مكان واحد",
-    alt: "لقطة حقيقية للوحة الأستاذ في تادمورا — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية للوحة الأستاذ في أُلارا — بيانات العرض التجريبية",
   },
   {
     id: "admin-dashboard",
     name: "لوحة الإدارة",
     caption: "الكليات والمقررات والمستخدمون — حاكمية واضحة",
-    alt: "لقطة حقيقية للوحة الإدارة في تادمورا — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية للوحة الإدارة في أُلارا — بيانات العرض التجريبية",
   },
   {
     id: "quality-dashboard",
     name: "لوحة الجودة",
     caption: "رقابة قرائية للمقررات والأساتذة والاختبارات",
-    alt: "لقطة حقيقية للوحة مكتب الجودة في تادمورا — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية للوحة مكتب الجودة في أُلارا — بيانات العرض التجريبية",
   },
   {
     id: "owner-dashboard",
     name: "لوحة المالك",
     caption: "مؤشرات المنصّة والتنبيهات التشغيلية",
-    alt: "لقطة حقيقية للوحة مالك المنصّة في تادمورا — بيانات العرض التجريبية",
+    alt: "لقطة حقيقية للوحة مالك المنصّة في أُلارا — بيانات العرض التجريبية",
   },
 ];
 
@@ -111,7 +111,7 @@ export default function Campus() {
           لا حرمَ جامعيًّا — بيئة تُبنى من بياناتك
         </T>
         <T variant="body" color="secondary">
-          تادمورا منظومة مستقلّة متعدّدة المؤسسات: لا تصوّر حرمًا ولا تتبنّى جامعة. ما تراه هنا لقطات حقيقية لأسطح المنصّة نفسها، وبيئة كل مؤسسة تُبنى من بياناتها بعد الانضمام.
+          أُلارا منظومة مستقلّة متعدّدة المؤسسات: لا تصوّر حرمًا ولا تتبنّى جامعة. ما تراه هنا لقطات حقيقية لأسطح المنصّة نفسها، وبيئة كل مؤسسة تُبنى من بياناتها بعد الانضمام.
         </T>
       </View>
 
@@ -154,7 +154,7 @@ export default function Campus() {
       </RowList>
 
       <T variant="sm" color="muted">
-        كل الإطارات لقطات حقيقية لأسطح المنصّة من «مساحة عمل تادمورا التجريبية» — بيانات عرض موسومة بوضوح، لا تنتمي لأي مؤسسة تعليمية.
+        كل الإطارات لقطات حقيقية لأسطح المنصّة من «مساحة عمل أُلارا التجريبية» — بيانات عرض موسومة بوضوح، لا تنتمي لأي مؤسسة تعليمية.
       </T>
 
       {/* [02] مؤسستك — the multi-tenant honest statement */}
@@ -164,7 +164,7 @@ export default function Campus() {
           بيئة مؤسستك… من بياناتها
         </T>
         <T variant="body" color="secondary">
-          عند انضمام مؤسستك إلى تادمورا تُبنى كلياتها ومقرراتها ومستخدموها من بياناتها هي — لا قوائم جاهزة ولا فروع مفترضة. ما يظهر لكل دور هو ما تملكه المؤسسة فعلًا.
+          عند انضمام مؤسستك إلى أُلارا تُبنى كلياتها ومقرراتها ومستخدموها من بياناتها هي — لا قوائم جاهزة ولا فروع مفترضة. ما يظهر لكل دور هو ما تملكه المؤسسة فعلًا.
         </T>
       </View>
 
@@ -172,7 +172,7 @@ export default function Campus() {
         <View style={{ flexDirection: "row", alignItems: "flex-start", gap: sp[8] }}>
           <Building2 size={18} color={p.textMuted} />
           <T variant="sm" color="muted" style={{ flex: 1 }}>
-            مستقلّية معلنة: تادمورا ليست موقعًا لأي جامعة بعينها ولا تتبع أي جهة تعليمية — إنما نظام تشغيل واحد تديره كل مؤسسة بنفسها.
+            مستقلّية معلنة: أُلارا ليست موقعًا لأي جامعة بعينها ولا تتبع أي جهة تعليمية — إنما نظام تشغيل واحد تديره كل مؤسسة بنفسها.
           </T>
         </View>
       </Card>

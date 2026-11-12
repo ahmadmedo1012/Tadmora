@@ -24,7 +24,9 @@ import { sp } from "@/design/tokens";
 import { T } from "@/components/ui/text";
 import { haptics } from "@/haptics";
 
-const LOCK_FLAG = "tdmr-biometric-lock";
+const LOCK_FLAG = "ula-biometric-lock";
+/** The retired identity's key — read-fallback, cleared on disable (§1.1). */
+const LEGACY_LOCK_FLAG = "tdmr-biometric-lock";
 
 /** Hardware present AND a biometric enrolled — the honest availability. */
 export async function biometricAvailable(): Promise<boolean> {
@@ -41,7 +43,15 @@ export async function biometricAvailable(): Promise<boolean> {
 
 export async function getBiometricLockEnabled(): Promise<boolean> {
   try {
-    return (await SecureStore.getItemAsync(LOCK_FLAG)) === "1";
+    // §1.1 rename shim: new key first, legacy fallback, adopt + write-through.
+    const fresh = await SecureStore.getItemAsync(LOCK_FLAG);
+    if (fresh !== null) return fresh === "1";
+    const legacy = await SecureStore.getItemAsync(LEGACY_LOCK_FLAG);
+    if (legacy === "1") {
+      await SecureStore.setItemAsync(LOCK_FLAG, "1").catch(() => undefined);
+      return true;
+    }
+    return false;
   } catch {
     return false;
   }
@@ -50,7 +60,13 @@ export async function getBiometricLockEnabled(): Promise<boolean> {
 export async function setBiometricLockEnabled(v: boolean): Promise<void> {
   try {
     if (v) await SecureStore.setItemAsync(LOCK_FLAG, "1");
-    else await SecureStore.deleteItemAsync(LOCK_FLAG);
+    else {
+      // disabling clears BOTH spellings — no legacy orphan re-locks later
+      await Promise.all([
+        SecureStore.deleteItemAsync(LOCK_FLAG).catch(() => undefined),
+        SecureStore.deleteItemAsync(LEGACY_LOCK_FLAG).catch(() => undefined),
+      ]);
+    }
   } catch {
     // SecureStore failures must never brick the lock state — worst case
     // the toggle doesn't persist and the next cold start is unlocked.
@@ -58,7 +74,7 @@ export async function setBiometricLockEnabled(v: boolean): Promise<void> {
 }
 
 /** One authentication attempt (device PIN fallback allowed). */
-export async function authenticate(reason = "افتح تادمورا لعرض حسابك"): Promise<boolean> {
+export async function authenticate(reason = "افتح أُلارا لعرض حسابك"): Promise<boolean> {
   try {
     // A quiet tick as the native prompt appears — the haptics foundation
     // owns the gate/throttle; web and reduced settings no-op safely.
@@ -133,7 +149,7 @@ export function BiometricGate({ children }: { children: ReactNode }) {
           <Fingerprint size={30} color={p.accent} />
         </View>
         <T variant="h4" weight="bold" align="center">
-          تادمورا مقفلة
+          أُلارا مقفلة
         </T>
         <T variant="body" color="muted" align="center" style={{ paddingHorizontal: sp[24] }}>
           {busy

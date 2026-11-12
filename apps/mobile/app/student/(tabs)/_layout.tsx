@@ -10,7 +10,7 @@ import { usePalette } from "@/design/theme";
  * longer re-mounts/slides with each screen transition (the per-screen
  * RoleTabFrame defect). Route paths are unchanged: the `(tabs)` group
  * contributes no segment, so `/student/dashboard` and
- * `tadmora://student/dashboard` resolve exactly as before.
+ * `ulara://student/dashboard` resolve exactly as before.
  *
  * Tab screens stay mounted across switches (bottom-tabs default): each
  * keeps its scroll position and query state; `lazy: true` (default) mounts

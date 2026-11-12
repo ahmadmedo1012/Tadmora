@@ -7,7 +7,7 @@
  * exam submit, grading) never has to think:
  *
  *  1. ENABLED GATE — a persisted user kill-switch. Non-secret settings
- *     ride AsyncStorage in this app (the `tdmr-mobile-*` family — see
+ *     ride AsyncStorage in this app (the `ula-mobile-*` family — see
  *     auth/session.ts; SecureStore is for secrets only, per
  *     lib/tokenStorage.ts / lib/biometric.tsx). Default ON; a missing or
  *     unreadable value never disables feedback.
@@ -29,12 +29,15 @@
 import { Platform } from "react-native";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getItemRenamed } from "@/lib/storageRename";
 
 export type HapticImpact = "light" | "medium" | "heavy";
 export type HapticNotification = "success" | "warning" | "error";
 
-/** Non-secret preference — the `tdmr-mobile-*` AsyncStorage family. */
-const STORAGE_KEY = "tdmr-mobile-haptics-enabled";
+/** Non-secret preference — the `ula-mobile-*` AsyncStorage family.
+ * §1.1 rename shim: reads fall back to the legacy key and adopt. */
+const STORAGE_KEY = "ula-mobile-haptics-enabled";
+const LEGACY_STORAGE_KEY = "tdmr-mobile-haptics-enabled";
 
 /** Global floor: minimum ms between ANY two emitted feedbacks. */
 const MIN_GAP_MS = 60;
@@ -123,7 +126,7 @@ function fire(kind: FireKind, emit: () => void | Promise<void>): void {
 export function hydrate(): Promise<void> {
   if (!hydratePromise) {
     hydratePromise = (async () => {
-      const stored = await AsyncStorage.getItem(STORAGE_KEY).catch(() => null);
+      const stored = await getItemRenamed(STORAGE_KEY, LEGACY_STORAGE_KEY);
       // setEnabled() won the race — its own write is already in storage.
       if (explicitSet) return;
       enabled = stored !== "0";

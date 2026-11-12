@@ -44,7 +44,7 @@ export default function CollegesIndex() {
 
   return (
     <Screen scroll>
-      <StackHeader title="الكلّيات" kicker="مساحة عمل تادمورا التجريبية" />
+      <StackHeader title="الكلّيات" kicker="مساحة عمل أُلارا التجريبية" />
 
       <View style={{ gap: sp[4], paddingBottom: sp[8] }}>
         <T variant="h3" weight="bold">
