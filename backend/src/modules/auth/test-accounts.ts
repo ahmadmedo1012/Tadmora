@@ -80,6 +80,11 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
     institution: 'zawia', specialty: 'علوم الحاسوب والذكاء الاصطناعي',
     rank: AcademicRank.ASSOCIATE_PROFESSOR,
   },
+  'teacher2@test.ly': {
+    firstName: 'خالد', lastName: 'الترابلسي', avatarInitials: 'خت', avatarColor: '#F5A623',
+    institution: 'alandalus', specialty: 'علوم الحاسوب',
+    rank: AcademicRank.ASSISTANT_PROFESSOR,
+  },
   'head@test.ly': {
     firstName: 'محمد', lastName: 'الشريف', avatarInitials: 'مش', avatarColor: '#0E7490',
     institution: 'zawia', specialty: 'هندسة البرمجيات', rank: AcademicRank.PROFESSOR,
@@ -108,6 +113,10 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
   'faculty@test.ly': {
     firstName: 'خديجة', lastName: 'المرابط', avatarInitials: 'خم', avatarColor: '#2EC4B6',
     institution: 'zawia',
+  },
+  'admin2@test.ly': {
+    firstName: 'المسجل', lastName: 'العام', avatarInitials: 'مع', avatarColor: '#2EC4B6',
+    institution: 'alandalus',
   },
   'quality@test.ly': {
     firstName: 'ضمان', lastName: 'الجودة', avatarInitials: 'جو', avatarColor: '#D4A537',

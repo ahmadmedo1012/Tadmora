@@ -40,23 +40,25 @@ import { ensureTestAccounts } from '../../src/modules/auth/test-accounts';
 /* ── table invariants ─────────────────────────────────────────── */
 
 describe('R320 §C — the test-account table', () => {
-  it('carries exactly the 10 documented jobs with unique @test.ly emails', () => {
-    expect(TEST_ACCOUNTS).toHaveLength(10);
+  it('carries exactly the 12 documented jobs with unique @test.ly emails', () => {
+    expect(TEST_ACCOUNTS).toHaveLength(12);
     const emails = TEST_ACCOUNTS.map((a) => a.email);
-    expect(new Set(emails).size).toBe(10);
+    expect(new Set(emails).size).toBe(12);
     for (const email of emails) {
       expect(email.endsWith('@test.ly')).toBe(true);
     }
-    // The easy documented set (one per job — the brief's table).
+    // The easy documented set (the brief's table — both workspaces).
     expect(emails).toEqual([
       'student@test.ly',
       'student2@test.ly',
       'teacher@test.ly',
+      'teacher2@test.ly',
       'head@test.ly',
       'dean@test.ly',
       'vicedean@test.ly',
       'registrar@test.ly',
       'faculty@test.ly',
+      'admin2@test.ly',
       'quality@test.ly',
       'owner@test.ly',
     ]);
@@ -86,11 +88,11 @@ describe('R320 §C — the test-account table', () => {
     expect(TEST_ACCOUNTS.filter((a) => a.scoped)).toHaveLength(1);
   });
 
-  it('groups match the documented panel contract (التعليم 6 · الحوكمة 3 · النظام 1 — R321 §A7: the governance bucket is «الحوكمة»)', () => {
+  it('groups match the documented panel contract (التعليم 7 · الحوكمة 4 · النظام 1 — R321 §A7: the governance bucket is «الحوكمة»)', () => {
     expect(TEST_ACCOUNT_GROUPS).toEqual(['التعليم', 'الحوكمة', 'النظام']);
     const count = (group: string) => TEST_ACCOUNTS.filter((a) => a.group === group).length;
-    expect(count('التعليم')).toBe(6);
-    expect(count('الحوكمة')).toBe(3);
+    expect(count('التعليم')).toBe(7);
+    expect(count('الحوكمة')).toBe(4);
     expect(count('النظام')).toBe(1);
     // No pending@test.ly — the honest skip (no pending user state in
     // the schema); documented in the module header.
@@ -122,11 +124,13 @@ const CANONICAL_NAMES: Record<string, { first: string; last: string; initials: s
   'student@test.ly': { first: 'أحمد', last: 'الزروق', initials: 'أح' },
   'student2@test.ly': { first: 'ليلى', last: 'المهدي', initials: 'لم' },
   'teacher@test.ly': { first: 'سالم', last: 'البوسيفي', initials: 'سب' },
+  'teacher2@test.ly': { first: 'خالد', last: 'الترابلسي', initials: 'خت' },
   'head@test.ly': { first: 'محمد', last: 'الشريف', initials: 'مش' },
   'dean@test.ly': { first: 'إبراهيم', last: 'الفيتوري', initials: 'إف' },
   'vicedean@test.ly': { first: 'آمال', last: 'بن عيسى', initials: 'آب' },
   'registrar@test.ly': { first: 'المسجل', last: 'العام', initials: 'مع' },
   'faculty@test.ly': { first: 'خديجة', last: 'المرابط', initials: 'خم' },
+  'admin2@test.ly': { first: 'المسجل', last: 'العام', initials: 'مع' },
   'quality@test.ly': { first: 'ضمان', last: 'الجودة', initials: 'جو' },
   'owner@test.ly': { first: 'مالك', last: 'المنصة', initials: 'مل' },
 };
@@ -213,11 +217,11 @@ describe('R320 §C — ensureTestAccounts (idempotent upsert)', () => {
     const prisma = makePrisma();
     const ensured = await ensureTestAccounts(prisma);
 
-    expect(ensured).toBe(10);
+    expect(ensured).toBe(12);
     const calls = prisma._spies.userUpsert.mock.calls as unknown as Array<
       [{ where: { email: string }; update: Record<string, unknown>; create: Record<string, unknown> }]
     >;
-    expect(calls).toHaveLength(10);
+    expect(calls).toHaveLength(12);
     for (const [args] of calls) {
       // One easy password for all — the SAME hash everywhere.
       expect(args.update.passwordHash).toBe('test-hash');
@@ -263,7 +267,7 @@ describe('R320 §C — ensureTestAccounts (idempotent upsert)', () => {
         },
       ]
     >;
-    expect(calls).toHaveLength(10);
+    expect(calls).toHaveLength(12);
     for (const [args] of calls) {
       const canonical = CANONICAL_NAMES[args.where.email]!;
       // The heal branch converges the row on the canonical name.
@@ -311,7 +315,7 @@ describe('R320 §C — ensureTestAccounts (idempotent upsert)', () => {
     const memberEmails = (prisma._spies.membershipUpsert.mock.calls as unknown as Array<
       [{ where: { userId_institutionId: { userId: string } } }]
     >).map(([args]) => args.where.userId_institutionId.userId.replace(/^u-/, ''));
-    expect(memberEmails).toHaveLength(9);
+    expect(memberEmails).toHaveLength(11);
     expect(memberEmails).not.toContain('owner@test.ly');
     expect(memberEmails).toContain('student2@test.ly'); // the second institution
   });
