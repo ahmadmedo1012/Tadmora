@@ -1,5 +1,5 @@
 /**
- * api/index.ts — the serverless entry for the whole TADMORA platform.
+ * api/index.ts — the serverless entry for the whole ULARA platform.
  *
  * The Express application (backend/src/app.ts → createApp()) already
  * speaks the Node (req, res) handler signature, so it IS the function

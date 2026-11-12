@@ -114,7 +114,7 @@ describe('isPaperOversightRole (role gate)', () => {
 });
 
 describe('isWithinPapersDir (directory pin)', () => {
-  const root = path.resolve('/srv/tadmora/storage');
+  const root = path.resolve('/srv/ulara/storage');
   const papersDir = path.join(root, 'papers');
 
   it('accepts a file directly inside papers/', () => {

@@ -25,7 +25,7 @@ import {
 // Scratch roots live under os.tmpdir() and are left for the OS to reap —
 // tests never touch the real backend/storage tree.
 async function freshRoot(): Promise<string> {
-  return mkdtemp(path.join(os.tmpdir(), 'tadmora-storage-'));
+  return mkdtemp(path.join(os.tmpdir(), 'ulara-storage-'));
 }
 
 const PDF_BYTES = Buffer.from('%PDF-1.7\nfake pdf payload \u00ff\u00fe\u0001\u0002 — bytes that are NOT utf8-roundtrip-safe', 'latin1');
@@ -110,7 +110,7 @@ describe('buildDriver (env selection — the pure factory)', () => {
       STORAGE_DRIVER: 's3',
       S3_ENDPOINT: 'https://storage.example.com',
       S3_REGION: 'auto',
-      S3_BUCKET: 'tadmora-files',
+      S3_BUCKET: 'ulara-files',
       S3_ACCESS_KEY_ID: 'test-example-access-key',
       S3_SECRET_ACCESS_KEY: 'test-example-secret-key-not-real-000',
     });
@@ -126,7 +126,7 @@ describe('buildDriver (env selection — the pure factory)', () => {
         STORAGE_DRIVER: 's3',
         S3_ENDPOINT: 'https://storage.example.com',
         S3_REGION: 'auto',
-        S3_BUCKET: 'tadmora-files',
+        S3_BUCKET: 'ulara-files',
       }),
     ).toThrow(/S3_ACCESS_KEY_ID/);
   });
