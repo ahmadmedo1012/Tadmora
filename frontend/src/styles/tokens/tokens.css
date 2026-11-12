@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   «تادمورا» — Design System (r305 — the HERON token foundation)
+   «أُلارا» — Design System (r305 — the HERON token foundation)
    ─────────────────────────────────────────────────────────────────────
    R305 re-keys the canon to the Heron-inspired visual system (the
    reference reverse-engineered live at heronaiapp.com — full evidence,
@@ -11,21 +11,21 @@
    FULL parity re-key; the r305/r306/r308 divergence rulings are
    SUPERSEDED by the owner decision):
 
-   · Warm vintage-paper neutrals — the near-white ground #F6F6EE over
+   · Warm vintage-paper neutrals — the near-white ground #F5F1E8 over
      white surfaces (the reference's own paper, live-sampled
-     #F4F4EE–#F5F5EF, r308 #F6F6EE — R313 canon); charcoal ink #282828
+     #F4F4EE–#F5F5EF, r308 #F5F1E8 — R313 canon); charcoal ink #262019
      (the reference's own --content--primary, verified live). Dark is
      the deliberate counterpart: the charcoal itself as ground
-     (#282828), surfaces one step up (#2E2E2E), warm hairlines
+     (#262019), surfaces one step up (#2E2E2E), warm hairlines
      #4A4A48/#5C5C5A, near-white ink — the reference's dark fills
      promoted to a full theme, never a cold blue-black.
-   · ONE vivid signal: orange #FA3600 (the reference's
+   · ONE vivid signal: orange #C43E16 (the reference's
      --content--brand, used for the scanline, contact accents, error
      chips and hover overlays). Raw orange is a LARGE-TEXT/UI tone
      (3.46:1 on the R313 ground — same class as the reference's own
      use); TEXT routes through the darkened AA ink #C72E00 (5.06:1).
      R313 SUPERSEDES the r305 "never white on orange" rule: the
-     reference ships WHITE labels on #FA3600 fills (measured, every
+     reference ships WHITE labels on #C43E16 fills (measured, every
      button recipe) — --accent-fg is #FFFFFF on light with the AA
      exception noted at its seat (small Arabic accent labels get
      weight ≥600 + size ≥14px where feasible; dark keeps the warmer
@@ -92,7 +92,7 @@
    the historical radii/elevation register and the fleet alias layer;
    r305 re-keyed the canon to the Heron system; R313 (this round,
    owner decision — FULL Heron parity) re-keys the paper to the warm
-   vintage #F6F6EE, collapses the radius ladder to 0, removes every
+   vintage #F5F1E8, collapses the radius ladder to 0, removes every
    decorative shadow, lands the fluid rem root + the rem type ladder
    + Geist Mono, and re-seats the accent label/hairline tokens —
    while preserving every role name and alias. */
@@ -478,16 +478,16 @@
     /* ─── r150a color-gate basis constants ──────────────────────────
        Theme-independent achromatic extremes the alpha derivations route
        through: --black (veil/shadow/matte basis), --white (sheens, text
-       on luminous fills), --warm-ink (the #191918 that must NOT flip
+       on luminous fills), --warm-ink (the #17130E that must NOT flip
        with the theme — terminal grounds, labels on the orange/coral
-       fills: 4.69:1 on #FA3600 and 5.10:1 on #F15534, both AA). R313:
+       fills: 4.69:1 on #C43E16 and 5.10:1 on #F15534, both AA). R313:
        the LIGHT accent label seat moves to --white (the reference's
-       own white-on-#FA3600 labels, 3.76:1 — AA-large; see --accent-fg);
+       own white-on-#C43E16 labels, 3.76:1 — AA-large; see --accent-fg);
        --warm-ink keeps the danger-fill + dark-theme seats where it
        measures stronger. */
     --black:     #000000;
     --white:     #FFFFFF;
-    --warm-ink:  #191918;
+    --warm-ink:  #17130E;
   }
 
   /* ─── R313 — the FLUID REM ROOT (the Heron D5 foundation) ──────────
@@ -547,9 +547,9 @@
   [data-theme="light"] {
 
     /* R313 — the warm vintage-paper neutral ramp, re-keyed from the
-       live reference: --neutral-900 is the charcoal INK #282828 (the
+       live reference: --neutral-900 is the charcoal INK #262019 (the
        reference's --content--primary; 13.57:1 on the R313 ground,
-       AAA); --neutral-50 is the warm PAGE GROUND #F6F6EE (the R313
+       AAA); --neutral-50 is the warm PAGE GROUND #F5F1E8 (the R313
        canon — live-sampled #F4F4EE–#F5F5EF family; the r305/r308
        blue-grey #F6F8FA ground is retired); the band rungs shift warm
        with it (#F0F0E6 / #EFEFE4 — the same paper family, no blue-grey
@@ -560,8 +560,8 @@
        mid rungs stay the reference's own technical greys. */
     /* R326 M0.4 — the ramp values moved to tokens.generated.css
        (source: shared/design-tokens.json); the provenance comments
-       above remain the documentation of record: #F6F6EE ground ·
-       #282828 charcoal ink · the reference's own technical greys. */
+       above remain the documentation of record: #F5F1E8 ground ·
+       #262019 charcoal ink · the reference's own technical greys. */
 
     /* The 9 section families (r305 re-key). Each has a soft tinted
        ground (band fill), a saturated "ink" for fills/UI accents, and a
@@ -596,7 +596,7 @@
 
     /* R313 — muted is the solid equivalent of the reference's own
        rgba(40,40,40,.72) tertiary ink, derived on the NEW paper:
-       #62625F = the exact alpha blend on #F6F6EE = 5.63:1 bg ·
+       #62625F = the exact alpha blend on #F5F1E8 = 5.63:1 bg ·
        6.12:1 surface · 5.34:1 surface-2 · 5.29:1 surface-3 — clears
        4.5 on every light text ground (warm, unlike the retired cool
        #626260 granite). */
@@ -632,7 +632,7 @@
     --surface-border:  rgba(40,40,40,0.07);
     --surface-divider: rgba(40,40,40,0.05);
 
-    /* The ONE signal: the vivid orange #FA3600 (r305 — the reference's
+    /* The ONE signal: the vivid orange #C43E16 (r305 — the reference's
        --content--brand, verified live). Links, active states, focus,
        chart-1. Raw orange is a LARGE-TEXT/UI tone on light (3.53:1 bg ·
        3.76:1 surface — same class as the reference's own usage);
@@ -642,7 +642,7 @@
        the old signal IS the new gold). */
 
     /* r305 — label ink on the accent fill → R313: WHITE (the reference
-       ships white-on-#FA3600 labels on every measured button recipe;
+       ships white-on-#C43E16 labels on every measured button recipe;
        3.76:1 = AA-large). The r305 warm-ink-only rule is superseded by
        the owner decision. AA EXCEPTION: small Arabic labels on the
        accent fill get weight ≥600 + size ≥14px where feasible (the
@@ -782,16 +782,16 @@
     --type-display-line-height: 1.30;
 
     /* The charcoal night ramp (r305): the page ground IS the
-       reference's charcoal #282828; surfaces sit one cool step up; the
+       reference's charcoal #262019; surfaces sit one cool step up; the
        ink is the paper twin #F6F8FA. The technical greys come home:
        #B4B4B0 — a decorative non-text rung on light — is a legitimate
        TEXT tone here (7.09:1 on the ground, AAA). */
     /* R326 M0.4 — the night ramp moved to tokens.generated.css; the
-       R324 X22 override (ink #F6F6EE, was #F6F8FA) is preserved there
+       R324 X22 override (ink #F5F1E8, was #F6F8FA) is preserved there
        and the old spelling stays on the parity gate's FORBIDDEN list. */
 
     /* Night families: deep ember-tinted bgs + luminous inks. Contrast
-       on --bg #282828 (engine-verified, r305): mint 8.08, yellow 9.28,
+       on --bg #262019 (engine-verified, r305): mint 8.08, yellow 9.28,
        rose 6.54, sky 7.82, lavender 6.56 — all text-AA; the status
        badge triads re-verified (family ink-on-bg ≥6.5; the copper/
        ember ink IS the signal — 4.73, the AA-large/UI register by
@@ -823,7 +823,7 @@
     --surface-divider: rgba(246,248,250,0.07);
 
     /* Night signal discipline (r305): the FILL stays the luminous ember
-       (#FF5A1F — 4.73:1 bg, AA-large/UI; --warm-ink labels 5.64:1);
+       (#FF6B3D — 4.73:1 bg, AA-large/UI; --warm-ink labels 5.64:1);
        --accent-strong becomes the light ember tier for text/icons/
        links on the night ground (9.72:1 bg). */
 
@@ -837,7 +837,7 @@
        (mint 7.69, yellow 7.87, rose 6.97, sky 6.87 on --bg), so -ink maps
        to the same values the base tokens resolve to — the icon-well pin
        (dark --x-ink ≡ --x) holds via those aliases. r315 C4-D EXCEPTS the
-       accent: the luminous ember fill #FF5A1F read 4.35:1 on --surface —
+       accent: the luminous ember fill #FF6B3D read 4.35:1 on --surface —
        under the 4.5 AA floor for 13px labels (the W6 .vc-kind probe) — so
        the text seat rides the family's OWN lighter hover rung #FF6B33
        (measured 4.79:1 surface · 5.20:1 bg · 5.08:1 accent-soft; ==
@@ -845,7 +845,7 @@
        by the token itself — the campus override retired). */
 
 
-    /* Label ink on the night coral fill (ink #191918 on #FF8E68 =
+    /* Label ink on the night coral fill (ink #17130E on #FF8E68 =
        7.81:1). Consumed by .btn.danger / notif badge. */
     --danger-fg:    var(--warm-ink);
 
@@ -935,26 +935,29 @@
 
   /* ─── 1. Role-accent (Light) — seven slots, each ≥3.0 vs the paper
      (computed against the live --bg by tests/unit/token-snapshot.test.ts;
-     role-accents tint chrome only, never body text). R313 re-verified
-     against #F6F6EE: student 5.06 · faculty 3.15 · department-head
-     3.11 · dean 3.56 · admin 3.08 · quality 3.31 · owner 5.24. */
+     role-accents tint chrome only, never body text). Re-verified on the
+     ULARA parchment #F5F1E8 (the warm re-key): student 4.88 · faculty
+     3.04 · department-head 3.30 · dean 3.43 · admin 3.34 · quality
+     3.19 · owner 5.05. The re-key itself dropped department-head
+     (2.998) and admin (2.969) under the floor — both re-tinted one
+     step darker, hue kept. */
   :root[data-theme="light"] body[data-role="student"]         { --role-accent: #C72E00; }
-  /* r305: faculty + department-head + quality retuned one step against
-     the cooler paper — the r304 values measured 3.05/3.17/3.00, with
-     quality sitting exactly ON the 3.0 floor (rounding-risk); the
-     retints clear it with margin (3.22/3.17→3.17 stays/3.38) and keep
-     the hue identity. */
+  /* r305: faculty + quality retuned one step against the cooler paper
+     (the r304 values measured at/near the 3.0 rounding-risk floor);
+     the ULARA re-verify keeps them (3.04/3.19). department-head +
+     admin carry the ULARA re-tint (#D0663E / #5486C4) for the same
+     margin rule on the warmer #F5F1E8 ground. */
   :root[data-theme="light"] body[data-role="faculty"]         { --role-accent: #3F9C5F; }
-  :root[data-theme="light"] body[data-role="department-head"] { --role-accent: #DA6C46; }
+  :root[data-theme="light"] body[data-role="department-head"] { --role-accent: #D0663E; }
   :root[data-theme="light"] body[data-role="dean"]            { --role-accent: #8A6FE0; }
-  :root[data-theme="light"] body[data-role="admin"]           { --role-accent: #5C8FCE; }
+  :root[data-theme="light"] body[data-role="admin"]           { --role-accent: #5486C4; }
   :root[data-theme="light"] body[data-role="quality"]         { --role-accent: #D9606C; }
   :root[data-theme="light"] body[data-role="owner"]           { --role-accent: #6B665E; }
 
-  /* ─── Role-accent (Dark) — each ≥3.0 vs #282828 (r305 re-verified:
-     student 4.73 · faculty 7.69 · department-head 7.10 · dean 6.56 ·
-     admin 6.87 · quality 6.97 · owner 6.97). ─────────────────────── */
-  :root[data-theme="dark"]  body[data-role="student"]         { --role-accent: #FF5A1F; }
+  /* ─── Role-accent (Dark) — each ≥3.0 vs #262019 (re-verified on the
+     ULARA ember re-key: student 5.70 · faculty 8.40 · department-head
+     7.76 · dean 7.17 · admin 7.51 · quality 7.61 · owner 7.62). ── */
+  :root[data-theme="dark"]  body[data-role="student"]         { --role-accent: #FF6B3D; }
   :root[data-theme="dark"]  body[data-role="faculty"]         { --role-accent: #82CB99; }
   :root[data-theme="dark"]  body[data-role="department-head"] { --role-accent: #F2A07F; }
   :root[data-theme="dark"]  body[data-role="dean"]            { --role-accent: #B7A0F4; }
@@ -1167,7 +1170,7 @@
     :root[data-theme="dark"] {
       /* light neutral ramp (the warm vintage paper, R313) */
       --neutral-0:   #FFFFFF;
-      --neutral-50:  #F6F6EE;
+      --neutral-50:  #F5F1E8;
       --neutral-100: #F0F0E6;
       --neutral-150: #EFEFE4;
       --neutral-200: #E0E0DA;
@@ -1176,7 +1179,7 @@
       --neutral-500: #72726F;
       --neutral-700: #414140;
       --neutral-800: #333330;
-      --neutral-900: #282828;
+      --neutral-900: #262019;
       /* light families (the r305 re-key) */
       --c-peach-bg:     #FCE5DE;  --c-peach-ink:    #F15534;  --c-peach-deep:    #9C2B0F;
       --c-mint-bg:      #E3EBE1;  --c-mint-ink:     #3F8F5C;  --c-mint-deep:     #1B5430;
@@ -1185,8 +1188,8 @@
       --c-yellow-bg:    #F5EBD6;  --c-yellow-ink:   #A8750F;  --c-yellow-deep:   #5E420C;
       --c-rose-bg:      #F9E3DC;  --c-rose-ink:     #F15534;  --c-rose-deep:     #8C230A;
       --c-sand-bg:      #F1ECDF;  --c-sand-ink:     #B59868;  --c-sand-deep:     #5A4623;
-      --c-grey-bg:      #ECEDEB;  --c-grey-ink:     #626260;  --c-grey-deep:     #282828;
-      --c-copper-bg:    #FCE3D9;  --c-copper-ink:   #FA3600;  --c-copper-deep:   #A32400;
+      --c-grey-bg:      #ECEDEB;  --c-grey-ink:     #626260;  --c-grey-deep:     #262019;
+      --c-copper-bg:    #FCE3D9;  --c-copper-ink:   #C43E16;  --c-copper-deep:   #A32400;
       /* literals the dark block hardcodes (not chained to neutrals) */
       --text-muted:     #62625F;
       --text-faint:     #70706A;
@@ -1194,7 +1197,7 @@
       --accent-hover:   #D92F00;
       --accent-fg:      #FFFFFF;
       /* print rides the orange seat */
-      --accent:          #FA3600;
+      --accent:          #C43E16;
       --accent-strong:   #A32400;
       --state-focus-ring-color: #C72E00;
       --border-faint:   rgba(40,40,40,0.06);

@@ -14,7 +14,7 @@
    belt for the surviving movers.
 
 /* ════════════════════════════════════════════════════════════════════
-   تادمورا — LANDING (r306) · «لوحة تادمورا» — the Heron-only drawing
+   أُلارا — LANDING (r306) · «لوحة أُلارا» — the Heron-only drawing
    sheet
    ════════════════════════════════════════════════════════════════════
    r306 recomposes the landing page in the single canonical visual
@@ -34,7 +34,7 @@
        tabular digits only, never below the 13px Arabic floor in
        reading copy;
      · near-square corners (--r-xs..--r-lg — the reference renders 0;
-       Tadmora keeps the hairline-crisp rungs);
+       Ulara keeps the hairline-crisp rungs);
      · hairline-framed sections and FLAT interface fragments — no
        elevation on the proof surfaces, the depth IS the paper step;
      · block-level reveals only (RevealCssClass), the imperative
@@ -111,7 +111,7 @@
  * again be the page's largest contentful paint (it measured as LCP
  * at 4.05s cold Fast-3G, hiding the hero's real LCP time). Visual
  * coverage is identical: fixed, full-viewport, under content. ═══ */
-body.tdmr-grain::before {
+body.ula-grain::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -126,7 +126,7 @@ body.tdmr-grain::before {
   opacity: 1;
 }
 
-html[data-theme='dark'] body.tdmr-grain::before {
+html[data-theme='dark'] body.ula-grain::before {
   background-image:
     url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22256%22%20height%3D%22256%22%3E%3Cfilter%20id%3D%22f%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22256%22%20height%3D%22256%22%20filterUnits%3D%22userSpaceOnUse%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.4%22%20numOctaves%3D%221%22%20seed%3D%2211%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220.0180%200%200%200%200.0100%200%200.0180%200%200%200.0100%200%200%200.0180%200%200.0100%200%200%200%200%201%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22256%22%20height%3D%22256%22%20filter%3D%22url%28%23f%29%22%2F%3E%3C%2Fsvg%3E'),
     url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23B3B3AF%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E');

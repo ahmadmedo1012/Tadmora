@@ -90,7 +90,7 @@ export function materialHref(m: MaterialHrefInput): MaterialHref {
   let url: URL;
   try {
     // Relative URLs resolve against a dummy origin; absolute ones parse.
-    url = new URL(raw, 'https://tadmora.invalid');
+    url = new URL(raw, 'https://ulara.invalid');
   } catch {
     return { kind: 'unavailable' };
   }

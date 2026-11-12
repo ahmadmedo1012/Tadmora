@@ -9,7 +9,7 @@
  *
  * Honesty contracts (r168b/r188/R307 lineage + Phase Ω):
  *  - Product captures are real UI from the seeded demo environment
- *    (the labeled neutral workspace «مساحة عمل تادمورا التجريبية» —
+ *    (the labeled neutral workspace «مساحة عمل أُلارا التجريبية» —
  *    clearly-marked demo data, never a university) — disclosed on
  *    every frame.
  *  - The platform is independent: no institution, no campus, no
@@ -41,7 +41,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-dashboard',
     titleAr: 'لوحة الطالب',
     captionAr: 'نظرة الطالب على يومه: جدول اليوم، والمهام، والتقدّم',
-    altAr: 'لقطة حقيقية من لوحة الطالب في تادمورا — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من لوحة الطالب في أُلارا — بيانات العرض التجريبية',
     route: '/student/dashboard',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 44rem, 100vw',
@@ -50,7 +50,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-library',
     titleAr: 'المكتبة الإلكترونية',
     captionAr: 'بحث عربي، وفهرس، وتصفّح الكتب والبحوث',
-    altAr: 'لقطة حقيقية من المكتبة الإلكترونية في تادمورا — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من المكتبة الإلكترونية في أُلارا — بيانات العرض التجريبية',
     route: '/student/library',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 30rem, 100vw',
@@ -59,7 +59,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-lecture-player',
     titleAr: 'المحاضرة التفاعلية',
     captionAr: 'مشغّل المحاضرة مع نقطة فحص تُصحَّح فورًا',
-    altAr: 'لقطة حقيقية من مشغّل المحاضرة التفاعلية في تادمورا مع بطاقة نقطة الفحص — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من مشغّل المحاضرة التفاعلية في أُلارا مع بطاقة نقطة الفحص — بيانات العرض التجريبية',
     route: '/student/courses',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 30rem, 100vw',
@@ -68,7 +68,7 @@ export const PRODUCT_CAPTURES: [
     id: 'student-matrix',
     titleAr: 'مصفوفة الإتقان',
     captionAr: 'درجة إتقان لكل مفهوم، وربطها بالدرس المناسب',
-    altAr: 'لقطة حقيقية من مصفوفة الإتقان في تادمورا — بيانات العرض التجريبية',
+    altAr: 'لقطة حقيقية من مصفوفة الإتقان في أُلارا — بيانات العرض التجريبية',
     route: '/student/matrix',
     widths: [720, 1280],
     sizes: '(min-width: 992px) 30rem, 100vw',
@@ -86,7 +86,7 @@ export const CAPTURE_LECTURE_CHECKPOINT_2X: ProductCapture = {
   id: 'lecture-checkpoint',
   titleAr: 'المحاضرة التفاعلية',
   captionAr: 'مشغّل المحاضرة مع نقطة فحص تُصحَّح فورًا',
-  altAr: 'لقطة حقيقية من مشغّل المحاضرة في تادمورا أثناء محاضرة «هندسة البرمجيات»، مع بطاقة نقطة فحص مدمجة في الفيديو — بيانات العرض التجريبية',
+  altAr: 'لقطة حقيقية من مشغّل المحاضرة في أُلارا أثناء محاضرة «هندسة البرمجيات»، مع بطاقة نقطة فحص مدمجة في الفيديو — بيانات العرض التجريبية',
   route: '/student/courses',
   widths: [1440],
   sizes: '(min-width: 992px) 30rem, 100vw',

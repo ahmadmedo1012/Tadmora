@@ -12,7 +12,7 @@
  * rule at the frame's inline-start edge (measured x33 = 26px inside
  * the frame).
  *
- * Reproduced in Tadmora's own construction (never the reference's
+ * Reproduced in Ulara's own construction (never the reference's
  * source): the split is a CSS SCROLL-DRIVEN animation over the first
  * 50% of the root scroll (animation-timeline: scroll()) — zero JS per
  * tick, zero keyframe durations (gate law), the curve rides the

@@ -7,8 +7,8 @@
    so the sheet rides whichever chunk first consumes the kit.
 
    R313 two-tone recolour (the Heron drafting grammar):
-   · pieces are ink (--ill-stroke #282828) + paper (--ill-paper
-     #F6F6EE) + SPARING signal (--accent #FA3600); the retired
+   · pieces are ink (--ill-stroke #262019) + paper (--ill-paper
+     #F5F1E8) + SPARING signal (--accent #C43E16); the retired
      --accent-soft tint fills now ride the paper STEP
      (--neutral-100 #F0F0E6) so scenes stay warm-paper monochrome.
    · gold remains in `achievement` ONLY (the r197 canon).
@@ -61,7 +61,7 @@
      carrying TWO 1px signal segments gliding in opposite directions
      (the reference's loading-progress item-top/item-bot pair), with a
      Geist Mono elapsed counter beneath (MM:SS, tabular, the reference
-     counter's #FA3600 ink). The band spans --mk-loader-size × 3; the
+     counter's #C43E16 ink). The band spans --mk-loader-size × 3; the
      counter measures REAL elapsed time — honest indeterminacy, never
      a fabricated percent. role="status" lives on the wrapper
      (BrandLoader.tsx); everything inside is aria-hidden decoration. */

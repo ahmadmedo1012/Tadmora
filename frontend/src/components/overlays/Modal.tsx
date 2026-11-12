@@ -58,7 +58,7 @@ export function Modal({
   useFocusTrap({ open, containerRef: cardRef, closeOnEscape, onClose, overlayKind: 'modal' });
   // r305 token alignment: the exit window must read the SAME token the
   // data-closing CSS animation consumes (components.css wave 7-a pins
-  // every exit — .modal-overlay's tadmora-overlay-out included — at
+  // every exit — .modal-overlay's ulara-overlay-out included — at
   // var(--motion-duration-short)). The old --motion-duration-medium read
   // only stretched the no-animationend safety net (320ms) past the real
   // 160ms exit; animationend-driven unmounts are unchanged.
@@ -75,7 +75,7 @@ export function Modal({
         if (e.target === e.currentTarget) onClose();
       }}
       onAnimationEnd={(e) => {
-        if (!open && e.animationName === 'tadmora-overlay-out') onExitEnd();
+        if (!open && e.animationName === 'ulara-overlay-out') onExitEnd();
       }}
     >
       <div

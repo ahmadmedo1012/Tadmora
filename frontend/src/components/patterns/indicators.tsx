@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — R325 P2.5 — the INDICATOR LANGUAGE (patterns/indicators.tsx)
+   ULARA — R325 P2.5 — the INDICATOR LANGUAGE (patterns/indicators.tsx)
    ─────────────────────────────────────────────────────────────────────
    The owner's long-standing verdict on the student pages — «ما فيها
    مؤشرات» — gets its answer as REUSABLE PRIMITIVES, not a one-page

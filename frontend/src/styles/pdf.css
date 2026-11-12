@@ -210,9 +210,9 @@
   /* (Wave 9-b dead-selector sweep: .pdf-viewer-controls removed —
      zero TSX consumers; PdfViewer renders .pdf-toolbar.) */
   .pdf-toolbar {
-    animation: tadmora-pdf-controls-in var(--motion-duration-long) var(--ease-out) both 100ms;
+    animation: ulara-pdf-controls-in var(--motion-duration-long) var(--ease-out) both 100ms;
   }
-  @keyframes tadmora-pdf-controls-in {
+  @keyframes ulara-pdf-controls-in {
     from { opacity: 0; transform: translateY(calc(var(--motion-distance-small) * -1)); } /* r153h: -6px → --motion-distance-small */
     to   { opacity: 1; transform: none; }
   }
@@ -854,12 +854,12 @@
    (r306: the selection is the brand signal — reached through the
    semantic accent aliases, not the legacy copper namesake):
    light --accent-strong #A32400 on --accent-soft #FCE3D9 = 8.62:1;
-   dark --neutral-50 #191918 on --accent #FF5A1F = 7.87:1. */
+   dark --neutral-50 #17130E on --accent #FF6B3D = 7.87:1. */
 .pdf-textLayer ::selection {
   background: var(--accent-soft);
   color: var(--accent-strong);
 }
 :root[data-theme='dark'] .pdf-textLayer ::selection {
   background: var(--accent);
-  color: var(--neutral-50); /* the ink ground — #191918 in dark */
+  color: var(--neutral-50); /* the ink ground — #17130E in dark */
 }

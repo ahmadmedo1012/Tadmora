@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — R314 «VISUAL TRUTH» (Task 8-b / B5)
+   ULARA — R314 «VISUAL TRUTH» (Task 8-b / B5)
    r314-productframe.css — the mock-UI card collage over ProductFrame
    ─────────────────────────────────────────────────────────────────────
    The reference's platform section (pair-075 evidence) composes
@@ -8,7 +8,7 @@
    designer's collage of hairline-bordered FLAT cards (radius 0, zero
    shadows) riding the capture's corners and the sheet's paper.
 
-   Tadmora's translation (honest, never a fabricated product state):
+   Ulara's translation (honest, never a fabricated product state):
    · Card A «مساعد الفهم» — the REAL platform assistant
      (/student/ai — «المساعد الأكاديمي · يعمل الآن» in the landing
      ledger) as a generic chat fragment: two qualitative lines, an
@@ -31,8 +31,8 @@
    declaration is gate-clean by construction):
    · colors → semantic tokens only (--surface/--rule/--text/
      --text-muted/--text-faint/--accent/--bg) — the task's measured
-     hexes ARE the token values (#B3B3AF=--rule · #282828=--text light
-     /--bg dark · #FA3600=--accent light);
+     hexes ARE the token values (#B3B3AF=--rule · #262019=--text light
+     /--bg dark · #C43E16=--accent light);
    · type → the fluid ladder (--fs-sm 13px Arabic floor · --fs-mono-md
      and --fs-mono-sm micro rungs); spacing → --sp-* rungs; radius → 0
      (the R313 canon); motion → the --t-* and --ease tokens, raw
@@ -94,8 +94,8 @@
   animation: prf-card-in var(--t-slower) var(--ease-out) both;
 }
 
-/* The dark title bar (24px): light theme rides --text (#282828 — the
-   task's measured ink) with paper labels (--bg #F6F6EE); the square
+/* The dark title bar (24px): light theme rides --text (#262019 — the
+   task's measured ink) with paper labels (--bg #F5F1E8); the square
    signal dot is the ONE accent. */
 .prf-card-bar {
   display: flex;
@@ -359,7 +359,7 @@
 /* ── Dark theme — the charcoal night twin ───────────────────────────
    The card rides the night surface (--surface #2E2E2E) with the same
    hairline grammar (--rule #4A4A48). The title bar stays DARK (the
-   composition's identity): the night ground #282828 (one step BELOW
+   composition's identity): the night ground #262019 (one step BELOW
    the surface — depth via surface step, the R313 canon) with the
    paper-white label. Everything else already rides semantic tokens. */
 [data-theme='dark'] .prf-card-bar {

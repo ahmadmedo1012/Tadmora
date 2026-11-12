@@ -1,9 +1,9 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — R319 shell sheet layer (C2-G2 · §C3 "the shared shell
+   ULARA — R319 shell sheet layer (C2-G2 · §C3 "the shared shell
    first — it fixes ~80% of screens at once")
    ─────────────────────────────────────────────────────────────────────
    The AUTHENTICATED app joins the drawing-sheet system. The landing
-   (landing.css .sheet-frame + body.tdmr-grain::before) and the guest
+   (landing.css .sheet-frame + body.ula-grain::before) and the guest
    doors (auth.css .auth-frame/.auth-grain via GuestSheetChrome) already
    seat every public face on the Heron sheet; this layer carries the
    same grammar through AppShell so every authed route renders on the
@@ -40,7 +40,7 @@
    matched to ±0.03% light): a multiply film-grain over the paper
    ground + the faint dotted micro-grid (24px cell). The light twin
    multiplies; the dark twin rides plain alpha (its mean IS the
-   charcoal paper) — the landing's body.tdmr-grain::before and the
+   charcoal paper) — the landing's body.ula-grain::before and the
    auth door's .auth-grain carry the identical pair.
    HOIST NOTE: the tile URLs sit in custom properties HERE so this
    cycle adds ONE shared source for the shell; landing.css/auth.css
@@ -49,13 +49,13 @@
    construction: two repeated tiles, one element, no blend of flowing
    content (the film sits UNDER it — §3's z-lift). */
 :root {
-  --tdmr-grain-image-light:
+  --ula-grain-image-light:
     url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22256%22%20height%3D%22256%22%3E%3Cfilter%20id%3D%22f%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22256%22%20height%3D%22256%22%20filterUnits%3D%22userSpaceOnUse%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.4%22%20numOctaves%3D%221%22%20seed%3D%2211%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%201.0988%20-0.2600%200%200%200%201.0988%200%20-0.2600%200%200%201.0988%200%200%200%200%201%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22256%22%20height%3D%22256%22%20filter%3D%22url%28%23f%29%22%2F%3E%3C%2Fsvg%3E'),
     url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23B3B3AF%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E');
-  --tdmr-grain-image-dark:
+  --ula-grain-image-dark:
     url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22256%22%20height%3D%22256%22%3E%3Cfilter%20id%3D%22f%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22256%22%20height%3D%22256%22%20filterUnits%3D%22userSpaceOnUse%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.4%22%20numOctaves%3D%221%22%20seed%3D%2211%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220.0180%200%200%200%200.0100%200%200.0180%200%200%200.0100%200%200%200.0180%200%200.0100%200%200%200%200%201%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22256%22%20height%3D%22256%22%20filter%3D%22url%28%23f%29%22%2F%3E%3C%2Fsvg%3E'),
     url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23B3B3AF%22%20fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E');
-  --tdmr-grain-tile: 256px, 24px;
+  --ula-grain-tile: 256px, 24px;
 }
 
 .sheet-grain {
@@ -63,15 +63,15 @@
   inset: 0;
   z-index: 0; /* under the flowing content (§3), over the paper ground */
   pointer-events: none;
-  background-image: var(--tdmr-grain-image-light);
-  background-size: var(--tdmr-grain-tile);
+  background-image: var(--ula-grain-image-light);
+  background-size: var(--ula-grain-tile);
   background-repeat: repeat, repeat;
   mix-blend-mode: multiply;
   opacity: 1;
 }
 
 html[data-theme='dark'] .sheet-grain {
-  background-image: var(--tdmr-grain-image-dark);
+  background-image: var(--ula-grain-image-dark);
   mix-blend-mode: normal;
   opacity: 0.9;
 }

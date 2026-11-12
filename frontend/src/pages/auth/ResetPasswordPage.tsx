@@ -119,7 +119,7 @@ export default function ResetPasswordPage() {
           العودة إلى تسجيل الدخول
         </Link>
         <span className="auth-context">
-          <Logo variant="mark" size={14} /> تادمورا
+          <Logo variant="mark" size={14} /> أُلارا
         </span>
       </header>
 

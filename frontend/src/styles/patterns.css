@@ -1,5 +1,5 @@
 /* Agent S shell family — shared page patterns (contract v1, r210).
- * Everything a Tadmora page composes from: frame, headers, rows,
+ * Everything a Ulara page composes from: frame, headers, rows,
  * split, stats, filters, today. Tokens only; logical properties only;
  * 44px interaction floor. CONTRACT.md is the normative doc. */
 
@@ -546,7 +546,7 @@ a.pf-row-link {
   }
 
   /* Quiet chrome link — no border, no resting fill. r313: the
-     hover is the reference's NAV recipe — the #282828 ink fill wipes
+     hover is the reference's NAV recipe — the #262019 ink fill wipes
      in and the label inverts (digest → buttons, nav items); radius 0,
      no surface step. 44px floor is unconditional. */
   .auth-back-home {
@@ -1261,7 +1261,7 @@ a.pf-row-link {
     border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
     border-block-start-color: currentColor;
     border-radius: 50%;
-    animation: tadmora-spin var(--motion-duration-stat) var(--ease-linear) infinite;
+    animation: ulara-spin var(--motion-duration-stat) var(--ease-linear) infinite;
   }
 
   /* Demo-account hint (dev-only): a quiet, dismissible ruled block —
@@ -1872,9 +1872,9 @@ a.pf-row-link {
   /* ONE authored moment: the sheet column rises in (calm distance, no
      bounce). R315: same keyframe, new seat — the dissolved card. */
   .auth-card {
-    animation: tadmora-auth-card-in var(--t-slow) var(--ease-out) both;
+    animation: ulara-auth-card-in var(--t-slow) var(--ease-out) both;
   }
-  @keyframes tadmora-auth-card-in {
+  @keyframes ulara-auth-card-in {
     from { opacity: 0; transform: translateY(var(--motion-distance-small)); }
     to   { opacity: 1; transform: none; }
   }
@@ -2293,7 +2293,7 @@ a.pf-row-link {
 }
 
 /* ═══ R315 (K-I) — the input ladder's THIRD rung ═════════════════════
-   filled+focus → the raw signal #FA3600 (= var(--accent)). The default
+   filled+focus → the raw signal #C43E16 (= var(--accent)). The default
    (var(--border-strong)) and :focus (#ED4C1F, .45s ≈ --t-slow) rungs
    live in their canonical homes (this file's pages layer + the shared
    polish v22 recipe). This one rung must BEAT polish's

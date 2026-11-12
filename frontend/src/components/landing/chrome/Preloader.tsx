@@ -3,7 +3,7 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  * Preloader — R333 «تتابع الدخول» — the entry overlay (heron-craft row 1).
  *
  * A full-screen paper overlay on the page ground (var(--bg)): the brand
- * mark + the «تادمورا» outlined wordmark draw in via the ONE brand
+ * mark + the «أُلارا» outlined wordmark draw in via the ONE brand
  * system's own stroke-draw (<Logo animated> — hairlines first, the
  * orange point last, complete-and-static under reduced motion), with a
  * mono percentage counter (0→100) tied to REAL asset readiness
@@ -25,12 +25,12 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  * .pl--exit class carries the whole choreography; the legs are declared
  * on the base classes from mount so the exit params are live in the
  * computed style the moment the class lands. At exit START the component
- * dispatches the `tdmr:entry-done` custom event AND calls onExitStart, so
+ * dispatches the `ula:entry-done` custom event AND calls onExitStart, so
  * downstream chrome (the consent banner) mounts under the reveal and
  * never overlaps the overlay.
  *
  * Gating (owned by the parent through the introGate decision):
- * plays once per session (the `tadmora-intro-seen` sessionStorage flag
+ * plays once per session (the `ulara-intro-seen` sessionStorage flag
  * is stamped here on play), never under prefers-reduced-motion (the
  * parent never mounts it; a defensive in-component guard completes
  * instantly), never for save-data/slow-device visitors.
@@ -52,7 +52,7 @@ const RELEASE_FLOOR_MS = 2750; /* the counter never resolves before 2.5s —
  * 2.5-4.9s window with runner-latency margin. */
 const MAX_RUN_MS = 4900; /* the hard cap — readiness races this timer */
 const EXIT_HOLD_MS = 700; /* the 100% beat before the wipe opens */
-const ENTRY_DONE_EVENT = 'tdmr:entry-done';
+const ENTRY_DONE_EVENT = 'ula:entry-done';
 
 type PreloaderProps = {
   /** the exit wipe is about to open — chrome may mount beneath it */
@@ -210,7 +210,7 @@ export function Preloader({ onExitStart, onDone }: PreloaderProps) {
       data-spec="preloader.overlay"
       data-cursor="none"
       role="progressbar"
-      aria-label="تحميل صفحة تادمورا"
+      aria-label="تحميل صفحة أُلارا"
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={pct}

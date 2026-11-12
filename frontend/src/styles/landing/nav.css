@@ -256,7 +256,7 @@ html[data-theme='dark'] .fo-header {
 }
 
 /* the compact logotype beside the mark (the reference wordmark is
- * 102×15 beside its 32×36 mark; «تادمورا» holds the same seat at the
+ * 102×15 beside its 32×36 mark; «أُلارا» holds the same seat at the
  * Arabic display weight). */
 .fo-brand-name {
   font-family: var(--font-display);
@@ -775,7 +775,7 @@ html[data-theme='dark'] .fo-header {
   }
 
   /* R319 §D7 — the hovered wipe darkens one step in LIGHT theme (the
-   * #FA3600 slab under the white label measured 3.76:1; #DB3A00 is the
+   * #C43E16 slab under the white label measured 3.76:1; #DB3A00 is the
    * r318 AA signal ground, white 4.55:1). Dark keeps its own pair. */
   .fo-actions-cta:hover::before {
     transform: translateY(0);

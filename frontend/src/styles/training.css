@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — Training & gamification surfaces
+   ULARA — Training & gamification surfaces
    ─────────────────────────────────────────────────────────────────────
    Owner: the training wave (Task 3-b). One visual system for:
      · TrainingCatalogPage / TrainingTrackPage / TrainingLessonPage /
@@ -168,7 +168,7 @@
   /* THE authored moment — a one-shot scale + ring pulse on newly
      earned badges only (the class renders exclusively on the reward
      feedback of a fresh completion; no idle glow anywhere). */
-  @keyframes tadmora-badge-earned {
+  @keyframes ulara-badge-earned {
     0% {
       transform: scale(0.6);
       opacity: 0;
@@ -186,7 +186,7 @@
      the decorative-shadow sweep — the scale/opacity ping carries the
      earned feedback alone, per the reference's shadow-free motion.) */
 
-  @keyframes tadmora-reward-in {
+  @keyframes ulara-reward-in {
     from {
       opacity: 0;
       transform: translateY(calc(var(--motion-distance-small) * var(--motion-direction)));
@@ -232,7 +232,7 @@
      existing pastel families (no new colors): gold = --c-yellow-*,
      silver = --c-grey-*, bronze = --c-peach-*. */
 
-  @keyframes tadmora-lb-row-in {
+  @keyframes ulara-lb-row-in {
     from {
       opacity: 0;
       transform: translateY(var(--motion-distance-small));

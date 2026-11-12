@@ -3,7 +3,7 @@
  * effects on the shared sheet clock.
  *
  * The reference resolves scroll-linked motion from its ONE ticker; on
- * Tadmora's native-scroll canon the equivalent discipline is:
+ * Ulara's native-scroll canon the equivalent discipline is:
  *
  *  · a passive `scroll` listener KICKS the effect awake (subscribing
  *    its frame to the shared conductor clock);

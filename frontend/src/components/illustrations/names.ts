@@ -1,5 +1,5 @@
 /**
- * mk-ill — Tadmora state-graphics kit: the piece registry names.
+ * mk-ill — Ulara state-graphics kit: the piece registry names.
  *
  * This kit is the r270+ state-illustration family for the redesign
  * (Superlist-era states): original two-colour scenes — ink + signal on

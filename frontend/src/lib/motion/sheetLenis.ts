@@ -5,7 +5,7 @@
  * `scroll`): Lenis 1.1.5 driven by the single ticker — `lenis.raf(time)`
  * per frame, a ScrollTrigger.update on every lenis scroll event, an
  * 'idle' class after 150ms of scroll-quiet, and NO visible scrollbar.
- * Tadmora's translation keeps the platform's own single clock:
+ * Ulara's translation keeps the platform's own single clock:
  *
  *  · ONE Lenis instance on the WINDOW (owner decision, r313 4-b): the
  *    whole guest stack reads window scroll — useSheetScroll, the
@@ -233,7 +233,7 @@ export function isGuestLenisOn(): boolean {
 /* R313-int: the shared scroll lock (lib/scrollLock.ts — menus, drawers,
  * dialogs) must PAUSE the engine: Lenis writes window.scrollTo
  * programmatically, which no overflow rule can stop. The lock toggles
- * `tdmr-scroll-locked` on <html>; this observer mirrors it onto the
+ * `ula-scroll-locked` on <html>; this observer mirrors it onto the
  * engine. One observer per engine lifetime, cleaned up on destroy. */
 let lockObserver: MutationObserver | null = null;
 
@@ -241,7 +241,7 @@ function watchScrollLock(): void {
   if (lockObserver || typeof MutationObserver === 'undefined') return;
   const sync = () => {
     if (!lenis) return;
-    if (document.documentElement.classList.contains('tdmr-scroll-locked')) {
+    if (document.documentElement.classList.contains('ula-scroll-locked')) {
       lenis.stop();
     } else {
       lenis.start();
@@ -272,10 +272,10 @@ export function initGuestLenis(): boolean {
    * (measured: a native instant jump to 0 snaps back to ~1800px within
    * 700ms while the engine's target still holds the walk's last seat —
    * every offset-shot a probe takes that way is mid-animation garbage).
-   * Same family as window.TadmoraConsent: a test seam, never a UI
+   * Same family as window.UlaraConsent: a test seam, never a UI
    * dependency. No engine (RM/SSR) → the seat stays undefined and
    * probes fall back to the native jump. */
-  (window as { __tdmrLenis?: Lenis }).__tdmrLenis = lenis;
+  (window as { __ulaLenis?: Lenis }).__ulaLenis = lenis;
   watchScrollLock();
   offLenisScroll = lenis.on('scroll', onLenisScroll) || null;
   document.addEventListener('visibilitychange', onVisibilityChange);

@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   SHARED DESIGN SYSTEM — structural skeleton (tadmora parity, r127-F1)
+   SHARED DESIGN SYSTEM — structural skeleton (ulara parity, r127-F1)
    ─────────────────────────────────────────────────────────────────────
    Companion to unified-parity.css. This file is the STRUCTURAL
    (non-color) skeleton: spacing, radius, type scale, motion ladder,
@@ -8,7 +8,7 @@
 
    COLOR ALWAYS COMES FROM THE PARITY FILE — unified-parity.css
    owns both theme blocks (R313 Heron FULL-parity foundation: warm
-   vintage paper #F6F6EE + orange signal, dark charcoal night — see
+   vintage paper #F5F1E8 + orange signal, dark charcoal night — see
    audits/evidence/r313/reference/digest.json), the status/accent
    families, the elevation recipes and the glass surfaces. Where the
    two files overlap (motion, z values, structural recipes) they are
@@ -24,7 +24,7 @@
    (shadcn-style): --foreground, --muted-foreground, --card,
    --card-muted, --ring. Everything else resolves from the pair.
 
-   NOT imported by tadmora's own app (main.tsx) — export artifacts
+   NOT imported by ulara's own app (main.tsx) — export artifacts
    gated by scripts/verify-parity-export.mjs.
 
    Architecture:

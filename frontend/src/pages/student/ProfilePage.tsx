@@ -89,7 +89,7 @@ function validateLink(kind: LinkKind, raw: string): string | null {
    in-memory state, which keeps working for the rest of the session. */
 function persistLinks(next: Record<string, string>) {
   try {
-    localStorage.setItem('tdmr-academic-links', JSON.stringify(next));
+    localStorage.setItem('ula-academic-links', JSON.stringify(next));
   } catch {
     // storage unavailable — keep the change in memory only
   }
@@ -110,7 +110,7 @@ export default function ProfilePage() {
   // Nothing here is sent to any API (no server-side field exists for it),
   // so the copy below must never claim institutional visibility or policy.
   const [links, setLinks] = useState<Record<string, string>>(() => {
-    try { return JSON.parse(localStorage.getItem('tdmr-academic-links') ?? '{}'); }
+    try { return JSON.parse(localStorage.getItem('ula-academic-links') ?? '{}'); }
     catch { return {}; }
   });
   const [editing, setEditing] = useState<LinkKind | null>(null);
@@ -341,7 +341,7 @@ export default function ProfilePage() {
             {/* 5-D1 (A11 P2-2): 11px mono accent-as-text measured 3.52:1
                 on surface-2 — --accent-ink is the text-safe accent (10.72:1
                 on surface); dark already passed either way. */}
-            <bdi dir="ltr" className="font-mono" style={{ color: 'var(--accent-ink)' }}>info@demo.tadmora.ly</bdi>.
+            <bdi dir="ltr" className="font-mono" style={{ color: 'var(--accent-ink)' }}>info@demo.ulara.ly</bdi>.
           </div>
         </Card>
         </section>

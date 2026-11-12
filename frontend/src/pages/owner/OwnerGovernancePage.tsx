@@ -120,7 +120,7 @@ export function OwnerGovernancePage() {
   } : null, [loginData, c]);
 
   // The authored moment: the total attempt count lands in the doughnut's
-  // center (tadmoraCenterLabelPlugin, metric type tokens) while the arcs
+  // center (ularaCenterLabelPlugin, metric type tokens) while the arcs
   // rotate in — the figure was previously invisible behind the legend.
   const doughnutOptions = useMemo(() => radialOptions({
     legend: true,

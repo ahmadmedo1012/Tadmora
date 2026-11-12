@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — Layout & navigation chrome
+   ULARA — Layout & navigation chrome
    r211 Superlist re-skin: calm surfaces, soft geometry, ONE signal
    accent, hierarchy via surface steps (not border stacks), zero
    decorative paint in the chrome. Logic untouched — visual only.
@@ -120,7 +120,7 @@
     font-weight: var(--fw-bold);
     font-size: var(--fs-sm);
     color: var(--text);
-    letter-spacing: 0; /* r148 (AUDIT-3 M8): «تادمورا» عربية — لا تتبّع سالب */
+    letter-spacing: 0; /* r148 (AUDIT-3 M8): «أُلارا» عربية — لا تتبّع سالب */
     line-height: 1.2;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
@@ -323,9 +323,9 @@
     /* R329 (gate:clean): the bar ground + animation duration are
        r325-shell.css's app-signal seats (unlayered wins) — the
        in-layer copies were inert. */
-    animation: tadmora-nav-pop var(--motion-duration-medium) var(--motion-ease-decelerate);
+    animation: ulara-nav-pop var(--motion-duration-medium) var(--motion-ease-decelerate);
   }
-  @keyframes tadmora-nav-pop {
+  @keyframes ulara-nav-pop {
     /* R313 (WP-F · D16): inset-block positions the bar; only the scale
        animates (no translateY displacement). */
     from { transform: scaleY(0.4); opacity: 0; }
@@ -466,12 +466,12 @@
     position: fixed; inset: 0;
     /* R319 (c1-A · B1b): the scrim is INK over paper — the translucent
        veil retires (it read as a flat grey wash on the phone). Light:
-       the ink #282828 (= --text light) at 58%; dark: the paper twin
+       the ink #262019 (= --text light) at 58%; dark: the paper twin
        #F6F8FA (= --text dark) at 92% — Heron's own menu veils. The
        theme fork below keys off the existing [data-theme] mechanism;
        the rgba literals are the precomputed rgb(from var(--text) …)
        equivalents. */
-    background: rgba(40,40,40,0.58); /* color-gate: allow — R319 (c1-A · B1b): drawer scrim, light theme — ink #282828 (var(--text)) at 58% over paper, the precomputed rgb(from var(--text) r g b / 0.58) */
+    background: rgba(40,40,40,0.58); /* color-gate: allow — R319 (c1-A · B1b): drawer scrim, light theme — ink #262019 (var(--text)) at 58% over paper, the precomputed rgb(from var(--text) r g b / 0.58) */
     opacity: 0; pointer-events: none;
     /* R329 (gate:clean): the fade transition is polish.css's overrides
        seat (motion-duration-medium) — this in-layer copy was inert. */
@@ -485,7 +485,7 @@
     background: rgba(246,248,250,0.92); /* color-gate: allow — R319 (c1-A · B1b): drawer scrim, dark theme — paper twin #F6F8FA (var(--text) dark) at 92%, Heron's night menu veil */
   }
 
-  /* ═══ تادمورا night shell (r211 Superlist re-skin) ═══
+  /* ═══ أُلارا night shell (r211 Superlist re-skin) ═══
      The r190 sky washes + hand-placed constellation points are RETIRED:
      the dark sidebar is the theme's own calm surface (--sidebar-bg from
      tokens.css — theme-aware, contrast-vetted). Chrome carries zero
@@ -986,10 +986,10 @@
     border-radius: var(--r-xs);
     overflow: hidden;
     /* Override any generic popover animation; this one's bespoke */
-    animation: tadmora-search-pop var(--motion-duration-medium) var(--ease-spring-soft) both;
+    animation: ulara-search-pop var(--motion-duration-medium) var(--ease-spring-soft) both;
     transform-origin: top center;
   }
-  @keyframes tadmora-search-pop {
+  @keyframes ulara-search-pop {
     from { opacity: 0; transform: translateY(-4px) scale(0.99); }
     to   { opacity: 1; transform: none; }
   }

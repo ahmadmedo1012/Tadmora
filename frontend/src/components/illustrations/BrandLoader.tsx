@@ -21,7 +21,7 @@
  *     (#B3B3AF via --grid-line) carrying TWO 1px signal segments
  *     gliding in opposite directions (the loading-progress
  *     item-top/item-bot pair), with a Geist Mono elapsed counter
- *     (MM:SS, tabular, the reference's #FA3600 counter ink) beneath.
+ *     (MM:SS, tabular, the reference's #C43E16 counter ink) beneath.
  *     The counter measures REAL elapsed time — the honest
  *     indeterminate counterpart of the reference's asset-gated
  *     percentage; it never fabricates progress. Everything visual is

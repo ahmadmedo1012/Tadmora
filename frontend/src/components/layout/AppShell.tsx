@@ -86,7 +86,7 @@ for (const groups of Object.values(NAV_BY_ROLE)) {
 // The static <title> from index.html — restored whenever the shell
 // unmounts (see the document.title effect in AppShell).
 // r177 (Phase 1 brand neutrality): university co-branding dropped.
-const DOC_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة';
+const DOC_TITLE_BASE = 'أُلارا · نظام تشغيل الجامعة';
 
 const PAGE_TITLES: Record<string, string> = {
   // Folded out of the student sidebar (A4 P2-1) — still a real surface
@@ -135,8 +135,8 @@ export function resolveTitle(pathname: string): string {
     if (pattern.test(pathname)) return title;
   }
   // 4-A14 P2-1: the fallback used to name the demo university — the
-  // university platform, not the product. The product is «تادمورا».
-  return 'تادمورا';
+  // university platform, not the product. The product is «أُلارا».
+  return 'أُلارا';
 }
 
 /* ───────────────────────────────────────────────────────────
@@ -145,7 +145,7 @@ export function resolveTitle(pathname: string): string {
    The guests already get payload names in their tabs (useDocTitle in
    CollegePages / VisionPages / CompetitionsPages) while every AUTHED
    entity page resolved to its DYNAMIC_TITLES pattern — «تفاصيل
-   المقرّر · تادمورا» for BOTH «هندسة البرمجيات» and «قواعد البيانات».
+   المقرّر · أُلارا» for BOTH «هندسة البرمجيات» and «قواعد البيانات».
    This hook is the authed half of that contract: the page hands its
    resolved entity name up and the tab (plus history entries / SR
    announcements, WCAG 2.4.2) names the thing, not the pattern.
@@ -161,7 +161,7 @@ export function useEntityPageTitle(entityName?: string | null): void {
   useEffect(() => {
     if (!entityName) return;
     const set = window.setTimeout(() => {
-      document.title = `${entityName} · تادمورا`;
+      document.title = `${entityName} · أُلارا`;
     }, 0);
     return () => window.clearTimeout(set);
   }, [entityName]);
@@ -294,9 +294,9 @@ export function AppShell({ children }: { children?: ReactNode }) {
      title when the shell unmounts (the logout redirect lands on
      /auth, which owns no title logic of its own). The fallback title
      resolves to the full platform title (4-A14 P2-1) — appending the
-     suffix would read «تادمورا · تادمورا». */
+     suffix would read «أُلارا · أُلارا». */
   useEffect(() => {
-    document.title = title === 'تادمورا' ? DOC_TITLE_BASE : `${title} · تادمورا`;
+    document.title = title === 'أُلارا' ? DOC_TITLE_BASE : `${title} · أُلارا`;
     return () => {
       document.title = DOC_TITLE_BASE;
     };

@@ -166,7 +166,7 @@ function formatRelative(iso: string): string {
  * The docTitle effect lives inside the AppShell, which never mounts
  * for guests — the app's ONLY crawlable pages shipped the static
  * index.html title. This local effect mirrors the shell's exact
- * grammar (title + « · تادمورا», base restore on unmount) for the guest
+ * grammar (title + « · أُلارا», base restore on unmount) for the guest
  * branch on the listing surfaces, and carries the PAYLOAD name on the
  * detail pages for everyone (the shell resolves titles from the
  * pathname alone and cannot know the record's name — «كلّيّة» for
@@ -174,12 +174,12 @@ function formatRelative(iso: string): string {
  * payload can land in the SAME commit as the shell's pathname effect,
  * and child effects run BEFORE the parent's — the task schedules
  * after every effect in that commit, so the payload title survives. */
-const GUEST_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة'; // AppShell's DOC_TITLE_BASE (keep in sync)
+const GUEST_TITLE_BASE = 'أُلارا · نظام تشغيل الجامعة'; // AppShell's DOC_TITLE_BASE (keep in sync)
 function useDocTitle(title: string | null) {
   useEffect(() => {
     if (title === null) return;
     const set = window.setTimeout(() => {
-      document.title = `${title} · تادمورا`;
+      document.title = `${title} · أُلارا`;
     }, 0);
     return () => {
       window.clearTimeout(set);
@@ -213,7 +213,7 @@ function GuestJoinRow() {
   const from = { from: { pathname } };
   return (
     <div className="guest-join-row">
-      <span className="guest-join-note">مؤسستك على تادمورا؟</span>
+      <span className="guest-join-note">مؤسستك على أُلارا؟</span>
       <Link to="/auth" state={from} className="btn ghost sm">تسجيل الدخول</Link>
       <Link to="/auth/register" state={from} className="btn primary sm">أنشئ حسابك</Link>
     </div>
@@ -229,9 +229,9 @@ function GuestClosingBand() {
   const from = { from: { pathname } };
   return (
     <section className="guest-cta-band" aria-labelledby="guest-cta-title">
-      <h2 id="guest-cta-title" className="guest-cta-title">مؤسستك، كلياتك… على تادمورا</h2>
+      <h2 id="guest-cta-title" className="guest-cta-title">مؤسستك، كلياتك… على أُلارا</h2>
       <p className="guest-cta-note">
-        انضم بمنصّة تادمورا وابنِ الهيكل الأكاديمي الذي يناسب مؤسستك — كلية، قسمًا، مقرّرًا.
+        انضم بمنصّة أُلارا وابنِ الهيكل الأكاديمي الذي يناسب مؤسستك — كلية، قسمًا، مقرّرًا.
       </p>
       <div className="guest-cta-actions">
         <Link to="/auth/register" state={from} className="btn primary">أنشئ حسابك</Link>
@@ -283,8 +283,8 @@ export function CollegesIndexPage() {
           title + [01] gutter index (the inner-public sheet bridge). */}
       <div className="inx-head">
         <PageHeader
-          title="مؤسستك، كلياتك… على تادمورا"
-          description="تادمورا منصّة مستقلة متعددة المستأجرين: كل مؤسسة تبني هيكلها الأكاديمي بنفسها — من لوحة المسجّل تُنشأ الكلية، ثم القسم، ثم المقرّرات — وتمتلك المؤسسة بياناتها بعزل كامل. ما تراه هنا هيكل مساحة العرض الموسومة، لا كتالوج جامعات."
+          title="مؤسستك، كلياتك… على أُلارا"
+          description="أُلارا منصّة مستقلة متعددة المستأجرين: كل مؤسسة تبني هيكلها الأكاديمي بنفسها — من لوحة المسجّل تُنشأ الكلية، ثم القسم، ثم المقرّرات — وتمتلك المؤسسة بياناتها بعزل كامل. ما تراه هنا هيكل مساحة العرض الموسومة، لا كتالوج جامعات."
           actions={isGuest ? <GuestJoinRow /> : undefined}
           index="01"
         />
@@ -554,7 +554,7 @@ export function CollegeDetailPage() {
       <SectionAccent kind="scene-paint" as="header" className="college-hero page-header">
         <div className="college-hero-emoji" aria-hidden><EmojiIcon emoji={c.iconEmoji ?? '🏛️'} size={36} /></div>
         <div className="college-hero-titles">
-          <div className="college-hero-eyebrow">مساحة عمل تادمورا التجريبية · بيانات موسومة للعرض</div>
+          <div className="college-hero-eyebrow">مساحة عمل أُلارا التجريبية · بيانات موسومة للعرض</div>
           <h1 className="page-title college-hero-name">{c.name}</h1>
           {c.nameEn && <div className="college-hero-sub">{c.nameEn}</div>}
         </div>

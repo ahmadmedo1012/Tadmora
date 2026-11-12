@@ -34,7 +34,7 @@ export type ThemeColor = 'green' | 'amber' | 'red' | 'purple' | 'gold' | 'brand'
 export { Button, Input, FormField } from './Form';
 export type { ButtonVariant, ButtonSize } from './Form';
 export { PageHeader } from './PageHeader';
-/* R189 «سجلّ تادمورا» — the ledger product language (see Ledger.tsx). */
+/* R189 «سجلّ أُلارا» — the ledger product language (see Ledger.tsx). */
 export {
   StatStrip, Sparkline, ProgressRing, LedgerPanel, LedgerRow,
 } from './Ledger';
@@ -425,7 +425,7 @@ export function AlertRow({
         never fail — the max-pick IS the keep-max fallback.
 
    Contract by `color` shape:
-   · hex            → gated ink (best of #fff / #191918, escalated to
+   · hex            → gated ink (best of #fff / #17130E, escalated to
                       #000000/#FFFFFF when the token max is < 4.5)
    · var()/other    → ink var(--text) — the only non-hex callers pass
                       neutral surface tokens (var(--surface-3), AI chat
@@ -436,7 +436,7 @@ export function AlertRow({
                       radius 0; polish.css). The shell surfaces never
                       forward the DB avatarColor (Sidebar/Topbar), so
                       authenticated chrome reads ONE avatar grammar. */
-const AVATAR_INKS = { light: '#FFFFFF', dark: '#191918' } as const;
+const AVATAR_INKS = { light: '#FFFFFF', dark: '#17130E' } as const;
 
 /* Pure WCAG escalation extremes (r171c step 3) — content-level color
  * DATA consumed by reference, not a style declaration: the color gate

@@ -6,7 +6,7 @@ import { PREFERS_REDUCED_MOTION } from '../../lib/motion-media';
  * The reference's loader is an ASSET-GATED instrument, not a fixed
  * clock (audits/evidence/r313/reference/digest.json → loader): a
  * curve-shaped counter whose ~59–60% plateau EMERGES from waiting on
- * real assets, a mono percentage (Geist Mono 10px #FA3600), an orange
+ * real assets, a mono percentage (Geist Mono 10px #C43E16), an orange
  * centre band wiping left→right, two 1px #B3B3AF translating rails,
  * a line-drawn logo, a 10-line system log (001–010), a metadata
  * block, an X/Y ruler readout tracking the mouse — and an 835ms
@@ -17,7 +17,7 @@ import { PREFERS_REDUCED_MOTION } from '../../lib/motion-media';
  * on client-side navigations, never under reduced motion / in
  * non-visual environments (lib/motion/introGate owns the decision).
  *
- * Tadmora keeps the honest layer the reference cannot have: every log
+ * Ulara keeps the honest layer the reference cannot have: every log
  * line describes work the page is actually doing, the counter never
  * waits past the fallback curve's 100% at ~5.65s (Promise.race timeout
  * on the asset gate), and a visible «تخطّي» (Esc/Enter/Space) always
@@ -98,7 +98,7 @@ export interface SheetLoaderProps {
 }
 
 /* ── The drawing — the platform's own educational linework (the
- * «مخطط تادمورا» geometry, composed for the loader window), staged by
+ * «مخطط أُلارا» geometry, composed for the loader window), staged by
  * the [data-ink] groups against the counter's ramp (landing.css .sl). */
 function SlDraw() {
   return (
@@ -114,7 +114,7 @@ function SlDraw() {
  * each a thing the page is actually doing while the loader runs;
  * `at` is the counter checkpoint that reveals the line. */
 const LOG_LINES: Array<{ at: number; code: string; text: string }> = [
-  { at: 0, code: '001', text: 'تهيئة لوحة تادمورا' },
+  { at: 0, code: '001', text: 'تهيئة لوحة أُلارا' },
   { at: 7, code: '002', text: 'تحميل عائلات الخطوط' },
   { at: 20, code: '003', text: 'تجهيز المخطط المرسوم' },
   { at: 33, code: '004', text: 'بناء شبكة الإطار والمسطرة' },
@@ -503,7 +503,7 @@ export function SheetLoader({ onDone, onExitStart }: SheetLoaderProps) {
       data-fullscreen-layer="sheet-loader"
       role="status"
       aria-busy={!exiting}
-      aria-label="تحضير صفحة تادمورا"
+      aria-label="تحضير صفحة أُلارا"
       onPointerMove={onPointerMove}
     >
       <div ref={mainRef} className="sl-main">
@@ -546,10 +546,10 @@ export function SheetLoader({ onDone, onExitStart }: SheetLoaderProps) {
         <div className="sl-meta" aria-hidden="true">
           <span className="sl-brand">
             <Logo variant="mark" size={22} animated className="sl-brand-logo" />
-            <span className="sl-meta-title">تادمورا — نظام تشغيل الجامعة</span>
+            <span className="sl-meta-title">أُلارا — نظام تشغيل الجامعة</span>
           </span>
           <span className="sl-meta-row fo-mono" dir="ltr">
-            TADMORA · LEARNING PLATFORM
+            ULARA · LEARNING PLATFORM
           </span>
           <span className="sl-meta-row fo-mono" dir="ltr">
             TYPE : ARABIC-FIRST LEARNING PLATFORM

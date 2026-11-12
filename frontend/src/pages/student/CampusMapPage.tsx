@@ -60,7 +60,7 @@ export default function CampusMapPage() {
         eyebrow="خدمات المؤسّسة"
         title="دليل كليات مؤسستك"
         description={
-          'لا خريطة جاهزة على تادمورا — الدليل يُقرأ مباشرة من بيانات مؤسستك: الهيكل الأكاديمي (كليات، أقسام، مقرّرات) ينشئه المسجّل العام، وهذه الصفحة تعرضه كما هو في قاعدة بياناتك.'
+          'لا خريطة جاهزة على أُلارا — الدليل يُقرأ مباشرة من بيانات مؤسستك: الهيكل الأكاديمي (كليات، أقسام، مقرّرات) ينشئه المسجّل العام، وهذه الصفحة تعرضه كما هو في قاعدة بياناتك.'
         }
         /* R342-08 — the header CTA pair (the D11/D8 measured seat;
            the phone band hides the topbar «اسأل AI» ≤920, D6):
@@ -97,7 +97,7 @@ export default function CampusMapPage() {
           }
         />
         <p className="ml-sec-note">
-          تادمورا منصّة مستقلة متعددة المستأجرين ولا تحمل حرمًا جامعيًّا ولا خريطة جاهزة:
+          أُلارا منصّة مستقلة متعددة المستأجرين ولا تحمل حرمًا جامعيًّا ولا خريطة جاهزة:
           كليات مؤسستك تُنشأ من لوحة المسجل العام، وهذا الدليل يقرأها من قاعدة بيانات مؤسستك مباشرة —
           بلا قوالب مفروضة وبلا محتوى مُختلق.
         </p>
@@ -169,7 +169,7 @@ export default function CampusMapPage() {
           <div className="ml-fact">
             <span className="ml-fact-label">البريد الإلكتروني</span>
             <span className="ml-fact-values">
-              <bdi dir="ltr" className="font-mono text-sm">info@demo.tadmora.ly</bdi>
+              <bdi dir="ltr" className="font-mono text-sm">info@demo.ulara.ly</bdi>
             </span>
           </div>
         </div>

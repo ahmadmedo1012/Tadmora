@@ -911,7 +911,7 @@ const CAP_DOMAIN_LABEL: Record<CapDomain, string> = {
 /** JS cadence constant — clears the one-shot confirm pulse shortly after
  *  the CSS animation (var(--t-slower) + ring settle) has finished. Not a
  *  CSS duration, so the motion-token gate does not apply; keep it in the
- *  token scale's register when retuning tadmora-perm-confirm. */
+ *  token scale's register when retuning ulara-perm-confirm. */
 const PULSE_CLEAR_MS = 1200;
 
 export function AdminPermissionsPage() {

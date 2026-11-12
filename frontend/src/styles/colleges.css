@@ -292,9 +292,9 @@
   background: var(--accent);
   transform: scaleY(0);
   transform-origin: top;
-  animation: tadmora-hero-bar-draw var(--t-slower) var(--ease-spring-soft) 240ms both;
+  animation: ulara-hero-bar-draw var(--t-slower) var(--ease-spring-soft) 240ms both;
 }
-@keyframes tadmora-hero-bar-draw {
+@keyframes ulara-hero-bar-draw {
   from { transform: scaleY(0); }
   to   { transform: scaleY(1); }
 }
