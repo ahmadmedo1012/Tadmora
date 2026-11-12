@@ -1,24 +1,24 @@
-# Deploy smoke — R326 M0.6: after a backend change is deployed,
-# prove the LIVE service before users complain.
+# Deploy smoke — after a change is deployed, prove the LIVE service
+# before users complain (R326 M0.6 → owner's 2026-11-12 login rescue).
 #
 #   wait-for-deploy  → poll GET /api/v1/status until buildId == the pushed
 #                      SHA (the platform derives buildId from the deployed
 #                      commit env), up to 20 minutes (builds take minutes)
-#   smoke            → health · login ×3 test accounts · one app-critical
-#                      endpoint · live openapi.json vs the committed
-#                      contract (additive-only). Failure opens an issue.
-# Deployment model note: production deploys are made from the repo with
-# the Vercel CLI (`npx vercel deploy --prod --regions fra1`), so after a
-# push to main the wait-for-deploy job polls until the CLI deploy of that
-# SHA lands and reports its buildId — or times out honestly.
+#   smoke            → health · login ×12 test accounts (the PUBLISHED
+#                      demo password 12345678 — the owner's 2026-11-12
+#                      rule: smoke = ما يجربه المالك تمامًا) · one
+#                      app-critical endpoint · live openapi.json vs the
+#                      committed contract (additive-only)
+#   login-ui         → scripts/e2e/login-all.mjs — the owner's acceptance
+#                      proof in a REAL browser: every account typed
+#                      MANUALLY (never the quick button), verified to
+#                      reach its role dashboard, screenshot per role.
+#                      Any failure opens an issue.
 name: Deploy smoke
 
 on:
   push:
     branches: [main]
-    paths:
-      - 'backend/**'
-      - 'docs/api/openapi.json'
   workflow_dispatch:
 
 permissions:
@@ -65,24 +65,26 @@ jobs:
       - uses: actions/checkout@v4
       - name: Health
         run: curl -sf --max-time 30 "$BASE/health" | tee /dev/stderr | grep -q '"ok":true'
-      - name: Login ×3 test accounts (student · teacher · registrar)
-        # The production hardening retired the published shared demo
-        # password — the smoke accounts carry unique rotated credentials
-        # held as repository secrets (rotate on the DB side, then here).
+      - name: Login ×12 test accounts (the PUBLISHED demo password — smoke = ما يجربه المالك)
+        # Owner rule (2026-11-12): the rotated SMOKE_PW_* secrets are
+        # RETIRED — the smoke proves the exact journey the owner's hands
+        # take: the documented @test.ly accounts with 12345678. The
+        # daily cron re-converges these credentials on the production
+        # DB (ULARA_TEST_ACCOUNTS=1), so smoke and reality can never
+        # diverge again.
         run: |
-          declare -A PW=( [student]="${{ secrets.SMOKE_PW_STUDENT }}" [teacher]="${{ secrets.SMOKE_PW_TEACHER }}" [registrar]="${{ secrets.SMOKE_PW_REGISTRAR }}" )
-          for who in student teacher registrar; do
-            TOK=$(curl -sf --max-time 30 -X POST "$BASE/auth/login" \
+          for who in student student2 teacher teacher2 head dean vicedean registrar admin2 faculty quality owner; do
+            TOK=$(curl -sf --max-time 60 -X POST "$BASE/auth/login" \
               -H 'Content-Type: application/json' \
-              -d "{\"email\":\"$who@test.ly\",\"password\":\"${PW[$who]}\"}" \
+              -d "{\"email\":\"$who@test.ly\",\"password\":\"12345678\"}" \
               | python3 -c 'import json,sys; print(json.load(sys.stdin)["data"]["accessToken"])')
-            echo "$who: token ${TOK:0:16}…"
+            echo "$who@test.ly: token ${TOK:0:16}…"
             [ -n "$TOK" ] || exit 1
           done
       - name: One app-critical endpoint (student dashboard)
         run: |
-          TOK=$(curl -sf -X POST "$BASE/auth/login" -H 'Content-Type: application/json' \
-            -d "{\"email\":\"student@test.ly\",\"password\":\"${{ secrets.SMOKE_PW_STUDENT }}\"}" \
+          TOK=$(curl -sf --max-time 60 -X POST "$BASE/auth/login" -H 'Content-Type: application/json' \
+            -d '{"email":"student@test.ly","password":"12345678"}' \
             | python3 -c 'import json,sys; print(json.load(sys.stdin)["data"]["accessToken"])')
           CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
             -H "Authorization: Bearer $TOK" "$BASE/me/dashboard")
@@ -114,12 +116,12 @@ jobs:
               sys.exit(1)  # triggers the || warning branch, NOT a job failure
           committed = json.load(open('docs/api/openapi.json'))
           def ops(spec):
-            out = set()
-            for p, methods in spec.get('paths', {}).items():
-                for m, op in methods.items():
-                    if isinstance(op, dict) and 'responses' in op:
-                        out.add(f"{m.upper()} {p}")
-            return out
+              out = set()
+              for p, methods in spec.get('paths', {}).items():
+                  for m, op in methods.items():
+                      if isinstance(op, dict) and 'responses' in op:
+                          out.add(f"{m.upper()} {p}")
+              return out
           lo, co = ops(live), ops(committed)
           missing = co - lo
           print(f"live ops: {len(lo)} · committed ops: {len(co)} · missing from live: {len(missing)}")
@@ -128,9 +130,42 @@ jobs:
               raise SystemExit(2)  # a REAL failure: a committed op is gone live
           print("contract holds: every committed op exists live (additive-only)")
           EOF
-      - name: Open an issue on failure
-        if: failure()
-        uses: actions/github-script@v7
+
+  login-ui:
+    name: Login UI — every account typed manually in a real browser
+    needs: wait-for-deploy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # Root install brings the workspaces (frontend's playwright is
+      # hoisted) + tsx for the shared-table import in the script.
+      - run: npm ci
+      - name: Install Playwright chromium
+        run: npx playwright install chromium --with-deps
+      - name: login-all (12 accounts · manual typing · role dashboards · screenshots)
+        run: npx tsx scripts/e2e/login-all.mjs
+      - name: Upload the evidence (screenshots + results JSON)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: login-all-evidence
+          path: scripts/e2e/artifacts/login-all/
+          retention-days: 30
+
+  open-issue-on-failure:
+    name: Open an issue on failure
+    needs: [smoke, login-ui]
+    if: failure()
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
         with:
           script: |
             const run = context.runId;
