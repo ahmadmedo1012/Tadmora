@@ -20,7 +20,7 @@
  *      restore is not done.
  *
  * Usage:
- *   STAGE_DIRECT='postgresql://…' npm run db:restore -- --url-env STAGE_DIRECT --file backups/tadmora-….dump
+ *   STAGE_DIRECT='postgresql://…' npm run db:restore -- --url-env STAGE_DIRECT --file backups/ulara-….dump
  *   npm run db:restore -- --url-env STAGE_DIRECT --file <dump> --dry-run
  *   # (restore over the live DB — refused by default:)
  *   npm run db:restore -- --url-env DATABASE_URL --file <dump> --confirm-live-restore
@@ -62,7 +62,7 @@ const HELP = [
   '  -h, --help           هذه المساعدة / this help',
   '',
   'أمثلة / examples:',
-  "  STAGE_DIRECT='postgresql://…' npm run db:restore -- --url-env STAGE_DIRECT --file backups/tadmora-20261015T090000Z.dump",
+  "  STAGE_DIRECT='postgresql://…' npm run db:restore -- --url-env STAGE_DIRECT --file backups/ulara-20261015T090000Z.dump",
   '  npm run db:restore -- --url-env STAGE_DIRECT --file backups/x.dump --dry-run',
 ].join('\n');
 
@@ -168,7 +168,7 @@ async function main() {
 
   const argv = buildRestoreCommand({ binary: PG_RESTORE, url: targetUrl, dumpFile: values.file });
 
-  console.log('━━━ تادمورا — استعادة نسخة · Tadmora db-restore ━━━');
+  console.log('━━━ أُلارا — استعادة نسخة · Ulara db-restore ━━━');
   console.log(`الهدف / target (${values.urlEnv}): ${redactUrl(targetUrl)}`);
   console.log(`الملف / file: ${values.file}`);
 

@@ -14,7 +14,7 @@
  * credential-redacted (scripts/db-ops-lib.mjs::redactUrl).
  *
  * Usage:
- *   npm run db:backup                                       # DATABASE_URL → backups/tadmora-<ts>.dump
+ *   npm run db:backup                                       # DATABASE_URL → backups/ulara-<ts>.dump
  *   npm run db:backup -- --url-env PG_DIRECT                # named env var (e.g. the direct/pooler-stripped URL)
  *   npm run db:backup -- --out backups/pre-migration.dump   # explicit path
  *   npm run db:backup -- --label pre-migration              # suffix in the default name
@@ -52,8 +52,8 @@ const HELP = [
   'الوسائط / options:',
   '  --url-env <ENV_VAR>  اسم متغير البيئة الحامل لسلسلة اتصال المصدر (الافتراضي DATABASE_URL)',
   '                       name of the env var holding the SOURCE connection URL (default DATABASE_URL)',
-  '  --out <file>         مسار ملف النسخة (الافتراضي backups/tadmora-<timestamp>.dump)',
-  '                       output dump path (default backups/tadmora-<timestamp>.dump)',
+  '  --out <file>         مسار ملف النسخة (الافتراضي backups/ulara-<timestamp>.dump)',
+  '                       output dump path (default backups/ulara-<timestamp>.dump)',
   '  --label <label>      وسم يُدمج في اسم الملف الافتراضي (safe slug)',
   '                       label folded into the default file name',
   '  --dry-run            اطبع الأمر الدقيق فقط (السلسلة مُقنَّعة) بلا تنفيذ',
@@ -118,7 +118,7 @@ async function main() {
   const outFile = values.out ?? defaultBackupPath(new Date(), values.label ?? '');
   const argv = buildBackupCommand({ binary: PG_DUMP, url: sourceUrl, outFile });
 
-  console.log('━━━ تادمورا — نسخة احتياطية · Tadmora db-backup ━━━');
+  console.log('━━━ أُلارا — نسخة احتياطية · Ulara db-backup ━━━');
   console.log(`المصدر / source (${urlEnvName}): ${redactUrl(sourceUrl)}`);
   console.log(`المخرج / output: ${outFile}`);
 

@@ -8,8 +8,8 @@
  * contracts (app.ts / auth.routes.ts / index.html):
  *
  *   1. GET  /api/v1/health   → 200 JSON { ok=true, dbLatencyMs, env }
- *      (generous 90s timeout + one retry — absorbs Render free-tier
- *      spin-up and Neon cold start).
+ *      (generous 90s timeout + one retry — absorbs the serverless
+ *      cold start and Neon cold start).
  *   2. GET  /                → 200 text/html containing the SPA mount
  *      root (<div id="root">) AND a Content-Security-Policy header
  *      carrying the D7 sha256 pins.
@@ -45,14 +45,14 @@
  * login (rate-limited by the auth limiter like any client).
  */
 
-const DEFAULT_BASE_URL = 'https://tadmora.vercel.app';
+const DEFAULT_BASE_URL = 'https://ulara.vercel.app';
 /** frontend/index.html SPA mount root — the page is dead without it. */
 const MOUNT_ROOT_MARKER = 'id="root"';
 /** D7: the CSP header must pin inline scripts with sha256 hashes. */
 const CSP_PIN_MARKER = 'sha256-';
 const HEALTH_TIMEOUT_MS = 90_000;
 const DEFAULT_TIMEOUT_MS = 30_000;
-const USER_AGENT = 'tadmora-smoke/1.0 (post-deploy check)';
+const USER_AGENT = 'ulara-smoke/1.0 (post-deploy check)';
 
 // ─── CLI / env parsing ────────────────────────────────────────────
 
@@ -80,7 +80,7 @@ function parseArgs(argv) {
 function helpText() {
   return [
     'الاستخدام / usage: npm run smoke -- [BASE_URL | --base-url URL]',
-    'المتغيرات / env:  BASE_URL (default https://tadmora.vercel.app)',
+    'المتغيرات / env:  BASE_URL (default https://ulara.vercel.app)',
     '                  SMOKE_EMAIL + SMOKE_PASSWORD (both) → login round-trip',
   ].join('\n');
 }
@@ -140,8 +140,8 @@ async function checkHealth(base) {
   try {
     res = await request(`${base}/api/v1/health`, {}, HEALTH_TIMEOUT_MS);
   } catch (err) {
-    // One retry: the FIRST request may pay Render free-tier spin-up
-    // (the service sleeps after idle) plus Neon cold start.
+    // One retry: the FIRST request may pay the serverless function's
+    // cold start plus the Neon cold start.
     try {
       res = await request(`${base}/api/v1/health`, {}, HEALTH_TIMEOUT_MS);
     } catch (err2) {
@@ -399,7 +399,7 @@ const STATUS_TAG = {
 function printReport(baseUrl, checks) {
   const line = '─'.repeat(72);
   console.log(line);
-  console.log('  تادمورا — فحص الدخان بعد النشر · Tadmora post-deploy smoke');
+  console.log('  أُلارا — فحص الدخان بعد النشر · Ulara post-deploy smoke');
   console.log(`  الهدف / target: ${baseUrl}`);
   console.log(line);
   for (const check of checks) {
@@ -416,8 +416,8 @@ function printReport(baseUrl, checks) {
   if (counts.fail === 0) {
     console.log('  الحالة / status: سليم ✅ — النشر يستجيب لعقود المنصة / deployment answers the platform contracts');
   } else {
-    console.log('  الحالة / status: معطوب ❌ — راقب تبويب Logs في Render ثم أعد المحاولة');
-    console.log('  / broken — inspect the Render Logs tab, then retry.');
+    console.log('  الحالة / status: معطوب ❌ — راقب تبويب Logs في Vercel ثم أعد المحاولة');
+    console.log('  / broken — inspect the Vercel Logs tab, then retry.');
   }
   console.log(line);
 }
