@@ -27,7 +27,14 @@ export function useAiChat() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input: { conversationId?: string; message: string }) =>
-      unwrap<{ conversationId: string; reply: string; engine?: string; model?: string }>(
+      unwrap<{
+        conversationId: string;
+        reply: string;
+        engine?: string;
+        model?: string;
+        degraded?: boolean;
+        notice?: string;
+      }>(
         api.post('/ai/chat', input),
       ),
     onSuccess: () => {

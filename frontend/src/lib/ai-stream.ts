@@ -38,6 +38,11 @@ export interface AiStreamDone {
   inputTokens?: number;
   outputTokens?: number;
   remaining?: number;
+  /** ULARA 3-b (owner rule 2026-11-12): present ONLY on the honest
+   * degraded turn — the free-model chain answered 429 and the LOCAL
+   * composer replied (model names it). Rendered verbatim. */
+  degraded?: boolean;
+  notice?: string;
 }
 
 /** The `error` frame — a typed failure AFTER the SSE headers shipped

@@ -547,6 +547,14 @@ async function recordBudgetBestEffort(tokens: number): Promise<void> {
 const dailyQuotaMessage = (limit: number): string =>
   `وصلتَ حدَّ الأسئلة اليوميّ للمساعد الذكيّ (${limit} سؤالًا) — عُد غدًا أو تابع من محادثاتك السابقة.`;
 
+/** ULARA 3-b (owner rule 2026-11-12) — the honest degraded notice:
+ * when the whole free-model chain comes back 429 (quota spent), the
+ * reply degrades to the LOCAL composer — labeled, never silent, never
+ * an LLM pretense: the envelope names the composer as the model and
+ * this notice explains WHY the answer is local this turn. */
+const DEGRADED_LOCAL_NOTICE =
+  'نفدت حصة النماذج المجانية مؤقتًا — هذا ردُّ الوضع المحليّ، أعد المحاولة بعد قليل.';
+
 /* ── r323 B1.1 — the SSE streaming chat path ────────────────────────
  *
  * Same gates as the JSON path (authMiddleware, aiLimiter, the verified
@@ -740,6 +748,45 @@ async function handleChatStream(args: ChatStreamArgs): Promise<void> {
           await emitFailure(new AiProviderError('client aborted the stream', 'transport'), undefined);
           return;
         }
+        /* ULARA 3-b (owner rule 2026-11-12): quota exhaustion (the
+         * whole chain answered 429 — a FIRST-response failure, no
+         * partial tokens on the wire) degrades to the LOCAL composer
+         * instead of a dead end: the student still gets help, the done
+         * frame names the composer as the model, and the notice line
+         * explains the degradation. Every other failure kind keeps the
+         * honest typed error frame (see emitFailure). */
+        if (classifyProviderFailure(e) === 'rate_limited') {
+          await emitFailure(e); // the provider 429 stays in telemetry
+          if (!abort.signal.aborted && !res.writableEnded) {
+            const localReply = await composeReply(userId, message, req.user!.role, institutionId);
+            if (!abort.signal.aborted && !res.writableEnded) {
+              for (const chunk of chunkLocalReply(localReply)) {
+                if (abort.signal.aborted || res.writableEnded) return;
+                writeEvent('token', { t: chunk });
+              }
+              const { conversationId: finalId, messageId } = await finishTurnWrites(
+                AI_CHAT_MODEL,
+                localReply,
+                0,
+                0,
+              );
+              writeEvent('done', {
+                conversationId: finalId,
+                messageId,
+                reply: localReply,
+                engine: aiProviderLabel,
+                model: AI_CHAT_MODEL,
+                inputTokens: 0,
+                outputTokens: 0,
+                citations: [] as unknown[],
+                degraded: true,
+                notice: DEGRADED_LOCAL_NOTICE,
+                ...(quota.limit > 0 ? { remaining: quota.remaining } : {}),
+              });
+            }
+          }
+          return;
+        }
         // Mid-stream failure after tokens reached the student: the
         // partial text stays unpersisted (the turn never completed) and
         // the typed error frame explains the stop.
@@ -898,9 +945,46 @@ router.post('/chat', aiLimiter, validate(chatSchema), async (req, res, next) => 
      * otherwise. On provider failure the catch below writes failure
      * telemetry (with the attempted model) and surfaces one honest
      * Arabic error — no silent template fallback (see composeReplyWithProvider). */
-    const engine = aiProvider
-      ? await composeReplyWithProvider(message, req.user!.role, history, context, rag.block)
-      : { reply: await composeReply(userId, message, req.user!.role, chatInstitutionId), model: AI_CHAT_MODEL, inputTokens: 0, outputTokens: 0 };
+    /* ULARA 3-b (owner rule 2026-11-12): quota exhaustion (429 through
+     * the whole model chain) degrades to the LOCAL composer — honestly
+     * labeled (the envelope names the composer + a notice line), never
+     * a silent failure and never an LLM pretense. Every other provider
+     * failure keeps the honest Arabic error path (the outer catch). */
+    let engine: { reply: string; model: string; inputTokens: number; outputTokens: number };
+    let degradedNotice: string | undefined;
+    if (aiProvider) {
+      try {
+        engine = await composeReplyWithProvider(message, req.user!.role, history, context, rag.block);
+      } catch (err) {
+        if (classifyProviderFailure(err) !== 'rate_limited') throw err;
+        try {
+          await writeAiTelemetry(prisma, {
+            userId,
+            latencyMs: Date.now() - startedAt,
+            success: false,
+            errorMessage: 'rate_limited (chain exhausted) → local fallback',
+            model: aiRouteId ?? undefined,
+          });
+        } catch {
+          /* telemetry is best-effort — the fallback proceeds */
+        }
+        logger.warn({ err }, 'AI provider quota exhausted — honest local fallback');
+        degradedNotice = DEGRADED_LOCAL_NOTICE;
+        engine = {
+          reply: await composeReply(userId, message, req.user!.role, chatInstitutionId),
+          model: AI_CHAT_MODEL,
+          inputTokens: 0,
+          outputTokens: 0,
+        };
+      }
+    } else {
+      engine = {
+        reply: await composeReply(userId, message, req.user!.role, chatInstitutionId),
+        model: AI_CHAT_MODEL,
+        inputTokens: 0,
+        outputTokens: 0,
+      };
+    }
 
     // All chat writes (conversation create + both messages + telemetry)
     // in ONE transaction — previously three separate non-transactional
@@ -974,6 +1058,11 @@ router.post('/chat', aiLimiter, validate(chatSchema), async (req, res, next) => 
          * never a fabricated name. */
         engine: aiProviderLabel,
         model: engine.model,
+        /* ULARA 3-b (owner rule 2026-11-12): present ONLY on the honest
+         * degraded turn (the free-model chain answered 429 and the local
+         * composer replied) — the FE renders the notice line verbatim
+         * above the engine tag. */
+        ...(degradedNotice ? { degraded: true, notice: degradedNotice } : {}),
         /* r323 B1.2 — the JSON grammar carries the same citations the
          * SSE grammar does (parity across transports). r327 (P4b): the
          * local composer NEVER cites — its reply is template-composed
@@ -982,7 +1071,8 @@ router.post('/chat', aiLimiter, validate(chatSchema), async (req, res, next) => 
          * badge it did not earn. Local mode returns [] exactly like
          * the SSE path always has (the comment claimed this; the code
          * leaked the citations — proven live before this fix). */
-        citations: aiProvider ? rag.citations : ([] as KnowledgeCitation[]),
+        citations:
+          aiProvider && !degradedNotice ? rag.citations : ([] as KnowledgeCitation[]),
       },
     });
   } catch (e) {

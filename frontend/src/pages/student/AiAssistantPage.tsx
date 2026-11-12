@@ -89,6 +89,9 @@ interface ChatMsg {
    * the provider's own `model` field. */
   engine?: string;
   model?: string;
+  /* ULARA 3-b: the honest degraded-turn notice (free-model quota spent
+   * → the local composer answered). Rendered above the engine tag. */
+  notice?: string;
   /* r323 B1.1 — streaming + per-answer state:
    *  · `streaming` marks the bubble tokens are arriving into (the
    *    cursor rides it; it finalizes into a plain bubble on done, a
@@ -441,6 +444,7 @@ export default function AiAssistantPage() {
             text: done.reply,
             engine: done.engine,
             model: done.model,
+            notice: done.notice,
             messageId: done.messageId,
           };
         } else {
@@ -449,6 +453,7 @@ export default function AiAssistantPage() {
             text: done.reply,
             engine: done.engine,
             model: done.model,
+            notice: done.notice,
             messageId: done.messageId,
           });
         }
@@ -533,6 +538,7 @@ export default function AiAssistantPage() {
           text: res.reply,
           engine: res.engine,
           model: res.model,
+          notice: res.notice,
           messageId: (res as { messageId?: string }).messageId,
         },
       ]);
@@ -968,6 +974,11 @@ export default function AiAssistantPage() {
                               CSS). Honest in both directions: a real provider
                               turn names its model, a composer turn names the
                               composer; untagged = no data for that turn. */}
+                          {m.notice && (
+                            <div className="font-mono text-xxs ai-engine-tag" role="status">
+                              {m.notice}
+                            </div>
+                          )}
                           {m.engine && (
                             <div className="font-mono text-xxs text-subtle ai-engine-tag">
                               {m.model ?? m.engine}

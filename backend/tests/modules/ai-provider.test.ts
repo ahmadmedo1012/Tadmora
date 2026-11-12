@@ -792,8 +792,14 @@ describe('clipHistoryContent (r176a — bounded history payload)', () => {
 describe('ai.routes.ts — the P4 mode switch', () => {
   it('resolves the provider once at boot (module level) and switches on it', () => {
     expect(aiRouteSource).toContain('const aiProvider = getAiProvider();');
-    expect(aiRouteSource).toContain('aiProvider\n      ? await composeReplyWithProvider(');
-    expect(aiRouteSource).toContain(': { reply: await composeReply(');
+    // ULARA 3-b (2026-11-12): the mode switch is a try/catch now — the
+    // provider path first, and a 429 (quota exhausted through the whole
+    // chain) degrades HONESTLY to the local composer (labeled + notice)
+    // instead of a dead end. The wiring pins:
+    expect(aiRouteSource).toContain('engine = await composeReplyWithProvider(');
+    expect(aiRouteSource).toContain("classifyProviderFailure(err) !== 'rate_limited'");
+    expect(aiRouteSource).toContain('degradedNotice = DEGRADED_LOCAL_NOTICE;');
+    expect(aiRouteSource).toContain('reply: await composeReply(');
   });
 
   it('the real path builds messages and calls the provider through the lib helpers', () => {
