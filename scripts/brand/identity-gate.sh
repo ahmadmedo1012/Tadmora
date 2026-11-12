@@ -17,6 +17,13 @@
 #   docs/legal/**            the third-party rights audit (historical names)
 #   scripts/conformance/results/**  visual-conformance evidence artifacts
 #   CHANGELOG.md             the project's historical changelog
+#   docs/ops/**              the ops ledger — the append-only progress
+#                           record (its §1 measurements quote old-identity
+#                           counts verbatim; rewriting history is worse
+#                           than recording it)
+#   scripts/scorecard.mjs    the §7 dashboard — its own no-trace row
+#                           SPELLED the old-identity search patterns to
+#                           measure them; instrumentation, not surface
 #
 # Usage:  bash scripts/brand/identity-gate.sh   (exit 0 = clean, 1 = leaks)
 #
@@ -40,6 +47,8 @@ WHITELIST=(
   -g '!node_modules/**'
   -g '!**/node_modules/**'
   -g '!CHANGELOG.md'
+  -g '!docs/ops/**'
+  -g '!scripts/scorecard.mjs'  # its no-trace row spells the patterns it measures
   -g '!docs/archive/**'
   -g '!docs/redesign/**'
   -g '!docs/history/**'

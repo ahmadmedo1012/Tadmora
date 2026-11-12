@@ -300,7 +300,11 @@ jobs:
     # declares workflow_dispatch with its inputs).
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
-    timeout-minutes: 50
+    # 65 not 50: the release APK build alone takes ~21 min (throwaway
+    # keystore, no cache hits); the journey adds ~10–15. The 50-min ceiling
+    # is what got run #9 cancelled mid-forensics — the timeout must bound
+    # runaway runs, never cut healthy long ones.
+    timeout-minutes: 65
     env:
       DATABASE_URL: postgresql://tadmora@localhost:5433/tadmora
       EXPO_NO_TELEMETRY: '1'
@@ -488,17 +492,26 @@ jobs:
                 FAIL=1
               fi
             done
+
+            # ── forensics capture MUST live INSIDE this script: the
+            # emulator-runner action tears the AVD down when the script
+            # exits, so any post-action `adb` would block forever on a
+            # dead device (observed: run #9's capture step hung 23 min →
+            # job timeout → the logcat artifact was LOST). Bound it too.
+            ADB="$ANDROID_HOME/platform-tools/adb"
+            "$ADB" devices > adb-devices.txt 2>&1 || true
+            if ! timeout 60 "$ADB" logcat -d > logcat.txt 2>&1; then
+              {
+                echo "(logcat capture failed — adb device state follows:)"
+                cat adb-devices.txt
+              } >> logcat.txt
+            fi
+            wc -c logcat.txt || true
             exit "$FAIL"
 
-      # ── the forensics: logcat ALWAYS, crash gate AFTER the emulator ──
-      - name: Capture logcat (always)
-        if: always()
-        run: |
-          ADB="$ANDROID_HOME/platform-tools/adb"
-          "$ADB" devices
-          "$ADB" logcat -d > logcat.txt
-          wc -c logcat.txt
-
+      # ── the crash gate + upload read the workspace files the emulator
+      # script captured — no adb here, the AVD is already gone (see the
+      # note inside the script above). ────────────────────────────────
       - name: Crash gate (logcat forensics — fails the job on signatures)
         # Deliberately OUTSIDE the emulator-runner script so it always
         # runs, whatever happened on the emulator. The grep redirect form
@@ -533,6 +546,7 @@ jobs:
           name: android-smoke-forensics
           path: |
             logcat.txt
+            adb-devices.txt
             crash-report.txt
             backend.log
           if-no-files-found: error
