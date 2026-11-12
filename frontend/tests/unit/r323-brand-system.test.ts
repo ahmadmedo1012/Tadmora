@@ -17,10 +17,16 @@
  *
  *   (c) the regenerated assets are the NEW system: favicon.svg +
  *       brand/*.svg contain no <linearGradient> and no copper hexes,
- *       carry the 32-grid khatam geometry with miter joins and the one
- *       #FA3600 point — and the static twins stay byte-pinned to
+ *       carry the 32-grid U-vessel geometry (ONE ink stroke, round
+ *       caps/joins, M/L/Q commands only) + the one sienna #C43E16
+ *       cornerstone — and the static twins stay pinned to
  *       frontend/src/brand/mark.ts + lockups.ts (the same numbers
  *       scripts/r323/brand-assets.mjs re-states).
+ *
+ *   (d) the RN port is the SAME geometry: apps/mobile/src/brand/{mark,
+ *       lockups,wordmark.generated}.ts are byte-identical twins of the
+ *       web seats (the parity tokens:check verifies — pinned here so
+ *       the unit belt fails louder + closer to the cause).
  *
  *   Plus the public contract the parallel work packages code against
  *   (frontend/src/brand — Logo variants/tones/animation), rendered for
@@ -37,7 +43,14 @@ import { render } from '@testing-library/react';
 
 import { Logo } from '../../src/brand';
 import { LOCKUP } from '../../src/brand/lockups';
-import { markStrokePx } from '../../src/brand/mark';
+import {
+  MARK_CORNERSTONE,
+  MARK_GRID_POINTS,
+  MARK_INK,
+  MARK_VESSEL_PATH,
+  MARK_VIEWBOX,
+  markStrokePx,
+} from '../../src/brand/mark';
 import { WORDMARK_AR } from '../../src/brand/wordmark.generated';
 
 const FRONTEND = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -205,35 +218,51 @@ describe('R323 gate (b) — the StarMark/BrandMark import graph is frozen', () =
 /* ════════════════════════════════════════════════════════════════════
  * the regenerated assets (gate c) + geometry sync
  * ════════════════════════════════════════════════════════════════════ */
-const ARCH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z';
+/* The vessel's cornerstone rect exactly as the static twins serialize
+ * it (brand-assets.mjs markGroup). */
+const cornerRect = (fill: string) =>
+  `<rect x="${MARK_CORNERSTONE.x}" y="${MARK_CORNERSTONE.y}" width="${MARK_CORNERSTONE.size}" height="${MARK_CORNERSTONE.size}" fill="${fill}"/>`;
 
-describe('R323 gate (c) — favicon + brand twins are the TADMORA system', () => {
+describe('R323 gate (c) — favicon + brand twins are the ULARA system', () => {
   const favicon = read('public/favicon.svg');
-  const tadmoraMark = read('public/brand/tadmora-mark.svg');
+  const ularaMark = read('public/brand/ulara-mark.svg');
 
-  it('favicon.svg + tadmora-mark.svg carry no <linearGradient> and no copper hexes', () => {
+  it('favicon.svg + ulara-mark.svg carry no <linearGradient> and no copper hexes', () => {
     for (const [name, svg] of [
       ['public/favicon.svg', favicon],
-      ['public/brand/tadmora-mark.svg', tadmoraMark],
+      ['public/brand/ulara-mark.svg', ularaMark],
     ] as const) {
       expect(svg, name).not.toMatch(/<linearGradient/i);
       expect(svg, name).not.toMatch(COPPER_RE);
     }
   });
 
-  it('favicon.svg: 32-grid Tadmora arch, miter joins, the 2.25 favicon ratio, one #FA3600 keystone', () => {
-    expect(favicon).toContain(ARCH);
-    expect(favicon).toContain('stroke-linejoin="miter"');
+  it('favicon.svg: the 32-grid U-vessel, round caps/joins, the 2.25 favicon ratio, one sienna cornerstone', () => {
+    expect(favicon).toContain(`viewBox="${MARK_VIEWBOX}"`);
+    expect(favicon).toContain(MARK_VESSEL_PATH);
+    expect(favicon).toContain('stroke-linecap="round"');
+    expect(favicon).toContain('stroke-linejoin="round"');
     expect(favicon).toContain('stroke-width="2.25"');
-    expect(favicon).toContain('#FA3600');
-    expect(favicon).not.toMatch(/stroke-linejoin="round"/i);
+    expect(favicon).toContain(cornerRect('#C43E16'));
+    /* the vessel is ONE continuous stroke — never mitered */
+    expect(favicon).not.toMatch(/stroke-linejoin="miter"/);
   });
 
-  it('tadmora-mark.svg: same geometry, miter joins, one #FA3600 keystone, byte-twin of mark.svg', () => {
-    expect(tadmoraMark).toContain(ARCH);
-    expect(tadmoraMark).toContain('stroke-linejoin="miter"');
-    expect(tadmoraMark).toContain('#FA3600');
-    expect(tadmoraMark).toBe(read('public/brand/mark.svg'));
+  it('ulara-mark.svg: same geometry, round joins, the sienna cornerstone, twin of the shared canonical mark', () => {
+    expect(ularaMark).toContain(`viewBox="${MARK_VIEWBOX}"`);
+    expect(ularaMark).toContain(MARK_VESSEL_PATH);
+    expect(ularaMark).toContain('stroke-linecap="round"');
+    expect(ularaMark).toContain('stroke-linejoin="round"');
+    expect(ularaMark).toContain('stroke-width="1.5"');
+    expect(ularaMark).toContain(cornerRect('#C43E16'));
+    expect(ularaMark).toContain('<title>أُلارا</title>');
+    /* geometry parity with the SHARED canonical mark (the compact RN/
+     * kit form scripts/brand/build-app-icons.mjs writes — same numbers,
+     * different serialization: the vessel + the cornerstone must be
+     * identically stated). */
+    const shared = repoRead('shared/brand/mark.svg');
+    expect(shared).toContain(MARK_VESSEL_PATH);
+    expect(shared).toContain(cornerRect('#C43E16'));
   });
 
   it('every public/brand/*.svg is gradient-free and copper-free', () => {
@@ -259,25 +288,59 @@ describe('R323 gate (c) — favicon + brand twins are the TADMORA system', () =>
     const mark = read('src/brand/mark.ts');
     const gen = repoRead('scripts/r323/brand-assets.mjs');
     for (const fact of [
-      "MARK_ARCH_PATH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z'",
-      "MARK_KEYSTONE = { x: 14, y: 5, size: 4 }",
+      `MARK_VESSEL_PATH = '${MARK_VESSEL_PATH}'`,
+      `MARK_CORNERSTONE = { x: ${MARK_CORNERSTONE.x}, y: ${MARK_CORNERSTONE.y}, size: ${MARK_CORNERSTONE.size} }`,
+      `MARK_INK = { x: ${MARK_INK.x}, y: ${MARK_INK.y}, w: ${MARK_INK.w}, h: ${MARK_INK.h} }`,
+      `MARK_VIEWBOX = '${MARK_VIEWBOX}'`,
+      `MARK_GRID_POINTS: readonly (readonly [number, number])[] = [`,
     ]) {
       expect(mark, `mark.ts missing ${fact}`).toContain(fact);
     }
     for (const fact of [
-      `arch: '${ARCH}'`,
-      "keystone: { x: 14, y: 5, size: 4 }",
+      `vessel: '${MARK_VESSEL_PATH}'`,
+      `cornerstone: { x: ${MARK_CORNERSTONE.x}, y: ${MARK_CORNERSTONE.y}, size: ${MARK_CORNERSTONE.size} }`,
     ]) {
       expect(gen, `brand-assets.mjs missing ${fact}`).toContain(fact);
     }
+    /* the grid anchors are exactly the construction's judged points */
+    expect(MARK_GRID_POINTS).toHaveLength(9);
+    expect(MARK_GRID_POINTS).toContainEqual([MARK_CORNERSTONE.x, MARK_CORNERSTONE.y]);
+    expect(MARK_GRID_POINTS).toContainEqual([MARK_CORNERSTONE.x + MARK_CORNERSTONE.size, MARK_CORNERSTONE.y + MARK_CORNERSTONE.size]);
   });
 
-  it('the generated wordmark is the r323 artifact (Plex 600 sheet, ink-height 100)', () => {
+  it('the generated wordmark is the ULARA sheet — أُلارا shaped WITH the damma', () => {
     const gen = read('src/brand/wordmark.generated.ts');
     expect(gen).toContain('scripts/r323/wordmark-build-r323.mjs');
     expect(gen).toContain('GENERATED FILE');
+    /* the damma contract is documented at the seat (the damma-less
+     * form is forbidden brand-wide) */
+    expect(gen).toContain('(U+064F — mandatory)');
     expect(WORDMARK_AR.ink.h).toBe(100);
     expect(WORDMARK_AR.ink.w).toBeGreaterThan(0);
+    /* a real shaped sheet, not a stub: the unioned outline data is
+     * substantial and the sheet carries its own viewBox */
+    expect(WORDMARK_AR.d.length).toBeGreaterThan(1000);
+    expect(WORDMARK_AR.viewBox).toBe('0 0 94.99 112.00');
+    /* the shaper's INPUT WORD carries the damma — the generator pins
+     * the word itself, and its own runtime assert rejects a missing/
+     * misplaced damma mark */
+    const shaper = repoRead('scripts/r323/wordmark-build-r323.mjs');
+    expect(shaper).toContain("const WORD = 'أُلارا'");
+    expect(shaper).not.toContain('ألارا');
+  });
+});
+
+/* ════════════════════════════════════════════════════════════════════
+ * the RN port (gate d) — apps/mobile/src/brand is the SAME geometry
+ * ═══════════════════════════════════════════════════════════════════ */
+describe('R323 gate (d) — the RN port is the same geometry (byte-identical twins)', () => {
+  it('apps/mobile/src/brand/mark.ts is the byte-identical twin of the web seat', () => {
+    expect(repoRead('apps/mobile/src/brand/mark.ts')).toBe(read('src/brand/mark.ts'));
+  });
+
+  it('apps/mobile lockups + wordmark sheets are byte-identical twins', () => {
+    expect(repoRead('apps/mobile/src/brand/lockups.ts')).toBe(read('src/brand/lockups.ts'));
+    expect(repoRead('apps/mobile/src/brand/wordmark.generated.ts')).toBe(read('src/brand/wordmark.generated.ts'));
   });
 });
 
@@ -285,32 +348,35 @@ describe('R323 gate (c) — favicon + brand twins are the TADMORA system', () =>
  * the public contract (the parallel packages code against this)
  * ════════════════════════════════════════════════════════════════════ */
 describe('R323 contract — <Logo> (frontend/src/brand)', () => {
-  it('default render: lockup, role=img, <title>تادمورا, data-logo, miter joins', () => {
+  it('default render: lockup, role=img, <title>أُلارا, data-logo, the vessel ROUND joins', () => {
     const { container } = render(React.createElement(Logo));
     const svg = container.querySelector('svg');
     expect(svg).not.toBeNull();
     expect(svg?.getAttribute('data-logo')).toBe('lockup');
     expect(svg?.getAttribute('role')).toBe('img');
-    expect(svg?.getAttribute('aria-label')).toBe('تادمورا');
-    expect(svg?.querySelector('title')?.textContent).toBe('تادمورا');
+    expect(svg?.getAttribute('aria-label')).toBe('أُلارا');
+    expect(svg?.querySelector('title')?.textContent).toBe('أُلارا');
+    /* the vessel is one continuous ROUND-joined stroke; the wordmark
+     * sheet keeps its miter-joined drafting outline */
+    expect(svg?.querySelector('[stroke-linejoin="round"]')).not.toBeNull();
     expect(svg?.querySelector('[stroke-linejoin="miter"]')).not.toBeNull();
-    /* auto tone: the ink rides currentColor, the point rides var(--accent) */
+    /* auto tone: the ink rides currentColor, the cornerstone rides var(--accent) */
     expect(svg?.querySelector('[fill="var(--accent)"]')).not.toBeNull();
     expect(svg?.innerHTML).not.toContain('#B57438');
   });
 
-  it('tones: orange/paper/ink swap BOTH slots to the literal colour', () => {
-    const orange = render(React.createElement(Logo, { tone: 'orange' })).container;
-    expect(orange.querySelector('[fill="var(--accent)"]')).toBeNull();
-    expect(orange.querySelector('[fill="#FA3600"]')).not.toBeNull();
-    expect(orange.querySelector('[stroke="#FA3600"]')).not.toBeNull();
+  it('tones: sienna/paper/ink swap BOTH slots to the literal colour', () => {
+    const sienna = render(React.createElement(Logo, { tone: 'sienna' })).container;
+    expect(sienna.querySelector('[fill="var(--accent)"]')).toBeNull();
+    expect(sienna.querySelector('[fill="#C43E16"]')).not.toBeNull();
+    expect(sienna.querySelector('[stroke="#C43E16"]')).not.toBeNull();
 
     const paper = render(React.createElement(Logo, { tone: 'paper' })).container;
-    expect(paper.querySelector('[stroke="#F6F6EE"]')).not.toBeNull();
+    expect(paper.querySelector('[stroke="#F5F1E8"]')).not.toBeNull();
     expect(paper.querySelector('[fill="var(--accent)"]')).toBeNull();
 
     const ink = render(React.createElement(Logo, { tone: 'ink' })).container;
-    expect(ink.querySelector('[stroke="#282828"]')).not.toBeNull();
+    expect(ink.querySelector('[stroke="#262019"]')).not.toBeNull();
   });
 
   it('variants: mark is square; wordmark scales from the ink metrics; stacked is vertical', () => {
@@ -330,7 +396,7 @@ describe('R323 contract — <Logo> (frontend/src/brand)', () => {
     expect(Number(stackedSvg?.getAttribute('height'))).toBeGreaterThan(32);
   });
 
-  it('animated: injects the keyframes + reduced-motion opt-out, point LAST (750ms)', () => {
+  it('animated: injects the keyframes + reduced-motion opt-out, cornerstone LAST (750ms)', () => {
     const still = render(React.createElement(Logo, { variant: 'mark' })).container;
     expect(still.querySelector('style')).toBeNull();
 
@@ -338,13 +404,13 @@ describe('R323 contract — <Logo> (frontend/src/brand)', () => {
     const style = moving.querySelector('style')?.textContent ?? '';
     expect(style).toContain('@keyframes');
     expect(style).toContain('prefers-reduced-motion');
-    /* the point pops LAST: its inline style carries the 750ms delay
-     * (hairlines draw at 0/250ms; the point waits for them) */
-    const point = moving.querySelector('[fill="var(--accent)"]');
-    expect(point).not.toBeNull();
-    const pointStyle = point?.getAttribute('style') ?? '';
-    expect(pointStyle).toContain('animation');
-    expect(pointStyle).toContain('750ms');
+    /* the cornerstone pops LAST: its inline style carries the 750ms
+     * delay (the vessel draws at 0ms; the stone waits for it) */
+    const stone = moving.querySelector('[fill="var(--accent)"]');
+    expect(stone).not.toBeNull();
+    const stoneStyle = stone?.getAttribute('style') ?? '';
+    expect(stoneStyle).toContain('animation');
+    expect(stoneStyle).toContain('750ms');
   });
 
   it('R324/X11 — the optical-size ramp tapers the hairline below 32px', () => {

@@ -117,7 +117,7 @@ function renderPage() {
 beforeEach(() => {
   h.rsvpMutate.mockClear();
   useAuthStore.setState({
-    user: { id: 't1', email: 't1@tdmr.dev', firstName: 'أحمد', lastName: 'المهدي', role: 'TEACHER' },
+    user: { id: 't1', email: 't1@ula.dev', firstName: 'أحمد', lastName: 'المهدي', role: 'TEACHER' },
   });
 });
 

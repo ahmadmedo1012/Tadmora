@@ -25,9 +25,9 @@
  *   # terminal 2:
  *   cd frontend && npx playwright test tests/e2e/r323-loader-overlap.e2e.ts
  *
- * With TADMORA_E2E_BASE_URL=<url> the config skips its webServer and
+ * With ULARA_E2E_BASE_URL=<url> the config skips its webServer and
  * drives the given instance instead. The shared fixture installs the
- * mock transport (no backend needed) and seeds `tadmora-intro-skip`
+ * mock transport (no backend needed) and seeds `ulara-intro-skip`
  * BEFORE any app script, so task-focused sampling boots straight into
  * each page. Post-integration wiring (foreman pass): the Splash /
  * RouteProgress / SlowServerCard mounts and the brand Logo's data-logo

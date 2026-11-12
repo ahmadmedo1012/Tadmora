@@ -65,20 +65,20 @@ describe('lib/pdfUpload — effectivePdfMaxBytes (Ω+2.0: the host-honest ceilin
   });
 
   it("a *.vercel.app host caps at 4 MiB — the deployment's real transfer limit", () => {
-    expect(effectivePdfMaxBytes('tadmora.vercel.app')).toBe(VERCEL_PDF_MAX_BYTES);
+    expect(effectivePdfMaxBytes('ulara.vercel.app')).toBe(VERCEL_PDF_MAX_BYTES);
     expect(effectivePdfMaxBytes('anything.vercel.app')).toBe(VERCEL_PDF_MAX_BYTES);
-    expect(pdfMaxMb('tadmora.vercel.app')).toBe(4);
+    expect(pdfMaxMb('ulara.vercel.app')).toBe(4);
   });
 
   it('every other host keeps the full 20 MiB product cap', () => {
     expect(effectivePdfMaxBytes('localhost')).toBe(PDF_MAX_BYTES);
-    expect(effectivePdfMaxBytes('tadmora.example.edu')).toBe(PDF_MAX_BYTES);
+    expect(effectivePdfMaxBytes('ulara.example.edu')).toBe(PDF_MAX_BYTES);
     expect(effectivePdfMaxBytes('')).toBe(PDF_MAX_BYTES);
     expect(pdfMaxMb('localhost')).toBe(20);
   });
 
   it("the oversize copy names the deployment's number — 4 on Vercel, 20 self-hosted", () => {
-    expect(pdfMaxMb('tadmora.vercel.app')).not.toBe(pdfMaxMb('localhost'));
+    expect(pdfMaxMb('ulara.vercel.app')).not.toBe(pdfMaxMb('localhost'));
   });
 });
 

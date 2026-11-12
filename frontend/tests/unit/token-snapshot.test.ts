@@ -7,7 +7,7 @@
  *
  * RA1 (r184, from the r183-A3 audit §F10): the tables are now READ
  * FROM `tokens.css` — the live token source — instead of hand-copied
- * hexes. The old copies had already rotted (dark surface #191918 and
+ * hexes. The old copies had already rotted (dark surface #17130E and
  * ink #F2EAD8 while the live dark theme serves --bg #070B16 and
  * --text #F2EFE6): editing tokens.css directly could pass silently.
  * Now a retuned theme table, a swapped role accent, or a renamed role

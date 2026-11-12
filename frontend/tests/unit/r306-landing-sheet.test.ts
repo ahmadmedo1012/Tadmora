@@ -1,5 +1,5 @@
 /**
- * r306 — the landing drawing-sheet contract («لوحة تادمورا»).
+ * r306 — the landing drawing-sheet contract («لوحة أُلارا»).
  *
  * r306 rebuilds the landing page in the single Heron canon
  * (docs/redesign/r306-heron-exclusivity-spec.md): the OPTIKKA
@@ -89,7 +89,7 @@ describe('r306 — the poster world is retired', () => {
   });
 
   it('the 3D world vocabulary is gone: no canvas layer, no data-cam, no story hooks, no conductor', () => {
-    expect(liveTsx).not.toContain('TadmoraWorld');
+    expect(liveTsx).not.toContain('UlaraWorld');
     expect(liveTsx).not.toContain('data-cam');
     expect(liveTsx).not.toContain('data-story-');
     expect(liveTsx).not.toContain('useScrollStage');
@@ -183,7 +183,7 @@ describe('r306 → r310 — the elevation illustration (the honest interactive)'
 
   it('R315 override — the hero art is the WHOLE elevation SVG on transparent paper (A.1)', () => {
     // R315 override (owner §0-A.1, supersedes the R314 raster seat): the
-    // hero's ONE graphic object is Tadmora's own drafted ELEVATION —
+    // hero's ONE graphic object is Ulara's own drafted ELEVATION —
     // the whole frontal building + trees + ground line + the two orange
     // pin squares — seated in the shared 1440×720 .bp-svg frame at ≈67%
     // of the window, centred, on TRANSPARENT paper (no <image>, no

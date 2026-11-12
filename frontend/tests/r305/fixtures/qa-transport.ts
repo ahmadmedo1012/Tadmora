@@ -63,7 +63,7 @@ export interface FixtureUser {
 
 export const STUDENT_USER: FixtureUser = {
   id: 'usr_qa_student',
-  email: 'student@qa.tadmora.app',
+  email: 'student@qa.ulara.app',
   firstName: 'أحمد',
   lastName: 'الزاوي',
   role: 'STUDENT',
@@ -75,7 +75,7 @@ export const STUDENT_USER: FixtureUser = {
 /** Credentials the dynamic login endpoint accepts (backend seed twin). */
 export const VALID_LOGIN = { email: STUDENT_USER.email, password: TEST_PASSWORD } as const;
 export const WRONG_LOGIN = { email: STUDENT_USER.email, password: 'wrong-password' } as const;
-export const LOCKED_EMAIL = 'locked@qa.tadmora.app';
+export const LOCKED_EMAIL = 'locked@qa.ulara.app';
 export const LOGIN_FAILED_MESSAGE = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
 export const LOGIN_LOCKED_MESSAGE = 'محاولات دخول كثيرة — انتظر قليلاً ثم أعد المحاولة.';
 
@@ -198,7 +198,7 @@ export const TRAINING_BADGES = [
 
 /** GET /training/me/certificates — TrainingCertificate[]. */
 export const TRAINING_CERTS = [
-  { id: 'cert_qa_study', title: 'شهادة إتمام: مهارات الدراسة الفعّالة', issuer: 'منصة تادمورا', issuedAt: iso(-240), hours: 3, status: 'COMPLETED', trackSlug: 'study-skills', iconEmoji: '📜', themeColor: null },
+  { id: 'cert_qa_study', title: 'شهادة إتمام: مهارات الدراسة الفعّالة', issuer: 'منصة أُلارا', issuedAt: iso(-240), hours: 3, status: 'COMPLETED', trackSlug: 'study-skills', iconEmoji: '📜', themeColor: null },
 ];
 
 /** GET /training/leaderboard — LeaderboardRow[]. */
@@ -468,14 +468,14 @@ export async function installQaApi(
 
 /**
  * localStorage payload exactly as zustand's persist middleware writes
- * it for `tdmr-auth` (stores/auth.store.ts — safeSessionStorage
+ * it for `ula-auth` (stores/auth.store.ts — safeSessionStorage
  * JSON.stringify's { state, version }).
  */
 export function authStorageJson(user: FixtureUser, token: string): string {
   return JSON.stringify({ state: { user, accessToken: token }, version: 0 });
 }
 
-/** localStorage payload for `tadmora-theme` (theme.store.ts v2). */
+/** localStorage payload for `ulara-theme` (theme.store.ts v2). */
 export function themeStorageJson(mode: 'light' | 'dark'): string {
   return JSON.stringify({ state: { mode, modeUpdatedAt: 0 }, version: 2 });
 }
@@ -498,15 +498,15 @@ export async function seedQaSession(
     ([auth, theme]) => {
       if (auth) {
         try {
-          if (localStorage.getItem('tdmr-auth') === null) {
-            localStorage.setItem('tdmr-auth', auth);
+          if (localStorage.getItem('ula-auth') === null) {
+            localStorage.setItem('ula-auth', auth);
           }
         } catch { /* storage unavailable — app falls back to guest */ }
       }
       if (theme) {
         try {
-          if (localStorage.getItem('tadmora-theme') === null) {
-            localStorage.setItem('tadmora-theme', theme);
+          if (localStorage.getItem('ulara-theme') === null) {
+            localStorage.setItem('ulara-theme', theme);
           }
         } catch { /* same probe-guard story as the auth store */ }
       }

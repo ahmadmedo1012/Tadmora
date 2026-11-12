@@ -61,7 +61,7 @@ test.describe('مراجعة قوالب الاختبارات', () => {
     await installStatefulApi(page, qualityRoutes(decided, moderateBodies));
 
     await page.goto('/quality/exam-moderation');
-    await expect(page).toHaveTitle('مراجعة الاختبارات · تادمورا');
+    await expect(page).toHaveTitle('مراجعة الاختبارات · أُلارا');
     await expect(page.locator('h1.page-title')).toHaveText('مراجعة الاختبارات');
     await expect(page.locator('.page-subtitle')).toContainText('صلاحية حصرية لمكتب الجودة');
 

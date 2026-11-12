@@ -59,7 +59,7 @@ test.describe('الزائر — الأسطح العامة', () => {
     // Phase Ω: the public gallery is the multi-tenancy pitch — its h1
     // states the platform truth and the rows list the workspace's REAL
     // faculties (mock /colleges payload), no campus grouping at all.
-    await expect(page.locator('h1.pf-page-title')).toContainText('مؤسستك، كلياتك… على تادمورا');
+    await expect(page.locator('h1.pf-page-title')).toContainText('مؤسستك، كلياتك… على أُلارا');
     const gallery = page.getByRole('group', { name: 'كليات مساحة العرض' });
     await expect(gallery).toBeVisible();
     await expect(gallery).toContainText('كلية الهندسة');

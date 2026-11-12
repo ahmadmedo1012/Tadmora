@@ -18,7 +18,7 @@ import type { MockRouteDef } from '../e2e/fixtures/mock-transport';
 import { teacherRoutes } from './teacher-fixtures';
 
 const OUT = '/tmp/r174-captures';
-const BASE = process.env.TADMORA_CAPTURE_BASE ?? 'http://localhost:5173';
+const BASE = process.env.ULARA_CAPTURE_BASE ?? 'http://localhost:5173';
 
 const VIEWPORTS: Array<[string, number, number]> = [
   ['m360', 360, 780],
@@ -62,7 +62,7 @@ async function capture(
         ([t]) => {
           try {
             localStorage.setItem(
-              'tadmora-theme',
+              'ulara-theme',
               JSON.stringify({ state: { mode: t, modeUpdatedAt: 0 }, version: 2 }),
             );
           } catch { /* storage unavailable */ }

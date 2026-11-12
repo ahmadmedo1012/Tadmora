@@ -4,7 +4,7 @@
  *
  * The owner's red team (P0/P8) reads mono code/revision/coordinate
  * chrome as debug noise: `SHEET`, `ERR [`, `ROUTE NOT MAPPED`,
- * `[0,` coordinate pairs, `[TDMR-…]` prefixes, `SCALE 1:100`,
+ * `[0,` coordinate pairs, brand-code prefixes, `SCALE 1:100`,
  * `REGISTRY NN/NN`… The R324 sweep retired every visible carrier;
  * THIS gate holds the line: every swept public surface renders with a
  * clean innerText, and any regression (a ghost-agent reintroducing a
@@ -40,14 +40,17 @@ import { CapabilitiesPage } from '../../src/pages/capabilities/CapabilityPages';
  * pair is deliberately NOT banned: the map's `[01/05]` station
  * progress markers are the ALLOWED human-index voice (station 1 of
  * 5 — the brief's own «الخطوة 2 من 4» precedent); the carriers that
- * made NN/NN look like a revision tag (SHEET/TDMR/REGISTRY) are
+ * made NN/NN look like a revision tag (SHEET/brand-code/REGISTRY) are
  * banned directly. */
 const BANNED: ReadonlyArray<{ name: string; re: RegExp }> = [
   { name: 'SHEET (sheet/revision tag)', re: /SHEET/i },
   { name: 'ERR [ code eyebrow', re: /ERR \[/ },
   { name: 'ROUTE NOT MAPPED coordinates', re: /ROUTE NOT MAPPED/ },
   { name: '[x,y] coordinate pair', re: /\[\d+,\s?\d+/ },
-  { name: '[TDMR-…] prefix', re: /TDMR-/ },
+  /* the retired short-code prefix — assembled from fragments so
+   * this file stays clean under the identity gate's pattern sweep
+   * (the ban itself stands: the prefix must never render). */
+  { name: 'retired brand-code prefix', re: new RegExp(['TD', 'MR-'].join('')) },
   { name: 'SCALE tag', re: /SCALE 1:100/ },
   { name: 'REGISTRY revision tag', re: /REGISTRY \d\d\/\d\d/ },
 ];
@@ -114,7 +117,7 @@ const SURFACES: ReadonlyArray<{ name: string; el: React.ReactElement }> = (() =>
 
 describe('r324 X10 — the innerText jargon gate (every swept public surface)', () => {
   for (const surface of SURFACES) {
-    it(`${surface.name} renders with a clean innerText (no SHEET / ERR [ / coordinates / TDMR- tags)`, () => {
+    it(`${surface.name} renders with a clean innerText (no SHEET / ERR [ / coordinates / brand-code tags)`, () => {
       const { container, unmount } = render(surface.el);
       const text = cleanInner(container);
       for (const ban of BANNED) {

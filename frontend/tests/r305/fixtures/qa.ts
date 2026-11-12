@@ -10,7 +10,7 @@
  *     corpus (fixtures/qa-transport.ts); the Vite dev server serves
  *     the real SPA. No backend, no DB, no network.
  *  3. AUTH STATE BOOTSTRAP — `test.use({ qaRole: 'STUDENT' })` seeds
- *     `tdmr-auth` localStorage exactly the way the zustand persist
+ *     `ula-auth` localStorage exactly the way the zustand persist
  *     store writes it, BEFORE any app script runs.
  *  4. FROZEN CLOCK — page.clock.setFixedTime(FIXED_NOW_ISO) with
  *     timezoneId UTC: deterministic Date.now()/new Date() while timers
@@ -32,18 +32,18 @@ import { installQaApi, seedQaSession, type MockRouteDef } from './qa-transport';
 export type QaRole = 'guest' | 'STUDENT';
 
 export interface QaOptions {
-  /** Seeded role boots the app signed-in (localStorage tdmr-auth). */
+  /** Seeded role boots the app signed-in (localStorage ula-auth). */
   qaRole: QaRole;
   /** Per-test mock routes — matched BEFORE the standard table.
    *  ⚠ 1 row maximum via use() (Playwright's option plumbing eats a
    *  2+ row array as a fixture tuple — the e2e area's landmine guard).
    *  Specs with 2+ extra routes register page-level routes directly. */
   qaOverrides: MockRouteDef[];
-  /** Optional persisted theme to seed (tadmora-theme localStorage). */
+  /** Optional persisted theme to seed (ulara-theme localStorage). */
   qaThemeSeed: 'light' | 'dark' | null;
 }
 
-const BASE_URL = process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173';
+const BASE_URL = process.env.ULARA_E2E_BASE_URL ?? 'http://localhost:5173';
 
 function userForRole(role: QaRole): FixtureUser | null {
   return role === 'STUDENT' ? STUDENT_USER : null;

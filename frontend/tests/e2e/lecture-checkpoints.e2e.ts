@@ -58,7 +58,7 @@ test.describe('نقاط التفاعل في مشغّل المحاضرة', () => 
   test('إجابة صحيحة: تصحيح فوري ثم «متابعة المحاضرة» يغلق النموذج', async ({ page }) => {
     await installStatefulApi(page, lectureRoutes());
     await page.goto(`/student/lectures/${CHECKPOINT_LECTURE_ID}`);
-    await expect(page).toHaveTitle('مشغّل المحاضرة · تادمورا');
+    await expect(page).toHaveTitle('مشغّل المحاضرة · أُلارا');
 
     /* المشغّل: العنوان + عنصر الفيديو الحقيقي (المقطع المشترك) + الفصول. */
     await expect(page.getByText('تمارين تفاعلية على الجشع').first()).toBeVisible();

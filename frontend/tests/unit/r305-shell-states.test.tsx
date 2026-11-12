@@ -15,7 +15,7 @@
  *  2. document.title resolution (5-B5 / 4-A14 / r183-B6): nav.ts is
  *     the single source for nav destinations; the manual map only
  *     carries non-nav surfaces; DYNAMIC_TITLES resolves parametric
- *     routes; the fallback is the product name («تادمورا» → the full
+ *     routes; the fallback is the product name («أُلارا» → the full
  *     DOC_TITLE_BASE when mirrored into the tab).
  *
  *  3. ⌘K chord grammar (4-A2 P2-8, wave 21-a): the chord opens the
@@ -273,19 +273,19 @@ describe('r305 shell — document.title resolution table (single source: nav.ts)
     ['dynamic pattern (exam, neutral title)', '/student/online-exams/ex_9', 'اختبار إلكتروني'],
     ['dynamic pattern (owner setup)', '/owner/institutions/inst_1', 'إعداد مؤسسة'],
     ['dynamic pattern (training track)', '/training/tr_1', 'مسار تدريبي'],
-    ['fallback (unlisted route)', '/no/such/route', 'تادمورا'],
+    ['fallback (unlisted route)', '/no/such/route', 'أُلارا'],
   ])('%s resolves %s → %s', (_kind, pathname, expected) => {
     expect(resolveTitle(pathname)).toBe(expected);
   });
 
   it('mirrors the resolved title into the tab with the product suffix', () => {
     renderShell('/student/courses/crs_123');
-    expect(document.title).toBe('تفاصيل المقرّر · تادمورا');
+    expect(document.title).toBe('تفاصيل المقرّر · أُلارا');
   });
 
   it('resolves the bare product fallback to the full platform title', () => {
     renderShell('/no/such/route');
-    expect(document.title).toBe('تادمورا · نظام تشغيل الجامعة');
+    expect(document.title).toBe('أُلارا · نظام تشغيل الجامعة');
   });
 });
 

@@ -240,7 +240,7 @@ describe('R323 loaderOrchestrator — the first-visit contract', () => {
     expect(shouldPlayIntro({ ...playing(), authenticated: true })).toBe(false);
   });
 
-  it('reads the persisted tdmr-auth session for authentication', () => {
+  it('reads the persisted ula-auth session for authentication', () => {
     expect(isPersistedAuthenticated()).toBe(false);
     window.localStorage.setItem(
       AUTH_PERSISTENCE_KEY,
@@ -251,12 +251,12 @@ describe('R323 loaderOrchestrator — the first-visit contract', () => {
     expect(shouldPlayIntro({ storage: fakeStorage(), session: fakeStorage() })).toBe(false);
   });
 
-  it('survives a corrupted tdmr-auth payload (reads as guest)', () => {
+  it('survives a corrupted ula-auth payload (reads as guest)', () => {
     window.localStorage.setItem(AUTH_PERSISTENCE_KEY, '{not json');
     expect(isPersistedAuthenticated()).toBe(false);
   });
 
-  it('markIntroPlayed writes tadmora.intro.v1 into localStorage', () => {
+  it('markIntroPlayed writes ulara.intro.v1 into localStorage', () => {
     expect(window.localStorage.getItem(INTRO_FLAG_KEY)).toBeNull();
     markIntroPlayed();
     expect(window.localStorage.getItem(INTRO_FLAG_KEY)).toBe('1');
@@ -267,10 +267,10 @@ describe('R323 loaderOrchestrator — the first-visit contract', () => {
 
   it('the hermetic e2e skip key and the R313 seen flag suppress (never cause a play)', () => {
     const session = fakeStorage();
-    session.setItem('tadmora-intro-skip', '1');
+    session.setItem('ulara-intro-skip', '1');
     expect(shouldPlayIntro({ ...playing(), session })).toBe(false);
     const seen = fakeStorage();
-    seen.setItem('tadmora-intro-seen', '1');
+    seen.setItem('ulara-intro-seen', '1');
     expect(shouldPlayIntro({ ...playing(), session: seen })).toBe(false);
   });
 });
