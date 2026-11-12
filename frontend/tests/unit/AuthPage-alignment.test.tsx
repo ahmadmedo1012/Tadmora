@@ -27,6 +27,7 @@ type LoginState = {
   isPending: boolean;
   isError: boolean;
   error: unknown;
+  reset: () => void;
 };
 
 const loginState = vi.hoisted(() => ({ current: {} as LoginState }));
@@ -77,6 +78,7 @@ describe('AuthPage — journey alignment (imm-5)', () => {
       isPending: false,
       isError: false,
       error: null,
+      reset: vi.fn(),
     };
   });
 
