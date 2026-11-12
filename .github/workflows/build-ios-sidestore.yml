@@ -428,21 +428,53 @@ jobs:
           # The jsbundle inlines EXPO_PUBLIC_API_BASE_URL at build time —
           # prove the packaged app really targets the current production
           # API, and that no retired host leaked into the binary.
+          # macOS pitfall avoided: `strings file | grep -q` breaks under
+          # `set -o pipefail` — grep -q exits on first match, strings
+          # takes SIGPIPE ("failed to flush output"), and the pipeline
+          # fails EVEN WHEN the match succeeded. Materialize the strings
+          # ONCE to a temp file, then grep the file — no pipes, no
+          # false negative.
           APP="build/verify/Payload/$APP_BASENAME"
           test -f "$APP/main.jsbundle"
+          STRINGS_OUT="$RUNNER_TEMP/main-jsbundle-strings.txt"
+          strings "$APP/main.jsbundle" > "$STRINGS_OUT"
           EXPECTED_HOST=$(printf '%s' "$EXPO_PUBLIC_API_BASE_URL" | sed -E 's#^https?://([^/]+)/.*#\1#')
           echo "Expected API host in the bundle: $EXPECTED_HOST"
-          if ! strings "$APP/main.jsbundle" | grep -q "$EXPECTED_HOST"; then
-            echo "::error::$EXPECTED_HOST not found in main.jsbundle — the binary does not target the current production API"
+          # Belt: the expo-constants config asset carries the same URL
+          # (the Constants.expoConfig.extra path) — check it too when
+          # present, so the proof covers BOTH client resolution paths.
+          # (bash 3.2 on macOS: guard array loops by length — an empty
+          # `"${ARR[@]:-}"` expands to one EMPTY word there.)
+          EXTRA_FILES=()
+          for f in "$APP/app.config" "$APP/assets/app.config"; do
+            [ -f "$f" ] && EXTRA_FILES+=("$f")
+          done
+          FOUND=0
+          if grep -q "$EXPECTED_HOST" "$STRINGS_OUT"; then FOUND=1; fi
+          if [ ${#EXTRA_FILES[@]} -gt 0 ]; then
+            for f in "${EXTRA_FILES[@]}"; do
+              if grep -q "$EXPECTED_HOST" "$f"; then FOUND=1; fi
+            done
+          fi
+          if [ "$FOUND" -ne 1 ]; then
+            echo "::error::$EXPECTED_HOST not found in main.jsbundle (or the app.config asset) — the binary does not target the current production API"
             exit 1
           fi
           for OBSOLETE in 'tadmora.onrender.com' '.onrender.com' 'herokuapp.com'; do
-            if strings "$APP/main.jsbundle" | grep -q "$OBSOLETE"; then
+            if grep -q "$OBSOLETE" "$STRINGS_OUT"; then
               echo "::error::Retired host \"$OBSOLETE\" found embedded in main.jsbundle"
               exit 1
             fi
+            if [ ${#EXTRA_FILES[@]} -gt 0 ]; then
+              for f in "${EXTRA_FILES[@]}"; do
+                if grep -q "$OBSOLETE" "$f"; then
+                  echo "::error::Retired host \"$OBSOLETE\" found in $f"
+                  exit 1
+                fi
+              done
+            fi
           done
-          echo "OK: binary targets $EXPECTED_HOST and carries no retired host"
+          echo "OK: binary targets $EXPECTED_HOST (jsbundle$( [ ${#EXTRA_FILES[@]} -gt 0 ] && echo ' + app.config asset')) and carries no retired host"
 
       - name: Upload the unsigned IPA artifact
         uses: actions/upload-artifact@v4
