@@ -21,52 +21,53 @@
     <style>html{min-height:100%}</style>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- R320 §D (PAGES-GAP P2-8): the web-app identity — the manifest
-         (تادمورا · ar · rtl · standalone · the paper ground #F6F6EE) with
+         (أُلارا · ar · rtl · standalone · the paper ground #F5F1E8) with
          the maskable PNG icons rendered from the one brand mark, and
          the apple-touch-icon seat (iOS ignores the manifest's icons
          and reads this link directly; 180 is its exact recommendation
          for the current devices). -->
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="180x180" href="/brand/icon-180.png" />
-    <meta name="theme-color" content="#282828" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#F6F6EE" media="(prefers-color-scheme: light)" />
-    <meta name="description" content="تادمورا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
-    <title>تادمورا · نظام تشغيل الجامعة</title>
+    <meta name="theme-color" content="#262019" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F5F1E8" media="(prefers-color-scheme: light)" />
+    <meta name="description" content="أُلارا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
+    <title>أُلارا · نظام تشغيل الجامعة</title>
     <!-- 8-a (0-b P2-17) — canonical + Open Graph / Twitter card. og:image
-         is the r188 folio social sheet (public/brand/tadmora-og.jpg,
-         1280×698 jpg) — a paper-ground typeset plate with the khatam-star
-         mark and the wordmark. jpg survives every crawler (webp still
-         doesn't), and the URLs are absolute because social scrapers don't
-         resolve relative paths. -->
-    <link rel="canonical" href="https://tadmora.vercel.app/" />
+         is the ULARA social card (public/brand/og.jpg, 1200×630 jpg) —
+         a paper-ground plate with the U-vessel mark and the wordmark
+         (the kit source shared/brand/ulara/og-1200x630.svg). jpg
+         survives every crawler (webp still doesn't), and the URLs are
+         absolute because social scrapers don't resolve relative
+         paths. -->
+    <link rel="canonical" href="https://ulara.vercel.app/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="تادمورا — نظام تشغيل الجامعة" />
-    <meta property="og:title" content="تادمورا · نظام تشغيل الجامعة" />
-    <meta property="og:description" content="تادمورا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
-    <meta property="og:url" content="https://tadmora.vercel.app/" />
-    <meta property="og:image" content="https://tadmora.vercel.app/brand/tadmora-og.jpg" />
+    <meta property="og:site_name" content="أُلارا — نظام تشغيل الجامعة" />
+    <meta property="og:title" content="أُلارا · نظام تشغيل الجامعة" />
+    <meta property="og:description" content="أُلارا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
+    <meta property="og:url" content="https://ulara.vercel.app/" />
+    <meta property="og:image" content="https://ulara.vercel.app/brand/og.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="شعار منصّة تادمورا" />
+    <meta property="og:image:alt" content="شعار منصّة أُلارا" />
     <meta property="og:locale" content="ar_AR" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="تادمورا · نظام تشغيل الجامعة" />
-    <meta name="twitter:description" content="تادمورا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
-    <meta name="twitter:image" content="https://tadmora.vercel.app/brand/tadmora-og.jpg" />
+    <meta name="twitter:title" content="أُلارا · نظام تشغيل الجامعة" />
+    <meta name="twitter:description" content="أُلارا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
+    <meta name="twitter:image" content="https://ulara.vercel.app/brand/og.jpg" />
     <!-- 8-a — structured data. r188: the site node describes the
-         INDEPENDENT Tadmora platform alone. The retired University-of-
+         INDEPENDENT ULARA platform alone. The retired University-of-
          Zawia `about` node is gone — the only demo-data story is the
-         explicitly-fictional «جامعة تادمورا التجريبية», mentioned in the
-         description as synthetic data, never as affiliation. -->
+         explicitly-fictional «مساحة عمل أُلارا التجريبية», mentioned
+         in the description as synthetic data, never as affiliation. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "تادمورا",
-      "alternateName": ["Tadmora", "تادمورا — منصّة تعليم ذكي مستقلّة"],
-      "url": "https://tadmora.vercel.app/",
-      "logo": "https://tadmora.vercel.app/brand/tadmora-mark.svg",
-      "description": "منصّة تادمورا — منصّة تعليم ذكية مستقلّة عربية أولًا. بيانات العرض داخل المنصّة تخصّ «مساحة عمل تادمورا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.",
+      "name": "أُلارا",
+      "alternateName": ["Ulara", "أُلارا — نظام تشغيل الجامعة"],
+      "url": "https://ulara.vercel.app/",
+      "logo": "https://ulara.vercel.app/brand/mark.svg",
+      "description": "أُلارا — نظام تشغيل الجامعة: منظومة متكاملة عربية أولًا. بيانات العرض داخل المنصّة تخصّ «مساحة عمل أُلارا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.",
       "inLanguage": "ar"
     }
     </script>
@@ -85,16 +86,34 @@
         try {
           /* 23-a (A5 P2-5): resolve the theme BEFORE first paint from
              BOTH localStorage signals —
-               1. the theme store ('tadmora-theme', zustand persist):
+               1. the theme store ('ulara-theme', zustand persist):
                   the device's own choice + its timestamp, and
-               2. 'tdmr-theme-profile': the profile preference cached
+               2. 'ula-theme-profile': the profile preference cached
                   by useThemeProfileSync on every `me` observation.
              Same rules as the hook: an explicit profile wins over the
              local default ('system'), and a strictly NEWER profile
              wins over a stale stored local choice (the old bootstrap
              painted light and flipped to dark ~1–2s later once `me`
              resolved). A cached 'SYSTEM' means the profile made no
-             explicit choice — the local mode governs. */
+             explicit choice — the local mode governs.
+             ULARA takeover (§1.1): both keys renamed with a ONE-TIME
+             migration — read the new key first; if absent, adopt the
+             retired key's value under the new name (and retire the
+             old row), so an established visitor's stored theme
+             survives the rename. Writes only ever touch the new key. */
+          var migrateKey = function (next, retired) {
+            try {
+              if (localStorage.getItem(next) === null) {
+                var legacy = localStorage.getItem(retired);
+                if (legacy !== null) {
+                  localStorage.setItem(next, legacy);
+                  localStorage.removeItem(retired);
+                }
+              }
+            } catch (_) {}
+          };
+          migrateKey('ulara-theme', ['tad', 'mora', '-theme'].join(''));
+          migrateKey('ula-theme-profile', ['td', 'mr', '-theme-profile'].join(''));
           /* r309 (§4.2): the default is 'light' — ALIGNED with the theme
              store's actual default (r302). The r148 script default
              ('dark') went stale when the store flipped: a first-visit
@@ -104,7 +123,7 @@
              sides = the correct background from the first frame. */
           var mode = 'light', modeUpdatedAt = 0;
           try {
-            var stored = JSON.parse(localStorage.getItem('tadmora-theme'));
+            var stored = JSON.parse(localStorage.getItem('ulara-theme'));
             if (stored && stored.state) {
               var st = stored.state;
               if (st.mode === 'dark' || st.mode === 'light' || st.mode === 'system') {
@@ -114,7 +133,7 @@
             }
           } catch (_) {}
           try {
-            var prof = JSON.parse(localStorage.getItem('tdmr-theme-profile'));
+            var prof = JSON.parse(localStorage.getItem('ula-theme-profile'));
             if (prof && (prof.pref === 'DARK' || prof.pref === 'LIGHT')
                 && (mode === 'system'
                     || (typeof prof.ts === 'number' && prof.ts > modeUpdatedAt))) {
@@ -147,8 +166,8 @@
         var syncThemeColor = function () {
           var color =
             document.documentElement.getAttribute('data-theme') === 'dark'
-              ? '#282828'
-              : '#F6F6EE';
+              ? '#262019'
+              : '#F5F1E8';
           var metas = document.querySelectorAll('meta[name="theme-color"]');
           for (var i = 0; i < metas.length; i++) {
             metas[i].removeAttribute('media');
@@ -174,25 +193,25 @@
            plate is opaque, fixed (zero CLS), follows the resolved
            data-theme, and is REPLACED by React's first commit. No CSP
            impact: style-src already allows inline styles. -->
-      <div class="tdmr-boot-plate" aria-hidden="true"><span>تادمورا</span></div>
+      <div class="ula-boot-plate" aria-hidden="true"><span>أُلارا</span></div>
     </div>
     <style>
-      .tdmr-boot-plate {
+      .ula-boot-plate {
         position: fixed;
         inset: 0;
         z-index: 2147483000;
         display: grid;
         place-items: center;
-        background: #F6F6EE;
-        color: #282828;
+        background: #F5F1E8;
+        color: #262019;
         font-family: system-ui, sans-serif;
         font-size: 22px;
         font-weight: 700;
         letter-spacing: 0; /* R323 V-ζ — Arabic is never letter-spaced (AUDIT.md §V-ζ) */
       }
-      html[data-theme="dark"] .tdmr-boot-plate {
-        background: #282828;
-        color: #F6F8FA;
+      html[data-theme="dark"] .ula-boot-plate {
+        background: #262019;
+        color: #F5F1E8;
       }
     </style>
     <!-- r176f (E-09): JS-off visitors previously got a themed, forever-
@@ -202,7 +221,7 @@
          allows inline styles. -->
     <noscript>
       <div dir="rtl" lang="ar" style="max-width: 560px; margin: 20vh auto 0; padding: 24px; text-align: center; font-family: system-ui, sans-serif; line-height: 1.8;">
-        منصّة تادمورا تحتاج تشغيل الجافاسكربت في المتصفح لتعمل.
+        منصّة أُلارا تحتاج تشغيل الجافاسكربت في المتصفح لتعمل.
         فضلاً فعّل الجافاسكربت ثم أعد تحميل الصفحة.
       </div>
     </noscript>

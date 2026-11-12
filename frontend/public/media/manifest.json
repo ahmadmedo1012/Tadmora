@@ -3,8 +3,8 @@
   "generatedFor": "Phase Ω — identity purity: the platform's own media only",
   "generatedAt": "2026-11-11",
   "policy": {
-    "ar": "ما يسكن هذه الخزائن هو إنتاج المنصّة نفسها حصرًا: لقطات حقيقية لأسطح تادمورا من «مساحة عمل تادمورا التجريبية» (بيانات عرض موسومة بوضوح)، ورسوم المنصّة الأصلية. لا صور جامعات ولا فيديوهات قنوات رسمية ولا أي محتوى مؤسسي — برنامج الوسائط الجامعي أُحيل إلى التقاعد في Phase Ω (نقاء الهوية): تادمورا منظومة مستقلّة متعددة المؤسسات، ليست موقعًا لأي جامعة.",
-    "en": "Everything in these vaults is the platform's own production: real captures of Tadmora's surfaces from the labeled demo workspace, and original illustrations. University photography and official-channel videos are retired (Phase Ω identity purity) — TADMORA is an independent multi-tenant platform, not any university's site."
+    "ar": "ما يسكن هذه الخزائن هو إنتاج المنصّة نفسها حصرًا: لقطات حقيقية لأسطح أُلارا من «مساحة عمل أُلارا التجريبية» (بيانات عرض موسومة بوضوح)، ورسوم المنصّة الأصلية. لا صور جامعات ولا فيديوهات قنوات رسمية ولا أي محتوى مؤسسي — برنامج الوسائط الجامعي أُحيل إلى التقاعد في Phase Ω (نقاء الهوية): أُلارا منظومة مستقلّة متعددة المؤسسات، ليست موقعًا لأي جامعة.",
+    "en": "Everything in these vaults is the platform's own production: real captures of Ulara's surfaces from the labeled demo workspace, and original illustrations. University photography and official-channel videos are retired (Phase Ω identity purity) — ULARA is an independent multi-tenant platform, not any university's site."
   },
   "products": [
     {
@@ -13,7 +13,7 @@
       "slot": "product",
       "titleAr": "لوحة الطالب",
       "captionAr": "نظرة الطالب على يومه: جدول اليوم، المهام، والتقدّم",
-      "altAr": "لوحة الطالب — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "لوحة الطالب — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/student-dashboard-720.webp",
         "1280": "/media/product/student-dashboard-1280.webp"
@@ -39,7 +39,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -48,7 +48,7 @@
       "slot": "product",
       "titleAr": "المكتبة الإلكترونية",
       "captionAr": "بحث عربي وفهرس وتصفح الكتب والبحوث",
-      "altAr": "المكتبة الإلكترونية — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "المكتبة الإلكترونية — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/student-library-720.webp",
         "1280": "/media/product/student-library-1280.webp"
@@ -74,7 +74,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -83,7 +83,7 @@
       "slot": "product",
       "titleAr": "المحاضرة التفاعلية",
       "captionAr": "مشغّل المحاضرة مع نقطة فحص تُصحَّب فورًا",
-      "altAr": "المحاضرة التفاعلية — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "المحاضرة التفاعلية — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/student-lecture-player-720.webp",
         "1280": "/media/product/student-lecture-player-1280.webp"
@@ -109,7 +109,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -118,7 +118,7 @@
       "slot": "product",
       "titleAr": "مصفوفة الإتقان",
       "captionAr": "درجة إتقان لكل مفهوم وربطها بالدرس المناسب",
-      "altAr": "مصفوفة الإتقان — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "مصفوفة الإتقان — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/student-matrix-720.webp",
         "1280": "/media/product/student-matrix-1280.webp"
@@ -144,7 +144,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -153,7 +153,7 @@
       "slot": "role",
       "titleAr": "لوحة الأستاذ",
       "captionAr": "متابعة الأقسام والطلاب والمقرّرات",
-      "altAr": "لوحة الأستاذ — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "لوحة الأستاذ — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/teacher-dashboard-720.webp",
         "1280": "/media/product/teacher-dashboard-1280.webp"
@@ -179,7 +179,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -188,7 +188,7 @@
       "slot": "role",
       "titleAr": "لوحة الإدارة",
       "captionAr": "مؤشرات الكليات والطلاب والأساتذة",
-      "altAr": "لوحة الإدارة — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "لوحة الإدارة — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/admin-dashboard-720.webp",
         "1280": "/media/product/admin-dashboard-1280.webp"
@@ -214,7 +214,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -223,7 +223,7 @@
       "slot": "role",
       "titleAr": "لوحة ضمان الجودة",
       "captionAr": "مجالس الجودة ومؤشرات الالتزام",
-      "altAr": "لوحة ضمان الجودة — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "لوحة ضمان الجودة — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/quality-dashboard-720.webp",
         "1280": "/media/product/quality-dashboard-1280.webp"
@@ -249,7 +249,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     },
     {
@@ -258,7 +258,7 @@
       "slot": "role",
       "titleAr": "لوحة المالك",
       "captionAr": "الحاكمية والمؤسّسات وسجلّ التدقيق",
-      "altAr": "لوحة المالك — لقطة حقيقية من واجهة تادمورا (بيانات العرض التجريبية)",
+      "altAr": "لوحة المالك — لقطة حقيقية من واجهة أُلارا (بيانات العرض التجريبية)",
       "assets": {
         "720": "/media/product/owner-dashboard-720.webp",
         "1280": "/media/product/owner-dashboard-1280.webp"
@@ -284,7 +284,7 @@
         "verifiedByPrincipal": "R344 C-4 — deterministic stage, seeded fixtures, no live data"
       },
       "changes": "cropped to viewport, re-encoded to WebP from .r308-capture-archive/; contains seeded demo data only — no real personal data",
-      "demoDataDisclosure": "بيانات العرض التجريبية داخل «جامعة تادمورا التجريبية» — مؤسسة اصطناعية بالكامل",
+      "demoDataDisclosure": "بيانات العرض التجريبية داخل «مساحة عمل أُلارا التجريبية» — مؤسسة اصطناعية بالكامل",
       "verifiedAt": "2026-10-22"
     }
   ],
@@ -292,8 +292,8 @@
     "generatedFor": "R342 — the original architectural illustration programme (R342-01)",
     "generatedAt": "2026-11-08",
     "policy": {
-      "ar": "رسوم معمارية أصلية بأسلوب الحبر المعماري أحادي اللون، مولّدة لتادمورا في جولة R342 وأعيد تلوينها إلى رموز الهوية البصرية بدقة البكسل (ورق #F6F6EE / حبر #282828 / برتقالي #FA3600 في النمط الفاتح، وعكسهما الداكن). لا أعمال لأطراف ثالثة، ولا نصوص مطبوعة داخل الصور، ولا تصوير لجامعة حقيقية. ظهور أي مبنى هو تخيّل تعليمي عام ولا يعني أي ارتباط مؤسسي.",
-      "en": "Original monochrome architectural ink illustrations generated for Tadmora in R342 and post-processed to pixel-exact brand tokens (paper #F6F6EE / ink #282828 / accent #FA3600 light; dark twins #282828/#F6F6EE/#FF5A1F). No third-party artwork, no baked text, no real-university depictions; buildings are imagined educational scenes, not institutional claims."
+      "ar": "رسوم معمارية أصلية بأسلوب الحبر المعماري أحادي اللون، مولّدة لأُلارا في جولة R342 وأعيد تلوينها إلى رموز الهوية البصرية بدقة البكسل (ورق / حبر / لون العلامة في النمط الفاتح، وعكسهما الداكن). لا أعمال لأطراف ثالثة، ولا نصوص مطبوعة داخل الصور، ولا تصوير لجامعة حقيقية. ظهور أي مبنى هو تخيّل تعليمي عام ولا يعني أي ارتباط مؤسسي.",
+      "en": "Original monochrome architectural ink illustrations generated for the platform in R342 and post-processed to pixel-exact brand tokens (paper / ink / the brand accent in the light theme, and their dark twins). No third-party artwork, no baked text, no real-university depictions; buildings are imagined educational scenes, not institutional claims."
     },
     "count": 19,
     "items": [
@@ -328,7 +328,7 @@
         "decorative": true,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md",
         "assets2x": {
           "light": "/media/illustrations/r342/footer/footer-skyline-light@2x.webp",
@@ -340,7 +340,7 @@
         "type": "illustration",
         "slot": "home-hero-wrap",
         "nameAr": "hero-campus",
-        "altAr": "المنظور الأكسونومتري المقطوع لمجمّع التعلّم في تادمورا: قاعة محاضرات مدرّجة، فناء داخلي بشجرة المعرفة، معارض مكتبة على طابقين، وأروقة مقوسة — بمدخلٍ بلون العلامة النحاسي",
+        "altAr": "المنظور الأكسونومتري المقطوع لمجمّع التعلّم في أُلارا: قاعة محاضرات مدرّجة، فناء داخلي بشجرة المعرفة، معارض مكتبة على طابقين، وأروقة مقوسة — بمدخلٍ بلون علامة المنصّة",
         "assets": {
           "light": "/media/illustrations/r342/hero/hero-campus-light.webp",
           "dark": "/media/illustrations/r342/hero/hero-campus-dark.webp"
@@ -366,7 +366,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md",
         "assets2x": {
           "light": "/media/illustrations/r342/hero/hero-campus-light@2x.webp",
@@ -396,7 +396,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -422,7 +422,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -448,7 +448,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -474,7 +474,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -500,7 +500,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -526,7 +526,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -552,7 +552,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -578,7 +578,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -604,7 +604,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -630,7 +630,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -656,7 +656,7 @@
         "decorative": true,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -682,7 +682,7 @@
         "decorative": true,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -708,7 +708,7 @@
         "decorative": true,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -734,7 +734,7 @@
         "decorative": true,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -760,7 +760,7 @@
         "decorative": true,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -768,7 +768,7 @@
         "type": "illustration",
         "slot": "home-intro-wrap",
         "nameAr": "statement-courtyard",
-        "altAr": "المقطع المعماري لقلب الحرم الجامعي: فناء داخلي تُحيط به أروقة مقوسة وفي مركزه شجرة المعرفة — رسم حبر أصلي لمنصّة تادمورا",
+        "altAr": "المقطع المعماري لقلب الحرم الجامعي: فناء داخلي تُحيط به أروقة مقوسة وفي مركزه شجرة المعرفة — رسم حبر أصلي لمنصّة أُلارا",
         "assets": {
           "light": "/media/illustrations/r342/statement/statement-courtyard-light.webp",
           "dark": "/media/illustrations/r342/statement/statement-courtyard-dark.webp"
@@ -786,7 +786,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       },
       {
@@ -812,7 +812,7 @@
         "decorative": false,
         "objectFit": "cover",
         "tool": "glm-image + r342-duotone-remap (original work)",
-        "license": "original-work-tadmora-r342",
+        "license": "original-work-ulara-r342",
         "contract": "docs/redesign/r342/ASSET-CONTRACT.md"
       }
     ]
