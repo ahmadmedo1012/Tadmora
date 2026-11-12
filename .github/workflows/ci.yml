@@ -97,6 +97,11 @@ jobs:
       # index-*.js ≤ 80KB · pdf-*.js ≤ 110KB — A11's LAB measurements
       # plus ~8-10% headroom, pinned in the script header).
       - run: node scripts/check-bundle-size.mjs
+      # ULARA Ω §7 — the Definition-of-Done dashboard, measured on every
+      # CI build (the bundle row reads the dist the step above just
+      # produced). Report-only: the scorecard MEASURES, the individual
+      # gates gate. Output lands in the job log for LEDGER pasting.
+      - run: node scripts/scorecard.mjs
 
   test-frontend:
     name: Test (frontend)
