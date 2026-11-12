@@ -763,7 +763,7 @@
     --grid-line-paper:     rgb(224, 224, 218);
     --grid-line-rule:      rgb(179, 179, 175);
     --grid-ink-72:         rgba(40, 40, 40, 0.72);
-    --grid-ink:            rgb(38, 32, 25);
+    --grid-ink:            rgb(40, 40, 40);
     /* the hero grid layer's own stacking rung (css-counts: raw z-index
        literals live in the token sources, not the sheets) */
     --z-hero-grid: 2;

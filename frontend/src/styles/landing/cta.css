@@ -132,7 +132,7 @@ html[data-theme='dark'] .fo-cta {
    RTL reading direction. ── */
 .fo-cta {
   --cta-resolve-ink: rgb(255, 255, 255); /* color-gate: allow — measured heron resolve ink */
-  --cta-resolve-bg: rgb(196, 62, 22); /* color-gate: allow — measured heron resolve wash (ADDENDUM 9 scoped-var pattern; T-25 owns unification) */
+  --cta-resolve-bg: rgb(250, 54, 0); /* color-gate: allow — measured heron resolve wash (ADDENDUM 9 scoped-var pattern; T-25 owns unification) */
 }
 
 .fo-cta .btn.accent.lg {
