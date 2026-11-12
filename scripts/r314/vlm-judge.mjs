@@ -43,7 +43,7 @@
  * Output: audits/evidence/r314/DIFFS.json (vlm items replaced by id; pixel
  * judge data lives in _local/judge/judge-report.json and is NOT touched here).
  *
- * CYCLE-2 NOTE: masked Tadmora crops are re-captured against the CURRENT
+ * CYCLE-2 NOTE: masked Ulara crops are re-captured against the CURRENT
  * landing (agent 3-a's height compaction landed between the first masked
  * capture and this run) with LIVE section-relative framing — see
  * vlm-mask.mjs --frames-mode live. Heron's masked crops are the single
@@ -98,7 +98,7 @@ function pairBasis(vp, theme) {
       return 'legacy-unrecorded';
     }
   };
-  return { heron: readMode('heron'), tadmora: readMode('tadmora') };
+  return { heron: readMode('heron'), ulara: readMode('ulara') };
 }
 
 const NEUTRAL = `NEUTRALIZED CATEGORIES — permitted differences. NEVER report, mention or count them:
@@ -223,7 +223,7 @@ Also state whether the greeked bars in image 2 sit where the text was in image 1
 Answer STRICT JSON only: {"dom_text_readable_in_image2": true|false, "locations": ["..."], "expected_leftovers": ["..."], "bars_placed_correctly": true|false}`;
   const checks = [];
   // probe ids must exist as drift shots in vlm-mask.mjs (DRIFT_IDS = fold / mid / footer)
-  for (const site of ['heron', 'tadmora']) {
+  for (const site of ['heron', 'ulara']) {
     for (const id of ['s00-0', 's04-50', 's08-0']) {
       const dir = path.join(CAP, site, '1440x900', 'light');
       const drift = path.join(dir, `drift-p-${id}.png`);
@@ -247,7 +247,7 @@ Answer STRICT JSON only: {"dom_text_readable_in_image2": true|false, "locations"
 // first new-prompt attempt 2026-10-23 ~22:30).
 if (process.argv.includes('--audit-cache')) {
   const hDir = path.join(CAP, 'heron/1440x900/light');
-  const mDir = path.join(CAP, 'tadmora/1440x900/light');
+  const mDir = path.join(CAP, 'ulara/1440x900/light');
   let cached = 0, live = 0;
   const liveByLabel = {};
   const plan = async (label, h, m) => {
@@ -261,23 +261,23 @@ if (process.argv.includes('--audit-cache')) {
   };
   // the --calibrate ladder (4 controls × framings)
   await plan('self-heron-s04-50', path.join(hDir, 'p-s04-50.png'), path.join(hDir, 'p-s04-50.png'));
-  await plan('self-tadmora-s05-50', path.join(mDir, 'p-s05-50.png'), path.join(mDir, 'p-s05-50.png'));
-  await plan('trap-heron-s00-vs-tadmora-s08', path.join(hDir, 'p-s00-0.png'), path.join(mDir, 'p-s08-0.png'));
-  await plan('trap-heron-s08-vs-tadmora-s04', path.join(hDir, 'p-s08-0.png'), path.join(mDir, 'p-s04-0.png'));
+  await plan('self-ulara-s05-50', path.join(mDir, 'p-s05-50.png'), path.join(mDir, 'p-s05-50.png'));
+  await plan('trap-heron-s00-vs-ulara-s08', path.join(hDir, 'p-s00-0.png'), path.join(mDir, 'p-s08-0.png'));
+  await plan('trap-heron-s08-vs-ulara-s04', path.join(hDir, 'p-s08-0.png'), path.join(mDir, 'p-s04-0.png'));
   const calibLive = live;
   // the full run (29 pairs × framings)
   const frames = fs.readdirSync(hDir).filter((f) => f.startsWith('p-') && f.endsWith('.png')).sort();
   // R315 C4-D — plan with the SAME basis guard as the real run: mismatched
   // pairs will be SKIPPED live-side, so they are not counted as live calls.
   const basis = pairBasis('1440x900', 'light');
-  const basisMismatch = basisOf(basis.heron) !== basisOf(basis.tadmora);
+  const basisMismatch = basisOf(basis.heron) !== basisOf(basis.ulara);
   let basisSkipped = 0;
   for (const f of frames) {
     if (basisMismatch) { basisSkipped++; continue; }
     await plan(`${'1440x900'}-light-${f.replace('.png', '')}`, path.join(hDir, f), path.join(mDir, f));
   }
   console.log(`audit-cache: calibration ${8 - calibLive}/8 cached (${calibLive} live) · full run ${58 - (live - calibLive)}/58 cached (${live - calibLive} live) · TOTAL cached=${cached} live=${live}` +
-    (basisMismatch ? ` · ⚠ basis-mismatch (heron ${basis.heron} vs tadmora ${basis.tadmora}) — ${basisSkipped} pairs would be SKIPPED, not judged` : ''));
+    (basisMismatch ? ` · ⚠ basis-mismatch (heron ${basis.heron} vs ulara ${basis.ulara}) — ${basisSkipped} pairs would be SKIPPED, not judged` : ''));
   const missList = Object.entries(liveByLabel).filter(([l]) => !l.startsWith('self-') && !l.startsWith('trap-'));
   if (missList.length) console.log('  pairs still needing live calls:', missList.map(([l, n]) => `${l}(${n})`).join(' '));
   process.exit(0);
@@ -286,7 +286,7 @@ if (process.argv.includes('--audit-cache')) {
 // ---------- mode: --calibrate (self-pairs must MATCH, trap-pairs must DIFFER) ----------
 if (process.argv.includes('--calibrate')) {
   const hDir = path.join(CAP, 'heron/1440x900/light');
-  const mDir = path.join(CAP, 'tadmora/1440x900/light');
+  const mDir = path.join(CAP, 'ulara/1440x900/light');
   const controls = [];
   const add = async (label, h, m, expect) => {
     const r = await judgePair(label, h, m, { framings: FRAMINGS });
@@ -296,10 +296,10 @@ if (process.argv.includes('--calibrate')) {
   };
   // self-pairs: identical image on both sides → the judge must be able to say MATCH
   await add('self-heron-s04-50', path.join(hDir, 'p-s04-50.png'), path.join(hDir, 'p-s04-50.png'), 'MATCH');
-  await add('self-tadmora-s05-50', path.join(mDir, 'p-s05-50.png'), path.join(mDir, 'p-s05-50.png'), 'MATCH');
+  await add('self-ulara-s05-50', path.join(mDir, 'p-s05-50.png'), path.join(mDir, 'p-s05-50.png'), 'MATCH');
   // trap-pairs: different sections presented as a pair → the judge must stay hostile
-  await add('trap-heron-s00-vs-tadmora-s08', path.join(hDir, 'p-s00-0.png'), path.join(mDir, 'p-s08-0.png'), 'DIFFERENT');
-  await add('trap-heron-s08-vs-tadmora-s04', path.join(hDir, 'p-s08-0.png'), path.join(mDir, 'p-s04-0.png'), 'DIFFERENT');
+  await add('trap-heron-s00-vs-ulara-s08', path.join(hDir, 'p-s00-0.png'), path.join(mDir, 'p-s08-0.png'), 'DIFFERENT');
+  await add('trap-heron-s08-vs-ulara-s04', path.join(hDir, 'p-s08-0.png'), path.join(mDir, 'p-s04-0.png'), 'DIFFERENT');
   const passed = controls.filter((c) => (c.expect === 'MATCH' ? c.verdict === 'MATCH' : c.verdict === 'DIFFERENT')).length;
   fs.writeFileSync(path.join(LOCAL, 'vlm-calibration.json'), JSON.stringify({ generatedAt: new Date().toISOString(), controls }, null, 1));
   console.log(`\ncalibration: ${passed}/${controls.length} controls pass`);
@@ -312,7 +312,7 @@ const results = [];
 for (const vp of fs.readdirSync(path.join(CAP, 'heron'))) {
   for (const theme of fs.readdirSync(path.join(CAP, 'heron', vp))) {
     const hDir = path.join(CAP, 'heron', vp, theme);
-    const mDir = path.join(CAP, 'tadmora', vp, theme);
+    const mDir = path.join(CAP, 'ulara', vp, theme);
     if (!fs.existsSync(mDir)) continue;
     const frames = fs.readdirSync(hDir).filter((f) => f.startsWith('p-') && f.endsWith('.png')).sort();
     for (const f of frames) {
@@ -321,15 +321,15 @@ for (const vp of fs.readdirSync(path.join(CAP, 'heron'))) {
       // R315 C4-D — basis guard: a section-mode capture pairs only with a
       // section-mode capture (see header). SKIPPED before any VLM call.
       const basis = pairBasis(vp, theme);
-      if (basisOf(basis.heron) !== basisOf(basis.tadmora)) {
+      if (basisOf(basis.heron) !== basisOf(basis.ulara)) {
         results.push({
           id: label, viewport: vp, theme, frame: f,
           verdict: 'SKIPPED', score: null, differences: [], framings: [],
           skipped: true, basisMismatch: true,
-          reason: `basis-mismatch (heron ${basis.heron} vs tadmora ${basis.tadmora}) — re-capture BOTH sides with the same --frames-mode (vlm-mask.mjs) before judging`,
-          pairBasis: `${basis.heron}/${basis.tadmora}`,
+          reason: `basis-mismatch (heron ${basis.heron} vs ulara ${basis.ulara}) — re-capture BOTH sides with the same --frames-mode (vlm-mask.mjs) before judging`,
+          pairBasis: `${basis.heron}/${basis.ulara}`,
         });
-        console.log(` SKIP  ${label} — basis-mismatch (heron ${basis.heron} vs tadmora ${basis.tadmora})`);
+        console.log(` SKIP  ${label} — basis-mismatch (heron ${basis.heron} vs ulara ${basis.ulara})`);
         continue;
       }
       const r = await judgePair(label, path.join(hDir, f), path.join(mDir, f), { framings: FRAMINGS });
@@ -338,7 +338,7 @@ for (const vp of fs.readdirSync(path.join(CAP, 'heron'))) {
       results.push({
         id: label, viewport: vp, theme, frame: f,
         verdict: r.verdict, score: r.score, differences: r.differences, framings: r.framings,
-        pairBasis: `${basis.heron}/${basis.tadmora}`,
+        pairBasis: `${basis.heron}/${basis.ulara}`,
       });
       console.log(`${r.verdict === 'MATCH' ? '·MATCH·' : ' DIFFR '} ${label} score=${r.score} diffs=${r.differences.length} [${crit}c/${maj}m] (${r.framings.join('/')})`);
     }
@@ -356,8 +356,8 @@ for (const r of results) {
 diffs.generatedAt = new Date().toISOString();
 diffs.calibration = {
   version: 'v2-text-masked (cycle 2)',
-  method: 'DOM greeking on both sites (per-line bars of each text node\'s own colour + transparent-text CSS net; see scripts/r314/vlm-mask.mjs — Tadmora re-captured LIVE section-relative against the current landing, Heron from the single drift-proven pass); prompts state the neutralized categories (text, RTL mirroring, artwork subject, brand marks) as hard rules; self-pairs must MATCH and trap-pairs must DIFFERENT before a run is trusted (see _local/vlm-calibration.json).',
-  maskingLimits: 'Heron\'s cookie banner, award badge and use-case annotation cards render outside the DOM text layer (iframe/canvas/artwork-baked) and stay readable; the prompt forbids judging any text that remains readable. Tadmora artwork-baked text (platform UI mockup screenshots) equally stays readable.',
+  method: 'DOM greeking on both sites (per-line bars of each text node\'s own colour + transparent-text CSS net; see scripts/r314/vlm-mask.mjs — Ulara re-captured LIVE section-relative against the current landing, Heron from the single drift-proven pass); prompts state the neutralized categories (text, RTL mirroring, artwork subject, brand marks) as hard rules; self-pairs must MATCH and trap-pairs must DIFFERENT before a run is trusted (see _local/vlm-calibration.json).',
+  maskingLimits: 'Heron\'s cookie banner, award badge and use-case annotation cards render outside the DOM text layer (iframe/canvas/artwork-baked) and stay readable; the prompt forbids judging any text that remains readable. Ulara artwork-baked text (platform UI mockup screenshots) equally stays readable.',
   legacyCycle1: { note: 'unmasked hostile judge: MATCH unreachable by construction on RTL pairs', items: 29, open: 29, closed: 0 },
 };
 fs.writeFileSync(OUTJSON, JSON.stringify(diffs, null, 1));

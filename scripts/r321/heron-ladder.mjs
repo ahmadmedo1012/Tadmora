@@ -59,7 +59,7 @@ const LADDER = [
   [768, 1024], [820, 1180], [1024, 768], [1180, 900], [1440, 900],
 ];
 const DEEP = [[390, 844], [1440, 900]];
-const TADMORA_BOARD = { 1440: 12607, 1024: 10184, 768: 12795, 390: 11388, 360: 10742 };
+const ULARA_BOARD = { 1440: 12607, 1024: 10184, 768: 12795, 390: 11388, 360: 10742 };
 const HERON_BOARD = { 1440: 12355, 1024: 9938, 768: 12577, 390: 11441, 360: 10684 };
 const DIR_MAX_BYTES = 2 * 1024 * 1024;
 const WHEEL_EVENTS = 8;
@@ -589,7 +589,7 @@ async function ladderPass(browser, log) {
     };
     row.boardHeron = HERON_BOARD[w] ?? null;
     row.boardHeronMatch = row.boardHeron === row.docH;
-    row.tadmoraBoard = TADMORA_BOARD[w] ?? null;
+    row.ularaBoard = ULARA_BOARD[w] ?? null;
     rows.push(row);
     log(`${w}x${h} ${uaClass} docH=${row.docH} (win ${plus5.windowDocH}) d+5s=${row.deltas.settleToPlus5 >= 0 ? '+' : ''}${row.deltas.settleToPlus5} ni=${goto.networkidleMs}ms${row.boardHeronMatch ? ' [BOARD ✓]' : ''}`);
     await ctx.close();
@@ -682,7 +682,7 @@ function buildLadderMd(data) {
   L.push('');
   L.push('**Measurements only** — nothing from the reference is copied into the codebase;');
   L.push('the shots in this directory are internal judging evidence. The §A2 ratchet compares');
-  L.push('Tadmora against these Heron numbers; the §F motion numbers seed the `motion ≥ 90` judging.');
+  L.push('Ulara against these Heron numbers; the §F motion numbers seed the `motion ≥ 90` judging.');
   L.push('');
   L.push('## Method — and the scroll-jack finding (read first)');
   L.push('');
@@ -699,21 +699,21 @@ function buildLadderMd(data) {
   L.push('The ladder\u2019s `docH` below is that scrollable content height (the honest page height a user');
   L.push('experiences); the window docH is recorded alongside in `heron-docH.json` (always ≈ viewport).');
   L.push('');
-  L.push('## §A2 ratchet table — docH: Heron (fresh) vs Tadmora current (BOARD a7e335db)');
+  L.push('## §A2 ratchet table — docH: Heron (fresh) vs Ulara current (BOARD a7e335db)');
   L.push('');
-  L.push('±1.5% target band = Heron × [0.985, 1.015]. The Tadmora numbers are the owner-measured');
+  L.push('±1.5% target band = Heron × [0.985, 1.015]. The Ulara numbers are the owner-measured');
   L.push('values from the R321 BOARD (base a7e335db); the six viewports the BOARD does not cover are');
-  L.push('marked **tadmora to measure** — §A2 must pin them with the tadmora ladder protocol');
+  L.push('marked **ulara to measure** — §A2 must pin them with the ulara ladder protocol');
   L.push('(networkidle + settle + NO reducedMotion override, per the r320 finding).');
   L.push('');
-  L.push('| Viewport | Heron docH | Heron (BOARD ref) | Tadmora current | Δ vs Heron | ±1.5% band | In band? |');
+  L.push('| Viewport | Heron docH | Heron (BOARD ref) | Ulara current | Δ vs Heron | ±1.5% band | In band? |');
   L.push('|---|---:|---:|---:|---:|---|---|');
   for (const r of ladder) {
     const bandLo = Math.round(r.docH * 0.985);
     const bandHi = Math.round(r.docH * 1.015);
-    const mad = r.tadmoraBoard;
+    const mad = r.ularaBoard;
     const delta = mad ? `${pct(mad, r.docH) >= 0 ? '+' : ''}${pct(mad, r.docH).toFixed(2)}%` : '—';
-    const verdict = mad ? (Math.abs(pct(mad, r.docH)) <= 1.5 ? '✅ IN' : '❌ OUT') : '**tadmora to measure**';
+    const verdict = mad ? (Math.abs(pct(mad, r.docH)) <= 1.5 ? '✅ IN' : '❌ OUT') : '**ulara to measure**';
     const ref = r.boardHeron ? `${fmt(r.boardHeron)}${r.boardHeron === r.docH ? ' ✓' : ''}` : '—';
     L.push(`| ${r.viewport} | ${fmt(r.docH)} | ${ref} | ${mad ? fmt(mad) : '—'} | ${delta} | ${fmt(bandLo)}–${fmt(bandHi)} | ${verdict} |`);
   }

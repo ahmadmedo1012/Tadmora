@@ -44,7 +44,7 @@
 #                                    reduced-motion token overrides)
 #   frontend/src/styles/base.css     (global reduced-motion belt with
 #                                    `0.01ms !important`)
-#   frontend/src/styles/landing.css  (immersive v2 «سماء تادمورا» — a
+#   frontend/src/styles/landing.css  (immersive v2 «سماء أُلارا» — a
 #                                    self-contained cinematic sheet whose
 #                                    hand-tuned cascade IS the authored
 #                                    choreography: scene-in 1.1s, drip

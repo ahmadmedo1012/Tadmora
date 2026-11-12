@@ -2,7 +2,7 @@
 
 Branch: `redesign/r305-heron-interactions` · Base: `1b766512` (origin/main, post-R304)
 Owner lane: A2 (cursor / buttons / shared motion). Reference: heronaiapp.com (mechanics reimplemented as
-original Tadmora code — no Heron code, fonts, images, or assets were copied).
+original Ulara code — no Heron code, fonts, images, or assets were copied).
 
 Everything here is **additive** — zero call sites changed, zero removed rules; existing surfaces render
 bit-identically at rest until they adopt a contract. Two r305 hover families apply to pre-existing elements
@@ -78,7 +78,7 @@ Root hooks for CSS/QA: `data-motion-label="true"`, `data-motion-icon="true"`.
 Keyboard parity: every hover choreography is paired with an ungated `:focus-visible` twin.
 Gates everywhere: `:not(:disabled):not([data-loading="true"])`; hover slide additionally rides
 `@media (hover: hover) and (pointer: fine)` (no touch sticky-hover); RM snaps via the token belt.
-Timing: `var(--t-slow) var(--ease-out)` (500ms decel on the r305 ladder — ≈ Heron's 0.48s roll register, Tadmora's own curve).
+Timing: `var(--t-slow) var(--ease-out)` (500ms decel on the r305 ladder — ≈ Heron's 0.48s roll register, Ulara's own curve).
 
 ### CSS classes (components.css r305 block)
 `.btn-motion-label > .btn-motion-label-track` (+ `.btn-motion-label-dup`) ·

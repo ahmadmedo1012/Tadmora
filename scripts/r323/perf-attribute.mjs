@@ -62,7 +62,7 @@ try {
   if (!up) { console.error('FATAL: no preview'); process.exit(1); }
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, locale: 'en-US' });
   await ctx.addInitScript(`
-    try { localStorage.setItem('tadmora.intro.v1','1'); sessionStorage.setItem('tadmora-intro-seen','1'); } catch(e){}
+    try { localStorage.setItem('ulara.intro.v1','1'); sessionStorage.setItem('ulara-intro-seen','1'); } catch(e){}
     (function(){ if (window.__rk) return; var W=(window.__rk={d:[],on:false,last:0});
       var tick=function(t){ if(W.on){ if(W.last)W.d.push(t-W.last); W.last=t; requestAnimationFrame(tick);} };
       W.start=function(){W.on=true;W.last=0;requestAnimationFrame(tick);};
@@ -122,7 +122,7 @@ try {
     console.error('[attr] JSON parse failed: ' + e.message);
   }
   console.log('[dbg] stream bytes:', DBG_CHUNKS, 'chunks:', chunks.length);
-  fs.writeFileSync('/tmp/tdmr-r323-trace.json', JSON.stringify(events));
+  fs.writeFileSync('/tmp/ula-r323-trace.json', JSON.stringify(events));
   console.log(`[attr] trace events: ${events.length} · frames: ${deltas.length}`);
 
   const gt20 = deltas.filter((d) => d > 20);

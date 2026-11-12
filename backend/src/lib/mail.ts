@@ -125,7 +125,7 @@ const SHELL_BORDER = '1px solid #E4E2D8';
 export function renderEmailShell(opts: { title: string; bodyHtml: string; ctaLabel?: string; ctaUrl?: string; footerNote?: string; baseUrl?: string }): string {
   const cta =
     opts.ctaLabel && opts.ctaUrl
-      ? `<tr><td style="padding:8px 32px 24px;"><a href="${opts.ctaUrl}" style="display:inline-block;background:#FA3600;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:15px;padding:12px 28px;border-radius:0;">${opts.ctaLabel}</a></td></tr>`
+      ? `<tr><td style="padding:8px 32px 24px;"><a href="${opts.ctaUrl}" style="display:inline-block;background:#C43E16;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:15px;padding:12px 28px;border-radius:0;">${opts.ctaLabel}</a></td></tr>`
       : '';
   const footer = `<tr><td style="padding:0 32px 28px;font-size:12px;color:#8A887C;line-height:1.8;">${
     opts.footerNote ?? 'إذا لم تكن من طلب هذه الرسالة فتجاهلها — لن يتغير شيء في حسابك.'
@@ -137,9 +137,9 @@ export function renderEmailShell(opts: { title: string; bodyHtml: string; ctaLab
 <body style="margin:0;padding:0;background:#F1EFE7;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F1EFE7;padding:24px 12px;">
 <tr><td align="center">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#F6F6EE;border:${SHELL_BORDER};">
-<tr><td style="padding:28px 32px 4px;font-weight:700;font-size:18px;color:#282828;">أُلارا</td></tr>
-<tr><td style="padding:4px 32px 8px;font-size:20px;font-weight:600;color:#282828;">${opts.title}</td></tr>
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#F5F1E8;border:${SHELL_BORDER};">
+<tr><td style="padding:28px 32px 4px;font-weight:700;font-size:18px;color:#262019;">أُلارا</td></tr>
+<tr><td style="padding:4px 32px 8px;font-size:20px;font-weight:600;color:#262019;">${opts.title}</td></tr>
 <tr><td style="padding:0 32px 20px;font-size:14px;color:#4A4A44;line-height:2;">${opts.bodyHtml}</td></tr>
 ${cta}
 ${footer}

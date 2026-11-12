@@ -15,7 +15,7 @@
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://tadmora.vercel.app';
+const BASE = process.argv[2] ?? 'https://ulara.vercel.app';
 const OUT = 'audits/evidence/r320/settings';
 
 const browser = await chromium.launch();
@@ -31,7 +31,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('tadmora-intro-skip', '1');
+        sessionStorage.setItem('ulara-intro-skip', '1');
       } catch {
         /* noop */
       }
@@ -85,7 +85,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('tadmora-intro-skip', '1');
+        sessionStorage.setItem('ulara-intro-skip', '1');
       } catch {
         /* noop */
       }
@@ -93,7 +93,7 @@ try {
     for (const [route, expectH1] of [
       ['/500', 'خللٌ من جانبنا — لا من جانبك'],
       ['/403', 'هذه الصفحة خارج نطاق صلاحياتك'],
-      ['/maintenance', 'تادمورا في صيانة قصيرة'],
+      ['/maintenance', 'أُلارا في صيانة قصيرة'],
     ]) {
       await page.goto(`${BASE}${route}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
       const h1 = page.locator('h1');

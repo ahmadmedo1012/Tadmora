@@ -1,5 +1,5 @@
 /**
- * commitlint.config.mjs — Tadmora conventional-commit law (r339/T-23).
+ * commitlint.config.mjs — Ulara conventional-commit law (r339/T-23).
  *
  * Zero-dependency by design: `@commitlint/*` is NOT installed (the repo is
  * dependency-conscious — knip/jscpd gates). The engine that enforces these

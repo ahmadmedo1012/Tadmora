@@ -50,7 +50,7 @@ const BASE = (process.env.VITE_URL || 'http://localhost:5173/').replace(/\/$/, '
 const API = process.env.API_URL || 'http://localhost:4000';
 const EXEC = process.env.CHROME_BIN || '/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 const OUT = process.env.OUT || path.join(ROOT, 'audits', 'evidence', 'r327', 'p3', 'scroll-rules.json');
-const SESSION_CACHE = '/tmp/tadmora-r327-sessions.json';
+const SESSION_CACHE = '/tmp/ulara-r327-sessions.json';
 const SESSION_TTL_MS = 12 * 60 * 1000;
 
 /* ── hard/soft verdict bookkeeping ─────────────────────────────────── */
@@ -90,14 +90,14 @@ const launch = () => chromium.launch({
  * silently skip the seeding (caught by the authSeeded diagnostic), so
  * every init script must be fully self-contained. */
 const GUEST_INIT = () => {
-  try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* hermetic opt-out */ }
-  try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: Date.now() }, version: 2 })); } catch { /* n/a */ }
+  try { sessionStorage.setItem('ulara-intro-skip', '1'); } catch { /* hermetic opt-out */ }
+  try { localStorage.setItem('ulara-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: Date.now() }, version: 2 })); } catch { /* n/a */ }
 };
 const AUTH_INIT = (session) => {
-  try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* hermetic opt-out */ }
+  try { sessionStorage.setItem('ulara-intro-skip', '1'); } catch { /* hermetic opt-out */ }
   try {
-    localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: Date.now() }, version: 2 }));
-    localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user: session.user, accessToken: session.accessToken }, version: 0 }));
+    localStorage.setItem('ulara-theme', JSON.stringify({ state: { mode: 'light', modeUpdatedAt: Date.now() }, version: 2 }));
+    localStorage.setItem('ula-auth', JSON.stringify({ state: { user: session.user, accessToken: session.accessToken }, version: 0 }));
   } catch { /* n/a */ }
 };
 /* The fake DevTools hook — counts React root commits (probe H). Must
@@ -138,7 +138,7 @@ async function settleShell(page, ms = 900) {
   } catch (e) {
     const state = await page.evaluate(() => ({
       url: location.pathname,
-      authSeeded: (() => { try { return Boolean(JSON.parse(localStorage.getItem('tdmr-auth') || 'null')?.state?.accessToken); } catch { return false; } })(),
+      authSeeded: (() => { try { return Boolean(JSON.parse(localStorage.getItem('ula-auth') || 'null')?.state?.accessToken); } catch { return false; } })(),
       rootKids: document.querySelector('#root')?.childElementCount ?? 0,
       bodyText: (document.body.innerText || '').slice(0, 120).replace(/\s+/g, ' '),
     })).catch(() => ({}));

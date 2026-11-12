@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: "🌐 الموقع المباشر | Live site"
-    url: https://smart-link.ly
+    url: https://ulara.vercel.app
     about: "جرّب المنتجات مباشرة قبل الإبلاغ | Try the products live before filing an issue"
   - name: "🔒 إبلاغ أمني خاص | Private security report"
     url: mailto:ahmadmedo1012@gmail.com

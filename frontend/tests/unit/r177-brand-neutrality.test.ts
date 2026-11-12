@@ -43,32 +43,12 @@ const readRepo = (p: string) => readFileSync(path.join(repoRoot, p), 'utf8');
  *
  * TODO(integration): when ula/total-takeover merges B + D, DELETE the
  * retired arms — every seat below must be an exact ULARA pin again. */
-const takeoverSeat = (source: string, ulara: string, retired: string, seat: string): void => {
-  const integrated = source.includes(ulara);
-  if (!integrated && source.includes(retired)) {
-    console.warn(`[r177] pre-integration seat (${seat}) — the retired literal is still present; workstream B/D renames it at integration`);
-  }
-  expect(
-    integrated || source.includes(retired),
-    `${seat}: expected the ULARA literal (or, pre-integration, the retired one)\n  ULARA:  ${ulara}\n  retired: ${retired}`,
-  ).toBe(true);
+/* INTEGRATION LANDED (ula/total-takeover merged B + C + D): every
+ * former transition seat is now an EXACT ULARA pin. The retired arms
+ * and their fragment pairs are deleted per the original TODO. */
+const takeoverSeat = (source: string, ulara: string, _retired: string, seat: string): void => {
+  expect(source, `${seat}: expected the ULARA literal`).toContain(ulara);
 };
-
-/* The RETIRED literals above arrive ASSEMBLED from fragments — the repo's
- * identity-gate convention (frontend/src/lib/legacy-storage.ts): the
- * retired brand's prefixes are never re-spelled as literals, not even in
- * the temporary pre-integration arms of the transition seats. Each arm
- * dies at the integration merge; delete the fragment pairs with them. */
-const RETIRED = {
-  pkgName: '"name":"tad' + 'mora"',
-  readmeAr: '# تاد' + 'مورا — نظام تشغيل الجامعة',
-  readmeEn: '# Tad' + 'mora — University Operating System',
-  licenseLine: 'Tad' + 'mora is an independent University Operating System developed by Ahmad Medo',
-  licenseHost: 'deployed at tad' + 'mora.vercel.app',
-  bootBanner: 'Tad' + 'mora Platform API listening',
-  issuer: "issuer: 'منصّة تاد" + "مورا التعليميّة'",
-  demoTenant: 'مساحة عمل تاد' + 'مورا التجريبية',
-} as const;
 
 /** Affiliation-claim markers that must never reappear in public copy. */
 const OFFICIAL_CLAIMS = [
@@ -187,7 +167,7 @@ describe('r177 — root manifests describe the independent platform', () => {
   it('package.json name + description are Ulara-branded', () => {
     const pkg = JSON.parse(readRepo('package.json'));
     /* workstream B seat — root package.json (takeover §1.5) */
-    takeoverSeat(JSON.stringify(pkg), '"name":"ulara"', RETIRED.pkgName, 'root package.json name');
+    takeoverSeat(JSON.stringify(pkg), '"name":"ulara"', '', 'root package.json name');
     expect(pkg['description']).toContain('مستقلّة');
     expect(pkg['description']).not.toContain('جامعة الزاوية');
   });
@@ -196,8 +176,8 @@ describe('r177 — root manifests describe the independent platform', () => {
     const readme = readRepo('README.md');
     const readmeEn = readRepo('README.en.md');
     /* workstream D seat — root READMEs */
-    takeoverSeat(readme, '# أُلارا — نظام تشغيل الجامعة', RETIRED.readmeAr, 'README.md header');
-    takeoverSeat(readmeEn, '# Ulara — University Operating System', RETIRED.readmeEn, 'README.en.md header');
+    takeoverSeat(readme, '# أُلارا — نظام تشغيل الجامعة', '', 'README.md header');
+    takeoverSeat(readmeEn, '# Ulara — University Operating System', '', 'README.en.md header');
     expect(readme).toContain('مستقلّة');
     expect(readmeEn).toContain('**independent** University Operating System');
     for (const claim of ['الرسمية لجامعة', 'official University Operating System of']) {
@@ -220,7 +200,7 @@ describe('r182 — the docs center intro stays affiliation-free', () => {
     // Phase Ω: the demo tenant is the labeled «مساحة عمل أُلارا
     // التجريبية» — synthetic data, never a university.
     /* workstream D seat — docs/README.md intro */
-    takeoverSeat(docsIndex, 'مساحة عمل أُلارا التجريبية', RETIRED.demoTenant, 'docs/README.md demo tenant');
+    takeoverSeat(docsIndex, 'مساحة عمل أُلارا التجريبية', '', 'docs/README.md demo tenant');
     expect(docsIndex).toContain('اصطناعية');
     expect(docsIndex).not.toContain('مؤسّسة العرض المرجعية');
     expect(docsIndex).not.toContain('منصة التعلم الذكية\nلجامعة الزاوية');
@@ -244,10 +224,10 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     takeoverSeat(
       license,
       'Ulara is an independent University Operating System developed by Ahmad Medo',
-      RETIRED.licenseLine,
+      '',
       'LICENSE identity line',
     );
-    takeoverSeat(license, 'deployed at ulara.vercel.app', RETIRED.licenseHost, 'LICENSE host line');
+    takeoverSeat(license, 'deployed at ulara.vercel.app', '', 'LICENSE host line');
     // Ω+2.0: the disclosure names the LABELED DEMO-WORKSPACE data (the
     // Phase Ω identity-purity retirement removed the Zawia showcase —
     // the license must not name a removed tenant) + the current host.
@@ -286,11 +266,11 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
   it('backend boot banner and certificate issuer are the platform name, not ZU', () => {
     const index = readRepo('backend/src/index.ts');
     /* workstream B seat — backend boot banner */
-    takeoverSeat(index, 'Ulara Platform API listening', RETIRED.bootBanner, 'backend boot banner');
+    takeoverSeat(index, 'ULARA Platform API listening', '', 'backend boot banner');
     expect(index).not.toContain('ZU Platform API');
     const training = readRepo('backend/src/http/routes/training.routes.ts');
     /* workstream B seat — certificate issuer */
-    takeoverSeat(training, "issuer: 'منصّة أُلارا التعليميّة'", RETIRED.issuer, 'certificate issuer');
+    takeoverSeat(training, "issuer: 'منصّة أُلارا التعليميّة'", '', 'certificate issuer');
     expect(training).not.toContain('منصة جامعة الزاوية للتعليم الذكي');
   });
 

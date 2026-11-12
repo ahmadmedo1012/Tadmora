@@ -39,5 +39,5 @@ section.policy-hero (0,0 1426.69×h)
 
 ## Builder notes
 
-- Tadmora legal pages (privacy/terms/cookie in Arabic) should reuse: mono breadcrumb row → sticky-or-collapsed TOC column → 60px-class display h1 → 20px numbered h2 rhythm → 13.33px body. Numbers per section mirror Heron's `#1-who-we-are` slug ids (anchor-scroll).
+- Ulara legal pages (privacy/terms/cookie in Arabic) should reuse: mono breadcrumb row → sticky-or-collapsed TOC column → 60px-class display h1 → 20px numbered h2 rhythm → 13.33px body. Numbers per section mirror Heron's `#1-who-we-are` slug ids (anchor-scroll).
 - Cookie policy links back to the consent banner («Learn more» target).

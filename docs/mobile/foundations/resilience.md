@@ -27,7 +27,7 @@ behavior on real hardware is `unverified` by the mission's honesty rule.
 ### `src/lib/resilience/persistence.ts`
 
 - `createAsyncStoragePersister({ storage?, key?, throttleTime? })` + `persistQueryClient({ queryClient, persister?, buster?, maxAge? })` — drop-in contract mirrors of `@tanstack/query-async-storage-persister` / `query-persist-client-core` (NOT installed; no new deps). Honesty rules: `maxAge` default **24h** (older caches deleted on restore), buster mismatch → discard, corrupt payload → delete, storage failures never crash.
-- Module defaults: `queryCachePersister`, `QUERY_CACHE_STORAGE_KEY = "tadmora-mobile-query-cache"`, `QUERY_CACHE_BUSTER = "r334-v1"`.
+- Module defaults: `queryCachePersister`, `QUERY_CACHE_STORAGE_KEY = "ulara-mobile-query-cache"`, `QUERY_CACHE_BUSTER = "r334-v1"`.
 - **Lead wiring (Round 2, app root — outside this branch's ownership):**
   ```ts
   const persisted = persistQueryClient({ queryClient, persister: queryCachePersister });

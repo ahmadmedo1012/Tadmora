@@ -22,7 +22,7 @@
 
 ## ماذا تفعل عمليًا (لكل صفحة في نطاقك)
 
-1. **شغّل وافحص**: البيئة المحلية جاهزة — vite على `http://localhost:5173` والـ API على `:4000`. دخول: `curl -X POST localhost:4000/api/v1/auth/login -H 'content-type: application/json' -d '{"email":"<role>@demo.tadmora.ly","password":"Tadmora2026!"}'` → خزّن `tdmr-auth` (نمط persisted state في `tests/` أو `/home/z/probes/r190-before.mjs`) + `tadmora-theme` بالموضوع. **مهم**: Playwright في هذه البيئة يمرر وسيطًا واحدًا فقط لـ `addInitScript` — غلّف كل شيء في JSON واحد (`JSON.stringify({a,t})` + `JSON.parse`).
+1. **شغّل وافحص**: البيئة المحلية جاهزة — vite على `http://localhost:5173` والـ API على `:4000`. دخول: `curl -X POST localhost:4000/api/v1/auth/login -H 'content-type: application/json' -d '{"email":"<role>@demo.ulara.ly","password":"Ulara2026!"}'` → خزّن `ula-auth` (نمط persisted state في `tests/` أو `/home/z/probes/r190-before.mjs`) + `ulara-theme` بالموضوع. **مهم**: Playwright في هذه البيئة يمرر وسيطًا واحدًا فقط لـ `addInitScript` — غلّف كل شيء في JSON واحد (`JSON.stringify({a,t})` + `JSON.parse`).
 2. **الموضوع للقطة مصادَق عليها**: `PUT /me/theme` بـ `LIGHT`/`DARK` قبل اللقطة (وأعده `SYSTEM` بعدها) — أو localStorage `{mode, ts:1}` (يعمل للمصفوفات العامة).
 3. **قيّم بصدق**: هل الصفحة تحمل الهوية الجديدة؟ (ترويسة masthead بعقدة بنفسجية · بيانات بلغة ledger/stat-strip مع العلامات ■ · زوايا شبه مربعة · عمق داكن زجاجي). صوّر قبل/بعد لكل تغيير في `/home/z/probes/r190-d<N>/`.
 4. **صلّح الملموس**: انحرافات محاذاة، تباين منخفض، فراغ ميت، عناصر r189 القديمة التي تصرخ «قالب» (شبكات بطاقات متطابقة، آبار أيقونات، eyebrow مزدحم).

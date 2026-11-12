@@ -99,7 +99,7 @@ let chromium, webkit;
 try {
   ({ chromium, webkit } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium, webkit } = createRequire("/home/z/tadmora/frontend/package.json"))("playwright");
+  ({ chromium, webkit } = createRequire("/home/z/ulara/frontend/package.json"))("playwright");
 }
 
 const SPEC_DIR = join(WORKTREE, "docs", "redesign", "r335", "heron-spec");
@@ -382,7 +382,7 @@ const WALK_JS = String.raw`
 async function SCROLL_WALK_JS(sectionSelectors) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const seat = (y) => {
-    const L = window.__tdmrLenis;
+    const L = window.__ulaLenis;
     if (L && typeof L.scrollTo === "function") L.scrollTo(y, { immediate: true, force: true });
     else window.scrollTo(0, y);
   };
@@ -507,10 +507,10 @@ function isLineContainerPath(p) {
 
 // ── runner ───────────────────────────────────────────────────────────────────
 // c4-E convention (same as frontend/playwright.config.ts): sandbox boxes run a
-// pre-installed Chrome-for-Testing via TADMORA_E2E_EXECUTABLE because
+// pre-installed Chrome-for-Testing via ULARA_E2E_EXECUTABLE because
 // `playwright install` is unavailable; CI installs its own browsers and never
 // sets the variable, so its launch stays byte-equivalent.
-const CHROMIUM_EXEC = ENGINE === "webkit" ? undefined : process.env.TADMORA_E2E_EXECUTABLE;
+const CHROMIUM_EXEC = ENGINE === "webkit" ? undefined : process.env.ULARA_E2E_EXECUTABLE;
 const browser = await (ENGINE === "webkit" ? webkit : chromium).launch({
   headless: true,
   ...(CHROMIUM_EXEC ? { executablePath: CHROMIUM_EXEC } : {}),

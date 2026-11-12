@@ -272,12 +272,12 @@ describe('buildBackupCommand / buildRestoreCommand / displayCommand', () => {
 // ─── Backup naming ─────────────────────────────────────────────────
 
 describe('backup naming', () => {
-  it('default path: backups/tadmora-<UTC timestamp>.dump', () => {
-    expect(defaultBackupPath(new Date('2026-10-15T09:08:07Z'))).toBe('backups/tadmora-20261015T090807Z.dump');
+  it('default path: backups/ulara-<UTC timestamp>.dump', () => {
+    expect(defaultBackupPath(new Date('2026-10-15T09:08:07Z'))).toBe('backups/ulara-20261015T090807Z.dump');
   });
   it('label is slugified and folded into the name', () => {
     expect(defaultBackupPath(new Date('2026-10-15T09:08:07Z'), 'Pre Migration!!')).toBe(
-      'backups/tadmora-20261015T090807Z-pre-migration.dump',
+      'backups/ulara-20261015T090807Z-pre-migration.dump',
     );
   });
   it('timestampSlug is UTC-stable regardless of local timezone', () => {

@@ -24,7 +24,7 @@ Run from `apps/mobile` @ commit `bcd7b736` (branch `wip/m11`, post-rebase on
 | **Android update ID** | `01a1b590-bb3d-79b7-a555-4c62b1e2387a` |
 | Message | r341 M11: M7-M10 visual-language parity (paper/ink/orange, hairlines, `[nn]` numerals, teacher/owner polish); navigation-bar + predictive-back fingerprint target |
 | Commit | `bcd7b7366a502b2f5006a90b40ef53fe077c5bc8` |
-| Dashboard | https://expo.dev/accounts/rh2011/projects/tadmora-mobile/updates/b8ee635b-28a9-4668-9b71-bd85091789bd |
+| Dashboard | https://expo.dev/accounts/rh2011/projects/ulara-mobile/updates/b8ee635b-28a9-4668-9b71-bd85091789bd |
 
 36 android assets, 1 app bundle, no code signing configured. Binaries whose
 fingerprint equals `6288933f…` pull this update; older binaries stay pinned to
@@ -60,8 +60,8 @@ live, script aborts loud by design (never auto-downloads):
   the SDK gate, printing the 3 install steps (cmdline-tools → env →
   `sdkmanager "platform-tools" "platforms;android-37" "build-tools;37.0.0"` +
   licenses). NOT auto-installed here: see ❌ disk, below — it would be wasted.
-- ❌ Keystore absent: `~/.tadmora/tadmora-release.keystore` missing,
-  `TADMORA_ANDROID_KEYSTORE*` env unset (§2 of ANDROID-LOCAL.md).
+- ❌ Keystore absent: `~/.ulara/ulara-release.keystore` missing,
+  `ULARA_ANDROID_KEYSTORE*` env unset (§2 of ANDROID-LOCAL.md).
 - ❌ `repo.maven.org` DNS-blocked (HTTP 000; `plugins.gradle.org` alone is
   200) → gradle `assembleRelease` cannot resolve the kotlin plugin 2.2.0 —
   same wall as r340 §8.

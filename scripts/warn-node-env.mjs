@@ -13,7 +13,7 @@
  * at the moment it happens.
  */
 if (process.env.NODE_ENV === 'production') {
-  const m = (s) => process.stdout.write(`[tadmora:install] ${s}\n`);
+  const m = (s) => process.stdout.write(`[ulara:install] ${s}\n`);
   m('WARNING: NODE_ENV=production is set during install.');
   m('npm will SKIP all devDependencies — typecheck / test / build will then fail.');
   m('For a full, correct install run:  env -u NODE_ENV npm ci');

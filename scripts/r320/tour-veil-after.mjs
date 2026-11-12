@@ -14,7 +14,7 @@
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://tadmora.vercel.app';
+const BASE = process.argv[2] ?? 'https://ulara.vercel.app';
 const OUT = 'audits/evidence/r320/accounts-production';
 
 const browser = await chromium.launch();
@@ -28,7 +28,7 @@ try {
   const page = await ctx.newPage();
   await page.addInitScript(() => {
     try {
-      sessionStorage.setItem('tadmora-intro-skip', '1');
+      sessionStorage.setItem('ulara-intro-skip', '1');
     } catch {
       /* noop */
     }

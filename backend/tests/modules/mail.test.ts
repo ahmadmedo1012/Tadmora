@@ -42,8 +42,8 @@ describe('renderEmailShell (the brand RTL shell)', () => {
   it('is RTL, table-based, inline-styled, image-free, gradient-free', () => {
     const html = renderEmailShell({ title: 'عنوان', bodyHtml: '<p>نص</p>', ctaLabel: 'زر', ctaUrl: 'https://x.ly' });
     expect(html).toContain('dir="rtl"');
-    expect(html).toContain('#F6F6EE');
-    expect(html).toContain('#FA3600');
+    expect(html).toContain('#F5F1E8');
+    expect(html).toContain('#C43E16');
     expect(html).not.toContain('<style');
     expect(html).not.toContain('<img');
     expect(html.toLowerCase()).not.toContain('linear-gradient');

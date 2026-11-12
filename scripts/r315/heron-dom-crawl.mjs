@@ -12,7 +12,7 @@
  *                and the DOM-geometry judge can code against.
  *   · geometry:  x/y/w/h relative to the `.main-inner` scroller origin —
  *                PHYSICAL coordinates, x measured from the LEFT edge.
- *                Heron is LTR; the RTL mirror for Tadmora happens later in
+ *                Heron is LTR; the RTL mirror for Ulara happens later in
  *                the judge/builders, never inside this capture.
  *   · styles:    font (family/size/weight/line-height/letter-spacing/
  *                transform/color), box (bg, bg-image, 4 border sides,
@@ -28,7 +28,7 @@
  * any class carrying a grammar keyword (btn/cta/menu/banner/cookie/ticker/
  * marquee/ruler/tick/frame/deco/logo/dot/mark/hero/card/form/…).
  *
- * Usage (from repo root /home/z/tadmora):
+ * Usage (from repo root /home/z/ulara):
  *   node scripts/r315/heron-dom-crawl.mjs --pages landing --viewport 1440x900
  *   node scripts/r315/heron-dom-crawl.mjs --viewport 1440x900        # every page @1440
  *   node scripts/r315/heron-dom-crawl.mjs --all                      # full 24-pass matrix
@@ -376,7 +376,7 @@ async function extraStates(page, pageKey, vp) {
           if (el.tagName === 'SELECT') { if (el.options.length > 1) el.selectedIndex = 1; el.dispatchEvent(new Event('change', { bubbles: true })); return; }
           const proto = el.tagName === 'TEXTAREA' ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
           const setter = Object.getOwnPropertyDescriptor(proto, 'value').set;
-          setter.call(el, el.tagName === 'TEXTAREA' ? 'R315 probe message' : 'probe@tadmora.ly');
+          setter.call(el, el.tagName === 'TEXTAREA' ? 'R315 probe message' : 'probe@ulara.ly');
           el.dispatchEvent(new Event('input', { bubbles: true }));
         });
         return els.length;

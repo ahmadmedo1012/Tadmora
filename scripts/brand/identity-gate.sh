@@ -108,6 +108,15 @@ WHITELIST=(
   -g '!specs/**'
   -g '!scripts/r325/**'
   -g '!scripts/twin/**'
+  # archived one-shot instruments + the immutable drill/backup evidence
+  -g '!scripts/archive/**'
+  -g '!scripts/conformance/results.json'
+  -g '!scripts/conformance/pages-*-results.json'
+  -g '!docs/runbooks/restore-exercise-log.md'
+  # the LEGACY-shim PIN tests — they assert the transition fallbacks
+  # keep working (the read-only old-key literals are the fixture)
+  -g '!apps/mobile/src/haptics.test.ts'
+  -g '!apps/mobile/src/lib/resilience/__tests__/persistence.test.ts'
   -g '!scripts/fidelity/**'
   -g '!scripts/conformance/results/**'
   # immutable migration history (spec §1.7)

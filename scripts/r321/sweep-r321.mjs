@@ -193,7 +193,7 @@ async function dochPass(browser, baseUrl, cells) {
     const check = { status: 'PASS', metric: 0, sample: '' };
     try {
       await page.goto(`${baseUrl}/`, { waitUntil: 'networkidle', timeout: 20000 });
-      await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
+      await page.evaluate(() => sessionStorage.setItem('ulara-intro-skip', '1'));
       await page.reload({ waitUntil: 'networkidle' });
       await page.waitForTimeout(700);
       const docH = await page.evaluate(() => document.documentElement.scrollHeight);

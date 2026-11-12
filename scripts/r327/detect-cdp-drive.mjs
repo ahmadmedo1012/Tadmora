@@ -53,9 +53,9 @@ for (const { role, email, routes } of MATRIX) {
       await page.setViewportSize({ width: 1280, height: 800 });
       await page.addInitScript(([s]) => {
         try {
-          sessionStorage.setItem('tadmora-intro-skip', '1');
-          localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 }));
-          localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 }));
+          sessionStorage.setItem('ulara-intro-skip', '1');
+          localStorage.setItem('ulara-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 }));
+          localStorage.setItem('ula-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 }));
         } catch { /* n/a */ }
       }, [session]);
       await page.goto(`${BASE}${route}`, { waitUntil: 'domcontentloaded', timeout: 30000 });

@@ -25,7 +25,7 @@ try {
   for (const [w, h] of [[1440, 900], [1024, 768], [768, 1024], [390, 844], [360, 800]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, ...(MOTION ? {} : { reducedMotion: 'reduce' }), locale: 'ar' });
     if (!INTRO) {
-      await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { /* off */ } });
+      await ctx.addInitScript(() => { try { sessionStorage.setItem('ulara-intro-skip', '1'); } catch { /* off */ } });
     }
     const page = await ctx.newPage();
     await page.goto(`${baseUrl}/`, { waitUntil: 'networkidle', timeout: 45000 }).catch(async () => { await page.waitForTimeout(1500); });

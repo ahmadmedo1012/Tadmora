@@ -23,7 +23,7 @@ const cdp = await ctx.newCDPSession(page);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
 
 await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
-await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
+await page.evaluate(() => sessionStorage.setItem('ulara-intro-skip', '1'));
 await page.reload({ waitUntil: 'networkidle' });
 await page.waitForTimeout(900);
 
@@ -43,8 +43,8 @@ await page.waitForTimeout(800);
 await cdp.send('Tracing.end');
 await page.waitForTimeout(1500);
 
-fs.mkdirSync('/tmp/tdmr-r321', { recursive: true });
-fs.writeFileSync('/tmp/tdmr-r321/invalidation.jsonl', chunks.map((e) => JSON.stringify(e)).join('\n'));
+fs.mkdirSync('/tmp/ula-r321', { recursive: true });
+fs.writeFileSync('/tmp/ula-r321/invalidation.jsonl', chunks.map((e) => JSON.stringify(e)).join('\n'));
 console.log('events:', chunks.length);
 
 // parse: style invalidation events

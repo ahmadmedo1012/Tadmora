@@ -87,7 +87,7 @@ Chromium؛ مهمة CI مستقلة `e2e` (≤ 12 دقيقة) تشغّلها ع�
   `meta` للترقيم)، نقطة الدخول ديناميكية (نجاح / 401 / 429 تقلب دور
   الجلسة)، وكل نداء بلا حِمل جاهز يجيب 501 بصوت عالٍ في السجل — لا
   نجاحًا صامتًا أبدًا.
-- `test.use({ e2eRole: 'STUDENT' })` يبذر `tdmr-auth` في localStorage
+- `test.use({ e2eRole: 'STUDENT' })` يبذر `ula-auth` في localStorage
   بنفس شكل persist الذي يكتبه الستور — إقلاع كامل كجلسة موقّعة،
   والبذرة أحادية الطلقة كي لا تمحو ما يكتبه التطبيق نفسه أثناء
   الاختبار (تبديل السمة، الدخول…). r165h فتحت البذرة نفسها للأدوار
@@ -175,7 +175,7 @@ Chromium؛ مهمة CI مستقلة `e2e` (≤ 12 دقيقة) تشغّلها ع�
 ```bash
 npx vite preview --port 4173 --strictPort &   # يخدم dist/ الإنتاجيّ
 AUDIT_BASELINE=1 AUDIT_API_MOCK=1 AUDIT_BASELINE_SLICE=1 \
-  TADMORA_E2E_BASE_URL=http://localhost:4173 \
+  ULARA_E2E_BASE_URL=http://localhost:4173 \
   npx playwright test tests/audit/surface-inventory.spec.ts
 npm run audit:baseline        # الترويج (بعد مراجعة بشرية للفرق)
 # ثم أعد الالتقاط ونفّذ الفحص:
@@ -208,12 +208,12 @@ vitest خاص به (`vitest.integration.config.ts`) وسكربت خاص
 
 ```bash
 # 1) أنشئ قاعدة معزولة على خادمك المحلي (مثال عبر عميل pg):
-node -e "const {Client}=require('pg');(async()=>{const c=new Client({connectionString:'postgresql://postgres:postgres@localhost:5433/postgres'});await c.connect();await c.query('CREATE DATABASE tadmora_inttest');await c.end();})()"
+node -e "const {Client}=require('pg');(async()=>{const c=new Client({connectionString:'postgresql://postgres:postgres@localhost:5433/postgres'});await c.connect();await c.query('CREATE DATABASE ulara_inttest');await c.end();})()"
 # 2) طبّق الترحيلات عليها بسكربت المستودع نفسه:
-cd backend && DATABASE_URL=postgresql://postgres:postgres@localhost:5433/tadmora_inttest \
+cd backend && DATABASE_URL=postgresql://postgres:postgres@localhost:5433/ulara_inttest \
   node scripts/migrate-deploy.mjs
 # 3) شغّل الحزام:
-cd .. && DATABASE_URL=postgresql://postgres:postgres@localhost:5433/tadmora_inttest \
+cd .. && DATABASE_URL=postgresql://postgres:postgres@localhost:5433/ulara_inttest \
   npm run test:integration
 ```
 
@@ -283,5 +283,5 @@ bash scripts/check-csp-hash.sh
 npm run validate:colleges
 npm --prefix frontend run test:e2e   # رحلات E2E المحكمّة (تشغّل Vite بنفسها)
 # حزام التكامل (اختياري — قاعدة تجريبية معزولة محليًا فقط):
-DATABASE_URL=postgresql://…@localhost:PORT/tadmora_inttest npm run test:integration
+DATABASE_URL=postgresql://…@localhost:PORT/ulara_inttest npm run test:integration
 ```

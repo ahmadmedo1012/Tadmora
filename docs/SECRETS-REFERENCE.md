@@ -18,7 +18,7 @@
 |----------|---------|
 | `NODE_ENV` | `production` enables static serving + secure cookies + `info` log level |
 | `PORT` | Listen port (default: 4000) |
-| `CORS_ORIGINS` | Comma-separated CORS origin allow-list (e.g. `"https://tadmora.vercel.app,https://staging.example.com"`). Trailing slashes are stripped, empty entries dropped; unset/empty → default list (`https://tadmora.vercel.app`, `http://localhost:5173`). Wildcards are deliberately unsupported because credentials are enabled |
+| `CORS_ORIGINS` | Comma-separated CORS origin allow-list (e.g. `"https://ulara.vercel.app,https://staging.example.com"`). Trailing slashes are stripped, empty entries dropped; unset/empty → default list (`https://ulara.vercel.app`, `http://localhost:5173`). Wildcards are deliberately unsupported because credentials are enabled |
 | `INTERNAL_SERVICE_TOKEN` | Service-to-service auth for `POST /api/v1/me/milestones/:id/fire` (≥16 chars; **fail-closed when unset** — every call is rejected). Comparison is constant-time: both sides are SHA-256-hashed to fixed-length digests, then compared with `crypto.timingSafeEqual`, so attackers cannot probe the token length via response timing. A user JWT never authenticates this endpoint |
 | `DIRECT_DATABASE_URL` | Neon **direct** (non-pooled) connection. When set, `prisma migrate deploy` uses it directly. When unset, the migrate script derives it from `DATABASE_URL` by stripping the `-pooler` hostname suffix + `pgbouncer`/`connection_limit` query params. |
 | `STORAGE_DRIVER` | Upload storage driver: `local` (default, filesystem — **ephemeral on serverless/Vercel**), `postgres` (BYTEA rows in the app DB — the current pilot choice), or `s3` (persistent object storage, enables presigned direct video uploads). See `docs/12-deployment.md` |
@@ -30,7 +30,7 @@
 
 ## Neon Connection Strategy (Render deployment)
 
-Tadmora uses two distinct connection URLs:
+Ulara uses two distinct connection URLs:
 
 1. **Runtime** (`DATABASE_URL`) — Neon **pooler** URL (e.g. `ep-<name>-pooler.<region>.aws.neon.tech`).
    Used by the Prisma Client for live API traffic. PgBouncer pooling reuses
@@ -62,7 +62,7 @@ single source of truth is `shared/testAccounts.ts` (physically
 `backend/src/modules/auth/test-accounts.data.ts`); `npm run db:seed`
 ALWAYS ensures the rows (idempotent upserts — the one deliberate
 exception to the r183 established-DB zero-writes rule), and setting
-**`TADMORA_TEST_ACCOUNTS=1`** (Render → Environment) re-ensures them at
+**`ULARA_TEST_ACCOUNTS=1`** (Render → Environment) re-ensures them at
 every backend boot, non-fatal on error. The `@test.ly` email domain is
 the demo marker (no schema column — schema changes were frozen this
 cycle).
@@ -89,15 +89,15 @@ pre-R320 demo accounts each carried a strong per-account secret rotated
 via the audited `db:rotate-password` path and delivered through a
 private channel. If the owner ever promotes the platform to production
 use, retire the `@test.ly` rows (or rotate them the same way) and
-unset `TADMORA_TEST_ACCOUNTS`.
+unset `ULARA_TEST_ACCOUNTS`.
 
 To rotate again: `npm run db:rotate-password -- --email <account> --new-password-env NEW_PASSWORD --yes`
 (the secret travels only via the env var; the script never logs it).
 
 ## Production URLs
 
-- **App:** https://tadmora.vercel.app
-- **Health:** https://tadmora.vercel.app/api/v1/health
+- **App:** https://ulara.vercel.app
+- **Health:** https://ulara.vercel.app/api/v1/health
 - **GitHub:** <repository-url>
 
 ## Database Connection (Neon)

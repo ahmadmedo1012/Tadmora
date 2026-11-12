@@ -19,10 +19,10 @@ await cdp.send('Tracing.start', { transferMode: 'ReportEvents', streamFormat: 'j
 await page.evaluate(() => { window.__anchor = performance.now(); });
 const pEval = await page.evaluate(() => { const t0 = performance.now(); const e = performance.now(); while (performance.now() - t0 < 30) {} return { t0, e }; });
 await page.mouse.wheel(0, 300);
-await page.evaluate(() => console.timeStamp('tdmr-notch-0'));
+await page.evaluate(() => console.timeStamp('ula-notch-0'));
 await page.waitForTimeout(150);
 await page.mouse.wheel(0, 300);
-await page.evaluate(() => console.timeStamp('tdmr-notch-1'));
+await page.evaluate(() => console.timeStamp('ula-notch-1'));
 await page.waitForTimeout(150);
 await cdp.send('Tracing.end');
 await new Promise((r) => { const t = setTimeout(r, 8000); cdp.on('Tracing.tracingComplete', () => { clearTimeout(t); r(); }); });

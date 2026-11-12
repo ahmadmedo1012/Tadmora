@@ -2,7 +2,7 @@ import { chromium } from 'playwright-core';
 const EXEC = '/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 const browser = await chromium.launch({ executablePath: EXEC, args: ['--disable-dev-shm-usage', '--disable-gpu'] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
-await page.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch {} });
+await page.addInitScript(() => { try { sessionStorage.setItem('ulara-intro-skip', '1'); } catch {} });
 await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
 await page.waitForTimeout(3000);
 const out = await page.evaluate(() => {

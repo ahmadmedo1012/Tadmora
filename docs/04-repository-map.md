@@ -7,7 +7,7 @@
 ## الشجرة الجذرية
 
 ```text
-tadmora/
+ulara/
 ├── AGENTS.md              ← عقد عمل وكلاء الذكاء الاصطناعي (ابدأ من هنا أنت أيضًا)
 ├── README.md              ← بوابة المشروع (عربي) · README.en.md (إنجليزي)
 ├── BACKEND.md             ← مرجع الخلفية (إنجليزي، متزامن مع الشيفرة)
@@ -101,4 +101,4 @@ tadmora/
 | `docs/archive/MASTER.md` | مسودة SpeckKit مُستبدلة (كانت `design-system/` — أُرشفت r137) — المرجع `DESIGN.md` |
 | `frontend/src/styles/unified-parity.css` + `shared-design-system.css` | زوج تصدير التكافؤ — مرجع داخلي **غير مستورد في التطبيق**؛ تتحقق منه بوابة parity 163/163 |
 | `backend/storage/papers/` | ملفات مُقدَّمة تخدمها واجهة `/files/papers` — إضافة ملفات تتم عبر مسار مراجعة، لا يدويًا في الإنتاج |
-| `.zcode/` | شخصيات وكلاء عامة غير خاصة بمشروع تادمورا (انظر `.zcode/README.md`) |
+| `.zcode/` | شخصيات وكلاء عامة غير خاصة بمشروع أُلارا (انظر `.zcode/README.md`) |
