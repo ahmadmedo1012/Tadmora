@@ -189,3 +189,81 @@ TOTAL 63365/67403 = 94.009% · ratchet floor: 93.1% · gate: PASS (EXIT 0)
 
 - PR #12 (1-C كاملًا): بانتظار CI بعد إعادة تثبيت ratchet + بوابة الشعار.
 - mobile run #8 (android-smoke التجريبية الأولى تاريخيًا): قيد التشغيل.
+
+---
+
+## Done (مع الإثبات) — cycle 4: الاستئناف وإنهاء Phase 1 (2026-11-12)
+
+**الاستئناف بعد انقطاع السياق** (وفق §0.1): قراءة هذا الملف + `git log -20` + `git status` → main @ `9c7821fd` (بعد دمج PR #11)، وثلاثة فروع Phase 1 مدفوعة من الدورة السابقة (1c/1a/1b) وPR #12 مفتوح. **لم يُعَد أي عمل** — تابعنا من نقطة التوقف.
+
+**المراجعة قبل كل دمج** (انضباط /review يدوي — gstack غير قابل للتشغيل في هذا الصندوق):
+- 1-C: قُرئ `footer-overlap.mjs` (تعريفات D1/D2/D3 صريحة) و`footer.css` الجديد — كل مواضع `--fu`/`position:absolute` الباقية في تعليقات التوثيق فقط، و`.fo-fstrip` صار تدفقًا طبيعيًا؛ `Footer.tsx` 370 سطرًا بمحتوى محفوظ حرفيًا.
+- 1-A: diff كامل (auth.service.ts +21/-1 مع 3 اختبارات قواعد عربية: 60ث→دقيقة واحدة · 14د→14 دقيقة · أقل من دقيقة→تقريب لأعلى).
+- 1-B: mobile.yml android-smoke (+286: PG مضمّن→backend :4000→APK release→محاكي API 34→Maestro→بوابة logcat) · scorecard.mjs في CI (تقرير فقط) · حارس S3 (حذف expo-updates عند projectId الأصفار، يرتفع تلقائيًا عند معرّف حقيقي).
+
+**الدمجات الثلاث** (بوابة الدمج = CI أخضر على رأس الفرع + `mergeable_state=clean`؛ أمر الدمج: `PUT /pulls/N/merge {"merge_method":"merge"}`):
+
+| PR | المحتوى | CI على الرأس | الدمج | حذف الفرع |
+|---|---|---|---|---|
+| #12 | 1-C الفوتر | 27/27 success (على 83a1502d) — Build/Tests/DB/E2E/Design/Conformance/Lint/Typecheck/Size/deadcode | ✅ merged → `087ed398` | ✅ |
+| #13 | 1-A(d) زمن القفل | run CI #78 success | ✅ merged → `98655694` | ✅ |
+| #14 | 1-B آلة التشخيص + scorecard + S3 | run CI #80 success | ✅ merged → `bc89025b` | ✅ |
+
+قاعدة «PR واحد مفتوح كحد أقصى» متبنّاة حرفيًا: التسلسل 12→13→14 بلا تراكب.
+
+**ما بعد الدمج على main** (تشغيل تلقائي عند push، أمر القياس: `GET /actions/runs?branch=main`):
+```
+CI #79 · Size gate #79 · deadcode #79 · Deploy (Vercel) #6 · Deploy smoke #6 — completed success (13:00Z)
+```
+أي: **الإنتاج نُشر بالفوتر الجديد ورسالة القفل الجديدة، ودخان النشر (تسجيل دخول الأدوار الثلاثة + لوحة الطالب) أخضر بعد النشر**.
+
+**Mobile #9 — أول تشغيل فعلي لـ android-smoke على main** (id=43225258321، push @ bc89025b، بدأ 13:13:34Z): run #8 السابق على الفرع أُلغي قبل الاكتمال، فالرقم المرجعي التشغيلي الأول هو هذا. مدة السقف 50 دقيقة؛ نتيجته تُقرأ في الدورة القادمة (نجاح → خطوة نحو معيار «3 تشغيلات متتالية بلا FATAL»؛ فشل → **أول أثر نهيار مرصود تاريخيًا** يفتح التشخيص الفعلي S1–S5 من logcat artifact لا من الفرضيات).
+
+**ملاحظة بيئة (للدورات القادمة)**: العمليات الخلفية في هذا الصندوق تُقتل بين استدعاءات الوكيل (npm ci محلي عبر nohup لم يُكمل — 7.9M جزئية ثم مات). الاتكال على CI كمصدر الإثبات، وأي أمر محلي طويل يجب أن يكون ذاتي الاكتمال داخل استدعاء واحد.
+
+## In progress (cycle 4)
+
+- **Mobile #9** (android-smoke على main، id=43225258321): قيد التشغيل — نتيجته أول بند في الدورة القادمة.
+
+## Next (cycle 4، مرتّب)
+
+1. قراءة نتيجة Mobile #9: نجاح → إعادة التشغيل حتى 3 متتالية (معيار قبول 1-B) · فشل → سحب logcat artifact وتشخيص S1–S5 من الأثر الفعلي.
+2. أول قياس للوحة §7 من `scorecard.mjs` (اشتغل ضمن CI #79) — نسخ نتيجته إلى هنا كأساس لوحة القياس.
+3. Phase 2 تحضيرًا للبوابة A: `shared/brand.json` + سكربت التحويل + الشعار الجديد (بلا تنفيذ قبل «نعم» المالك).
+4. حلقة الكمال §4: رحلات الأدوار الخمسة e2e ويب + تدقيق بصري للصفحات (منهجية impeccable audit يدويًا) + `/cso` أمنيًا (منهجية STRIDE يدويًا).
+5. iOS (لا emulator على Linux): نفس ما وثّقه البرنامج — بناء Hermes + telemetry + خطوات المالك الثلاث لالتقاط تقرير الانهيار + شاشة «نسخ تقرير الخطأ».
+
+## Decisions (cycle 4)
+
+- أسلوب الدمج: merge-commit (توافقًا مع تاريخ الريبو)؛ بوابة الدمج = CI أخضر + clean؛ لا دمج على تعطّل.
+- الإثبات يعتمد CI في هذه البيئة (القيود أعلاه) — مخرجات API هي الدليل الطرفي.
+- آلية الاستمرار بين الدورات: مهمة مجدولة (cron) كل ساعتين في بيئة الوكيل تقرأ هذا الملف و`git log -20` و`git status` وتتابع من «Next». تُعطَّل بأمر المالك. الاعتماد المخزّن في `~/.config/ulara/gh-token` (خارج الشجرة، لا يُطبع أبدًا).
+
+### لوحة القياس §7 — أول قياس آلي (من CI #81، Build job، main @ bc89025b، 2026-11-12T13:16Z)
+
+مخرجات `node scripts/scorecard.mjs` كما طبعتها الوظيفة (سجل التشغيل 43225258816):
+
+| المقياس | الحد | المقاس | الحكم | الإثبات/الأداة |
+|---|---|---|---|---|
+| tracked files | < 1,000 | 2651 | ⚠️ Phase-3 pending | `git ls-files \| wc -l` |
+| md files | < 40 | 442 | ⚠️ over | `git ls-files '*.md' \| wc -l` |
+| docs/ files | ≤ ~15 | 586 | ⚠️ over | `git ls-files 'docs/**' \| wc -l` |
+| .git size | < 15MB (post Gate B) | 31.5MB | ⚠️ | du of .git (إعادة التاريخ هي البوابة B) |
+| JS bundle (gz) | ≤ 770KB | 757.7 KB | ✅ | `node scripts/check-bundle-size.mjs` |
+| no-trace gate | 0 (post Gate A) | 60026 | ⚠️ pre-rename | `git grep -IiE 'tadmora\|…'` — سطح إعادة التسمية المتبقي |
+| npm audit high/critical (prod) | 0 | ? | ⚠️ instrument | `npm audit --omit=dev` |
+| login on production (web+mobile roles) | success, proven | deploy-smoke run #5 green (2026-11-11) | ✅ | workflow Deploy smoke — Login ×3 + dashboard 200 |
+| mobile crashes in emulator | 0 على 3 تشغيلات متتالية × 5 أدوار | android-smoke job — أول تشغيل جارٍ | ⚠️ | workflow Mobile → android-smoke |
+| footer overlap / horizontal overflow | 0 @ 320–1920 × l/d | PASS — zero defects (16 خلية) | ✅ | `node scripts/brand/footer-overlap.mjs` |
+| conformance ratchet floor | صعود رتيب | 93.8% | ✅ | `scripts/conformance/ratchet.json` (بوابة CI) |
+| axe a11y serious/critical | 0 · تباين ≥ 4.5:1 · لمس ≥ 44px | instrument pending | ⚠️ | Phase 4: بوابة axe |
+| Lighthouse (موبايل 4G) home/login/dashboards | P≥90 A≥95 BP≥95 SEO≥95 | instrument pending | ⚠️ | Phase 4: Lighthouse CI |
+| console errors in journeys | 0 | e2e journeys assert zero console errors | ⚠️ | يُتحقق في tests/e2e (التقاط console لكل رحلة) |
+
+**قراءة اللوحة**: أخضر اليوم = الحزمة · الفوتر (16/16) · الدخول على الإنتاج · ratchet 93.8. الأصفر كله مرتبط بأطوار لاحقة مبرمجة (Phase 3 التنظيف · البوابة A إعادة التسمية · البوابة B التاريخ · أدوات Phase 4) — لا بند أحمر مضروم.
+
+### إخفاق E2E عابر ومعالجته (بروتوكول §0.3 — flake مُثبَت)
+
+- CI #82 (حدث push) على نفس الـSHA فشل بمواصفة واحدة: `r305-shell-heron.e2e.ts:284` — `TimeoutError: page.waitForFunction: Timeout 8000ms exceeded` (محاولة + retry)، بينما **156 نجحت** في نفس الوظيفة.
+- نفس المحتوى نجح كاملًا في CI #81 (main @ bc89025b) وCI #83 (pull_request على نفس الـSHA) — والتغيير في PR #15 مستندي فقط ⇒ **flake مُثبَت**.
+- الإجراء الحرفي للعقد: إعادة تشغيل واحدة لوظائف الوظيفة الفاشلة — `POST /actions/runs/43225448304/rerun-failed-jobs` → HTTP 201.
