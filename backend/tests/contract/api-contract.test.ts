@@ -192,8 +192,8 @@ async function call(
 }
 
 const refreshCookieFrom = (res: Response): string => {
-  const raw = res.headers.getSetCookie().find((c) => c.startsWith('tdmr_refresh='));
-  if (!raw) throw new Error('login/refresh response carried no tdmr_refresh Set-Cookie');
+  const raw = res.headers.getSetCookie().find((c) => c.startsWith('ulara_refresh='));
+  if (!raw) throw new Error('login/refresh response carried no ulara_refresh Set-Cookie');
   return raw.slice(0, raw.indexOf(';'));
 };
 
