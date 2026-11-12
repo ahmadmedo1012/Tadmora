@@ -1,58 +1,57 @@
 /**
- * mark.ts — the TADMORA mark «قوس تادمورا» — the single source of the
+ * mark.ts — the ULARA mark «الأُلارا — الإناء» — the single source of the
  * mark's GEOMETRY (the <Logo> component in ./Logo.tsx renders it;
- * scripts/r323/brand-assets.mjs re-states the same numbers for the static
- * twins, scripts/brand/build-app-icons.mjs parses this file for the mobile
- * asset set, and frontend/tests/unit/r323-brand-system.test.ts pins them
- * together — never edit one without the other).
+ * scripts/brand/wordmark-build.mjs + scripts/r323/brand-assets.mjs re-state
+ * the same numbers for the static twins, scripts/brand/build-app-icons.mjs
+ * parses this file for the mobile asset set, and the brand pin test
+ * frontend/tests/unit/r323-brand-system.test.ts pins them together — never
+ * edit one without the other).
  *
  * CONSTRUCTION (32-unit grid, viewBox 0 0 32 32):
- *  · the Palmyra gateway idea: TWO hairline pillars carry a semicircular
- *    arch over a baseline — the colonnade of Tadmor (تدمر), the university
- *    as the gateway of knowledge;
- *  · the pillars stand at x=8 and x=24, rising from the baseline y=27 to
- *    the arch spring y=15 — every anchor ON a grid intersection;
- *  · the arch: radius 8, centre (16,15) — springs (8,15) and (24,15), the
- *    apex at the grid intersection (16,7); ONE closed path
- *    M8 27 L8 15 A8 8 0 0 1 24 15 L24 27 Z (the Z draws the baseline
- *    back to the first pillar — the stylobate of the colonnade);
- *  · ONE solid orange square — the KEYSTONE — seated exactly at the arch's
- *    apex: a 4×4 square at x=14..18, y=5..9, centred (16,7), interrupting
- *    the arch line like a true keystone. The keystone is the person —
- *    student, teacher, researcher — at the apex of the system: the
- *    University Operating System is built around its people
- *    («الجامعة في منظومة واحدة»);
- *  · the ink lands x=8..24, y=5..27 — perfectly centred in the 32-grid
- *    (8-unit side margins, 5-unit top/bottom margins);
- *  · hairline ink strokes, UNIFORM weight, MITER joins (never round),
- *    radius 0, no fills except the keystone, no gradients, no shadows.
+ *  · the vessel idea: the letter U opened upward — a vessel, an open
+ *    book, a container of knowledge — drawn as ONE unified ink stroke:
+ *    two vertical stems on the x=9 and x=23 rails joined by a quadratic
+ *    bowl dipping to y=27. M/L/Q commands only — the retired arch's arc
+ *    signature is structurally impossible in this family (logo-gate);
+ *  · stems rise from the bowl to y=7, round caps and joins throughout;
+ *  · ONE solid sienna square — the CORNERSTONE — seated at the top-right
+ *    corner of the right stem: a 4×4 cell at x=21..25, y=3..7, flush
+ *    with the stem's round cap — the letter grows out of the stone. The
+ *    cornerstone is the person at the opening of the vessel — the
+ *    university system built around its people
+ *    («المؤسّسة في منظومة واحدة»);
+ *  · the construction ink lands x9..25, y3..27 (stroke outset excluded)
+ *    — centred in the 32-grid;
+ *  · hairline ink strokes, UNIFORM weight, ROUND joins (never miter —
+ *    the vessel is one continuous stroke), no fills except the
+ *    cornerstone, no gradients, no shadows.
  *
- * COLOURS (the only three): paper #F6F6EE · ink #282828 · orange #FA3600.
- * In the app the ink rides currentColor and the orange rides var(--accent)
- * (tokens.css re-keys that shared seat per theme: #FA3600 on light, the
- * luminous ember #FF5A1F on dark — the sanctioned dark-theme swap, one
+ * COLOURS (the only three): paper #F5F1E8 · ink #262019 · sienna #C43E16.
+ * In the app the ink rides currentColor and the sienna rides var(--accent)
+ * (tokens.css re-keys that shared seat per theme: #C43E16 on light, the
+ * luminous ember #FF6B3D on dark — the sanctioned dark-theme swap, one
  * var() and the mark themes without props).
  */
 
 /** The mark's own viewBox (the 32-unit grid). */
 export const MARK_VIEWBOX = '0 0 32 32';
 
-/** The gateway as ONE closed path: left pillar up, the arch over the top,
- * right pillar down, the baseline back — miter joins at every corner. */
-export const MARK_ARCH_PATH = 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z';
+/** The vessel as ONE open stroke: left stem down, the quadratic bowl
+ * through the bottom, right stem up — round caps and joins everywhere. */
+export const MARK_VESSEL_PATH = 'M9 7L9 19Q9 27 16 27Q23 27 23 19L23 7';
 
-/** The orange keystone: 4×4 square centred on the arch's apex (16,7). */
-export const MARK_KEYSTONE = { x: 14, y: 5, size: 4 } as const;
+/** The sienna cornerstone: 4×4 square flush with the right stem's top. */
+export const MARK_CORNERSTONE = { x: 21, y: 3, size: 4 } as const;
 
-/** The mark's ink bbox inside the 32 viewBox (x8..24, y5..27). */
-export const MARK_INK = { x: 8, y: 5, w: 16, h: 22 } as const;
+/** The mark's construction ink bbox inside the 32 viewBox (x9..25, y3..27). */
+export const MARK_INK = { x: 9, y: 3, w: 16, h: 24 } as const;
 
-/** The grid intersections the construction is judged on. */
+/** The grid anchors the construction is judged on. */
 export const MARK_GRID_POINTS: readonly (readonly [number, number])[] = [
-  [8, 15], [24, 15], /* the arch springs */
-  [16, 7],           /* the apex — the keystone's seat */
-  [8, 27], [24, 27], /* the baseline corners */
-  [14, 5], [18, 5], [14, 9], [18, 9], /* the keystone's corners */
+  [9, 7], [23, 7],    /* the stem tops */
+  [9, 19], [23, 19],  /* the bowl springs */
+  [16, 27],           /* the bowl bottom */
+  [21, 3], [25, 3], [21, 7], [25, 7], /* the cornerstone's corners */
 ];
 
 /** Static stroke ratios. The component renders the mark with a

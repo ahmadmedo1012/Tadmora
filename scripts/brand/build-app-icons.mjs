@@ -50,8 +50,8 @@ function need(re, name, cast = (x) => x) {
 }
 
 const VIEWBOX = need(/MARK_VIEWBOX = '([^']+)'/, "MARK_VIEWBOX", (g) => g[0]);
-const ARCH = need(/MARK_ARCH_PATH = '([^']+)'/, "MARK_ARCH_PATH", (g) => g[0]);
-const KEY = need(/MARK_KEYSTONE = \{ x: (\d+), y: (\d+), size: (\d+) \}/, "MARK_KEYSTONE", (g) => g.map(Number));
+const VESSEL = need(/MARK_VESSEL_PATH = '([^']+)'/, "MARK_VESSEL_PATH", (g) => g[0]);
+const KEY = need(/MARK_CORNERSTONE = \{ x: (\d+), y: (\d+), size: (\d+) \}/, "MARK_CORNERSTONE", (g) => g.map(Number));
 
 const STROKE_COMPONENT = 1.5; // mark.ts: hairline at the 32-grid design size
 const STROKE_FAVICON = 2.25;  // mark.ts: the sanctioned small-seat ratio
@@ -64,19 +64,19 @@ const STROKE_FAVICON = 2.25;  // mark.ts: the sanctioned small-seat ratio
  * ink/orange — colours; canvas — output px; box — fraction of the canvas
  * the full 32-grid box occupies; bg — background fill or null.
  */
-function markSvg({ stroke, ink = "#282828", orange = "#FA3600", canvas = 1024, box = 1, bg = null }) {
+function markSvg({ stroke, ink = "#262019", orange = "#C43E16", canvas = 1024, box = 1, bg = null }) {
   // Build in the mark's own 32-unit space; the viewBox carries the box
-  // fraction (the mark occupies `box` of the canvas, centred) so the arc
-  // command's flags stay literal — never re-scale path numbers by hand.
+  // fraction (the mark occupies `box` of the canvas, centred) so the path
+  // commands stay literal — never re-scale path numbers by hand.
   const vb = 32 / box; // total viewBox units across the canvas
   const off = +((vb - 32) / 2).toFixed(4);
   const bgRect = bg ? `<rect x="${-off}" y="${-off}" width="${vb}" height="${vb}" fill="${bg}"/>` : "";
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas}" height="${canvas}" viewBox="${-off} ${-off} ${vb} ${vb}">${bgRect}<g fill="none" stroke="${ink}" stroke-width="${stroke}" stroke-linejoin="miter"><path d="${ARCH}"/></g><rect x="${KEY[0]}" y="${KEY[1]}" width="${KEY[2]}" height="${KEY[2]}" fill="${orange}"/></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvas}" height="${canvas}" viewBox="${-off} ${-off} ${vb} ${vb}">${bgRect}<g fill="none" stroke="${ink}" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round"><path d="${VESSEL}"/></g><rect x="${KEY[0]}" y="${KEY[1]}" width="${KEY[2]}" height="${KEY[2]}" fill="${orange}"/></svg>`;
 }
 
 /* ── 3. the asset table (every number derived from the one source) ──── */
 
-const PAPER = "#F6F6EE";
+const PAPER = "#F5F1E8";
 const ASSETS = {
   // App icon — punchy favicon-ratio strokes on paper.
   "icon.png": { svg: () => markSvg({ stroke: STROKE_FAVICON, bg: PAPER, box: 0.74 }) },
@@ -130,7 +130,7 @@ const report = (name, ok, note) => {
 console.log(`build-app-icons (${MODE}) — source: apps/mobile/src/brand/mark.ts`);
 
 // The ONE SVG — canonical, committed, byte-checked (viewBox = mark's own).
-const oneSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="${VIEWBOX}"><g fill="none" stroke="#282828" stroke-width="${STROKE_COMPONENT}" stroke-linejoin="miter"><path d="${ARCH}"/></g><rect x="${KEY[0]}" y="${KEY[1]}" width="${KEY[2]}" height="${KEY[2]}" fill="#FA3600"/></svg>`;
+const oneSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="${VIEWBOX}"><g fill="none" stroke="#262019" stroke-width="${STROKE_COMPONENT}" stroke-linecap="round" stroke-linejoin="round"><path d="${VESSEL}"/></g><rect x="${KEY[0]}" y="${KEY[1]}" width="${KEY[2]}" height="${KEY[2]}" fill="#C43E16"/></svg>`;
 
 if (MODE === "png") {
   writeFileSync(join(SHARED_BRAND, "mark.svg"), oneSvg + "\n");
