@@ -117,8 +117,25 @@ row('footer overlap / horizontal overflow', '0 @ 320–1920 × l/d', 'PASS — z
   'node scripts/brand/footer-overlap.mjs');
 row('conformance ratchet floor', 'monotonic rise', ratchet ? `${ratchet.rate}%` : '?', ratchet ? '✅' : '⚠️',
   'scripts/conformance/ratchet.json (CI gate)');
-row('axe a11y serious/critical', '0 · contrast ≥ 4.5:1 · touch ≥ 44px', 'instrument pending', '⚠️',
-  'Phase 4: axe gate (the master prompt §4-2 audit loop)');
+// ── 7. the axe a11y gate's last report (dynamic — the scorecard reads
+//      the gate's own JSON, it never launches a browser; the file is
+//      scripts/brand/a11y-gate.mjs's default --out) ─────────────────────
+let a11yLast = null;
+try { a11yLast = JSON.parse(readFileSync('/tmp/a11y-gate/a11y-gate.json', 'utf8')); } catch { /* gate not run yet */ }
+if (a11yLast) {
+  const s = a11yLast.totals?.serious ?? 0;
+  const c = a11yLast.totals?.critical ?? 0;
+  const floor = (a11yLast.baseline?.floorTotals?.serious ?? 0) + (a11yLast.baseline?.floorTotals?.critical ?? 0);
+  const cells = a11yLast.cells?.length ?? 0;
+  const when = String(a11yLast.generatedAt ?? '').slice(0, 10);
+  row('axe a11y serious/critical', '0 · contrast ≥ 4.5:1 · touch ≥ 44px',
+    `${s + c} (S${s}/C${c}) vs floor ${floor} — ${cells} cells (${when})`,
+    (a11yLast.regressions?.length ?? 0) > 0 ? '✗' : (s + c === 0 ? '✅' : '⚠️'),
+    'node scripts/brand/a11y-gate.mjs (ratchet: scripts/brand/a11y-baseline.json — the floor only tightens)');
+} else {
+  row('axe a11y serious/critical', '0 · contrast ≥ 4.5:1 · touch ≥ 44px', 'pending (run a11y-gate)', '⚠️',
+    'node scripts/brand/a11y-gate.mjs → /tmp/a11y-gate/a11y-gate.json (the scorecard reads the report file; it never launches a browser)');
+}
 row('Lighthouse (mobile 4G) home/login/dashboards', 'P≥90 A≥95 BP≥95 SEO≥95', 'instrument pending', '⚠️',
   'Phase 4: Lighthouse CI');
 row('console errors in journeys', '0', 'e2e journeys assert zero console errors', '⚠️',
