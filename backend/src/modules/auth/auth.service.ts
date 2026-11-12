@@ -459,7 +459,26 @@ export const loginUser = async (
       userId: user.id,
       ...ctx,
     });
-    throw AppError.tooMany('الحساب مقفل مؤقتاً — حاول مرة أخرى بعد قليل');
+    // ULARA Ω 1-A(d): the lock message carries the remaining time (the
+    // response already distinguishes locked from wrong-credentials by
+    // design — the timing equalization above is about the argon2 cost,
+    // not the message — so stating the wait adds honesty, not leakage).
+    // Arabic minute-count grammar: 1 → دقيقة واحدة · 2 → دقيقتين ·
+    // 3–10 → N دقائق · 11+ → N دقيقة. Rounded UP so the user never
+    // retries before the lock lifts (the ceilings are 60s/15m).
+    const remainingMin = Math.max(
+      1,
+      Math.ceil((user.lockedUntil.getTime() - Date.now()) / 60_000),
+    );
+    const waitText =
+      remainingMin === 1
+        ? 'دقيقة واحدة'
+        : remainingMin === 2
+          ? 'دقيقتين'
+          : remainingMin <= 10
+            ? `${remainingMin} دقائق`
+            : `${remainingMin} دقيقة`;
+    throw AppError.tooMany(`الحساب مقفل مؤقتاً — حاول مرة أخرى بعد ${waitText}`);
   }
 
   const ok = await verifyPassword(user.passwordHash, password);
