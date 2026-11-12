@@ -7,6 +7,48 @@ import type { ExpoConfig } from "expo/config";
  * The API base URL is public configuration (EXPO_PUBLIC_API_BASE_URL);
  * secrets never belong in this file or in the app bundle.
  */
+
+/* ── Ω 1-B (D3) — the S3 placeholder guard ────────────────────────────
+ *
+ * extra.eas.projectId is still the zero placeholder: the NEW EAS project
+ * does not exist (`eas init` pending — docs/RELEASE.md §"OTA re-activation",
+ * the owner runbook). A u.expo.dev URL that points at a nonexistent
+ * project makes every fresh device build run its ON_LOAD update check
+ * against an endpoint that can never answer — a boot-time crash suspect
+ * (S3) that NOBODY has ever observed, because no workflow has ever run
+ * the app on an emulator with a logcat attached (that machine is
+ * mobile.yml `android-smoke`, this program's 1-B deliverable).
+ *
+ * Until a real project id exists, the config OMITS the expo-updates plugin
+ * entry and the `updates` block entirely — the native build then embeds no
+ * update manifest to check at boot. expo-updates stays installed (the JS
+ * side, src/lib/updates.tsx, fails soft by design); reactCompiler stays ON
+ * (S1 — its confirmation is exactly the android-smoke job). The guard
+ * lifts as soon as a real id arrives: either set EXPO_PUBLIC_EAS_PROJECT_ID
+ * at build time, or replace the ONE placeholder literal in EAS_PROJECT_ID
+ * below with the id `eas init` prints (docs/RELEASE.md runbook step 1) —
+ * everything (updates.url, the plugin entry, extra.eas.projectId) follows
+ * that single literal, restoring the pre-guard behavior for a real project.
+ */
+const EAS_PROJECT_ID =
+  process.env.EXPO_PUBLIC_EAS_PROJECT_ID ?? "00000000-0000-0000-0000-000000000000";
+const EAS_PROJECT_PLACEHOLDER = "00000000-0000-0000-0000-000000000000";
+const hasRealEasProject = EAS_PROJECT_ID !== EAS_PROJECT_PLACEHOLDER;
+
+/* The expo-updates surfaces for a REAL project id (both omitted from the
+ * config below while the placeholder is in place — see the S3 guard block
+ * above). Typed as a mutable tuple so the conditional spread satisfies
+ * ExpoConfig["plugins"] without `as const` friction. */
+const easUpdatesPlugin: [string, { url: string }] = [
+  "expo-updates",
+  { url: `https://u.expo.dev/${EAS_PROJECT_ID}` },
+];
+const easUpdatesBlock = {
+  url: `https://u.expo.dev/${EAS_PROJECT_ID}`,
+  checkAutomatically: "ON_LOAD" as const,
+  fallbackToCacheTimeout: 0,
+};
+
 const config: ExpoConfig = {
   name: "تادمورا",
   slug: "tadmora",
@@ -90,23 +132,16 @@ const config: ExpoConfig = {
     // R326 M0.5 — real OTA: the project's update endpoint, not a username
     // placeholder. runtimeVersion uses the fingerprint policy so any native
     // dependency/plugin/config change produces a new binary+update pairing.
-    [
-      "expo-updates",
-      {
-        // TADMORA-REBRAND: a NEW EAS project must be provisioned — the
-        // retired pre-rebrand project is intentionally NOT reused
-        // (deployment independence). Replace this placeholder after
-        // `eas init`.
-        url: "https://u.expo.dev/00000000-0000-0000-0000-000000000000",
-      },
-    ],
+    // Ω 1-B (D3): the entry itself is GUARDED — it only ships when a real
+    // project id is resolved (see the S3 guard block at the top of this
+    // file); with the zero placeholder it is omitted entirely.
+    ...(hasRealEasProject ? [easUpdatesPlugin] : []),
   ],
-  updates: {
-    // TADMORA-REBRAND: placeholder until the new EAS project is provisioned.
-    url: "https://u.expo.dev/00000000-0000-0000-0000-000000000000",
-    checkAutomatically: "ON_LOAD",
-    fallbackToCacheTimeout: 0,
-  },
+  // Ω 1-B (D3): the `updates` block ships only with a real project id —
+  // with the zero placeholder it is omitted entirely (a fake u.expo.dev
+  // URL can crash the ON_LOAD update check at boot; see the S3 guard
+  // block at the top of this file).
+  ...(hasRealEasProject ? { updates: easUpdatesBlock } : {}),
   runtimeVersion: {
     policy: "fingerprint",
   },
@@ -127,8 +162,12 @@ const config: ExpoConfig = {
     apiBaseUrl:
       process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://tadmora.vercel.app/api/v1",
     eas: {
-      // TADMORA-REBRAND: placeholder — run `eas init` to bind the NEW project.
-      projectId: "00000000-0000-0000-0000-000000000000",
+      // Single source of truth: the resolved EAS_PROJECT_ID (env override,
+      // else the placeholder literal). With no real project the id stays the
+      // zero placeholder exactly as before (D3 changes nothing else); with a
+      // real id every updates surface — updates.url, the expo-updates plugin
+      // entry and this projectId — follows the one literal above.
+      projectId: EAS_PROJECT_ID,
     },
   },
 };
