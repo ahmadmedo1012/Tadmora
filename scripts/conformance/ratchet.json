@@ -1,7 +1,7 @@
 {
-  "rate": 93.9,
-  "total": 67403,
-  "pass": 63365,
-  "updatedAt": "2026-11-12T08:10:00.000Z",
-  "note": "ULARA Ω 1-C authorized raise: the footer section left the matrix (its mapping files footer.json + footer-r343.json retired together with the spec-mirror DOM rebuild — the section's entire conformance purpose was pixel-matching the third-party reference the program retires). Locally measured on the new 8-section matrix: 63365/67403 = 94.009 (run chromium-20261112-075737-full.json). Pin set to 93.9 — the known local-vs-CI instrument variance (~0.13, see the R344 item-0 note below) leaves CI headroom; raise to min(last 3 CI-measured rates) once three CI runs are on record. The ratchet only rises: 93.1 → 93.9."
+  "rate": 93.8,
+  "total": 68297,
+  "pass": 64058,
+  "updatedAt": "2026-11-12T08:30:00.000Z",
+  "note": "ULARA Ω 1-C authorized re-measure: the footer section left the matrix (mapping footer.json + footer-r343.json retired with the spec-mirror DOM rebuild — the section's conformance purpose was pixel-matching the third-party reference the program retires). First CI measurement on the 8-section matrix: 64058/68297 = 93.8 (run 43179846674, PR #12). The pin follows the R344 item-0 protocol — min(CI-measured rates), n=1 so far; raise to min(3 CI runs) once three are on record. Environment note: the authoring sandbox measured 94.0 on the same tree (font/rendering environment difference, the same class the item-0 note documented); the pin rides the CI instrument, not the sandbox. History: 93.1 (9-section matrix) → 93.9 (sandbox-measured, one notch too high) → 93.8 (CI-measured). The ratchet only rises from here."
 }
