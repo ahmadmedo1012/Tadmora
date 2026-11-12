@@ -36,7 +36,7 @@ const ASSET_CACHE_CAP = 120;
 
 const PRECACHE = [
   '/offline.html',
-  '/brand/mark.svg',
+  '/brand/ulara-mark.svg',
   '/brand/icon-192.png',
   '/brand/icon-512.png',
   '/manifest.webmanifest',

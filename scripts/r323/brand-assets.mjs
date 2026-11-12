@@ -5,14 +5,14 @@
  * sheets) so the product component, the favicon, the PWA icons, the OG
  * card and the e-mail/pdf twins can never diverge again:
  *
- *   frontend/public/brand/mark.svg            (component twin, 32-grid)
+ *   frontend/public/brand/ulara-mark.svg     (component twin, 32-grid)
  *   frontend/public/brand/lockup.svg          (RTL lockup: mark right,
  *       «أُلارا» left — same composition as <Logo variant="lockup">)
  *   frontend/public/brand/lockup-stacked.svg  (mark / أُلارا / ULARA)
  *   frontend/public/favicon.svg               (thicker 16 px ratios — the
  *       ONLY sanctioned stroke deviation, BRAND.md §min-sizes)
  *   frontend/public/brand/icon-180|192|512.png (maskable, paper ground)
- *   frontend/public/brand/og.jpg              (1200×630 social card)
+ *   frontend/public/brand/ulara-og.jpg        (1200×630 social card)
  *
  * The mark is the ULARA U-vessel: ONE ink stroke (round caps + joins)
  * + the sienna cornerstone — the same constants frontend/src/brand/mark.ts
@@ -164,11 +164,11 @@ const lockupStackedSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 $
 </svg>
 `;
 
-writeFileSync(path.join(BRAND_DIR, 'mark.svg'), markSvg);
+writeFileSync(path.join(BRAND_DIR, 'ulara-mark.svg'), markSvg);
 writeFileSync(path.join(BRAND_DIR, 'lockup.svg'), lockupSvg);
 writeFileSync(path.join(BRAND_DIR, 'lockup-stacked.svg'), lockupStackedSvg);
 writeFileSync(path.join(ROOT, 'frontend', 'public', 'favicon.svg'), faviconSvg);
-console.log('[brand-assets] ✓ mark.svg · lockup.svg · lockup-stacked.svg · favicon.svg');
+console.log('[brand-assets] ✓ ulara-mark.svg · lockup.svg · lockup-stacked.svg · favicon.svg');
 
 /* ── raster: PWA icons + the OG card (Playwright/Chromium) ──────────── */
 const EXECUTABLE = process.env.ULARA_E2E_EXECUTABLE
@@ -242,8 +242,8 @@ try {
   await page.waitForTimeout(120); /* font raster settle */
   const jpg = await page.screenshot({ type: 'jpeg', quality: 92, clip: { x: 0, y: 0, width: W, height: H } });
   await page.close();
-  writeFileSync(path.join(BRAND_DIR, 'og.jpg'), jpg);
-  console.log(`[brand-assets] ✓ og.jpg — ${W}×${H}, ${(jpg.length / 1024).toFixed(1)}KB`);
+  writeFileSync(path.join(BRAND_DIR, 'ulara-og.jpg'), jpg);
+  console.log(`[brand-assets] ✓ ulara-og.jpg — ${W}×${H}, ${(jpg.length / 1024).toFixed(1)}KB`);
 } finally {
   await browser.close();
 }
