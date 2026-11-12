@@ -59,7 +59,9 @@ npm run db:seed      # بذر البيانات التجريبية
   تُضبط للقيمة الموثقة في كل تشغيلة — انظر رأس `seed.ts`.
 - بديل بلا Neon: `tools/boot-pg.sh` يشغّل PostgreSQL مدمجًا على `:5433`
   (يتطلب `cd tools && npm install` مرة واحدة). استخدم بعدئذ
-  `postgresql://tadmora@127.0.0.1:5433/tadmora` في `DATABASE_URL`.
+  `postgresql://ulara@127.0.0.1:5433/ulara` في `DATABASE_URL`
+  (المستخدم وقاعدة البيانات كلاهما `ulara` — إن كان لديك `tools/pgdata`
+  قديم من الاسم السابق فاحذفه مرة ليعاد التهيئة).
 
 ### 4) التشغيل (نافذتان)
 

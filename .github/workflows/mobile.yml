@@ -283,14 +283,14 @@ jobs:
   # are non-secret by construction and the key never leaves the job.
   # (The direct channel keeps its stable key — android-apk.yml.)
   #
-  # DATABASE_URL: postgresql://tadmora@localhost:5433/tadmora — the
-  # documented boot-pg.sh URL is postgresql://tadmora@127.0.0.1:5433/tadmora
+  # DATABASE_URL: postgresql://ulara@localhost:5433/ulara — the
+  # documented boot-pg.sh URL is postgresql://ulara@127.0.0.1:5433/ulara
   # (docs/05-setup.md §3), with one verified deviation: `localhost`, NOT
   # `127.0.0.1` — backend/scripts/migrate-deploy.mjs's DNS pre-flight
   # (dns.resolve4) cannot resolve IP literals (ENOTFOUND — reproduced in
   # the 1-B sandbox: resolve4("127.0.0.1") → ENOTFOUND, resolve4("localhost")
   # → 127.0.0.1, and a full db:deploy run passes against the localhost form).
-  # The `tadmora` database itself must be CREATED after boot — boot-pg.sh
+  # The `ulara` database itself must be CREATED after boot — boot-pg.sh
   # only initdb's (postgres/template0/template1 exist; the app DB does not).
   android-smoke:
     name: Android smoke (emulator · five-role journey · logcat gate)
@@ -306,7 +306,7 @@ jobs:
     # runaway runs, never cut healthy long ones.
     timeout-minutes: 65
     env:
-      DATABASE_URL: postgresql://tadmora@localhost:5433/tadmora
+      DATABASE_URL: postgresql://ulara@localhost:5433/ulara
       EXPO_NO_TELEMETRY: '1'
       CI: 'true'
     steps:
@@ -373,8 +373,8 @@ jobs:
           npm install --no-audit --no-fund
           bash boot-pg.sh
 
-      - name: Create the tadmora database
-        # boot-pg.sh initdb's with user tadmora but creates NO application
+      - name: Create the ulara database
+        # boot-pg.sh initdb's with user ulara but creates NO application
         # database (only postgres/template0/template1) — create it with the
         # pg client that ships in tools/node_modules. The SQL passes the
         # name as a $1 parameter so the whole snippet stays inside one
@@ -384,12 +384,12 @@ jobs:
           node -e '
             const { Client } = require("pg");
             (async () => {
-              const c = new Client({ host: "127.0.0.1", port: 5433, user: "tadmora", database: "postgres" });
+              const c = new Client({ host: "127.0.0.1", port: 5433, user: "ulara", database: "postgres" });
               await c.connect();
-              const r = await c.query("SELECT 1 FROM pg_database WHERE datname = $1", ["tadmora"]);
-              if (r.rows.length === 0) await c.query("CREATE DATABASE tadmora");
+              const r = await c.query("SELECT 1 FROM pg_database WHERE datname = $1", ["ulara"]);
+              if (r.rows.length === 0) await c.query("CREATE DATABASE ulara");
               await c.end();
-              console.log("db tadmora ready");
+              console.log("db ulara ready");
             })().catch((e) => { console.error(e.message); process.exit(1); });
           '
 
