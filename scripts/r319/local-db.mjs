@@ -4,7 +4,7 @@
  * local stack (embedded PostgreSQL 16, no Docker).
  *
  *   node scripts/r319/local-db.mjs start    boot PG on :5433 (idempotent),
- *                                            create db `tadmora_dev`,
+ *                                            create db `ulara_dev`,
  *                                            write backend/.env.local ONCE
  *   node scripts/r319/local-db.mjs stop     clean shutdown (pg_ctl -m fast)
  *   node scripts/r319/local-db.mjs status   port + datadir + env-file report
@@ -46,15 +46,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(__dirname, '..', '..');
 
 /* ── configuration (env-overridable, local-only defaults) ─────────── */
-const PG_PORT = Number(process.env.TADMORA_PG_PORT || 5433);
+const PG_PORT = Number(process.env.ULARA_PG_PORT || 5433);
 const PG_HOST = '127.0.0.1';
 const PG_USER = 'postgres';
-const DB_NAME = process.env.TADMORA_DB_NAME || 'tadmora_dev';
+const DB_NAME = process.env.ULARA_DB_NAME || 'ulara_dev';
 const DATA_DIR = path.join(REPO_ROOT, '.local', 'pgdata');
 const LOG_FILE = path.join(REPO_ROOT, '.local', 'pg.log');
 const ENV_FILE = path.join(REPO_ROOT, 'backend', '.env.local');
 export const DATABASE_URL =
-  process.env.TADMORA_DATABASE_URL || `postgresql://${PG_USER}@localhost:${PG_PORT}/${DB_NAME}`;
+  process.env.ULARA_DATABASE_URL || `postgresql://${PG_USER}@localhost:${PG_PORT}/${DB_NAME}`;
 
 const log = (...args) => console.log('[local-db]', ...args);
 const die = (msg) => {

@@ -4,17 +4,17 @@
  * swallowed navigation errors with .catch(() => {}) and then printed
  * a successful result), the SPA must actually MOUNT (#root non-empty),
  * and the landing page's own content must be present (.landing root,
- * .landing-header, the تادمورا brand, the Arabic document title).
+ * .landing-header, the أُلارا brand, the Arabic document title).
  *
  * Parameterized + deterministic for release verification:
- *   BASE_URL (default https://tadmora.vercel.app)
+ *   BASE_URL (default https://ulara.vercel.app)
  *   CAPTURE_DIR (default /tmp/r174-captures)
  * Exit code: 0 pass · 1 fail.
  */
 import { mkdir } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
-const BASE = process.env.BASE_URL ?? 'https://tadmora.vercel.app';
+const BASE = process.env.BASE_URL ?? 'https://ulara.vercel.app';
 const CAPTURE_DIR = process.env.CAPTURE_DIR ?? '/tmp/r174-captures';
 
 async function main(): Promise<void> {
@@ -63,7 +63,7 @@ async function main(): Promise<void> {
     hasRoot: !!document.querySelector('#root') && document.querySelector('#root')!.childElementCount > 0,
     hasLandingRoot: !!document.querySelector('.landing'),
     hasLandingHeader: !!document.querySelector('.landing-header'),
-    hasBrand: document.querySelector('.landing-brand')?.textContent?.includes('تادمورا') ?? false,
+    hasBrand: document.querySelector('.landing-brand')?.textContent?.includes('أُلارا') ?? false,
     theme: document.documentElement.getAttribute('data-theme'),
     horizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
   }));
@@ -76,7 +76,7 @@ async function main(): Promise<void> {
     state.hasLandingRoot &&
     state.hasLandingHeader &&
     state.hasBrand &&
-    state.title.includes('تادمورا') &&
+    state.title.includes('أُلارا') &&
     !state.horizontalOverflow &&
     errors.length === 0 &&
     failedApi.length === 0;

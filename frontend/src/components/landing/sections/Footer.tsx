@@ -9,7 +9,7 @@
  * its art, and every seat sizes from its content. The CONTENT is the
  * R338 folio's own, byte-verbatim: the brand identity + independence
  * paragraph, the three link families, the funnel pair, the subscribe
- * door (a real route to /contact), the construction mark (Tadmora's
+ * door (a real route to /contact), the construction mark (Ulara's
  * OWN geometry, never the reference's paths), the licensed skyline
  * strip, and the ten-link policy row with CSS ::after glyph
  * separators (the §A6 law — decorative glyphs are CSS content, never
@@ -84,14 +84,14 @@ const INDEX_TOP: { label: string; links: [string, string][] }[] = [
  * all real public routes */
 const CHANNEL_LINKS: [string, string][] = [
   ['/contact', 'التواصل'],
-  ['/about', 'عن تادمورا'],
+  ['/about', 'عن أُلارا'],
   ['/help', 'المساعدة'],
   ['/legal/data', 'البيانات'],
   ['/legal/privacy', 'الخصوصية'],
   ['/legal/terms', 'الشروط'],
 ];
 
-/* the col3 construction mark — Tadmora's OWN Logo geometry, authored
+/* the col3 construction mark — Ulara's OWN Logo geometry, authored
  * inline line-art (never the reference's paths) */
 const MARK_PATHS = [
   'M178 38A94 94 0 1 0 190 122', // the orbit circle (open at the reading apex)
@@ -145,14 +145,14 @@ export function Footer({ year }: { year: number }) {
             <div className="fo-c1-top">
               <div className="fo-brand-block">
                 {/* the ONE logo — the brand system's stacked identity
-                    (mark / «تادمورا» / TADMORA), themed via tokens */}
+                    (mark / «أُلارا» / ULARA), themed via tokens */}
                 <Logo variant="stacked" size={40} className="fo-brand-logo" />
                 <div className="fo-brand-sub">نظام تشغيل الجامعة — عربية أولًا</div>
                 {/* the independence paragraph — VERBATIM the About page's
                     own sentence (one text node; «اصطناعية بالكامل» stays
                     contiguous on one source line — the brand-integrity
                     gate) */}
-                <p className="fo-footer-about">منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «مساحة عمل تادمورا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.</p>
+                <p className="fo-footer-about">منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛ وبيانات العرض داخلها تخصّ «مساحة عمل أُلارا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.</p>
               </div>
               {BRAND_ROWS.map((row, i) => (
                 <div className="fo-brow" key={i}>
@@ -261,7 +261,7 @@ export function Footer({ year }: { year: number }) {
               </div>
               <div className="fo-lgroup">
                 <div className="fo-mono-label">ADDRESS</div>
-                <a href="/about" className="fo-link">مساحة عمل تادمورا التجريبية</a>
+                <a href="/about" className="fo-link">مساحة عمل أُلارا التجريبية</a>
                 <div className="fo-rule" aria-hidden="true" />
                 <div className="fo-mono-label">REGION</div>
                 <a href="/about" className="fo-link">منصّة مستقلّة — لا تنتمي لأي جهة</a>
@@ -278,7 +278,7 @@ export function Footer({ year }: { year: number }) {
           </div>
 
           {/* col3 (RTL: the left column) — the drawn construction mark:
-              Tadmora's OWN mark geometry, authored inline line-art (the
+              Ulara's OWN mark geometry, authored inline line-art (the
               circle + orbit + point construction), never the reference's
               paths. Normal flow, sized container, square by viewBox */}
           <div className="fo-col fo-col3">
@@ -287,7 +287,7 @@ export function Footer({ year }: { year: number }) {
                 className="fo-mark-svg"
                 viewBox="0 0 215 215"
                 role="img"
-                aria-label="علامة تادمورا — رسم بنائي لخط المدار والنقطة"
+                aria-label="علامة أُلارا — رسم بنائي لخط المدار والنقطة"
               >
                 {MARK_PATHS.map((d, i) => (
                   <path key={i} className="fo-mark-p" d={d} />
@@ -334,7 +334,7 @@ export function Footer({ year }: { year: number }) {
         <div className="fo-footer-bottom">
           <div className="fo-legal-l">
             <p className="fo-legal-p">
-              <span className="fo-mono">© {year} تادمورا</span>
+              <span className="fo-mono">© {year} أُلارا</span>
               {' '}— منصّة مستقلّة · عربية أولًا · بيانات العرض اصطناعية بالكامل —{' '}
               <a className="fo-legal-a" href="/about">
                 عن المنصّة
@@ -354,7 +354,7 @@ export function Footer({ year }: { year: number }) {
             <span className="fo-legal-sep" aria-hidden="true" />
             <Link to="/legal/data" className="fo-legal-link">البيانات</Link>
             <span className="fo-legal-sep" aria-hidden="true" />
-            <Link to="/about" className="fo-legal-link">عن تادمورا</Link>
+            <Link to="/about" className="fo-legal-link">عن أُلارا</Link>
             <span className="fo-legal-sep" aria-hidden="true" />
             <Link to="/help" className="fo-legal-link">المساعدة</Link>
             <span className="fo-legal-sep" aria-hidden="true" />

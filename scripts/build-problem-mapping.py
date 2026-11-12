@@ -33,7 +33,7 @@ recorded paths are ≤6-seg windows whose first index resets per window):
     ordinal, but the instrument cannot see which is which — honesty over
     pairing luck).
   · The per-column svg line-art shapes (path/ellipse/line/circle/rect
-    inside the art box) are content art: our PainArt draws Tadmora's own
+    inside the art box) are content art: our PainArt draws Ulara's own
     four motifs; only the svg BOX is bound (problem.artsvg.N). The
     reference's zero-size tween wrappers and the swiper mask span are
     excused with written reasons.
@@ -383,7 +383,7 @@ for p in sorted(all_paths):
     if tag in ("path", "ellipse", "line", "circle", "rect"):
         reason = (
             "svg line-art shape: the reference's own drawing motif inside the column art "
-            "box — our PainArt draws Tadmora's own four motifs in the same 20rem box "
+            "box — our PainArt draws Ulara's own four motifs in the same 20rem box "
             "(the svg box itself is bound as problem.artsvg.N); per-shape geometry is "
             "content art, not layout structure."
         )

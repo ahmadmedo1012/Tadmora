@@ -20,7 +20,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
 import { ScrubReveal, WordReveal } from '../../components/landing/journey/WordReveal';
 
-const SAMPLE = 'هذا مسطح لطابق تعلم واحد في تادمورا.';
+const SAMPLE = 'هذا مسطح لطابق تعلم واحد في أُلارا.';
 
 /** collapse runs of whitespace + trim — the "normalized equals" helper */
 const norm = (s: string) => s.replace(/\s+/g, ' ').trim();
@@ -67,7 +67,7 @@ describe('R318 §A1 — WordReveal real word spaces', () => {
   });
 
   it('a single-word string emits no space node (no trailing gap)', () => {
-    const single = 'تادمورا';
+    const single = 'أُلارا';
     const { container } = render(<WordReveal text={single} />);
     const wrapper = container.querySelector<HTMLElement>('.wr')!;
     expect(wrapper.textContent).toBe(single);

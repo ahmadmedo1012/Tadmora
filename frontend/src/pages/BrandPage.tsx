@@ -6,16 +6,17 @@
  *
  * Contents (docs/redesign/r323/brand/BRAND.md is the written contract;
  * this page is its live specimen):
- *   1. the construction plate — the Tadmora arch ON its 32-grid, coordinates
+ *   1. the construction plate — the U-vessel ON its 32-grid, coordinates
  *      labelled, drawn from the SAME constants the Logo renders
  *      (frontend/src/brand/mark.ts — no second geometry),
  *   2. the four variants (lockup · mark · wordmark · stacked),
  *   3. the four tones on their proper grounds,
  *   4. clear space = ½ mark height,
  *   5. the minimum sizes (mark 16 px, lockup 88 px),
- *   6. the three colour tokens (paper · ink · orange),
+ *   6. the three colour tokens (paper · ink · sienna),
  *   7. do / don't,
- *   8. the animated draw (the hairline gateway → the orange keystone LAST).
+ *   8. the animated draw (the hairline vessel → the sienna cornerstone
+ *      LAST).
  *
  * Dark-mode correctness is structural: every chrome colour is a system
  * token; the three literal brand hexes appear ONLY inside the swatch
@@ -28,9 +29,9 @@ import type React from 'react';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { Logo } from '../brand';
 import {
-  MARK_ARCH_PATH,
+  MARK_CORNERSTONE,
   MARK_GRID_POINTS,
-  MARK_KEYSTONE,
+  MARK_VESSEL_PATH,
   MARK_VIEWBOX,
 } from '../brand/mark';
 import '../styles/shared/brand.css';
@@ -39,10 +40,10 @@ import '../styles/shared/brand.css';
  * lattice intersections the mark's anchors snap to. */
 const GRID_LINES = Array.from({ length: 17 }, (_, i) => i * 2);
 const LABELLED: ReadonlyArray<readonly [number, number, string]> = [
-  [8, 15, '(8,15)'],
-  [24, 15, '(24,15)'],
-  [16, 7, '(16,7)'],
-  [8, 27, '(8,27)'],
+  [9, 7, '(9,7)'],
+  [23, 7, '(23,7)'],
+  [16, 27, '(16,27)'],
+  [21, 3, '(21,3)'],
 ];
 
 function ConstructionPlate(): React.JSX.Element {
@@ -52,7 +53,7 @@ function ConstructionPlate(): React.JSX.Element {
         className="r323b-grid-svg"
         viewBox="0 0 32 32"
         role="img"
-        aria-label="لوحة الإنشاء: القوس على شبكة 32 وحدة"
+        aria-label="لوحة الإنشاء: الإناء على شبكة 32 وحدة"
         focusable="false"
         style={{ display: 'block' }}
       >
@@ -65,16 +66,18 @@ function ConstructionPlate(): React.JSX.Element {
             <line key={`h${v}`} x1={0} y1={v} x2={32} y2={v} />
           ))}
         </g>
-        {/* the keystone's seat — the crosshair through the apex (16,7) */}
+        {/* the cornerstone's seat — the crosshair through its centre
+            (23,5): the stone rides the right stem's top (21..25, 3..7) */}
         <g stroke="var(--rule-strong)" strokeWidth="0.14">
-          <line x1={MARK_KEYSTONE.x - 2} y1={MARK_KEYSTONE.y + 2} x2={MARK_KEYSTONE.x + 6} y2={MARK_KEYSTONE.y + 2} />
-          <line x1={MARK_KEYSTONE.x + 2} y1={MARK_KEYSTONE.y - 2} x2={MARK_KEYSTONE.x + 2} y2={MARK_KEYSTONE.y + 6} />
+          <line x1={MARK_CORNERSTONE.x - 2} y1={MARK_CORNERSTONE.y + 2} x2={MARK_CORNERSTONE.x + 6} y2={MARK_CORNERSTONE.y + 2} />
+          <line x1={MARK_CORNERSTONE.x + 2} y1={MARK_CORNERSTONE.y - 2} x2={MARK_CORNERSTONE.x + 2} y2={MARK_CORNERSTONE.y + 6} />
         </g>
-        {/* the mark itself — the same constants <Logo> renders */}
-        <g fill="none" stroke="var(--text-strong)" strokeWidth="0.5" strokeLinejoin="miter">
-          <path d={MARK_ARCH_PATH} />
+        {/* the mark itself — the same constants <Logo> renders (one
+            continuous stroke, ROUND caps and joins) */}
+        <g fill="none" stroke="var(--text-strong)" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d={MARK_VESSEL_PATH} />
         </g>
-        <rect x={MARK_KEYSTONE.x} y={MARK_KEYSTONE.y} width={MARK_KEYSTONE.size} height={MARK_KEYSTONE.size} fill="var(--accent)" />
+        <rect x={MARK_CORNERSTONE.x} y={MARK_CORNERSTONE.y} width={MARK_CORNERSTONE.size} height={MARK_CORNERSTONE.size} fill="var(--accent)" />
         {/* the anchors, pinned as dots */}
         <g fill="var(--text-muted)">
           {MARK_GRID_POINTS.map(([gx, gy]) => (
@@ -91,7 +94,7 @@ function ConstructionPlate(): React.JSX.Element {
         </g>
       </svg>
       <figcaption>
-        MARK_VIEWBOX «{MARK_VIEWBOX}» · الشعرة 1.5px غير قياسية · وصلات miter · حجر الزاوية على القمة (16,7)
+        MARK_VIEWBOX «{MARK_VIEWBOX}» · الشعرة 1.5px غير قياسية · وصلات round · حجر الزاوية على قمّة الساق اليمنى (21,3)
       </figcaption>
     </figure>
   );
@@ -116,7 +119,7 @@ const VARIANT_ROWS: ReadonlyArray<readonly [string, React.JSX.Element, string]> 
   [
     'stacked — التكوين الرأسي',
     <Logo key="stacked" variant="stacked" size={44} />,
-    'alt: <Logo variant="stacked" /> · mark / تادمورا / TADMORA',
+    'alt: <Logo variant="stacked" /> · mark / أُلارا / ULARA',
   ],
 ];
 
@@ -124,13 +127,13 @@ const TONE_ROWS: ReadonlyArray<readonly [string, string, React.JSX.Element]> = [
   ['auto', 'currentColor + var(--accent) — أي أرضية نظام', <Logo key="t1" variant="lockup" size={28} />],
   ['ink', 'حبر صريح على ورق/صور فاتحة', <Logo key="t2" variant="lockup" size={28} tone="ink" />],
   ['paper', 'على الأرضيات الداكنة (صف دركي في الصفحة)', <Logo key="t3" variant="lockup" size={28} tone="paper" />],
-  ['orange', 'لوحة الإشارة الواحدة — استعمال نادر', <Logo key="t4" variant="mark" size={28} tone="orange" />],
+  ['sienna', 'لوحة الإشارة الواحدة — استعمال نادر', <Logo key="t4" variant="mark" size={28} tone="sienna" />],
 ];
 
 const SWATCHES: ReadonlyArray<readonly [string, string, string, string]> = [
-  ['الورق · paper', 'r323b-chip-paper', '#F6F6EE', 'الأرضية (فاتح) + النسخ الساكنة'],
-  ['الحبر · ink', 'r323b-chip-ink', '#282828', 'الشعيرات والكلمة — يركب currentColor'],
-  ['البرتقالي · orange', 'r323b-chip-orange', '#FA3600', 'حجر الزاوية — الإشارة الوحيدة · var(--accent)'],
+  ['الورق · paper', 'r323b-chip-paper', '#F5F1E8', 'الأرضية (فاتح) + النسخ الساكنة'],
+  ['الحبر · ink', 'r323b-chip-ink', '#262019', 'الشعيرات والكلمة — يركب currentColor'],
+  ['السيينا المحروقة · sienna', 'r323b-chip-sienna', '#C43E16', 'حجر الزاوية — الإشارة الوحيدة · var(--accent)'],
 ];
 
 export default function BrandPage(): React.JSX.Element {
@@ -142,9 +145,10 @@ export default function BrandPage(): React.JSX.Element {
         <h1>نظام العلامة</h1>
         <p className="r323b-mono">R323 · BRAND SYSTEM · /__brand</p>
         <p className="r323b-lead">
-          «نقطة تصبح مدارًا» — هوية واحدة بعد ست هويات متزاحة: الخاتم
-          يُعاد رسمه شعيرات حبر موحّدة بوصلات miter، ونقطة برتقالية واحدة
-          تجلس على التقاطع (24,8). المرجع المكتوب:{' '}
+          «الإناء المتّحد» — هوية واحدة بعد ست هويات متزاحة: حرف U مفتوح
+          من الأعلى — إناء، كتاب مفتوح، وعاء للمعرفة — يُرسم شعيرة حبر
+          واحدة موحّدة بوصلات round، وحجر سيينا محروقة واحد يجلس على
+          قمّة الساق اليمنى (21,3). المرجع المكتوب:{' '}
           <code>docs/redesign/r323/brand/BRAND.md</code>.
         </p>
       </header>
@@ -199,8 +203,8 @@ export default function BrandPage(): React.JSX.Element {
           ))}
         </div>
         <p>
-          المقعد `var(--accent)` يعيد ضبط نفسه في النسق الداكن (الجمر
-          المضيء) — لا «نسخة داكنة» ثانية من الشعار، ولا خلفية برتقالية
+          المقعد `var(--accent)` يعيد ضبط نفسه في النسق الداكن (السيينا
+          المضيئة) — لا «نسخة داكنة» ثانية من الشعار، ولا خلفية سيينا
           تحت الرمز أبدًا.
         </p>
       </section>
@@ -288,8 +292,8 @@ export default function BrandPage(): React.JSX.Element {
             <span className="r323b-mono">DO · افعل</span>
             <ul className="r323b-do">
               <li>ابدأ من الشبكة: كل مراسي الرمز تقاطعات (VARIANTS.md — ب).</li>
-              <li>شعرة موحّدة بوصلات miter — بلا استدارة ولا ظل.</li>
-              <li>نقطة برتقالية واحدة فوق التقاطع (24,8).</li>
+              <li>شعرة واحدة متّصلة بوصلات round — بلا ظل.</li>
+              <li>حجر سيينا محروقة واحد فوق قمّة الساق اليمنى (21,3).</li>
               <li>الفراغ الأمان ½ ارتفاع الرمز؛ الحد الأدنى 16px / 88px.</li>
               <li>currentColor + var(--accent) — والداكن يتكيف وحده.</li>
               <li>inline SVG فقط، مع title و data-logo على الجذر.</li>
@@ -299,10 +303,10 @@ export default function BrandPage(): React.JSX.Element {
             <span className="r323b-mono">DON'T · لا تفعل</span>
             <ul className="r323b-dont">
               <li>لا تدرّج، لا توهّج، لا نحاسي/ذهبي، لا لون رابع.</li>
-              <li>لا وصلات round ولا استدارة — النحو miter.</li>
+              <li>لا وصلات miter ولا حدّ قاطع — الإناء ضربة واحدة بوصلات round.</li>
               <li>لا تدوير أو ميل أو تغيير نسب الرمز.</li>
-              <li>لا حشو للمربعين ولا «نسخة مصمتة».</li>
-              <li>لا تباعد أحرف على العربية (الكلمة متصلة كما نحجتها harfbuzz).</li>
+              <li>لا حشو للإناء ولا «نسخة مصمتة».</li>
+              <li>لا تباعد أحرف على العربية (الكلمة متصلة كما نحجتها harfbuzz — والضمة إلزامية في أُلارا).</li>
               <li>لا هويات قديمة (StarMark / BrandMark / نجم EdgeTab / لوحة الإقلاع) — قائمة R323-PENDING تبدّل في التكامل.</li>
             </ul>
           </div>
@@ -318,7 +322,7 @@ export default function BrandPage(): React.JSX.Element {
           <Logo variant="lockup" size={44} animated />
         </div>
         <p>
-          <code>animated</code> يرسم الشعيرات 600–900ms — النقطة البرتقالية
+          <code>animated</code> يرسم الشعيرات 600–900ms — حجر السيينا
           آخر شيء يظهر. تحت <code>prefers-reduced-motion</code> لا يتحرك
           شيء: الشعار كامل من اللحظة الأولى.
         </p>

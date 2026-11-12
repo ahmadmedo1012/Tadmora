@@ -35,7 +35,7 @@ for (const [w, h] of VIEWPORTS) {
   // let the intro/loader settle (skip key seeded by fresh context? seed
   // it to keep the landing world mounted — the loader replays otherwise
   // and the sheet's staged reveal may hold heights)
-  await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
+  await page.evaluate(() => sessionStorage.setItem('ulara-intro-skip', '1'));
   await page.reload({ waitUntil: 'networkidle' });
   await page.waitForTimeout(900);
   const m = await page.evaluate(() => {

@@ -28,7 +28,7 @@ try {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...(mode === 'RM' ? { reducedMotion: 'reduce' } : {}) });
     const page = await ctx.newPage();
     await page.goto(`${BASE}/`, { waitUntil: 'networkidle', timeout: 30000 });
-    await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
+    await page.evaluate(() => sessionStorage.setItem('ulara-intro-skip', '1'));
     await page.reload({ waitUntil: 'networkidle' });
     await page.waitForTimeout(900);
     out[mode] = await page.evaluate(() => {

@@ -3,7 +3,7 @@
 /**
  * heron-map-extract.mjs — R322 «DESIGN DIRECTOR EDITION» · cycle C3 · package 3-a.
  * WP-3a "heron-map": the STRUCTURE + NUMBERS extractor for the `home-map` section
- * of https://heronaiapp.com/ — the transplant basis for Tadmora's C3 map rewrite.
+ * of https://heronaiapp.com/ — the transplant basis for Ulara's C3 map rewrite.
  *
  * WHAT THIS IS
  *   One polite Playwright chromium visit per breakpoint (1440×900 / 768×1024 / 390×844)

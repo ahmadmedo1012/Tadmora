@@ -34,7 +34,7 @@ export type MailProviderName = 'none' | 'resend' | 'brevo';
 export interface MailConfig {
   provider: MailProviderName;
   apiKey?: string;
-  from: string; // «تادمورا <no-reply@domain>» or a bare address
+  from: string; // «أُلارا <no-reply@domain>» or a bare address
   baseUrl?: string; // the app origin for footer links (optional)
 }
 
@@ -57,7 +57,7 @@ export function resolveMailConfig(source: {
   return {
     provider: valid.includes(provider) ? provider : 'none',
     apiKey: source.MAIL_API_KEY,
-    from: source.MAIL_FROM ?? 'تادمورا <no-reply@tadmora.example>',
+    from: source.MAIL_FROM ?? 'أُلارا <no-reply@ulara.example>',
     baseUrl: source.APP_ORIGIN,
   };
 }
@@ -125,11 +125,11 @@ const SHELL_BORDER = '1px solid #E4E2D8';
 export function renderEmailShell(opts: { title: string; bodyHtml: string; ctaLabel?: string; ctaUrl?: string; footerNote?: string; baseUrl?: string }): string {
   const cta =
     opts.ctaLabel && opts.ctaUrl
-      ? `<tr><td style="padding:8px 32px 24px;"><a href="${opts.ctaUrl}" style="display:inline-block;background:#FA3600;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:15px;padding:12px 28px;border-radius:0;">${opts.ctaLabel}</a></td></tr>`
+      ? `<tr><td style="padding:8px 32px 24px;"><a href="${opts.ctaUrl}" style="display:inline-block;background:#C43E16;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:15px;padding:12px 28px;border-radius:0;">${opts.ctaLabel}</a></td></tr>`
       : '';
   const footer = `<tr><td style="padding:0 32px 28px;font-size:12px;color:#8A887C;line-height:1.8;">${
     opts.footerNote ?? 'إذا لم تكن من طلب هذه الرسالة فتجاهلها — لن يتغير شيء في حسابك.'
-  }${opts.baseUrl ? `<br>تادمورا — <a href="${opts.baseUrl}" style="color:#8A887C;">${opts.baseUrl.replace(/^https?:\/\//, '')}</a>` : ''}</td></tr>`;
+  }${opts.baseUrl ? `<br>أُلارا — <a href="${opts.baseUrl}" style="color:#8A887C;">${opts.baseUrl.replace(/^https?:\/\//, '')}</a>` : ''}</td></tr>`;
 
   return `<!DOCTYPE html>
 <html dir="rtl" lang="ar">
@@ -137,9 +137,9 @@ export function renderEmailShell(opts: { title: string; bodyHtml: string; ctaLab
 <body style="margin:0;padding:0;background:#F1EFE7;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F1EFE7;padding:24px 12px;">
 <tr><td align="center">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#F6F6EE;border:${SHELL_BORDER};">
-<tr><td style="padding:28px 32px 4px;font-weight:700;font-size:18px;color:#282828;">تادمورا</td></tr>
-<tr><td style="padding:4px 32px 8px;font-size:20px;font-weight:600;color:#282828;">${opts.title}</td></tr>
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#F5F1E8;border:${SHELL_BORDER};">
+<tr><td style="padding:28px 32px 4px;font-weight:700;font-size:18px;color:#262019;">أُلارا</td></tr>
+<tr><td style="padding:4px 32px 8px;font-size:20px;font-weight:600;color:#262019;">${opts.title}</td></tr>
 <tr><td style="padding:0 32px 20px;font-size:14px;color:#4A4A44;line-height:2;">${opts.bodyHtml}</td></tr>
 ${cta}
 ${footer}
@@ -153,9 +153,9 @@ ${footer}
 /** The reset email: one calm paragraph, ONE button, the plain link as fallback. */
 export function renderResetEmail(resetUrl: string, minutes = 30): { subject: string; html: string; text: string } {
   const title = 'إعادة تعيين كلمة المرور';
-  const body = `وصلك هذا الطلب لأن أحدهم طلب رابطًا جديدًا لكلمة مرور حسابه في تادمورا. الرابط يعمل مرة واحدة ولمدة ${minutes} دقيقة فقط.`;
+  const body = `وصلك هذا الطلب لأن أحدهم طلب رابطًا جديدًا لكلمة مرور حسابه في أُلارا. الرابط يعمل مرة واحدة ولمدة ${minutes} دقيقة فقط.`;
   return {
-    subject: 'تادمورا — رابط إعادة تعيين كلمة المرور',
+    subject: 'أُلارا — رابط إعادة تعيين كلمة المرور',
     html: renderEmailShell({
       title,
       bodyHtml: `<p style="margin:0;">${body}</p><p style="margin:12px 0 0;">إن لم تطلب الرابط فتجاهل هذه الرسالة وكلمة مرورك الحالية كما هي.</p>`,
@@ -168,14 +168,14 @@ export function renderResetEmail(resetUrl: string, minutes = 30): { subject: str
 
 /** The bulk-import invite: the account exists, this is how you get in. */
 export function renderInviteEmail(name: string, loginUrl: string, tempPassword: string): { subject: string; html: string; text: string } {
-  const title = `مرحبًا ${name} — حسابك في تادمورا جاهز`;
-  const body = `أنشأ فريق جامعتك حسابًا لك في منصة تادمورا. سجّل الدخول بكلمة المرور المؤقتة أدناه، ثم غيّرها من إعداداتك عند أول دخول.`;
+  const title = `مرحبًا ${name} — حسابك في أُلارا جاهز`;
+  const body = `أنشأ فريق جامعتك حسابًا لك في منصة أُلارا. سجّل الدخول بكلمة المرور المؤقتة أدناه، ثم غيّرها من إعداداتك عند أول دخول.`;
   return {
-    subject: 'تادمورا — حسابك الجاهز وكلمة المرور المؤقتة',
+    subject: 'أُلارا — حسابك الجاهز وكلمة المرور المؤقتة',
     html: renderEmailShell({
       title,
       bodyHtml: `<p style="margin:0;">${body}</p><table role="presentation" cellpadding="0" cellspacing="0" style="margin:16px 0;border:${SHELL_BORDER};"><tr><td style="padding:10px 16px;font-size:13px;color:#4A4A44;">كلمة المرور المؤقتة: <strong style="font-family:monospace;font-size:15px;letter-spacing:1px;">${tempPassword}</strong></td></tr></table>`,
-      ctaLabel: 'الدخول إلى تادمورا',
+      ctaLabel: 'الدخول إلى أُلارا',
       ctaUrl: loginUrl,
       footerNote: 'احتفظ بكلمة المرور في مكان آمن ولا تشاركها مع أحد.',
     }),

@@ -1,7 +1,7 @@
 # المساهمة | Contributing
 
-> مساهمات تادمورا تمر عبر جولات عمل منسقة — هذا المستند يوثّق القواعد
-> القائمة فعلًا. | Tadmora contributions flow through coordinated
+> مساهمات أُلارا تمر عبر جولات عمل منسقة — هذا المستند يوثّق القواعد
+> القائمة فعلًا. | Ulara contributions flow through coordinated
 > work rounds — this documents the rules in force.
 
 ## الإعداد | Setup
@@ -107,5 +107,5 @@ are reserved for maintainer-coordinated work. Fill the PR checklist; keep
 
 ## اللغة والنسخ | Language & copy
 
-الواجهة عربية أولًا والمصطلحات من معجم تادمورا (راجع `README.md`).
+الواجهة عربية أولًا والمصطلحات من معجم أُلارا (راجع `README.md`).
 | UI copy is Arabic-first; terminology follows the project glossary.

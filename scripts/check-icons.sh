@@ -58,12 +58,12 @@ cd "$ROOT"
 violations=0
 
 # Files we scan: every .ts/.tsx under frontend/src EXCEPT the allowlist.
-# components/landing/ — immersive v2 «سماء تادمورا» scene components
+# components/landing/ — immersive v2 «سماء أُلارا» scene components
 # (CollegeConstellation / JourneyLightPath): their raw <svg> is
 # illustrative diagram authoring (a constellation map, a computed light
 # path), the same category as lib/illustrations — NOT UI iconography.
 # UI icons inside the landing still go through <Icon icon={...} />.
-# R189: primitives/Ledger.tsx — the «سجلّ تادمورا» data-viz primitives
+# R189: primitives/Ledger.tsx — the «سجلّ أُلارا» data-viz primitives
 # (Sparkline polyline + ProgressRing stroke-dasharray circle) are
 # CHART-class media (the same family ChartFrame's <canvas> charts
 # belong to), each carrying a role="img"/progressbar contract and real

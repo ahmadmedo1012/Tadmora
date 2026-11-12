@@ -1,4 +1,4 @@
-/* T-05 (r338) — [06] لماذا تادمورا — REWRITTEN from the frozen Heron
+/* T-05 (r338) — [06] لماذا أُلارا — REWRITTEN from the frozen Heron
  * home-why-wrap spec (docs/redesign/r335/heron-spec/home-why-wrap.*.json).
  *
  * The reference's why strip: a ruled editorial head (eyebrow + display
@@ -21,7 +21,7 @@ export function Why() {
        * share the top band (side lede sr.y = eyebrow sr.y). */}
       <div className="wy-head" data-spec="why.head">
         <div className="wy-eyebrow" data-spec="why.eyebrow">
-          <div className="wy-eyebrow-t" data-spec="why.eyebrowt">[06] لماذا تادمورا</div>
+          <div className="wy-eyebrow-t" data-spec="why.eyebrowt">[06] لماذا أُلارا</div>
         </div>
         <RevealCssClass as="div" className="wy-h2w" data-spec="why.h2w" delay={1}>
           <h2 className="wy-title" id="wy-title" data-spec="why.title">الرحلة في أربع مراحل</h2>
@@ -33,7 +33,7 @@ export function Why() {
           <div className="wy-lede" data-spec="why.lede">
             <div className="wy-lede-t" data-spec="why.ledet">
               شاهد، تحقّق، اختبر، أتقن — المراحل الأربع التي تعبرها في كل مقرّر داخل
-              تادمورا، ولكل مرحلة سطح حقيقي من أسطح الطالب نعرضه هنا كما هو تمامًا.
+              أُلارا، ولكل مرحلة سطح حقيقي من أسطح الطالب نعرضه هنا كما هو تمامًا.
             </div>
           </div>
           <div className="wy-note" data-spec="why.note">

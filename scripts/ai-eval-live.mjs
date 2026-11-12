@@ -19,7 +19,7 @@
  *  · Credentials via SMOKE_EMAIL / SMOKE_PASSWORD (the smoke-deploy
  *    convention) — NEVER hardcoded, NEVER printed. Missing → exit 2
  *    with zero requests (BLOCKED, not silently skipped).
- *  · BASE_URL env (default https://tadmora.vercel.app).
+ *  · BASE_URL env (default https://ulara.vercel.app).
  *
  * Usage:
  *   SMOKE_EMAIL=… SMOKE_PASSWORD=… node scripts/ai-eval-live.mjs \
@@ -27,7 +27,7 @@
  */
 import { writeFileSync } from 'node:fs';
 
-const BASE_URL = process.env.BASE_URL ?? 'https://tadmora.vercel.app';
+const BASE_URL = process.env.BASE_URL ?? 'https://ulara.vercel.app';
 const SMOKE_EMAIL = process.env.SMOKE_EMAIL;
 const SMOKE_PASSWORD = process.env.SMOKE_PASSWORD;
 const OUT = process.argv[2] ?? 'ai-eval-report.json';

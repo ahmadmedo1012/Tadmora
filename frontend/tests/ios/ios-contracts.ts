@@ -50,8 +50,8 @@ export const GHOST_ROW_TEXT = 'مقرّراتي الدراسية';
 
 /** The theme's own paper ground (tokens.css --bg) — the only ground the sheet may paint. */
 export const PAPER: Record<'light' | 'dark', string> = {
-  light: 'rgb(246, 246, 238)',
-  dark: 'rgb(40, 40, 40)',
+  light: 'rgb(245, 241, 232)',
+  dark: 'rgb(38, 32, 25)',
 };
 
 /** Runtime artifacts (gitignored) — plain screenshots, never pinned. */
@@ -72,7 +72,7 @@ export const IOS_EVIDENCE_DIR = path.resolve(
   'ios',
 );
 
-const BASE_URL = process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173';
+const BASE_URL = process.env.ULARA_E2E_BASE_URL ?? 'http://localhost:5173';
 
 /* ─── the iPhone context ─────────────────────────────────────────── */
 
@@ -103,7 +103,7 @@ export async function createIphoneContext(
   // boot; CI hosts can be 2-core).
   await context.addInitScript(() => {
     try {
-      sessionStorage.setItem('tadmora-intro-skip', '1');
+      sessionStorage.setItem('ulara-intro-skip', '1');
       try {
         Object.defineProperty(Navigator.prototype, 'hardwareConcurrency', {
           configurable: true,

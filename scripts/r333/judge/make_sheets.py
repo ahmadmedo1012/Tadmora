@@ -60,14 +60,14 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 GENERATOR = "make_sheets.py r333/1"
-FORM_SCHEMA = "tadmora-r333-judge-form/1"
+FORM_SCHEMA = "ulara-r333-judge-form/1"
 CRITERIA = [
     "composition", "typography_craft", "spacing_rhythm", "imagery", "storytelling",
     "motion_quality", "scroll_feel", "micro_interactions", "density_contrast_legibility",
     "consistency", "arabic_rtl_craft", "polish_finish",
 ]
-SIDES = ("heron", "tadmora")
-FORBIDDEN = ("heron", "tadmora")  # must not appear in sheets/forms/manifest text
+SIDES = ("heron", "ulara")
+FORBIDDEN = ("heron", "ulara")  # must not appear in sheets/forms/manifest text
 
 MARGIN = 10
 LABEL_W = 64

@@ -59,7 +59,7 @@ test('F11 · student uploads a PDF → the teacher grades it → the student rea
     // tracked .env template (postgresql://USER:PASS@HOST/DB) must never
     // leak into the child (found live: a template URL survives both ??
     // and || and Prisma dies validating it).
-    { cwd: REPO_ROOT, env: { ...process.env, DATABASE_URL: 'postgresql://postgres@localhost:5433/tadmora_dev' }, stdio: 'pipe', timeout: 60_000 },
+    { cwd: REPO_ROOT, env: { ...process.env, DATABASE_URL: 'postgresql://postgres@localhost:5433/ulara_dev' }, stdio: 'pipe', timeout: 60_000 },
   );
 
   // ── SETUP (API, not under test): link the paper to the grading

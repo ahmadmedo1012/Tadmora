@@ -10,7 +10,7 @@
  * product capability being demonstrated.
  *
  * Phase Ω — NEUTRAL WORKSPACE SOURCE: every fact below belongs to
- * «مساحة عمل تادمورا التجريبية», the platform's clearly-labeled neutral
+ * «مساحة عمل أُلارا التجريبية», the platform's clearly-labeled neutral
  * demonstration workspace (NOT a university: no campus names, no
  * affiliation claims, no invented identity). The values are coherent
  * demo fabrications — obviously-demo contact details, the honest
@@ -43,23 +43,23 @@ export interface FactPatch {
 
 /**
  * Curated facts for the labeled neutral demo workspace
- * (مساحة عمل تادمورا التجريبية). Demo by design — demo contact
+ * (مساحة عمل أُلارا التجريبية). Demo by design — demo contact
  * details, demo structure, the honest three-faculty set.
  */
 export const STATIC_FACTS: FactPatch[] = [
   // ─── Identity ────────────────────────────────────────────
-  { key: 'name.ar', value: 'مساحة عمل تادمورا التجريبية', category: 'identity', source: 'demo-source:identity' },
-  { key: 'name.en', value: 'Tadmora Experimental Workspace', category: 'identity', source: 'demo-source:identity' },
+  { key: 'name.ar', value: 'مساحة عمل أُلارا التجريبية', category: 'identity', source: 'demo-source:identity' },
+  { key: 'name.en', value: 'Ulara Experimental Workspace', category: 'identity', source: 'demo-source:identity' },
   { key: 'foundingYear', value: '2015', category: 'identity', source: 'demo-source:identity' },
   { key: 'foundingDecree', value: 'سجلّ عرض تجريبي — لا قرار حقيقي (بيانات اصطناعية)', category: 'identity', source: 'demo-source:identity' },
   { key: 'collegeCount', value: '3', category: 'identity', source: 'demo-source:colleges' },
-  { key: 'website', value: 'https://demo.tadmora.ly', category: 'identity', source: 'demo-source:identity' },
+  { key: 'website', value: 'https://demo.ulara.ly', category: 'identity', source: 'demo-source:identity' },
 
   // ─── Contact (obviously-synthetic demo details) ──────────
   { key: 'address.ar', value: 'مساحة افتراضية — بيانات عرض (لا موقع جغرافي)', category: 'contact', source: 'demo-source:contact' },
   { key: 'phone.primary', value: '+218 00 000000', category: 'contact', source: 'demo-source:contact' },
   { key: 'postBox', value: '00000', category: 'contact', source: 'demo-source:contact' },
-  { key: 'email.primary', value: 'info@demo.tadmora.ly', category: 'contact', source: 'demo-source:contact' },
+  { key: 'email.primary', value: 'info@demo.ulara.ly', category: 'contact', source: 'demo-source:contact' },
 
   // ─── Structure ───────────────────────────────────────────
   { key: 'memberships', value: 'لا عضويّات — مساحة عرض محايدة (بيانات تجريبية)', category: 'memberships', source: 'demo-source:identity' },

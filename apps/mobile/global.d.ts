@@ -1,5 +1,5 @@
 /*
- * Tadmora Mobile — ambient module declarations.
+ * Ulara Mobile — ambient module declarations.
  * `src/global.css` is a web-only stylesheet consumed by the react-native-web
  * export (see `npm run export:web`). Metro ignores CSS imports on native
  * platforms; TypeScript still needs an ambient declaration for the

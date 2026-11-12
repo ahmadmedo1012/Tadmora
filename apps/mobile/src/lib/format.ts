@@ -20,14 +20,15 @@
  *   <T>{formatNumber(kpi.courseCount)}</T>            // ٠١٢٣ or 0123
  *
  * The preference persists via zustand + AsyncStorage (the exact pattern of
- * the theme store in src/design/theme.tsx — key "tadmora-mobile-numerals").
+ * the theme store in src/design/theme.tsx — key "ula-mobile-numerals",
+ * with the retired identity's key read as fallback per §1.1).
  * No Intl.NumberFormat on purpose: Hermes Intl support is engine-dependent
  * (the R326 crash), so digit mapping is a pure string transform.
  */
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { renamedAsyncStorage } from "@/lib/storageRename";
 
 const TZ = "Africa/Tripoli";
 
@@ -133,6 +134,9 @@ interface NumeralsState {
   setPreference: (p: NumeralsPreference) => void;
 }
 
+/** The retired identity's numerals key — read-fallback only (§1.1). */
+const LEGACY_NUMERALS_KEY = "tadmora-mobile-numerals";
+
 const useNumeralsStore = create(
   persist<NumeralsState>(
     (set) => ({
@@ -140,8 +144,11 @@ const useNumeralsStore = create(
       setPreference: (preference) => set({ preference }),
     }),
     {
-      name: "tadmora-mobile-numerals",
-      storage: createJSONStorage(() => AsyncStorage),
+      // §1.1 rename shim: adopts the legacy persisted preference once.
+      name: "ula-mobile-numerals",
+      storage: createJSONStorage(() =>
+        renamedAsyncStorage("ula-mobile-numerals", LEGACY_NUMERALS_KEY),
+      ),
     },
   ),
 );

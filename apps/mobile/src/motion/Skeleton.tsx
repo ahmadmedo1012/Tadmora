@@ -50,7 +50,7 @@ export function Skeleton({
   const { name, palette } = useTheme();
   // React 19 useId, sanitized — svg resolves url(#id) globally, so gradient
   // ids must be unique per instance.
-  const gradientId = `tdmr-skel-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
+  const gradientId = `ula-skel-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
 
   // Sweep geometry needs a numeric width; percentage/auto bones measure once.
   const [measured, setMeasured] = useState<number | null>(typeof width === "number" ? width : null);

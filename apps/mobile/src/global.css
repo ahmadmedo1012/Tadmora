@@ -1,4 +1,4 @@
-/* Web reset for the Tadmora mobile-web output.
+/* Web reset for the Ulara mobile-web output.
    Native layouts own the real chrome; this keeps the paper ground, removes
    default margins, and fixes text rendering for RTL Arabic. */
 html,
@@ -10,10 +10,10 @@ body,
 }
 html {
   direction: rtl;
-  background: #f6f6ee;
+  background: #f5f1e8;
 }
 html[data-theme="dark"] {
-  background: #282828;
+  background: #262019;
 }
 body {
   font-family: "Body-Regular", "IBM Plex Sans Arabic", system-ui, sans-serif;

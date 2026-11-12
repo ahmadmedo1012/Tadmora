@@ -23,9 +23,8 @@
  *      (additive-only contract, by design).
  *
  * The snapshot `shape` values (recursive `{'[]': …}` / scalar-type tree)
- * are the OBSERVED shapes of real responses against the seeded dev DB
- * (DATABASE_URL=postgresql://postgres@localhost:5433/tadmora_dev) — the
- * same file feeds docs/api/openapi.json via `npm run api:openapi`.
+ * are the OBSERVED shapes of real responses against the seeded local dev
+ * DB — the same file feeds docs/api/openapi.json via `npm run api:openapi`.
  * Regenerate after an intentional additive change:
  *
  *   cd backend && DATABASE_URL=… UPDATE_SNAPSHOT=1 npx vitest run tests/contract
@@ -192,8 +191,8 @@ async function call(
 }
 
 const refreshCookieFrom = (res: Response): string => {
-  const raw = res.headers.getSetCookie().find((c) => c.startsWith('tdmr_refresh='));
-  if (!raw) throw new Error('login/refresh response carried no tdmr_refresh Set-Cookie');
+  const raw = res.headers.getSetCookie().find((c) => c.startsWith('ulara_refresh='));
+  if (!raw) throw new Error('login/refresh response carried no ulara_refresh Set-Cookie');
   return raw.slice(0, raw.indexOf(';'));
 };
 

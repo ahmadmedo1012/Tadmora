@@ -4,13 +4,13 @@
  *
  * Run:  npm run db:seed
  *
- * Phase Ω (identity purity): TADMORA is an independent multi-tenant
+ * Phase Ω (identity purity): ULARA is an independent multi-tenant
  * University Operating System — it is NOT any university's website and
  * has NO institutional affiliations. The demo data therefore lives in
  * clearly-labeled NEUTRAL WORKSPACES, never in fictional universities
  * or invented campuses:
  *
- *   · مساحة عمل تادمورا التجريبية (slug tadmora-demo) — the labeled
+ *   · مساحة عمل أُلارا التجريبية (slug ulara-demo) — the labeled
  *     demo workspace that owns the academic demo content. The row
  *     keeps its stable id inst-zawia-showcase, a legacy identifier
  *     from the retired showcase era, not identity.
@@ -35,11 +35,11 @@
  * Test accounts (R320 §C — ONE easy account per job; the single source
  * of truth is src/modules/auth/test-accounts.data.ts, re-exported at
  * the repo root as shared/testAccounts.ts):
- *   student@test.ly   → STUDENT (أحمد الزروق) — membership in tadmora-demo
+ *   student@test.ly   → STUDENT (أحمد الزروق) — membership in ulara-demo
  *   student2@test.ly  → STUDENT (ليلى المهدي) — membership in alandalus-demo
- *   teacher@test.ly   → TEACHER (د. سالم البوسيفي) — membership in tadmora-demo
- *   registrar@test.ly → ADMIN   (المسجل العام) — membership in tadmora-demo
- *   quality@test.ly   → QUALITY (ضمان الجودة) — membership in tadmora-demo
+ *   teacher@test.ly   → TEACHER (د. سالم البوسيفي) — membership in ulara-demo
+ *   registrar@test.ly → ADMIN   (المسجل العام) — membership in ulara-demo
+ *   quality@test.ly   → QUALITY (ضمان الجودة) — membership in ulara-demo
  *   owner@test.ly     → OWNER   (مالك المنصة) — NO membership (platform owner)
  *   teacher2@test.ly  → TEACHER (خالد التربلسي) — membership in alandalus-demo
  *   admin2@test.ly    → ADMIN   (مسجل عام) — membership in alandalus-demo
@@ -53,7 +53,7 @@
  * AND established databases — as the ONE deliberate exception to the
  * r183 zero-writes rule below, and it touches ONLY the @test.ly
  * accounts (never real users' data). The backend boot path can also
- * run it by setting TADMORA_TEST_ACCOUNTS=1 (see backend/src/index.ts).
+ * run it by setting ULARA_TEST_ACCOUNTS=1 (see backend/src/index.ts).
  *
  * NOTE (final-polish audit, 2026-09-28): the PRODUCTION database was
  * seeded by older generations of this file whose demo passwords differ
@@ -68,7 +68,7 @@
  * redeploy of an ESTABLISHED database (any users exist) SKIPS the seed
  * entirely — zero writes: passwords, settings and academic records are
  * not even read for update. The deliberate demo-reset path is explicit
- * and operator-invoked ONLY: `TADMORA_SEED_FORCE=1` (`npm run
+ * and operator-invoked ONLY: `ULARA_SEED_FORCE=1` (`npm run
  * db:seed:force`), which re-runs the full create-only body including the
  * documented demo-password resets and demo-freshness refreshes. CI
  * never runs the root build, so this only executes on Render deploys.
@@ -85,8 +85,8 @@
  * usable), (b) notification timestamps + training-track catalogue
  * metadata are refreshed (deliberate demo freshness).
  *
- * NOTE (r183 brand voice): all seed copy speaks in the Tadmora
- * platform voice («منصّة تادمورا») — the demo workspace is DATA
+ * NOTE (r183 brand voice): all seed copy speaks in the ULARA
+ * platform voice («منصّة أُلارا») — the demo workspace is DATA
  * (organizer/institution context), never the platform's identity.
  */
 
@@ -118,9 +118,9 @@ async function main() {
   // A NORMAL redeploy must never touch an established database: with
   // any users present the seed skips ENTIRELY (zero writes). Fresh
   // installs (no users) self-bootstrap. The deliberate demo reset is
-  // explicit and conscious: TADMORA_SEED_FORCE=1 (npm run
+  // explicit and conscious: ULARA_SEED_FORCE=1 (npm run
   // db:seed:force) — guarded so no accidental production path sets it.
-  const force = process.env.TADMORA_SEED_FORCE === '1';
+  const force = process.env.ULARA_SEED_FORCE === '1';
   const existingUsers = await prisma.user.count();
   if (existingUsers > 0 && !force) {
     // R320 §C — the test accounts are the ONE explicit exception to
@@ -129,19 +129,19 @@ async function main() {
     // touching nothing else. See src/modules/auth/test-accounts.ts.
     const ensured = await ensureTestAccounts(prisma);
     console.log(
-      `ℹ بذرة r183: القاعدة مؤسَّسة (${existingUsers} مستخدمًا) — التشغيل العادي للنشر لا يكتب شيئًا أصلًا، باستثناء حسابات الاختبار الموثقة (${ensured} حسابًا على نطاق test.ly) / seed skipped: established database, zero writes except the documented @test.ly test accounts. إعادة ضبط العرض الواعية: TADMORA_SEED_FORCE=1 (npm run db:seed:force).`,
+      `ℹ بذرة r183: القاعدة مؤسَّسة (${existingUsers} مستخدمًا) — التشغيل العادي للنشر لا يكتب شيئًا أصلًا، باستثناء حسابات الاختبار الموثقة (${ensured} حسابًا على نطاق test.ly) / seed skipped: established database, zero writes except the documented @test.ly test accounts. إعادة ضبط العرض الواعية: ULARA_SEED_FORCE=1 (npm run db:seed:force).`,
     );
     return;
   }
   if (force) {
     console.warn(
-      '⚠ TADMORA_SEED_FORCE=1 — إعادة ضبط عرض واعية: كلمات مرور حسابات العرض ستُضبط للقيمة الموثقة وبيانات نضارة العرض تُحدَّث. سجلات التعليم المُدارة من المستخدمين لا تُمحى أبدًا (بذرة إنشاء-فقط) / deliberate demo reset: demo passwords reset, user-managed records never wiped.',
+      '⚠ ULARA_SEED_FORCE=1 — إعادة ضبط عرض واعية: كلمات مرور حسابات العرض ستُضبط للقيمة الموثقة وبيانات نضارة العرض تُحدَّث. سجلات التعليم المُدارة من المستخدمين لا تُمحى أبدًا (بذرة إنشاء-فقط) / deliberate demo reset: demo passwords reset, user-managed records never wiped.',
     );
   }
   console.log('🌱 Seeding database...');
 
-  // ─── Workspaces (r178 → r188 → Phase Ω) ─────────────────────
-  // Upsert by slug. The labeled demo workspace is مساحة عمل تادمورا
+  // ─── Workspaces (r178 → r188 → Phase Ω → ULARA) ─────────────
+  // Upsert by slug. The labeled demo workspace is مساحة عمل أُلارا
   // التجريبية — a NEUTRAL workspace, not a university (Phase Ω: the
   // platform has no institutional affiliations; institutions self-
   // onboard and own their data). The row is created with the FIXED
@@ -151,17 +151,18 @@ async function main() {
   // identity) — the same id the migration backfill used, so migrated
   // databases and fresh seeded databases agree on the reference id
   // (tests rely on it). The r188 migration renamed an existing
-  // zawia-showcase row to this slug; the Phase Ω migration renames the
-  // r188 university label to the workspace label; fresh installs
-  // create it directly.
+  // zawia-showcase row to the demo slug; the Phase Ω migration renamed
+  // the r188 university label to the workspace label; the ULARA rebrand
+  // migration renamed the slug + labels to the ULARA forms; fresh
+  // installs create it directly.
   const zawia = await prisma.institution.upsert({
-    where: { slug: 'tadmora-demo' },
-    update: { name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', status: 'ACTIVE' },
+    where: { slug: 'ulara-demo' },
+    update: { name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', status: 'ACTIVE' },
     create: {
       id: 'inst-zawia-showcase',
-      name: 'مساحة عمل تادمورا التجريبية',
-      nameEn: 'Tadmora Experimental Workspace',
-      slug: 'tadmora-demo',
+      name: 'مساحة عمل أُلارا التجريبية',
+      nameEn: 'Ulara Experimental Workspace',
+      slug: 'ulara-demo',
       status: 'ACTIVE',
     },
   });
@@ -178,7 +179,7 @@ async function main() {
     },
   });
 
-  // ─── Faculties & Departments (مساحة عمل تادمورا التجريبية) ───
+  // ─── Faculties & Departments (مساحة عمل أُلارا التجريبية) ────
   // Phase Ω (identity purity): an honest MINIMAL set — three generic
   // faculties, no campus names, no per-college identity profiles. No
   // real or invented university registry is transcribed here: real
@@ -729,8 +730,8 @@ async function main() {
 
   // ─── MOOCs ──────────────────────────────────────────────────
   const moocs = [
-    { title: 'Python للبيانات والذكاء الاصطناعي', organization: 'منصة تادمورا', iconEmoji: '🐍', category: 'prog', durationHours: 40, level: 'متوسط', rating: 4.8, enrolled: 1240 },
-    { title: 'تصميم قواعد البيانات المتقدمة', organization: 'منصة تادمورا', iconEmoji: '🗄️', category: 'data', durationHours: 25, level: 'متقدم', rating: 4.6, enrolled: 840 },
+    { title: 'Python للبيانات والذكاء الاصطناعي', organization: 'منصة أُلارا', iconEmoji: '🐍', category: 'prog', durationHours: 40, level: 'متوسط', rating: 4.8, enrolled: 1240 },
+    { title: 'تصميم قواعد البيانات المتقدمة', organization: 'منصة أُلارا', iconEmoji: '🗄️', category: 'data', durationHours: 25, level: 'متقدم', rating: 4.6, enrolled: 840 },
     { title: 'تسويق رقمي شامل', organization: 'مزوّد دورات مفتوحة', iconEmoji: '📱', category: 'business', durationHours: 30, level: 'مبتدئ', rating: 4.7, enrolled: 2100 },
     { title: 'تصميم UI/UX من الصفر', organization: 'مزوّد دورات مفتوحة', iconEmoji: '🎨', category: 'design', durationHours: 35, level: 'مبتدئ', rating: 4.9, enrolled: 3400 },
   ];
@@ -1017,7 +1018,7 @@ async function main() {
           ordinal: def.ordinal,
           durationSec: def.durationSec,
           videoUrl: def.videoUrl,
-          posterUrl: '/brand/tadmora-mark.svg',
+          posterUrl: '/brand/mark.svg',
         },
       });
     } else {
@@ -1033,7 +1034,7 @@ async function main() {
           ordinal: def.ordinal,
           durationSec: def.durationSec,
           videoUrl: def.videoUrl,
-          posterUrl: '/brand/tadmora-mark.svg',
+          posterUrl: '/brand/mark.svg',
         },
       });
     }
@@ -1167,9 +1168,9 @@ async function main() {
       studentId: student.id,
       reviewerId: teacher.id,
       offeringId: seOffering.id,
-      title: 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في مساحة عمل تادمورا التجريبية',
+      title: 'تأثير استراتيجية الصف المعكوس على تحصيل طلاب الهندسة في مساحة عمل أُلارا التجريبية',
       abstract:
-        'دراسة شبه تجريبية على 84 طالباً من أقسام الهندسة، تقارن متوسط التحصيل بين فصلين أحدهما اعتمد الصف المعكوس مدعوماً بمنصة تادمورا. النتائج تُظهر فرقاً ذا دلالة إحصائية لصالح المجموعة التجريبية.',
+        'دراسة شبه تجريبية على 84 طالباً من أقسام الهندسة، تقارن متوسط التحصيل بين فصلين أحدهما اعتمد الصف المعكوس مدعوماً بمنصة أُلارا. النتائج تُظهر فرقاً ذا دلالة إحصائية لصالح المجموعة التجريبية.',
       status: ResearchPaperStatus.PUBLISHED,
       fileUrl: '/api/v1/files/papers/sample.pdf',
       plagiarismPct: 5.6,
@@ -1277,13 +1278,13 @@ async function main() {
   const TRACKS: TrackSeed[] = [
     {
       slug: 'platform-onboarding',
-      title: 'كيف تستخدم منصّة تادمورا',
+      title: 'كيف تستخدم منصّة أُلارا',
       titleEn: 'Platform Onboarding',
       summary: 'جولة سريعة على واجهات المنصة: المحاضرات، المصفوفة التعليمية، البحوث، المكتبة، والإحصاءات.',
       category: 'ONBOARDING', level: 'BEGINNER', iconEmoji: '🧭', themeColor: '#2952C8',
       estMinutes: 25, pointsAward: 150, order: 1,
       lessons: [
-        { title: 'الترحيب والتسجيل', summary: 'كيفية إنشاء الحساب وإكمال الملف الشخصي', content: 'أهلاً بك في منصّة تادمورا للتعليم الذكي. تبدأ رحلتك بإنشاء حسابك الجامعي عبر صفحة "إنشاء حساب"، وإدخال بياناتك الأساسية. بعدها أكمل ملفك الشخصي بإضافة الكلية والقسم والمعرّف الجامعي.', quiz: { q: 'ما نطاق بريد حسابات العرض في المنصّة؟', a: 'test.ly' } },
+        { title: 'الترحيب والتسجيل', summary: 'كيفية إنشاء الحساب وإكمال الملف الشخصي', content: 'أهلاً بك في منصّة أُلارا للتعليم الذكي. تبدأ رحلتك بإنشاء حسابك الجامعي عبر صفحة "إنشاء حساب"، وإدخال بياناتك الأساسية. بعدها أكمل ملفك الشخصي بإضافة الكلية والقسم والمعرّف الجامعي.', quiz: { q: 'ما نطاق بريد حسابات العرض في المنصّة؟', a: 'test.ly' } },
         { title: 'لوحة التحكم الرئيسية', summary: 'فهم العناصر في الصفحة الرئيسية', content: 'لوحة التحكم تعرض: المقررات الحالية، نسبة الإنجاز، الإشعارات، والمساعد الذكي. كل بطاقة قابلة للنقر وتأخذك إلى التفاصيل.' },
         { title: 'المصفوفة التعليمية', summary: 'كيف تعمل وكيف تستفيد منها', content: 'المصفوفة التعليمية تتبع فهمك لكل مفهوم على حدة وتقترح فيديوهات لسد أي فجوة معرفية تظهر في امتحاناتك أو نقاط التفاعل.' },
         { title: 'البحوث والمكتبة', summary: 'رفع البحث والبحث في المكتبة', content: 'يمكنك رفع بحثك من قسم البحوث، وستجري المنصة فحص انتحال وفحص ذكاء اصطناعي قبل الإرسال للأستاذ. المكتبة تتيح البحث عبر آلاف الأبحاث المنشورة.', quiz: { q: 'ما النسبة القصوى المقبولة للانتحال في البحث؟', a: '15' } },
@@ -1442,7 +1443,7 @@ async function main() {
         { title: 'تعلم الآلة مقابل التعلم العميق', summary: 'متى نستخدم كل منهما', content: 'تعلم الآلة الكلاسيكي مناسب للبيانات المهيكلة وكميات قليلة. التعلم العميق يحتاج بيانات ضخمة وقوة حسابية كبيرة، لكنه يتفوق في الصور واللغة.' },
         { title: 'علم البيانات والإحصاء', summary: 'الأساس الذي يقوم عليه كل شيء', content: 'علم البيانات يدمج الإحصاء والبرمجة والمعرفة المجالية. أدوات: Python (pandas, numpy)، R، SQL. مهارة قراءة البيانات أهم من إتقان الأدوات.' },
         { title: 'تتبع المعرفة (Knowledge Tracing)', summary: 'الخوارزمية وراء مصفوفتنا التعليمية', content: 'خوارزميات تتبع المعرفة تنتج نموذج معرفة الطالب بمرور الوقت. مسابقة Kaggle لشركة Riiid (2020) كانت محطة فاصلة. المنصة تستخدم نموذجاً مشابهاً لتحديد فجواتك المعرفية.', quiz: { q: 'ما اسم الشركة الكورية صاحبة مسابقة تتبع المعرفة على Kaggle؟', a: 'Riiid' } },
-        { title: 'الذكاء الاصطناعي في التعليم', summary: 'مستقبل التعلم المخصص', content: 'الذكاء الاصطناعي سيغير التعليم: مدرسون افتراضيون، محتوى مخصص لكل طالب، تقييم لحظي، اكتشاف الفجوات قبل أن تظهر في الامتحان. منصّة تادمورا خطوة في هذا الاتجاه.' },
+        { title: 'الذكاء الاصطناعي في التعليم', summary: 'مستقبل التعلم المخصص', content: 'الذكاء الاصطناعي سيغير التعليم: مدرسون افتراضيون، محتوى مخصص لكل طالب، تقييم لحظي، اكتشاف الفجوات قبل أن تظهر في الامتحان. منصّة أُلارا خطوة في هذا الاتجاه.' },
       ],
       badge: { slug: 'badge-ai-pioneer', title: 'رائد ذكاء اصطناعي', description: 'أنهيت المسار المتخصص في الذكاء الاصطناعي', iconEmoji: '🤖', rarity: 'LEGENDARY' },
     },
@@ -1651,7 +1652,7 @@ async function main() {
       difficulty: 'HARD' as const, points: 5,
     },
     {
-      category: generalCategory.id, type: 'MCQ' as const, prompt: 'ما النسبة القصوى المقبولة للتشابه (الانتحال) في البحث العلمي على منصّة تادمورا؟',
+      category: generalCategory.id, type: 'MCQ' as const, prompt: 'ما النسبة القصوى المقبولة للتشابه (الانتحال) في البحث العلمي على منصّة أُلارا؟',
       choices: ['5%', '10%', '15%', '25%'], correct: 2, difficulty: 'EASY' as const, points: 1,
     },
     {
@@ -1763,8 +1764,8 @@ async function main() {
   const announcementDefs = [
       {
         authorId: admin.id, scope: 'PLATFORM', scopeId: null,
-        title: 'تادمورا: انطلاق نظام تشغيل الجامعة',
-        body: 'تنطلق منصّة تادمورا — نظام تشغيل الجامعة المستقلّ — لخدمة مؤسساتها التعليمية بكامل ميزاتها الذكية. يستطيع جميع الطلاب والأساتذة الاستفادة من الميزات الجديدة فوراً.',
+        title: 'أُلارا: انطلاق نظام تشغيل الجامعة',
+        body: 'تنطلق منصّة أُلارا — نظام تشغيل الجامعة المستقلّ — لخدمة مؤسساتها التعليمية بكامل ميزاتها الذكية. يستطيع جميع الطلاب والأساتذة الاستفادة من الميزات الجديدة فوراً.',
         pinned: true, iconEmoji: '🎉',
       },
       {
@@ -1776,7 +1777,7 @@ async function main() {
       {
         authorId: teacher.id, scope: 'FACULTY', scopeId: faculties[0]!.id,
         title: 'محاضرة افتراضية مع خبير عالمي في الذكاء الاصطناعي',
-        body: 'تستضيف كلية علوم الحاسوب محاضرة عن بُعد مع أحد خبراء الذكاء الاصطناعي يوم الخميس عبر منصّة تادمورا. الحضور مفتوح لجميع طلاب الكلية.',
+        body: 'تستضيف كلية علوم الحاسوب محاضرة عن بُعد مع أحد خبراء الذكاء الاصطناعي يوم الخميس عبر منصّة أُلارا. الحضور مفتوح لجميع طلاب الكلية.',
         iconEmoji: '🎤',
       },
       {
@@ -1800,7 +1801,7 @@ async function main() {
         organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '🔬', themeColor: '#7B3AED',
       },
       {
-        title: 'هاكاثون تادمورا الأول',
+        title: 'هاكاثون أُلارا الأول',
         description: 'هاكاثون 48 ساعة لتطوير حلول رقمية لتحديات المؤسسات التعليمية. مفتوح لجميع الطلاب من جميع الكليات.',
         category: 'برمجة', prize: '5,000$ + فرصة تدريب',
         deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
@@ -1834,7 +1835,7 @@ async function main() {
         capacity: 500, organizerId: admin.id, institutionId: zawia.id, iconEmoji: '💼', themeColor: '#0E5C2F',
       },
       {
-        title: 'ندوة: مستقبل التعليم الرقمي', description: 'ندوة حوارية حول رؤية التعليم 2030 وكيف تبني المؤسسات مسارها الخاص على منصّة تادمورا.',
+        title: 'ندوة: مستقبل التعليم الرقمي', description: 'ندوة حوارية حول رؤية التعليم 2030 وكيف تبني المؤسسات مسارها الخاص على منصّة أُلارا.',
         location: 'مدرج كلية الهندسة', startsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000),
         capacity: 200, organizerId: quality.id, institutionId: zawia.id, iconEmoji: '🎓', themeColor: '#2952C8',

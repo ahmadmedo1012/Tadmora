@@ -35,7 +35,7 @@ export default function LegalDocScreen() {
   if (!doc || !data) {
     return (
       <Screen scroll>
-        <StackHeader title="السياسات" kicker="تادمورا" />
+        <StackHeader title="السياسات" kicker="أُلارا" />
         <EmptyState
           title="الصفحة غير موجودة"
           message="هذه الوثيقة ليست من سياسات المنصّة الست."

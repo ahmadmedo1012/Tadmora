@@ -36,7 +36,7 @@
  *
  * Run (from the repo root):
  *   npx tsx scripts/r321/prod-proof.ts \
- *     [--base https://tadmora.vercel.app] \
+ *     [--base https://ulara.vercel.app] \
  *     [--out audits/evidence/r321/prod] \
  *     [--phases health,accounts,pages,statics,landing]
  *
@@ -45,7 +45,7 @@
  *     this container (missing system libs, no sudo) — the WebKit leg
  *     runs in CI (tests/e2e ios-webkit job), noted in proof.md.
  *   - The entrance/intro gate is skipped via the same sessionStorage
- *     key every e2e fixture seeds (`tadmora-intro-skip=1`) so h1
+ *     key every e2e fixture seeds (`ulara-intro-skip=1`) so h1
  *     assertions measure the page, not the loader.
  */
 import fs from 'node:fs';
@@ -64,7 +64,7 @@ const argv = new Map<string, string>();
 for (let i = 2; i < process.argv.length; i += 2) {
   argv.set(process.argv[i]!.replace(/^--/, ''), process.argv[i + 1]!);
 }
-const BASE = (argv.get('base') ?? 'https://tadmora.vercel.app').replace(/\/$/, '');
+const BASE = (argv.get('base') ?? 'https://ulara.vercel.app').replace(/\/$/, '');
 const OUT_DIR = path.isAbsolute(argv.get('out') ?? '')
   ? (argv.get('out') as string)
   : path.join(REPO_ROOT, argv.get('out') ?? path.join('audits', 'evidence', 'r321', 'prod'));
@@ -81,7 +81,7 @@ const PHASES = new Set(
 async function seedIntroSkip(ctx: BrowserContext): Promise<void> {
   await ctx.addInitScript(() => {
     try {
-      sessionStorage.setItem('tadmora-intro-skip', '1');
+      sessionStorage.setItem('ulara-intro-skip', '1');
     } catch {
       /* storage unavailable */
     }
@@ -942,7 +942,7 @@ function renderMd(proof: Proof): string {
   );
   L.push(
     `- The entrance/intro loader is skipped via the standard e2e fixture key ` +
-      `(\`sessionStorage tadmora-intro-skip=1\`) on every page so h1 assertions ` +
+      `(\`sessionStorage ulara-intro-skip=1\`) on every page so h1 assertions ` +
       `measure the page, not the loader gate.`,
   );
   L.push(

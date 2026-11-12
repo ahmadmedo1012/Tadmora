@@ -2,7 +2,7 @@ import { createContext, useEffect, useMemo, type ReactNode } from "react";
 import { useColorScheme } from "react-native";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { renamedAsyncStorage } from "@/lib/storageRename";
 import { heron, statusTones, type HeronPalette, type StatusTone, type StatusToneName, type ThemeName } from "./tokens";
 import { semanticThemeFor, type SemanticTheme } from "./semantic";
 
@@ -13,6 +13,9 @@ interface ThemeState {
   setPreference: (p: ThemePreference) => void;
 }
 
+/** The retired identity's persisted-theme key — read-fallback only (§1.1). */
+const LEGACY_THEME_KEY = "tadmora-mobile-theme";
+
 const useThemeStore = create(
   persist<ThemeState>(
     (set) => ({
@@ -20,8 +23,12 @@ const useThemeStore = create(
       setPreference: (preference) => set({ preference }),
     }),
     {
-      name: "tadmora-mobile-theme",
-      storage: createJSONStorage(() => AsyncStorage),
+      // §1.1 rename shim: reads the legacy persisted theme once, adopts it
+      // under the new key, writes only the new key from then on.
+      name: "ula-mobile-theme",
+      storage: createJSONStorage(() =>
+        renamedAsyncStorage("ula-mobile-theme", LEGACY_THEME_KEY),
+      ),
     },
   ),
 );

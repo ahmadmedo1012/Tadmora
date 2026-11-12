@@ -153,14 +153,14 @@ describe('r172a §8 — the landing carries the REAL theme control', () => {
     // useThemeSync (mounted by the page) applies the resolved theme…
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     // …and the SHARED store carries the choice (no second theme state
-    // anywhere — this is the same tadmora-theme store the shell reads).
+    // anywhere — this is the same ulara-theme store the shell reads).
     expect(useThemeStore.getState().mode).toBe('light');
     // The persist layer wrote the serialized state to ITS storage
     // surface (the store captured the polyfill at import time — read
     // it through the store's own persist API, not window.localStorage,
     // which the global setup re-installs per test).
     const storage = useThemeStore.persist.getOptions().storage;
-    const raw = storage ? storage.getItem('tadmora-theme') : null;
+    const raw = storage ? storage.getItem('ulara-theme') : null;
     // (the persist surface may hand back the serialized string or its
     // parsed shape — both carry the mode choice)
     expect(JSON.stringify(raw)).toContain('"mode":"light"');
@@ -435,7 +435,7 @@ describe('r172a §7 — the html[data-landing-boot] machinery is retired end-to-
     const index = stripComments(read('index.html'));
     expect(index).not.toContain('data-landing-boot');
     expect(index).not.toContain('#252A3E');
-    expect(index).not.toContain("localStorage.getItem('tdmr-auth')");
+    expect(index).not.toContain("localStorage.getItem('ula-auth')");
     expect(index).toContain("attributeFilter: ['data-theme']");
     // the theme bootstrap itself still resolves the theme pre-paint
     expect(index).toContain("setAttribute('data-theme', resolved)");

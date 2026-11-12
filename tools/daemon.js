@@ -9,16 +9,16 @@ if (!name || !cmd) {
   process.exit(1);
 }
 
-const logPath = `/home/z/tadmora/${name}.log`;
+const logPath = `/home/z/ulara/${name}.log`;
 const out = fs.openSync(logPath, 'a');
 const err = fs.openSync(logPath, 'a');
 
 const child = spawn(cmd, args, {
-  cwd: process.env.DAEMON_CWD || '/home/z/tadmora',
+  cwd: process.env.DAEMON_CWD || '/home/z/ulara',
   detached: true,
   stdio: ['ignore', out, err],
   env: process.env,
 });
 child.unref();
-fs.writeFileSync(`/home/z/tadmora/${name}.pid`, String(child.pid));
+fs.writeFileSync(`/home/z/ulara/${name}.pid`, String(child.pid));
 console.log(`daemon ${name} pid=${child.pid} log=${logPath}`);

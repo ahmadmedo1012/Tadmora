@@ -423,7 +423,7 @@ async function ensureDemoStudent(
 }
 
 export async function seedPilotCohort(prisma: PrismaClient): Promise<{ students: number; lectures: number }> {
-  const institution = await prisma.institution.findUnique({ where: { slug: 'tadmora-demo' } });
+  const institution = await prisma.institution.findUnique({ where: { slug: 'ulara-demo' } });
   const teacher = await prisma.user.findUnique({ where: { email: 'teacher@test.ly' }, select: { id: true } });
   if (!institution || !teacher) return { students: 0, lectures: 0 };
 
@@ -490,7 +490,7 @@ export async function seedPilotCohort(prisma: PrismaClient): Promise<{ students:
           durationSec: def.durationSec,
           // the honest self-hosted chapter-card clip the player ships
           videoUrl: `/media/generated/chapter-card-${offering.course.code.toLowerCase()}-${i + 1}.mp4`,
-          posterUrl: '/brand/tadmora-mark.svg',
+          posterUrl: '/brand/mark.svg',
         },
       });
       lecturesCreated++;

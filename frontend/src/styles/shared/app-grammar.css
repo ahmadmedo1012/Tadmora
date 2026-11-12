@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — R325 app grammar tokens (DESIGN.md §R325 — P2.1)
+   ULARA — R325 app grammar tokens (DESIGN.md §R325 — P2.1)
    ─────────────────────────────────────────────────────────────────────
    The authenticated app has NO Heron counterpart to trace: this sheet
    is Heron's MATERIAL (§1, §4.d — paper, ink, hairlines, radius 0, the
@@ -46,16 +46,16 @@
   --app-topbar-h: 56px;                      /* the reference's own chrome height (§0/D8) */
 
   /* ── §R325.l — structure + ink (theme pairs, zero app-local hex) ──── */
-  --app-bg: var(--bg);                       /* paper #F6F6EE / charcoal #282828 */
+  --app-bg: var(--bg);                       /* paper #F5F1E8 / charcoal #262019 */
   --app-surface: var(--surface);             /* #FFFFFF / #2E2E2E */
-  --app-ink: var(--text);                    /* #282828 / #F6F6EE */
+  --app-ink: var(--text);                    /* #262019 / #F5F1E8 */
   --app-ink-2: var(--text-secondary);        /* #414140 / #C9C9C5 */
   --app-ink-3: var(--text-muted);            /* #626260 / #B4B4B0 */
   --app-line: var(--rule);                   /* structural seams #B3B3AF / #4A4A48 */
   --app-line-soft: var(--border);            /* row/card hairlines #E0E0DA / #4A4A48 */
-  --app-signal: var(--accent);               /* #FA3600 / #FF5A1F — the ONE signal */
-  --app-signal-ink: var(--accent-ink);       /* signal TEXT #C72E00 / #FF6B33 */
-  --app-signal-wash: var(--accent-soft);     /* tint well #FCE3D9 / #432015 */
+  --app-signal: var(--accent);               /* #C43E16 / #FF6B3D — the ONE signal */
+  --app-signal-ink: var(--accent-ink);       /* signal TEXT #A33312 / #FF7E52 */
+  --app-signal-wash: var(--accent-soft);     /* tint well #F8E3D8 / #46221A */
   --app-backdrop: var(--overlay-veil);       /* ink 40% / black 62% — one veil */
 
   /* ── §R325.e — forms ─────────────────────────────────────────────────

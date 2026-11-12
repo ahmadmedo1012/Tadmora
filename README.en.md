@@ -1,24 +1,25 @@
 <div dir="ltr">
 
-# Tadmora — University Operating System
+# Ulara — University Operating System
 
-> **Brand (one line, no image):** the Tadmora arch on a 32-unit grid —
-> a hairline gateway (two pillars, a semicircular arch, a baseline) with
-> miter joins and ONE solid orange keystone (`#FA3600`) seated at the
-> arch's apex (16,7) — «the university in one system»; paper `#F6F6EE`,
-> ink `#282828`, dark mode swaps via tokens. Guide:
-> [`docs/redesign/r323/brand/BRAND.md`](docs/redesign/r323/brand/BRAND.md)
+> **Brand (one line, no image):** the Ulara U-vessel on a 32-unit grid —
+> ONE rounded-cap ink stroke (an open vessel:
+> `M9 7L9 19Q9 27 16 27Q23 27 23 19L23 7`) with exactly ONE solid 4×4
+> sienna cornerstone at (21,3) — «the university in one system»; paper
+> `#F5F1E8`, ink `#262019`, burnt-sienna accent `#C43E16`, dark mode
+> swaps via tokens (luminous ember `#FF6B3D`). Guide:
+> `shared/brand.json` + `scripts/brand/ulara-kit.mjs`
 > · spec page: `/__brand`.
 
 **Arabic-primary README lives here: [`README.md`](README.md).** This file
 is the English mirror for international readers and tooling.
 
-**Tadmora** is an **independent** University Operating System (Arabic-first).
-No official adoption or endorsement by any educational
+**Ulara (أُلارا)** is an **independent** University Operating System
+(Arabic-first). No official adoption or endorsement by any educational
 institution exists — the platform is multi-institution: every
 institution that joins builds its own faculties and courses from its own
 data, and the demo data currently shown belongs to the labeled neutral
-demo workspace («مساحة عمل تادمورا التجريبية») — clearly-marked synthetic
+demo workspace («مساحة عمل أُلارا التجريبية») — clearly-marked synthetic
 data modeling no university.
 
 ## What it is
@@ -30,13 +31,13 @@ PDF annotations, Arabic-normalized cross-document library search, a
 read-only quality-oversight sector, and DB-driven administration with a
 capability-based governance model and a full audit log — all Arabic-RTL,
 with a bespoke two-theme design system driven by one token set
-(paper/ink with the single orange signal — no gradients, no copper/gold
+(paper/ink with the single burnt-sienna signal — no gradients, no copper/gold
 in the brand).
 
 **Stack:** Express + TypeScript + Prisma 5 backend serving `/api/v1/*`
 *and* the built React 18 + Vite SPA as one platform; PostgreSQL on Neon
-(Frankfurt); deployed on **Vercel** (project `tadmora` — serverless functions
-in `fra1`, https://tadmora.vercel.app, scheduled daily jobs via the platform
+(Frankfurt); deployed on **Vercel** (project `ulara` — serverless functions
+in `fra1`, https://ulara.vercel.app, scheduled daily jobs via the platform
 cron).
 
 ## Current state (honest)
@@ -65,7 +66,7 @@ Prereqs: **Node `>=20 <25`**, **npm**, a PostgreSQL (free Neon works).
 Full guide: `docs/05-setup.md`.
 
 ```bash
-git clone <repository-url> && cd tadmora
+git clone https://github.com/ahmadmedo1012/ulara && cd ulara
 cp .env.example backend/.env       # fill DATABASE_URL + both JWT secrets
 npm install
 npm run db:migrate                 # apply schema
@@ -97,7 +98,7 @@ their institution's courses (a foreign offering answers 403). Seeding is
 an explicit operator step from `backend/` (see `docs/12-deployment.md`),
 non-destructive on an established database (r180) — the one documented
 exception being these `@test.ly` accounts (R320 §C; the boot-time ensure
-can be enabled with `TADMORA_TEST_ACCOUNTS=1` in the Vercel project
+can be enabled with `ULARA_TEST_ACCOUNTS=1` in the Vercel project
 environment).
 
 ## Verify it yourself
@@ -113,11 +114,11 @@ bash scripts/check-csp-hash.sh        # CSP pin drift guard (now in CI)
 
 ## Deploy on Vercel + Neon
 
-The production stack: **Vercel** (project `tadmora` — serverless functions
-in `fra1`, https://tadmora.vercel.app; the static SPA served from
+The production stack: **Vercel** (project `ulara` — serverless functions
+in `fra1`, https://ulara.vercel.app; the static SPA served from
 `frontend/dist`, `/api/v1/*` through one Express serverless function, a
 daily platform cron on `GET /api/v1/jobs/daily`) + **Neon PostgreSQL**
-(project `tadmora-production`, Frankfurt `aws-eu-central-1`, PG 16).
+(project `ulara-production`, Frankfurt `aws-eu-central-1`, PG 16).
 Deploy from the repo root:
 
 ```bash
@@ -132,7 +133,7 @@ npx vercel deploy --prod --regions fra1
    `INTERNAL_SERVICE_TOKEN` with `CRON_SECRET` set to the same value.
 3. **After the first seed**: harden with `provision-owner.mjs` +
    `rotate-demo-passwords.mjs`, then verify the live deployment with
-   `BASE_URL=https://tadmora.vercel.app npm run smoke`.
+   `BASE_URL=https://ulara.vercel.app npm run smoke`.
 
 Deploys ride the Vercel CLI today — GitHub auto-deploy needs the GitHub
 login connection added to the Vercel account (the known manual step).

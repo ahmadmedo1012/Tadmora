@@ -2,7 +2,7 @@ import { BP_DRAWABLE, BP_DRAWABLE_HAIR } from './copy';
 /**
  * ElevationDrawing — R310 «واجهة التعلّم» — Artwork A.
  *
- * R315 (B1 · A.1): the hero window re-seats this, Tadmora's own ink
+ * R315 (B1 · A.1): the hero window re-seats this, Ulara's own ink
  * elevation, as the hero art — the WHOLE frontal building on
  * transparent paper (the R314 raster fragment retires from the seat).
  * Variants:
@@ -24,7 +24,7 @@ import { BP_DRAWABLE, BP_DRAWABLE_HAIR } from './copy';
  * volumes that carry the learning journey (RTL reading): the lecture
  * auditorium (start), the checkpoint link, the exam pavilion, the
  * library wing, and the mastery tower (end). This replaces the R306
- * five-pictogram «مخطط تادمورا»: the same narrative, promoted from icon
+ * five-pictogram «مخطط أُلارا»: the same narrative, promoted from icon
  * row to a drafted elevation with a structural grid, a dimension
  * chain, registration marks, an edge ruler, stippled wall texture,
  * trees, and sparse ORANGE signals that mean something (the checkpoint
@@ -197,9 +197,9 @@ export function ElevationArt({
           />
         ))}
         {/* R322 V1 kill: the sheet's title-block mono labels
-            (TDMR · CAMPUS · ELEV A-A / SCALE 1:200 · UNITS M) are
-            deleted — dimension/scale notes are debug text, not
-            content. */}
+            (the retired brand code · CAMPUS · ELEV A-A /
+            SCALE 1:200 · UNITS M) are deleted — dimension/scale
+            notes are debug text, not content. */}
       </g>
       )}
 
@@ -607,7 +607,7 @@ export function ElevationDrawing({
       className="bp-svg"
       viewBox={`0 0 ${ELEVATION_VB.w} ${ELEVATION_VB.h}`}
       role="img"
-      aria-label="واجهة معمارية لمبنى التعلّم في تادمورا: قاعة المحاضرات بمدخلها ودرجها، جسر نقطة الفحص بصاريته، جناح الاختبار بأعمدته وساعته، جناح المكتبة بنوافذه العالية، وبرج الإتقان المتدرّج — على خط أرض واحد مع شبكة إنشائية وسلسلة أبعاد ومسار تعلّم متقطّع يُقرأ من اليمين إلى اليسار"
+      aria-label="واجهة معمارية لمبنى التعلّم في أُلارا: قاعة المحاضرات بمدخلها ودرجها، جسر نقطة الفحص بصاريته، جناح الاختبار بأعمدته وساعته، جناح المكتبة بنوافذه العالية، وبرج الإتقان المتدرّج — على خط أرض واحد مع شبكة إنشائية وسلسلة أبعاد ومسار تعلّم متقطّع يُقرأ من اليمين إلى اليسار"
       preserveAspectRatio="xMidYMid meet"
     >
       <ElevationArt active={active} variant={variant} />

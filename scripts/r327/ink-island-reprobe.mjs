@@ -146,12 +146,12 @@ for (const t of TARGETS) {
       viewport: VP_SIZES[bp], deviceScaleFactor: 1, locale: 'ar',
       colorScheme: 'dark', serviceWorkers: 'block',
     });
-    await ctx.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip', '1'); } catch { } });
+    await ctx.addInitScript(() => { try { sessionStorage.setItem('ulara-intro-skip', '1'); } catch { } });
     await ctx.addInitScript(() => {
-      try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { }
+      try { localStorage.setItem('ulara-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: 1 }, version: 2 })); } catch { }
     });
     const session = await sessionForEmail('student@test.ly');
-    await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('tdmr-auth', auth); } catch { } }, { auth: authStorageJson(session) });
+    await ctx.addInitScript(({ auth }) => { try { localStorage.setItem('ula-auth', auth); } catch { } }, { auth: authStorageJson(session) });
     const page = await ctx.newPage();
     const entry = { route: t.key, bp, path: t.path, ink: null, boxes: [] };
     try {

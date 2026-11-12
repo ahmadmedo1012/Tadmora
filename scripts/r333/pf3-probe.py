@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """R333 P-F3 probe — journey/cta/footer geometry + heading type at the matrix viewports.
 
-Measures (tadmora only; heron targets come from docs/redesign/r333/twin/matrix-*.md):
+Measures (ulara only; heron targets come from docs/redesign/r333/twin/matrix-*.md):
   · journey  (#chapters)  offsetHeight + .chapters-title computed font-size
   · cta      (#vision)    offsetHeight + .fo-cta-title fs + rhythm gaps (driver.py algorithm)
   · footer   (footer.fo-footer) offsetHeight + band breakdown + max heading fs (h-scan slice)

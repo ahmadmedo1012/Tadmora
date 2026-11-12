@@ -1,12 +1,16 @@
 /**
- * Logo.tsx — the R326 M0.4 RN port of the R323 <Logo>
+ * Logo.tsx — the R326 M0.4 RN port of the <Logo>
  * (frontend/src/brand/Logo.tsx — the web implementation of record).
  *
  * The GEOMETRY is shared byte-identical (mark.ts · lockups.ts ·
  * wordmark.generated.ts are verbatim copies — enforced by
  * `npm run tokens:check`), and the variant math below mirrors the web
- * implementation line for line: lockup (RTL: mark right, «تادمورا» left) ·
- * mark · wordmark · stacked (mark / «تادمورا» / TADMORA).
+ * implementation line for line: lockup (RTL: mark right, «أُلارا» left) ·
+ * mark · wordmark · stacked (mark / «أُلارا» / ULARA).
+ *
+ * The mark is the U-vessel (mark.ts): ONE round-capped ink stroke
+ * `MARK_VESSEL_PATH` + the sienna `MARK_CORNERSTONE` square seated at the
+ * right stem's top — never the retired arch, never miter joins.
  *
  * Two documented platform differences:
  *  · react-native-svg has no vector-effect:non-scaling-stroke — the
@@ -20,8 +24,8 @@ import type { ReactNode } from "react";
 import Svg, { G, Path, Rect } from "react-native-svg";
 import { useTheme } from "../design/theme";
 import {
-  MARK_ARCH_PATH,
-  MARK_KEYSTONE,
+  MARK_VESSEL_PATH,
+  MARK_CORNERSTONE,
   MARK_VIEWBOX,
   markStrokePx,
 } from "./mark";
@@ -42,7 +46,7 @@ export function Logo({
   /** mark height in px; lockup/stacked scale from it. In the 'wordmark'
    * variant it is the wordmark's ink height in px. */
   size?: number;
-  /** 'auto' = the live palette (ink text · accent keystone — themes with
+  /** 'auto' = the live palette (ink text · sienna cornerstone — themes with
    * the app); 'ink'/'paper'/'orange' are literal one-colour settings
    * for fixed backgrounds (BRAND.md §tones). */
   tone?: LogoTone;
@@ -51,30 +55,31 @@ export function Logo({
   const { palette } = useTheme();
   const ink =
     tone === "paper"
-      ? "#F6F6EE"
+      ? "#F5F1E8"
       : tone === "orange"
-        ? "#FA3600"
+        ? "#C43E16"
         : tone === "ink"
-          ? "#282828"
+          ? "#262019"
           : palette.text;
-  const keystone = tone === "auto" ? palette.accent : ink;
+  const cornerstone = tone === "auto" ? palette.accent : ink;
 
   /* the web's non-scaling hairline, reproduced in viewBox units (X11):
    * at size 32 → 1.5 units ≈ 1.5px; at size 16 the taper keeps the same
-   * rendered px weight the web's vector-effect guarantees. */
+   * rendered px weight the web's vector-effect guarantees. The vessel is
+   * ONE continuous stroke — round caps and joins throughout. */
   const markStrokeUnits = +((markStrokePx(size) * 32) / size).toFixed(3);
 
   /* ── the mark (shared by mark/lockup/stacked) ─────────────────────── */
   const markShape = (
-    <G stroke={ink} fill="none" strokeWidth={markStrokeUnits} strokeLinejoin="miter">
-      <Path d={MARK_ARCH_PATH} />
-      
+    <G stroke={ink} fill="none" strokeWidth={markStrokeUnits} strokeLinejoin="round" strokeLinecap="round">
+      <Path d={MARK_VESSEL_PATH} />
+
       <Rect
-        x={MARK_KEYSTONE.x}
-        y={MARK_KEYSTONE.y}
-        width={MARK_KEYSTONE.size}
-        height={MARK_KEYSTONE.size}
-        fill={keystone}
+        x={MARK_CORNERSTONE.x}
+        y={MARK_CORNERSTONE.y}
+        width={MARK_CORNERSTONE.size}
+        height={MARK_CORNERSTONE.size}
+        fill={cornerstone}
         stroke="none"
       />
     </G>
@@ -141,7 +146,7 @@ export function Logo({
       height={height}
       testID={testID}
       accessibilityRole="image"
-      accessibilityLabel="تادمورا"
+      accessibilityLabel="أُلارا"
     >
       {body}
     </Svg>

@@ -34,7 +34,7 @@
 | `collisions` | text-bearing leaf rects must not intersect >2px²; no text rect may cross the viewport's left/right edge (tolerance 0). Decorative aria-hidden markers (`+`) excluded. Allowlist: `collision-allowlist.json` (written reasons required; edge crossings never allowlistable) | overlapping labels, clipped edge text (§A10 shape) |
 | `placeholders` | `body.innerText` must not match `/--%\|undefined\|NaN\|lorem\|TODO\|\[object/i` | unfinished copy leaking to production |
 | `overflow` | `documentElement`/`body` `scrollWidth` must not exceed `clientWidth` | horizontal leaks at any band (protects docH parity ≈12,340 @1440) |
-| `ocr` | footer wordmark screenshot (1440 & 390, both themes) must read «تادمورا» via tesseract `ara+eng` (TESSDATA_PREFIX, Arabic presentation forms normalized). **BLOCKED-with-reason when skipped**: `--skip=ocr` — §A6 wordmark rebuild owned by C3 (later cycle) | unreadable drafted wordmark |
+| `ocr` | footer wordmark screenshot (1440 & 390, both themes) must read «أُلارا» via tesseract `ara+eng` (TESSDATA_PREFIX, Arabic presentation forms normalized). **BLOCKED-with-reason when skipped**: `--skip=ocr` — §A6 wordmark rebuild owned by C3 (later cycle) | unreadable drafted wordmark |
 | `perf` | CPU 4× throttle; rAF-delta sampling during a CDP wheel scroll of the full page; PerformanceObserver longtasks + layout-shift. Thresholds: ≥98% frames ≤20ms · 0 longtasks >50ms · CLS ≤0.05. **BLOCKED-with-reason when skipped**: `--skip=perf` — deep harness owned by C2 (cycle 2) — the scaffold must exist and run | jank, long tasks, layout shift |
 
 ## CLI
@@ -42,7 +42,7 @@
 ```
 node scripts/r318/defect-gate.mjs
   [--viewports 360,390,768,1024,1440]   # widths; heights default 800/844/1024/768/900
-  [--theme light,dark]                  # seeds localStorage tadmora-theme (v2 shape) AND <html data-theme> init — see "How the theme flag actually works"
+  [--theme light,dark]                  # seeds localStorage ulara-theme (v2 shape) AND <html data-theme> init — see "How the theme flag actually works"
   [--skip ocr,perf]                     # skipped checks are reported BLOCKED-with-reason, never silently green
   [--perf]                              # explicit perf opt-in (on by default)
   [--base-url http://localhost:4180]
@@ -64,7 +64,7 @@ Exit code **0** only when every non-skipped check passes; **1** on any FAIL;
 
 ## How the theme flag actually works (measured)
 
-The app stores its theme in `localStorage['tadmora-theme']` as the
+The app stores its theme in `localStorage['ulara-theme']` as the
 zustand-persist v2 shape `{"state":{"mode":"light|dark|system","modeUpdatedAt":0},"version":2}`;
 on mount `useThemeSync()` (LandingPage) mirrors the resolved mode onto
 `<html data-theme>`, which is what `tokens.css` keys on
@@ -72,7 +72,7 @@ on mount `useThemeSync()` (LandingPage) mirrors the resolved mode onto
 
 The gate therefore seeds BOTH (belt & braces, both verified):
 
-1. `localStorage['tadmora-theme']` via `addInitScript` with the exact v2
+1. `localStorage['ulara-theme']` via `addInitScript` with the exact v2
    shape above — this is the one that wins long-term (the store re-applies
    it on every mount);
 2. `document.documentElement.dataset.theme` via a second `addInitScript` —

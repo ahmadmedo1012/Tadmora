@@ -1,9 +1,9 @@
 {
-  "_comment": "T-22 Track B ratchet baseline — measured analyzer output. Counts may only improve; when a count drops, re-pin it here in the SAME commit (scripts/deadcode/check.sh --update). Pinned tools: knip@5.88.1, jscpd@5.4.2, dependency-cruiser@18.7.2 (+ typescript@5.7.2 for depcruise); jscpd minTokens=70.\n  Platform-completion drop reason: unusedExports 49→48 — mark.ts MARK_ARCH + MARK_KEYSTONE_CENTRE deleted from both twins (frontend + apps/mobile): zero importers anywhere (knip-verified), geometry fully narrated in the file docblock and pinned by r323-brand-system.test.ts via MARK_ARCH_PATH / MARK_KEYSTONE / markStrokePx.",
+  "_comment": "T-22 Track B ratchet baseline — measured analyzer output. Counts may only improve; when a count drops, re-pin it here in the SAME commit (scripts/deadcode/check.sh --update). Pinned tools: knip@5.88.1, jscpd@5.4.2, dependency-cruiser@18.7.2 (+ typescript@5.7.2 for depcruise); jscpd minTokens=70.",
   "knip": {
     "unusedFiles": 63,
     "unusedExports": 48,
-    "unusedExportedTypes": 229,
+    "unusedExportedTypes": 227,
     "unusedDependencies": 0,
     "unusedDevDependencies": 1,
     "unlisted": 0,
@@ -11,7 +11,7 @@
     "duplicates": 0
   },
   "jscpd": {
-    "duplicateBlocks": 266
+    "duplicateBlocks": 264
   },
   "depcruise": {
     "circularDependencies": 0

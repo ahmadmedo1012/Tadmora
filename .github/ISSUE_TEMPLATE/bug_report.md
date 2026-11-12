@@ -1,6 +1,6 @@
 ---
 name: "🐞 تقرير خطأ | Bug report"
-about: "أبلغ عن مشكلة في أحد تطبيقات منظومة تادمورا | Report a problem in one of the Tadmora ecosystem apps"
+about: "أبلغ عن مشكلة في أحد تطبيقات منظومة أُلارا | Report a problem in one of the Ulara ecosystem apps"
 title: ""
 labels: ["bug"]
 assignees: []

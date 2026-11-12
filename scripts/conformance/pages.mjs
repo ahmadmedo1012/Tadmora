@@ -44,7 +44,7 @@ let chromium;
 try {
   ({ chromium } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium } = createRequire("/home/z/tadmora/frontend/package.json")("playwright"));
+  ({ chromium } = createRequire("/home/z/ulara/frontend/package.json")("playwright"));
 }
 
 const arg = (n, d) => (process.argv.indexOf(`--${n}`) > 0 ? process.argv[process.argv.indexOf(`--${n}`) + 1] : d);
@@ -260,7 +260,7 @@ try {
     for (const bp of BPS) {
       for (const theme of DARK ? ["dark"] : ["light"]) {
         const page = await browser.newPage({ viewport: { width: bp, height: bp === 390 ? 844 : 900 } });
-        if (theme === "dark") await page.addInitScript(() => localStorage.setItem("tadmora-theme", "dark"));
+        if (theme === "dark") await page.addInitScript(() => localStorage.setItem("ulara-theme", "dark"));
         await page.goto(`${URL.replace(/\/$/, "")}${route}`, { waitUntil: "networkidle", timeout: 60000 });
         await page.waitForTimeout(1800);
         const r = await page.evaluate(PAGE_PROBE, { bp, rungNames, rungTol: RUNG_TOL });

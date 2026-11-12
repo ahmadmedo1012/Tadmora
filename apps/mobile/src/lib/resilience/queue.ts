@@ -23,10 +23,15 @@
  *     silently.
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getItemRenamed, removeItemRenamed } from "@/lib/storageRename";
 import { examsApi } from "@/api/exams";
 
-/** Storage key for the offline exam-answer queue. */
-export const ANSWER_QUEUE_STORAGE_KEY = "tadmora-mobile-exam-answer-queue";
+/** Storage key for the offline exam-answer queue.
+ * §1.1 rename: reads fall back to the retired identity's key and adopt,
+ * so a queued-but-unsent answer survives the app update. */
+export const ANSWER_QUEUE_STORAGE_KEY = "ula-mobile-exam-answer-queue";
+/** The retired identity's queue key — read-fallback + cleared on flush. */
+const LEGACY_ANSWER_QUEUE_KEY = "tadmora-mobile-exam-answer-queue";
 
 /** One queued exam answer — mirrors examsApi.answer's payload. */
 export interface QueuedAnswer {
@@ -83,7 +88,8 @@ const isQueuedAnswer = (v: unknown): v is QueuedAnswer => {
 async function readAll(): Promise<QueuedAnswer[]> {
   let raw: string | null = null;
   try {
-    raw = await AsyncStorage.getItem(ANSWER_QUEUE_STORAGE_KEY);
+    // §1.1 shim: new key first, legacy fallback, adopt + write-through.
+    raw = await getItemRenamed(ANSWER_QUEUE_STORAGE_KEY, LEGACY_ANSWER_QUEUE_KEY);
   } catch {
     return [];
   }
@@ -160,9 +166,10 @@ export async function removeAnswer(id: string): Promise<void> {
   await writeAll(items);
 }
 
-/** Clear the whole queue (logout hygiene / tests). */
+/** Clear the whole queue (logout hygiene / tests).
+ * §1.1: clears BOTH spellings — no legacy orphan can resurrect. */
 export async function clearAnswerQueue(): Promise<void> {
-  await writeAll([]);
+  await removeItemRenamed(ANSWER_QUEUE_STORAGE_KEY, LEGACY_ANSWER_QUEUE_KEY);
 }
 
 export interface FlushOptions {

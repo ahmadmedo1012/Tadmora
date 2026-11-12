@@ -3,11 +3,10 @@
  * scripts/brand/ulara-kit.mjs — ULARA Ω 2-A: the staged brand kit generator.
  *
  * Reads shared/brand.json (the ONE name source of truth — see its $doc) and
- * generates the staged ULARA asset SOURCES into shared/brand/ulara/. This is
- * PREPARATION ONLY: nothing on the product surface consumes these files until
- * Gate A (the owner's explicit rename approval) opens. The current mark
- * (shared/brand/mark.svg, the Tadmora gateway arch) stays untouched — this
- * kit is a parallel staging area, not a replacement.
+ * generates the official ULARA asset SOURCES into shared/brand/ulara/. The
+ * owner's takeover directive opened the old Gate A: these files ARE the
+ * active brand kit now — the product surface consumes them (the shared
+ * canonical mark is shared/brand/mark.svg, rewritten from this kit).
  *
  * The mark (owner-approved brief): a geometric U on the 32×32 grid — the
  * letter U opened upward, reading as a vessel / open book — drawn as ONE
@@ -97,10 +96,10 @@ if (EN !== EN[0] + EN.slice(1).toLowerCase() || EN === EN.toUpperCase()) {
   process.exit(1);
 }
 
-/* The palette never moves with the rename: cross-check against the live
- * design-tokens.json brand trio (paper/ink/orange) on every run. In
- * brand.json the orange is seated as "accent"; in design-tokens it is the
- * brand.orange seat (accent routes through triad.copper.ink there). */
+/* The palette is pinned to the live design-tokens.json brand trio
+ * (paper/ink/orange) on every run. In brand.json the sienna is seated as
+ * "accent"; in design-tokens it is the brand.orange seat (accent routes
+ * through triad.copper.ink there). */
 const tokens = JSON.parse(readFileSync(TOKENS_JSON, "utf8"));
 const tokenBrand = tokens.color.brand;
 for (const [seat, hex, tokenSeat] of [
@@ -109,7 +108,7 @@ for (const [seat, hex, tokenSeat] of [
   ["accent", ACCENT, "orange"],
 ]) {
   if (tokenBrand[tokenSeat] !== hex) {
-    console.error(`ulara-kit: brand.json colors.${seat} (${hex}) has drifted from design-tokens.json color.brand.${tokenSeat} (${tokenBrand[tokenSeat]}) — the rename changes the name, never the palette.`);
+    console.error(`ulara-kit: brand.json colors.${seat} (${hex}) has drifted from design-tokens.json color.brand.${tokenSeat} (${tokenBrand[tokenSeat]}) — the two sources must stay pinned together.`);
     process.exit(1);
   }
 }

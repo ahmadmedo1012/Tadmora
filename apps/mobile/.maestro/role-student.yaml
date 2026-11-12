@@ -2,7 +2,7 @@
 # Full cycle for the STUDENT role: login → main tabs → profile → settings → logout.
 # NOTE: 120s login timeout — the Render free tier may be waking up on the
 # first authenticated call of the run.
-appId: ly.tadmora.mobile
+appId: ly.ulara.app
 name: "02 — طالب: دخول، تبويبات، خروج"
 ---
 - launchApp

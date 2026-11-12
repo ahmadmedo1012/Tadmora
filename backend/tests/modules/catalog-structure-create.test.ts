@@ -68,7 +68,7 @@ const CREATED_FACULTY = {
   iconEmoji: '⚙️',
   city: 'افتراضي',
   institutionId: INST_A,
-  institution: { id: INST_A, name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', slug: SLUG_A },
+  institution: { id: INST_A, name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', slug: SLUG_A },
 };
 const CREATED_DEPARTMENT = {
   id: 'dep-new-1',

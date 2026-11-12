@@ -20,7 +20,7 @@
  *                     must remove it ("cookie toast glued over the
  *                     footer/CTA band").
  *   · scrollProgress— the landing's scroll-tied progress family
- *                     (window.__tadmoraProgress — lib/
+ *                     (window.__ularaProgress — lib/
  *                     progressRegistry.ts) must count ≥ 5 rendered
  *                     seats (the reference measured 7), every range
  *                     non-degenerate, every colour in the accent/ink
@@ -64,7 +64,7 @@ let chromium;
 try {
   ({ chromium } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium } = createRequire("/home/z/tadmora/frontend/package.json"))("playwright");
+  ({ chromium } = createRequire("/home/z/ulara/frontend/package.json"))("playwright");
 }
 
 /* Panel bps — the brief's three (the 1920/1024 matrix cells add no
@@ -197,7 +197,7 @@ const COOKIE_PROBE = (cfg) => {
  * + the [data-passed] descendant count) so discrete seats — the tick
  * rail flips data-passed on children — are diffed too. */
 const PROGRESS_SNAPSHOT = () => {
-  const list = (window.__tadmoraProgress ?? []).map((s) => {
+  const list = (window.__ularaProgress ?? []).map((s) => {
     const el = s.el;
     const cs = getComputedStyle(el);
     const r = el.getBoundingClientRect();

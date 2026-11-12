@@ -15,9 +15,9 @@ import { usePalette } from "@/design/theme";
 /** The brand asset register (frontend/public/brand) — SVG sources named
  *  verbatim; the mobile app draws its own vector BrandMark twin. */
 const BRAND_ASSETS: { file: string; label: string }[] = [
-  { file: "mark.svg", label: "رمز العلامة المربَّع (المعوّل)" },
-  { file: "tadmora-mark.svg", label: "الرمز المستقلّ للويب" },
-  { file: "wordmark.svg", label: "الكتابة (تادمورا)" },
+  { file: "mark.svg", label: "الرمز القياسي — الإناء (شبكة 32)" },
+  { file: "ulara-mark.svg", label: "الرمز المستقلّ للويب" },
+  { file: "wordmark.svg", label: "الكتابة (أُلارا)" },
   { file: "lockup.svg", label: "الدمج الأفقيّ — رمز + كتابة" },
   { file: "lockup-stacked.svg", label: "الدمج المركَّب — رمز فوق كتابة" },
 ];
@@ -42,10 +42,10 @@ export default function OwnerContent() {
             <BrandMark size={44} />
             <View style={{ flex: 1, gap: 2 }}>
               <T variant="body" weight="bold">
-                علامة تادمورا
+                علامة أُلارا
               </T>
               <T variant="xs" color="muted">
-                مربَّع + معوّل بخطوط شعرية، وعقدة برتقالية واحدة
+                الإناء — ضربة حبر واحدة بأطراف دائرية، وحجر زاوية بلون السيينا
               </T>
             </View>
             <Badge label="SVG" tone="grey" mono />
@@ -80,7 +80,7 @@ export default function OwnerContent() {
             </View>
             <T variant="sm" color="muted">
               تعديل ألوان العلامة التجاريّة (الأساسيّ، الثانويّ، التمييز) ومحتوى الصفحة الرئيسيّة
-              قيد التطوير. حالياً تُعتمَد ألوان علامة تادمورا الرسميّة المعتمدة في نظام التصميم —
+              قيد التطوير. حالياً تُعتمَد ألوان علامة أُلارا الرسميّة المعتمدة في نظام التصميم —
               ومحرّر العنوان والوصف الفرعيّ محدَّد في كود الصفحة الرئيسيّة.
             </T>
           </View>
@@ -101,7 +101,7 @@ export default function OwnerContent() {
                 من لوحة الويب — التطبيق يعرض هوية المنصّة كما هي معرَّفة في الشيفرة والتصميم.
               </T>
               <Button
-                label="عن تادمورا — الهويّة والمنصّة"
+                label="عن أُلارا — الهويّة والمنصّة"
                 kind="ghost"
                 small
                 icon={<ArrowRight size={14} color={p.text} />}

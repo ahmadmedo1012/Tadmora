@@ -15,8 +15,8 @@ test.describe('رحلة المقرّرات', () => {
   test('القائمة → تفاصيل المقرّر → مشغّل المحاضرة', async ({ page }) => {
     /* 1 — قائمة المقرّرات */
     await page.goto('/student/courses');
-    // usePageTitle: «<السياق> · تادمورا».
-    await expect(page).toHaveTitle('مقرّراتي الدراسية · تادمورا');
+    // usePageTitle: «<السياق> · أُلارا».
+    await expect(page).toHaveTitle('مقرّراتي الدراسية · أُلارا');
     // r173a: شريط المؤشرات الأربعة (MetricCard) صار سطر ملخّص واحدًا
     // خفيفًا — نفس الأعداد (تسجيلتان في التثبيت الوهمي → «مقرّران
     // مسجّلان»)، re-pin صادق لواجهة الصفحة الجديدة.
@@ -38,7 +38,7 @@ test.describe('رحلة المقرّرات', () => {
     /* 2 — تفاصيل المقرّر */
     await card.click();
     await expect(page).toHaveURL(new RegExp(`/student/courses/${OFFERING_ID}$`));
-    await expect(page).toHaveTitle('مقدمة في الخوارزميات · تادمورا'); // r315 C4-E re-pin (content-anchored): r183-B6 — the tab names the COURSE (CourseDetailPage.tsx:118)
+    await expect(page).toHaveTitle('مقدمة في الخوارزميات · أُلارا'); // r315 C4-E re-pin (content-anchored): r183-B6 — the tab names the COURSE (CourseDetailPage.tsx:118)
     // هيكل البطل: اسم المقرّر + الأستاذ (من offerings/full).
     await expect(page.getByText('مقدمة في الخوارزميات').first()).toBeVisible();
     await expect(page.getByText('ليلى الفيتوري').first()).toBeVisible();
@@ -56,7 +56,7 @@ test.describe('رحلة المقرّرات', () => {
     await expect(page).toHaveURL(new RegExp(`/student/lectures/${LECTURE_ID}$`));
     // r315 C4-E re-pin (content-anchored): r183-B6 (A4 P3-4) — the tab names
     // the LECTURE, not the generic «مشغّل المحاضرة» (LecturePlayerPage.tsx:132).
-    await expect(page).toHaveTitle('الخوارزميات الجشعة · تادمورا');
+    await expect(page).toHaveTitle('الخوارزميات الجشعة · أُلارا');
     // المشغّل يعرض عنوان المحاضرة + عنصر الفيديو + فصول المشاهدة.
     await expect(page.getByText('الخوارزميات الجشعة').first()).toBeVisible();
     await expect(page.locator('video').first()).toBeAttached();

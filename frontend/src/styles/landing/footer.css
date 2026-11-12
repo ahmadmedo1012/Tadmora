@@ -126,7 +126,7 @@ footer.fo-footer {
   row-gap: var(--sp-3);
   color: var(--text);
 }
-/* the stacked identity (mark / «تادمورا» / TADMORA) — the <Logo>
+/* the stacked identity (mark / «أُلارا» / ULARA) — the <Logo>
    component's own geometry; the CSS width rides the clamp and the
    height follows the viewBox ratio. 32px floor (the chrome scale),
    3.6vw line (the fluid root's own gear), 56px cap. */

@@ -1,8 +1,9 @@
-# AGENTS.md — Tadmora repo guide (for humans and AI agents)
+# AGENTS.md — Ulara repo guide (for humans and AI agents)
 
-Tadmora (تادمورا) is an independent, Arabic-first University Operating System: one service —
+Ulara (أُلارا) is an independent, Arabic-first University Operating System: one service —
 Express + TypeScript + Prisma backend that also serves the built React 18 + Vite SPA —
-deployed to Render with Neon PostgreSQL. The UI is fully Arabic RTL. **Code wins over
+deployed to Vercel (ulara.vercel.app, serverless functions in fra1) with Neon
+PostgreSQL. The UI is fully Arabic RTL. **Code wins over
 docs**: on any conflict, fix the doc in the same change. Platform docs (docs/01–16,
 docs/modules/) are Arabic; generated references (docs/*-REFERENCE.md) are English.
 
@@ -10,16 +11,16 @@ docs/modules/) are Arabic; generated references (docs/*-REFERENCE.md) are Englis
 
 | path | what lives there |
 |---|---|
-| `frontend/` | `@tadmora/frontend` — React 18 + Vite SPA: `src/App.tsx` shell, `src/pages/` (incl. `LandingPage.tsx`), `src/components/landing/sections/*.tsx` (landing seats), `src/styles/` (token + layer + feature CSS), `stores/` (zustand), `tests/` (vitest + Playwright e2e/audit/r305) |
+| `frontend/` | `@ulara/frontend` — React 18 + Vite SPA: `src/App.tsx` shell, `src/pages/` (incl. `LandingPage.tsx`), `src/components/landing/sections/*.tsx` (landing seats), `src/styles/` (token + layer + feature CSS), `stores/` (zustand), `tests/` (vitest + Playwright e2e/audit/r305) |
 | `backend/` | Express + TS + Prisma workspace: `src/app.ts`, `src/http/routes/*.ts` (API), `src/modules/*`, `src/lib/` (permissions, governance, storage), `prisma/schema.prisma` + `migrations/` + `seed.ts` |
 | `apps/mobile/` | Expo ~58 (React Native) app with its own lockfile — see `apps/mobile/README.md` |
 | `scripts/` | `verify.sh` (the ONE gate set) + gates: `check-bundle-size.mjs`, `check-{icons,colors,raw-css,motion-tokens,csp-hash}.sh`, `tokens/build.mjs`, `verify-parity-export.mjs`, `spec/extract-heron.mjs`, round dirs (`r314…r333`, history), `gates/` (stylelint ratchet + css-counts/coverage), `deadcode/` (knip/jscpd ratchet) |
-| `scripts/conformance/` | visual conformance instrument: `run.mjs`, `pages.mjs` (per-page ≥90 gate), `panel.mjs` (blind panel judging), `scroll.mjs`, `interact.mjs`, `tween.mjs`, `mapping/*.json` (section→DOM binding), `ratchet.json` (monotonic floor — 91.8), `results.json` |
+| `scripts/conformance/` | visual conformance instrument: `run.mjs`, `pages.mjs` (per-page ≥90 gate), `panel.mjs` (blind panel judging), `scroll.mjs`, `interact.mjs`, `tween.mjs`, `mapping/*.json` (section→DOM binding), `ratchet.json` (monotonic floor — 93.8), `results.json` |
 | `shared/` | `design-tokens.json` (source of generated tokens), `brand/`, `testAccounts.ts` |
 | `specs/` | SpeckKit feature specs (001–012); live status is `docs/SPECS-REFERENCE.md`, **not** `specs/*/spec.md` |
 | `tools/` | `boot-pg.sh` (local postgres), `daemon.js` |
 | `docs/` | Arabic platform docs 01–16 + `modules/` + `architecture/` + `redesign/` (round history r305…r341; `redesign/r335/heron-spec/*.json` = frozen reference; `redesign/r341/` = current program: QUEUE/HANDOFF/OWNERSHIP/tasks/arsenal; r338–r340 = closed rounds still on disk — r333/r335/r337 docs already under `docs/archive/redesign/`) |
-| `.github/workflows/` | `ci.yml` (full gate matrix), `size-gate.yml`, `mobile.yml`, `deploy-smoke.yml`, `keep-warm.yml`, `build-ios-sidestore.yml`, `mobile-builds-ledger.yml`, `deadcode.yml` — runners pinned to `ubuntu-24.04` |
+| `.github/workflows/` | `ci.yml` (full gate matrix), `size-gate.yml`, `mobile.yml`, `android-apk.yml`, `deploy.yml` (Vercel), `deploy-smoke.yml`, `build-ios-sidestore.yml`, `mobile-builds-ledger.yml`, `deadcode.yml` — runners pinned to `ubuntu-24.04` |
 
 Sources of truth (don't guess, read): endpoints → `backend/src/app.ts` + `http/routes/`
 (full table: `docs/API-REFERENCE.md`); models → `backend/prisma/schema.prisma`
@@ -27,7 +28,8 @@ Sources of truth (don't guess, read): endpoints → `backend/src/app.ts` + `http
 design tokens → `frontend/src/styles/tokens.css` (wins over `DESIGN.md`) +
 `shared/design-tokens.json`; route strings → `frontend/src/lib/routes.ts` (the
 r341/Y2 single source); commands → the three `package.json` files; deploy →
-`render.yaml` + `.github/workflows/ci.yml`.
+`vercel.json` + `.github/workflows/deploy.yml` (Vercel CLI from the repo root,
+`fra1`).
 
 ## 2. Commands
 
@@ -203,10 +205,10 @@ briefs in `docs/redesign/r341/tasks/`.
   with the requested build name symlinked to `chromium-1200`. WebKit is often absent →
   report it as RESIDUAL, never fake the number.
 - Dark cells: measure with `run.mjs --dark` (site's own `html[data-theme=dark]` flip).
-- Production is `tadmora.vercel.app` (Vercel + Neon). It is reachable for read-only
+- Production is `ulara.vercel.app` (Vercel + Neon). It is reachable for read-only
   verification, but take product-UI crops from the local dev server/build and never
   run destructive flows against production.
 - No `gh` CLI, no pnpm/yarn on PATH; GitHub API via `curl` + token header. git identity
-  is preset in `/home/z/tadmora` (worktrees inherit it).
+  is preset in `/home/z/ulara` (worktrees inherit it).
 - Commits: `type(rNNN): subject` (feat|fix|chore|docs); section rewrites carry
   `conformance <section>: a% → b%` in the message.

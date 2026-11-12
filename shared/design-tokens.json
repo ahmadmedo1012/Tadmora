@@ -1,35 +1,35 @@
 {
-  "name": "tadmora-heron",
+  "name": "ulara-heron",
   "version": 1,
   "$doc": "R326 M0.4 — the ONE source of truth for the shared Heron design tokens (web + mobile). Provenance: frontend/src/styles/tokens/tokens.css (R313/R322/R323/R324 canon) and the r325-era apps/mobile/src/design/tokens.ts hand-copy it replaces. Regen: npm run tokens:build (repo root). Outputs: frontend/src/styles/tokens/tokens.generated.css (web CSS vars, imported BEFORE tokens.css, same @layer tokens) + apps/mobile/src/design/tokens.generated.ts (mobile TS). Drift gate: npm run tokens:check (CI-enforced). Reference grammar: 'neutral.50' | 'triad.<family>.<bg|ink|deep>' | 'brand.<key>' | a semantic seat name (another ref, one tier up) | a literal '#hex'. External seat: brand.warmInk emits var(--warm-ink) on web — its definition stays hand-written in tokens.css base :root. NOT shared (deliberately): the web fluid-rem type ladder + font stacks (tokens.css hand section — web-only), the mobile px ladder lives here under typography.mobile; --state-focus-ring-color / --danger-fg / glass / veils / chrome / charts stay hand-written in tokens.css (web-only seats).",
   "color": {
     "brand": {
-      "$doc": "The only three brand colours (R323): paper #F6F6EE · ink #282828 · orange #FA3600 — plus the dark-theme luminous ember #FF5A1F and the warm label ink #191918. Consumed by the RN <Logo> tones and the mobile palette; web emits var(--warm-ink) refs only.",
-      "paper": "#F6F6EE",
-      "ink": "#282828",
-      "warmInk": "#191918",
-      "orange": "#FA3600",
-      "orangeDark": "#FF5A1F",
+      "$doc": "The ULARA brand colours — «Parchment & Sienna» (Ω takeover): paper #F5F1E8 · ink #262019 · burnt sienna #C43E16 — plus the dark-theme luminous ember #FF6B3D and the warm label ink #17130E. The deliberate evolution from the retired palette (paper #F6F6EE · ink #282828 · orange #FA3600): a warmer parchment ground, a sepia-black ink, and a sienna accent that clears AA on paper (4.60:1) with white-on-accent at 5.19:1. Consumed by the RN <Logo> tones and the mobile palette; web emits var(--warm-ink) refs only.",
+      "paper": "#F5F1E8",
+      "ink": "#262019",
+      "warmInk": "#17130E",
+      "orange": "#C43E16",
+      "orangeDark": "#FF6B3D",
       "white": "#FFFFFF"
     },
     "neutral": {
       "$doc": "The warm vintage-paper ramp (R313). Light: near-white ground #F6F6EE over white surfaces, charcoal ink #282828 (13.57:1 AAA). Dark: the charcoal itself as ground (#282828), surfaces one step up (#2E2E2E), warm hairlines #4A4A48/#5C5C5A, near-white ink. neutral-900 dark is the R324 X22 warm paper twin #F6F6EE (was #F6F8FA — that spelling is on the parity gate's FORBIDDEN list).",
       "light": {
         "0": "#FFFFFF",
-        "50": "#F6F6EE",
-        "100": "#F0F0E6",
-        "150": "#EFEFE4",
+        "50": "#F5F1E8",
+        "100": "#EFEBDF",
+        "150": "#EDE9DC",
         "200": "#E0E0DA",
         "300": "#B3B3AF",
         "400": "#B4B4B0",
         "500": "#72726F",
         "700": "#414140",
         "800": "#333330",
-        "900": "#282828"
+        "900": "#262019"
       },
       "dark": {
         "0": "#2E2E2E",
-        "50": "#282828",
+        "50": "#262019",
         "100": "#353535",
         "150": "#3D3D3D",
         "200": "#6F6F6B",
@@ -38,7 +38,7 @@
         "500": "#B4B4B0",
         "700": "#C9C9C5",
         "800": "#E0E0DC",
-        "900": "#F6F6EE"
+        "900": "#F5F1E8"
       }
     },
     "triad": {
@@ -131,7 +131,7 @@
         "light": {
           "bg": "#ECEDEB",
           "ink": "#626260",
-          "deep": "#282828"
+          "deep": "#262019"
         },
         "dark": {
           "bg": "#2A2A28",
@@ -140,15 +140,15 @@
         }
       },
       "copper": {
-        "$doc": "The signal family — the ONE vivid orange #FA3600 (the reference's --content--brand). Raw orange is a LARGE-TEXT/UI tone on light (3.53:1); text routes through accentInk #C72E00 (AA). Dark ink is the luminous ember #FF5A1F (4.73:1 AA-large/UI).",
+        "$doc": "The signal family — the ONE burnt sienna #C43E16 (the brand accent seat). AA on paper at 4.60:1 (normal text); hover/text routing through accentInk #A33312 (6.13:1). Dark ink is the luminous ember #FF6B3D (5.70:1 on the dark ground, AA).",
         "light": {
-          "bg": "#FCE3D9",
-          "ink": "#FA3600",
-          "deep": "#A32400"
+          "bg": "#F8E3D8",
+          "ink": "#C43E16",
+          "deep": "#8F2F0F"
         },
         "dark": {
-          "bg": "#432015",
-          "ink": "#FF5A1F",
+          "bg": "#46221A",
+          "ink": "#FF6B3D",
           "deep": "#FFC5AE"
         }
       }
@@ -175,11 +175,11 @@
         "rule": "neutral.300",
         "ruleStrong": "borderStrong",
         "accent": "triad.copper.ink",
-        "accentHover": "#D03000",
+        "accentHover": "#A83514",
         "accentSoft": "triad.copper.bg",
         "accentStrong": "triad.copper.deep",
         "accentFg": "#FFFFFF",
-        "accentInk": "#C72E00",
+        "accentInk": "#A33312",
         "success": "triad.mint.ink",
         "successSoft": "triad.mint.bg",
         "successInk": "triad.mint.deep",
@@ -218,11 +218,11 @@
         "rule": "neutral.200",
         "ruleStrong": "borderStrong",
         "accent": "triad.copper.ink",
-        "accentHover": "#FF6B33",
+        "accentHover": "#FF7E52",
         "accentSoft": "triad.copper.bg",
         "accentStrong": "triad.copper.deep",
         "accentFg": "brand.warmInk",
-        "accentInk": "#FF6B33",
+        "accentInk": "#FF8A5F",
         "success": "triad.mint.ink",
         "successSoft": "triad.mint.bg",
         "successInk": "triad.mint.ink",

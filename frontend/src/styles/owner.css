@@ -256,7 +256,7 @@
 .owner-health-dot.green {
   background: var(--success);
   position: relative;
-  animation: tadmora-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
+  animation: ulara-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
 }
 
 /* (r153e: the green dot's half of the v17 heartbeat family moved
@@ -271,7 +271,7 @@
   border-radius: inherit;
   background: inherit;
   opacity: 0.6;
-  animation: tadmora-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
+  animation: ulara-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
   pointer-events: none;
 }
 
@@ -314,7 +314,7 @@
 /* ── Command Center: Live Pulse ────────────────────────────── */
 /* (r153e: the v17 heartbeat family moved home from polish.css's
    overrides layer — declarations verbatim. The old `pulse-live`
-   keyframes were DEAD CODE (polish v17's tadmora-heartbeat beat
+   keyframes were DEAD CODE (polish v17's ulara-heartbeat beat
    this rule on layer order alone, so nothing rendered them) and are
    deleted with this move. Render-neutral for the normal state
    (probe-verified at HEAD 3dacc23); leaving the overrides layer also
@@ -331,7 +331,7 @@
      gone; polish.css's overrides-layer RM belt (v18 owner list) still
      kills this loop under reduced motion, and the local switch at
      the bottom of this sheet keeps it self-contained (guardrail #6). */
-  animation: tadmora-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
+  animation: ulara-heartbeat var(--motion-duration-ambient) var(--motion-ease-standard) infinite;
   flex-shrink: 0;
 }
 
@@ -342,16 +342,16 @@
   border-radius: inherit;
   background: inherit;
   opacity: 0.6;
-  animation: tadmora-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
+  animation: ulara-pulse-ring var(--motion-duration-ambient) var(--motion-ease-decelerate) infinite;
   pointer-events: none;
 }
 
-@keyframes tadmora-heartbeat {
+@keyframes ulara-heartbeat {
   0%, 100% { transform: scale(1); }
   50%      { transform: scale(1.06); }
 }
 
-@keyframes tadmora-pulse-ring {
+@keyframes ulara-pulse-ring {
   0%   { transform: scale(1); opacity: 0.6; }
   80%  { transform: scale(2.2); opacity: 0; }
   100% { transform: scale(2.2); opacity: 0; }
@@ -428,7 +428,7 @@
   background: var(--danger);
   /* T3-F4 — was #fff in both themes: 3.19:1 on light --danger #DD6E78
      and ~1.9:1 on dark --danger #F09BA3. A fixed near-black ink passes
-     BOTH: #191918 on #DD6E78 = 5.51:1, on #F09BA3 = 8.31:1. */
+     BOTH: #17130E on #DD6E78 = 5.51:1, on #F09BA3 = 8.31:1. */
   color: var(--warm-ink);
   font-size: var(--fs-xxs); /* r184: literal → token (11px = --fs-xxs), zero visual change */
   font-weight: var(--fw-bold);
@@ -476,7 +476,7 @@
    polish v17 shipped: its overrides-layer .owner-live-pulse
    heartbeat beat them on layer order alone, so pending/degraded
    dots kept beating (probe-documented at HEAD 3dacc23: forced
-   is-pending still computed tadmora-heartbeat). The heartbeat
+   is-pending still computed ulara-heartbeat). The heartbeat
    moved home to THIS sheet, so specificity wins again — and the
    ::after ring freeze below is new: the v17 ring pulsed through
    pending/degraded too; both layers of the dot are honest now. */

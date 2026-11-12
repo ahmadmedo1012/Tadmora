@@ -35,7 +35,7 @@ afterEach(() => {
 describe('auth store hydration (P2-13)', () => {
   it('rehydrates a persisted session and marks hydration complete', async () => {
     localStorage.setItem(
-      'tdmr-auth',
+      'ula-auth',
       JSON.stringify({ state: { user: USER_A, accessToken: 'tok-1' }, version: 0 }),
     );
     const { useAuthStore } = await importAuthStore();
@@ -74,7 +74,7 @@ describe('auth store hydration (P2-13)', () => {
   });
 
   it('marks hydration complete when the persisted payload is corrupted', async () => {
-    localStorage.setItem('tdmr-auth', '{not-valid-json');
+    localStorage.setItem('ula-auth', '{not-valid-json');
     const { useAuthStore } = await importAuthStore();
     await flush();
 

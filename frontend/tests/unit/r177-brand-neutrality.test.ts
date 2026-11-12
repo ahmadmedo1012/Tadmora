@@ -1,7 +1,7 @@
 /**
  * r177 (Phase 1 — brand neutrality) public-copy pins.
  *
- * Tadmora presents itself as an INDEPENDENT educational platform. No
+ * Ulara presents itself as an INDEPENDENT educational platform. No
  * official adoption/endorsement by any university or ministry exists, so
  * no public surface may claim one. The University of Zawia records remain
  * — as explicitly labeled SHOWCASE data (مؤسّسة العرض) — never as the
@@ -29,6 +29,27 @@ const repoRoot = path.resolve(root, '..'); // monorepo root
 const read = (p: string) => readFileSync(path.join(root, p), 'utf8');
 const readRepo = (p: string) => readFileSync(path.join(repoRoot, p), 'utf8');
 
+/* ═══ ULARA TAKEOVER TRANSITION SEATS (spec §2 — workstreams B/D) ═══
+ *
+ * The cross-workstream identity seats these pins read — the root
+ * package.json (B), the backend boot banner + certificate issuer +
+ * seed tenant (B), and the root READMEs / LICENSE / docs/README.md
+ * (D) — rename to ULARA in their OWN branches of ula/total-takeover.
+ * Until the integration merge this suite runs on the A (web) tree
+ * where those files still carry the retired literal, so each seat
+ * accepts BOTH the decided ULARA value (the post-integration truth)
+ * and the documented pre-takeover value — with a loud console warning
+ * on the retired arm so the transition state is visible in CI logs.
+ *
+ * TODO(integration): when ula/total-takeover merges B + D, DELETE the
+ * retired arms — every seat below must be an exact ULARA pin again. */
+/* INTEGRATION LANDED (ula/total-takeover merged B + C + D): every
+ * former transition seat is now an EXACT ULARA pin. The retired arms
+ * and their fragment pairs are deleted per the original TODO. */
+const takeoverSeat = (source: string, ulara: string, _retired: string, seat: string): void => {
+  expect(source, `${seat}: expected the ULARA literal`).toContain(ulara);
+};
+
 /** Affiliation-claim markers that must never reappear in public copy. */
 const OFFICIAL_CLAIMS = [
   'المنصّة الرسمية',
@@ -41,23 +62,25 @@ describe('r177 — public metadata is platform-neutral (index.html)', () => {
   const html = read('index.html');
 
   it('title and description carry the independent platform identity', () => {
-    expect(html).toContain('<title>تادمورا · نظام تشغيل الجامعة</title>');
-    // r191: ذكي → ذكية (the rejected provenance slogan removed)
-    expect(html).toContain('منصّة تعليم ذكية مستقلّة');
+    expect(html).toContain('<title>أُلارا · نظام تشغيل الجامعة</title>');
+    // ULARA takeover: the meta description is the platform's own
+    // one-line identity — the full Arabic-first descriptor.
+    expect(html).toContain('منظومة متكاملة، عربية أولًا');
+    expect(html).not.toContain('منصّة تعليم ذكية مستقلّة'); // the r191 slogan seat is retired
   });
 
-  it('OG / Twitter cards describe Tadmora, not a university', () => {
-    expect(html).toContain('<meta property="og:site_name" content="تادمورا — نظام تشغيل الجامعة" />');
+  it('OG / Twitter cards describe Ulara, not a university', () => {
+    expect(html).toContain('<meta property="og:site_name" content="أُلارا — نظام تشغيل الجامعة" />');
     expect(html).not.toMatch(/og:(site_name|title)" content="[^"]*جامعة الزاوية/);
     expect(html).not.toMatch(/twitter:title" content="[^"]*جامعة الزاوية/);
   });
 
-  it('r188 — JSON-LD site node is Tadmora ALONE: no `about` university node exists at all', () => {
+  it('r188 — JSON-LD site node is Ulara ALONE: no `about` university node exists at all', () => {
     const ld = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     expect(ld).not.toBeNull();
     const data = JSON.parse(ld![1]!);
     expect(data['@type']).toBe('WebSite');
-    expect(data['name']).toBe('تادمورا');
+    expect(data['name']).toBe('أُلارا');
     // no official-affiliation claim anywhere in the structured data
     const flat = JSON.stringify(data);
     for (const claim of OFFICIAL_CLAIMS) {
@@ -66,7 +89,7 @@ describe('r177 — public metadata is platform-neutral (index.html)', () => {
     // r188: the retired real-university `about` node is GONE — the only
     // demo-data mention is the fictional tenant, inside the description.
     expect(data['about']).toBeUndefined();
-    expect(data['description']).toContain('مساحة عمل تادمورا التجريبية');
+    expect(data['description']).toContain('مساحة عمل أُلارا التجريبية');
     expect(data['description']).toContain('اصطناعية');
   });
 
@@ -103,7 +126,7 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
     // Phase Ω: the only sample-data story is the LABELED demo
     // workspace, stated in the independence manifesto with its
     // synthetic label (a workspace, never a university).
-    expect(landing).toContain('مساحة عمل تادمورا التجريبية');
+    expect(landing).toContain('مساحة عمل أُلارا التجريبية');
     expect(landing).toContain('اصطناعية بالكامل');
     expect(landing).not.toContain('جامعة الزاوية');
     // brand subtitle is a product descriptor, not a university
@@ -118,7 +141,7 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
     // r193: the year renders in WESTERN digits — the platform's one
     // numeral convention (formatNum ar-LY→latn); the r191 Arabic-Indic
     // AR() helper was the drift and is gone.
-    expect(landing).toContain('© {year} تادمورا</span>');
+    expect(landing).toContain('© {year} أُلارا</span>');
   });
 
   it('auth pages carry the platform identity, no ministry strip', () => {
@@ -135,15 +158,16 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
   it('document-title bases drop the university co-branding (kept in sync)', () => {
     const shell = read('src/components/layout/AppShell.tsx');
     const colleges = read('src/pages/colleges/CollegePages.tsx');
-    expect(shell).toContain("const DOC_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة'");
-    expect(colleges).toContain("const GUEST_TITLE_BASE = 'تادمورا · نظام تشغيل الجامعة'");
+    expect(shell).toContain("const DOC_TITLE_BASE = 'أُلارا · نظام تشغيل الجامعة'");
+    expect(colleges).toContain("const GUEST_TITLE_BASE = 'أُلارا · نظام تشغيل الجامعة'");
   });
 });
 
 describe('r177 — root manifests describe the independent platform', () => {
-  it('package.json name + description are Tadmora-branded', () => {
+  it('package.json name + description are Ulara-branded', () => {
     const pkg = JSON.parse(readRepo('package.json'));
-    expect(pkg['name']).toBe('tadmora');
+    /* workstream B seat — root package.json (takeover §1.5) */
+    takeoverSeat(JSON.stringify(pkg), '"name":"ulara"', '', 'root package.json name');
     expect(pkg['description']).toContain('مستقلّة');
     expect(pkg['description']).not.toContain('جامعة الزاوية');
   });
@@ -151,9 +175,10 @@ describe('r177 — root manifests describe the independent platform', () => {
   it('README headers claim independence, not university ownership', () => {
     const readme = readRepo('README.md');
     const readmeEn = readRepo('README.en.md');
-    expect(readme).toContain('# تادمورا — نظام تشغيل الجامعة');
+    /* workstream D seat — root READMEs */
+    takeoverSeat(readme, '# أُلارا — نظام تشغيل الجامعة', '', 'README.md header');
+    takeoverSeat(readmeEn, '# Ulara — University Operating System', '', 'README.en.md header');
     expect(readme).toContain('مستقلّة');
-    expect(readmeEn).toContain('# Tadmora — University Operating System');
     expect(readmeEn).toContain('**independent** University Operating System');
     for (const claim of ['الرسمية لجامعة', 'official University Operating System of']) {
       expect(readme).not.toContain(claim);
@@ -168,17 +193,18 @@ describe('r182 — the docs center intro stays affiliation-free', () => {
    * (brand-audit-and-changes.md) documents it as already fixed.
    * Pin the corrected wording so the docs index can never drift
    * back into university co-branding. */
-  it('docs/README.md presents Tadmora as the independent platform with the fictional demo tenant', () => {
+  it('docs/README.md presents Ulara as the independent platform with the fictional demo tenant', () => {
     const docsIndex = readRepo('docs/README.md');
     expect(docsIndex).toContain('منصّة تعليم');
     expect(docsIndex).toContain('مستقلّة');
-    // Phase Ω: the demo tenant is the labeled «مساحة عمل تادمورا
+    // Phase Ω: the demo tenant is the labeled «مساحة عمل أُلارا
     // التجريبية» — synthetic data, never a university.
-    expect(docsIndex).toContain('مساحة عمل تادمورا التجريبية');
+    /* workstream D seat — docs/README.md intro */
+    takeoverSeat(docsIndex, 'مساحة عمل أُلارا التجريبية', '', 'docs/README.md demo tenant');
     expect(docsIndex).toContain('اصطناعية');
     expect(docsIndex).not.toContain('مؤسّسة العرض المرجعية');
     expect(docsIndex).not.toContain('منصة التعلم الذكية\nلجامعة الزاوية');
-    expect(docsIndex).not.toMatch(/مشروع \*\*تادمورا\*\* — منصة[^\n]*جامعة الزاوية/);
+    expect(docsIndex).not.toMatch(/مشروع \*\*أُلارا\*\* — منصة[^\n]*جامعة الزاوية/);
   });
 });
 
@@ -194,17 +220,21 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('LICENSE states the independent platform + demo-workspace disclosure (grant intact)', () => {
     const license = readRepo('LICENSE');
-    expect(license).toContain(
-      'Tadmora is an independent University Operating System developed by Ahmad Medo',
+    /* workstream D seat — LICENSE identity + host lines */
+    takeoverSeat(
+      license,
+      'Ulara is an independent University Operating System developed by Ahmad Medo',
+      '',
+      'LICENSE identity line',
     );
+    takeoverSeat(license, 'deployed at ulara.vercel.app', '', 'LICENSE host line');
     // Ω+2.0: the disclosure names the LABELED DEMO-WORKSPACE data (the
     // Phase Ω identity-purity retirement removed the Zawia showcase —
     // the license must not name a removed tenant) + the current host.
     expect(license).toContain('labeled demo-workspace data, not affiliation');
-    expect(license).toContain('deployed at tadmora.vercel.app');
     expect(license).not.toContain('developed and deployed for University of Zawia');
     expect(license).not.toContain('University of Zawia records');
-    expect(license).not.toContain('tadmora.onrender.com');
+    expect(license).not.toContain('ulara.onrender.com');
     // the proprietary grant itself must stay untouched
     expect(license).toContain('no right to\ndeploy, modify, or redistribute is granted');
   });
@@ -235,10 +265,12 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('backend boot banner and certificate issuer are the platform name, not ZU', () => {
     const index = readRepo('backend/src/index.ts');
-    expect(index).toContain('Tadmora Platform API listening');
+    /* workstream B seat — backend boot banner */
+    takeoverSeat(index, 'ULARA Platform API listening', '', 'backend boot banner');
     expect(index).not.toContain('ZU Platform API');
     const training = readRepo('backend/src/http/routes/training.routes.ts');
-    expect(training).toContain("issuer: 'منصّة تادمورا التعليميّة'");
+    /* workstream B seat — certificate issuer */
+    takeoverSeat(training, "issuer: 'منصّة أُلارا التعليميّة'", '', 'certificate issuer');
     expect(training).not.toContain('منصة جامعة الزاوية للتعليم الذكي');
   });
 
@@ -250,11 +282,11 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
 
   it('admin settings card names the platform consistently (no self-contradicting rows)', () => {
     const admin = read('src/pages/admin/AdminExtraPages.tsx');
-    expect(admin).toContain('تادمورا — نظام تشغيل الجامعة');
+    expect(admin).toContain('أُلارا — نظام تشغيل الجامعة');
     expect(admin).not.toContain('منصّة الزاوية للتعليم الذكيّ');
   });
 
-  it('the product chrome renders the Tadmora mark; the favicon is the neutral mark', () => {
+  it('the product chrome renders the Ulara mark; the favicon is the neutral mark', () => {
     // R323 override (A1 integration): the BrandMark primitive is RETIRED
     // (deleted with StarMark.tsx) — the chrome now draws the ONE brand
     // system <Logo variant="mark"> from frontend/src/brand/. The chrome
@@ -268,13 +300,13 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     const favicon = read('public/favicon.svg');
     // r188: the mark is the khatam star (copper→gold) — the retired
     // blue/violet shield gradient and the ZU crest colors are gone.
-    // derived from the tadmora shield mark palette — NOT the ZU crest palette
+    // derived from the ulara shield mark palette — NOT the ZU crest palette
     // R323 override: A1 replaced the copper→gold ramp with the paper/ink/orange
     // system — the favicon is now hairline ink + one solid orange point
-    // (#FA3600); copper/gold hexes are BANNED from the favicon (r323-brand-system
+    // (#C43E16); copper/gold hexes are BANNED from the favicon (r323-brand-system
     // gate (c) pins this too). The r188 copper assertions are inverted, not deleted.
-    expect(favicon).toContain('#282828');
-    expect(favicon).toContain('#FA3600');
+    expect(favicon).toContain('#262019');
+    expect(favicon).toContain('#C43E16');
     expect(favicon).not.toContain('#B57438');
     expect(favicon).not.toContain('#E9B44C');
     expect(favicon).not.toContain('#0E3F6C');

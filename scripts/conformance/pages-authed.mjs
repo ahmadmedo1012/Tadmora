@@ -4,7 +4,7 @@
  * the authed STUDENT routes (the D6 hermetic seeded-session method,
  * pages.mjs's exact probe axes/score/floor): the REAL e2e fixture
  * transport (mock-transport.ts + api-fixtures.ts, esbuild-bundled the
- * r319 way) with the `tdmr-auth` persist key seeded STUDENT before
+ * r319 way) with the `ula-auth` persist key seeded STUDENT before
  * first paint, so the app boots signed-in reload-style. Distinct
  * filename from pages-quality.mjs (D10's QUALITY twin) so the
  * concurrent branches merge without conflict.
@@ -35,8 +35,8 @@ try {
   ({ chromium } = require('./../../frontend/node_modules/playwright'));
   esbuild = require.esbuild ?? require('./../../frontend/node_modules/esbuild');
 } catch {
-  ({ chromium } = createRequire('/home/z/tadmora/frontend/package.json')('playwright'));
-  esbuild = createRequire('/home/z/tadmora/frontend/package.json')('esbuild');
+  ({ chromium } = createRequire('/home/z/ulara/frontend/package.json')('playwright'));
+  esbuild = createRequire('/home/z/ulara/frontend/package.json')('esbuild');
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

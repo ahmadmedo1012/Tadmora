@@ -1,56 +1,57 @@
 #!/usr/bin/env node
 /**
- * wordmark-build-r323.mjs — the R323 brand wordmark «تادمورا» + the Latin
- * transliteration «TADMORA» — the ONE wordmark of the unified brand
- * system (frontend/src/brand), adapted from scripts/r318/wordmark-build.mjs
- * (which stays untouched — it still owns the FOOTER wordmark sheet until
- * the foreman's integration pass swaps that call-site).
+ * wordmark-build-r323.mjs — the ULARA brand wordmark «أُلارا» + the Latin
+ * lockup voice «ULARA» — the ONE wordmark of the unified brand system
+ * (frontend/src/brand). Originally built for the retired name (the R323
+ * brief); the ULARA takeover re-seats the same pipeline on the new word
+ * — the generator's shape assertions, the mark-joining union and the
+ * normalization sheet are brand-agnostic on purpose.
  *
- * FONT SEATING (per the R323 brief + R322 font-vote): the wordmark shapes
- * from IBM PLEX SANS ARABIC 600 — the arabic-subset woff2 fonts.css
- * self-hosts and the R322 blind vote re-seated as the display voice
- * (audits/evidence/r322/dsys/font-vote.md) — NOT Alexandria 700 (the
- * 800/900 display era ended in R322; task 1-d migrates the legacy seats).
- * The Latin transliteration uses GEIST MONO 500 — the R313 instrument
- * voice (latin subset, self-hosted).
+ * FONT SEATING (unchanged by the takeover — the R322 font-vote stands):
+ * the Arabic word shapes from IBM PLEX SANS ARABIC 600 — the
+ * arabic-subset woff2 fonts.css self-hosts and the R322 blind vote
+ * seated as the display voice (audits/evidence/r322/dsys/font-vote.md).
+ * The Latin lockup voice is GEIST MONO 500 (latin subset, self-hosted).
  *
  * WHAT IT DOES (build-time only; the app ships ONLY the emitted static
  *   path data — zero new runtime dependencies):
  *   1. decompress the woff2s → ttf (python3 fontTools; a hash-keyed tmp
  *      cache keeps runs deterministic and the repo clean),
- *   2. shape «تادمورا» with harfbuzzjs — REAL contextual joining: ت initial
- *      connected into ا final; م initial connected into و final; د/ر/ا
- *      isolated. NO kashida: the brand
- *      wordmark is the compact natural setting (the r318 footer sheet's
- *      10-tatweel elongation is a footer-layout device, not a brand one).
- *      The output arrives in visual left-to-right order (clusters 4..0)
- *      with per-glyph advances,
+ *   2. shape «أُلارا» with harfbuzzjs — REAL contextual shaping: the ل
+ *      and its ا collapse into the لا LIGATURE (one glyph, cluster 2),
+ *      the damma (U+064F — MANDATORY in أُلارا) rides as a zero-advance
+ *      mark glyph offset above the أ, ر and the trailing ا are isolated.
+ *      NO kashida: the brand wordmark is the compact natural setting.
+ *      The output arrives in visual left-to-right order (clusters
+ *      5,4,2,0,0) with per-glyph advances AND mark offsets,
  *   3. extract the shaped glyphs' outlines with opentype.js (font units,
  *      y-up, quadratic TrueType contours — outer loops AND counters),
+ *      placed at pen + (xOffset, yOffset) — the damma would sit ON the
+ *      baseline without its harfbuzz offset,
  *   4. flatten every contour to polygons and UNION them with clipper-lib
- *      (nonzero fill): the تـا and مـو joins are overlapping glyph outlines, so
- *      a stroke-only render without the union draws DOUBLE lines through
- *      the join (the measured r319 §D1 defect — «صدارك»),
- *   5. normalize: ink height → 100 units, 6-unit construction margins all
- *      round, coordinates rounded to 2dp — ONE path per word,
- *   6. «TADMORA»: Geist Mono 500 glyphs placed at their advances + 0.08em
+ *      (nonzero fill): overlapping glyph outlines would otherwise draw
+ *      DOUBLE lines through the joins in a stroke-only render (the
+ *      measured r319 §D1 defect),
+ *   5. normalize: ink height → 100 units, 6-unit construction margins
+ *      all round, coordinates rounded to 2dp — ONE path per word (the
+ *      sheet absorbs the letter-count change automatically),
+ *   6. «ULARA»: Geist Mono 500 glyphs placed at their advances + 0.08em
  *      tracking (Latin MAY be letter-spaced — Arabic never is), same
  *      flatten+union+normalize pass,
  *   7. emit:
  *        frontend/src/brand/wordmark.generated.ts  (path data + ink metrics)
  *        frontend/public/brand/wordmark.svg        (static twin, ink stroke)
  *
- * RENDER CONTRACT (documented in docs/redesign/r323/brand/BRAND.md):
- * the Arabic word renders STROKE-ONLY (fill:none; stroke:currentColor;
- * vector-effect non-scaling ~1.5px — the heron-footer verdict «thin
- * uniform outlines, interior empty»), tuned to read at 16 px and 160 px
- * ink heights. The Latin micro-label renders FILLED currentColor (the
- * mono voice is solid — the same texture split the loader uses between
- * the outlined drawing and the solid Geist Mono readouts).
+ * RENDER CONTRACT (docs/redesign/r323/brand/BRAND.md): the Arabic word
+ * renders STROKE-ONLY (fill:none; stroke:currentColor; proportional
+ * ~3.5 sheet units — «thin uniform outlines, interior empty»), tuned to
+ * read at 16 px and 160 px ink heights. The Latin micro-label renders
+ * FILLED currentColor (the mono voice is solid). All-caps «ULARA» is a
+ * LOCKUP-ONLY voice — running text spells «Ulara».
  *
  * Run from the repo root:  node scripts/r323/wordmark-build-r323.mjs
  * (build-time deps are root devDependencies: harfbuzzjs, opentype.js,
- * clipper-lib — no install step).
+ * clipper-lib — no install step beyond npm install).
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -66,8 +67,8 @@ const AR_WOFF2 = path.join(ROOT, 'frontend/public/fonts/plex-sans-arabic-600-nor
 const LAT_WOFF2 = path.join(ROOT, 'frontend/public/fonts/geist-mono-500-normal-latin.woff2');
 const OUT_TS = path.join(ROOT, 'frontend/src/brand/wordmark.generated.ts');
 const OUT_SVG = path.join(ROOT, 'frontend/public/brand/wordmark.svg');
-const WORD = 'تادمورا';
-const LATIN = 'TADMORA';
+const WORD = 'أُلارا';
+const LATIN = 'ULARA';
 
 /* normalization: ink height 100, construction margins 6, 2dp coords */
 const INK_H = 100;
@@ -81,8 +82,8 @@ const LATIN_TRACK_EM = 0.08; /* Latin tracking (Arabic is NEVER tracked) */
  * renders ≈1 px — a true hollow hairline whose counters stay open; a
  * non-scaling 1.5 px outline would close every counter below ~24 px ink
  * (the 600-weight letterforms are only ~2.4 px thick there) and read as
- * a blob. Uniformity with the mark's 1.5 px hairline holds at chrome
- * sizes and degrades gracefully — BRAND.md §min-sizes. */
+ * a blob. Uniformity with the mark's hairline holds at chrome sizes and
+ * degrades gracefully — BRAND.md §min-sizes. */
 const WORDMARK_STROKE_SHEET = 3.5;
 
 /* ── 1. woff2 → ttf (hash-cached in tmp; deterministic) ─────────────── */
@@ -122,11 +123,11 @@ function shapeText(ttfBytes, text) {
 }
 
 /* ── 3/4. outlines → flattened contours → clipper union ─────────────── */
-function contoursFromCommands(commands, atX) {
+function contoursFromCommands(commands, atX, atY = 0) {
   const contours = [];
   let cur = null;
   let px = 0, py = 0, sx = 0, sy = 0;
-  const push = (x, y) => { if (cur) cur.push({ X: Math.round((x + atX) * CSCALE), Y: Math.round(y * CSCALE) }); };
+  const push = (x, y) => { if (cur) cur.push({ X: Math.round((x + atX) * CSCALE), Y: Math.round((y + atY) * CSCALE) }); };
   for (const c of commands) {
     if (c.type === 'M') {
       if (cur && cur.length > 2) contours.push(cur);
@@ -201,18 +202,22 @@ function normalize(lightened, inkBox) {
   };
 }
 
-/* envelope of on+off-curve points of the PLACED glyphs (font units) */
+/* envelope of on+off-curve points of the PLACED glyphs (font units,
+ * including each glyph's harfbuzz x/y offset — the damma rides ABOVE
+ * the alef-hamza and defines the sheet's ink top) */
 function inkEnvelope(glyphs) {
   let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity;
   let pen = 0;
   for (const g of glyphs) {
     const at = pen;
+    const offX = g.xOffset ?? 0;
+    const offY = g.yOffset ?? 0;
     pen += g.advance + (g.trackAfter ?? 0);
     for (const c of g.commands) {
       for (const [kx, ky] of [['x', 'y'], ['x1', 'y1'], ['x2', 'y2']]) {
         if (typeof c[kx] === 'number') {
-          xMin = Math.min(xMin, c[kx] + at); xMax = Math.max(xMax, c[kx] + at);
-          yMin = Math.min(yMin, c[ky]); yMax = Math.max(yMax, c[ky]);
+          xMin = Math.min(xMin, c[kx] + at + offX); xMax = Math.max(xMax, c[kx] + at + offX);
+          yMin = Math.min(yMin, c[ky] + offY); yMax = Math.max(yMax, c[ky] + offY);
         }
       }
     }
@@ -220,14 +225,17 @@ function inkEnvelope(glyphs) {
   return { xMin, xMax, yMin, yMax };
 }
 
-/* ══ A. the Arabic wordmark «تادمورا» ══════════════════════════════════ */
+/* ══ A. the Arabic wordmark «أُلارا» ══════════════════════════════════ */
 const arTtf = woff2ToTtf(AR_WOFF2);
 const shaped = shapeText(arTtf, WORD);
-if (shaped.length !== 7) {
-  console.error(`[wordmark-r323] expected 7 shaped glyphs for «${WORD}», got ${shaped.length}`);
+/* «أُلارا» = 6 codepoints → 5 glyphs in visual LTR: the trailing ا,
+ * the ر, the لا LIGATURE (clusters 1+2 collapse into one glyph), the
+ * damma mark (cluster 0, zero advance) and the أ. */
+if (shaped.length !== 5) {
+  console.error(`[wordmark-r323] expected 5 shaped glyphs for «${WORD}» (لا ligature + damma mark), got ${shaped.length}`);
   process.exit(1);
 }
-const expectedClusters = [6, 5, 4, 3, 2, 1, 0]; /* harfbuzz RTL output = visual LTR */
+const expectedClusters = [5, 4, 2, 0, 0]; /* harfbuzz RTL output = visual LTR */
 if (JSON.stringify(shaped.map((g) => g.cluster)) !== JSON.stringify(expectedClusters)) {
   console.error(`[wordmark-r323] unexpected cluster order ${JSON.stringify(shaped.map((g) => g.cluster))} (want ${JSON.stringify(expectedClusters)})`);
   process.exit(1);
@@ -240,34 +248,49 @@ const arGlyphs = shaped.map((g) => {
     console.error('[wordmark-r323] .notDef in the shaped run — the arabic subset is missing a glyph');
     process.exit(1);
   }
-  return { name: glyph.name, advance: g.xAdvance, cluster: g.cluster, commands: glyph.path.commands.map((c) => ({ ...c })) };
+  return {
+    name: glyph.name,
+    advance: g.xAdvance,
+    cluster: g.cluster,
+    xOffset: g.xOffset,
+    yOffset: g.yOffset,
+    commands: glyph.path.commands.map((c) => ({ ...c })),
+  };
 });
 console.log(`[wordmark-r323] shaped «${WORD}» → visual LTR ${arGlyphs.map((g) => g.name).join(' · ')} (advances ${arGlyphs.map((g) => g.advance).join('/')})`);
-/* the join proofs: ت (cluster 0) must join into ا (cluster 1) — the
- * تـا pair — ADJACENT at the END of the visual stream (the rightmost
- * pair), and م (cluster 3) must join into و (cluster 4) — the مـو pair —
- * ADJACENT mid-stream; د (cluster 2), ر (cluster 5) and the trailing ا
- * (cluster 6) are isolated. Logged for the audit, asserted structurally
- * (adjacency + non-zero advances). */
-if (arGlyphs[6].cluster !== 0 || arGlyphs[5].cluster !== 1) {
-  console.error('[wordmark-r323] ت/ا not adjacent at the visual tail — the تـا join would break');
+/* the join proofs, asserted structurally:
+ *  · the لا LIGATURE — the ل (cluster 1) and its ا (cluster 2) collapse
+ *    into ONE glyph (cluster 2) mid-stream; a non-ligated shaping would
+ *    emit a separate cluster-1 glyph and the count/clusters above would
+ *    already have failed;
+ *  · the DAMMA — the brand name is أُلارا WITH damma (the damma-less
+ *    spelling is forbidden): exactly one zero-advance mark glyph
+ *    (cluster 0, the position over the أ) with a POSITIVE yOffset
+ *    lifting it above the alef-hamza. */
+const ligature = arGlyphs[2];
+if (ligature.cluster !== 2 || !(ligature.advance > arGlyphs[0].advance) || arGlyphs.some((g, i) => i !== 2 && g.cluster === 1)) {
+  console.error('[wordmark-r323] the لا pair did not collapse into the ligature — the join would break');
   process.exit(1);
 }
-if (arGlyphs[3].cluster !== 3 || arGlyphs[2].cluster !== 4) {
-  console.error('[wordmark-r323] م/و not adjacent mid-stream — the مـو join would break');
+const damma = arGlyphs[3];
+if (damma.cluster !== 0 || damma.advance !== 0 || !(damma.yOffset > 0)) {
+  console.error('[wordmark-r323] the damma mark is missing or misplaced — «أُلارا» is MANDATORY with damma');
   process.exit(1);
 }
 
 const arContours = [];
-for (let i = 0; i < arGlyphs.length; i += 1) {
-  const at = arGlyphs.slice(0, i).reduce((sum, g) => sum + g.advance, 0);
-  arContours.push(...contoursFromCommands(arGlyphs[i].commands, at));
+{
+  let pen = 0;
+  for (const g of arGlyphs) {
+    arContours.push(...contoursFromCommands(g.commands, pen + (g.xOffset ?? 0), g.yOffset ?? 0));
+    pen += g.advance;
+  }
 }
 const arInk = inkEnvelope(arGlyphs);
 const ar = normalize(unionContours(arContours), arInk);
 console.log(`[wordmark-r323] AR ink ${ar.inkW}×${ar.inkH}u sheet ${ar.viewBox} (${(ar.inkW / ar.inkH).toFixed(3)}:1), ${ar.d.length} bytes of path`);
 
-/* ══ B. the Latin transliteration «TADMORA» ══════════════════════════ */
+/* ══ B. the Latin lockup voice «ULARA» ═══════════════════════════════ */
 const latTtf = woff2ToTtf(LAT_WOFF2);
 const latOt = opentype.parse(latTtf.buffer.slice(latTtf.byteOffset, latTtf.byteOffset + latTtf.length));
 const latGlyphs = [...LATIN].map((ch, i) => {
@@ -301,21 +324,22 @@ const header = `/* ════════════════════�
  * Generator: scripts/r323/wordmark-build-r323.mjs (deterministic:
  * same fonts + same words ⇒ same bytes; rerun after any font change).
  *
- * The R323 brand wordmark — the ONE «تادمورا» of the unified system.
- * Shaped with harfbuzz from IBM Plex Sans Arabic 600 (the R322-seated
- * display voice): ت initial CONNECTED into ا final, م initial into و
- * final; د/ر/ا isolated. NO kashida (the compact brand setting; the
- * r318 footer sheet's tatweel elongation is a footer-layout device).
- * The تـا and مـو joins are unioned (clipper) so the stroke-only render
- * never draws double lines through the joins. Normalized sheet: ink height 100 units,
- * 6-unit construction margins, 2dp coordinates.
+ * The ULARA brand wordmark — the ONE «أُلارا» of the unified system.
+ * Shaped with harfbuzz from IBM Plex Sans Arabic 600 (the display
+ * voice): the ل and its ا collapse into the لا ligature; the damma
+ * (U+064F — mandatory) rides as a mark above the أ; ر and the trailing
+ * ا isolated. NO kashida (the compact brand setting). Overlapping
+ * outlines are unioned (clipper) so the stroke-only render never draws
+ * double lines through the joins. Normalized sheet: ink height 100
+ * units, 6-unit construction margins, 2dp coordinates.
  *
  * Render contract (docs/redesign/r323/brand/BRAND.md):
  *  · WORDMARK_AR — stroke-only: fill:none, stroke:currentColor,
- *    vector-effect non-scaling ≈1.5px (hollow drafting outline).
- *  · WORDMARK_LATIN — «TADMORA» in Geist Mono 500, 0.08em tracking
+ *    proportional hairline sheet units (hollow drafting outline).
+ *  · WORDMARK_LATIN — «ULARA» in Geist Mono 500, 0.08em tracking
  *    (Latin may be tracked; Arabic never), rendered FILLED
- *    currentColor (the solid mono voice).
+ *    currentColor (the solid mono voice). All-caps «ULARA» is a
+ *    LOCKUP-ONLY voice — running text spells «Ulara».
  * ═══════════════════════════════════════════════════════════════════ */
 
 export const WORDMARK_AR = {
@@ -333,13 +357,14 @@ export const WORDMARK_LATIN = {
 fs.writeFileSync(OUT_TS, header);
 console.log(`[wordmark-r323] wrote ${path.relative(ROOT, OUT_TS)} (${(header.length / 1024).toFixed(1)}KB)`);
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ar.viewBox}" role="img" aria-label="تادمورا">
-  <!-- R323 brand wordmark «تادمورا» — generated by scripts/r323/wordmark-build-r323.mjs
-       (IBM Plex Sans Arabic 600, harfbuzz-shaped, join-unioned). Static twin of
-       frontend/src/brand/wordmark.generated.ts — same geometry. Stroke-only ink;
-       recolour via the component (currentColor) — this file is for og/pdf/e-mail. -->
-  <title>تادمورا</title>
-  <path d="${ar.d}" fill="none" stroke="#282828" stroke-width="${WORDMARK_STROKE_SHEET}" stroke-linejoin="miter"/>
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${ar.viewBox}" role="img" aria-label="أُلارا">
+  <!-- ULARA brand wordmark «أُلارا» — generated by scripts/r323/wordmark-build-r323.mjs
+       (IBM Plex Sans Arabic 600, harfbuzz-shaped, join-unioned, damma mark placed).
+       Static twin of frontend/src/brand/wordmark.generated.ts — same geometry.
+       Stroke-only ink; recolour via the component (currentColor) — this file is
+       for og/pdf/e-mail. -->
+  <title>أُلارا</title>
+  <path d="${ar.d}" fill="none" stroke="#262019" stroke-width="${WORDMARK_STROKE_SHEET}" stroke-linejoin="miter"/>
 </svg>
 `;
 fs.writeFileSync(OUT_SVG, svg);

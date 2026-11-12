@@ -2,7 +2,7 @@
 /**
  * R315 B9 — wordmark path audit (footer defect §0-F).
  *
- * Proves the drafted «تادمورا» wordmark SVG (LandingPage.tsx) carries NO
+ * Proves the drafted «أُلارا» wordmark SVG (LandingPage.tsx) carries NO
  * self-intersecting contours — the exact class of artefact the retired
  * CSS text-stroke produced at «ك»/«د»: every path is flattened to
  * polylines (lines / quadratics sampled / circular arcs sampled) and

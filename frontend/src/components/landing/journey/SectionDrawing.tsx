@@ -4,7 +4,7 @@ import { BP_DRAWABLE_HAIR } from '../copy';
  *
  * The reference's late-map frames read as a MULTI-VIEW TECHNICAL SHEET
  * (its s07 frames: the plan beside stacked detail views, title blocks,
- * node markers). This is the Tadmora translation for the journey's
+ * node markers). This is the Ulara translation for the journey's
  * CLOSING state: when the capability column opens at pin end, it
  * carries the learning floor's SECTION A-A — the same cut the plan's
  * corridor path flags — so the release state reads as one drawing

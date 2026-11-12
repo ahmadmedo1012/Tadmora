@@ -30,7 +30,7 @@
  *     largest-contentful-paint, event (INP, durationThreshold 16),
  *     long-animation-frame.
  *   · a rAF frame-delta recorder armed/disarmed from the harness
- *     (window.__tdmrPerfStart / window.__tdmrPerfStop).
+ *     (window.__ulaPerfStart / window.__ulaPerfStop).
  *   · an OPTIONAL layout-read census (`--grbc`): wraps
  *     Element.prototype.getBoundingClientRect + setAttribute(d/points/
  *     transform/viewBox) + CSSStyleDeclaration.setProperty('—*') while a
@@ -38,7 +38,7 @@
  *     rewrites and CSS-var writes during scroll with the offending
  *     selectors. Off by default because the wrapper itself costs a
  *     little (never used for headline numbers).
- *   · `window.__tdmrMark(label)` — frame-window marks; the scenarios
+ *   · `window.__ulaMark(label)` — frame-window marks; the scenarios
  *     bracket their ACTIVE interaction (first→last input) so jank is
  *     reported for the scroll window itself, not diluted by the
  *     settle tail (`frames` = whole recording, `framesActive` = the
@@ -130,8 +130,8 @@ function initScript({ loaderSkip, variant, grbc }) {
           : '';
   return `
 (function () {
-  if (window.__tdmrPerf) return;
-  var W = (window.__tdmrPerf = {
+  if (window.__ulaPerf) return;
+  var W = (window.__ulaPerf = {
     frameDeltas: [], marks: [], recording: false, _rafOn: false, _last: 0,
     longtasks: [], shifts: [], lcps: [], events: [], loaf: [],
     grbc: { on: ${grbc ? 'true' : 'false'}, count: 0, dSets: 0, cssVars: 0, bySel: {} },
@@ -150,7 +150,7 @@ function initScript({ loaderSkip, variant, grbc }) {
   }
   W.desc = desc;
   /* rAF frame-delta recorder — armed from the harness only */
-  window.__tdmrPerfStart = function () {
+  window.__ulaPerfStart = function () {
     W.recording = true;
     if (!W._rafOn) {
       W._rafOn = true; W._last = 0;
@@ -162,9 +162,9 @@ function initScript({ loaderSkip, variant, grbc }) {
       });
     }
   };
-  window.__tdmrPerfStop = function () { W.recording = false; };
+  window.__ulaPerfStop = function () { W.recording = false; };
   /* frame-window marks — the scenarios bracket their ACTIVE input window */
-  window.__tdmrMark = function (label) {
+  window.__ulaMark = function (label) {
     W.marks.push({ label: String(label), idx: W.frameDeltas.length, t: Math.round(performance.now()) });
   };
   /* observers */
@@ -229,27 +229,27 @@ function initScript({ loaderSkip, variant, grbc }) {
   /* OPTIONAL layout-read census (armed per-run by the harness) */
   var gRBC = Element.prototype.getBoundingClientRect;
   Element.prototype.getBoundingClientRect = function () {
-    var g = window.__tdmrPerf && window.__tdmrPerf.grbc;
+    var g = window.__ulaPerf && window.__ulaPerf.grbc;
     if (g && g.on) {
       g.count++;
-      try { var k = window.__tdmrPerf.desc(this); g.bySel[k] = (g.bySel[k] || 0) + 1; } catch (e) {}
+      try { var k = window.__ulaPerf.desc(this); g.bySel[k] = (g.bySel[k] || 0) + 1; } catch (e) {}
     }
     return gRBC.call(this);
   };
   var sAttr = Element.prototype.setAttribute;
   Element.prototype.setAttribute = function (n, v) {
-    var g = window.__tdmrPerf && window.__tdmrPerf.grbc;
+    var g = window.__ulaPerf && window.__ulaPerf.grbc;
     if (g && g.on && (n === 'd' || n === 'points' || n === 'transform' || n === 'viewBox')) g.dSets++;
     return sAttr.call(this, n, v);
   };
   var sProp = CSSStyleDeclaration.prototype.setProperty;
   CSSStyleDeclaration.prototype.setProperty = function (k, v, p) {
-    var g = window.__tdmrPerf && window.__tdmrPerf.grbc;
+    var g = window.__ulaPerf && window.__ulaPerf.grbc;
     if (g && g.on && String(k).indexOf('--') === 0) g.cssVars = (g.cssVars || 0) + 1;
     return sProp.call(this, k, v, p);
   };
   /* loader bypass + CSS variant overrides — before ANY app script */
-  try { ${loaderSkip ? "sessionStorage.setItem('tadmora-intro-skip', '1');" : "sessionStorage.removeItem('tadmora-intro-skip');"} } catch (e) {}
+  try { ${loaderSkip ? "sessionStorage.setItem('ulara-intro-skip', '1');" : "sessionStorage.removeItem('ulara-intro-skip');"} } catch (e) {}
   ${cssOverride}
 })();
 `;
@@ -321,7 +321,7 @@ const summarizeLoaf = (loaf) => {
 /* ── one-time DOM census (post-load; runs only for scroll/touch) ─── */
 const CENSUS_FN = `(() => {
   const all = document.querySelectorAll('*');
-  const W = window.__tdmrPerf;
+  const W = window.__ulaPerf;
   const out = { totalNodes: all.length, svg: 0, pattern: 0, filterEl: 0, clipPath: 0, symbol: 0, path: 0 };
   for (const el of all) {
     const tag = el.tagName;
@@ -380,7 +380,7 @@ function summarizeTrace(events) {
 }
 /* raw traces can be tens of MB — they go OUTSIDE the repo (/tmp); the
  * parsed per-event summary is the durable evidence. */
-const TRACE_DIR = '/tmp/tdmr-r316-traces';
+const TRACE_DIR = '/tmp/ula-r316-traces';
 function dumpTrace(events, file) {
   try {
     fs.mkdirSync(TRACE_DIR, { recursive: true });
@@ -433,8 +433,8 @@ async function runScenario({ browser, vp, cpu, scenario, variant, loaderSkip, gr
       /* the cold run records from DOMContentLoaded: the loader animation,
        * hydration, the exit sweep — the whole first-visit experience. */
       startMs = await page.evaluate(() => Math.round(performance.now()));
-      if (grbc) await page.evaluate(() => { window.__tdmrPerf.grbc.on = true; });
-      await page.evaluate(() => window.__tdmrPerfStart());
+      if (grbc) await page.evaluate(() => { window.__ulaPerf.grbc.on = true; });
+      await page.evaluate(() => window.__ulaPerfStart());
       armed = true;
       await page.waitForFunction(() => document.readyState === 'complete', null, { timeout: 80000 }).catch(() => result.notes.push('load wait timeout'));
       /* the loader mounts with the lazy route chunk — under throttling that
@@ -471,13 +471,13 @@ async function runScenario({ browser, vp, cpu, scenario, variant, loaderSkip, gr
     /* arm the recorders around the interaction (cold armed at DCL) */
     if (!armed) {
       startMs = await page.evaluate(() => Math.round(performance.now()));
-      if (grbc) await page.evaluate(() => { window.__tdmrPerf.grbc.on = true; });
-      await page.evaluate(() => window.__tdmrPerfStart());
+      if (grbc) await page.evaluate(() => { window.__ulaPerf.grbc.on = true; });
+      await page.evaluate(() => window.__ulaPerfStart());
     }
 
     const scrollYSamples = [];
     if (scenario === 'scroll') {
-      await page.evaluate(() => window.__tdmrMark('active-start'));
+      await page.evaluate(() => window.__ulaMark('active-start'));
       for (let i = 0; i < 12; i++) {
         await page.mouse.wheel(0, 600); await page.waitForTimeout(80);
         scrollYSamples.push(await page.evaluate(() => Math.round(window.scrollY)).catch(() => null));
@@ -487,12 +487,12 @@ async function runScenario({ browser, vp, cpu, scenario, variant, loaderSkip, gr
         await page.mouse.wheel(0, -600); await page.waitForTimeout(80);
         scrollYSamples.push(await page.evaluate(() => Math.round(window.scrollY)).catch(() => null));
       }
-      await page.evaluate(() => window.__tdmrMark('active-end'));
+      await page.evaluate(() => window.__ulaMark('active-end'));
       await page.waitForTimeout(900);
     } else if (scenario === 'touch') {
       const cx = Math.floor(vp / 2), cy = Math.floor(HEIGHTS[vp] / 2);
       /* negative yDistance = finger swipes UP = content scrolls DOWN */
-      await page.evaluate(() => window.__tdmrMark('active-start'));
+      await page.evaluate(() => window.__ulaMark('active-start'));
       for (let i = 0; i < 12; i++) {
         await client.send('Input.synthesizeScrollGesture', { x: cx, y: cy, xDistance: 0, yDistance: -600, speed: 1400 });
         await page.waitForTimeout(80);
@@ -504,7 +504,7 @@ async function runScenario({ browser, vp, cpu, scenario, variant, loaderSkip, gr
         await page.waitForTimeout(80);
         scrollYSamples.push(await page.evaluate(() => Math.round(window.scrollY)).catch(() => null));
       }
-      await page.evaluate(() => window.__tdmrMark('active-end'));
+      await page.evaluate(() => window.__ulaMark('active-end'));
       await page.waitForTimeout(900);
     } else if (scenario === 'menu') {
       const burger = page.locator('.fo-burger');
@@ -545,21 +545,21 @@ async function runScenario({ browser, vp, cpu, scenario, variant, loaderSkip, gr
       await page.waitForTimeout(1200);
       /* the goto opened a NEW document — re-arm the recorders on it */
       startMs = await page.evaluate(() => Math.round(performance.now()));
-      await page.evaluate(() => window.__tdmrPerfStart());
+      await page.evaluate(() => window.__ulaPerfStart());
       const email = page.locator('.auth-input[type="email"]').first();
       const emailFallback = page.locator('input[dir="ltr"]').first();
       const emailInput = (await email.count()) ? email : emailFallback;
       await emailInput.click().catch(() => {});
-      await emailInput.type('smoothness.probe@tadmora.test', { delay: 45 }).catch(() => {});
+      await emailInput.type('smoothness.probe@ulara.test', { delay: 45 }).catch(() => {});
       const pass = page.locator('.auth-input[type="password"]').first();
-      if (await pass.count()) { await pass.click().catch(() => {}); await pass.type('Tadmora#Probe2026', { delay: 45 }).catch(() => {}); }
+      if (await pass.count()) { await pass.click().catch(() => {}); await pass.type('Ulara#Probe2026', { delay: 45 }).catch(() => {}); }
       await page.waitForTimeout(800);
     } else if (scenario === 'cold') {
       await page.waitForTimeout(2000); // extra LCP/CLS settle
     }
 
-    await page.evaluate(() => window.__tdmrPerfStop());
-    if (grbc) await page.evaluate(() => { window.__tdmrPerf.grbc.on = false; });
+    await page.evaluate(() => window.__ulaPerfStop());
+    if (grbc) await page.evaluate(() => { window.__ulaPerf.grbc.on = false; });
     const endMs = await page.evaluate(() => Math.round(performance.now()));
     result.scrollYSamples = scrollYSamples.length ? scrollYSamples : undefined;
     result.interactWindowMs = endMs - startMs;
@@ -574,7 +574,7 @@ async function runScenario({ browser, vp, cpu, scenario, variant, loaderSkip, gr
     }
 
     const data = await page.evaluate(() => {
-      const W = window.__tdmrPerf;
+      const W = window.__ulaPerf;
       return {
         frameDeltas: W.frameDeltas, marks: W.marks, longtasks: W.longtasks, shifts: W.shifts,
         lcps: W.lcps, events: W.events, loaf: W.loaf, grbc: W.grbc,

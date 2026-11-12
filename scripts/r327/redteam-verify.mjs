@@ -7,7 +7,7 @@ const lum = (r,g,b)=>{const f=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0
 const ratio=(a,b)=>{const m=s=>s.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)/);const x=m(a),y=m(b);const l1=lum(+x[1],+x[2],+x[3]),l2=lum(+y[1],+y[2],+y[3]);return Math.round(((Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05))*100)/100};
 
 /* 1 — landing footer contrast on DARK */
-await page.addInitScript(() => { try { sessionStorage.setItem('tadmora-intro-skip','1'); localStorage.setItem('tadmora-theme', JSON.stringify({state:{mode:'dark',modeUpdatedAt:Date.now()},version:2})); } catch {} });
+await page.addInitScript(() => { try { sessionStorage.setItem('ulara-intro-skip','1'); localStorage.setItem('ulara-theme', JSON.stringify({state:{mode:'dark',modeUpdatedAt:Date.now()},version:2})); } catch {} });
 await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
 await page.waitForTimeout(4000);
 const footer = await page.evaluate(() => {
@@ -73,7 +73,7 @@ const c2 = await b2.newContext({ viewport: { width: 1440, height: 900 } });
 const p2 = await c2.newPage();
 const res = await fetch('http://localhost:4000/api/v1/auth/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: 'registrar@test.ly', password: '12345678' }) });
 const session = (await res.json()).data;
-await p2.addInitScript(([s]) => { try { localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 })); localStorage.setItem('tadmora-theme', JSON.stringify({state:{mode:'light',modeUpdatedAt:Date.now()},version:2})); } catch {} }, [session]);
+await p2.addInitScript(([s]) => { try { localStorage.setItem('ula-auth', JSON.stringify({ state: { user: s.user, accessToken: s.accessToken }, version: 0 })); localStorage.setItem('ulara-theme', JSON.stringify({state:{mode:'light',modeUpdatedAt:Date.now()},version:2})); } catch {} }, [session]);
 await p2.goto('http://localhost:5173/admin', { waitUntil: 'domcontentloaded' });
 await p2.waitForTimeout(5000);
 const homeRed = await p2.evaluate(() => {

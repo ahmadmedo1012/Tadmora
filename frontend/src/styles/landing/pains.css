@@ -55,7 +55,7 @@
      arm can re-point it (roles.css --rl-soft-ink precedent): a raw
      literal never flips with the theme, and under [data-theme="dark"]
      the rgba(40,40,40,.72) ink composites to 1.0:1 on the charcoal
-     ground (#282828) — the blind panel's invisible labels. The LIGHT
+     ground (#262019) — the blind panel's invisible labels. The LIGHT
      computed style stays byte-identical to the frozen Heron measure. */
   --pm-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
   color: var(--pm-soft-ink);
@@ -70,7 +70,7 @@
    ramp's own ink via color-mix on the flipping --text token; the
    theme flip moves no box, only the color. The mono column indices
    re-seat on --text-muted (--neutral-400 measures 4.25:1 on the
-   #282828 ground — under the 4.5:1 text floor). */
+   #262019 ground — under the 4.5:1 text floor). */
 [data-theme="dark"] .pm-section {
   --pm-soft-ink: color-mix(in srgb, var(--text) 72%, transparent);
 }

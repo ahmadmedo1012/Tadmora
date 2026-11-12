@@ -17,12 +17,12 @@ import '../../styles/campus-media.css'; // the page-scoped capture-grid sheet
  *
  * The retired page was the real-university documentary gallery (Commons
  * photographs + official-channel videos of public universities). Phase Ω
- * (identity purity) retires it whole: TADMORA is an independent
+ * (identity purity) retires it whole: ULARA is an independent
  * multi-tenant University Operating System — no campus, no university
  * photography, no institutional references. What lives here instead is
  * the platform's OWN environment, honestly:
  *   · real product captures of the running surfaces (the labeled demo
- *     workspace «مساحة عمل تادمورا التجريبية» — every frame carries the
+ *     workspace «مساحة عمل أُلارا التجريبية» — every frame carries the
  *     demo-data disclosure);
  *   · the honest statement that every institution's environment is
  *     built from its own data after onboarding — there is no campus to
@@ -42,9 +42,9 @@ export function CampusLifePage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="cu-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
+          <Link to="/" className="cu-header-brand" aria-label="أُلارا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            تادمورا
+            أُلارا
           </Link>
         </div>
       </header>
@@ -60,7 +60,7 @@ export function CampusLifePage() {
               لا حرمَ جامعيًّا — <em>بيئة تُبنى من بياناتك</em>
             </RevealCssClass>
             <RevealCssClass as="p" className="cu-lede" delay={2}>
-              تادمورا منصّة مستقلة متعددة المستأجرين: لا جامعة ولا حرم ولا صور جامعات.
+              أُلارا منصّة مستقلة متعددة المستأجرين: لا جامعة ولا حرم ولا صور جامعات.
               ما تراه هنا لقطات حقيقية من واجهات المنصّة نفسها — وبيئة مؤسستك تكتمل من بياناتها بعد انضمامها.
             </RevealCssClass>
             {/* D9: the honest in-page nav pair on the actions row — the
@@ -85,7 +85,7 @@ export function CampusLifePage() {
 
           <RevealCssClass as="p" className="cu-foot" delay={3}>
             كل إطار هنا لقطة من المنصّة تعمل فعلاً — ببيانات مساحة العرض التجريبية الموسومة بوضوح.
-            لا جامعة في هذه الصور ولا انتماء: تادمورا مستقلّة، وبيئة كل مؤسسة تُبنى من بياناتها.
+            لا جامعة في هذه الصور ولا انتماء: أُلارا مستقلّة، وبيئة كل مؤسسة تُبنى من بياناتها.
           </RevealCssClass>
         </section>
 
@@ -105,7 +105,7 @@ export function CampusLifePage() {
           </div>
 
           <RevealCssClass as="p" className="cu-foot" delay={3}>
-            جوّز الأدوار الخمسة يُعرض على الصفحة الرئيسية في مقطع «لماذا تادمورا» —
+            جوّز الأدوار الخمسة يُعرض على الصفحة الرئيسية في مقطع «لماذا أُلارا» —
             <Link to="/" className="fo-text-link"> من هنا</Link>.
           </RevealCssClass>
         </section>

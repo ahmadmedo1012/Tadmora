@@ -436,7 +436,7 @@ export default function RegisterPage() {
                   <span className="auth-meta">(إنشاء حساب)</span>
                   <h1 className="auth-form-title" tabIndex={-1} ref={stepHeadingRef}>من أنت؟</h1>
                   <p className="auth-form-sub">
-                    اختر نوع الحساب لإنشاء وصولك إلى منصّة تادمورا.
+                    اختر نوع الحساب لإنشاء وصولك إلى منصّة أُلارا.
                   </p>
                 </div>
 

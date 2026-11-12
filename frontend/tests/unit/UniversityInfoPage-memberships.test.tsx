@@ -54,6 +54,6 @@ describe('UniversityInfoPage — بطاقة تعريف المؤسّسة (Phase �
 
   it('claims NO accreditation — the ownership note states whose affair it is', () => {
     renderPage();
-    expect(screen.getAllByText('الاعتماد والعضويّات شأن مؤسستك — تادمورا منصّة مستقلّة لا تدّعي أي اعتماد').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('الاعتماد والعضويّات شأن مؤسستك — أُلارا منصّة مستقلّة لا تدّعي أي اعتماد').length).toBeGreaterThan(0);
   });
 });

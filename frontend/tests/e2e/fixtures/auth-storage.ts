@@ -9,7 +9,7 @@
  * the REAL POST /auth/login, takes the live payload and builds the exact
  * Playwright `storageState` the app boots from:
  *
- *   - `tdmr-auth` localStorage in the zustand persist shape
+ *   - `ula-auth` localStorage in the zustand persist shape
  *     (stores/auth.store.ts — safeSessionStorage JSON.stringify's
  *     `{ state, version }`; partialize keeps { user, accessToken,
  *     memberships, currentInstitution, membershipRole }), so the SPA
@@ -30,9 +30,9 @@
  * drift from the seeder.
  *
  * Env knobs:
- *   TADMORA_E2E_API_URL   API origin the login POSTs to
+ *   ULARA_E2E_API_URL   API origin the login POSTs to
  *                         (default http://localhost:4000)
- *   TADMORA_E2E_BASE_URL  frontend origin the storageState seeds
+ *   ULARA_E2E_BASE_URL  frontend origin the storageState seeds
  *                         (default http://localhost:5173 — MUST match
  *                         the page origin or the state won't apply)
  */
@@ -91,8 +91,8 @@ export const STACK_ROLES: readonly StackRole[] = [
   'OWNER',
 ];
 
-const API_BASE = (process.env.TADMORA_E2E_API_URL ?? 'http://localhost:4000').replace(/\/+$/, '');
-export const WEB_ORIGIN = (process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173').replace(
+const API_BASE = (process.env.ULARA_E2E_API_URL ?? 'http://localhost:4000').replace(/\/+$/, '');
+export const WEB_ORIGIN = (process.env.ULARA_E2E_BASE_URL ?? 'http://localhost:5173').replace(
   /\/+$/,
   '',
 );
@@ -159,7 +159,7 @@ export async function loginRole(role: StackRole): Promise<LoginSession> {
   return data;
 }
 
-/** The `tdmr-auth` value the zustand persist store would have written —
+/** The `ula-auth` value the zustand persist store would have written —
  * same shape as fixtures/mock-transport.ts authStorageJson, but with the
  * REAL token, the REAL user payload and the CURRENT persist version 1
  * (no migrate on hydration). */
@@ -179,7 +179,7 @@ export function authStorageJson(session: LoginSession): string {
 
 /**
  * Full Playwright storageState for a role: logs in through the real API
- * and seeds `tdmr-auth` on the frontend origin. Use it with
+ * and seeds `ula-auth` on the frontend origin. Use it with
  * `browser.newContext({ storageState })` (NOT the hermetic fixtures/e2e
  * context — that one installs the mock transport) or
  * `test.use({ storageState })`.
@@ -191,7 +191,7 @@ export async function storageStateForRole(role: StackRole): Promise<StorageState
     origins: [
       {
         origin: WEB_ORIGIN,
-        localStorage: [{ name: 'tdmr-auth', value: authStorageJson(session) }],
+        localStorage: [{ name: 'ula-auth', value: authStorageJson(session) }],
       },
     ],
   };

@@ -824,23 +824,25 @@ async function main(): Promise<void> {
   const doc = {
     openapi: '3.1.0',
     info: {
-      title: 'Tadmora Platform API',
+      title: 'ULARA Platform API',
       version: backendPkg.version as string,
       description: [
-        'تادمورا — Arabic-first University Operating System. Non-browser (Expo) clients should start at `docs/api/mobile-auth.md`.',
+        'أُلارا — Arabic-first University Operating System. Non-browser (Expo) clients should start at `docs/api/mobile-auth.md`.',
         '',
         'Conventions: every endpoint lives under `/api/v1` and answers `{ data: … }`',
         '(errors: `{ error: { code, message, details? } }`, Arabic messages, UPPER_SNAKE codes).',
-        'Auth: `Authorization: Bearer <accessToken>` (15 min) + a 7-day `tdmr_refresh` cookie',
-        'for rotation. The contract is ADDITIVE-ONLY for mobile clients — enforced by',
-        '`backend/tests/contract/api-contract.test.ts` against the committed snapshot.',
+        'Auth: `Authorization: Bearer <accessToken>` (15 min) + a 7-day `ulara_refresh` cookie',
+        'for rotation (the refresh endpoint also accepts the pre-rename cookie during',
+        'the rename transition window). The contract is ADDITIVE-ONLY for mobile',
+        'clients — enforced by `backend/tests/contract/api-contract.test.ts` against',
+        'the committed snapshot.',
         '',
         'Generated from the live Express route table + the real zod DTOs; response field',
         'shapes on snapshot-covered operations come from the committed contract snapshot',
         '(top-level observed fields, additionalProperties open).',
       ].join('\n'),
     },
-    servers: [{ url: 'http://localhost:4000', description: 'Local dev (PORT=4000, tadmora_dev)' }],
+    servers: [{ url: 'http://localhost:4000', description: 'Local dev (PORT=4000)' }],
     tags: [...tagCounts.entries()]
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([name, count]) => ({ name, description: `${count} operation(s) under /api/v1/${name === 'root' ? '' : name}` })),
@@ -856,8 +858,8 @@ async function main(): Promise<void> {
         refreshCookie: {
           type: 'apiKey',
           in: 'cookie',
-          name: 'tdmr_refresh',
-          description: 'httpOnly refresh cookie (SameSite=Strict, Path=/api/v1/auth, 7 days) consumed by POST /api/v1/auth/refresh. Native clients must persist this cookie (cookie jar) — the refresh endpoint does not (yet) accept a body token.',
+          name: 'ulara_refresh',
+          description: 'httpOnly refresh cookie (SameSite=Strict, Path=/api/v1/auth, 7 days) consumed by POST /api/v1/auth/refresh (a pre-rename cookie is accepted during the rename transition). Native clients must persist this cookie (cookie jar) — the refresh endpoint does not (yet) accept a body token.',
         },
       },
       schemas: {

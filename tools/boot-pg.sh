@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Boot portable PostgreSQL for tadmora dev (mirrors previous session's tools/pgsql setup)
+# Boot portable PostgreSQL for ULARA dev (mirrors the earlier tools/pgsql setup).
+# initdb superuser + the application database are BOTH named `ulara` —
+# CI (mobile.yml android-smoke) and docs/05-setup.md §3 use the same
+# scheme: postgresql://ulara@{localhost,127.0.0.1}:5433/ulara. If you
+# still carry a tools/pgdata initialized under the retired name, delete
+# it once (rm -rf tools/pgdata) so initdb re-runs with the new user.
 set -e
 # Resolve tools/ from the script's own location (works from any checkout path).
 TOOLS="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,7 +18,7 @@ mkdir -p "$SOCK" && rm -rf "$SOCK"/*
 
 if [ ! -f "$PGDATA/PG_VERSION" ]; then
   rm -rf "$PGDATA" && mkdir -p "$PGDATA"
-  "$PGBIN/initdb" -D "$PGDATA" -U tadmora --auth=trust -E UTF8 >/dev/null
+  "$PGBIN/initdb" -D "$PGDATA" -U ulara --auth=trust -E UTF8 >/dev/null
 fi
 
 "$PGBIN/pg_ctl" -D "$PGDATA" -o "-p $PORT -k $SOCK -c listen_addresses=127.0.0.1" -l "$TOOLS/pg.log" start

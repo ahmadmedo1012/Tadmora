@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — Student experience pages (Notion-product flavor)
+   ULARA — Student experience pages (Notion-product flavor)
    Lecture player · training & gamification · research · library · live
    Owned by the student-page waves. Append-only: add sections, never
    rewrite other waves' sections. Import order: before polish.css.
@@ -52,7 +52,7 @@
   .lecture-video {
     /* r166a (E1 square-stage defect): the WRAP owns the geometry — the
        video is pinned to it absolutely. In-flow, a paused <video> with
-       a square poster (the seeded /brand/tadmora-mark.svg, viewBox
+       a square poster (the seeded /brand/ulara-mark.svg, viewBox
        64×64) sizes itself by the POSTER's ratio (818×818 measured
        live) and, as a .lecture-main flex item's content, stretches the
        aspect-ratio'd wrap to a square via the auto min-content
@@ -381,13 +381,13 @@
     font-weight: 700;
   }
   /* r341 D7a — the light-theme AA seat: white on the raw --accent
-     (#FA3600) measures 3.76:1 (the documented AA-LARGE exception —
+     (#C43E16) measures 3.76:1 (the documented AA-LARGE exception —
      but this numeral is fs-sm 13px, a SMALL text node, and the
      conformance ink probe + axe both read it). The same darker seat
      the R318 .btn.accent recipe takes (#DB3A00, 4.55:1), built from
      tokens: accent mixed 82% toward --black ≈ #CD2C00 = 5.31:1 with
      the white numeral. Dark already passes by construction
-     (--warm-ink #191918 on the luminous ember ≈ 4.7:1+) — untouched. */
+     (--warm-ink #17130E on the luminous ember ≈ 4.7:1+) — untouched. */
   [data-theme='light'] .cal-cell[data-today='true'] .cal-day-num {
     background: color-mix(in srgb, var(--accent) 82%, var(--black));
   }
@@ -479,7 +479,7 @@
 
   /* ═══ CoursesPage — filter → grid re-stagger (the authored moment) ═══
      The polish overrides layer staggers EVERY .grid-3 child on every
-     mount (tadmora-stagger-up, fill both) — which fires an entrance on
+     mount (ulara-stagger-up, fill both) — which fires an entrance on
      the first data render (the antipattern this page avoids) AND pins
      transform:none forever, silently killing the shared .thumb-card
      hover lift. The courses grid opts out of the global rule and owns

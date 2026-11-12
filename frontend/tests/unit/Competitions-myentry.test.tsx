@@ -121,7 +121,7 @@ function renderIndexAt(initial: string) {
   );
 }
 
-const viewer = { id: 'u1', email: 'u1@tdmr.dev', firstName: 'أحمد', lastName: 'المهدي', role: 'STUDENT' as const };
+const viewer = { id: 'u1', email: 'u1@ula.dev', firstName: 'أحمد', lastName: 'المهدي', role: 'STUDENT' as const };
 
 describe('CompetitionDetailPage — myEntry identity (r157 w2-F6)', () => {
   beforeEach(() => {

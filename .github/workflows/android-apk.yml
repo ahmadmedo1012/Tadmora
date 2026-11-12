@@ -5,7 +5,10 @@
 # publishes it to the rolling «latest» GitHub Release, so ONE stable
 # URL always serves the newest build:
 #
-#   https://github.com/ahmadmedo1012/Tadmora/releases/latest/download/tadmora.apk
+#   https://github.com/ahmadmedo1012/ulara/releases/latest/download/ulara.apk
+#
+# (the repo rename lands at integration; GitHub redirects the old
+# org/repo path, so both spellings resolve during the transition)
 #
 # The build itself is the repo's ONE build recipe — scripts/build-
 # android-local.sh (docs/mobile/ANDROID-LOCAL.md): expo prebuild →
@@ -112,16 +115,16 @@ jobs:
             echo "::error::ANDROID_KEYSTORE_B64 secret missing — the direct channel cannot sign without it (RELEASE.md §direct channel documents the key model)"
             exit 1
           fi
-          printf '%s' "$ANDROID_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/tadmora-direct.jks"
-          chmod 600 "$RUNNER_TEMP/tadmora-direct.jks"
-          echo "keystore materialized at $RUNNER_TEMP/tadmora-direct.jks"
+          printf '%s' "$ANDROID_KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/ulara-direct.jks"
+          chmod 600 "$RUNNER_TEMP/ulara-direct.jks"
+          echo "keystore materialized at $RUNNER_TEMP/ulara-direct.jks"
 
       - name: Build the signed release APK (the repo's own recipe)
         env:
-          TADMORA_ANDROID_KEYSTORE: ${{ runner.temp }}/tadmora-direct.jks
-          TADMORA_ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          TADMORA_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          TADMORA_ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ULARA_ANDROID_KEYSTORE: ${{ runner.temp }}/ulara-direct.jks
+          ULARA_ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ULARA_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ULARA_ANDROID_KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           EXPO_NO_TELEMETRY: '1'
           CI: 'true'
         run: scripts/build-android-local.sh
@@ -133,9 +136,9 @@ jobs:
             echo "::error::release APK not found at $APK"
             exit 1
           fi
-          cp "$APK" tadmora.apk
-          "$ANDROID_HOME/build-tools/37.0.0/apksigner" verify --print-certs tadmora.apk
-          sha256sum tadmora.apk | tee apk.sha256
+          cp "$APK" ulara.apk
+          "$ANDROID_HOME/build-tools/37.0.0/apksigner" verify --print-certs ulara.apk
+          sha256sum ulara.apk | tee apk.sha256
 
       - name: Release metadata (app version from the resolved Expo config)
         id: meta
@@ -152,10 +155,10 @@ jobs:
           VERSION: ${{ steps.meta.outputs.version }}
         run: |
           SHA=$(cut -d' ' -f1 apk.sha256)
-          SIZE=$(du -h tadmora.apk | cut -f1)
+          SIZE=$(du -h ulara.apk | cut -f1)
           NOTES="$RUNNER_TEMP/release-notes.md"
           cat > "$NOTES" <<EOF
-          # تادمورا — تطبيق أندرويد (قناة التنزيل المباشر)
+          # أُلارا — تطبيق أندرويد (قناة التنزيل المباشر)
 
           بناء مباشر من أحدث شيفرة الفرع الرئيسي — يُنتج تلقائيًا عبر GitHub Actions
           كلما تغيّر التطبيق، ويحلّ محلّ السابق في نفس الرابط.
@@ -167,7 +170,7 @@ jobs:
           | حجم الملف | ${SIZE} |
           | SHA-256 | \`${SHA}\` |
 
-          **التثبيت:** نزّل \`tadmora.apk\` وافتحه على جهازك، واسمح بـ«التثبيت من
+          **التثبيت:** نزّل \`ulara.apk\` وافتحه على جهازك، واسمح بـ«التثبيت من
           مصادر غير معروفة» عند سؤال النظام أول مرة. التوقيع ثابت عبر البناءات —
           التحديثات تُثبَّت فوق النسخ السابقة مباشرة دون إزالة.
 
@@ -176,15 +179,15 @@ jobs:
             وتتخطّى خطوة واحدة من المالك (RELEASE.md).
           - التحديثات التلقائية (OTA) عبر EAS لم تُفعَّل بعد (يتطلب تهيئة مشروع
             EAS الجديد — RELEASE.md).
-          - حزمة الويب (PWA) بديل فوري للمتصفح: tadmora.vercel.app.
+          - حزمة الويب (PWA) بديل فوري للمتصفح: ulara.vercel.app.
           EOF
           # The rolling release: delete + recreate the fixed `latest` tag so
           # BOTH stable URLs always resolve to the newest build:
-          #   /releases/latest/download/tadmora.apk  (latest full release)
-          #   /releases/download/latest/tadmora.apk  (fixed tag)
+          #   /releases/latest/download/ulara.apk  (latest full release)
+          #   /releases/download/latest/ulara.apk  (fixed tag)
           gh release delete latest --yes --cleanup-tag 2>/dev/null || true
-          gh release create latest tadmora.apk#tadmora.apk \
-            --title "تادمورا — أندرويد v${VERSION} (أحدث بناء)" \
+          gh release create latest ulara.apk#ulara.apk \
+            --title "أُلارا — أندرويد v${VERSION} (أحدث بناء)" \
             --notes-file "$NOTES" \
             --latest
 
@@ -193,9 +196,9 @@ jobs:
           {
             echo "## Android APK — rolling «latest» release published"
             echo ""
-            echo "- Stable download: https://github.com/ahmadmedo1012/Tadmora/releases/latest/download/tadmora.apk"
-            echo "- Fixed-tag download: https://github.com/ahmadmedo1012/Tadmora/releases/download/latest/tadmora.apk"
-            echo "- Releases page: https://github.com/ahmadmedo1012/Tadmora/releases"
+            echo "- Stable download: https://github.com/ahmadmedo1012/ulara/releases/latest/download/ulara.apk"
+            echo "- Fixed-tag download: https://github.com/ahmadmedo1012/ulara/releases/download/latest/ulara.apk"
+            echo "- Releases page: https://github.com/ahmadmedo1012/ulara/releases"
             echo "- App version: ${{ steps.meta.outputs.version }}"
             echo "- Commit: \`${GITHUB_SHA}\`"
           } >> "$GITHUB_STEP_SUMMARY"

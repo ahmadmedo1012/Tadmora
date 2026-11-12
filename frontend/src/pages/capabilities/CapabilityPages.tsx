@@ -41,9 +41,9 @@ export function CapabilitiesPage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="cu-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
+          <Link to="/" className="cu-header-brand" aria-label="أُلارا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            تادمورا
+            أُلارا
           </Link>
         </div>
       </header>
@@ -123,7 +123,7 @@ export function CapabilitiesPage() {
             <dl className="cu-meta" aria-label="بيانات السجلّ">
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">السجلّ</dt>
-                <dd className="fo-meta-v">مساحة عمل تادمورا التجريبية</dd>
+                <dd className="fo-meta-v">مساحة عمل أُلارا التجريبية</dd>
               </div>
               <div className="fo-meta-row">
                 <dt className="fo-meta-k">الكليات</dt>
@@ -142,8 +142,8 @@ export function CapabilitiesPage() {
           </RevealCssClass>
 
           <p className="cu-foot">
-            بيانات العرض تخصّ «مساحة عمل تادمورا التجريبية» — مساحةً موسومة لأغراض العرض، لا جامعة ولا انتماء،
-            وتادمورا منصّة مستقلّة متعددة المستأجرين لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها.
+            بيانات العرض تخصّ «مساحة عمل أُلارا التجريبية» — مساحةً موسومة لأغراض العرض، لا جامعة ولا انتماء،
+            وأُلارا منصّة مستقلّة متعددة المستأجرين لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها.
           </p>
         </section>
       </main>

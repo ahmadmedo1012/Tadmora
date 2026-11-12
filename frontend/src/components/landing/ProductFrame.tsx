@@ -3,7 +3,7 @@
  * on the landing sheet (DESIGN.md §6c, r307).
  *
  * A flat hairline frame around an authentic capture of the running
- * application (the labeled demo workspace «مساحة عمل تادمورا
+ * application (the labeled demo workspace «مساحة عمل أُلارا
  * التجريبية» — clearly-marked demo data). Every frame carries:
  *   · the demo-data disclosure — the honest «بيانات العرض
  *     التجريبية» line (the r324 X4 sweep retired the «real-ui»

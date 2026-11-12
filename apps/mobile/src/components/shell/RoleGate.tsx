@@ -37,10 +37,10 @@ export function RoleGate({ allow, children }: { allow: AppRole[]; children: Reac
   }
   if (!user) {
     router.replace("/auth");
-    return <LaunchSheet label="تادمورا" />;
+    return <LaunchSheet label="أُلارا" />;
   }
   if (!allow.includes(user.role)) {
-    return <LaunchSheet label="تادمورا" />;
+    return <LaunchSheet label="أُلارا" />;
   }
   return <>{children}</>;
 }

@@ -58,7 +58,7 @@ let chromium;
 try {
   ({ chromium } = createRequire(join(WORKTREE, "frontend", "package.json"))("playwright"));
 } catch {
-  ({ chromium } = createRequire("/home/z/tadmora/frontend/package.json"))("playwright");
+  ({ chromium } = createRequire("/home/z/ulara/frontend/package.json"))("playwright");
 }
 const SPEC_DIR = join(WORKTREE, "docs", "redesign", "r335", "heron-spec");
 const CURVES_FILE = (bp) => join(SPEC_DIR, `scroll-curves.${bp}.json`);
@@ -93,7 +93,7 @@ export const BPS = [
  *  from the element up to the wrap), so resolution walks children[n-1]
  *  from segs[2] on. Seating: Heron scrolls .main-inner (Lenis wrapper —
  *  the window never scrolls there); our page scrolls the window (or its
- *  own Lenis via window.__tdmrLenis). */
+ *  own Lenis via window.__ulaLenis). */
 const PAGE_LIB_JS = String.raw`
 (() => {
   const resolveSpec = (path) => {
@@ -110,7 +110,7 @@ const PAGE_LIB_JS = String.raw`
     return el;
   };
   const seat = (y) => {
-    const L = window.__tdmrLenis;
+    const L = window.__ulaLenis;
     if (L && typeof L.scrollTo === "function") { L.scrollTo(y, { immediate: true, force: true }); return; }
     const mi = document.querySelector(".main-inner");
     if (mi && document.documentElement.scrollHeight <= window.innerHeight + 60 && mi.scrollHeight > mi.clientHeight + 60) { mi.scrollTop = Math.max(0, Math.round(y)); return; }
@@ -458,7 +458,7 @@ export async function feel(url, bps) {
         scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
         bodyScrollBehavior: getComputedStyle(document.body).scrollBehavior,
         scrollRestoration: "scrollRestoration" in history ? history.scrollRestoration : "unknown",
-        lenisLive: !!(window.__tdmrLenis && (window.__tdmrLenis.scrollTo || window.__tdmrLenis.on)),
+        lenisLive: !!(window.__ulaLenis && (window.__ulaLenis.scrollTo || window.__ulaLenis.on)),
         scrollerIsWindow: window.scrollY === 0 ? document.documentElement.scrollHeight > window.innerHeight : true,
         stickyTops: [...document.querySelectorAll("*")].filter((el) => getComputedStyle(el).position === "sticky").slice(0, 30).map((el) => ({ cls: (el.className || "").toString().slice(0, 40), top: getComputedStyle(el).top })),
         deadAnchors: [...document.querySelectorAll('a[href^="#"]')].filter((a) => {

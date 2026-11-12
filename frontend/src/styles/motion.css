@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — Motion + Interaction Foundation
+   ULARA — Motion + Interaction Foundation
    ─────────────────────────────────────────────────────────────────────
    Owns: reduced-motion overrides, universal :focus-visible ring,
          reveal keyframes, skeleton shimmer, route-transition keyframes.
@@ -214,11 +214,11 @@
 
   /* ───────────────────────────────────────────────────────────────────
      Sheet bottom entrance — wave 2-a.
-     `tadmora-sheet-slide-bottom` is consumed by .sheet-panel-bottom
+     `ulara-sheet-slide-bottom` is consumed by .sheet-panel-bottom
      (components.css). The keyframes themselves now live in the
      `@layer overrides` block after this file's components layer —
      see that block's comment for why (audit 4-A11 P2-8).
-     Sibling keyframes tadmora-sheet-slide-end/-start live with
+     Sibling keyframes ulara-sheet-slide-end/-start live with
      the sheet styles in components.css.
      ─────────────────────────────────────────────────────────────────── */
 
@@ -229,7 +229,7 @@
     .sheet-panel-bottom { animation: none; }
   }
 
-  /* (The @keyframes tadmora-sheet-slide-bottom definition moved to the
+  /* (The @keyframes ulara-sheet-slide-bottom definition moved to the
      @layer overrides block below — 4-A11 P2-8 duplicate-keyframe kill.) */
 
   /* ───────────────────────────────────────────────────────────────────
@@ -462,7 +462,7 @@
    spring. The reduced-motion kill for .sheet-panel-bottom stays in the
    components block above (plus base.css's global belt). */
 @layer overrides {
-  @keyframes tadmora-sheet-slide-bottom {
+  @keyframes ulara-sheet-slide-bottom {
     from {
       opacity: 0;
       transform: translateY(8%);

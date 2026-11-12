@@ -1,5 +1,5 @@
 {
-  "$doc": "ULARA Omega 2-A — the ONE source of truth for the product name and its identity primitives. The rename itself is gated behind Gate A (owner approval); until that gate opens NOTHING on the product surface consumes this file — the staged kit (shared/brand/ulara/ + scripts/brand/ulara-kit.mjs) is its only consumer, so the future rename stays a one-file change. Regen: node scripts/brand/ulara-kit.mjs · verify: node --test scripts/brand/ulara-kit.test.mjs. Name rules (test-enforced): name_ar is the logo form WITH damma — the damma-less spelling is forbidden anywhere in the kit; name_en is the running-text form — all-caps ULARA is allowed ONLY inside logo lockups; colours are the unchanged palette, pinned to shared/design-tokens.json color.brand.",
+  "$doc": "ULARA Omega takeover — the ONE source of truth for the product name and its identity primitives. The owner's takeover directive opened the old Gate A: the product surface NOW consumes this file. Regen: node scripts/brand/ulara-kit.mjs · verify: node --test scripts/brand/ulara-kit.test.mjs. Name rules (test-enforced): name_ar is the logo form WITH damma — the damma-less spelling is forbidden anywhere in the kit; name_en is the running-text form — all-caps ULARA is allowed ONLY inside logo lockups; colours are the ULARA «Parchment & Sienna» palette, pinned to shared/design-tokens.json color.brand.",
   "name_ar": "أُلارا",
   "name_en": "Ulara",
   "slug": "ulara",
@@ -10,9 +10,9 @@
   "npm_scope": "@ulara",
   "env_prefix": "ULARA_",
   "colors": {
-    "$doc": "The only three brand colours, carried over verbatim from shared/design-tokens.json color.brand (paper #F6F6EE / ink #282828 / orange #FA3600). The rename changes the name, never the palette — the generator cross-checks this trio against design-tokens.json on every run.",
-    "paper": "#F6F6EE",
-    "ink": "#282828",
-    "accent": "#FA3600"
+    "$doc": "The only three brand colours — the ULARA «Parchment & Sienna» palette (paper #F5F1E8 · ink #262019 · burnt sienna #C43E16), pinned to shared/design-tokens.json color.brand. The deliberate Ω-takeover evolution away from the retired palette; the generator cross-checks this trio against design-tokens.json on every run.",
+    "paper": "#F5F1E8",
+    "ink": "#262019",
+    "accent": "#C43E16"
   }
 }

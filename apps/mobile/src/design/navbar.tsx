@@ -19,9 +19,9 @@
  * bar color to paint; the screen ground IS what shows through. What remains
  * is the declarative `<NavigationBar style>` component:
  *   · "light" — a light bar with DARK content (dark handle) → our light
- *     paper theme (#F6F6EE) wants this.
+ *     paper theme (#F5F1E8) wants this.
  *   · "dark"  — a dark bar with LIGHT content (light handle) → our dark
- *     charcoal theme (#282828) wants this.
+ *     charcoal theme (#262019) wants this.
  * Note the INVERTED naming vs status-bar `style` (there "light" = light
  * CONTENT): navigation-bar style describes the BAR, status-bar style the
  * CONTENT.

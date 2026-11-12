@@ -14,11 +14,11 @@
  *
  * Usage:
  *   node scripts/r320/admin-clip-probe.mjs [baseURL]
- *   (default https://tadmora.vercel.app)
+ *   (default https://ulara.vercel.app)
  */
 import { chromium } from 'playwright-core';
 
-const BASE = process.argv[2] ?? 'https://tadmora.vercel.app';
+const BASE = process.argv[2] ?? 'https://ulara.vercel.app';
 const OUT = 'audits/evidence/r320/accounts-production';
 
 const EMAIL = 'registrar@test.ly';
@@ -37,7 +37,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('tadmora-intro-skip', '1');
+        sessionStorage.setItem('ulara-intro-skip', '1');
       } catch {
         /* noop */
       }
@@ -64,7 +64,7 @@ try {
     const page = await ctx.newPage();
     await page.addInitScript(() => {
       try {
-        sessionStorage.setItem('tadmora-intro-skip', '1');
+        sessionStorage.setItem('ulara-intro-skip', '1');
       } catch {
         /* noop */
       }

@@ -41,7 +41,7 @@ async function run(condition, initScript) {
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
 
   await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
-  await page.evaluate(() => sessionStorage.setItem('tadmora-intro-skip', '1'));
+  await page.evaluate(() => sessionStorage.setItem('ulara-intro-skip', '1'));
   await page.reload({ waitUntil: 'networkidle' });
   await page.evaluate(() => (document.fonts ? document.fonts.ready : null)).catch(() => {});
   await page.waitForTimeout(800);

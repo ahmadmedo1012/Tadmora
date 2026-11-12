@@ -248,10 +248,10 @@ try {
           deviceScaleFactor: 1, locale: 'ar',
         });
         /* the REAL persistence path: the app's theme store reads
-           localStorage['tadmora-theme'] (zustand persist v2) — colorScheme
+           localStorage['ulara-theme'] (zustand persist v2) — colorScheme
            emulation never flips it (default mode is 'light'). */
         await ctx.addInitScript((t) => {
-          localStorage.setItem('tadmora-theme', JSON.stringify({
+          localStorage.setItem('ulara-theme', JSON.stringify({
             state: { mode: t, modeUpdatedAt: 1 }, version: 2,
           }));
         }, theme);

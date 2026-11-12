@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * R315 B9 — Heron footer-role geometry extraction per viewport (from the
- * E-crawl dumps), so the footer rebuild can pin Tadmora's bands to the
+ * E-crawl dumps), so the footer rebuild can pin Ulara's bands to the
  * judge's own numbers at every judged viewport.
  *
  * Usage: node scripts/r315/b9-heron-roles.mjs
@@ -9,7 +9,7 @@
 import fs from 'node:fs';
 
 const VPS = ['1440x900', '1280x800', '1024x768', '768x1024', '390x844', '360x800'];
-const base = '/home/z/tadmora/_local/heron-dom';
+const base = '/home/z/ulara/_local/heron-dom';
 
 const SELECTORS = [
   'footer.footer',

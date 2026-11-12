@@ -1,7 +1,7 @@
 /**
  * theme-persistence.e2e.ts — ثبات السمة عبر التحميل (r164-k).
  *
- * يبدأ بوضع «فاتح» مبذورًا في localStorage (tadmora-theme بنفس شكل
+ * يبدأ بوضع «فاتح» مبذورًا في localStorage (ulara-theme بنفس شكل
  * persist v2)، يبدّل عبر مفتاح الشريط الجانبي ثلاثي الحالات إلى
  * «داكن»، ثم يثبت أن الاختيار صمد بعد إعادة التحميل — محليًا
  * (data-theme) وفي الستور المدوّم، وأن مسار الدفع نحو /me/theme
@@ -28,7 +28,7 @@ test.describe('ثبات السمة', () => {
     /* إعادة التحميل: الاختيار مدوّم في الستور */
     await page.reload();
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-    const stored = await page.evaluate(() => localStorage.getItem('tadmora-theme'));
+    const stored = await page.evaluate(() => localStorage.getItem('ulara-theme'));
     expect(stored).toContain('"mode":"dark"');
 
     /* الصفحة ما تزال حيّة بعد إعادة التحميل (وليست شاشة إقلاع عالقة) */

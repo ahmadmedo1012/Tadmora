@@ -49,12 +49,12 @@ import { PREFERS_REDUCED_MOTION } from '../lib/motion-media';
  *
  * ── First-visit contract ─────────────────────────────────────────────
  * shouldPlayIntro() is true ONLY when there is no
- * localStorage['tadmora.intro.v1'] flag AND the visitor is not
- * authenticated (the persisted `tdmr-auth` zustand session — see
+ * localStorage['ulara.intro.v1'] flag AND the visitor is not
+ * authenticated (the persisted `ula-auth` zustand session — see
  * stores/auth.store.ts). Additional SUPPRESSORS (they can never cause
  * a play, only prevent a double intro): prefers-reduced-motion, the
- * hermetic e2e opt-out (`tadmora-intro-skip`) and the R313 session
- * seen-flag (`tadmora-intro-seen`) — both owned by lib/motion/introGate
+ * hermetic e2e opt-out (`ulara-intro-skip`) and the R313 session
+ * seen-flag (`ulara-intro-seen`) — both owned by lib/motion/introGate
  * (read-only import; that file is NOT modified).
  *
  * ── Reduced motion ───────────────────────────────────────────────────
@@ -108,10 +108,10 @@ export interface StorageLike {
 
 /** The R323 first-visit flag — the cross-session «has seen the intro»
  *  truth (the R313 sessionStorage seen-flag stays as a suppressor). */
-export const INTRO_FLAG_KEY = 'tadmora.intro.v1';
+export const INTRO_FLAG_KEY = 'ulara.intro.v1';
 
 /** The persisted zustand auth session (stores/auth.store.ts `name`). */
-export const AUTH_PERSISTENCE_KEY = 'tdmr-auth';
+export const AUTH_PERSISTENCE_KEY = 'ula-auth';
 
 /* ── Machine state (module-private) ────────────────────────────────── */
 
@@ -374,7 +374,7 @@ function flagIsSet(store: StorageLike | null, key: string): boolean {
 }
 
 /** Authentication as persisted by the zustand session store
- *  (stores/auth.store.ts — key `tdmr-auth`, shape
+ *  (stores/auth.store.ts — key `ula-auth`, shape
  *  `{ state: { user, accessToken, … }, version }`; v0 payloads carried
  *  the pair at the top level). Read-only; that file is NOT imported
  *  (the orchestrator stays framework-free and cycle-free). */
@@ -403,7 +403,7 @@ export interface IntroDecisionContext {
   storage?: StorageLike | null;
   /** Defaults to the live sessionStorage (legacy suppressors). */
   session?: StorageLike | null;
-  /** Defaults to the persisted `tdmr-auth` session read. */
+  /** Defaults to the persisted `ula-auth` session read. */
   authenticated?: boolean;
   /** Defaults to the live matchMedia. */
   reducedMotion?: boolean;
@@ -411,10 +411,10 @@ export interface IntroDecisionContext {
 
 /** Should the R323 intro play for this visitor?
  *
- *  true ONLY when: no `tadmora.intro.v1` localStorage flag AND not
+ *  true ONLY when: no `ulara.intro.v1` localStorage flag AND not
  *  authenticated AND motion is allowed. The legacy introGate keys
- *  (`tadmora-intro-skip` — the hermetic e2e opt-out — and
- *  `tadmora-intro-seen`) are read as SUPPRESSORS so the orchestrator
+ *  (`ulara-intro-skip` — the hermetic e2e opt-out — and
+ *  `ulara-intro-seen`) are read as SUPPRESSORS so the orchestrator
  *  can never double-play behind the existing gate. Returning visits
  *  and authenticated routes never play. */
 export function shouldPlayIntro(ctx: IntroDecisionContext = {}): boolean {
@@ -428,7 +428,7 @@ export function shouldPlayIntro(ctx: IntroDecisionContext = {}): boolean {
   return true;
 }
 
-/** Record that the intro played — writes localStorage['tadmora.intro.v1'].
+/** Record that the intro played — writes localStorage['ulara.intro.v1'].
  *  Storage failures are soft (privacy modes): the in-memory session
  *  still behaves, nothing throws. */
 export function markIntroPlayed(): void {

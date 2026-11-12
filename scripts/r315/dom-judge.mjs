@@ -3,13 +3,13 @@
  * R315 · Task 1-c (agent J2) — the DOM-GEOMETRY JUDGE (the R315 primary
  * objective: an objective, language-free parity judge — owner §3.2-1).
  *
- * For every viewport × [Heron live, Tadmora localhost:5173] it loads each
+ * For every viewport × [Heron live, Ulara localhost:5173] it loads each
  * page once (loader-gated), measures every role pair from
  * scripts/r315/roles.json and compares NORMALIZED geometry + paint:
  *
  *   · boxes:      x/w as fractions of the viewport width AFTER mirroring
  *                 Heron's x-axis (mirrored_x = 1 − (x + w)/vw — Heron is
- *                 LTR, Tadmora RTL); y/h as viewport px (fixed elements)
+ *                 LTR, Ulara RTL); y/h as viewport px (fixed elements)
  *                 or document px (in-flow — scroll-independent).
  *   · typography: font-size/line-height (±2px ladder noise), font-weight
  *                 exact. NEVER font-family (Arabic-first is by design),
@@ -29,16 +29,16 @@
  *   Heron  /            : poll `.loading` gone ≤15s + ≥11s from nav + settle.
  *   Heron  /contact-us  : no loader replay (Barba entrance) → ≥4s settle.
  *   Heron  404          : no loader at all → ≥3s settle.
- *   Tadmora /           : `.landing.intro-done` + no `.sl` + 2s settle.
- *   Tadmora /auth       : `.auth-cell` + no `.sl` + 2s.
- *   Tadmora 404         : `.nf-scene` + 2s.
+ *   Ulara /           : `.landing.intro-done` + no `.sl` + 2s settle.
+ *   Ulara /auth       : `.auth-cell` + no `.sl` + 2s.
+ *   Ulara 404         : `.nf-scene` + 2s.
  *
  * Politeness: Heron is a live third-party site — ONE pass per page+
  * viewport, ONE retry, then the failure is recorded and the run moves on.
  * A fresh browser context per viewport = no consent cookie on either
  * site, so the consent banner paints on both (K-C role measurable).
  *
- * Usage (repo root /home/z/tadmora):
+ * Usage (repo root /home/z/ulara):
  *   node scripts/r315/dom-judge.mjs                 # default matrix:
  *                                                   #   1440x900 + 390x844 — ALL roles
  *                                                   #   360x800/768x1024/1024x768/1280x800 — core groups
@@ -61,7 +61,7 @@ const ROLES_PATH = path.resolve(process.cwd(), 'scripts/r315/roles.json');
 const OUT_DEFAULT = '_local/dom-judge';
 const GAP_MS = 1500;               // between Heron passes (politeness)
 const LOADER_TIMEOUT_MS = 15000;   // heron .loading poll
-const TADMORA_GATE_TIMEOUT_MS = 30000;
+const ULARA_GATE_TIMEOUT_MS = 30000;
 
 /* ── CLI ─────────────────────────────────────────────────────────────── */
 const args = process.argv.slice(2);
@@ -211,14 +211,14 @@ async function gateHeron(page, pageKey, t0) {
   try { await page.evaluate(() => document.fonts.ready); } catch {}
   await page.waitForTimeout(1500);
 }
-async function gateTadmora(page, pageKey, t0) {
+async function gateUlara(page, pageKey, t0) {
   const fn = pageKey === 'landing'
     ? () => { const r = document.querySelector('.landing'); return !!(r && r.classList.contains('intro-done')) && !document.querySelector('.sl'); }
     : pageKey === 'contact'
       ? () => !!document.querySelector('.auth-cell') && !document.querySelector('.sl')
       : () => !!document.querySelector('.nf-scene');
   try {
-    await page.waitForFunction(fn, { timeout: TADMORA_GATE_TIMEOUT_MS, polling: 250 });
+    await page.waitForFunction(fn, { timeout: ULARA_GATE_TIMEOUT_MS, polling: 250 });
   } catch { /* gate timed out — measure what is there */ }
   try { await page.evaluate(() => document.fonts.ready); } catch {}
   const elapsed = Date.now() - t0;
@@ -238,7 +238,7 @@ async function measurePage(ctx, site, pageKey, vp, roleSpecs) {
     try {
       const resp = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
       if (site === 'heron') await gateHeron(page, pageKey, t0);
-      else await gateTadmora(page, pageKey, t0);
+      else await gateUlara(page, pageKey, t0);
       const data = await page.evaluate(COLLECT, roleSpecs);
       const rec = {
         site, page: pageKey, url, vp, status: resp ? resp.status() : null,
@@ -288,7 +288,7 @@ function compareRole(role, h, m, hMeta, mMeta) {
 
   const push = (prop, type, hVal, mVal, delta, sev, tolDesc, pass) => {
     res.checks.push({
-      prop, type, heron: hVal, tadmora: mVal, delta, severity: round(sev, 4), tol: tolDesc, pass,
+      prop, type, heron: hVal, ulara: mVal, delta, severity: round(sev, 4), tol: tolDesc, pass,
     });
     if (!pass) res.status = 'mismatch';
   };
@@ -297,11 +297,11 @@ function compareRole(role, h, m, hMeta, mMeta) {
   if (h.missing && m.missing) return { ...res, status: 'skipped', why: 'missing on both sites' };
   if (h.missing || m.missing) {
     return {
-      ...res, status: 'unmeasurable', why: h.missing ? 'heron selector matched nothing' : 'tadmora selector matched nothing',
-      detail: { heron: h.missing ? 'missing' : 'present', tadmora: m.missing ? 'missing' : 'present' },
+      ...res, status: 'unmeasurable', why: h.missing ? 'heron selector matched nothing' : 'ulara selector matched nothing',
+      detail: { heron: h.missing ? 'missing' : 'present', ulara: m.missing ? 'missing' : 'present' },
     };
   }
-  if (h.error || m.error) return { ...res, status: 'unmeasurable', why: 'collector error', detail: { heron: h.error, tadmora: m.error } };
+  if (h.error || m.error) return { ...res, status: 'unmeasurable', why: 'collector error', detail: { heron: h.error, ulara: m.error } };
   if (h.hidden && m.hidden) return { ...res, status: 'skipped', why: 'hidden on both sites (' + (h.hidden || m.hidden) + ')' };
   if (h.hidden || m.hidden) {
     push('visibility', 'visibility', h.hidden ? 'hidden (' + h.hidden + ')' : 'visible', m.hidden ? 'hidden (' + m.hidden + ')' : 'visible', 1, 0.8, 'both must paint', false);
@@ -368,7 +368,7 @@ function compareRole(role, h, m, hMeta, mMeta) {
     if (c.condW) {
       const hw = parseFloat(h[c.condW[0]]), mw = parseFloat(m[c.condW[1]]);
       if (!(hw >= 0.5 && mw >= 0.5)) {
-        res.checks.push({ prop: c.prop, type: 'color', heron: hv, tadmora: mv, delta: '—', severity: 0, tol: 'skipped: side not painted on both', pass: true });
+        res.checks.push({ prop: c.prop, type: 'color', heron: hv, ulara: mv, delta: '—', severity: 0, tol: 'skipped: side not painted on both', pass: true });
         continue;
       }
     }
@@ -420,7 +420,7 @@ async function runViewport(browser, entry) {
   for (const r of roles) (byPage[r.page] ||= []).push(r);
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, locale: 'en-US', reducedMotion: 'no-preference' });
 
-  const data = { heron: {}, tadmora: {} };
+  const data = { heron: {}, ulara: {} };
   for (const pageKey of ['landing', 'contact', 'nf']) {
     if (!byPage[pageKey]) continue;
     const specs = byPage[pageKey].map((r) => {
@@ -437,14 +437,14 @@ async function runViewport(browser, entry) {
   for (const pageKey of ['landing', 'contact', 'nf']) {
     if (!byPage[pageKey]) continue;
     const specs = byPage[pageKey].map((r) => {
-      const s = { id: r.id, sel: r.tadmora.sel };
-      if (r.tadmora.nth) s.nth = r.tadmora.nth;
-      if (r.tadmora.agg) s.agg = r.tadmora.agg;
-      if (r.tadmora.pseudo) s.pseudo = r.tadmora.pseudo;
+      const s = { id: r.id, sel: r.ulara.sel };
+      if (r.ulara.nth) s.nth = r.ulara.nth;
+      if (r.ulara.agg) s.agg = r.ulara.agg;
+      if (r.ulara.pseudo) s.pseudo = r.ulara.pseudo;
       return s;
     });
-    console.log(`  ▸ tadmora ${pageKey}@${vp} …`);
-    data.tadmora[pageKey] = await measurePage(ctx, 'tadmora', pageKey, vp, specs);
+    console.log(`  ▸ ulara ${pageKey}@${vp} …`);
+    data.ulara[pageKey] = await measurePage(ctx, 'ulara', pageKey, vp, specs);
   }
   await ctx.close();
 
@@ -452,10 +452,10 @@ async function runViewport(browser, entry) {
   const results = [];
   const unmeasurable = [];
   for (const r of roles) {
-    const hp = data.heron[r.page], mp = data.tadmora[r.page];
+    const hp = data.heron[r.page], mp = data.ulara[r.page];
     if (!hp || !mp) continue;
     if (!hp.ok || !mp.ok) {
-      unmeasurable.push({ role: r.id, viewport: vp, why: !hp.ok ? 'heron pass failed: ' + (hp.error || '') : 'tadmora pass failed: ' + (mp.error || '') });
+      unmeasurable.push({ role: r.id, viewport: vp, why: !hp.ok ? 'heron pass failed: ' + (hp.error || '') : 'ulara pass failed: ' + (mp.error || '') });
       continue;
     }
     const out = compareRole(r, hp.roles[r.id] || { missing: true }, mp.roles[r.id] || { missing: true }, hp, mp);
@@ -470,7 +470,7 @@ async function runViewport(browser, entry) {
       if (c.pass) continue;
       mismatches.push({
         viewport: vp, role: rr.role, group: rr.group, page: rr.page,
-        prop: c.prop, type: c.type, heron: c.heron, tadmora: c.tadmora,
+        prop: c.prop, type: c.type, heron: c.heron, ulara: c.ulara,
         delta: c.delta, tol: c.tol, severity: c.severity,
       });
     }
@@ -488,14 +488,14 @@ async function runViewport(browser, entry) {
     },
     sites: {
       heron: Object.fromEntries(Object.entries(data.heron).map(([k, v]) => [k, { ok: v.ok, status: v.status, attempts: v.attempts, totalMs: v.totalMs, vw: v.vw, vh: v.vh, docH: v.docH, scroller: v.scroller, dir: v.dir, title: v.title, error: v.error }])),
-      tadmora: Object.fromEntries(Object.entries(data.tadmora).map(([k, v]) => [k, { ok: v.ok, status: v.status, attempts: v.attempts, totalMs: v.totalMs, vw: v.vw, vh: v.vh, docH: v.docH, scroller: v.scroller, dir: v.dir, title: v.title, error: v.error }])),
+      ulara: Object.fromEntries(Object.entries(data.ulara).map(([k, v]) => [k, { ok: v.ok, status: v.status, attempts: v.attempts, totalMs: v.totalMs, vw: v.vw, vh: v.vh, docH: v.docH, scroller: v.scroller, dir: v.dir, title: v.title, error: v.error }])),
     },
     roles: results,
     mismatches,
     unmeasurable: unmeasurable.filter((u) => !u.why.includes('pass failed')),
     raw: {
       heron: Object.fromEntries(Object.entries(data.heron).map(([k, v]) => [k, v.roles])),
-      tadmora: Object.fromEntries(Object.entries(data.tadmora).map(([k, v]) => [k, v.roles])),
+      ulara: Object.fromEntries(Object.entries(data.ulara).map(([k, v]) => [k, v.roles])),
     },
   };
   const outFile = path.join(OUT, `${vp}.json`);
@@ -562,5 +562,5 @@ fs.writeFileSync(reportPath, JSON.stringify(report));
 console.log(`✓ report → ${path.relative(process.cwd(), reportPath)}  (${report.totals.distinctIssues} distinct issues, ${report.totals.mismatchInstances} instances across ${report.totals.viewportRuns} viewports)`);
 console.log('\nTOP 12 (worst instance per role·prop):');
 report.worst.slice(0, 12).forEach((m, i) => {
-  console.log(`${String(i + 1).padStart(2)}. [${m.severity.toFixed(3)}] ${m.viewport} ${m.role}.${m.prop}  heron=${String(m.heron).slice(0, 40)}  tadmora=${String(m.tadmora).slice(0, 40)}  Δ=${String(m.delta).slice(0, 30)}`);
+  console.log(`${String(i + 1).padStart(2)}. [${m.severity.toFixed(3)}] ${m.viewport} ${m.role}.${m.prop}  heron=${String(m.heron).slice(0, 40)}  ulara=${String(m.ulara).slice(0, 40)}  Δ=${String(m.delta).slice(0, 30)}`);
 });

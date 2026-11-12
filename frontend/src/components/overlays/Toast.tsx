@@ -261,7 +261,7 @@ function ToastCard({ item }: { item: ToastItem }) {
         if (!cardRef.current?.contains(e.relatedTarget as Node | null)) resumeTimer();
       }}
       onAnimationEnd={(e) => {
-        if (e.animationName === 'tadmora-toast-out') remove(item.id);
+        if (e.animationName === 'ulara-toast-out') remove(item.id);
       }}
     >
       <span className={`toast-icon toast-icon-${item.variant}`} aria-hidden>

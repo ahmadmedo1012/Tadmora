@@ -14,7 +14,7 @@
  * Loader-gate + theme-gate logic untouched.
  *
  * Usage:
- *   node scripts/r314/capture.mjs --site heron|tadmora --viewport 1440x900 \
+ *   node scripts/r314/capture.mjs --site heron|ulara --viewport 1440x900 \
  *        [--url <url>] [--out <dir>] [--frames 21] [--settle 900] [--wait <ms>]
  *        [--stitch] [--loader-frames] [--theme light|dark] [--chrome]
  */
@@ -26,7 +26,7 @@ const EXE = process.env.HOME + '/.cache/ms-playwright/chromium-1200/chrome-linux
 const SITES = {
   heron: { url: 'https://heronaiapp.com/', wait: 11000 },
   // R315: vite dev server moved 3000 → 5173 (r314 default was stale/dead).
-  tadmora: { url: 'http://localhost:5173/', wait: 9000 },
+  ulara: { url: 'http://localhost:5173/', wait: 9000 },
 };
 
 const args = process.argv.slice(2);
@@ -35,7 +35,7 @@ const get = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i
 // — --stitch/--loader-frames/--chrome silently NEVER fired in r314. Normalize so
 // both flag('stitch') and flag('--stitch') resolve to '--stitch'.
 const flag = (k) => args.includes('--' + k.replace(/^--/, ''));
-const site = get('site', 'tadmora');
+const site = get('site', 'ulara');
 const [w, h] = get('viewport', '1440x900').split('x').map(Number);
 const frames = Number(get('frames', 21));
 const settle = Number(get('settle', 900));
@@ -60,16 +60,16 @@ console.log(`▸ ${site} ${w}x${h} ${theme} → ${outRoot}`);
 console.log(`  url: ${url}`);
 const mainResp = await page.goto(url, { waitUntil: 'load', timeout: 60000 });
 try { await page.evaluate(() => document.fonts.ready); } catch {}
-if (theme === 'dark' && site === 'tadmora') {
-  // Tadmora theme = zustand persist store, localStorage key 'tadmora-theme'
+if (theme === 'dark' && site === 'ulara') {
+  // Ulara theme = zustand persist store, localStorage key 'ulara-theme'
   // ({state:{mode,modeUpdatedAt},version:2}), resolved BEFORE first paint by
   // the index.html bootstrap into <html data-theme="…">. R315 fix (J1): the
-  // old 'tadmora.theme'/'theme' keys + html.dark class were no-ops — dark
+  // old 'ulara.theme'/'theme' keys + html.dark class were no-ops — dark
   // captures silently came out LIGHT. Legacy keys kept for compatibility.
   await page.evaluate(() => {
-    try { localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 })); } catch {}
-    try { localStorage.removeItem('tdmr-theme-profile'); } catch {} // cached profile pref must not override
-    try { localStorage.setItem('tadmora.theme', 'dark'); } catch {}
+    try { localStorage.setItem('ulara-theme', JSON.stringify({ state: { mode: 'dark', modeUpdatedAt: Date.now() }, version: 2 })); } catch {}
+    try { localStorage.removeItem('ula-theme-profile'); } catch {} // cached profile pref must not override
+    try { localStorage.setItem('ulara.theme', 'dark'); } catch {}
     try { localStorage.setItem('theme', 'dark'); } catch {}
     document.documentElement.setAttribute('data-theme', 'dark');
   });
@@ -86,7 +86,7 @@ if (theme === 'dark' && site === 'tadmora') {
 // loader frames (first pass only, before banner/state capture)
 if (flag('--loader-frames')) {
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.evaluate(() => { try { localStorage.removeItem('tadmora.loader-seen'); localStorage.removeItem('loaderSeen'); } catch {} });
+  await page.evaluate(() => { try { localStorage.removeItem('ulara.loader-seen'); localStorage.removeItem('loaderSeen'); } catch {} });
   await page.reload({ waitUntil: 'domcontentloaded' });
   const t0 = Date.now();
   let i = 0;
@@ -97,10 +97,10 @@ if (flag('--loader-frames')) {
   }
 }
 
-// settle: loader + entrance animations. Heron ~7.2s + exit; Tadmora gated.
+// settle: loader + entrance animations. Heron ~7.2s + exit; Ulara gated.
 await page.waitForTimeout(wait);
 // dismiss heron cookie banner? NO — the banner is part of the chrome we judge.
-// (Tadmora banner is being added in R314; both stay as-is.)
+// (Ulara banner is being added in R314; both stay as-is.)
 
 const meta = { site, url, viewport: `${w}x${h}`, theme, frames, capturedAt: new Date().toISOString() };
 // R315: record what ACTUALLY loaded (redirects, soft-404s, titles).
@@ -108,7 +108,7 @@ meta.finalUrl = page.url();
 meta.mainStatus = mainResp ? mainResp.status() : null;
 try { meta.title = await page.title(); } catch { meta.title = null; }
 // R314: detect the real scroll container (Heron scrolls .main-inner via Lenis,
-// overflow hidden; Tadmora scrolls the window). Progress is container-relative.
+// overflow hidden; Ulara scrolls the window). Progress is container-relative.
 const scrollInfo = await page.evaluate(() => {
   const lenisEl = document.querySelector('.lenis, [data-lenis-wrapper]');
   const winH = document.documentElement.scrollHeight;

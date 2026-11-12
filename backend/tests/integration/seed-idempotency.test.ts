@@ -17,7 +17,7 @@
  *      those rows). A rotated TEST-account password is reset to the
  *      published value; a REAL user's rotated password still survives
  *      and user-managed data is not even read for update.
- *   3. The deliberate demo reset — `TADMORA_SEED_FORCE=1` (npm run
+ *   3. The deliberate demo reset — `ULARA_SEED_FORCE=1` (npm run
  *      db:seed:force) — re-runs the create-only body: test passwords
  *      are reset to the published value, demo freshness refreshes,
  *      and ALL user-managed records (progress, grades, non-demo
@@ -57,13 +57,13 @@ const DEMO_PASSWORD = TEST_PASSWORD;
 
 /**
  * Run the seed as a real subprocess — the production deploy path
- * (r183: pass force=true to run the TADMORA_SEED_FORCE=1 demo-reset
+ * (r183: pass force=true to run the ULARA_SEED_FORCE=1 demo-reset
  * path exactly the way `npm run db:seed:force` runs it).
  */
 function runSeed(force = false): Promise<void> {
   return new Promise((resolvePromise, rejectPromise) => {
     const env = { ...process.env };
-    if (force) env.TADMORA_SEED_FORCE = '1';
+    if (force) env.ULARA_SEED_FORCE = '1';
     const child = spawn(process.execPath, ['--import', 'tsx', seedPath], {
       cwd: backendRoot,
       env,
@@ -93,7 +93,7 @@ describe('r182 — deploy-time seed repeat safety (stage 09-C)', () => {
       });
       const slugs = institutions.map((i) => i.slug).sort();
       expect(slugs).toContain('alandalus-demo');
-      expect(slugs).toContain('tadmora-demo');
+      expect(slugs).toContain('ulara-demo');
 
       // R320 §C: the documented STUDENT account lives on @test.ly.
       const student = await prisma.user.findUniqueOrThrow({
@@ -104,7 +104,7 @@ describe('r182 — deploy-time seed repeat safety (stage 09-C)', () => {
       await expect(verifyPassword(student.passwordHash, DEMO_PASSWORD)).resolves.toBe(true);
 
       // Memberships: the multi-institution backbone (r178) — the demo
-      // student belongs to tadmora-demo, and the OWNER deliberately
+      // student belongs to ulara-demo, and the OWNER deliberately
       // has NO membership (platform scope).
       const memberships = await prisma.membership.count();
       expect(memberships).toBeGreaterThanOrEqual(7);
@@ -225,7 +225,7 @@ describe('r182 — deploy-time seed repeat safety (stage 09-C)', () => {
   );
 
   it(
-    'the DELIBERATE force path (TADMORA_SEED_FORCE=1) resets only the demo credentials and still preserves everything else',
+    'the DELIBERATE force path (ULARA_SEED_FORCE=1) resets only the demo credentials and still preserves everything else',
     { timeout: 180_000 },
     async () => {
       await runSeed(); // deploy #1 — fresh bootstrap

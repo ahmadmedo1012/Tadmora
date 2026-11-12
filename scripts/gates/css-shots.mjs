@@ -68,7 +68,7 @@ try {
     const context = await browser.newContext({ viewport: { width: 1440, height: 844 }, locale: 'ar' });
     await context.addInitScript(() => {
       try {
-        sessionStorage.setItem('tadmora-intro-skip', '1');
+        sessionStorage.setItem('ulara-intro-skip', '1');
       } catch { /* storage unavailable */ }
     });
     for (const vp of VPS) {

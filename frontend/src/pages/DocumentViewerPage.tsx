@@ -91,7 +91,7 @@ function fileNamespace(raw: string | null): FileNamespace {
 const SIDE_W_MIN = 280;
 const SIDE_W_MAX = 560;
 const SIDE_W_DEFAULT = 320;
-const SIDE_W_KEY = 'tdmr-doc-side-w';
+const SIDE_W_KEY = 'ula-doc-side-w';
 
 function readStoredSideWidth(): number {
   try {

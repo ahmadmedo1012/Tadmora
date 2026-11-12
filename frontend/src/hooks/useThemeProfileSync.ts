@@ -20,7 +20,7 @@
  *   the hook can tell its own hydrate apart from a user toggle.
  *
  *   PRE-PAINT: every observed profile is cached in localStorage
- *   (`tdmr-theme-profile`) for the index.html bootstrap, which
+ *   ('ula-theme-profile') for the index.html bootstrap, which
  *   applies the same rules before the first paint — the theme no
  *   longer resolves light and flip to dark a second or two after
  *   load once `me` arrives.
@@ -40,10 +40,12 @@ const toLocal  = (s: ServerPreference): ThemeMode  => s.toLowerCase() as ThemeMo
 
 /** localStorage mirror of the last observed profile preference — the
  *  key the index.html bootstrap reads to resolve the theme BEFORE the
- *  first paint. Storage failures (Safari private mode, embedded
- *  browsers) are non-fatal: the bootstrap falls back to the local
- *  store's mode. */
-const PROFILE_CACHE_KEY = 'tdmr-theme-profile';
+ *  first paint. ULARA takeover §1.1: renamed with the brand; the
+ *  bootstrap carries the one-time migration off the retired row, and
+ *  this hook writes ONLY the new key. Storage failures (Safari private
+ *  mode, embedded browsers) are non-fatal: the bootstrap falls back to
+ *  the local store's mode. */
+const PROFILE_CACHE_KEY = 'ula-theme-profile';
 
 function cacheProfilePref(pref: ServerPreference, tsMs: number): void {
   try {

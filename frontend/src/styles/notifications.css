@@ -487,7 +487,7 @@
   pointer-events: auto;
   touch-action: pan-y; /* horizontal swipes dismiss; vertical scrolls pass */
   will-change: transform;
-  animation: tadmora-toast-in var(--motion-duration-medium) var(--motion-ease-decelerate) both;
+  animation: ulara-toast-in var(--motion-duration-medium) var(--motion-ease-decelerate) both;
 }
 
 /* Swipe visual tracking (5-C4, measured live): the entrance's `both`
@@ -509,14 +509,14 @@
 }
 
 .toast-stack .toast[data-closing="true"] {
-  animation: tadmora-toast-out var(--motion-duration-short) var(--motion-ease-accelerate) both;
+  animation: ulara-toast-out var(--motion-duration-short) var(--motion-ease-accelerate) both;
 }
 /* المسافة 12px سعةُ حركةٍ بين درجتي ‎--motion-distance-small (6px) و‎--motion-distance-medium (16px) — ليست فراغًا ولا درجة حركة، فتبقى خامًا عمدًا ولا تُستبدل بـ‎--sp-3. */
-@keyframes tadmora-toast-in {
+@keyframes ulara-toast-in {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
-@keyframes tadmora-toast-out {
+@keyframes ulara-toast-out {
   to { opacity: 0; transform: translateY(12px); }
 }
 
@@ -679,13 +679,13 @@
 
    R342-08: the previous seat painted `--danger-ink` (the DEEP text
    shade #8C230A light / the night ink dark) UNDER `--danger-fg`
-   (warm-ink #191918 — the ink designed for the CORAL fill). That
+   (warm-ink #17130E — the ink designed for the CORAL fill). That
    mixed two tokens from different pairing contracts and measured
    1.98:1 on every page. The tokens' own documented pair (tokens.css
    §danger: "Label ink ON A --danger FILL … consumed by .btn.danger +
    notif badge") is the coral fill + warm-ink label:
-     light — bg var(--danger) #F15534 + var(--danger-fg) #191918 = 5.10:1
-     dark  — bg var(--danger) #FF8E68 + var(--danger-fg) #191918 = 7.81:1
+     light — bg var(--danger) #F15534 + var(--danger-fg) #17130E = 5.10:1
+     dark  — bg var(--danger) #FF8E68 + var(--danger-fg) #17130E = 7.81:1
    Both re-resolve per theme/contrast block. The unread count itself
    is REAL server truth (meta.unread of GET /notifications?limit=1,
    polled 60s — useUnreadNotifications); digits are Western, ≥13px,

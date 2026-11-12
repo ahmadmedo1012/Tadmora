@@ -3,7 +3,7 @@
  * defect, pinned at the transport-mocked journey level).
  *
  * E1 measured the defect LIVE: a paused <video> sizes itself by its
- * POSTER's intrinsic ratio (the seeded /brand/tadmora-mark.svg is
+ * POSTER's intrinsic ratio (the seeded /brand/ulara-mark.svg is
  * square, viewBox 0 0 64 64) — as in-flow content that stretched the
  * aspect-ratio'd .lecture-video-wrap to 818×818 (ratio 1.0) instead of
  * 820×462. The fix makes the WRAP own the geometry (the video is
@@ -27,7 +27,7 @@ test.use({
   apiOverrides: [{
     method: 'GET',
     path: '/lectures/:lectureId',
-    json: { data: { ...LECTURE_DETAIL, posterUrl: '/brand/tadmora-mark.svg' } },
+    json: { data: { ...LECTURE_DETAIL, posterUrl: '/brand/ulara-mark.svg' } },
   }],
 });
 
@@ -38,7 +38,7 @@ test('ساحة الفيديو تحافظ على 16:9 مع بوستر مربّع'
   const video = page.locator('video.lecture-video');
   await expect(wrap).toBeVisible();
   // The brand poster stays (it letterboxes on the matte now).
-  await expect(video).toHaveAttribute('poster', '/brand/tadmora-mark.svg');
+  await expect(video).toHaveAttribute('poster', '/brand/ulara-mark.svg');
 
   const box = (await wrap.boundingBox())!;
   const vBox = (await video.boundingBox())!;

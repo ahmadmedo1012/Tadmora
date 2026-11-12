@@ -41,10 +41,10 @@ MEASURE_JS = """
     rlLineFs: fs('.rl-row-line'),
     armed: document.documentElement.classList.contains('js-reveal-armed'),
     // Arabic shaping: SplitText must NOT have wrapped words/chars in the CTA title
-    ctaTitleSpans: q('.fo-cta-title') ? q('.fo-cta-title').querySelectorAll('.tdmr-line').length : null,
+    ctaTitleSpans: q('.fo-cta-title') ? q('.fo-cta-title').querySelectorAll('.ula-line').length : null,
     ctaWordSpans: q('.fo-cta-title') ? q('.fo-cta-title').querySelectorAll('div > div, span[style]').length : null,
     ctaTitleHTML: q('.fo-cta-title') ? q('.fo-cta-title').innerHTML.slice(0, 160) : null,
-    ctaLineOpacity: q('.fo-cta-title .tdmr-line') ? getComputedStyle(q('.fo-cta-title .tdmr-line')).opacity : null,
+    ctaLineOpacity: q('.fo-cta-title .ula-line') ? getComputedStyle(q('.fo-cta-title .ula-line')).opacity : null,
   };
 }
 """

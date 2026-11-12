@@ -3,7 +3,7 @@ import { env } from './env.js';
 
 export const logger = pino({
   level: env.isProd ? 'info' : 'debug',
-  base: { service: 'tadmora' },
+  base: { service: 'ulara' },
   // Seatbelt (11-a P2-14): no current call site logs secrets (verified
   // across the auth paths), but redact guarantees future ones can't leak
   // credentials into the JSON log stream either. Each path uses at most

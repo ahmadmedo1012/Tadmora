@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local verification proxy for the Tadmora mobile web export.
+"""Local verification proxy for the Ulara mobile web export.
 
 Serves the static export at / and forwards /api/v1/* to the real backend.
 Server-side requests carry no Origin header, so the backend's CORS
@@ -16,7 +16,7 @@ import ssl
 
 PORT = 9999
 DIST = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dist-web"))
-HOST = "tadmora.vercel.app"
+HOST = "ulara.vercel.app"
 
 ctx = ssl.create_default_context()
 

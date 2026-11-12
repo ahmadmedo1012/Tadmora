@@ -34,7 +34,7 @@ const CFG = {
   accessKeyId: 'AKIDEXAMPLE',
   secretAccessKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
   region: 'auto',
-  bucket: 'tadmora-lectures',
+  bucket: 'ulara-lectures',
   endpoint: 'https://account.r2.cloudflarestorage.com',
 };
 
@@ -59,7 +59,7 @@ describe('presignS3Url', () => {
     );
     expect(url.protocol).toBe('https:');
     expect(url.host).toBe('account.r2.cloudflarestorage.com');
-    expect(url.pathname).toBe('/tadmora-lectures/lectures/cabc.mp4');
+    expect(url.pathname).toBe('/ulara-lectures/lectures/cabc.mp4');
     expect(url.searchParams.get('X-Amz-Algorithm')).toBe('AWS4-HMAC-SHA256');
     expect(url.searchParams.get('X-Amz-Credential')).toBe('AKIDEXAMPLE/20261029/auto/s3/aws4_request');
     expect(url.searchParams.get('X-Amz-Date')).toBe('20261029T120000Z');
@@ -112,7 +112,7 @@ describe('presignS3MultipartParts', () => {
     expect(parts.map((p) => p.partNumber)).toEqual([1, 2, 3]);
     for (const p of parts) {
       const url = new URL(p.url);
-      expect(url.pathname).toBe('/tadmora-lectures/lectures/cabc.mp4');
+      expect(url.pathname).toBe('/ulara-lectures/lectures/cabc.mp4');
       expect(url.searchParams.get('partNumber')).toBe(String(p.partNumber));
       expect(url.searchParams.get('uploadId')).toBe('UPID');
     }

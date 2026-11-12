@@ -11,7 +11,7 @@ import {
 import './cursor.css';
 
 /* ═════════════════════════════════════════════════════════════════════
-   CursorManager — R305-A2 additive pointer layer (original Tadmora
+   CursorManager — R305-A2 additive pointer layer (original Ulara
    implementation of the Heron-style cursor mechanics).
 
    PUBLIC CONTRACT

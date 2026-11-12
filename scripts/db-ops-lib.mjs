@@ -35,7 +35,7 @@
  *   - displayCommand:       shell-safe rendering with every postgres URL
  *                           redacted — what --dry-run prints.
  *   - defaultBackupPath / timestampSlug / slugifyLabel: backups/
- *                           tadmora-<ts>[-label].dump naming.
+ *                           ulara-<ts>[-label].dump naming.
  *   - sha256File / humanSize: post-backup evidence line.
  */
 
@@ -309,10 +309,10 @@ export function slugifyLabel(label) {
     .slice(0, 40);
 }
 
-/** Default dump path: backups/tadmora-<timestamp>[-<label>].dump */
+/** Default dump path: backups/ulara-<timestamp>[-<label>].dump */
 export function defaultBackupPath(now = new Date(), label = '') {
   const slug = slugifyLabel(label);
-  return `backups/tadmora-${timestampSlug(now)}${slug ? `-${slug}` : ''}.dump`;
+  return `backups/ulara-${timestampSlug(now)}${slug ? `-${slug}` : ''}.dump`;
 }
 
 // ─── Post-backup evidence ───────────────────────────────────────────
@@ -380,7 +380,7 @@ export const VERIFY_QUERIES = [
 
 /**
  * Pure verdict from the measured values. HARD failures mean "this is not
- * a sane Tadmora restore" (broken pg_restore, wrong DB, empty target);
+ * a sane Ulara restore" (broken pg_restore, wrong DB, empty target);
  * WARNs mean "restore ran but deserves the operator's eyes".
  */
 export function summarizeVerify({ tables, migrations, users, ownerCount }) {
@@ -399,7 +399,7 @@ export function summarizeVerify({ tables, migrations, users, ownerCount }) {
 
   if (migrations <= 0) {
     level = 'FAIL';
-    findings.push('جدول _prisma_migrations فارغ أو غائب — المخطط ليس مخطط تادمورا / _prisma_migrations empty or missing — not a Tadmora schema');
+    findings.push('جدول _prisma_migrations فارغ أو غائب — المخطط ليس مخطط أُلارا / _prisma_migrations empty or missing — not an Ulara schema');
   } else {
     findings.push(`الترحيلات المسجَّلة: ${migrations} ✅ / recorded migrations: ${migrations} ✅`);
   }

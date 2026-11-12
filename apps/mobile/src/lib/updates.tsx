@@ -23,7 +23,7 @@ import { themeFor } from "@/design/theme";
 
 const STATUS_URL =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-  "https://tadmora.vercel.app/api/v1";
+  "https://ulara.vercel.app/api/v1";
 
 function appSemver(): string {
   return (
@@ -75,7 +75,7 @@ export async function checkAndDownloadUpdate(showToast = true): Promise<boolean>
     crumb("ota: downloading update");
     await u.fetchUpdateAsync();
     if (showToast) {
-      toast.info("تحديث جاهز — أعد التشغيل لتطبيقه", "تحديث تادمورا");
+      toast.info("تحديث جاهز — أعد التشغيل لتطبيقه", "تحديث أُلارا");
     }
     crumb("ota: update downloaded");
     return true;
@@ -137,7 +137,7 @@ export function useVersionGate(): VersionGate {
         };
         clearTimeout(timer);
         const min = body.data?.minAppVersion ?? null;
-        const updateUrl = body.data?.updateUrl ?? "https://tadmora.vercel.app/app";
+        const updateUrl = body.data?.updateUrl ?? "https://ulara.vercel.app/app";
         if (cancelled) return;
         if (min && compareSemver(appSemver(), min) < 0) {
           crumb(`version gate: BLOCKED (app ${appSemver()} < min ${min})`);

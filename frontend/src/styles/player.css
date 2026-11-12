@@ -1,6 +1,6 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — player.css · VideoPlayerChrome (`.vpc`) — branded player
-   skin (R2-B, «ليل تادمورا» v3 family)
+   ULARA — player.css · VideoPlayerChrome (`.vpc`) — branded player
+   skin (R2-B, «ليل أُلارا» v3 family)
    ─────────────────────────────────────────────────────────────────────
    The chrome for the core learning surface: the lecture video player.
    Same product family as the v3 night shell — calm + focused, a WORK
@@ -35,7 +35,7 @@
      physical matte (the documented #000 rationale on .lecture-video),
      never a theme card. The sealed neutrals (void/navy/ink/mist) are
      the island's own; the SIGNAL follows the system accent token so
-     the chrome speaks the reference's #FA3600 grammar (R313 WP-E:
+     the chrome speaks the reference's #C43E16 grammar (R313 WP-E:
      the old v3 gold family is retired — progress + play ride the
      accent, per the lead's player brief). */
   .vpc {
@@ -359,7 +359,7 @@
     padding: 0;
     border: 0;
     /* R313 (WP-E): square control — the accent slab (the reference
-       puts white labels on #FA3600 fills). */
+       puts white labels on #C43E16 fills). */
     border-radius: var(--r-sm);
     background: var(--vpc-accent);
     color: var(--vpc-void);

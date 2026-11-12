@@ -1,11 +1,11 @@
 /**
  * r315 C4-D — the EdgeTab year is COMPUTED, never hardcoded.
  *
- * The vertical tab label «منصّة مستقلّة · تادمورا ٢٠٢٦» carried a baked
+ * The vertical tab label «منصّة مستقلّة · أُلارا ٢٠٢٦» carried a baked
  * year that would keep rendering a stale ٢٠٢٦ through 2027+ (the W5
  * carried flag — text-only pass, code fix deferred to this round).
  * The fix computes the year at render; this belt pins both ends:
- *   · the RENDERED label equals «منصّة مستقلّة · تادمورا <current year>»
+ *   · the RENDERED label equals «منصّة مستقلّة · أُلارا <current year>»
  *     with the year independently re-derived through ICU (ar-EG
  *     numbering), so a revert to any hardcode fails the day the
  *     clock rolls past the baked year;
@@ -35,7 +35,7 @@ describe('r315 C4-D — EdgeTab year is computed (Arabic-Indic, never hardcoded)
   it('renders the honest label with the CURRENT year in Arabic-Indic digits', () => {
     const { container } = render(<EdgeTab />);
     const label = container.querySelector('.et-label');
-    expect(label?.textContent).toBe(`منصّة مستقلّة · تادمورا ${yearArIcu()}`);
+    expect(label?.textContent).toBe(`منصّة مستقلّة · أُلارا ${yearArIcu()}`);
   });
 
   it('the label carries zero Latin digits (the drafting-script numeral family only)', () => {
@@ -51,7 +51,7 @@ describe('r315 C4-D — EdgeTab year is computed (Arabic-Indic, never hardcoded)
     const live = read('src/components/landing/chrome/EdgeTab.tsx')
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/\/\/[^\n]*/g, '');
-    expect(live).not.toContain('تادمورا ٢٠٢٦'); // the retired hardcode
+    expect(live).not.toContain('أُلارا ٢٠٢٦'); // the retired hardcode
     expect(live).toContain('yearAr()'); // the computed seat
   });
 });

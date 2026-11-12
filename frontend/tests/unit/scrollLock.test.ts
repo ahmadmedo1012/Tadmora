@@ -16,7 +16,7 @@ import {
   releaseScrollLock,
 } from '../../src/lib/scrollLock';
 
-const RULE_ID = 'tdmr-scroll-lock-rule';
+const RULE_ID = 'ula-scroll-lock-rule';
 
 describe('scrollLock', () => {
   const holders: string[] = [];

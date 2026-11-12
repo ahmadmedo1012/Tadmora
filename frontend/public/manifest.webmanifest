@@ -1,14 +1,14 @@
 {
-  "name": "تادمورا — نظام تشغيل الجامعة",
-  "short_name": "تادمورا",
+  "name": "أُلارا — نظام تشغيل الجامعة",
+  "short_name": "أُلارا",
   "description": "نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "theme_color": "#F6F6EE",
-  "background_color": "#F6F6EE",
+  "theme_color": "#F5F1E8",
+  "background_color": "#F5F1E8",
   "icons": [
     {
       "src": "/brand/icon-192.png",

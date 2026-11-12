@@ -3,7 +3,7 @@
 
 Measures absolute document tops of platform/why/roles (+ journey, cta) on BOTH
 sides at one viewport, in one dev-once call, to find where the pre-cta stack
-offset between heron and tadmora comes from.
+offset between heron and ulara comes from.
 
 Usage: bash scripts/r333/dev-once.sh --web-only -- python3 scripts/r333/pf-gap-probe.py --vp 1920
 """
@@ -11,11 +11,11 @@ from __future__ import annotations
 import argparse, json, sys
 from pathlib import Path
 
-sys.path.insert(0, "/home/z/tadmora/scripts/twin")
+sys.path.insert(0, "/home/z/ulara/scripts/twin")
 import driver  # noqa: E402
 from playwright.sync_api import sync_playwright
 
-CFG = json.loads(Path("/home/z/tadmora/scripts/twin/config.json").read_text())
+CFG = json.loads(Path("/home/z/ulara/scripts/twin/config.json").read_text())
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--vp", default="1920")
@@ -28,7 +28,7 @@ with sync_playwright() as pw:
     ctx = browser.new_context(viewport={"width": vp["width"], "height": vp["height"]},
                               device_scale_factor=1, locale="en-US")
     out = {}
-    for side in ("heron", "tadmora"):
+    for side in ("heron", "ulara"):
         page = ctx.new_page()
         page.goto(CFG["urls"][side], wait_until="networkidle", timeout=60000)
         driver.ready(page, extra_ms=2000)
@@ -49,11 +49,11 @@ with sync_playwright() as pw:
         page.close()
     browser.close()
 
-print("\n-- tops side by side (heron vs tadmora, Δ) --")
+print("\n-- tops side by side (heron vs ulara, Δ) --")
 for name in ("journey", "platform", "why", "roles", "cta", "footer"):
-    h, m = out["heron"].get(name), out["tadmora"].get(name)
+    h, m = out["heron"].get(name), out["ulara"].get(name)
     if h and m:
         print(f"{name:9s} H.top={h['top']:9.1f} h={h['h']:7.1f} | "
               f"M.top={m['top']:9.1f} h={m['h']:7.1f} | Δtop={h['top']-m['top']:+8.1f}")
     else:
-        print(f"{name:9s} MISSING heron={bool(h)} tadmora={bool(m)}")
+        print(f"{name:9s} MISSING heron={bool(h)} ulara={bool(m)}")

@@ -23,11 +23,19 @@ import {
   visualGap,
 } from '../../../../scripts/r318/gate-lib.mjs';
 
-/* تادمورا in Arabic presentation forms (what OCR often emits):
- * ت initial \uFE97 · ا final \uFE8E · د isolated \u062F ·
- * م initial \uFEE3 · و final \uFEEE · ر isolated \u0631 ·
- * ا isolated \u0627 — NFKC folds all to base letters. */
-const WORDMARK_PF = '\uFE97\uFE8E\u062F\uFEE3\uFEEE\u0631\u0627';
+/* أُلارا in Arabic presentation forms (what OCR often emits):
+ * أ isolated \uFE83 · damma \u064F · ل isolated \uFEDD ·
+ * ا final \uFE8E · ر isolated \u0631 · ا isolated \u0627 —
+ * NFKC folds the presentation forms onto the base letters. */
+const WORDMARK_PF = '\uFE83\u064F\uFEDD\uFE8E\u0631\u0627';
+
+/* normalizeArabic strips the harakat BY DESIGN (OCR emits them as
+ * noise) — so the wordmark's NORMAL form is the damma-less letter
+ * skeleton «ألارا». That is an internal comparison artifact, NOT a
+ * rendered surface: the rendered wordmark keeps its damma (pinned in
+ * tests/unit/r323-brand-system.test.ts) — the damma-less form is
+ * forbidden only as PRODUCT copy. */
+const WORDMARK_NORM = 'ألارا';
 
 describe('parseColor — Chrome computed-value formats', () => {
   it('parses rgb()/rgba() and transparent', () => {
@@ -153,24 +161,24 @@ describe('RTL-aware word-gap geometry', () => {
 
 describe('Arabic OCR normalization', () => {
   it('folds presentation forms onto base letters (NFKC) so OCR glyphs compare', () => {
-    expect(normalizeArabic(WORDMARK_PF)).toBe('تادمورا');
+    expect(normalizeArabic(WORDMARK_PF)).toBe(WORDMARK_NORM);
   });
 
   it('strips spaces, diacritics and tatweel before comparing', () => {
-    expect(normalizeArabic('تـ ا دَ مـ و رَ ا')).toBe('تادمورا');
-    expect(normalizeArabic('ت\u064Bادمورا')).toBe('تادمورا'); // fathan on ت
+    expect(normalizeArabic('أُ ل ا ر ا')).toBe(WORDMARK_NORM);
+    expect(normalizeArabic('أ\u064Bلارا')).toBe(WORDMARK_NORM); // fathan on أ
   });
 
   it('drops latin/punctuation noise and keeps only Arabic letters', () => {
-    expect(normalizeArabic('TADMORA تادمورا — 2026')).toBe('تادمورا');
+    expect(normalizeArabic('ULARA أُلارا — 2026')).toBe(WORDMARK_NORM);
   });
 
   it('containsWordmark accepts spaced/presentation OCR output and rejects misses', () => {
-    expect(containsWordmark('ت ا د م و ر ا')).toBe(true);
+    expect(containsWordmark('أ ل ا ر ا')).toBe(true);
     expect(containsWordmark(WORDMARK_PF)).toBe(true);
-    expect(containsWordmark('التادمورا')).toBe(true); // containment — prefixes survive
-    expect(containsWordmark('تادمر')).toBe(false);
-    expect(containsWordmark('تادومرا')).toBe(false); // wrong letter order is a real miss
+    expect(containsWordmark('الأُلارا')).toBe(true); // containment — prefixes survive
+    expect(containsWordmark('أُلار')).toBe(false); // truncated is a real miss
+    expect(containsWordmark('أُالرا')).toBe(false); // wrong letter order is a real miss
     expect(containsWordmark('')).toBe(false);
   });
 });

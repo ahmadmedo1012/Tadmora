@@ -9,13 +9,13 @@ plus a manifest.json (urls, sizes, hashes, overlay policy note).
 
 OVERLAY POLICY (rubric §3.4 — different from scripts/twin/capture.py):
   consent banners / cookie chrome / award badges are shown AS-IS on BOTH sides.
-  No consent seeding, no CSS masking, no locale forcing (tadmora is judged
+  No consent seeding, no CSS masking, no locale forcing (ulara is judged
   natively as Arabic/RTL). The ONLY allowed flag, --wheel, performs identical
   gentle user-like wheel nudges on BOTH sides at fixed times (default off).
 
 CLI:
   python3 scripts/r333/judge/record_first10s.py --run-id run-001 \
-      [--engines chromium,webkit] [--vps 1440,390] [--sides heron,tadmora] \
+      [--engines chromium,webkit] [--vps 1440,390] [--sides heron,ulara] \
       [--seconds 10] [--wheel] [--out-root /home/z/evidence-r333/judge] \
       [--dims 360=360x740]
 
@@ -33,8 +33,8 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, "/home/z/tadmora/scripts/twin")
-TWIN_CFG = json.loads(Path("/home/z/tadmora/scripts/twin/config.json").read_text())
+sys.path.insert(0, "/home/z/ulara/scripts/twin")
+TWIN_CFG = json.loads(Path("/home/z/ulara/scripts/twin/config.json").read_text())
 URLS = TWIN_CFG["urls"]
 VPDIMS = {v["name"]: {"width": v["width"], "height": v["height"]}
           for v in TWIN_CFG["viewports"]}
@@ -80,7 +80,7 @@ def record_one(pw, engine: str, vp: str, side: str, seconds: int,
         user_agent=UA_CHROMIUM if engine == "chromium" else None,
         record_video_dir=str(tmp),
         record_video_size={"width": w, "height": h},
-        locale="en-US" if side == "heron" else None,  # heron is EN; leave tadmora native (RTL)
+        locale="en-US" if side == "heron" else None,  # heron is EN; leave ulara native (RTL)
     )
     page = ctx.new_page()
     t0 = time.time()
@@ -115,7 +115,7 @@ def main():
     ap.add_argument("--out-root", default="/home/z/evidence-r333/judge")
     ap.add_argument("--engines", default="chromium")
     ap.add_argument("--vps", default="1440,390")
-    ap.add_argument("--sides", default="heron,tadmora")
+    ap.add_argument("--sides", default="heron,ulara")
     ap.add_argument("--seconds", type=int, default=10)
     ap.add_argument("--wheel", action="store_true",
                     help="identical gentle wheel nudges at t=4s/8s on BOTH sides")
