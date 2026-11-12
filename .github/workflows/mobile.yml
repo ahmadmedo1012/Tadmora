@@ -283,14 +283,14 @@ jobs:
   # are non-secret by construction and the key never leaves the job.
   # (The direct channel keeps its stable key — android-apk.yml.)
   #
-  # DATABASE_URL: postgresql://tadmora@localhost:5433/tadmora — the
-  # documented boot-pg.sh URL is postgresql://tadmora@127.0.0.1:5433/tadmora
+  # DATABASE_URL: postgresql://ulara@localhost:5433/ulara — the
+  # documented boot-pg.sh URL is postgresql://ulara@127.0.0.1:5433/ulara
   # (docs/05-setup.md §3), with one verified deviation: `localhost`, NOT
   # `127.0.0.1` — backend/scripts/migrate-deploy.mjs's DNS pre-flight
   # (dns.resolve4) cannot resolve IP literals (ENOTFOUND — reproduced in
   # the 1-B sandbox: resolve4("127.0.0.1") → ENOTFOUND, resolve4("localhost")
   # → 127.0.0.1, and a full db:deploy run passes against the localhost form).
-  # The `tadmora` database itself must be CREATED after boot — boot-pg.sh
+  # The `ulara` database itself must be CREATED after boot — boot-pg.sh
   # only initdb's (postgres/template0/template1 exist; the app DB does not).
   android-smoke:
     name: Android smoke (emulator · five-role journey · logcat gate)
@@ -306,7 +306,7 @@ jobs:
     # runaway runs, never cut healthy long ones.
     timeout-minutes: 65
     env:
-      DATABASE_URL: postgresql://tadmora@localhost:5433/tadmora
+      DATABASE_URL: postgresql://ulara@localhost:5433/ulara
       EXPO_NO_TELEMETRY: '1'
       CI: 'true'
     steps:
@@ -373,8 +373,8 @@ jobs:
           npm install --no-audit --no-fund
           bash boot-pg.sh
 
-      - name: Create the tadmora database
-        # boot-pg.sh initdb's with user tadmora but creates NO application
+      - name: Create the ulara database
+        # boot-pg.sh initdb's with user ulara but creates NO application
         # database (only postgres/template0/template1) — create it with the
         # pg client that ships in tools/node_modules. The SQL passes the
         # name as a $1 parameter so the whole snippet stays inside one
@@ -384,12 +384,12 @@ jobs:
           node -e '
             const { Client } = require("pg");
             (async () => {
-              const c = new Client({ host: "127.0.0.1", port: 5433, user: "tadmora", database: "postgres" });
+              const c = new Client({ host: "127.0.0.1", port: 5433, user: "ulara", database: "postgres" });
               await c.connect();
-              const r = await c.query("SELECT 1 FROM pg_database WHERE datname = $1", ["tadmora"]);
-              if (r.rows.length === 0) await c.query("CREATE DATABASE tadmora");
+              const r = await c.query("SELECT 1 FROM pg_database WHERE datname = $1", ["ulara"]);
+              if (r.rows.length === 0) await c.query("CREATE DATABASE ulara");
               await c.end();
-              console.log("db tadmora ready");
+              console.log("db ulara ready");
             })().catch((e) => { console.error(e.message); process.exit(1); });
           '
 
@@ -406,14 +406,14 @@ jobs:
           npm run db:seed
 
       - name: Boot backend (:4000, test accounts on) + wait for /api/v1/status
-        # TADMORA_TEST_ACCOUNTS=1 → backend/src/index.ts:36 ensures the
+        # ULARA_TEST_ACCOUNTS=1 → backend/src/index.ts:36 ensures the
         # @test.ly set at boot (non-fatal). The two JWT secrets are
         # generated per job — they never leave the runner and only need
         # to be ≥32 chars (backend/src/env.ts).
         run: |
           export JWT_ACCESS_SECRET="$(openssl rand -hex 48)"
           export JWT_REFRESH_SECRET="$(openssl rand -hex 48)"
-          export TADMORA_TEST_ACCOUNTS=1
+          export ULARA_TEST_ACCOUNTS=1
           export PORT=4000
           nohup npm run dev -w backend > backend.log 2>&1 &
           for i in $(seq 1 40); do
@@ -435,16 +435,16 @@ jobs:
       - name: Build the release APK (throwaway keystore · 10.0.2.2 base URL)
         env:
           EXPO_PUBLIC_API_BASE_URL: http://10.0.2.2:4000/api/v1
-          TADMORA_ANDROID_KEYSTORE: ${{ runner.temp }}/smoke.jks
-          TADMORA_ANDROID_KEYSTORE_ALIAS: smoke
+          ULARA_ANDROID_KEYSTORE: ${{ runner.temp }}/smoke.jks
+          ULARA_ANDROID_KEYSTORE_ALIAS: smoke
           # ONE password for store AND key: PKCS12 keystores cannot carry a
           # separate key password — Java's keytool IGNORES a differing
           # -keypass (verified: "Different store and key passwords not
           # supported for PKCS12 KeyStores. Ignoring user-specified -keypass
           # value.") — a mismatched keyPassword in key.properties would fail
           # gradle signing. Fixed non-secret by construction (see above).
-          TADMORA_ANDROID_KEYSTORE_PASSWORD: smoke-keystore-pass
-          TADMORA_ANDROID_KEYSTORE_KEY_PASSWORD: smoke-keystore-pass
+          ULARA_ANDROID_KEYSTORE_PASSWORD: smoke-keystore-pass
+          ULARA_ANDROID_KEYSTORE_KEY_PASSWORD: smoke-keystore-pass
         run: |
           # Throwaway key: generated and destroyed with the job — the smoke
           # does not need the production signature (see the job header).
@@ -453,7 +453,7 @@ jobs:
             -alias smoke -keyalg RSA -keysize 2048 -validity 10000 \
             -storetype PKCS12 \
             -storepass smoke-keystore-pass -keypass smoke-keystore-pass \
-            -dname "CN=Tadmora Smoke, OU=CI, O=Tadmora, L=Tripoli, ST=Tripoli, C=LY"
+            -dname "CN=Ulara Smoke, OU=CI, O=Ulara, L=Tripoli, ST=Tripoli, C=LY"
           scripts/build-android-local.sh
           APK="apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
           [ -f "$APK" ] || { echo "::error::release APK not found at $APK"; exit 1; }
@@ -489,6 +489,13 @@ jobs:
       # state in the fail.flag FILE (not a variable), the five-role loop
       # single-lined, and the forensics capture runs BEFORE the only line
       # allowed to exit non-zero (the last one).
+      # Maestro debug capture: the CLI writes every flow's screenshots +
+      # UI hierarchy under $HOME/.maestro/tests on the RUNNER — the same
+      # machine this script and the upload step below run on. Copy that
+      # tree next to the other forensics files (single standalone line,
+      # same sh -c constraint), ALWAYS — a green run's output is exactly
+      # as diagnostic as a red one's, and run #10's post-mortem had no
+      # UI evidence at all.
       - name: Emulator + Maestro five-role journey
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -505,6 +512,7 @@ jobs:
             timeout 60 "$ANDROID_HOME/platform-tools/adb" logcat -d > logcat.txt 2>&1; [ -s logcat.txt ] || echo "(logcat capture failed — adb device state follows:)" >> logcat.txt
             cat adb-devices.txt >> logcat.txt 2>/dev/null || true
             wc -c logcat.txt || true
+            cp -r "$HOME/.maestro/tests" maestro-debug 2>/dev/null || echo "(maestro debug output not found under \$HOME/.maestro/tests — no flow produced output)" > maestro-debug.txt || true
             if [ -f fail.flag ]; then echo "::error::android-smoke stages failed — forensics are in the artifact"; exit 1; fi
       - name: Crash gate (logcat forensics — fails the job on signatures)
         # Deliberately OUTSIDE the emulator-runner script so it always
@@ -533,7 +541,7 @@ jobs:
             echo "logcat clean — no crash signatures. The five-role journeys either passed or failed on assertions; the trace is attached either way."
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Upload forensics (logcat + backend.log + crash report)
+      - name: Upload forensics (logcat + backend.log + crash report + Maestro debug output)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -543,4 +551,6 @@ jobs:
             adb-devices.txt
             crash-report.txt
             backend.log
+            maestro-debug
+            maestro-debug.txt
           if-no-files-found: error

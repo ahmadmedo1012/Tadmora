@@ -86,11 +86,33 @@ if (existsSync(join(ROOT, 'frontend/dist'))) {
 }
 
 // ── 4. the no-trace gate (§5 — only meaningful post-rename) ──────────────
+// The pattern family matches identity-gate v2: the retired madarek
+// identity AND the tadmora/تادمورا/tdmr identity it replaced, all
+// case-insensitive. The exclusions mirror the identity gate's whitelist
+// (historical records under docs/{ops,archive,redesign,history,releases,
+// screenshots,rebrand-tadmora,brand,legal}, CHANGELOG.md, the immutable
+// prisma migrations, lockfiles, the conformance evidence blobs, and the
+// gate/brand scripts that necessarily spell the patterns) — so this row
+// measures exactly the surface the identity gate gates, and 0 is
+// reachable once the rename is done (report-only: the gate gates).
 const TRACE_RX = 'tadmora|تادمورا|تدمر|tdmr|madarek|مدارك|mdrk|heron|zawia|الزاوية|onrender|khatam|afc4265f';
-const traceHits = sh(`git grep -IiE '${TRACE_RX}' -- . ':!node_modules' | wc -l`) ?? '?';
+const TRACE_EXCLUDES = [
+  'node_modules',
+  'CHANGELOG.md',
+  'docs/ops', 'docs/archive', 'docs/redesign', 'docs/history',
+  'docs/releases', 'docs/screenshots', 'docs/rebrand-tadmora',
+  'docs/brand', 'docs/legal',
+  'scripts/scorecard.mjs',
+  'scripts/conformance/results',
+  'backend/prisma/migrations',
+  'scripts/brand/identity-gate.sh', 'scripts/brand/logo-gate.sh',
+  'scripts/brand/ulara-kit.mjs', 'scripts/brand/wordmark-build.mjs',
+  'package-lock.json', '**/package-lock.json',
+].map((p) => `:!${p}`);
+const traceHits = sh(`git grep -IiE '${TRACE_RX}' -- . ${TRACE_EXCLUDES.map((e) => `'${e}'`).join(' ')} | wc -l`) ?? '?';
 row('no-trace gate', '0 (post Gate A)', String(traceHits),
   traceHits === '0' ? '✅' : '⚠️ pre-rename',
-  "git grep -IiE 'tadmora|…' — the count is the rename's remaining surface");
+  "git grep -IiE 'tadmora|…' with the identity-gate whitelist — the count is the rename's remaining surface");
 
 // ── 5. npm audit (high/critical) ─────────────────────────────────────────
 const audit = sh('npm audit --omit=dev --json');

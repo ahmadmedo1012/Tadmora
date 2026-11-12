@@ -26,7 +26,7 @@ on:
       ipa_name:
         description: "IPA file/artifact name, without .ipa"
         required: false
-        default: "Tadmora"
+        default: "Ulara"
 
 # The rolling "latest" release is created/updated from the workflow, so the
 # default GITHUB_TOKEN needs write access to release assets. No PAT is used.
@@ -48,10 +48,10 @@ env:
   # app.config.ts default). This is not a secret. It MUST stay the current
   # production API host — the workflow validates the resolved config AND
   # the URL embedded in the built binary before publishing, so a stale
-  # host here (e.g. the retired tadmora.onrender.com) fails the build
-  # instead of silently shipping an app that talks to a dead server.
-  EXPO_PUBLIC_API_BASE_URL: "https://tadmora.vercel.app/api/v1"
-  IPA_NAME: ${{ github.event.inputs.ipa_name || 'Tadmora' }}
+  # host here (e.g. a retired pre-Vercel host like onrender.com) fails the
+  # build instead of silently shipping an app that talks to a dead server.
+  EXPO_PUBLIC_API_BASE_URL: "https://ulara.vercel.app/api/v1"
+  IPA_NAME: ${{ github.event.inputs.ipa_name || 'Ulara' }}
 
 jobs:
   build-unsigned-ipa:
@@ -115,13 +115,13 @@ jobs:
           const c = require('./build/expo-config.json');
           const fail = (msg) => { console.error(`::error::${msg}`); process.exit(1); };
           if (c.sdkVersion !== '58.0.0') fail(`Unexpected Expo SDK: ${c.sdkVersion}`);
-          if (c.ios?.bundleIdentifier !== 'ly.tadmora.mobile') {
+          if (c.ios?.bundleIdentifier !== 'ly.ulara.app') {
             fail(`Unexpected iOS bundle id: ${c.ios?.bundleIdentifier}`);
           }
           if (!c.runtimeVersion) fail('runtimeVersion is missing');
           // The API host this build will talk to. Guarded so an obsolete
-          // hostname can never ship silently (the retired Render host
-          // tadmora.onrender.com must never come back here).
+          // hostname can never ship silently (the retired pre-Vercel host
+          // onrender.com must never come back here).
           const api = c.extra?.apiBaseUrl;
           const EXPECTED = process.env.EXPO_PUBLIC_API_BASE_URL;
           if (api !== EXPECTED) {
@@ -202,13 +202,13 @@ jobs:
           BID=$(bundle_id_for_scheme "$SCHEME")
           echo "Project scheme: $PROJECT_SCHEME (bundle id: ${BID:-<none>})"
 
-          if [ "$BID" != "ly.tadmora.mobile" ]; then
+          if [ "$BID" != "ly.ulara.app" ]; then
             echo "Project scheme did not resolve the app bundle id; scanning schemes..."
             SCHEME=""
             while IFS= read -r candidate; do
               [ -z "$candidate" ] && continue
               CANDIDATE_BID=$(bundle_id_for_scheme "$candidate")
-              if [ "$CANDIDATE_BID" = "ly.tadmora.mobile" ]; then
+              if [ "$CANDIDATE_BID" = "ly.ulara.app" ]; then
                 SCHEME="$candidate"
                 BID="$CANDIDATE_BID"
                 break
@@ -216,8 +216,8 @@ jobs:
             done < <(jq -r '(.workspace // .project).schemes[]?' build/xcode-list.json | grep -v '^Pods' || true)
           fi
 
-          if [ -z "$SCHEME" ] || [ "$BID" != "ly.tadmora.mobile" ]; then
-            echo "::error::Could not find a scheme that builds ly.tadmora.mobile"
+          if [ -z "$SCHEME" ] || [ "$BID" != "ly.ulara.app" ]; then
+            echo "::error::Could not find a scheme that builds ly.ulara.app"
             exit 1
           fi
 
@@ -326,7 +326,7 @@ jobs:
           echo "CFBundleSupportedPlatforms[0]: $SUPPORTED_PLATFORM"
           echo "DTPlatformName: $DT_PLATFORM"
 
-          test "$BUNDLE_ID" = "ly.tadmora.mobile"
+          test "$BUNDLE_ID" = "ly.ulara.app"
           test "$SUPPORTED_PLATFORM" = "iPhoneOS"
           test "$DT_PLATFORM" = "iphoneos"
 
@@ -460,7 +460,7 @@ jobs:
             echo "::error::$EXPECTED_HOST not found in main.jsbundle (or the app.config asset) — the binary does not target the current production API"
             exit 1
           fi
-          for OBSOLETE in 'tadmora.onrender.com' '.onrender.com' 'herokuapp.com'; do
+          for OBSOLETE in '.onrender.com' 'herokuapp.com'; do
             if grep -q "$OBSOLETE" "$STRINGS_OUT"; then
               echo "::error::Retired host \"$OBSOLETE\" found embedded in main.jsbundle"
               exit 1
@@ -479,7 +479,7 @@ jobs:
       - name: Upload the unsigned IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Tadmora-unsigned-ipa
+          name: Ulara-unsigned-ipa
           path: |
             apps/mobile/build/${{ env.IPA_NAME }}.ipa
             apps/mobile/build/SHA256SUMS.txt
@@ -494,7 +494,7 @@ jobs:
         run: |
           set -euo pipefail
           TAG="sidestore-latest"
-          TITLE="Tadmora.ipa — latest unsigned SideStore build"
+          TITLE="Ulara.ipa — latest unsigned SideStore build"
           NOTES="$RUNNER_TEMP/sidestore-latest-notes.md"
           BUILD_INFO="apps/mobile/build/build-info.json"
 
@@ -511,14 +511,14 @@ jobs:
           DOWNLOAD_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/$TAG/$IPA_NAME.ipa"
 
           {
-            echo "# Tadmora.ipa — latest unsigned SideStore build"
+            echo "# Ulara.ipa — latest unsigned SideStore build"
             echo ""
             echo "This release is updated automatically from the latest push to main that touches the mobile app."
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| IPA | $IPA_NAME.ipa |"
-            echo "| Bundle ID | ly.tadmora.mobile |"
+            echo "| Bundle ID | ly.ulara.app |"
             echo "| Version | $VERSION ($BUILD_NUMBER) |"
             echo "| Minimum iOS | $MIN_OS |"
             echo "| Architecture | $ARCH — $PLATFORM |"
@@ -580,11 +580,11 @@ jobs:
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| IPA | \`${IPA_NAME}.ipa\` |"
-            echo "| Bundle ID | \`ly.tadmora.mobile\` |"
+            echo "| Bundle ID | \`ly.ulara.app\` |"
             echo "| Commit | \`$GITHUB_SHA\` |"
             echo "| Platform | iPhoneOS / arm64 (not Simulator) |"
             echo "| Signed | No — ready for SideStore re-signing |"
-            echo "| Artifact | \`Tadmora-unsigned-ipa\` |"
+            echo "| Artifact | \`Ulara-unsigned-ipa\` |"
             echo ""
             echo "Download the artifact from this run's **Artifacts** section."
           } >> "$GITHUB_STEP_SUMMARY"

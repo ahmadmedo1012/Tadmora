@@ -194,12 +194,12 @@ try {
       await context.addInitScript(
         ([mode, user]) => {
           try {
-            localStorage.setItem('tadmora-theme', JSON.stringify({ state: { mode, modeUpdatedAt: Date.now() }, version: 2 }));
-            sessionStorage.setItem('tadmora-intro-skip', '1');
+            localStorage.setItem('ulara-theme', JSON.stringify({ state: { mode, modeUpdatedAt: Date.now() }, version: 2 }));
+            sessionStorage.setItem('ulara-intro-skip', '1');
           } catch { /* storage unavailable */ }
           if (user) {
             try {
-              localStorage.setItem('tdmr-auth', JSON.stringify({ state: { user, accessToken: 'css-coverage-mock-token' }, version: 0 }));
+              localStorage.setItem('ula-auth', JSON.stringify({ state: { user, accessToken: 'css-coverage-mock-token' }, version: 0 }));
             } catch { /* ditto */ }
           }
         },

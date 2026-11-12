@@ -1,8 +1,8 @@
 # 12 — النشر والتشغيل (Vercel + Neon)
 
-الإنتاج يعمل على ثنائية واحدة موثّقة: **Vercel** (مشروع `tadmora` — دوال
+الإنتاج يعمل على ثنائية واحدة موثّقة: **Vercel** (مشروع `ulara` — دوال
 serverless في إقليم `fra1`/فرانكفورت، الرابط الإنتاجي
-**https://tadmora.vercel.app**) + **Neon PostgreSQL** (مشروع `tadmora-production`
+**https://ulara.vercel.app**) + **Neon PostgreSQL** (مشروع `ulara-production`
 في `aws-eu-central-1` — فرانكفورت أيضًا، بجوار الدوال). النشر يتم عبر
 **Vercel CLI** من جذر المستودع، و`vercel.json` هو مخطط النشر الوحيد. لا توجد
 خطوات نشر داخل CI (يبني ويفحص فقط)، وربط GitHub التلقائي غير مفعل بعد —
@@ -11,8 +11,8 @@ serverless في إقليم `fra1`/فرانكفورت، الرابط الإنتا
 ## المتطلبات
 
 1. حساب Vercel + ‏CLI (يعمل عبر `npx vercel` — لا تثبيت دائم مطلوب) ومشروع
-   باسم `tadmora` مربوط بالمستودع (`npx vercel link` أول مرة).
-2. مشروع Neon PostgreSQL: `tadmora-production` — ‏PG 16، إقليم
+   باسم `ulara` مربوط بالمستودع (`npx vercel link` أول مرة).
+2. مشروع Neon PostgreSQL: `ulara-production` — ‏PG 16، إقليم
    `aws-eu-central-1` (فرانكفورت).
 3. سرّا JWT مختلفان + سرّ خدمة داخلي واحد (القسم «متغيرات البيئة»).
 
@@ -53,7 +53,7 @@ DATABASE_URL='<السلسلة نفسها>' npm run prisma:seed   # أول إقل
   بيانات اعتماد أبدًا). الاستثناء الموثّق: حسابات الاختبار `@test.ly` (R320
   §C) يضمنها البذر دائمًا. أما إعادة ضبط بيانات العرض الواعية ففعل مشغّل
   صريح ومعزول:
-  `TADMORA_SEED_FORCE=1 npm run db:seed:force` — وحتى في مسار FORCE يبقى
+  `ULARA_SEED_FORCE=1 npm run db:seed:force` — وحتى في مسار FORCE يبقى
   العقد: التقدم التعليمي المُدار من المستخدمين (درجات/إتقان/مشاهدات/مستويات
   مهارات) **لا يُرجَع أبدًا** (upserts إنشاء-فقط) — انظر رأس
   `backend/prisma/seed.ts` وعقد الاختبار في
@@ -102,13 +102,13 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 
 | المتغير | الافتراضي | ملاحظات |
 |---|---|---|
-| `CORS_ORIGINS` | `https://tadmora.vercel.app,http://localhost:5173` | قائمة سماح مفصولة بفواصل؛ ضبطها **يستبدل** الافتراضي كليًا (لا يلحقه) — أضف نطاق الإنتاج ضمنها |
+| `CORS_ORIGINS` | `https://ulara.vercel.app,http://localhost:5173` | قائمة سماح مفصولة بفواصل؛ ضبطها **يستبدل** الافتراضي كليًا (لا يلحقه) — أضف نطاق الإنتاج ضمنها |
 | `STORAGE_DRIVER` | `local` | في الإنتاج اضبط `postgres` (دوام BYTEA داخل قاعدة Neon — بلا متغيرات إضافية، يستعمل `DATABASE_URL` نفسها) أو `s3` + متغيرات `S3_*` الأربعة |
 | `DIRECT_DATABASE_URL` | مشتقّة تلقائيًا | الاتصال المباشر للترحيلات؛ لا حاجة لها ما دام الاشتقاق (حذف `-pooler`) صحيحًا |
-| `APP_ORIGIN` | غير مضبوط | أصل روابط البريد — مثال: `https://tadmora.vercel.app` |
+| `APP_ORIGIN` | غير مضبوط | أصل روابط البريد — مثال: `https://ulara.vercel.app` |
 | `AI_PROVIDER` + `AI_API_KEY` + `AI_MODEL` (+ `AI_BASE_URL`) | `local` | المحرّك المحلي الحتمي افتراضيًا (بلا استدعاءات خارجية)؛ لنموذج حقيقي: `AI_PROVIDER=openai` مع أي خدمة متوافقة (الخطوات أدناه) |
 | `MAIL_PROVIDER` + `MAIL_API_KEY` + `MAIL_FROM` | `none` | بلا بريد افتراضيًا — المسار الموثّق هو رابط إعادة التعيين اليدوي من المسجّل العام |
-| `TADMORA_TEST_ACCOUNTS` | غير مضبوط | اضبط `1` لضمان حسابات `@test.ly` عند كل إقلاع خلفية (الحزام الذاتي الشافي فوق البذرة) |
+| `ULARA_TEST_ACCOUNTS` | غير مضبوط | اضبط `1` لضمان حسابات `@test.ly` عند كل إقلاع خلفية (الحزام الذاتي الشافي فوق البذرة) |
 
 > كل هذه المتغيرات تُدار من إعدادات مشروع Vercel (Settings → Environment
 > Variables) — لا تُوضع أسرار حقيقية في أي ملف متتبَّع بالمستودع أبدًا.
@@ -190,7 +190,7 @@ argon2id **بنفس معاملات `src/lib/password.ts`** (اختبار وحد�
 بأتمتة المالك:
 
 ```bash
-BASE_URL=https://tadmora.vercel.app npm run smoke   # (وهذا هو الافتراضي أيضًا)
+BASE_URL=https://ulara.vercel.app npm run smoke   # (وهذا هو الافتراضي أيضًا)
 BASE_URL=https://<نطاقك> npm run smoke              # هدف مختلف عبر البيئة
 SMOKE_EMAIL=<بريد> SMOKE_PASSWORD=<كلمة> npm run smoke   # + حلقة دخول كاملة
 # فحص عزل المؤسستين — زوّد زوجًا ثانيًا لمستخدم مؤسسة أخرى:
@@ -300,7 +300,7 @@ npm run db:backup -- --url-env PG_DIRECT --dry-run   # معاينة الأمر �
 # الأمر الخام الذي يشغّله السكربت (قانون هذا الدليل نفسه —
 # نسخة كاملة بصيغة custom قابلة للضغط والاستعادة الانتقائية):
 pg_dump --format=custom --no-owner --no-privileges \
-  --file="tadmora-$(date -u +%Y%m%dT%H%M%SZ).dump" "$PG_DIRECT"
+  --file="ulara-$(date -u +%Y%m%dT%H%M%SZ).dump" "$PG_DIRECT"
 ```
 
 قالب الاستعادة إلى قاعدة/فرع **تجريبي** (لا إلى الإنتاج مباشرة أبدًا — الفرع
@@ -318,12 +318,12 @@ pg_dump --format=custom --no-owner --no-privileges \
 ```bash
 STAGE_DIRECT='<سلسلة الاتصال المباشر لفرع التجربة من لوحة Neon>'
 
-npm run db:restore -- --url-env STAGE_DIRECT --file tadmora-YYYYMMDDTHHMMSSZ.dump
+npm run db:restore -- --url-env STAGE_DIRECT --file ulara-YYYYMMDDTHHMMSSZ.dump
 npm run db:restore -- --url-env STAGE_DIRECT --file <dump> --dry-run
 
 # الأمر الخام الذي يشغّله السكربت:
 pg_restore --no-owner --no-privileges \
-  --dbname="$STAGE_DIRECT" tadmora-YYYYMMDDTHHMMSSZ.dump
+  --dbname="$STAGE_DIRECT" ulara-YYYYMMDDTHHMMSSZ.dump
 ```
 
 - `--no-owner --no-privileges`: أسماء الأدوار في Neon مُدارة ولا تُنقل مع
@@ -445,7 +445,7 @@ pg_restore --no-owner --no-privileges \
 للتوسّع إلى تخزين كائنات S3-متوافق (AWS S3 / Cloudflare R2 / MinIO) — خطوات
 المالك مرة واحدة:
 
-1. أنشئ حاوية (bucket) — مثل `tadmora-files` — وفعّل الوصول للكائنات فقط
+1. أنشئ حاوية (bucket) — مثل `ulara-files` — وفعّل الوصول للكائنات فقط
    (لا استضافة عامة: كل تقديم يمر عبر الخلفية المصرَّدة).
 2. أنشئ رمز وصول API (Access Key ID + Secret) بصلاحيات على تلك الحاوية
    فقط — لا مفاتيح الحساب كاملة.
@@ -455,7 +455,7 @@ pg_restore --no-owner --no-privileges \
      لوحة R2 (عنونة path-style)؛ مع MinIO عنوان خدمتك، ومع AWS S3 إقليمك
      مثل `https://s3.eu-central-1.amazonaws.com`
    - `S3_REGION=auto` (اصطلاح R2؛ إقليمك مع AWS)
-   - `S3_BUCKET=tadmora-files`
+   - `S3_BUCKET=ulara-files`
    - `S3_ACCESS_KEY_ID=…` و`S3_SECRET_ACCESS_KEY=…` (سريّان — بيئة Vercel
      فقط، لا يوضعان في الشيفرة أو `.env.example` بقيم حقيقية)
 4. احفظ وأعد النشر، وتفحص السجلات: لا رسالة
@@ -500,7 +500,7 @@ OpenRouter، DeepSeek، Together، vLLM/Ollama ذاتي الاستضافة):
 
 ## علاقة النشر بالمنظومة
 
-تادمورا لا يعتمد على أي خدمة خارجية وقت التشغيل افتراضيًا (لا بريد، لا
+أُلارا لا يعتمد على أي خدمة خارجية وقت التشغيل افتراضيًا (لا بريد، لا
 Redis؛ المساعد الذكيّ محلي ما لم يفعّل المالك `AI_PROVIDER=openai` بمزوّد
 حقيقي — والتخزين داخل قاعدة Neon ما لم يفعّل `s3`) — قاعدة البيانات هي
 الاعتماد الخارجي الوحيد افتراضيًا، مما يجعل النشر قابلًا للتكرار على أي
