@@ -238,3 +238,32 @@ CI #79 · Size gate #79 · deadcode #79 · Deploy (Vercel) #6 · Deploy smoke #6
 - أسلوب الدمج: merge-commit (توافقًا مع تاريخ الريبو)؛ بوابة الدمج = CI أخضر + clean؛ لا دمج على تعطّل.
 - الإثبات يعتمد CI في هذه البيئة (القيود أعلاه) — مخرجات API هي الدليل الطرفي.
 - آلية الاستمرار بين الدورات: مهمة مجدولة (cron) كل ساعتين في بيئة الوكيل تقرأ هذا الملف و`git log -20` و`git status` وتتابع من «Next». تُعطَّل بأمر المالك. الاعتماد المخزّن في `~/.config/ulara/gh-token` (خارج الشجرة، لا يُطبع أبدًا).
+
+### لوحة القياس §7 — أول قياس آلي (من CI #81، Build job، main @ bc89025b، 2026-11-12T13:16Z)
+
+مخرجات `node scripts/scorecard.mjs` كما طبعتها الوظيفة (سجل التشغيل 43225258816):
+
+| المقياس | الحد | المقاس | الحكم | الإثبات/الأداة |
+|---|---|---|---|---|
+| tracked files | < 1,000 | 2651 | ⚠️ Phase-3 pending | `git ls-files \| wc -l` |
+| md files | < 40 | 442 | ⚠️ over | `git ls-files '*.md' \| wc -l` |
+| docs/ files | ≤ ~15 | 586 | ⚠️ over | `git ls-files 'docs/**' \| wc -l` |
+| .git size | < 15MB (post Gate B) | 31.5MB | ⚠️ | du of .git (إعادة التاريخ هي البوابة B) |
+| JS bundle (gz) | ≤ 770KB | 757.7 KB | ✅ | `node scripts/check-bundle-size.mjs` |
+| no-trace gate | 0 (post Gate A) | 60026 | ⚠️ pre-rename | `git grep -IiE 'tadmora\|…'` — سطح إعادة التسمية المتبقي |
+| npm audit high/critical (prod) | 0 | ? | ⚠️ instrument | `npm audit --omit=dev` |
+| login on production (web+mobile roles) | success, proven | deploy-smoke run #5 green (2026-11-11) | ✅ | workflow Deploy smoke — Login ×3 + dashboard 200 |
+| mobile crashes in emulator | 0 على 3 تشغيلات متتالية × 5 أدوار | android-smoke job — أول تشغيل جارٍ | ⚠️ | workflow Mobile → android-smoke |
+| footer overlap / horizontal overflow | 0 @ 320–1920 × l/d | PASS — zero defects (16 خلية) | ✅ | `node scripts/brand/footer-overlap.mjs` |
+| conformance ratchet floor | صعود رتيب | 93.8% | ✅ | `scripts/conformance/ratchet.json` (بوابة CI) |
+| axe a11y serious/critical | 0 · تباين ≥ 4.5:1 · لمس ≥ 44px | instrument pending | ⚠️ | Phase 4: بوابة axe |
+| Lighthouse (موبايل 4G) home/login/dashboards | P≥90 A≥95 BP≥95 SEO≥95 | instrument pending | ⚠️ | Phase 4: Lighthouse CI |
+| console errors in journeys | 0 | e2e journeys assert zero console errors | ⚠️ | يُتحقق في tests/e2e (التقاط console لكل رحلة) |
+
+**قراءة اللوحة**: أخضر اليوم = الحزمة · الفوتر (16/16) · الدخول على الإنتاج · ratchet 93.8. الأصفر كله مرتبط بأطوار لاحقة مبرمجة (Phase 3 التنظيف · البوابة A إعادة التسمية · البوابة B التاريخ · أدوات Phase 4) — لا بند أحمر مضروم.
+
+### إخفاق E2E عابر ومعالجته (بروتوكول §0.3 — flake مُثبَت)
+
+- CI #82 (حدث push) على نفس الـSHA فشل بمواصفة واحدة: `r305-shell-heron.e2e.ts:284` — `TimeoutError: page.waitForFunction: Timeout 8000ms exceeded` (محاولة + retry)، بينما **156 نجحت** في نفس الوظيفة.
+- نفس المحتوى نجح كاملًا في CI #81 (main @ bc89025b) وCI #83 (pull_request على نفس الـSHA) — والتغيير في PR #15 مستندي فقط ⇒ **flake مُثبَت**.
+- الإجراء الحرفي للعقد: إعادة تشغيل واحدة لوظائف الوظيفة الفاشلة — `POST /actions/runs/43225448304/rerun-failed-jobs` → HTTP 201.
