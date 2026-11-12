@@ -36,7 +36,7 @@ import S3rver from 's3rver';
 import { buildDriver, probeStorage, type StorageDriver } from '../../src/lib/storage.js';
 
 // ── Boot the live server BEFORE collection (skipIf must know) ──────
-const tmpDir = mkdtempSync(join(tmpdir(), 'tadmora-s3-live-'));
+const tmpDir = mkdtempSync(join(tmpdir(), 'ulara-s3-live-'));
 let s3rver: S3rver | null = null;
 let driver: StorageDriver | null = null;
 let baseUrl: string | null = null;
@@ -48,7 +48,7 @@ try {
     directory: tmpDir,
     silent: true,
     resetOnClose: true,
-    configureBuckets: [{ name: 'tadmora-files' }],
+    configureBuckets: [{ name: 'ulara-files' }],
   });
   const addr = await s3rver.run();
   baseUrl = `http://127.0.0.1:${addr.port}`;
@@ -57,7 +57,7 @@ try {
     STORAGE_DRIVER: 's3',
     S3_ENDPOINT: baseUrl,
     S3_REGION: 'auto',
-    S3_BUCKET: 'tadmora-files',
+    S3_BUCKET: 'ulara-files',
     S3_ACCESS_KEY_ID: 'S3RVER', // s3rver's registered dummy account
     S3_SECRET_ACCESS_KEY: 'S3RVER',
   });
@@ -121,7 +121,7 @@ describe.skipIf(driver === null)('S3Driver × s3rver — the real wire protocol 
     // The wire: the server itself honors the Range header with 206.
     const start = 2;
     const end = 11;
-    const wire = await rawFetch(`/tadmora-files/${key}`, { headers: { range: `bytes=${start}-${end}` } });
+    const wire = await rawFetch(`/ulara-files/${key}`, { headers: { range: `bytes=${start}-${end}` } });
     expect(wire.status).toBe(206);
     expect(wire.headers.get('content-range')).toBe(`bytes ${start}-${end}/${PDF_BYTES.length}`);
     expect(wire.headers.get('content-length')).toBe(String(end - start + 1));
@@ -136,7 +136,7 @@ describe.skipIf(driver === null)('S3Driver × s3rver — the real wire protocol 
   it('a really missing key answers 404 on the wire and null through the driver (get + stat)', async () => {
     const key = nextKey(); // never written
 
-    const wire = await rawFetch(`/tadmora-files/${key}`);
+    const wire = await rawFetch(`/ulara-files/${key}`);
     expect(wire.status).toBe(404);
 
     await expect(driver!.get(key)).resolves.toBeNull();
@@ -147,12 +147,12 @@ describe.skipIf(driver === null)('S3Driver × s3rver — the real wire protocol 
     const key = nextKey();
     await driver!.put(key, PDF_BYTES);
 
-    const head = await rawFetch(`/tadmora-files/${key}`, { method: 'HEAD' });
+    const head = await rawFetch(`/ulara-files/${key}`, { method: 'HEAD' });
     expect(head.status).toBe(200);
     expect(head.headers.get('content-type')).toBe('application/pdf');
     expect(head.headers.get('content-length')).toBe(String(PDF_BYTES.length));
 
-    const got = await rawFetch(`/tadmora-files/${key}`);
+    const got = await rawFetch(`/ulara-files/${key}`);
     expect(got.headers.get('content-type')).toBe('application/pdf');
   });
 
@@ -168,7 +168,7 @@ describe.skipIf(driver === null)('S3Driver × s3rver — the real wire protocol 
 
     // The wire: a range starting past EOF is 416 with the size named.
     const start = PDF_BYTES.length + 10;
-    const wire = await rawFetch(`/tadmora-files/${key}`, { headers: { range: `bytes=${start}-999` } });
+    const wire = await rawFetch(`/ulara-files/${key}`, { headers: { range: `bytes=${start}-999` } });
     expect(wire.status).toBe(416);
     expect(Buffer.from(await wire.arrayBuffer()).toString('latin1')).toContain('InvalidRange');
 
@@ -190,7 +190,7 @@ describe.skipIf(driver === null)('S3Driver × s3rver — the real wire protocol 
       STORAGE_DRIVER: 's3',
       S3_ENDPOINT: baseUrl!,
       S3_REGION: 'auto',
-      S3_BUCKET: 'tadmora-files',
+      S3_BUCKET: 'ulara-files',
       S3_ACCESS_KEY_ID: 'wrong-key-live-test', // unregistered → 403
       S3_SECRET_ACCESS_KEY: 'S3RVER',
     });

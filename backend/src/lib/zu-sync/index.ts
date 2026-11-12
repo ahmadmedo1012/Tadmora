@@ -89,7 +89,7 @@ export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
  * syncs and WHICH source POST /admin/sync/trigger runs.
  *
  * The labeled demo workspace's curated sheet (static-source.ts, Phase Ω
- * neutral «مساحة عمل تادمورا التجريبية» fact sheet) is the DEMO
+ * neutral «مساحة عمل أُلارا التجريبية» fact sheet) is the DEMO
  * workspace's source, NOT a global source for every institution. An
  * institution absent from this registry (today: every institution other
  * than the demo workspace, e.g. alandalus-demo) has NO configured
@@ -98,7 +98,7 @@ export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
  *
  * Matching is by institution id OR slug (both unique in the DB): the
  * demo row keeps the FIXED legacy id `inst-zawia-showcase` (stable FK
- * anchor) with the r188 slug `tadmora-demo` (prisma/seed.ts), so either
+ * anchor) with the ulara-demo slug (prisma/seed.ts), so either
  * identity resolves the same row. This is deliberately a simple in-code
  * registry — there is no operator-editable source-config surface yet,
  * so a DB config table would be speculative. Adding a future source =
@@ -116,7 +116,7 @@ export interface InstitutionSyncConfig {
 export const INSTITUTION_SYNC_CONFIGS: readonly InstitutionSyncConfig[] = [
   {
     institutionId: DEFAULT_SYNC_INSTITUTION_ID,
-    institutionSlug: 'tadmora-demo',
+    institutionSlug: 'ulara-demo',
     source: 'static-markdown',
   },
 ];
@@ -128,7 +128,7 @@ export const INSTITUTION_SYNC_CONFIGS: readonly InstitutionSyncConfig[] = [
  * the registry on purpose: the public default and the scheduled sources
  * are separate decisions, even though both are the demo workspace today.
  */
-export const PUBLIC_FACTS_DEFAULT_SLUG = 'tadmora-demo';
+export const PUBLIC_FACTS_DEFAULT_SLUG = 'ulara-demo';
 
 /**
  * The configured source for an institution, matched by id OR slug.

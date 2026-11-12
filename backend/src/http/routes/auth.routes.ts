@@ -37,7 +37,23 @@ import { logger } from '../../logger.js';
 const MAIL_TTL_MINUTES = Math.round(TOKEN_TTL_MS / 60_000);
 
 const router = Router();
-const REFRESH_COOKIE = 'tdmr_refresh';
+
+/**
+ * The refresh cookie. ULARA rename: the cookie is now `ulara_refresh`.
+ * Login/register/refresh/select-institution/change-password SET only
+ * this name (identical flags to the retired one: httpOnly, secure in
+ * prod, sameSite strict, path /api/v1/auth, maxAge = jwtRefreshTtl).
+ */
+const REFRESH_COOKIE = 'ulara_refresh';
+
+/**
+ * The pre-rename cookie — READ-ONLY for one transition window:
+ * sessions issued before the rename still carry it. The refresh
+ * endpoint falls back to it (one pino info line per use) and
+ * immediately re-issues under the new name; logout clears BOTH so a
+ * pre-rename client logs out cleanly. Never set again.
+ */
+const LEGACY_REFRESH_COOKIE = 'tdmr_refresh';
 
 // Derived from the SAME string jsonwebtoken signs the refresh token with
 // (env.jwtRefreshTtl) — the cookie must die with its token, not before
@@ -156,8 +172,15 @@ router.post(
 // replay/brute-force attempts against the cookie are ever counted.
 router.post('/refresh', authRateLimiter, async (req, res, next) => {
   try {
-    const token = req.cookies?.[REFRESH_COOKIE] ?? '';
+    // ULARA rename transition: the new cookie wins; an established
+    // pre-rename session still rides the legacy cookie — accept it,
+    // log the transition once, and the setRefreshCookie below migrates
+    // the session to the new name in the same response.
+    const token = req.cookies?.[REFRESH_COOKIE] || req.cookies?.[LEGACY_REFRESH_COOKIE] || '';
     if (!token) throw AppError.unauthenticated('جلسة غير صالحة — سجّل الدخول من جديد');
+    if (!req.cookies?.[REFRESH_COOKIE] && req.cookies?.[LEGACY_REFRESH_COOKIE]) {
+      logger.info('legacy refresh cookie used — will be re-issued');
+    }
     const { user, accessToken, refreshToken } = await refreshTokens(token);
     setRefreshCookie(res, refreshToken);
     res.json({ data: { user, accessToken } });
@@ -186,8 +209,9 @@ router.post('/logout', optionalAuthMiddleware, async (req, res, _next) => {
       // Revoke is best-effort — the cookie clear below is the guarantee.
     }
   } else {
-    // ...otherwise try to revoke via the refresh cookie.
-    const token = req.cookies?.[REFRESH_COOKIE] ?? '';
+    // ...otherwise try to revoke via the refresh cookie (either name —
+    // the rename transition keeps pre-rename sessions revocable).
+    const token = req.cookies?.[REFRESH_COOKIE] || req.cookies?.[LEGACY_REFRESH_COOKIE] || '';
     if (token) {
       try {
         const payload = verifyRefreshToken(token);
@@ -197,7 +221,10 @@ router.post('/logout', optionalAuthMiddleware, async (req, res, _next) => {
       }
     }
   }
+  // ULARA rename: clear BOTH names with identical options — a
+  // pre-rename client's legacy cookie dies in the same 204.
   res.clearCookie(REFRESH_COOKIE, { path: '/api/v1/auth' });
+  res.clearCookie(LEGACY_REFRESH_COOKIE, { path: '/api/v1/auth' });
   res.status(204).end();
 });
 

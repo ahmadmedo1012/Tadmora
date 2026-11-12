@@ -187,7 +187,7 @@ async function main() {
       return;
     }
 
-    console.log('━━━ تادمورا — تدوير كلمة مرور (مشغِّل مفوَّض) · authorized rotation ━━━');
+    console.log('━━━ أُلارا — تدوير كلمة مرور (مشغِّل مفوَّض) · authorized rotation ━━━');
     console.log(`القاعدة / database: ${redactUrl(process.env.DATABASE_URL ?? '')}`);
     console.log(`الحساب / account: ${email} · ${user.role} · isActive=${user.isActive}`);
     console.log(`الحالة قبل التدوير / state before: tokenVersion=${user.tokenVersion}, failedLoginCount=${user.failedLoginCount}, lockedUntil=${user.lockedUntil ? 'مضبوط/locked' : 'null'}`);

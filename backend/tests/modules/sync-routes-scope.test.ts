@@ -60,12 +60,12 @@ afterAll(async () => {
 
 // ── Fixtures ────────────────────────────────────────────────────────
 
-const ZAWIA = { id: 'inst-zawia-showcase', slug: 'tadmora-demo', name: 'مساحة عمل تادمورا التجريبية' };
+const ZAWIA = { id: 'inst-zawia-showcase', slug: 'ulara-demo', name: 'مساحة عمل أُلارا التجريبية' };
 const OTHER = { id: 'inst-other', slug: 'other-demo', name: 'مؤسسة أخرى' };
 
 const FACT_ROWS = [
   {
-    institutionId: ZAWIA.id, key: 'name.ar', value: 'مساحة عمل تادمورا التجريبية',
+    institutionId: ZAWIA.id, key: 'name.ar', value: 'مساحة عمل أُلارا التجريبية',
     category: 'identity', source: 'zu.edu.ly:about', isStale: false, syncedAt: new Date(),
   },
   {
@@ -172,8 +172,8 @@ describe('GET /api/v1/university/facts — public per-institution facts', () => 
     const body = (await res.json()) as {
       data: { institution: { slug: string }; categories: Record<string, Record<string, string>> };
     };
-    expect(body.data.institution.slug).toBe('tadmora-demo');
-    expect(body.data.categories.identity!['name.ar']).toBe('مساحة عمل تادمورا التجريبية');
+    expect(body.data.institution.slug).toBe('ulara-demo');
+    expect(body.data.categories.identity!['name.ar']).toBe('مساحة عمل أُلارا التجريبية');
     // No auth → no membership re-resolution ever runs on this path.
     expect(membershipFindFirst).not.toHaveBeenCalled();
   });
@@ -216,7 +216,7 @@ describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () 
         categories: Array<{ items: Array<{ key: string; value: string }> }>;
       };
     };
-    expect(body.data.institution!.slug).toBe('tadmora-demo');
+    expect(body.data.institution!.slug).toBe('ulara-demo');
     expect(body.data.hasSyncSource).toBe(true);
     expect(body.data.factCount).toBe(1);
     expect(body.data.staleCount).toBe(0);
@@ -227,7 +227,7 @@ describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () 
     expect(factFindMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: { institutionId: ZAWIA.id } }),
     );
-    expect(body.data.categories[0]!.items[0]!.value).toBe('مساحة عمل تادمورا التجريبية');
+    expect(body.data.categories[0]!.items[0]!.value).toBe('مساحة عمل أُلارا التجريبية');
   });
 
   it('a contextless ADMIN gets 403 INSTITUTION_CONTEXT_REQUIRED (no institution guessing)', async () => {
@@ -305,7 +305,7 @@ describe('GET /api/v1/admin/sync — OWNER views', () => {
     ]);
     // Platform-wide fact items carry their institution slug.
     const slugs = body.data.categories[0]!.items.map((i) => i.institutionSlug).sort();
-    expect(slugs).toEqual(['other-demo', 'tadmora-demo']);
+    expect(slugs).toEqual(['other-demo', 'ulara-demo']);
   });
 
   it('?institution=slug narrows the view to that institution', async () => {
@@ -379,7 +379,7 @@ describe('POST /api/v1/admin/sync/trigger', () => {
     const res = await post('/api/v1/admin/sync/trigger', token);
     expect(res.status).toBe(200);
     expect(institutionFindUnique).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { slug: 'tadmora-demo' } }),
+      expect.objectContaining({ where: { slug: 'ulara-demo' } }),
     );
     expect(runSyncGuardedMock).toHaveBeenCalledWith('admin-trigger', {
       institutionId: ZAWIA.id,

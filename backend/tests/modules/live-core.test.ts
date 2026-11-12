@@ -15,15 +15,15 @@ import {
 describe('live/core — the Jitsi default', () => {
   it('derives a stable, prefixed, sanitized room name from the session id', () => {
     const id = 'clxabc123def456ghi';
-    expect(jitsiRoomNameFor(id)).toMatch(/^tadmora-[a-z0-9]{1,12}$/);
+    expect(jitsiRoomNameFor(id)).toMatch(/^ulara-[a-z0-9]{1,12}$/);
     expect(jitsiRoomNameFor(id)).toBe(jitsiRoomNameFor(id));
     expect(jitsiRoomNameFor('clx!!weird__id!!')).not.toMatch(/[^a-z0-9-]/);
   });
 
   it('encodes the room into a meet.jit.si URL (idempotent, safe chars only)', () => {
-    expect(jitsiUrlFor('tadmora-abc123')).toBe('https://meet.jit.si/tadmora-abc123');
+    expect(jitsiUrlFor('ulara-abc123')).toBe('https://meet.jit.si/ulara-abc123');
     expect(jitsiUrlFor('a b')).toBe('https://meet.jit.si/a%20b');
-    expect(defaultJoinUrlFor('clxabc123def456ghi')).toContain('https://meet.jit.si/tadmora-');
+    expect(defaultJoinUrlFor('clxabc123def456ghi')).toContain('https://meet.jit.si/ulara-');
   });
 });
 

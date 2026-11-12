@@ -9,8 +9,8 @@
  *     /\br\d{3}\b|probe|APP_INTERNAL|SYNC_|test/i   → must NOT match
  *
  * What it seeds (all upsert/guarded-create → re-runs are no-ops):
- *   - reuses the labeled demo workspace مساحة عمل تادمورا التجريبية
- *     (slug tadmora-demo — the same row seed.ts maintains; the fixed
+ *   - reuses the labeled demo workspace مساحة عمل أُلارا التجريبية
+ *     (slug ulara-demo — the same row seed.ts maintains; the fixed
  *     legacy id 'inst-zawia-showcase' is only on the fresh-create
  *     branch so migrated and fresh databases agree on the reference id)
  *   - 8 courses with real Arabic names (codes CS101…NT101 — a fresh
@@ -52,7 +52,7 @@ import { hashPassword } from '../src/lib/password.js';
 import { TEST_PASSWORD } from '../src/modules/auth/test-accounts.data.js';
 
 const TERM = '2024-FALL';
-const INSTITUTION_SLUG = 'tadmora-demo';
+const INSTITUTION_SLUG = 'ulara-demo';
 
 // ─── Teachers (6) — Arabic names, full profiles ─────────────────
 interface TeacherSeedDef {
@@ -380,8 +380,8 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
     update: {},
     create: {
       id: 'inst-zawia-showcase',
-      name: 'مساحة عمل تادمورا التجريبية',
-      nameEn: 'Tadmora Experimental Workspace',
+      name: 'مساحة عمل أُلارا التجريبية',
+      nameEn: 'Ulara Experimental Workspace',
       slug: INSTITUTION_SLUG,
       status: 'ACTIVE',
     },
@@ -517,7 +517,7 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
           durationSec: lec.durationSec,
           // the honest self-hosted placeholder clip the player ships
           videoUrl: `/media/generated/chapter-card-${c.code.toLowerCase()}-${i + 1}.mp4`,
-          posterUrl: '/brand/tadmora-mark.svg',
+          posterUrl: '/brand/mark.svg',
         },
       });
       summary.lectures++;
@@ -768,7 +768,7 @@ async function main(): Promise<void> {
   try {
     const s = await seedDemoR330(prisma);
     console.log(
-      `🌱 بذرة العرض النظيفة: «مساحة عمل تادمورا التجريبية» — ${s.courses} مقررات، ${s.lectures} محاضرات، ` +
+      `🌱 بذرة العرض النظيفة: «مساحة عمل أُلارا التجريبية» — ${s.courses} مقررات، ${s.lectures} محاضرات، ` +
         `${s.teachers} أساتذة، ${s.students} طلبة، ${s.enrollments} تسجيل، ${s.grades} درجة، ` +
         `${s.examTemplates} نماذج امتحان، ${s.messages} رسائل، ${s.notifications} إشعارات — كل النصوص المعروضة نظيفة (بلا سلاسل فنية).`,
     );

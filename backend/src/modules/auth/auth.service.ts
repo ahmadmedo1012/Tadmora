@@ -116,7 +116,7 @@ const writeLoginEvent = async (event: {
  * parameters as real password hashes. Also burned on the ACCOUNT_LOCKED
  * path so lock state isn't timing-visible either.
  */
-const DUMMY_HASH_PROMISE = hashPassword('tadmora-timing-equalizer-no-account');
+const DUMMY_HASH_PROMISE = hashPassword('ulara-timing-equalizer-no-account');
 
 /** Burn one dummy-hash argon2 verify; never changes the rejection path. */
 const burnDummyVerify = async (password: string): Promise<void> => {
