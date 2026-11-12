@@ -210,11 +210,11 @@ test("brand.json round-trip: name forms obey the rules, palette pinned", () => {
       storage_prefix: "ula-",
       npm_scope: "@ulara",
       env_prefix: "ULARA_",
-      paper: "#F6F6EE",
-      ink: "#282828",
-      accent: "#FA3600",
+      paper: "#F5F1E8",
+      ink: "#262019",
+      accent: "#C43E16",
     },
-    "brand.json: the identity primitives drifted from the Omega 2-A specification",
+    "brand.json: the identity primitives drifted from the ULARA takeover specification",
   );
 
   /* name_ar: the damma is not optional — and the damma-less spelling is
