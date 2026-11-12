@@ -17,7 +17,7 @@
 ### 1) الاستنساخ والتثبيت
 
 ```bash
-git clone <repository-url> && cd tadmora
+git clone https://github.com/ahmadmedo1012/ulara && cd ulara
 npm install        # workspaces: يثبت backend + frontend معًا، وينفّذ prisma generate
 ```
 
@@ -84,9 +84,9 @@ Vite تحويله إلى `:4000` — لا حاجة لأي إعداد CORS محل
 
 | المهمّة | البريد | الدور |
 |---|---|---|
-| طالب | `student@test.ly` | طالب (أحمد الزروق) — جامعة تادمورا التجريبية |
+| طالب | `student@test.ly` | طالب (أحمد الزروق) — مساحة عمل أُلارا التجريبية |
 | طالب ثانٍ (للرسائل/المجتمع) | `student2@test.ly` | طالبة (ليلى المهدي) — مؤسسة الأندلس |
-| أستاذ | `teacher@test.ly` | أستاذ (د. سالم البوسيفي) — جامعة تادمورا التجريبية |
+| أستاذ | `teacher@test.ly` | أستاذ (د. سالم البوسيفي) — مساحة عمل أُلارا التجريبية |
 | رئيس قسم | `head@test.ly` | أستاذ (محمد الشريف) — TeacherProfile.position: DEPARTMENT_HEAD |
 | عميد | `dean@test.ly` | أستاذ (إبراهيم الفيتوري) — position: DEAN |
 | نائب عميد | `vicedean@test.ly` | أستاذ (آمال بن عيسى) — position: ASSOCIATE_DEAN |
@@ -104,8 +104,8 @@ Vite تحويله إلى `:4000` — لا حاجة لأي إعداد CORS محل
 > المقرر `SE301` موجودان في المؤسستين عمدًا — سجّل الدخول بالطالبين
 > وراقب العزل.
 >
-> على Render يمكن أيضًا ضمان الحسابات عند كل إقلاع للخلفية بضبط
-> `TADMORA_TEST_ACCOUNTS=1` من لوحة Environment (انظر
+> في مشروع Vercel يمكن أيضًا ضمان الحسابات عند كل إقلاع للخلفية بضبط
+> `ULARA_TEST_ACCOUNTS=1` من لوحة Environment Variables (انظر
 > `docs/SECRETS-REFERENCE.md`).
 
 ## البناء والإنتاج محليًا (اختياري)
