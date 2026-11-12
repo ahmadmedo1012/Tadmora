@@ -489,6 +489,13 @@ jobs:
       # state in the fail.flag FILE (not a variable), the five-role loop
       # single-lined, and the forensics capture runs BEFORE the only line
       # allowed to exit non-zero (the last one).
+      # Maestro debug capture: the CLI writes every flow's screenshots +
+      # UI hierarchy under $HOME/.maestro/tests on the RUNNER — the same
+      # machine this script and the upload step below run on. Copy that
+      # tree next to the other forensics files (single standalone line,
+      # same sh -c constraint), ALWAYS — a green run's output is exactly
+      # as diagnostic as a red one's, and run #10's post-mortem had no
+      # UI evidence at all.
       - name: Emulator + Maestro five-role journey
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -505,6 +512,7 @@ jobs:
             timeout 60 "$ANDROID_HOME/platform-tools/adb" logcat -d > logcat.txt 2>&1; [ -s logcat.txt ] || echo "(logcat capture failed — adb device state follows:)" >> logcat.txt
             cat adb-devices.txt >> logcat.txt 2>/dev/null || true
             wc -c logcat.txt || true
+            cp -r "$HOME/.maestro/tests" maestro-debug 2>/dev/null || echo "(maestro debug output not found under \$HOME/.maestro/tests — no flow produced output)" > maestro-debug.txt || true
             if [ -f fail.flag ]; then echo "::error::android-smoke stages failed — forensics are in the artifact"; exit 1; fi
       - name: Crash gate (logcat forensics — fails the job on signatures)
         # Deliberately OUTSIDE the emulator-runner script so it always
@@ -533,7 +541,7 @@ jobs:
             echo "logcat clean — no crash signatures. The five-role journeys either passed or failed on assertions; the trace is attached either way."
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Upload forensics (logcat + backend.log + crash report)
+      - name: Upload forensics (logcat + backend.log + crash report + Maestro debug output)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -543,4 +551,6 @@ jobs:
             adb-devices.txt
             crash-report.txt
             backend.log
+            maestro-debug
+            maestro-debug.txt
           if-no-files-found: error
