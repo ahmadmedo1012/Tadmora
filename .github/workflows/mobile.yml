@@ -406,14 +406,14 @@ jobs:
           npm run db:seed
 
       - name: Boot backend (:4000, test accounts on) + wait for /api/v1/status
-        # TADMORA_TEST_ACCOUNTS=1 → backend/src/index.ts:36 ensures the
+        # ULARA_TEST_ACCOUNTS=1 → backend/src/index.ts:36 ensures the
         # @test.ly set at boot (non-fatal). The two JWT secrets are
         # generated per job — they never leave the runner and only need
         # to be ≥32 chars (backend/src/env.ts).
         run: |
           export JWT_ACCESS_SECRET="$(openssl rand -hex 48)"
           export JWT_REFRESH_SECRET="$(openssl rand -hex 48)"
-          export TADMORA_TEST_ACCOUNTS=1
+          export ULARA_TEST_ACCOUNTS=1
           export PORT=4000
           nohup npm run dev -w backend > backend.log 2>&1 &
           for i in $(seq 1 40); do
@@ -435,16 +435,16 @@ jobs:
       - name: Build the release APK (throwaway keystore · 10.0.2.2 base URL)
         env:
           EXPO_PUBLIC_API_BASE_URL: http://10.0.2.2:4000/api/v1
-          TADMORA_ANDROID_KEYSTORE: ${{ runner.temp }}/smoke.jks
-          TADMORA_ANDROID_KEYSTORE_ALIAS: smoke
+          ULARA_ANDROID_KEYSTORE: ${{ runner.temp }}/smoke.jks
+          ULARA_ANDROID_KEYSTORE_ALIAS: smoke
           # ONE password for store AND key: PKCS12 keystores cannot carry a
           # separate key password — Java's keytool IGNORES a differing
           # -keypass (verified: "Different store and key passwords not
           # supported for PKCS12 KeyStores. Ignoring user-specified -keypass
           # value.") — a mismatched keyPassword in key.properties would fail
           # gradle signing. Fixed non-secret by construction (see above).
-          TADMORA_ANDROID_KEYSTORE_PASSWORD: smoke-keystore-pass
-          TADMORA_ANDROID_KEYSTORE_KEY_PASSWORD: smoke-keystore-pass
+          ULARA_ANDROID_KEYSTORE_PASSWORD: smoke-keystore-pass
+          ULARA_ANDROID_KEYSTORE_KEY_PASSWORD: smoke-keystore-pass
         run: |
           # Throwaway key: generated and destroyed with the job — the smoke
           # does not need the production signature (see the job header).
@@ -453,7 +453,7 @@ jobs:
             -alias smoke -keyalg RSA -keysize 2048 -validity 10000 \
             -storetype PKCS12 \
             -storepass smoke-keystore-pass -keypass smoke-keystore-pass \
-            -dname "CN=Tadmora Smoke, OU=CI, O=Tadmora, L=Tripoli, ST=Tripoli, C=LY"
+            -dname "CN=Ulara Smoke, OU=CI, O=Ulara, L=Tripoli, ST=Tripoli, C=LY"
           scripts/build-android-local.sh
           APK="apps/mobile/android/app/build/outputs/apk/release/app-release.apk"
           [ -f "$APK" ] || { echo "::error::release APK not found at $APK"; exit 1; }
