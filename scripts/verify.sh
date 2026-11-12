@@ -66,6 +66,16 @@ else
   fail "css ratchet"; tail -8 /tmp/verify-cssgate.log
 fi
 
+# 3.6 logo gate (ULARA Ω 1-C — the mark's single-source-of-truth law:
+#     no hand-copied arch path, no MARK_* import outside the brand
+#     system; dependency-free, <1s)
+step "logo single-source gate"
+if bash scripts/brand/logo-gate.sh > /tmp/verify-logogate.log 2>&1; then
+  ok "logo gate"
+else
+  fail "logo gate"; tail -8 /tmp/verify-logogate.log
+fi
+
 if [[ $FAST -eq 1 ]]; then
   step "--fast mode: stopping here"
   [[ $FAIL -eq 0 ]] && echo "verify.sh: FAST PASS" || echo "verify.sh: FAIL"
