@@ -1,7 +1,7 @@
 {
-  "rate": 93.1,
-  "total": 75477,
-  "pass": 70358,
-  "updatedAt": "2026-11-09T07:32:00.000Z",
-  "note": "R344 item-0 authorized re-pin (the single documented exception): min(last 3 CI-measured rates) = 93.1 — CI measured 93.090 (run 42536253080), 93.092 (42537598378), 93.218 (42576861358, post the +90 real-check wave). The pre-fix 93.2 pin was taken from a different environment (the r343 session box measured 93.24 on the same tree CI measured 93.09); the remaining delta is instrument noise — the crawl-marquee cells' geometry rides the loop phase at measure (position-dependent per run, proven in docs/redesign/r344/DECISIONS.md), depth-6 path-collision glue and the map junk-ordinal mass (47.4% heur) are not honestly fixable by CSS. From here the ratchet only rises."
+  "rate": 93.9,
+  "total": 67403,
+  "pass": 63365,
+  "updatedAt": "2026-11-12T08:10:00.000Z",
+  "note": "ULARA Ω 1-C authorized raise: the footer section left the matrix (its mapping files footer.json + footer-r343.json retired together with the spec-mirror DOM rebuild — the section's entire conformance purpose was pixel-matching the third-party reference the program retires). Locally measured on the new 8-section matrix: 63365/67403 = 94.009 (run chromium-20261112-075737-full.json). Pin set to 93.9 — the known local-vs-CI instrument variance (~0.13, see the R344 item-0 note below) leaves CI headroom; raise to min(last 3 CI-measured rates) once three CI runs are on record. The ratchet only rises: 93.1 → 93.9."
 }

@@ -506,7 +506,15 @@ function isLineContainerPath(p) {
 }
 
 // ── runner ───────────────────────────────────────────────────────────────────
-const browser = await (ENGINE === "webkit" ? webkit : chromium).launch({ headless: true });
+// c4-E convention (same as frontend/playwright.config.ts): sandbox boxes run a
+// pre-installed Chrome-for-Testing via TADMORA_E2E_EXECUTABLE because
+// `playwright install` is unavailable; CI installs its own browsers and never
+// sets the variable, so its launch stays byte-equivalent.
+const CHROMIUM_EXEC = ENGINE === "webkit" ? undefined : process.env.TADMORA_E2E_EXECUTABLE;
+const browser = await (ENGINE === "webkit" ? webkit : chromium).launch({
+  headless: true,
+  ...(CHROMIUM_EXEC ? { executablePath: CHROMIUM_EXEC } : {}),
+});
 const results = { generatedAt: new Date().toISOString(), engine: ENGINE, url: URL, specDir: SPEC_DIR, summary: {}, sections: {}, failures: [], unmatchedReport: [], skippedReport: [], darkInkReport: [], sectionEdges: {} };
 let totalPass = 0, totalFail = 0, exceptionUses = 0;
 let darkPass = 0, darkFail = 0, darkContrast = 0, darkContrastSkipped = 0;
