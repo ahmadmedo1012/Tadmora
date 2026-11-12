@@ -267,3 +267,68 @@ CI #79 · Size gate #79 · deadcode #79 · Deploy (Vercel) #6 · Deploy smoke #6
 - CI #82 (حدث push) على نفس الـSHA فشل بمواصفة واحدة: `r305-shell-heron.e2e.ts:284` — `TimeoutError: page.waitForFunction: Timeout 8000ms exceeded` (محاولة + retry)، بينما **156 نجحت** في نفس الوظيفة.
 - نفس المحتوى نجح كاملًا في CI #81 (main @ bc89025b) وCI #83 (pull_request على نفس الـSHA) — والتغيير في PR #15 مستندي فقط ⇒ **flake مُثبَت**.
 - الإجراء الحرفي للعقد: إعادة تشغيل واحدة لوظائف الوظيفة الفاشلة — `POST /actions/runs/43225448304/rerun-failed-jobs` → HTTP 201.
+
+---
+
+## Done (مع الإثبات) — cycle 5 (2026-11-12)
+
+**الاستئناف بعد حذف الجدولة**: طلب المالك حذف مهمة الـ cron (526606 — حُذفت عبر API، HTTP success) ومتابعة العمل في جلسة تفاعلية «بعدد وكلاء فرعيين». استؤنف من «Next» بلا إعادة عمل. **تنبيه أمني متكرر: ظهر الـ PAT مرة أخرى في محادثة بشرية ⇒ يلزم التدوير (Blocked-Owner 1).**
+
+### البند الأول في Next: قراءة نتيجة Mobile #9 (android-smoke)
+
+**النتيجة: cancelled — والأثر الجنائي فُقد، والسبب البنيوي وُجد وأُصلح:**
+```
+steps: 14 Emulator + Maestro five-role journey → completed/FAILURE (13:40:44→13:48:27)
+       15 Capture logcat (always) → in_progress → علقت 23 دقيقة (13:48→14:11:58)
+       16/17 crash gate + upload → pending (لم تُشغَّل قط)
+job conclusion: cancelled · run conclusion: cancelled · cancelled_by: None
+job logs: HTTP 200 → BlobNotFound (سجلات الوظائف الملغاة تُمحى — حاولنا مرتين)
+```
+- **العلة الهندسية (مُثبَتة من الخطوات الزمنية)**: خطوة «Capture logcat» تعمل **بعد** تفكيك reactivecircus للمحاكي ⇒ `adb logcat -d` يعلق بلا جهاز حتى مهلة الوظيفة (50د) فيُلغى كل شيء ويضيع الأثر بالضبط عند أول فشل حقيقي.
+- **سبب فشل رحلة Maestro نفسها: غير معروف** (بلا أثر) — التشغيل القادم يحمل الأثر المحصَّن.
+- CI #82 attempt 2 (rerun-flake من cycle 4): انتهى cancelled (إلغاء تزامني آلي) — وflake مُثبَت أصلًا من #81/#83 الأخضرتين على المحتوى نفسه؛ القضية تبقى مغلقة.
+
+### الوكلاء الفرعيون الثلاثة (worktrees متوازية + node_modules symlink، منافذ 5181/5182 معزولة)
+
+| الوكيل | الفرع → PR → الدمج | المضمون (إثبات) |
+|---|---|---|
+| **2-a** brand kit | `ula/2a-brand-kit` → PR #16 → **merged `1f1e5bc2`** | **تحضير البوابة A كاملًا**: `shared/brand.json` (مصدر الاسم الواحد: أُلارا/Ulara/slug/domain/scheme/bundle_id/storage_prefix + لوحة الألوان مثبتة على design-tokens) · `scripts/brand/ulara-kit.mjs` مولِّد حتمي · 10 SVG (علامة U-وعائية شبكة 32، ضربة حبر واحدة، حجر برتقالي واحد، **صفر أقواس** — التوقيع الممنوع مستحيل بنيويًا؛ lockups عربي/لاتيني أفقي/عمودي، favicon 16/32 مؤلَّف للـ16px، appicon-1024، OG 1200×630 RTL) · 7/7 اختبارات node · logo-gate PASS · فحص عرض Playwright عند 16px على الخلفيتين (غير فارغ، U مقروء، تمركز appicon). CI على PR #16: CI/Size/deadcode أخضر (حدثا push+PR) |
+| **2-b** axe gate | `ula/2b-axe-gate` → PR #17 → **merged `b2454b8e`** | **بند §7 «axe instrument pending» صار مقيسًا**: `scripts/brand/a11y-gate.mjs` (إقلاع Vite ذاتي :5182 + chromium + حقن axe.min.js المرفوع من @axe-core/react — **صفر اعتماديات جديدة، صفر قواعد معطلة**)، مصفوفة `/` · `/auth` · `/404` × فاتح/داكن × 390/1280، RTL. **القياس الأول: 25 serious / 0 critical — كلها على الواجهة الرئيسية** (`/auth` و`/404` نظيفتان تمامًا). أرضية ratchet مثبتة (25/0، السقف لا يهبط) · wiring: verify.sh خطوة 3.7 (fast) + CI (e2e job) + scorecard يقرأ التقرير. verify.sh --fast: FAST PASS. CI على PR #17 أخضر — **البوابة اشتغلت على CI فعلًا** |
+| **2-c** smoke hardening | `ula/2c-smoke-hardening` → PR #18 → **merged `83c1de35`** | إصلاح علة #9 أعلاه: logcat + adb-devices تُلتقطان **داخل** سكربت المحاكي (الجهاز حي) بمهلة `timeout 60` مع بديل إعلامي عند الفشل · حذف خطوة adb اللاحقة العالقة · مهلة الوظيفة 50→65 · رفع adb-devices.txt ضمن الأثر. **زائد**: identity-gate كانت **تفشل على main نفسه** (6 تسريبات: scorecard.mjs يتهجّى أنماط القياس نفسها + LEDGER يقتبس أرقام §1) — ضُمّا للقائمة البيضاء بمبرر في ترويسة البوابة → PASS. YAML سليم (python yaml) |
+
+قاعدة «PR واحد مفتوح» ملتزمة حرفيًا: 16 → 17 → 18 متتابعة بلا تراكب.
+
+### قياسات لوحة §7 — تغيّرات هذه الدورة
+
+| المقياس | قبل | بعد | الإثبات |
+|---|---|---|---|
+| axe serious/critical | instrument pending ⚠️ | **25S/0C مقيسًا، 0 فوق الأرضية** (12 خلية) — `/auth` و`/404` صفر | `node scripts/brand/a11y-gate.mjs` محليًا + CI e2e job على PR #17 |
+| بوابة الهوية (scorecard no-trace الداخلية) | identity-gate فاشلة على main (6) | PASS (مقعدا قياس/سجل موثقان) | `bash scripts/brand/identity-gate.sh` |
+| android-smoke forensics | تضيع عند أي فشل رحلة | تنجو (التقاط داخل السكربت + مهلة 60د + رفع الحالة) | mobile.yml @ 83c1de35 |
+| الباقي | — | بلا تغيير وظيفي (الحزمة 757.7KB ✅ عبر 3 PRs) | CI/Size/deadcode أخضر ×3 |
+
+**قائمة حرق §4 (مزروعة من قياس 2-b):** color-contrast فاتح فقط على `/` (13 عقدة: map.finding1f–4f، problem.indextext.1–4، platform.img1، .lp-numeral) · aria-prohibited-attr `.wr` (aria-label على span عام) · aria-hidden-focus (جوال: `.pm-dots`، platform.row2) · scrollable-region-focusable (جوال: `.hro-work`، `.wy-track`).
+
+## In progress (cycle 5)
+
+- **Mobile 43245122721** (main @ 83c1de35): android-smoke بأثر محصَّن — أول بند في الدورة القادمة (نجاح → 2 إضافيان للسلسلة الثلاثية · فشل → **android-smoke-forensics يُرفع الآن مهما حدث** → تشخيص S1–S5 من logcat فعلي).
+- **Deploy smoke 43245298721** (workflow_dispatch على main بعد الدمجات): نتيجته تُقرأ في الدورة القادمة (آخر أخضر 13:00Z @ 98655694).
+- CI/Size/deadcode على main @ 83c1de35 (running).
+
+## Next (مرتّب)
+
+1. قراءة Mobile 43245122721 + Deploy smoke 43245298721.
+2. حرق قائمة a11y الـ25 (أولًا color-contrast على الواجهة الرئيسية الفاتحة — العقد الـ13 معروفة المحددات)؛ الأرضية تُخفَّض مع كل حرق (لا ترتفع أبدًا).
+3. Phase 2 عند «نعم» المالك: عدة الاسم جاهزة (تغيير `shared/brand.json` + توليد) — يجهَّز codemod التحويل الشامل أثناء الانتظار.
+4. أدوات §7 المتبقية: Lighthouse CI · npm audit high/critical (scorecard يطبع ؟ — تفعيل القياس في CI).
+5. iOS: خطوات المالك الثلاث + شاشة «نسخ تقرير الخطأ» داخل التطبيق.
+
+## Decisions (cycle 5)
+
+- **البيئة المحلية استُعيدت**: npm ci (13s جذر + 12s workspaces، كاش دافئ) أعاد vite/playwright/chromium/axe.min.js للحياة (إقلاع Vite في 2s) — الوكلاء تحققوا محليًا مرة أخرى؛ CI يبقى مصدر إثبات الدمج.
+- **flake useScrollRestoration مُوثّق عبر worktrees**: فشل 1/3036 في بيئة 2-a ونجح كاملًا في بيئة 2-b + 7/7 معزولة — نفس المحتوى، نتائج مختلفة = flake (كل PRs خضراء دونه).
+- نمط worktree + symlink node_modules للمقارَنة الفرعية آمن وفعّال (منافذ معزولة تمنع التصادم).
+- scorecard يقرأ تقرير a11y من /tmp — على CI يطبع pending بتصميم صادق (وظيفة build ≠ وظيفة e2e)؛ تحسين لاحق: تمرير التقرير بين الوظائف.
+- دخان النشر يُطلق يدويًا عند دمجات لا تلمس مساراته — إثبات إنتاج دوري بلا انتظار مرشّح.
+
+**تتمة cycle 5 (قبل فتح PR):** Deploy smoke 43245298721 (workflow_dispatch بعد الدمجات، main @ 83c1de35) → **completed/success** — تسجيل دخول حسابات الدخان الثلاثة + لوحة الطالب على الإنتاج المنشور أخضر بعد دمجات الدورة (آخر إثبات إنتاج: ناجح).
