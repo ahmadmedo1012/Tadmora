@@ -97,7 +97,7 @@ describe("groupNotificationsByDay", () => {
 
 describe("notificationIconUrl", () => {
   test("http(s) icons pass through as avatar URLs", () => {
-    expect(notificationIconUrl("https://cdn.tadmora.io/a.png")).toBe("https://cdn.tadmora.io/a.png");
+    expect(notificationIconUrl("https://cdn.ulara.io/a.png")).toBe("https://cdn.ulara.io/a.png");
   });
   test("emoji / short icon names / null render the badge instead", () => {
     expect(notificationIconUrl("📢")).toBeNull();

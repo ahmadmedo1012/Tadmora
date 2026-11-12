@@ -110,8 +110,8 @@ describe("threadMessages", () => {
 
 describe("imageUrlsInBody", () => {
   test("image-extension http(s) URLs pass, with and without query strings", () => {
-    expect(imageUrlsInBody("انظر https://cdn.tadmora.io/a.png من فضلك")).toEqual([
-      "https://cdn.tadmora.io/a.png",
+    expect(imageUrlsInBody("انظر https://cdn.ulara.io/a.png من فضلك")).toEqual([
+      "https://cdn.ulara.io/a.png",
     ]);
     expect(imageUrlsInBody("https://x.io/p.jpg?w=200")).toEqual(["https://x.io/p.jpg?w=200"]);
   });

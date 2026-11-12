@@ -74,7 +74,7 @@ export async function setBiometricLockEnabled(v: boolean): Promise<void> {
 }
 
 /** One authentication attempt (device PIN fallback allowed). */
-export async function authenticate(reason = "افتح تادمورا لعرض حسابك"): Promise<boolean> {
+export async function authenticate(reason = "افتح أُلارا لعرض حسابك"): Promise<boolean> {
   try {
     // A quiet tick as the native prompt appears — the haptics foundation
     // owns the gate/throttle; web and reduced settings no-op safely.
@@ -149,7 +149,7 @@ export function BiometricGate({ children }: { children: ReactNode }) {
           <Fingerprint size={30} color={p.accent} />
         </View>
         <T variant="h4" weight="bold" align="center">
-          تادمورا مقفلة
+          أُلارا مقفلة
         </T>
         <T variant="body" color="muted" align="center" style={{ paddingHorizontal: sp[24] }}>
           {busy

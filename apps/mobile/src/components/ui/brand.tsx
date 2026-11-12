@@ -1,42 +1,51 @@
 import Svg, { Path, Rect } from "react-native-svg";
 import { StyleSheet, View } from "react-native";
 import { usePalette } from "@/design/theme";
+import { MARK_VESSEL_PATH, MARK_CORNERSTONE, markStrokePx } from "@/brand/mark";
 import { T } from "./text";
 
 /**
- * The Tadmora brand mark — geometry from frontend/src/brand/mark.ts:
- * square + rotated-square (compass) hairlines in ink, one orange node.
+ * The Ulara brand mark — geometry from src/brand/mark.ts (the U-vessel):
+ * ONE round-capped ink stroke (two stems + the quadratic bowl) and the
+ * sienna cornerstone square at the right stem's top.
  */
 export function BrandMark({ size = 32, ink, orange }: { size?: number; ink?: string; orange?: string }) {
   const p = usePalette();
   const stroke = ink ?? p.text;
   const accent = orange ?? p.accent;
-  const sw = 1;
-  const scale = size / 32;
+  // The web's non-scaling hairline (X11 optical ramp), reproduced in
+  // viewBox units — same rendered px weight at every size.
+  const sw = +((markStrokePx(size) * 32) / size).toFixed(3);
   return (
-    <View style={{ width: size, height: size }} accessibilityLabel="شعار تادمورا">
+    <View style={{ width: size, height: size }} accessibilityLabel="شعار أُلارا">
       <Svg width={size} height={size} viewBox="0 0 32 32">
-        <Rect x={8 * scale} y={8 * scale} width={16 * scale} height={16 * scale} fill="none" stroke={stroke} strokeWidth={sw} strokeLinejoin="miter" />
         <Path
-          d={`M16 ${5 * scale}L${27 * scale} 16L16 ${27 * scale}L${5 * scale} 16Z`}
+          d={MARK_VESSEL_PATH}
           fill="none"
           stroke={stroke}
           strokeWidth={sw}
-          strokeLinejoin="miter"
+          strokeLinejoin="round"
+          strokeLinecap="round"
         />
-        <Rect x={22 * scale} y={6 * scale} width={4 * scale} height={4 * scale} fill={accent} />
+        <Rect
+          x={MARK_CORNERSTONE.x}
+          y={MARK_CORNERSTONE.y}
+          width={MARK_CORNERSTONE.size}
+          height={MARK_CORNERSTONE.size}
+          fill={accent}
+        />
       </Svg>
     </View>
   );
 }
 
-/** Wordmark row — mark + تادمورا word in display weight. */
+/** Wordmark row — mark + أُلارا word in display weight. */
 export function BrandLockup({ size = 28 }: { size?: number }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
       <BrandMark size={size} />
       <T variant="h3" weight="bold">
-        تادمورا
+        أُلارا
       </T>
     </View>
   );
@@ -60,7 +69,7 @@ export function LaunchSheet({ label }: { label?: string }) {
         <View style={{ position: "absolute", bottom: -1, left: -1, width: 8, height: 8, backgroundColor: p.accent }} />
       </View>
       <T variant="h3" weight="bold">
-        {label ?? "تادمورا"}
+        {label ?? "أُلارا"}
       </T>
       <T variant="sm" color="muted">
         نظام تشغيل الجامعة

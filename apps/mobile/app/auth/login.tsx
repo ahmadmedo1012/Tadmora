@@ -114,7 +114,7 @@ export default function SignIn() {
         <View style={{ alignItems: "center", gap: sp[8], paddingTop: sp[16] }}>
           <BrandMark size={48} />
           <T variant="h2" weight="bold">تسجيل الدخول</T>
-          <T variant="sm" color="muted">تادمورا — نظام تشغيل الجامعة</T>
+          <T variant="sm" color="muted">أُلارا — نظام تشغيل الجامعة</T>
         </View>
 
         <View style={{ gap: sp[12] }}>

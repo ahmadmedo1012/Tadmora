@@ -52,7 +52,7 @@ the inbox), fan out the same payload via Expo's push API
 - Fire-and-forget with an async queue/`setImmediate` — never block the request.
 - Payload = `{ title, body, data: { kind, link } }` where `link` reuses the
   exact in-app path the inbox notification already carries (the mobile deep
-  links `tadmora://<path>` mirror web routes, so one `link` serves both).
+  links `ulara://<path>` mirror web routes, so one `link` serves both).
 - Handle Expo receipts: drop tokens that come back `DeviceNotRegistered`
   (delete the `PushDevice` row) and respect `MessageRateLimit`.
 - A `PUSH_ENABLED` env flag keeps the whole path dark until the project is

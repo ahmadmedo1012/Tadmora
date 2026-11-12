@@ -5,10 +5,10 @@
  *  - user JSON (non-secret profile) persisted in AsyncStorage under
  *    ula-mobile-user. Cache clearing happens at every session boundary.
  *
- * ULARA codemod §1.1: the keys were renamed from the retired identity's
- * `tdmr-mobile-*` family; reads fall back to the legacy keys and adopt
- * (write-through), so an upgrading user keeps their session, and logout
- * clears BOTH spellings.
+ * ULARA codemod §1.1: the keys were renamed away from the retired
+ * identity's mobile key family; reads fall back to the legacy keys and
+ * adopt (write-through), so an upgrading user keeps their session, and
+ * logout clears BOTH spellings.
  */
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";

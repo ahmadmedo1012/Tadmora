@@ -13,7 +13,7 @@
  *   1. FS shape — every role has app/<role>/(tabs)/_layout.tsx, every
  *      ROLE_TABS entry has a screen file inside the group, and every
  *      tab route lives ONLY inside it (URLs unchanged — groups add
- *      no segments, so deep links like tadmora://student/dashboard stay).
+ *      no segments, so deep links like ulara://student/dashboard stay).
  *   2. No stragglers — nothing under app/ imports TabFrame (the deleted
  *      per-screen bar) or FeedbackFab (the removed floating FAB).
  *   3. The bar renders once and its identity persists across tab
