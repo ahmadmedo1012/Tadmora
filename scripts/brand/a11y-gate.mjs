@@ -70,7 +70,7 @@ const { chromium } = require('playwright');
 /** The repo's own convention (playwright.config.ts c4-E): sandbox boxes run a
  *  pre-installed Chrome-for-Testing instead of `playwright install`. */
 function chromiumExecutable() {
-  if (process.env.TADMORA_E2E_EXECUTABLE) return process.env.TADMORA_E2E_EXECUTABLE;
+  if (process.env.ULARA_E2E_EXECUTABLE) return process.env.ULARA_E2E_EXECUTABLE;
   const cache = `${process.env.HOME}/.cache/ms-playwright`;
   try {
     const revs = readdirSync(cache)
@@ -209,7 +209,7 @@ try {
         try {
           await page.goto(`${BASE}${route}`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
           // React's first commit replaces the static boot plate — the mount signal
-          await page.waitForSelector('.tdmr-boot-plate', { state: 'detached', timeout: 45_000 });
+          await page.waitForSelector('.ula-boot-plate', { state: 'detached', timeout: 45_000 });
           const ready = ROUTE_READY[route];
           if (ready) await page.locator(ready).first().waitFor({ state: 'visible', timeout: 45_000 });
           cell.direction = await page.evaluate(() =>

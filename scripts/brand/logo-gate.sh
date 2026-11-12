@@ -1,34 +1,43 @@
 #!/usr/bin/env bash
-# logo-gate.sh — ULARA Ω 1-C: the single-source-of-truth logo gate.
+# logo-gate.sh — logo-gate v2 (the ULARA total takeover, spec §3).
 #
-# The mark's geometry (the Tadmora gateway arch + keystone, mark.ts) is
-# ONE authored source per platform, with generated twins and documented
-# re-staters. Any HAND-COPIED arch path or mark-constant import outside
-# the sanctioned seats = a competing logo = CI failure. This gate pins
-# the state the 1-C audit measured (zero unsanctioned copies) so a new
-# one can never land silently.
+# The U-vessel is the ONE mark: a single ink stroke
+# (MARK_VESSEL_PATH 'M9 7L9 19Q9 27 16 27Q23 27 23 19L23 7' — M/L/Q
+# commands only, round caps/joins) + the sienna 4×4 cornerstone at
+# (21,3), authored once per platform in frontend/src/brand/mark.ts with
+# generated twins and documented re-staters. The RETIRED ARCH is gone
+# for good: its sweep signature must appear in ZERO files.
 #
-# Sanctioned seats for the ARCH PATH SIGNATURE ('A8 8 0 0 1 24 15' —
-# the arch sweep, distinctive enough to catch copies in either spacing
-# variant; the full path is 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z'):
-#   · frontend/src/brand/            the web source (mark.ts) + renderers
-#   · apps/mobile/src/brand/         the RN port (generated, tokens:check-pinned)
-#   · scripts/r323/brand-assets.mjs  the documented static-twin re-stater
-#   · frontend/public/brand/ + favicon.svg   generated twins (brand-assets.mjs)
-#   · shared/brand/                  the ONE shared svg (build-app-icons.mjs,
-#                                     byte-identical drift check via icons:check)
-#   · frontend/tests/                the pin tests (r323-brand-system.test.ts)
-#   · frontend/dist/                 build output (never committed decisions)
+# ── 1. the retired arch signature — 'A8 8 0 0 1 24 15' ────────────────────
+# ZERO sanctioned seats in code/assets: the arch is retired, its assets
+# were regenerated (not whitelisted). Excluded from the scan:
+#   · this gate script — it spells the signature it forbids
+#   · node_modules / frontend/dist — never committed decisions
+#   · prose (.md) — docs/ops/ULARA-CODEMOD-SPEC.md §0 DEFINES the
+#     forbidden signature, LEDGER.md records the old audit, and the
+#     legal rights audit (docs/legal/THIRD_PARTY-RIGHTS.md) + the brand
+#     bible (docs/brand/BRAND.md) document the retired mark's geometry
+#     as history/legal evidence — prose quotes are not renderable
+#     duplications (the 1-C precedent); the docs owners re-key their
+#     prose on their own cadence
 #
-# Sanctioned importers of the MARK_* constants (MARK_ARCH_PATH /
-# MARK_KEYSTONE / MARK_VIEWBOX / lockups):
-#   · frontend/src/brand/**          the system itself
-#   · frontend/src/pages/BrandPage.tsx   the /__brand spec sheet — it renders
-#     the CONSTRUCTION DRAWING from the constants (consuming, not copying)
-#   · frontend/tests/** · apps/mobile/src/brand/**   the pins + the port
-#
-# Prose (docs/**, *.md) is exempt: documentation quoting the path is not a
-# renderable duplication. Generated icon PNGs are binary (never match).
+# ── 2. the U-vessel path signature + MARK_* constants — the sanctioned
+# seats (spec §3 + the takeover instruction):
+#   · frontend/src/brand/**           the web source (mark.ts) + renderers
+#   · apps/mobile/src/brand/**        the RN port (byte-identical, tokens:check)
+#   · frontend/tests/**               the pin tests (r323-brand-system.test.ts)
+#   · scripts/r323/brand-assets.mjs   the documented static-twin re-stater
+#   · scripts/r323/wordmark-build-r323.mjs  the wordmark generator
+#   · scripts/brand/build-app-icons.mjs     the shared-mark/icon builder
+#   · scripts/brand/ulara-kit.mjs    the owner-approved staged-geometry kit
+#                                     that AUTHORS the vessel (the spec §0
+#                                     source the constants port faithfully)
+#   · shared/brand/**                 the ONE shared svg + the kit outputs
+#   · frontend/public/brand/** + frontend/public/favicon.svg
+#                                     the generated twins (brand-assets.mjs)
+#   · frontend/src/pages/BrandPage.tsx      the /__brand spec sheet — renders
+#                                     the CONSTRUCTION DRAWING from the
+#                                     constants (consuming, not copying)
 set -uo pipefail
 # scripts/brand/logo-gate.sh → repo root is TWO levels up (unlike the
 # scripts/*.sh siblings, whose one-level ".." idiom does not apply here).
@@ -39,44 +48,69 @@ step() { printf '\n▶ %s\n' "$1"; }
 ok()   { printf '✓ %s\n' "$1"; }
 bad()  { printf '✗ %s\n' "$1"; FAIL=1; }
 
-# ── 1. the arch path signature ────────────────────────────────────────────
-step "arch path signature outside sanctioned seats"
+# ── 1. the retired arch signature — ZERO files ───────────────────────────
+step "the retired arch signature 'A8 8 0 0 1 24 15' (must be ZERO everywhere)"
 SIG='A8 8 0 0 1 24 15'
-VIOL=$(
+ARCHViol=$(
   grep -rlF "$SIG" \
+    --include='*.ts' --include='*.tsx' --include='*.mjs' --include='*.js' \
+    --include='*.cjs' --include='*.jsx' --include='*.svg' --include='*.html' \
+    --include='*.css' --include='*.json' --include='*.webmanifest' \
+    --include='*.xml' --include='*.sh' --include='*.py' \
+    frontend apps scripts shared tools api specs 2>/dev/null \
+  | grep -v 'node_modules' \
+    | grep -v '^frontend/dist/' \
+    | grep -v '^scripts/brand/logo-gate.sh$' \
+    || true
+)
+if [ -n "$ARCHViol" ]; then
+  bad "the retired arch signature still exists (the arch is deleted, not whitelisted):"
+  printf '    %s\n' $ARCHViol
+else
+  ok "zero — the retired arch exists nowhere in code or assets"
+fi
+
+# ── 2. the U-vessel path signature — sanctioned seats only ───────────────
+step "the U-vessel path signature outside the sanctioned seats"
+VESSEL='M9 7L9 19Q9 27 16 27Q23 27 23 19L23 7'
+VESSELViol=$(
+  grep -rlF "$VESSEL" \
     --include='*.ts' --include='*.tsx' --include='*.mjs' --include='*.js' \
     --include='*.svg' --include='*.html' --include='*.css' --include='*.json' \
     frontend apps scripts shared 2>/dev/null \
-  | grep -v '^frontend/dist/' \
-  | grep -v '^frontend/public/brand/' \
-  | grep -v '^frontend/public/favicon.svg' \
-  | grep -v '^frontend/src/brand/' \
-  | grep -v '^frontend/tests/' \
-  | grep -v '^apps/mobile/src/brand/' \
-  | grep -v '^scripts/r323/brand-assets.mjs' \
-  | grep -v '^shared/brand/' \
   | grep -v 'node_modules' \
-  || true
+    | grep -v '^frontend/dist/' \
+    | grep -v '^frontend/src/brand/' \
+    | grep -v '^frontend/tests/' \
+    | grep -v '^apps/mobile/src/brand/' \
+    | grep -v '^scripts/r323/brand-assets.mjs$' \
+    | grep -v '^scripts/r323/wordmark-build-r323.mjs$' \
+    | grep -v '^scripts/brand/build-app-icons.mjs$' \
+    | grep -v '^scripts/brand/ulara-kit.mjs$' \
+    | grep -v '^shared/brand/' \
+    | grep -v '^frontend/public/brand/' \
+    | grep -v '^frontend/public/favicon.svg$' \
+    || true
 )
-if [ -n "$VIOL" ]; then
-  bad "the arch path signature appears in unsanctioned files (hand-copied logo?):"
-  printf '    %s\n' $VIOL
+if [ -n "$VESSELViol" ]; then
+  bad "the U-vessel path appears outside the sanctioned seats (hand-copied logo?):"
+  printf '    %s\n' $VESSELViol
 else
-  ok "no hand-copied arch path outside the sanctioned seats"
+  ok "the U-vessel path lives only in the brand system, its generators, twins, and pins"
 fi
 
-# ── 2. the mark constants import discipline ───────────────────────────────
+# ── 3. the MARK_* constant import discipline ─────────────────────────────
 step "MARK_* constant consumers outside the brand system"
 CONSTViol=$(
-  grep -rlE 'MARK_ARCH_PATH|MARK_KEYSTONE|MARK_VIEWBOX' \
+  grep -rlE 'MARK_VESSEL_PATH|MARK_CORNERSTONE|MARK_VIEWBOX|MARK_INK|MARK_GRID_POINTS' \
     --include='*.ts' --include='*.tsx' \
     frontend/src apps/mobile/src apps/mobile/app 2>/dev/null \
   | grep -v '^frontend/src/brand/' \
-  | grep -v '^frontend/src/pages/BrandPage.tsx' \
-  | grep -v '^frontend/tests/' \
-  | grep -v '^apps/mobile/src/brand/' \
-  | grep -v 'node_modules' \
-  || true
+    | grep -v '^frontend/src/pages/BrandPage.tsx' \
+    | grep -v '^frontend/tests/' \
+    | grep -v '^apps/mobile/src/brand/' \
+    | grep -v 'node_modules' \
+    || true
 )
 if [ -n "$CONSTViol" ]; then
   bad "MARK_* constants consumed outside the sanctioned importers:"
@@ -87,8 +121,8 @@ fi
 
 # ── verdict ───────────────────────────────────────────────────────────────
 if [ "$FAIL" -eq 0 ]; then
-  printf '\nlogo-gate: PASS — the mark has exactly one source per platform\n'
+  printf '\nlogo-gate: PASS — the U-vessel has exactly one source per platform, the arch is retired\n'
 else
-  printf '\nlogo-gate: FAIL — a competing logo copy exists (see above)\n' >&2
+  printf '\nlogo-gate: FAIL — see above\n' >&2
   exit 1
 fi
