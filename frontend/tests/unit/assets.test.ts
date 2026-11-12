@@ -100,7 +100,7 @@ describe('r188 brand reset — campus photography retired (no real-university im
     expect(src).not.toContain('<picture>');
     expect(src).not.toContain('main_photo');
     // R315 (owner §0-A.1, supersedes the R314 raster sanction): the
-    // hero's ONE graphic object is Tadmora's own drafted ELEVATION SVG
+    // hero's ONE graphic object is Ulara's own drafted ELEVATION SVG
     // — whole frontal building, centred, transparent paper, no crop.
     // The R314 ink render (the Commons-licensed derivative in
     // manifest.json renders[], adapted:true, ShareAlike kept) leaves
@@ -114,7 +114,7 @@ describe('r188 brand reset — campus photography retired (no real-university im
     // transparent paper — the raster <image> is gone from the window
     expect(ink).not.toContain('<image');
     // …and the r188 provenance strings survive (brand gates below
-    // still pin مساحة عمل تادمورا التجريبية as synthetic data).
+    // still pin مساحة عمل أُلارا التجريبية as synthetic data).
   });
 
   it('r198 — the retired landing raster family stays deleted', () => {
@@ -179,42 +179,43 @@ describe('welcome-card background + dead brand assets (audit 11-g P2-3 / P1-4 �
 
   it('dead brand assets stay deleted; the three referenced keepers remain', () => {
     const dead = [
-      'tadmora-logo-full.jpg',
-      'tadmora-logo.jpg',
-      'tadmora-logo-md.jpg',
-      'tadmora-logo-sm.jpg',
+      'ulara-logo-full.jpg',
+      'ulara-logo.jpg',
+      'ulara-logo-md.jpg',
+      'ulara-logo-sm.jpg',
       'zu-campus.jpg',
       'zu-campus-sm.jpg',
     ];
     for (const f of dead) {
       expect(existsSync(path.join(root, 'public/brand', f)), `${f} should stay deleted`).toBe(false);
     }
-    // keepers (r188): og:image/twitter (index.html → tadmora-og.jpg) +
-    // BrandMark / favicon (tadmora-mark.svg). The retired ZU crest
-    // (zu-mark.svg) and the old logo sheet (tadmora-logo-lg.jpg) joined
+    // keepers (r188): og:image/twitter (index.html → ulara-og.jpg) +
+    // BrandMark / favicon (ulara-mark.svg). The retired ZU crest
+    // (zu-mark.svg) and the old logo sheet (ulara-logo-lg.jpg) joined
     // the dead list — no real-university asset remains on disk.
-    for (const f of ['tadmora-og.jpg', 'tadmora-mark.svg']) {
+    for (const f of ['ulara-og.jpg', 'ulara-mark.svg']) {
       expect(existsSync(path.join(root, 'public/brand', f)), `${f} must remain`).toBe(true);
     }
-    for (const f of ['zu-mark.svg', 'tadmora-logo-lg.jpg']) {
+    for (const f of ['zu-mark.svg', 'ulara-logo-lg.jpg']) {
       expect(existsSync(path.join(root, 'public/brand', f)), `${f} must stay deleted (r188 brand reset)`).toBe(false);
     }
   });
 });
 
 describe('theme-color metas match the real canvas tokens', () => {
-  it('dark meta = #282828 (charcoal night = dark --bg), light meta = #F6F6EE (R313 warm vintage paper = light --bg)', () => {
+  it('dark meta = #262019 (charcoal night = dark --bg), light meta = #F5F1E8 (R313 warm vintage paper = light --bg)', () => {
     const html = read('index.html');
-    expect(html).toContain('<meta name="theme-color" content="#282828" media="(prefers-color-scheme: dark)"');
-    expect(html).toContain('<meta name="theme-color" content="#F6F6EE" media="(prefers-color-scheme: light)"');
+    expect(html).toContain('<meta name="theme-color" content="#262019" media="(prefers-color-scheme: dark)"');
+    expect(html).toContain('<meta name="theme-color" content="#F5F1E8" media="(prefers-color-scheme: light)"');
     // the runtime sync script must paint the same grounds (R313: the
     // r305-era #F6F8FA blue-grey paper died with the warm-paper re-key)
-    expect(html.match(/['"]#282828['"]/g)?.length ?? 0).toBeGreaterThanOrEqual(2);
-    expect(html.match(/['"]#F6F6EE['"]/g)?.length ?? 0).toBeGreaterThanOrEqual(1);
-    // #F6F8FA survives in EXACTLY ONE seat: the dark boot-plate ink
-    // (mirrors dark --text / --neutral-900 — the R313 "one remaining
-    // use" ruling; the light ground seat is dead).
-    expect(html.match(/#F6F8FA/g)?.length ?? 0).toBe(1);
+    expect(html.match(/['"]#262019['"]/g)?.length ?? 0).toBeGreaterThanOrEqual(2);
+    expect(html.match(/['"]#F5F1E8['"]/g)?.length ?? 0).toBeGreaterThanOrEqual(1);
+    // the blue-grey #F6F8FA paper is FULLY retired by the ULARA
+    // Parchment & Sienna re-key — the boot plate now paints paper
+    // #F5F1E8 on ink #262019 in both directions, so not even the old
+    // "one remaining seat" survives.
+    expect(html.match(/#F6F8FA/g)?.length ?? 0).toBe(0);
     expect(html).not.toContain('#070B16');
     expect(html).not.toContain('#16140F');
     expect(html).not.toContain('#F3EEE4');

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, type PersistStorage, type StorageValue } from 'zustand/middleware';
+import { legacyAuthKey, withLegacyFallback } from '../lib/legacy-storage';
 
 /**
  * Session token architecture — orchestrator decision D4 (wave 12).
@@ -85,7 +86,7 @@ export interface SessionInstitutionExtras {
   membershipRole: AppRole | null;
 }
 
-/** The partialized slice persisted under the `tdmr-auth` key.
+/** The partialized slice persisted under the `ula-auth` key.
  *  r178: widened deliberately — see the D4 block above. */
 type PersistedSession = SessionInstitutionExtras & {
   user: AuthUser | null;
@@ -134,8 +135,8 @@ interface AuthState extends PersistedSession {
 function resolveStringStorage(): SyncStringStorage {
   try {
     const real = globalThis.localStorage;
-    real.setItem('tdmr-auth::probe', '1');
-    real.removeItem('tdmr-auth::probe');
+    real.setItem('ula-auth::probe', '1');
+    real.removeItem('ula-auth::probe');
     return real;
   } catch {
     const mem = new Map<string, string>();
@@ -160,7 +161,11 @@ function resolveStringStorage(): SyncStringStorage {
  * `<HydrationSplash/>` forever.
  */
 function safeSessionStorage(): PersistStorage<PersistedSession> {
-  const ls = resolveStringStorage();
+  /* ULARA takeover §1.1: the persist key renamed to ula-auth; the
+   * adapter adopts the retired row ONCE (read new first → adopt →
+   * drop the old row, writes only the new key) so an established
+   * session survives the rename — see lib/legacy-storage. */
+  const ls = withLegacyFallback(resolveStringStorage(), legacyAuthKey);
   return {
     getItem: (name) => {
       try {
@@ -232,7 +237,7 @@ export const useAuthStore = create<AuthState>()(
       };
     },
     {
-      name: 'tdmr-auth',
+      name: 'ula-auth',
       storage: safeSessionStorage(),
       // r178: version 0 payloads ({user, accessToken}) pre-date the
       // institution context fields. The migrate folds them into the new

@@ -82,7 +82,7 @@ test.describe('المكتبة الإلكترونية — الاستعارة وا
     ]);
 
     await page.goto('/student/library');
-    await expect(page).toHaveTitle('المكتبة الإلكترونية · تادمورا');
+    await expect(page).toHaveTitle('المكتبة الإلكترونية · أُلارا');
     await expect(page.locator('h1.pf-page-title')).toHaveText('المكتبة الإلكترونية');
 
     /* تبويب البحوث يحمل عدّه من الحمولة (بحث واحد منشور). */

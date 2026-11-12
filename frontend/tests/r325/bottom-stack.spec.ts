@@ -38,7 +38,7 @@
  * ──────────
  *   cd frontend && npx playwright test --project=r325
  *   # against an already-running dev server:
- *   TADMORA_E2E_BASE_URL=http://localhost:5206 npx playwright test --project=r325
+ *   ULARA_E2E_BASE_URL=http://localhost:5206 npx playwright test --project=r325
  *
  * EVIDENCE (opt-in — a plain run never writes): R325_EVIDENCE=before|after
  * captures the overlap states at 390 and 1440 into

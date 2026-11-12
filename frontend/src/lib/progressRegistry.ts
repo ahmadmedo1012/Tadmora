@@ -10,7 +10,7 @@
  * register is the honest inventory the conformance instrument reads
  * (`scripts/conformance/panel.mjs` — scrollProgress check):
  *
- *   window.__tadmoraProgress = [
+ *   window.__ularaProgress = [
  *     { el, label, range: [startPx, endPx] }  // document-scroll scrub range
  *   ]
  *
@@ -43,7 +43,7 @@ interface ProgressSeat {
 
 declare global {
   interface Window {
-    __tadmoraProgress?: ProgressSeat[];
+    __ularaProgress?: ProgressSeat[];
   }
 }
 
@@ -54,8 +54,8 @@ declare global {
  */
 export function registerProgressSeat(seat: ProgressSeat): () => void {
   if (typeof window === 'undefined') return () => undefined;
-  const w = window as Window & { __tadmoraProgress?: ProgressSeat[] };
-  const list = (w.__tadmoraProgress ??= []);
+  const w = window as Window & { __ularaProgress?: ProgressSeat[] };
+  const list = (w.__ularaProgress ??= []);
   list.push(seat);
   return () => {
     const i = list.indexOf(seat);

@@ -362,7 +362,7 @@ describe('R312 mobile camera — the source contracts (R322 map override)', () =
     /* … and the R322 re-key finally gives the LIBRARY door [04] its
      * beat (the old design left it permanently quiet) */
     expect(PLAN_SRC).toMatch(/\.jt\[data-wash='library'\] \.jt-plan \.pl-station\[data-station='3'\]/);
-    /* the AA ink on the #FA3600 chip ground: #1A1A1A (4.63:1), not
+    /* the AA ink on the #C43E16 chip ground: #1A1A1A (4.63:1), not
      * the 3.76:1 white */
     expect(PLAN_SRC).toMatch(/\.pl-station\[data-station='4'\] \{ fill: #1A1A1A; font-weight: 700; \}/);
     /* the retired stage-keyed pairing must be gone */

@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — Components & Patterns (Notion-flavored)
+   ULARA — Components & Patterns (Notion-flavored)
    Bold buttons · soft cards · pill badges · friendly tabs
    ════════════════════════════════════════════════════════════════════ */
 
@@ -218,9 +218,9 @@
      ║  exists (Button primitive — Form.tsx). Variant seats (all       ║
      ║  token-pure, both themes resolve):                              ║
      ║    default/ghost  transparent + hairline → INK wipe (the        ║
-     ║                    reference's nav-item recipe: #282828 fill +  ║
+     ║                    reference's nav-item recipe: #262019 fill +  ║
      ║                    white label)                                  ║
-     ║    primary/accent/  accent rest (#FA3600 + white label — the    ║
+     ║    primary/accent/  accent rest (#C43E16 + white label — the    ║
      ║    gold             documented AA exception; small Arabic       ║
      ║                      labels ride weight ≥600) → INK wipe        ║
      ║    outline         the SECONDARY seat: --primary ink slab +    ║
@@ -346,10 +346,10 @@
   }
 
   /* ── PRIMARY — the accent signal slab (R313: the ink slab is      ──
-     retired; #FA3600 + white label is the reference's CTA seat —
+     retired; #C43E16 + white label is the reference's CTA seat —
      documented AA exception, small Arabic labels ride weight ≥600).
      Hover swaps to the INK wipe (--primary/--primary-fg, both themes
-     resolve: light #282828+white · dark white slab + warm ink). */
+     resolve: light #262019+white · dark white slab + warm ink). */
   .btn.primary {
     --_btn-bg: var(--accent);
     --_btn-fg: var(--accent-fg);
@@ -378,7 +378,7 @@
   }
 
   /* R318 §B (defect-gate contrast) — the light-theme accent slab
-     deepens to the minimum AA seat: white on #FA3600 measures 3.755:1
+     deepens to the minimum AA seat: white on #C43E16 measures 3.755:1
      (gate: «أنشئ حسابك الجامعي» 3.76:1 at every light cell); #DB3A00
      is the least-shift ground that clears 4.5:1 (4.548:1, computed by
      scripts/r318/gate-lib.mjs contrastRatio). Dark keeps its own token
@@ -395,7 +395,7 @@
   }
 
   /* R323 A5 §2 (contrast-gate): `.btn.outline`'s HOVER WIPE paints the
-     raw accent (#FA3600) under a white label — 3.76:1. The wipe ground
+     raw accent (#C43E16) under a white label — 3.76:1. The wipe ground
      takes the same AA seat; --_btn-wipe-fg stays white. */
   [data-theme='light'] .btn.outline {
     --_btn-wipe: #DB3A00; /* color-gate: allow — R318 AA seat, documented */
@@ -417,7 +417,7 @@
   }
 
   /* R313 (D4): outline becomes the SECONDARY seat — the reference's
-     #282828 slab + white label + 1px #B3B3AF hairline (--primary /
+     #262019 slab + white label + 1px #B3B3AF hairline (--primary /
      --primary-fg / --border-strong; dark resolves to the white slab +
      warm ink + dark hairline). Hover = the ACCENT wipe (header-cta). */
   .btn.outline {
@@ -733,7 +733,7 @@
     outline: none;
   }
   /* R313 (D16): the FILLED state — autofilled fields carry the accent
-     hairline (the reference's filled → #FA3600). */
+     hairline (the reference's filled → #C43E16). */
   .input::placeholder, input::placeholder, textarea::placeholder { color: var(--text-faint); }
 
   /* ── Disabled text controls ──────────────────────────────────────
@@ -1099,7 +1099,7 @@
      ║  show a soft skeleton-bar pattern alongside the spinner so    ║
      ║  users see content shape forming, not just a spinner.         ║
      ╚═══════════════════════════════════════════════════════════════╝ */
-  @keyframes tadmora-loadingstate-pulse {
+  @keyframes ulara-loadingstate-pulse {
     0%, 100% { opacity: 0.25; }
     50%      { opacity: 0.45; }
   }
@@ -1169,9 +1169,9 @@
      The real empty/error anatomy is the States primitive above —
      this container remains for the four legacy student surfaces. */
 
-  @keyframes tadmora-spin { to { transform: rotate(360deg); } }
+  @keyframes ulara-spin { to { transform: rotate(360deg); } }
 
-  /* r150b: the `.skeleton` redefinition + `tadmora-shimmer` keyframes
+  /* r150b: the `.skeleton` redefinition + `ulara-shimmer` keyframes
      that lived here were one of three rival grammars — cascade-shadowed
      by the overrides layer, structurally dead. Deleted in the
      six-shimmer unification; the ONE grammar lives in motion.css. */
@@ -1290,14 +1290,14 @@
     background: var(--overlay-veil);
     /* R313 (D16): NO backdrop-filter — the reference has none; the
        solid veil + the card's solid surface + hairline separate the
-       layers (blur is a Tadmora-era affordance, retired). */
+       layers (blur is a Ulara-era affordance, retired). */
     display: flex; align-items: center; justify-content: center;
     /* 012-design-graphics-uplift T060 — z-order language. */
     z-index: var(--z-modal, 400);
-    animation: tadmora-fade var(--motion-duration-medium) var(--motion-ease-decelerate) both;
+    animation: ulara-fade var(--motion-duration-medium) var(--motion-ease-decelerate) both;
     padding: var(--sp-4);
   }
-  @keyframes tadmora-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ulara-fade { from { opacity: 0; } to { opacity: 1; } }
 
   .modal-card {
     background: var(--surface);
@@ -1308,7 +1308,7 @@
     max-block-size: calc(100dvh - var(--sp-9));
     overflow: clip;
     display: flex; flex-direction: column;
-    animation: tadmora-pop var(--motion-duration-medium) var(--motion-ease-decelerate) both;
+    animation: ulara-pop var(--motion-duration-medium) var(--motion-ease-decelerate) both;
     position: relative;
     /* r168a: real query container for grid4 strips mounted inside
        dialogs — a 560px modal gets the 2×2 floor, not 4 cramped
@@ -1318,7 +1318,7 @@
   /* (R313 D16: the .modal-card::before accent-gradient hairline bar is
      RETIRED — no gradients on overlays; the header's own hairline
      (border-block-end --rule) is the section rule.) */
-  @keyframes tadmora-pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes ulara-pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
 
   /* r167/PI-08: .modal-footer restored verbatim from the 8efb5a9a base
      (the working tree lost it in the batch-A sweep) — the flex-end
@@ -1382,15 +1382,15 @@
      --motion-direction exactly like the exit keyframes at the bottom
      of this file. The previous physical translateX(±8%) entered from
      the page interior under [dir="rtl"]. */
-  @keyframes tadmora-sheet-slide-end {
+  @keyframes ulara-sheet-slide-end {
     from { opacity: 0; transform: translateX(calc(var(--motion-direction) * 8%)); }
     to   { opacity: 1; transform: none; }
   }
-  @keyframes tadmora-sheet-slide-start {
+  @keyframes ulara-sheet-slide-start {
     from { opacity: 0; transform: translateX(calc(var(--motion-direction) * -8%)); }
     to   { opacity: 1; transform: none; }
   }
-  /* r130-W2-7: @keyframes tadmora-sheet-slide-bottom deleted HERE.
+  /* r130-W2-7: @keyframes ulara-sheet-slide-bottom deleted HERE.
      It collided with motion.css's authored settle-overshoot spring under
      the same name — same-name keyframes do not merge; within equal layer
      order the later import (this file) silently overrode the spring, and
@@ -1417,7 +1417,7 @@
      ║  Anchored overlay; --elev-3 + --r-lg + --z-popover, subtle     ║
      ║  glass. NO focus trap, NO scroll lock.                         ║
      ╚═══════════════════════════════════════════════════════════════╝ */
-  @keyframes tadmora-popover-in {
+  @keyframes ulara-popover-in {
     from { opacity: 0; transform: translateY(-4px); }
     to   { opacity: 1; transform: none; }
   }
@@ -1440,7 +1440,7 @@
     max-inline-size: min(320px, calc(100vw - var(--sp-6) * 2));
     padding: var(--sp-1);
     overflow: clip;
-    animation: tadmora-popover-in var(--motion-duration-short) var(--motion-ease-decelerate) both;
+    animation: ulara-popover-in var(--motion-duration-short) var(--motion-ease-decelerate) both;
   }
   .dropdown-item {
     display: flex;
@@ -1483,7 +1483,7 @@
      ║  TOOLTIP — 012-design-graphics-uplift T068.                    ║
      ║  --elev-2 + --r-sm + --z-tooltip. No glass. Tight padding.     ║
      ╚═══════════════════════════════════════════════════════════════╝ */
-  @keyframes tadmora-tooltip-in {
+  @keyframes ulara-tooltip-in {
     from { opacity: 0; transform: translateY(2px); }
     to   { opacity: 1; transform: none; }
   }
@@ -1497,7 +1497,7 @@
      a Modal portals to document.body and would paint behind the scrim
      it belongs to (invisible + click-blocked).
 
-     Signal: scrollLock's single body class (tdmr-scroll-locked) is
+     Signal: scrollLock's single body class (ula-scroll-locked) is
      held exactly while a BLOCKING overlay is open — Modal, Sheet,
      Lightbox, CommandPalette (via useFocusTrap) and the mobile
      sidebar drawer. Anchored layers never hold it themselves, so the
@@ -1580,7 +1580,7 @@
     display: flex; align-items: flex-start; justify-content: center;
     padding-block-start: 12vh;
     z-index: var(--z-modal, 400);
-    animation: tadmora-fade var(--motion-duration-medium) var(--motion-ease-decelerate) both;
+    animation: ulara-fade var(--motion-duration-medium) var(--motion-ease-decelerate) both;
     padding-inline: var(--sp-4);
   }
   .cmd-palette-card {
@@ -1592,7 +1592,7 @@
     max-block-size: calc(76dvh);
     overflow: clip;
     display: flex; flex-direction: column;
-    animation: tadmora-pop var(--motion-duration-medium) var(--motion-ease-decelerate) both;
+    animation: ulara-pop var(--motion-duration-medium) var(--motion-ease-decelerate) both;
   }
 
   /* ╔═══════════════════════════════════════════════════════════════╗
@@ -1839,7 +1839,7 @@
      exists, audit 0-e P1-28 wanted both). Ground = --success-ink so
      BOTH themes stay AA with the same declaration: light resolves it
      to --c-mint-deep #1F4F30 (9.46:1 with #fff), dark brightens it to
-     --c-mint-ink #82CB99 so the foreground flips to ink #191918
+     --c-mint-ink #82CB99 so the foreground flips to ink #17130E
      (9.10:1). R313 (D4): the brighten pair moves onto the wipe vars
      (same mixes, colour-swap grammar). ── */
   [data-theme='dark'] .btn.success {
@@ -1881,7 +1881,7 @@
      on the approve/reject button while the mutation is in flight
      (currentColor = the variant's foreground, so success/danger read
      in their own ink). One animation per click, never idle. */
-  @keyframes tadmora-moderation-pulse {
+  @keyframes ulara-moderation-pulse {
     from { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
     to { box-shadow: 0 0 0 10px transparent; }
   }
@@ -1892,7 +1892,7 @@
      the board (or a fresh score lands), the moved row flashes its
      accent wash once: ring ping + highlight sweep, fill-mode none so
      the row settles back to its normal background. ──────────────── */
-  @keyframes tadmora-rank-pulse {
+  @keyframes ulara-rank-pulse {
     from {
       background: var(--accent-soft);
       box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 40%, transparent);
@@ -1980,7 +1980,7 @@
      tone wash once (success for grants, warning for revokes/resets)
      with an outward ring ping, then settles back. Same language as
      wave 5-c's moderation / rank pulses. ─────────────────────────── */
-  @keyframes tadmora-perm-confirm {
+  @keyframes ulara-perm-confirm {
     from {
       background: var(--pulse-wash);
       box-shadow: 0 0 0 0 var(--pulse-ring);
@@ -1995,7 +1995,7 @@
      the runs stream in top-to-bottom on first mount (one-shot; the
      30s poll refetches without remounting, so it never re-plays).
      Delay rides --run-i capped at --motion-stagger-cap. ───────────── */
-  @keyframes tadmora-sync-run-in {
+  @keyframes ulara-sync-run-in {
     from { opacity: 0; transform: translateY(var(--motion-distance-small)); } /* r153h: 6px → --motion-distance-small */
     to { opacity: 1; transform: none; }
   }
@@ -2029,7 +2029,7 @@
      inline-start (direction-aware via --motion-direction). polish.css
      v8 owns the WHOLE machinery since r151f — duration, easing, the
      nth-child delay ladder AND the direction-aware keyframes (the
-     old animation-name !important flip + duplicate tadmora-feed-slide
+     old animation-name !important flip + duplicate ulara-feed-slide
      keyframes were merged into the owner verbatim). */
   /* Filter pills inside the feed toolbar hit the 44px touch floor on
      phones (shared class — Competitions' toolbar benefits equally). */
@@ -2040,7 +2040,7 @@
      remount in the TSX). One-shot scale settle, never idle. */
   .compact-kpi-delta[data-dir='up'] { color: var(--success-ink); }
   .compact-kpi-delta[data-dir='dn'] { color: var(--danger-ink); }
-  @keyframes tadmora-kpi-delta {
+  @keyframes ulara-kpi-delta {
     0%   { opacity: 0; transform: scale(0.4); }
     55%  { opacity: 1; transform: scale(1.25); }
     100% { opacity: 1; transform: scale(1); }
@@ -2117,7 +2117,7 @@
   .page-profile > *:nth-child(5) { --lab-i: 4; }
   .page-profile > *:nth-child(6) { --lab-i: 5; }
   .page-profile > *:nth-child(n+7) { --lab-i: 6; }
-  @keyframes tadmora-section-in {
+  @keyframes ulara-section-in {
     from { opacity: 0; transform: translateY(var(--motion-distance-small)); } /* r153h: 6px → --motion-distance-small */
     to   { opacity: 1; transform: none; }
   }
@@ -2148,7 +2148,7 @@
      authored moment of the research page: the newest annotation lands
      with a one-shot gold highlight that fades to the quiet row (a fresh
      note written in the reader pulses the moment the modal shows it). */
-  @keyframes tadmora-annotation-hl {
+  @keyframes ulara-annotation-hl {
     0%   { background: var(--gold-soft); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 45%, transparent); }
     70%  { background: var(--gold-soft); }
     100% { background: var(--surface-2); box-shadow: none; }
@@ -2194,17 +2194,17 @@
      Duration is the token nearest the requested ~120ms — guardrail #1
      forbids raw values, and --motion-duration-short (160ms) reads
      cleanly at menu scale. */
-  @keyframes tadmora-popover-out {
+  @keyframes ulara-popover-out {
     from { opacity: 1; transform: none; }
     to   { opacity: 0; transform: scale(0.97); }
   }
 
   /* ── Modal exit: scrim fades, card settles down + fades. */
-  @keyframes tadmora-overlay-out {
+  @keyframes ulara-overlay-out {
     from { opacity: 1; }
     to   { opacity: 0; }
   }
-  @keyframes tadmora-modal-out {
+  @keyframes ulara-modal-out {
     from { opacity: 1; transform: none; }
     to   { opacity: 0; transform: translateY(8px) scale(0.98); }
   }
@@ -2213,23 +2213,23 @@
      Direction-aware — `end` docks inline-end (right in LTR, left in
      RTL), so the exit multiplies by --motion-direction. Bottom
      sheets slide fully down. */
-  @keyframes tadmora-sheet-out-end {
+  @keyframes ulara-sheet-out-end {
     to { opacity: 0; transform: translateX(calc(var(--motion-direction) * 8%)); }
   }
-  @keyframes tadmora-sheet-out-start {
+  @keyframes ulara-sheet-out-start {
     to { opacity: 0; transform: translateX(calc(var(--motion-direction) * -8%)); }
   }
-  @keyframes tadmora-sheet-out-bottom {
+  @keyframes ulara-sheet-out-bottom {
     to { opacity: 0; transform: translateY(100%); }
   }
 
   /* ── Lightbox exit: the media surface fades (scrim + content),
      content scaling down a hair so the close reads as "release". */
-  @keyframes tadmora-lightbox-out {
+  @keyframes ulara-lightbox-out {
     from { opacity: 1; }
     to   { opacity: 0; }
   }
-  @keyframes tadmora-lightbox-content-out {
+  @keyframes ulara-lightbox-content-out {
     from { opacity: 1; transform: none; }
     to   { opacity: 0; transform: scale(0.98); }
   }
@@ -2433,8 +2433,8 @@
      exit set — every overlay family but this one had a data-closing
      rule. Scrim fades + card settles down, the modal-family recipe
      (CommandPalette sits at the modal elevation level per the
-     elevation-language contract), reusing tadmora-overlay-out /
-     tadmora-modal-out — no new keyframes. Keyed on the data-closing
+     elevation-language contract), reusing ulara-overlay-out /
+     ulara-modal-out — no new keyframes. Keyed on the data-closing
      attribute the useDelayedUnmount contract renders, so the rule
      stays dormant (zero visual delta) until CommandPalette wires the
      delayed unmount on the component side. */
@@ -2449,11 +2449,11 @@
 }
 
   /* ╔═══════════════════════════════════════════════════════════════╗
-     ║  R189 · سجلّ تادمورا — THE LEDGER PRODUCT LANGUAGE                ║
+     ║  R189 · سجلّ أُلارا — THE LEDGER PRODUCT LANGUAGE                ║
      ║  (append-only; later source order within @layer components    ║
      ║   wins — the standing convention of this file)                 ║
      ╚═══════════════════════════════════════════════════════════════╝
-     The R189 direction («سجلّ تادمورا», VLM-compared 2-direction trial,
+     The R189 direction («سجلّ أُلارا», VLM-compared 2-direction trial,
      /home/z/probes/preview/): the authenticated product speaks the
      editorial-ledger language continuous with the folio landing —
      masthead openers (polish.css §page-header), ledger-row data
@@ -2763,7 +2763,7 @@
 
 /* ╔════════════════════════════════════════════════════════════════════╗
    ║  r305-A2 · lane 2-b — CONTROL MICROINTERACTIONS (Heron-style,     ║
-   ║  ORIGINAL Tadmora implementation). Opt-in only: every rule here    ║
+   ║  ORIGINAL Ulara implementation). Opt-in only: every rule here    ║
    ║  targets r305 namespaced classes (.btn-motion-* / .link-underline- ║
    ║  -motion) or the gated .btn.outline / .nav-item pseudos below —    ║
    ║  zero changes for elements that never opt in.                      ║

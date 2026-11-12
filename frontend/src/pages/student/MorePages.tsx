@@ -1730,10 +1730,10 @@ export function DownloadsPage() {
 /* r183-B3 (A6 P2): the slug of the reference showcase institution —
  * the same contract as the backend's SHOWCASE_INSTITUTION_SLUG
  * (http/routes/colleges.routes.ts) and the seed row (prisma/seed.ts,
- * slug `tadmora-demo` — r188 fictional demo tenant). Only this institution renders the curated
+ * slug `ulara-demo` — r188 fictional demo tenant). Only this institution renders the curated
  * ZU showcase facts; every other institution gets its own identity
  * and only the facts the platform actually holds for it. */
-const SHOWCASE_INSTITUTION_SLUG = 'tadmora-demo';
+const SHOWCASE_INSTITUTION_SLUG = 'ulara-demo';
 
 export function UniversityInfoPage() {
   const institution = useAuthStore((s) => s.currentInstitution);
@@ -1762,7 +1762,7 @@ export function UniversityInfoPage() {
         <PatternPageHeader
           eyebrow="خدمات المؤسّسة"
           title={inst.name}
-          description="مؤسّستك على منصّة تادمورا — تعرض هذه الصفحة الكليّات المسجَّلة في مؤسستك، وهي التي تبنيها من بياناتها."
+          description="مؤسّستك على منصّة أُلارا — تعرض هذه الصفحة الكليّات المسجَّلة في مؤسستك، وهي التي تبنيها من بياناتها."
           /* R342-08 — the header CTA pair rides the masthead (the
              D11/D8 measured seat; the phone band hides the topbar
              «اسأل AI» ≤920, D6): the university-services family's
@@ -1871,8 +1871,8 @@ export function UniversityInfoPage() {
           تجريبية throughout. */}
       <PatternPageHeader
         eyebrow="خدمات المؤسّسة"
-        title="مساحة عمل تادمورا التجريبية"
-        description="مساحة العرض على منصّة تادمورا — بيئة اصطناعية بالكامل تُظهر سير العمل الأكاديمي ببيانات تجريبية، لا تحاكي أي جامعة ولا تحمل حرَمًا أو فروعًا."
+        title="مساحة عمل أُلارا التجريبية"
+        description="مساحة العرض على منصّة أُلارا — بيئة اصطناعية بالكامل تُظهر سير العمل الأكاديمي ببيانات تجريبية، لا تحاكي أي جامعة ولا تحمل حرَمًا أو فروعًا."
         /* R342-08 — the [01] numeral + eyebrow seat this page on the
            family grammar (map/live's header precedent), and the CTA
            pair rides the masthead (the D11/D8 measured seat; the
@@ -1926,7 +1926,7 @@ export function UniversityInfoPage() {
         </Card>
         <Card title="الرسالة" icon={Star}>
           <p style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-muted)', lineHeight: 'var(--lh-loose)', margin: 0 }}>
-            إظهار سير العمل الأكاديمي الكامل — من الهيكل إلى الإتقان — داخل تادمورا:
+            إظهار سير العمل الأكاديمي الكامل — من الهيكل إلى الإتقان — داخل أُلارا:
             تجربة الطالب، تقييم الأستاذ، عزل المؤسّسات، وجودة قابلة للقياس، كلها كأمثلة حيّة.
           </p>
         </Card>
@@ -1942,10 +1942,10 @@ export function UniversityInfoPage() {
         <SectionBar index="01" title="بطاقة تعريف" />
         <div className="r305s-band r305s-band--deep">
           <div className="r305u-facts">
-            <FactRow deep label="الاسم الرسميّ" value="مساحة عمل تادمورا التجريبية" />
+            <FactRow deep label="الاسم الرسميّ" value="مساحة عمل أُلارا التجريبية" />
             <FactRow deep label="النطاق" value="بيانات اصطناعية — لا مؤسّسة حقيقية" />
             <FactRow deep label="النوع" value="مساحة عرض تجريبية (اصطناعية)" />
-            <FactRow deep label="بريد العرض" value="demo.tadmora.ly" mono />
+            <FactRow deep label="بريد العرض" value="demo.ulara.ly" mono />
             <FactRow deep label="الموقع" value="مساحة افتراضية — لا حرَم ولا فروع" />
             <FactRow deep label="طابع البيانات" value="مولَّدة لأغراض العرض" />
           </div>
@@ -2013,7 +2013,7 @@ export function UniversityInfoPage() {
               r155b lesson carries over). */}
           {/* R305 Heron: the inline surface-2 wells become hairline ledger
               rows (.r305u-row). The membership Badge drops the gold tone —
-              gold is the ACHIEVEMENTS-only signal on the Tadmora canon;
+              gold is the ACHIEVEMENTS-only signal on the Ulara canon;
               institutional classifications ride the neutral chip. */}
           <div className="r305u-row">
             <span className="text-sm r305u-row-main">لا عضويّات — مساحة عرض محايدة (بيانات تجريبية)</span>
@@ -2022,9 +2022,9 @@ export function UniversityInfoPage() {
         </div>
         {/* 5-A6 P2-7 — the honest ownership note (student.css .uni-accredit
             as a class): accreditation and memberships belong to each
-            institution; تادمورا claims none. */}
+            institution; أُلارا claims none. */}
         <div className="uni-accredit">
-          الاعتماد والعضويّات شأن مؤسستك — تادمورا منصّة مستقلّة لا تدّعي أي اعتماد
+          الاعتماد والعضويّات شأن مؤسستك — أُلارا منصّة مستقلّة لا تدّعي أي اعتماد
         </div>
       </Card>
 
@@ -2076,9 +2076,9 @@ export function UniversityInfoPage() {
           <FactRow label="العنوان" value="بيانات عرض — بلا عنوان حقيقي (مؤسّسة اصطناعية)" />
           <FactRow label="الهاتف" value="+218 23 762659" mono />
           <FactRow label="هاتف بديل" value="+218 23 762882" mono />
-          <FactRow label="البريد العامّ" value="info@demo.tadmora.ly" mono />
-          <FactRow label="بريد العرض" value="ico@demo.tadmora.ly" mono />
-          <FactRow label="نطاق العرض" value="demo.tadmora.ly" mono />
+          <FactRow label="البريد العامّ" value="info@demo.ulara.ly" mono />
+          <FactRow label="بريد العرض" value="ico@demo.ulara.ly" mono />
+          <FactRow label="نطاق العرض" value="demo.ulara.ly" mono />
         </div>
       </Card>
     </PageFrame>

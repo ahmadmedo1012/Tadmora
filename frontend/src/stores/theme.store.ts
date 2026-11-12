@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { legacyThemeKey, withLegacyFallback } from '../lib/legacy-storage';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type ResolvedTheme = 'light' | 'dark';
@@ -30,13 +31,10 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      // تادمورا v3: night is the product's flagship skin — the same سماء
-      // تادمورا world the landing lives in. New sessions start in the
-      // night; the sidebar's 3-state toggle (فاتح · داكن · تلقائي) keeps
-      // the نهاري reading mode one tap away, and persisted choices are
-      // untouched (zustand merges stored state over this default).
-      // The workspace opens on its cleanest, most legible surface. Users can
-      // still choose dark or system mode and their saved preference wins.
+      // أُلارا: the workspace opens on its cleanest, most legible
+      // surface — the same paper world the landing lives in. Users can
+      // choose dark or system mode and their saved preference wins
+      // (zustand merges stored state over this default).
       mode: 'light',
       modeUpdatedAt: 0,
       setMode: (mode) => set({ mode, modeUpdatedAt: Date.now() }),
@@ -51,8 +49,12 @@ export const useThemeStore = create<ThemeState>()(
       },
     }),
     {
-      name: 'tadmora-theme',
-      storage: createJSONStorage(() => localStorage),
+      /* ULARA takeover §1.1: 't*'-era key renamed to ulara-theme; the
+       * storage adapter adopts the retired row once (lib/legacy-storage)
+       * and the index.html bootstrap carries the same migration — a
+       * visitor's persisted theme survives the rename. */
+      name: 'ulara-theme',
+      storage: createJSONStorage(() => withLegacyFallback(localStorage, legacyThemeKey)),
       version: 2,
       migrate: (persisted: unknown, version) => {
         // v1 → v2: add modeUpdatedAt = 0 so any saved server-side

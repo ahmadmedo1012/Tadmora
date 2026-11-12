@@ -124,7 +124,7 @@ beforeEach(() => {
   h.react.mutate.mockClear();
   sessionStorage.clear();
   useAuthStore.setState({
-    user: { id: 't1', email: 't1@tdmr.dev', firstName: 'أحمد', lastName: 'المهدي', role: 'TEACHER' },
+    user: { id: 't1', email: 't1@ula.dev', firstName: 'أحمد', lastName: 'المهدي', role: 'TEACHER' },
   });
 });
 

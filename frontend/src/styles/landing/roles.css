@@ -34,13 +34,13 @@
 }
 
 /* R338 T-14b/T-02e dark arm — the soft ink's night seat: the same 72%
-   strength pointed at the dark ramp's own ink (--text = #F6F6EE,
-   the paper twin). Composited on the charcoal ground #282828 it
+   strength pointed at the dark ramp's own ink (--text = #F5F1E8,
+   the paper twin). Composited on the charcoal ground #262019 it
    reads rgb(188,188,182) ≈ 7.7:1 (WCAG AAA; the --dark contrast
    floor ≥3.0 passes with room). The theme flip must not move a
    box: only the color changes, no geometry rule differs. */
 [data-theme="dark"] .rl-section {
-  --rl-soft-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink --text #F6F6EE at the spec's 72% strength (≈7.7:1 composited on the #282828 ground); the light arm keeps the frozen Heron literal */
+  --rl-soft-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink --text #F5F1E8 at the spec's 72% strength (≈7.7:1 composited on the #262019 ground); the light arm keeps the frozen Heron literal */
 }
 
 /* the frame's top + bottom hairlines */
@@ -175,7 +175,7 @@
   transition: color 0.4s ease;
 }
 /* r339 T-12 — the accordion icon's night seat: --rule-strong flips to
-   #85857F in dark — 3.97:1 on the #282828 ground, under the 4.5:1 text
+   #85857F in dark — 3.97:1 on the #262019 ground, under the 4.5:1 text
    floor on all 8 accordion rows (@1440) + their 390 twins (16 census
    cells; the +/- chevrons stroke currentColor, so the seat re-inks the
    glyphs with the box). --text-muted (#B4B4B0 dark) clears 7.0:1. The

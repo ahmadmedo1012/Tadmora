@@ -20,7 +20,7 @@
  *    all checked; the probe fails (exit 1) when any of them breaks.
  *
  * Deterministic + parameterized for release verification:
- *   BASE_URL   (default https://tadmora.vercel.app)
+ *   BASE_URL   (default https://ulara.vercel.app)
  *   SMOKE_EMAIL / SMOKE_PASSWORD / SMOKE_ROLE (default STUDENT)
  *   CAPTURE_DIR (default /tmp/r174-captures)
  * Exit codes: 0 pass · 1 fail · 2 authenticated check BLOCKED (no creds).
@@ -28,7 +28,7 @@
 import { mkdir } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
-const BASE = process.env.BASE_URL ?? 'https://tadmora.vercel.app';
+const BASE = process.env.BASE_URL ?? 'https://ulara.vercel.app';
 const CAPTURE_DIR = process.env.CAPTURE_DIR ?? '/tmp/r174-captures';
 const SMOKE_ROLE = process.env.SMOKE_ROLE ?? 'STUDENT';
 const DASHBOARD_PATH = SMOKE_ROLE === 'STUDENT' ? '/student/dashboard' : `/${SMOKE_ROLE.toLowerCase()}/dashboard`;
@@ -95,7 +95,7 @@ async function main(): Promise<void> {
   try {
     auth = await page.waitForFunction(
       () => {
-        const raw = localStorage.getItem('tdmr-auth');
+        const raw = localStorage.getItem('ula-auth');
         if (!raw) return null;
         try {
           const parsed = JSON.parse(raw) as AuthStore;

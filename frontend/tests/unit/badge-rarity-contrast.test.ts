@@ -91,7 +91,7 @@ type Rgb = { r: number; g: number; b: number };
 /** color-mix(in srgb, A P%, B) as the browser resolves it: linear on
  * the gamma-encoded sRGB components (verified against the live
  * getComputedStyle values for the COMMON chip: 0.6·#9CA3AF +
- * 0.4·#191918 = rgb(103.6, 107.8, 114.6) exactly). */
+ * 0.4·#17130E = rgb(103.6, 107.8, 114.6) exactly). */
 function mix(a: Rgb, pct: number, b: Rgb): Rgb {
   return {
     r: (a.r * pct) / 100 + (b.r * (100 - pct)) / 100,

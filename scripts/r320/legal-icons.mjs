@@ -2,7 +2,7 @@
 /**
  * legal-icons.mjs — R320 §D (c2-LEGAL · PAGES-GAP P2-8): render the
  * PWA/manifest icons from the ONE brand mark (public/brand/
- * tadmora-mark.svg) at exact sizes 180/192/512.
+ * ulara-mark.svg) at exact sizes 180/192/512.
  *
  * Why a browser renderer and not sharp/canvas: the worktree ships
  * neither sharp nor a canvas binding, but it ships Playwright +
@@ -11,13 +11,13 @@
  * to the product's own rendering of its mark.
  *
  * The recipe (maskable contract):
- *  · full-bleed SQUARE paper ground #F6F6EE — ink-on-paper, the
+ *  · full-bleed SQUARE paper ground #F5F1E8 — ink-on-paper, the
  *    platform's light theme token (manifest theme_color/background);
  *  · the mark centred at 62% of the tile — inside the maskable safe
  *    zone (the central 80% circle), so every launcher mask (circle,
- *    squircle, rounded) keeps the whole star;
- *  · the mark AS-IS (its own copper→gold ramp — no recolouring, the
- *    «no new art» rule from PAGES-GAP).
+ *    squircle, rounded) keeps the whole vessel;
+ *  · the mark AS-IS (its own ink + sienna cornerstone — no recolouring,
+ *    the «no new art» rule from PAGES-GAP).
  *
  * Output: frontend/public/brand/icon-{180,192,512}.png — the PNG IHDR
  * width/height are asserted exactly before writing (the unit belt
@@ -31,13 +31,13 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const MARK_PATH = path.join(ROOT, 'frontend', 'public', 'brand', 'tadmora-mark.svg');
+const MARK_PATH = path.join(ROOT, 'frontend', 'public', 'brand', 'ulara-mark.svg');
 const OUT_DIR = path.join(ROOT, 'frontend', 'public', 'brand');
 const SIZES = [180, 192, 512];
 /** The mark's share of the tile — comfortably inside the maskable
  * safe zone (central 80%) with the reference's own breathing room. */
 const MARK_RATIO = 0.62;
-const PAPER = '#F6F6EE';
+const PAPER = '#F5F1E8';
 
 /** Read a PNG's IHDR width/height (bytes 16..24, big-endian). */
 function pngIhdrSize(buf) {
@@ -51,7 +51,7 @@ const svg = readFileSync(MARK_PATH, 'utf8');
  * worktree runs against the PRE-INSTALLED Chrome-for-Testing build
  * when the bundled headless-shell revision is absent (CI installs its
  * own and never sets the override). */
-const EXECUTABLE = process.env.TADMORA_E2E_EXECUTABLE
+const EXECUTABLE = process.env.ULARA_E2E_EXECUTABLE
   ?? '/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 
 const browser = await chromium.launch({

@@ -11,14 +11,14 @@
  * loaderDisplay:none), never under reduced motion, never in non-visual
  * environments. This module now encodes exactly that:
  *
- *  · the seen-flag (`tadmora-intro-seen`) is still WRITTEN when the
- *    entrance plays — the Tadmora twin of the reference's inert
+ *  · the seen-flag (`ulara-intro-seen`) is still WRITTEN when the
+ *    entrance plays — the Ulara twin of the reference's inert
  *    `isLoaded` flag — but it no longer suppresses anything;
  *  · a DOCUMENT-LIFETIME flag replaces it as the anti-replay guard:
  *    a full load/reload boots a fresh document (flag unset → plays);
  *    a React Router navigation re-mounts the landing inside the SAME
  *    document (flag set → the loader never replays);
- *  · a dedicated skip key (`tadmora-intro-skip`) is the hermetic
+ *  · a dedicated skip key (`ulara-intro-skip`) is the hermetic
  *    opt-out the e2e fixture seeds before app boot so task-focused
  *    journeys boot straight into the page. Real visitors never set it.
  *
@@ -32,7 +32,7 @@
  * asset wait), the accelerating TAIL (67%@3965 → 100%@5649ms), the
  * ~717ms HOLD at 100%, then the 835ms split (exit 6366→7201ms — the
  * counter model's DONE/TAIL/HOLD constants now reproduce the measured
- * exit window to the millisecond). The asset gate keeps Tadmora's own
+ * exit window to the millisecond). The asset gate keeps Ulara's own
  * honest semantics: an early release still shortens the run, but the
  * R313 1.5× acceleration is retired (measured: the reference's own
  * warm-cache reload finishes 100% at 4680ms — only ~17% faster than
@@ -40,9 +40,9 @@
  * ~60%, so the cap is now 1.0× the natural tail rate).
  */
 
-export const INTRO_SEEN_KEY = 'tadmora-intro-seen';
+export const INTRO_SEEN_KEY = 'ulara-intro-seen';
 /** R313 — the hermetic-context opt-out (see the fixture's init script). */
-export const INTRO_SKIP_KEY = 'tadmora-intro-skip';
+export const INTRO_SKIP_KEY = 'ulara-intro-skip';
 
 export interface SessionLike {
   getItem(key: string): string | null;

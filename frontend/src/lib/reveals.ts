@@ -44,7 +44,7 @@ import { PREFERS_REDUCED_MOTION } from '../lib/motion-media';
  * belt enforces the same outcome defensively).
  *
  * ── Idempotency / lifecycle ─────────────────────────────────────────
- * window.__tdmrReveals guards double init; destroy() disconnects the
+ * window.__ulaReveals guards double init; destroy() disconnects the
  * observers, removes every class this module added and the armed root
  * class — safe for landing remounts (React 18 double-effect included).
  *
@@ -127,7 +127,7 @@ interface RevealsHandle {
 }
 
 interface RevealsWindow extends Window {
-  __tdmrReveals?: RevealsHandle;
+  __ulaReveals?: RevealsHandle;
 }
 
 const OBSERVER_ROOT_MARGIN_LINES = '0px 0px -15% 0px'; // the 85% entry line
@@ -139,7 +139,7 @@ export function initReveals(): RevealsHandle {
     return noop;
   }
   const w = window as RevealsWindow;
-  if (w.__tdmrReveals) return w.__tdmrReveals; // idempotent — never double-arm
+  if (w.__ulaReveals) return w.__ulaReveals; // idempotent — never double-arm
   if (window.matchMedia(PREFERS_REDUCED_MOTION).matches) {
     return noop; // RM: bail entirely — content stays in final state
   }
@@ -336,9 +336,9 @@ export function initReveals(): RevealsHandle {
       window.removeEventListener('scroll', onScrollQuiet);
       touched.forEach(({ el, cls }) => el.classList.remove(cls));
       document.documentElement.classList.remove(ARMED_CLASS);
-      delete w.__tdmrReveals;
+      delete w.__ulaReveals;
     },
   };
-  w.__tdmrReveals = handle;
+  w.__ulaReveals = handle;
   return handle;
 }

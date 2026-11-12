@@ -40,13 +40,13 @@ export function PrivacyPage() {
   useLegalMeta({
     title: 'سياسة الخصوصية',
     path: '/legal/privacy',
-    description: 'ما تجمعه منصّة تادمورا من بيانات، ولماذا، وأين تُخزَّن، وحقوقك — مكتوبة من سلوك المنصّة الفعلي لا من قوالب.',
+    description: 'ما تجمعه منصّة أُلارا من بيانات، ولماذا، وأين تُخزَّن، وحقوقك — مكتوبة من سلوك المنصّة الفعلي لا من قوالب.',
   });
 
   return (
     <LegalSheet
       title="سياسة الخصوصية"
-      lede="هذه الصفحة تصف ما تجمعه تادمورا فعلًا — مكتوبة من سلوك المنصّة كما هو في النظام اليوم، بلا مبالغة وبلا وعود. ما لا نعرفه بعد، نكتبه بوضوح: [يُستكمل قبل الإطلاق]."
+      lede="هذه الصفحة تصف ما تجمعه أُلارا فعلًا — مكتوبة من سلوك المنصّة كما هو في النظام اليوم، بلا مبالغة وبلا وعود. ما لا نعرفه بعد، نكتبه بوضوح: [يُستكمل قبل الإطلاق]."
       updated={LEGAL_UPDATED}
     >
       <LegalSectionBar index={1} title="ما الذي نجمعه" id="privacy-collect" />
@@ -118,7 +118,7 @@ export function PrivacyPage() {
       <LegalSectionBar index={7} title="ملفات تعريف الارتباط والتخزين المحلي" id="privacy-storage" />
       <LegalCell>
         <p className="lg-p">
-          تكتب تادمورا على جهازك <strong>كوكي واحدًا</strong> (كوكي الجلسة <CodeRun>tdmr_refresh</CodeRun>) و
+          تكتب أُلارا على جهازك <strong>كوكي واحدًا</strong> (كوكي الجلسة <CodeRun>ulara_refresh</CodeRun>) و
           <strong> تسعة مفاتيح تخزين محلي</strong> — لكل مفتاح غرض معلن، والجدول الكامل مع ما يُحذف عند
           الرفض في <Link to="/legal/cookies" className="lg-link">صفحة التخزين المحلي</Link>.
         </p>
@@ -149,23 +149,23 @@ export function TermsPage() {
   useLegalMeta({
     title: 'شروط الاستخدام',
     path: '/legal/terms',
-    description: 'شروط استخدام منصّة تادمورا التعليمية التجريبية — ما هي المنصّة وما ليست، وقواعد الحساب والمحتوى.',
+    description: 'شروط استخدام منصّة أُلارا التعليمية التجريبية — ما هي المنصّة وما ليست، وقواعد الحساب والمحتوى.',
   });
 
   return (
     <LegalSheet
       title="شروط الاستخدام"
-      lede="شروط قصيرة وصادقة لمنصّة تجريبية: نقول ما هي تادمورا بالضبط، وما ليست، وما الذي نطلبه منك مقابل حسابك."
+      lede="شروط قصيرة وصادقة لمنصّة تجريبية: نقول ما هي أُلارا بالضبط، وما ليست، وما الذي نطلبه منك مقابل حسابك."
       updated={LEGAL_UPDATED}
     >
-      <LegalSectionBar index={1} title="ما هي تادمورا" id="terms-what" />
+      <LegalSectionBar index={1} title="ما هي أُلارا" id="terms-what" />
       <LegalCell>
         <p className="lg-p">
-          تادمورا منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛
-          وبيانات العرض داخلها تخصّ «مساحة عمل تادمورا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.
+          أُلارا منصّة تعليمية تقنية مستقلّة، عربية أولًا. لا تنتمي إلى أيّ مؤسّسة تعليمية ولا تمثّلها؛
+          وبيانات العرض داخلها تخصّ «مساحة عمل أُلارا التجريبية» — مساحة اصطناعية بالكامل لأغراض العرض، لا تحاكي أي جامعة.
         </p>
         <p className="lg-p">
-          <strong>تادمورا ليست جامعة معتمدة ولا تمنح درجات</strong> — لا شهادات ولا صكوك أكاديمية، وما يظهر
+          <strong>أُلارا ليست جامعة معتمدة ولا تمنح درجات</strong> — لا شهادات ولا صكوك أكاديمية، وما يظهر
           داخلها من كليات ومقررات ونتائج هو محتوى عرض تجريبي.
         </p>
       </LegalCell>
@@ -201,7 +201,7 @@ export function TermsPage() {
       <LegalSectionBar index={5} title="المشغّل والقانون الحاكم" id="terms-operator" />
       <LegalCell>
         <p className="lg-p">
-          تُشغَّل تادمورا حاليًا كمشروع تقني تجريبي مستقل؛ الهوية القانونية للمشغّل <PendingTag />، والقانون
+          تُشغَّل أُلارا حاليًا كمشروع تقني تجريبي مستقل؛ الهوية القانونية للمشغّل <PendingTag />، والقانون
           الحاكم لهذه الشروط <PendingTag />.
         </p>
       </LegalCell>
@@ -223,28 +223,28 @@ export function TermsPage() {
  * writer. The table the cookies page is WRITTEN FROM: same keys, same
  * purposes, same purge story as the code. */
 export const STORAGE_LEDGER = [
-  { key: 'tadmora.consent', purpose: 'قرارك على لافتة التخزين (موافق/أرفض)', kind: 'أساسي', purge: 'لا — هو القرار نفسه' },
-  { key: 'tadmora.consent.record', purpose: 'سجل القرار مع طابعه الزمني (JSON)', kind: 'أساسي', purge: 'لا' },
-  { key: 'tadmora-theme', purpose: 'اختيارك للمظهر: فاتح أو داكن أو النظام', kind: 'أساسي', purge: 'لا' },
-  { key: 'tdmr-theme-profile', purpose: 'ذاكرة المظهر قبل تحميل الصفحة', kind: 'أساسي', purge: 'لا' },
-  { key: 'tdmr-auth', purpose: 'جلسة الدخول: المستخدم ورمز الوصول القصير وسياق المؤسسة', kind: 'أساسي', purge: 'لا' },
-  { key: 'tdmr-ui', purpose: 'طيّ الشريط الجانبي وآخر اللوحات المفتوحة (4 على الأكثر)', kind: 'تفضيل', purge: 'نعم' },
-  { key: 'tdmr-doc-side-w', purpose: 'عرض اللوحة الجانبية في عارض المستندات', kind: 'تفضيل', purge: 'نعم' },
-  { key: 'tdmr-academic-links', purpose: 'روابطك الأكاديمية التي تحفظها بنفسك — بياناتك أنت', kind: 'بيانات مستخدم', purge: 'لا — لا تُدمَّر أبدًا' },
-  { key: 'tdmr-auth::probe', purpose: 'فحص توفر التخزين — يُكتب ويُحذف في اللحظة نفسها', kind: 'عابر', purge: 'ينظّف نفسه' },
+  { key: 'ulara.consent', purpose: 'قرارك على لافتة التخزين (موافق/أرفض)', kind: 'أساسي', purge: 'لا — هو القرار نفسه' },
+  { key: 'ulara.consent.record', purpose: 'سجل القرار مع طابعه الزمني (JSON)', kind: 'أساسي', purge: 'لا' },
+  { key: 'ulara-theme', purpose: 'اختيارك للمظهر: فاتح أو داكن أو النظام', kind: 'أساسي', purge: 'لا' },
+  { key: 'ula-theme-profile', purpose: 'ذاكرة المظهر قبل تحميل الصفحة', kind: 'أساسي', purge: 'لا' },
+  { key: 'ula-auth', purpose: 'جلسة الدخول: المستخدم ورمز الوصول القصير وسياق المؤسسة', kind: 'أساسي', purge: 'لا' },
+  { key: 'ula-ui', purpose: 'طيّ الشريط الجانبي وآخر اللوحات المفتوحة (4 على الأكثر)', kind: 'تفضيل', purge: 'نعم' },
+  { key: 'ula-doc-side-w', purpose: 'عرض اللوحة الجانبية في عارض المستندات', kind: 'تفضيل', purge: 'نعم' },
+  { key: 'ula-academic-links', purpose: 'روابطك الأكاديمية التي تحفظها بنفسك — بياناتك أنت', kind: 'بيانات مستخدم', purge: 'لا — لا تُدمَّر أبدًا' },
+  { key: 'ula-auth::probe', purpose: 'فحص توفر التخزين — يُكتب ويُحذف في اللحظة نفسها', kind: 'عابر', purge: 'ينظّف نفسه' },
 ] as const;
 
 export function CookiesPage() {
   useLegalMeta({
     title: 'ملفات تعريف الارتباط والتخزين المحلي',
     path: '/legal/cookies',
-    description: 'الكوكي الوحيد ومفاتيح التخزين المحلي التسعة التي تكتبها منصّة تادمورا — الجدول الكامل وما يُحذف عند الرفض.',
+    description: 'الكوكي الوحيد ومفاتيح التخزين المحلي التسعة التي تكتبها منصّة أُلارا — الجدول الكامل وما يُحذف عند الرفض.',
   });
 
   return (
     <LegalSheet
       title="ملفات تعريف الارتباط والتخزين المحلي"
-      lede="هذه هي القائمة الكاملة لما تكتبه تادمورا على جهازك: كوكي واحد وتسعة مفاتيح تخزين محلي — لا شيء غيرها، ولا تحليلات ولا تتبّع."
+      lede="هذه هي القائمة الكاملة لما تكتبه أُلارا على جهازك: كوكي واحد وتسعة مفاتيح تخزين محلي — لا شيء غيرها، ولا تحليلات ولا تتبّع."
       updated={LEGAL_UPDATED}
     >
       <LegalSectionBar index={1} title="المبدأ" id="cookies-principle" />
@@ -293,7 +293,7 @@ export function CookiesPage() {
       <LegalSectionBar index={3} title="الكوكي الوحيد" id="cookies-the-cookie" />
       <LegalCell>
         <p className="lg-p">
-          كوكي واحد فقط: <CodeRun>tdmr_refresh</CodeRun> — يحمل رمز تحديث الجلسة، بسمات <CodeRun>httpOnly</CodeRun>
+          كوكي واحد فقط: <CodeRun>ulara_refresh</CodeRun> — يحمل رمز تحديث الجلسة، بسمات <CodeRun>httpOnly</CodeRun>
           (لا تقرؤه سكربتات الصفحة) و<CodeRun>sameSite=strict</CodeRun>، ومحصور في المسار <CodeRun>/api/v1/auth</CodeRun>،
           وينتهي خلال <CodeRun>7d</CodeRun> مع دوران الرمز. حذفك له من المتصفح يعني تسجيل خروجك من هذا الجهاز.
         </p>
@@ -302,12 +302,12 @@ export function CookiesPage() {
       <LegalSectionBar index={4} title="الرفض وما يحدث عنده" id="cookies-reject" />
       <LegalCell>
         <p className="lg-p">
-          عند الرفض تُحذف مفاتيح التفضيلات <CodeRun>tdmr-ui</CodeRun> و<CodeRun>tdmr-doc-side-w</CodeRun> —
+          عند الرفض تُحذف مفاتيح التفضيلات <CodeRun>ula-ui</CodeRun> و<CodeRun>ula-doc-side-w</CodeRun> —
           كلاهما تُعيد المنصّة اشتقاقه من قيمه الافتراضية عند الحاجة، فلا يتعطل شيء. ويُحفظ قرار الرفض نفسه
           حتى لا تُسأل في كل زيارة.
         </p>
         <p className="lg-p">
-          أما <CodeRun>tdmr-academic-links</CodeRun> — روابطك الأكاديمية المحفوظة — <strong>فلا يُمس أبدًا عند
+          أما <CodeRun>ula-academic-links</CodeRun> — روابطك الأكاديمية المحفوظة — <strong>فلا يُمس أبدًا عند
           الرفض</strong>: بياناتك التي كتبتَها بنفسك تبقى ملكك، والرفض لا يدمّر محتوى المستخدم. وكذلك تبقى
           جلسة الدخول واختيار المظهر وذاكرته.
         </p>
@@ -338,7 +338,7 @@ export function AccessibilityPage() {
   useLegalMeta({
     title: 'بيان إمكانية الوصول',
     path: '/legal/accessibility',
-    description: 'ما تطبّقه منصّة تادمورا فعلًا لإمكانية الوصول — عربية أولًا، لوحة مفاتيح، تقليل الحركة، تباين — وما لم يُقيَّم بعد.',
+    description: 'ما تطبّقه منصّة أُلارا فعلًا لإمكانية الوصول — عربية أولًا، لوحة مفاتيح، تقليل الحركة، تباين — وما لم يُقيَّم بعد.',
   });
 
   return (
@@ -391,7 +391,7 @@ export function SecurityPage() {
   useLegalMeta({
     title: 'الأمن والإفصاح المسؤول',
     path: '/legal/security',
-    description: 'الضوابط الأمنية المطبَّقة فعلًا في منصّة تادمورا — تجزئة كلمات المرور، دوران الجلسات، الحدود — وما لا ندّعيه.',
+    description: 'الضوابط الأمنية المطبَّقة فعلًا في منصّة أُلارا — تجزئة كلمات المرور، دوران الجلسات، الحدود — وما لا ندّعيه.',
   });
 
   return (
@@ -445,19 +445,19 @@ export function DataPage() {
   useLegalMeta({
     title: 'البيانات وبيانات العرض',
     path: '/legal/data',
-    description: 'الفصل بين البيانات الاصطناعية المبذورة وبياناتك الحقيقية داخل منصّة تادمورا التجريبية.',
+    description: 'الفصل بين البيانات الاصطناعية المبذورة وبياناتك الحقيقية داخل منصّة أُلارا التجريبية.',
   });
 
   return (
     <LegalSheet
       title="البيانات وبيانات العرض"
-      lede="صفحة واحدة تجيب عن سؤال واحد: ما الذي داخل تادمورا اصطناعي للعرض، وما الذي هو بيانات حقيقية كتبتها أنت؟"
+      lede="صفحة واحدة تجيب عن سؤال واحد: ما الذي داخل أُلارا اصطناعي للعرض، وما الذي هو بيانات حقيقية كتبتها أنت؟"
       updated={LEGAL_UPDATED}
     >
       <LegalSectionBar index={1} title="ما الذي نجمعه — النوعان" id="data-types" />
       <LegalCell>
         <p className="lg-p">
-          <strong>بيانات مبذورة اصطناعية بالكامل:</strong> «مساحة عمل تادمورا التجريبية» بكلياتها ومقرراتها
+          <strong>بيانات مبذورة اصطناعية بالكامل:</strong> «مساحة عمل أُلارا التجريبية» بكلياتها ومقرراتها
           وخططها الدراسية، والمستخدمون التجريبيون وحسابات الاختبار <CodeRun>@test.ly</CodeRun> ونتائجهم —
           كلها وُلدت من سكربت البذرة لأغراض العرض، ولا تمثّل أي شخص أو مؤسسة حقيقية.
         </p>

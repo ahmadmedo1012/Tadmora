@@ -4,7 +4,7 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  *
  * An ORIGINAL implementation of the reference's measured cursor
  * grammar (docs/redesign/r308/reference-observations.md §4), on the
- * Tadmora token system:
+ * Ulara token system:
  *
  *  · Canvas 2D layer (fixed, viewport-sized, DPR-capped at 2): a 10px
  *    square in the ONE signal color, eased toward the pointer
@@ -13,7 +13,7 @@ import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
  *    segment alpha ramps quadratically from 0 (oldest) to ≈1 (newest).
  *    (V15 · R314 cycle-2: the square is the reference's measured
  *    geometry — a true 10×10px bbox with exactly 100 opaque pixels,
- *    solid #FA3600, read by canvas getImageData at rest over links
+ *    solid #C43E16, read by canvas getImageData at rest over links
  *    (r313 telemetry D14). The R308 ground-colour PLATE is retired:
  *    its 13px alpha footprint read as a 13px cursor — the geometry
  *    contract here wins, and the reference ships the naked square
@@ -99,7 +99,7 @@ export function SheetCursor() {
 
     /* colours re-read on every wake — theme flips mid-session stay
      * correct because the next pointer movement re-wakes the system. */
-    let ink = '#FA3600';
+    let ink = '#C43E16';
 
     const readColors = () => {
       const styles = getComputedStyle(document.documentElement);

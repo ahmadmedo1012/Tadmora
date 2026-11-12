@@ -1,28 +1,29 @@
 /**
  * r171c — WCAG 1.4.3 pin for the UserAvatar initials ink escalation.
  *
- * The 21-c luminance gate picked the better of the two TOKEN inks
- * (#FFFFFF / #191918) — which is ≥4.5:1 for the whole seed palette
+ * The 21-c luminance gate picks the better of the two TOKEN inks
+ * (#FFFFFF / #17130E — the ULARA warm ink, one step darker than the
+ * retired #191918) — which is ≥4.5:1 for the whole seed palette
  * (worst case #6B7280 4.83:1), but NOT for the whole hue wheel: the
- * mid-violet band measured live on the admin user tables + message
+ * deep-violet band measured live on the admin user tables + message
  * inbox rows sits in the pocket where BOTH token inks are under AA at
  * the 11–13px/600 the initials render at:
  *
- *   ground     white-ink  dark-ink  (r171c, computed — browser-verified
- *   #9269DB      3.99       4.41      on the same math via axe-core
- *   #8E66D6      4.18       4.21      4.10.3 + computed styles)
- *   #835FC7      4.74       3.71   ← token white already clears AA
+ *   ground     white-ink  dark-ink  (re-measured r171c/ULARA — the
+ *   #8E66D6      4.18       4.42      warm ink re-key moved the pocket:
+ *   #905CE8      4.30       4.30      #9269DB now KEEPS the dark token
+ *                            at 4.64 — only the deep edge escalates)
  *
  * The fix escalates: token max < 4.5 → try the pure extremes
  * (#000000 / #FFFFFF) and ship the max-ratio one. Pure black measures
- * 5.27:1 / 5.02:1 on the two failing grounds; mathematically the pure
+ * 5.02:1 / 4.88:1 on the two failing grounds; mathematically the pure
  * pair can never miss — max((L+0.05)/0.05, 1.05/(L+0.05)) ≥ √21 ≈
  * 4.58 for every single ground — pinned here by a full coarse-grid
  * sweep, not just the two measured hexes.
  *
  * The seed palette must keep its exact 21-c inks (no behavior drift
- * for grounds that already pass): #4F8EF7 → dark 5.48, #9B6FE8 → dark
- * 4.89, #3DD68C → dark 9.38, #D4A537 → dark 7.74, #6B7280 → white
+ * for grounds that already pass): #4F8EF7 → dark 5.76, #9B6FE8 → dark
+ * 5.13, #3DD68C → dark 9.86, #D4A537 → dark 8.13, #6B7280 → white
  * 4.83 — the seeded users render pixel-identical.
  */
 import { describe, expect, it } from 'vitest';
@@ -41,10 +42,13 @@ function ratio(ink: string, ground: string): number {
 }
 
 describe('avatarInk — WCAG 1.4.3 escalation (r171c)', () => {
-  it('the mid-violet grounds that fail both token inks escalate to a pure extreme that clears AA', () => {
-    // #9269DB: token max = dark 4.41 · #8E66D6: token max = dark 4.21 —
-    // both under the 4.5 floor; pure black rescues at 5.27 / 5.02.
-    for (const ground of ['#9269DB', '#8E66D6']) {
+  it('the deep-violet grounds that fail both token inks escalate to a pure extreme that clears AA', () => {
+    // #8E66D6: token max = dark 4.42 · #905CE8: token max = dark 4.30 —
+    // both under the 4.5 floor; pure black rescues at 5.02 / 4.88.
+    // (The ULARA warm-ink re-key DARKENED the dark token, so the old
+    // #9269DB ground now keeps its token ink at 4.64 — the escalation
+    // pocket shrank to the band's deep edge.)
+    for (const ground of ['#8E66D6', '#905CE8']) {
       const ink = avatarInk(ground);
       expect(ink, `ink for ${ground}`).toBeDefined();
       expect([AVATAR_PURE_INKS.black, AVATAR_PURE_INKS.white]).toContain(ink);
@@ -59,10 +63,10 @@ describe('avatarInk — WCAG 1.4.3 escalation (r171c)', () => {
   it('grounds a token ink already clears keep that token ink — the seed palette is unchanged', () => {
     // [ground, expected ink, ratio for the record]
     const kept: Array<[string, string, number]> = [
-      ['#4F8EF7', AVATAR_INKS.dark, 5.48], // seeded student — blue keeps the dark token
-      ['#9B6FE8', AVATAR_INKS.dark, 4.89], // seeded admin (violet, still clears)
-      ['#3DD68C', AVATAR_INKS.dark, 9.38], // seeded teacher
-      ['#D4A537', AVATAR_INKS.dark, 7.74], // seeded quality
+      ['#4F8EF7', AVATAR_INKS.dark, 5.76], // seeded student — blue keeps the dark token
+      ['#9B6FE8', AVATAR_INKS.dark, 5.13], // seeded admin (violet, still clears)
+      ['#3DD68C', AVATAR_INKS.dark, 9.86], // seeded teacher
+      ['#D4A537', AVATAR_INKS.dark, 8.13], // seeded quality
       ['#6B7280', AVATAR_INKS.light, 4.83], // seeded owner — the 21-c worst case
       ['#835FC7', AVATAR_INKS.light, 4.74], // measured band edge: white clears
     ];
@@ -103,7 +107,7 @@ describe('avatarInk — WCAG 1.4.3 escalation (r171c)', () => {
       }
     }
     // …and the sweep's own worst case stays above the AA floor with
-    // margin (recorded: 4.561 — a token-white pick just above the
+    // margin (recorded: 4.513 — a token-dark pick just above the
     // gate; the escalated subset bottoms out at the √21 ≈ 4.58 pure
     // pair floor, so the overall floor is the 4.5 gate itself).
     expect(worst!.ratio).toBeGreaterThanOrEqual(4.5);
@@ -118,18 +122,18 @@ describe('avatarInk — WCAG 1.4.3 escalation (r171c)', () => {
 });
 
 describe('UserAvatar — the escalation reaches the DOM (r171c)', () => {
-  it('renders the escalated pure ink inline for a failing mid-violet ground', () => {
-    const { container } = render(<UserAvatar initials="أ" color="#9269DB" size={28} />);
+  it('renders the escalated pure ink inline for a failing deep-violet ground', () => {
+    const { container } = render(<UserAvatar initials="أ" color="#8E66D6" size={28} />);
     const avatar = container.querySelector('.avatar') as HTMLElement;
     // jsdom normalizes hex to rgb(): pure black ink on the violet ground.
     expect(avatar.style.color).toBe('rgb(0, 0, 0)');
-    expect(avatar.style.backgroundColor).toBe('rgb(146, 105, 219)');
+    expect(avatar.style.backgroundColor).toBe('rgb(142, 102, 214)');
   });
 
   it('renders the token dark ink unchanged for a passing ground (#4F8EF7)', () => {
     const { container } = render(<UserAvatar initials="أح" color="#4F8EF7" />);
     const avatar = container.querySelector('.avatar') as HTMLElement;
-    expect(avatar.style.color).toBe('rgb(25, 25, 24)');
+    expect(avatar.style.color).toBe('rgb(23, 19, 14)');
     expect(avatar.style.backgroundColor).toBe('rgb(79, 142, 247)');
   });
 

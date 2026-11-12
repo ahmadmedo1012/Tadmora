@@ -1,8 +1,8 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — R314 «VISUAL TRUTH» chrome layer (Task 6-a / B10)
+   ULARA — R314 «VISUAL TRUTH» chrome layer (Task 6-a / B10)
    ─────────────────────────────────────────────────────────────────────
    Two NEW landing chrome components in the reference's measured
-   geometry, carrying Tadmora's OWN honest content (never the
+   geometry, carrying Ulara's OWN honest content (never the
    reference's text, logo, or awards):
 
    · cb — ConsentBanner (V11 → R315 K-C → R318 §A9 → R341 L1-c): the
@@ -16,16 +16,16 @@
      Reject ink-labelled), the pair grouped at the inline end on wide
      frames, anchored edge to edge on phones with 44px touch targets.
      Keyboard-dismissable (native buttons); aria-live="polite" region.
-     Real functionality: «موافق»/«أرفض» persist `tadmora.consent`
-     (+ JSON record with timestamp under `tadmora.consent.record`);
-     reject removes the gated UI-pref keys; window.TadmoraConsent
+     Real functionality: «موافق»/«أرفض» persist `ulara.consent`
+     (+ JSON record with timestamp under `ulara.consent.record`);
+     reject removes the gated UI-pref keys; window.UlaraConsent
      exposes the live state. See
      components/landing/chrome/ConsentBanner.tsx.
 
    · et — EdgeTab (V12): the right-edge vertical tab (paper ground,
      outer hairline, orange square + tiny white 4-pointed star at the
-     top, rotated vertical mono label «منصّة مستقلّة · تادمورا ٢٠٢٦» —
-     Tadmora's own mark and line, NO award claims). Click scrolls to
+     top, rotated vertical mono label «منصّة مستقلّة · أُلارا ٢٠٢٦» —
+     Ulara's own mark and line, NO award claims). Click scrolls to
      the colophon footer. Hidden below 768px.
 
    CASCADE CONTRACT: imported by LandingPage.tsx right after
@@ -177,7 +177,7 @@
     text-decoration-line: underline;
     /* R319 §D7 — the light-theme hover ink must clear AA on the card
        paper: --accent-hover (#D92F00) measured 4.44:1. The deep copper
-       --accent-strong (#A32400) is 6.91:1 on #F6F6EE; the dark twin
+       --accent-strong (#A32400) is 6.91:1 on #F5F1E8; the dark twin
        below keeps the night sheet's own hover unchanged (it already
        passes). */
     color: var(--accent-strong);
@@ -205,8 +205,8 @@
 /* «موافق» — R318 (§A9): the REAL primary. An INK slab with a PAPER
    label — the site's own primary grammar (unified-parity --primary:
    charcoal slab CTA, 14.74:1) — carried on the theme tokens so both
-   sheets resolve with zero forks (light #282828+#F6F6EE 12.44:1 ·
-   dark #F6F8FA+#282828 13.37:1). The measured SEAT is kept:
+   sheets resolve with zero forks (light #262019+#F5F1E8 12.44:1 ·
+   dark #F6F8FA+#262019 13.37:1). The measured SEAT is kept:
    78.63×27.98 @1440, radius 0, the 1px ink border riding INSIDE the
    border-box so the outer geometry is exact. Hover keeps the
    reference's accent fill-wipe (the .btn grammar's wipe pair);
@@ -440,7 +440,7 @@
 /* The small orange square (~14×14 @1440) at the rail's TOP —
    var(--accent) ground with the tiny white 4-pointed star stroked in
    --accent-fg (#FFFFFF light · warm ink dark — the label-on-accent
-   seat). Tadmora's own mark; no award badge, ever. */
+   seat). Ulara's own mark; no award badge, ever. */
 .et-mark {
   flex: 0 0 auto;
   inline-size: 1.68rem;           /* 14px @1440 — measured */
@@ -450,8 +450,8 @@
   background: var(--accent);
 }
 
-/* The rotated vertical mono label — Tadmora's own honest line:
-   «منصّة مستقلّة · تادمورا ٢٠٢٦». writing-mode vertical-rl + the 180°
+/* The rotated vertical mono label — Ulara's own honest line:
+   «منصّة مستقلّة · أُلارا ٢٠٢٦». writing-mode vertical-rl + the 180°
    rotate gives the RTL bottom-to-top reading; mono 10px @1440
    (--fs-mono-sm — the stack's Arabic fallback carries the script);
    muted ink — the solid twin of rgba(40,40,40,.72). NOTE: the 0.14em

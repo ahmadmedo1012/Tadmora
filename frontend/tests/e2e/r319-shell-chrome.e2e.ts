@@ -78,7 +78,7 @@ interface GrainLayer {
 /** The gate's §E-12 grain contract, resolved from the live DOM. */
 async function grainLayer(page: import('@playwright/test').Page): Promise<GrainLayer | null> {
   return page.evaluate(() => {
-    const el = document.querySelector('body.tdmr-grain, [class*="grain"]');
+    const el = document.querySelector('body.ula-grain, [class*="grain"]');
     if (!el) return null;
     const cs = getComputedStyle(el);
     return {
@@ -127,7 +127,7 @@ for (const theme of THEMES) {
       await expect(page.locator('h1')).toBeVisible({ timeout: 20000 });
 
       const grain = await grainLayer(page);
-      expect(grain, 'body.tdmr-grain / [class*="grain"] must resolve').not.toBeNull();
+      expect(grain, 'body.ula-grain / [class*="grain"] must resolve').not.toBeNull();
       expect(grain!.cls).toContain('sheet-grain');
       expect(grain!.position).toBe('fixed');
       expect(grain!.pointerEvents).toBe('none');

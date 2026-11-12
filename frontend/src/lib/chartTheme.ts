@@ -1,6 +1,6 @@
 /**
  * chartTheme — shared Chart.js styling, plugins and repaint plumbing
- * for Tadmora.
+ * for Ulara.
  *
  * Chart.js renders to <canvas> and CANNOT read CSS variables, so passing
  * strings like 'var(--chart-grid)' silently falls back to defaults
@@ -15,16 +15,16 @@
  * at module init, so every chart — including the inline-option holdouts
  * (Skills radar, student dash doughnut) — reads as designed:
  *
- *   tadmoraTooltipPlugin      designed DOM tooltip (surface ground, 1px
+ *   ularaTooltipPlugin      designed DOM tooltip (surface ground, 1px
  *                             border, --shadow-pop, --r-sm, --font-sans,
  *                             rtl) replacing the canvas default.
- *   tadmoraFadingAxisPlugin   gridlines fade to transparent at the chart
+ *   ularaFadingAxisPlugin   gridlines fade to transparent at the chart
  *                             edges (8%; 2% under prefers-contrast: more).
- *   tadmoraGradientFillPlugin area fills under line datasets become
+ *   ularaGradientFillPlugin area fills under line datasets become
  *                             accent-fading gradients — opt-in per chart
  *                             via cartesianOptions({ gradientFill: true })
- *                             or options.plugins.tadmoraGradientFill.
- *   tadmoraCenterLabelPlugin  doughnut center text drawn with
+ *                             or options.plugins.ularaGradientFill.
+ *   ularaCenterLabelPlugin  doughnut center text drawn with
  *                             --type-metric tokens — opt-in via
  *                             radialOptions({ centerLabel: {value,label} }).
  *
@@ -55,12 +55,12 @@ import { useSyncExternalStore } from 'react';
 
 /* ─── Opt-in plugin option types (augment Chart.js plugin options) ─── */
 
-export type TadmoraGradientFillOptions = {
+export type UlaraGradientFillOptions = {
   /** Fill line-dataset areas with accent-fading canvas gradients. */
   enabled: boolean;
 };
 
-export type TadmoraCenterLabelOptions = {
+export type UlaraCenterLabelOptions = {
   /** Big value rendered with --type-metric tokens. */
   value: string;
   /** Optional caption under the value (--type-label tokens). */
@@ -75,10 +75,10 @@ declare module 'chart.js' {
   // readability.)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface PluginOptionsByType<TType extends ChartType> {
-    /** Consumed by tadmoraGradientFillPlugin (globally registered). */
-    tadmoraGradientFill?: Partial<TadmoraGradientFillOptions>;
-    /** Consumed by tadmoraCenterLabelPlugin (globally registered). */
-    tadmoraCenterLabel?: Partial<TadmoraCenterLabelOptions>;
+    /** Consumed by ularaGradientFillPlugin (globally registered). */
+    ularaGradientFill?: Partial<UlaraGradientFillOptions>;
+    /** Consumed by ularaCenterLabelPlugin (globally registered). */
+    ularaCenterLabel?: Partial<UlaraCenterLabelOptions>;
   }
 }
 
@@ -256,17 +256,17 @@ trackMedia('(prefers-contrast: more)', (m) => {
 const FALLBACK = {
   /* R313 (WP-D · charts): the canvas-layer fallbacks re-tint to the
      Heron paper/signal family — warm neutrals, no blue-grey; series 1
-     IS the #FA3600 signal (mirrors tokens.css --chart-1). */
+     IS the #C43E16 signal (mirrors tokens.css --chart-1). */
   chartText:   '#414140',
   chartGrid:   '#E0E0DA',
-  accent:      '#FA3600',
+  accent:      '#C43E16',
   surface1:    '#111113',
   surface3:    '#EFEFE4',
   success:     '#3DD68C',
   chart6Warm:  '#F5A623',
   danger:      '#F55353',
   chart6Gold:  '#e9c349',
-  chart1:      '#FA3600',
+  chart1:      '#C43E16',
   chart2:      '#4FA66D',
   chart3:      '#5C8FCE',
   chart4:      '#DD6E78',
@@ -274,7 +274,7 @@ const FALLBACK = {
   chart6:      '#E8B547',
   chart7:      '#3F8B8B',
   chart8:      '#A65D8A',
-  text:        '#191918',
+  text:        '#17130E',
 } as const;
 
 export function chartColors() {
@@ -363,7 +363,7 @@ export function chartAnimation(): false | ChartAnimationProfile {
   return { duration: readTokenNumber('--t-slow', 380), easing: 'easeOutQuart' };
 }
 
-/* ─── Fading-axis treatment (contract §tadmoraFadingAxisPlugin) ────── */
+/* ─── Fading-axis treatment (contract §ularaFadingAxisPlugin) ────── */
 
 /** Edge fade extent as a fraction of the axis span. */
 const GRID_FADE_EXTENT = 0.08;
@@ -405,9 +405,9 @@ function fadingGridColor(scaleId: 'x' | 'y', base: string): FadingGridColor {
   return fade;
 }
 
-/* ─── Designed DOM tooltip (contract §tadmoraTooltipPlugin) ────────── */
+/* ─── Designed DOM tooltip (contract §ularaTooltipPlugin) ────────── */
 
-const TOOLTIP_CLASS = 'tadmora-chart-tooltip';
+const TOOLTIP_CLASS = 'ulara-chart-tooltip';
 
 let tooltipEl: HTMLDivElement | null = null;
 let tooltipOwner: Chart | null = null;
@@ -436,7 +436,7 @@ function ensureTooltipEl(): HTMLDivElement | null {
   el.style.border = '1px solid var(--border-strong)';
   el.style.borderRadius = 'var(--r-sm)';
   el.style.boxShadow = 'none';
-  // chart-treatment.md §tadmoraTooltipPlugin pins 12px 14px padding.
+  // chart-treatment.md §ularaTooltipPlugin pins 12px 14px padding.
   el.style.padding = '12px 14px';
   el.style.fontFamily = 'var(--font-sans)';
   el.style.fontSize = 'var(--fs-xs, 12px)';
@@ -515,7 +515,7 @@ function buildTooltipContent(el: HTMLDivElement, tooltip: TooltipModel<ChartType
  * External tooltip handler — replaces Chart.js's canvas tooltip with the
  * designed DOM surface. Installed by the tooltip() options factory (so
  * every cartesianOptions/radialOptions chart gets it for free) and by
- * tadmoraTooltipPlugin for inline-option charts.
+ * ularaTooltipPlugin for inline-option charts.
  *
  * Chart.js calls this on every active-element/position change (i.e. every
  * mousemove — pointer-following with ≤16 ms response); the CSS transform
@@ -523,7 +523,7 @@ function buildTooltipContent(el: HTMLDivElement, tooltip: TooltipModel<ChartType
  * enter/leave fade (the model itself jumps 0↔1 because `enabled: false`
  * disables its internal animation).
  */
-function drawTadmoraTooltip(args: { chart: Chart; tooltip: TooltipModel<ChartType> }): void {
+function drawUlaraTooltip(args: { chart: Chart; tooltip: TooltipModel<ChartType> }): void {
   const { chart, tooltip } = args;
   const el = ensureTooltipEl();
   if (!el || !chart.canvas) return;
@@ -587,7 +587,7 @@ function tooltip() {
     // still receives the full model (title/body/caret), while
     // `enabled: false` keeps the canvas default from double-rendering.
     enabled: false,
-    external: drawTadmoraTooltip,
+    external: drawUlaraTooltip,
   };
 }
 
@@ -598,7 +598,7 @@ export function cartesianOptions(opts?: {
   horizontal?: boolean;
   legend?: boolean;
   /** Opt-in: fill line-dataset areas with accent-fading gradients
-   *  (tadmoraGradientFillPlugin — registered globally, disabled by default). */
+   *  (ularaGradientFillPlugin — registered globally, disabled by default). */
   gradientFill?: boolean;
 }): ChartOptions<'line' | 'bar'> {
   const c = chartColors();
@@ -683,7 +683,7 @@ export function cartesianOptions(opts?: {
           }
         : { display: false },
       tooltip: tooltip(),
-      ...(opts?.gradientFill ? { tadmoraGradientFill: { enabled: true } } : {}),
+      ...(opts?.gradientFill ? { ularaGradientFill: { enabled: true } } : {}),
     },
     scales: {
       // Vertical charts: categories on x, numbers on y — horizontal swaps.
@@ -698,7 +698,7 @@ export function radialOptions(opts?: {
   legend?: boolean;
   cutout?: string;
   /** Opt-in: doughnut center text drawn with --type-metric tokens
-   *  (tadmoraCenterLabelPlugin — registered globally). */
+   *  (ularaCenterLabelPlugin — registered globally). */
   centerLabel?: { value: string; label?: string };
 }): ChartOptions<'doughnut'> {
   const c = chartColors();
@@ -757,7 +757,7 @@ export function radialOptions(opts?: {
               },
             },
       tooltip: tooltip(),
-      ...(opts?.centerLabel ? { tadmoraCenterLabel: opts.centerLabel } : {}),
+      ...(opts?.centerLabel ? { ularaCenterLabel: opts.centerLabel } : {}),
     },
   } as ChartOptions<'doughnut'>;
 }
@@ -799,7 +799,7 @@ export const valueLabels = {
 /* ─── Chart.js plugins (contract plugin set) ───────────────────────── */
 
 /**
- * tadmoraTooltip — installs the designed DOM tooltip on charts whose
+ * ularaTooltip — installs the designed DOM tooltip on charts whose
  * options don't already carry it (the inline-option holdouts). Charts
  * built through cartesianOptions()/radialOptions() already embed the
  * external handler in their tooltip options, so this hook skips them;
@@ -807,8 +807,8 @@ export const valueLabels = {
  * doughnut) keeps tooltips fully disabled. Also owns the hide-on-destroy
  * cleanup for the shared tooltip element.
  */
-const tadmoraTooltipPlugin: Plugin = {
-  id: 'tadmoraTooltip',
+const ularaTooltipPlugin: Plugin = {
+  id: 'ularaTooltip',
   beforeInit(chart) {
     const options = chart.config.options;
     if (!options) return;
@@ -817,7 +817,7 @@ const tadmoraTooltipPlugin: Plugin = {
     if (typeof tooltipOpts.external === 'function') return;
     if (tooltipOpts.enabled === false) return;
     tooltipOpts.enabled = false;
-    tooltipOpts.external = drawTadmoraTooltip;
+    tooltipOpts.external = drawUlaraTooltip;
   },
   afterDestroy(chart) {
     if (tooltipOwner === chart && tooltipEl) {
@@ -828,15 +828,15 @@ const tadmoraTooltipPlugin: Plugin = {
 };
 
 /**
- * tadmoraFadingAxis — decorates a chart's raw x/y scale config with the
+ * ularaFadingAxis — decorates a chart's raw x/y scale config with the
  * fading grid color. Charts built through cartesianOptions() already
  * carry it (marker-guarded, idempotent); this hook covers charts with
  * hand-written scales that did NOT set an explicit grid.color — an
  * explicit custom color is respected and left untouched (use the
  * exported fadingGridColor() helper to fade a custom base color).
  */
-const tadmoraFadingAxisPlugin: Plugin = {
-  id: 'tadmoraFadingAxis',
+const ularaFadingAxisPlugin: Plugin = {
+  id: 'ularaFadingAxis',
   beforeInit(chart) {
     const options = chart.config.options;
     const scales = options?.scales;
@@ -853,25 +853,25 @@ const tadmoraFadingAxisPlugin: Plugin = {
 };
 
 /**
- * tadmoraGradientFill — converts filled line-dataset areas into vertical
+ * ularaGradientFill — converts filled line-dataset areas into vertical
  * accent-fading gradients (the previously zero-consumer lineFillGradient,
  * now automatic). Opt in per chart:
  *
  *   options={cartesianOptions({ gradientFill: true })}
- *   // or: options={{ ..., plugins: { tadmoraGradientFill: { enabled: true } } }}
+ *   // or: options={{ ..., plugins: { ularaGradientFill: { enabled: true } } }}
  *
  * Runs in beforeDatasetsDraw — before the Filler plugin paints areas —
  * and rebuilds the gradient every draw, so resizes and theme remounts
  * re-resolve the accent automatically.
  */
-const tadmoraGradientFillPlugin: Plugin = {
-  id: 'tadmoraGradientFill',
+const ularaGradientFillPlugin: Plugin = {
+  id: 'ularaGradientFill',
   defaults: { enabled: false },
   /* R313 (WP-D · charts): no chart gradients — opted-in line datasets
      get the FLAT 12% alpha band instead of the retired gradient sweep
      (the plugin stays registered so legacy `gradientFill: true`
      options, e.g. AdminPages, resolve harmlessly). */
-  beforeDatasetsDraw(chart: Chart, _args: unknown, options: Partial<TadmoraGradientFillOptions>) {
+  beforeDatasetsDraw(chart: Chart, _args: unknown, options: Partial<UlaraGradientFillOptions>) {
     if (!options.enabled) return;
     const area = chart.chartArea;
     if (!area) return;
@@ -896,17 +896,17 @@ const tadmoraGradientFillPlugin: Plugin = {
 };
 
 /**
- * tadmoraCenterLabel — draws a value (+ optional caption) in the center
+ * ularaCenterLabel — draws a value (+ optional caption) in the center
  * of a doughnut/pie using --type-metric / --type-label tokens. Opt in:
  *
  *   options={radialOptions({ cutout: '78%', centerLabel: { value: '85%', label: 'التقدّم' } })}
  *
  * Pair it with a cutout ≥ 60% so the text clears the arcs.
  */
-export const tadmoraCenterLabelPlugin: Plugin = {
-  id: 'tadmoraCenterLabel',
+export const ularaCenterLabelPlugin: Plugin = {
+  id: 'ularaCenterLabel',
   defaults: {},
-  afterDraw(chart: Chart, _args: unknown, options: Partial<TadmoraCenterLabelOptions>) {
+  afterDraw(chart: Chart, _args: unknown, options: Partial<UlaraCenterLabelOptions>) {
     const value = options.value;
     if (!value) return;
     const area = chart.chartArea;
@@ -941,14 +941,14 @@ export const tadmoraCenterLabelPlugin: Plugin = {
 };
 
 /* Registered once at module init so every chart — including the
-   inline-option holdouts — runs the Tadmora treatment. The gradient-fill
+   inline-option holdouts — runs the Ulara treatment. The gradient-fill
    and center-label plugins stay inert until a chart opts in via their
    options flags (defaults keep them disabled). */
 Chart.register(
-  tadmoraTooltipPlugin,
-  tadmoraFadingAxisPlugin,
-  tadmoraGradientFillPlugin,
-  tadmoraCenterLabelPlugin,
+  ularaTooltipPlugin,
+  ularaFadingAxisPlugin,
+  ularaGradientFillPlugin,
+  ularaCenterLabelPlugin,
 );
 
 /* ─── 012-design-graphics-uplift — theme-change observer ──────────────

@@ -18,7 +18,7 @@ import { apiBaseURL } from '../lib/api';
 import '../styles/app.css';
 
 /**
- * /app — «تطبيق تادمورا: التنزيل والتحديث» (R327 D1 · M0.8).
+ * /app — «تطبيق أُلارا: التنزيل والتحديث» (R327 D1 · M0.8).
  *
  * The distribution sheet in the public grammar (hairline cells · [nn]
  * bars · paper/ink). EVERY claim is honest:
@@ -46,9 +46,9 @@ import '../styles/app.css';
  * — the URL below is ALWAYS the newest build. The releases page is the
  * durable source of truth (history + checksums). */
 const ANDROID_APK_URL =
-  'https://github.com/ahmadmedo1012/Tadmora/releases/latest/download/tadmora.apk';
+  'https://github.com/ahmadmedo1012/ulara/releases/latest/download/ulara.apk';
 const BUILDS_PAGE_URL =
-  'https://github.com/ahmadmedo1012/Tadmora/releases';
+  'https://github.com/ahmadmedo1012/ulara/releases';
 const APP_VERSION = '1.0.0';
 
 interface StatusShape {
@@ -67,10 +67,10 @@ function AppPendingTag() {
 export function AppDownloadPage() {
   useThemeSync();
   useLegalMeta({
-    title: 'تطبيق تادمورا — التنزيل والتحديث',
+    title: 'تطبيق أُلارا — التنزيل والتحديث',
     path: '/app',
     description:
-      'تنزيل تطبيق تادمورا لأندرويد، حالة iOS، قنوات التحديث، والحد الأدنى للإصدار — مباشرة وبدون وسيط.',
+      'تنزيل تطبيق أُلارا لأندرويد، حالة iOS، قنوات التحديث، والحد الأدنى للإصدار — مباشرة وبدون وسيط.',
   });
 
   // The live floor — the same status the app's version gate reads (M0.7).
@@ -100,9 +100,9 @@ export function AppDownloadPage() {
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="ap-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
+          <Link to="/" className="ap-header-brand" aria-label="أُلارا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            تادمورا
+            أُلارا
           </Link>
         </div>
       </header>
@@ -112,7 +112,7 @@ export function AppDownloadPage() {
           <div className="pf-page-header">
             <div className="pf-page-header-text">
               <p className="pf-eyebrow">وثيقة التوزيع</p>
-              <h1 className="pf-page-title">تطبيق تادمورا — التنزيل والتحديث</h1>
+              <h1 className="pf-page-title">تطبيق أُلارا — التنزيل والتحديث</h1>
               <p className="pf-page-desc">
                 صفحة واحدة لكل ما يخصّ تطبيق الجوال: تنزيل أندرويد المباشر، حالة iOS، كيف تصل
                 التحديثات إلى هاتفك، والحد الأدنى للإصدار الذي تفرضه المنصّة الآن — قراءة حيّة من الخادم.
@@ -188,7 +188,7 @@ export function AppDownloadPage() {
               <div className="ap-qr">
                 <img
                   src="/media/app/qr-app-page.svg"
-                  alt="رمز QR يؤدي إلى صفحة تنزيل تطبيق تادمورا"
+                  alt="رمز QR يؤدي إلى صفحة تنزيل تطبيق أُلارا"
                   width={168}
                   height={168}
                   loading="lazy"

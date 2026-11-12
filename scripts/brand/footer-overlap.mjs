@@ -46,7 +46,7 @@ const { chromium } = require('playwright');
 /** The repo's own convention (playwright.config.ts c4-E): sandbox boxes run a
  *  pre-installed Chrome-for-Testing instead of `playwright install`. */
 function chromiumExecutable() {
-  if (process.env.TADMORA_E2E_EXECUTABLE) return process.env.TADMORA_E2E_EXECUTABLE;
+  if (process.env.ULARA_E2E_EXECUTABLE) return process.env.ULARA_E2E_EXECUTABLE;
   const cache = `${process.env.HOME}/.cache/ms-playwright`;
   try {
     const revs = readdirSync(cache)

@@ -82,21 +82,21 @@ const IN_PAGE_REDIRECTS: Array<{ path: string; source: string; marker: string }>
 /* Non-shell pages that own their titles via usePageTitle (verified by
  * rendering the real page below). */
 const NON_SHELL_TITLED: Record<string, string> = {
-  '/auth': 'تسجيل الدخول · تادمورا',
-  '/auth/register': 'إنشاء حساب جامعي · تادمورا',
+  '/auth': 'تسجيل الدخول · أُلارا',
+  '/auth/register': 'إنشاء حساب جامعي · أُلارا',
   /* R320 §D (PAGES-GAP §5): the forgot-password flow's two guest
    * sheets — same usePageTitle contract as their login sibling
    * (rendered + pinned in the it.each below). */
-  '/auth/forgot-password': 'استعادة كلمة المرور · تادمورا',
-  '/auth/reset-password': 'تعيين كلمة مرور جديدة · تادمورا',
+  '/auth/forgot-password': 'استعادة كلمة المرور · أُلارا',
+  '/auth/reset-password': 'تعيين كلمة مرور جديدة · أُلارا',
   /* R323 §A1: the brand specimen sheet — standalone (outside AppShell,
    * its own usePageTitle), pinned in the it.each below. */
-  '/__brand': 'دليل الهوية · تادمورا',
+  '/__brand': 'دليل الهوية · أُلارا',
   /* R323 A5: the component-system specimen sheet (dev + evidence). */
-  '/__design': 'نظام المكونات · تادمورا',
+  '/__design': 'نظام المكونات · أُلارا',
   /* R344 C-4: the product-plate stage (deterministic capture harness). */
-  '/__plates': 'لوحات المنتج · تادمورا',
-  '/404': 'الصفحة غير موجودة · تادمورا',
+  '/__plates': 'لوحات المنتج · أُلارا',
+  '/404': 'الصفحة غير موجودة · أُلارا',
 };
 
 import { resolveTitle, useEntityPageTitle } from '../../src/components/layout/AppShell';
@@ -106,7 +106,7 @@ import { resolveTitle, useEntityPageTitle } from '../../src/components/layout/Ap
  * The guest listing/detail surfaces layer payload names onto the tab
  * (useDocTitle in CollegePages / VisionPages / CompetitionsPages)
  * while the AUTHED entity pages resolved to their DYNAMIC_TITLES
- * pattern — «تفاصيل المقرّر · تادمورا» for two DIFFERENT courses.
+ * pattern — «تفاصيل المقرّر · أُلارا» for two DIFFERENT courses.
  * useEntityPageTitle is the authed half: the page hands its resolved
  * entity name up; the 0ms macrotask lands it past the shell's
  * pathname-title effect (parent effects run after child effects in
@@ -119,17 +119,17 @@ describe('useEntityPageTitle — the authed entity-name layer (r183-B6, A4 P3-4)
 
   it('two different entities produce two different document.titles', async () => {
     // The shell's pathname resolution stands in for the parent effect.
-    document.title = `${resolveTitle('/student/courses/x')} · تادمورا`;
+    document.title = `${resolveTitle('/student/courses/x')} · أُلارا`;
     const { rerender } = render(<TitleProbe name="هندسة البرمجيات" />);
-    await waitFor(() => expect(document.title).toBe('هندسة البرمجيات · تادمورا'));
+    await waitFor(() => expect(document.title).toBe('هندسة البرمجيات · أُلارا'));
     // Same pattern route, different entity — the tab must differ.
     rerender(<TitleProbe name="قواعد البيانات" />);
-    await waitFor(() => expect(document.title).toBe('قواعد البيانات · تادمورا'));
+    await waitFor(() => expect(document.title).toBe('قواعد البيانات · أُلارا'));
     // A null name (query pending / unknown id) writes nothing — the
     // shell's own resolution owns the tab then.
     rerender(<TitleProbe name={null} />);
-    expect(document.title).toBe('قواعد البيانات · تادمورا');
-    document.title = 'تادمورا · نظام تشغيل الجامعة';
+    expect(document.title).toBe('قواعد البيانات · أُلارا');
+    document.title = 'أُلارا · نظام تشغيل الجامعة';
   });
 
   it('the seven authed entity surfaces adopt the hook (fs pin)', () => {
@@ -223,7 +223,7 @@ describe('route-title coverage — every App.tsx route resolves a title (WCAG 2.
       // :param rows resolve through DYNAMIC_TITLES — feed a concrete id.
       const concrete = path.replace(/:[^/]+/g, 'probe');
       const title = resolveTitle(concrete);
-      expect(title, `${path} must not fall through to the generic fallback`).not.toBe('تادمورا');
+      expect(title, `${path} must not fall through to the generic fallback`).not.toBe('أُلارا');
       expect(title.length, path).toBeGreaterThan(1);
       covered.set(path, title);
     }
@@ -237,7 +237,7 @@ describe('route-title coverage — every App.tsx route resolves a title (WCAG 2.
     // mounts a title effect, so the static <title> IS the landing title
     // (and every titled page restores it on unmount). Pin the string.
     const m = read('index.html').match(/<title>([^<]+)<\/title>/);
-    expect(m?.[1]).toBe('تادمورا · نظام تشغيل الجامعة');
+    expect(m?.[1]).toBe('أُلارا · نظام تشغيل الجامعة');
   });
 });
 
@@ -323,17 +323,17 @@ import ResetPasswordPage from '../../src/pages/auth/ResetPasswordPage';
 
 describe('non-shell pages — usePageTitle sets the live document.title (2.4.2)', () => {
   it.each([
-    ['/auth', AuthPage, 'تسجيل الدخول · تادمورا'],
-    ['/auth/register', RegisterPage, 'إنشاء حساب جامعي · تادمورا'],
+    ['/auth', AuthPage, 'تسجيل الدخول · أُلارا'],
+    ['/auth/register', RegisterPage, 'إنشاء حساب جامعي · أُلارا'],
     /* R320 §D: the two flow sheets render + restore the title the same
      * way (usePageTitle contract — reset carries ?token= through a
      * MemoryRouter initialEntries entry so the page renders its form). */
-    ['/auth/forgot-password', ForgotPasswordPage, 'استعادة كلمة المرور · تادمورا'],
-    ['/auth/reset-password', ResetPasswordPage, 'تعيين كلمة مرور جديدة · تادمورا'],
-    ['/__brand', BrandPage, 'دليل الهوية · تادمورا'],
+    ['/auth/forgot-password', ForgotPasswordPage, 'استعادة كلمة المرور · أُلارا'],
+    ['/auth/reset-password', ResetPasswordPage, 'تعيين كلمة مرور جديدة · أُلارا'],
+    ['/__brand', BrandPage, 'دليل الهوية · أُلارا'],
     /* R323 A5: the /__design specimen sheet titles + restores the same way. */
-    ['/__design', DesignPage, 'نظام المكونات · تادمورا'],
-    ['/404', NotFoundPage, 'الصفحة غير موجودة · تادمورا'],
+    ['/__design', DesignPage, 'نظام المكونات · أُلارا'],
+    ['/404', NotFoundPage, 'الصفحة غير موجودة · أُلارا'],
   ] as const)('%s titles the tab and restores the previous title on unmount', (_path, Page, expected) => {
     document.title = 'العنوان السابق';
     /* r180: AuthPage mounts a (disabled-by-default) institutions query

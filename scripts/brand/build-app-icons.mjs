@@ -3,7 +3,7 @@
  * scripts/brand/build-app-icons.mjs — R327 B1 «الشعار الواحد».
  *
  * ONE canonical source: apps/mobile/src/brand/mark.ts (the 32-grid
- * Tadmora arch construction — the gateway path + the orange keystone).
+ * ULARA U-vessel — the one ink stroke + the sienna cornerstone).
  * This script PARSES the
  * constants out of that file (loudly failing if its shape changes), builds
  * EVERY app asset from the same numbers, and byte-verifies the committed

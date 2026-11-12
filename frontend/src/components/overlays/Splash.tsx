@@ -61,7 +61,7 @@ export function Splash() {
       data-fullscreen-layer="splash"
       data-exiting={exiting ? 'true' : 'false'}
       role="status"
-      aria-label="جارٍ تهيئة تادمورا"
+      aria-label="جارٍ تهيئة أُلارا"
     >
       <Logo
         variant="mark"

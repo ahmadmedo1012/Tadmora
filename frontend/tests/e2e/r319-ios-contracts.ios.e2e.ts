@@ -37,7 +37,7 @@
  *   • `webkit-iphone` (real WebKit) — GitHub CI job `ios-webkit`. This
  *     dev sandbox CANNOT launch WebKit (missing libgtk/libgraphene/
  *     gstreamer; no root to install), so the `ios` fixture below skips
- *     the suite cleanly here: `TADMORA_IOS_SKIP_UNSUPPORTED=1` opts out
+ *     the suite cleanly here: `ULARA_IOS_SKIP_UNSUPPORTED=1` opts out
  *     explicitly, and ANY WebKit launch failure converts to a skip with
  *     the reason in the test title — the suite stays green on hosts
  *     without WebKit and runs for real where WebKit exists.
@@ -96,7 +96,7 @@ const THEMES = ['light', 'dark'] as const;
  *   `*-iphone` projects; any other project (the desktop `e2e` project
  *   matches this file by its broader testMatch) skips with a reason.
  *
- *   GUARD B (WebKit availability) — TADMORA_IOS_SKIP_UNSUPPORTED=1
+ *   GUARD B (WebKit availability) — ULARA_IOS_SKIP_UNSUPPORTED=1
  *   opts out explicitly (the dev sandbox), and a WebKit LAUNCH FAILURE
  *   converts to a skip too (missing system libs / browser not
  *   installed). Chromium launch failures stay loud — that engine is
@@ -114,8 +114,8 @@ const test = base.extend<{ ios: Browser }>({
     const declared = (testInfo.project.use as { browserName?: unknown }).browserName;
     const engineName = declared === 'webkit' ? 'webkit' : 'chromium';
 
-    if (engineName === 'webkit' && process.env.TADMORA_IOS_SKIP_UNSUPPORTED === '1') {
-      testInfo.skip(true, 'WebKit unavailable on this host (TADMORA_IOS_SKIP_UNSUPPORTED=1)');
+    if (engineName === 'webkit' && process.env.ULARA_IOS_SKIP_UNSUPPORTED === '1') {
+      testInfo.skip(true, 'WebKit unavailable on this host (ULARA_IOS_SKIP_UNSUPPORTED=1)');
       return;
     }
     let browser: Browser;

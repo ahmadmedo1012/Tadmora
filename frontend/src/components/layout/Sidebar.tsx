@@ -264,7 +264,7 @@ export function Sidebar() {
             <Logo variant="mark" size={24} />
           </div>
           <div className="sidebar-brand-text">
-            <div className="sidebar-brand-name">تادمورا</div>
+            <div className="sidebar-brand-name">أُلارا</div>
             <div className="sidebar-brand-sub">نظام تشغيل الجامعة</div>
           </div>
           {/* Desktop: collapse / expand */}

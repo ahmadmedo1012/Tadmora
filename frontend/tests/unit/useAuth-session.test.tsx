@@ -78,7 +78,7 @@ beforeEach(() => {
     currentInstitution: null,
     membershipRole: null,
   });
-  localStorage.removeItem('tdmr-auth');
+  localStorage.removeItem('ula-auth');
 });
 
 describe('useLogin — session boundary', () => {

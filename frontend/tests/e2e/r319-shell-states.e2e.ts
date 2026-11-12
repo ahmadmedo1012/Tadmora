@@ -43,12 +43,12 @@ import path from 'node:path';
 import { FIXED_NOW_ISO, STUDENT_USER } from './fixtures/api-fixtures';
 import { installMockApi, seedSession } from './fixtures/mock-transport';
 
-const BASE_URL = process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173';
+const BASE_URL = process.env.ULARA_E2E_BASE_URL ?? 'http://localhost:5173';
 /* Evidence frames — the R319 board's owner-screenshot re-shoot mandate. */
 const EVIDENCE_DIR = path.resolve(process.cwd(), '..', 'audits', 'evidence', 'r319-shell');
 const THEMES = ['light', 'dark'] as const;
-/* The theme's own paper ground (tokens.css --bg): light #F6F6EE, dark
- * #282828 — the ONLY grounds the sheet and the dock may paint. */
+/* The theme's own paper ground (tokens.css --bg): light #F5F1E8, dark
+ * #262019 — the ONLY grounds the sheet and the dock may paint. */
 const PAPER: Record<(typeof THEMES)[number], string> = {
   light: 'rgb(246, 246, 238)',
   dark: 'rgb(40, 40, 40)',
@@ -149,7 +149,7 @@ async function iphoneSuite(browser: Browser, theme: (typeof THEMES)[number]): Pr
   // init script, same reasons — deterministic task-focused boot).
   await context.addInitScript(() => {
     try {
-      sessionStorage.setItem('tadmora-intro-skip', '1');
+      sessionStorage.setItem('ulara-intro-skip', '1');
       try {
         Object.defineProperty(Navigator.prototype, 'hardwareConcurrency', {
           configurable: true,
@@ -532,8 +532,8 @@ for (const theme of THEMES) {
       expect(dock.cellSep).toBe('1px');
 
       // active = ink label + 2px accent TOP rule + filled ink icon.
-      // The accent is theme-keyed: #FA3600 on light, the night ember
-      // #FF5A1F on dark (tokens.css --accent).
+      // The accent is theme-keyed: #C43E16 on light, the night ember
+      // #FF6B3D on dark (tokens.css --accent).
       expect(dock.active.rule.h).toBe('2px');
       const ACCENT = theme === 'light' ? 'rgb(250, 54, 0)' : 'rgb(255, 90, 31)';
       expect(dock.active.rule.bg).toBe(ACCENT);

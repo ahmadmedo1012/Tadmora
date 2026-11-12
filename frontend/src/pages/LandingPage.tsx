@@ -60,12 +60,12 @@ import { useSheetScroll } from '../lib/motion/useSheetScroll';
 import { clamp } from '../lib/motion/sheetConductor';
 // r314-chrome.css — R314 B10 — the consent banner (V11) + the right-edge
 // vertical tab (V12): the landing chrome pair, Heron geometry with
-// Tadmora's own honest content. R323 (A3 · defect 3): imported BEFORE
+// Ulara's own honest content. R323 (A3 · defect 3): imported BEFORE
 // landing.css so the sheet's R323 chrome block (the compact phone
 // consent bar + the --z-consent/--z-loader tokens) is the cascade's
 // last word over the chrome pair without specificity forks.
 import '../styles/landing/consent-edge.css';
-// landing.css — «لوحة تادمورا r306 → r313» — the Heron-parity drawing
+// landing.css — «لوحة أُلارا r306 → r313» — the Heron-parity drawing
 // sheet, re-composed to the reference's 9-section structure (D7):
 // hero → statement → live (the pains) → chapters (the pinned map) →
 // product → why → roles → vision/cta → footer, inside the full-page
@@ -118,7 +118,7 @@ import '../styles/landing/home.css';
 import { SheetNav } from '../components/landing/chrome/SheetNav';
 
 /**
- * Landing — «لوحة تادمورا» (r306 sheet → R313 Heron structure).
+ * Landing — «لوحة أُلارا» (r306 sheet → R313 Heron structure).
  *
  * P2-0 (r335 split): this file is the COMPOSER — hooks + refs +
  * effects + the nine section components in the original DOM order.
@@ -217,14 +217,14 @@ export default function LandingPage() {
    * .fo-grain div; idempotent both ways). */
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
-    document.body.classList.add('tdmr-grain');
-    return () => document.body.classList.remove('tdmr-grain');
+    document.body.classList.add('ula-grain');
+    return () => document.body.classList.remove('ula-grain');
   }, []);
 
   /* R333 (P-C) — the second-half reveal grammar (layout effect: the
    * gsap.set hidden state lands PRE-PAINT, so the armed frame never
    * flashes un-hidden content). initReveals is idempotent
-   * (window.__tdmrReveals) and its destroy() kills every trigger and
+   * (window.__ulaReveals) and its destroy() kills every trigger and
    * reverts every split — remount-safe (React 18 double-effect
    * included). RM: the module bails and the copy ships visible. */
   useLayoutEffect(() => {
@@ -482,7 +482,7 @@ export default function LandingPage() {
             divider ‖ sub + the register CTA + the login secondary)
             closed by the work strip — the reveal grammar, motion
             values and layer stack of docs/redesign/r331/heron-program.md
-            §4, on Tadmora's own artwork and copy. The component owns
+            §4, on Ulara's own artwork and copy. The component owns
             the whole block (and imports styles/r331/hero.css). ═══ */}
         <Hero />
 
@@ -525,7 +525,7 @@ export default function LandingPage() {
           gate (V11) + the right-edge vertical tab (V12). Public surface
           only — these never mount on auth pages.
           R333 P-D — the consent banner waits for the preloader's exit
-          (introDone flips at wipe-start / the `tdmr:entry-done` event;
+          (introDone flips at wipe-start / the `ula:entry-done` event;
           no overlay overlap), while the tab is not an overlay and
           mounts as before. */}
       {introDone && <ConsentBanner />}

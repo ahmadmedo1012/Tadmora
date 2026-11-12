@@ -121,30 +121,30 @@ describe('AppShell — skip link', () => {
 describe('AppShell — document.title per route (15-g P2-3)', () => {
   it('mirrors the resolved route title into document.title', () => {
     renderShell('محتوى', '/student/dashboard');
-    expect(document.title).toBe('لوحة التحكم · تادمورا');
+    expect(document.title).toBe('لوحة التحكم · أُلارا');
   });
 
   it('falls back to the full platform title for unlisted routes (4-A14 P2-1)', () => {
     renderShell(); // MemoryRouter default entry '/' — no PAGE_TITLES match
-    // The fallback used to read «منصة الزاوية · تادمورا» — the wrong
+    // The fallback used to read «منصة الزاوية · أُلارا» — the wrong
     // brand (the university platform, not the product) with a doubled
     // suffix. The product name alone resolves to the base title.
-    expect(document.title).toBe('تادمورا · نظام تشغيل الجامعة');
+    expect(document.title).toBe('أُلارا · نظام تشغيل الجامعة');
   });
 
   it('resolves the previously-unmapped teacher/admin routes (4-A14 P2-1)', () => {
     const cases: Array<[string, string]> = [
-      ['/teacher/exams', 'بنك الأسئلة والاختبارات · تادمورا'],
-      ['/teacher/ai', 'المساعد الذكي · تادمورا'],
+      ['/teacher/exams', 'بنك الأسئلة والاختبارات · أُلارا'],
+      ['/teacher/ai', 'المساعد الذكي · أُلارا'],
       // 5-B5 (A4 P3-2): one name per feature — the teacher library row
       // follows the nav label (the page h1) «المكتبة الإلكترونية».
-      ['/teacher/library', 'المكتبة الإلكترونية · تادمورا'],
-      ['/teacher/alerts', 'الإشعارات · تادمورا'],
-      ['/admin/alerts', 'الإشعارات · تادمورا'],
-      ['/student/ar', 'تجارب AR/VR · تادمورا'],
+      ['/teacher/library', 'المكتبة الإلكترونية · أُلارا'],
+      ['/teacher/alerts', 'الإشعارات · أُلارا'],
+      ['/admin/alerts', 'الإشعارات · أُلارا'],
+      ['/student/ar', 'تجارب AR/VR · أُلارا'],
       // nav.ts-canonical labels after the orphan surfacing (A14 P3-2)
-      ['/student/gamification', 'النقاط والمستويات · تادمورا'],
-      ['/student/skills', 'مهاراتي · تادمورا'],
+      ['/student/gamification', 'النقاط والمستويات · أُلارا'],
+      ['/student/skills', 'مهاراتي · أُلارا'],
     ];
     for (const [path, expected] of cases) {
       const { unmount } = renderShell('محتوى', path);
@@ -155,14 +155,14 @@ describe('AppShell — document.title per route (15-g P2-3)', () => {
 
   it('resolves the exam-template detail route via DYNAMIC_TITLES (4-A14 P2-1)', () => {
     renderShell('محتوى', '/teacher/exams/tpl_123');
-    expect(document.title).toBe('بنك الأسئلة والاختبارات · تادمورا');
+    expect(document.title).toBe('بنك الأسئلة والاختبارات · أُلارا');
   });
 
   it('restores the static index.html title when the shell unmounts (logout path)', () => {
     const { unmount } = renderShell('محتوى', '/student/dashboard');
-    expect(document.title).toBe('لوحة التحكم · تادمورا');
+    expect(document.title).toBe('لوحة التحكم · أُلارا');
     unmount();
-    expect(document.title).toBe('تادمورا · نظام تشغيل الجامعة');
+    expect(document.title).toBe('أُلارا · نظام تشغيل الجامعة');
   });
 });
 

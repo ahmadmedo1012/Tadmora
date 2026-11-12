@@ -269,7 +269,7 @@ function CycleFigure() {
           onLoad={settle('dark')}
         />
       </RevealCssClass>
-      <figcaption className="wy-cycle-cap">دورة تادمورا في لوحة واحدة — من المشاهدة إلى الإتقان</figcaption>
+      <figcaption className="wy-cycle-cap">دورة أُلارا في لوحة واحدة — من المشاهدة إلى الإتقان</figcaption>
     </figure>
   );
 }

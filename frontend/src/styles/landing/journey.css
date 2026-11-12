@@ -30,7 +30,7 @@ section.chapters {
    ════════════════════════════════════════════════════════════════════ */
 .jt {
   position: relative;
-  /* T-09d — the band's measured ink model: #282828 at 72% alpha on
+  /* T-09d — the band's measured ink model: #262019 at 72% alpha on
      every structural node, as a section-scoped var (the r338
      ADDENDUM 9 pattern; flips with the theme for the dark census). */
   --jt-ink: rgb(40 40 40 / 72%); /* color-gate: allow — measured Heron map ink, scoped var not a global token mutation (r338 ADDENDUM 9 pattern). The computed value must serialise rgba(40,40,40,0.72); the dark twin below carries the same allowance. */
@@ -49,7 +49,7 @@ section.chapters {
 /* r339 T-12 — the map ink's night seat (unchanged). */
 [data-theme='dark'] .jt {
   --jt-cap: var(--text-muted);
-  --jt-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink #F6F6EE at the spec's 72% strength; the light arm keeps the frozen Heron literal */
+  --jt-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink #F5F1E8 at the spec's 72% strength; the light arm keeps the frozen Heron literal */
 
   --jt-cap: var(--text-muted);
 }
@@ -536,7 +536,7 @@ section.chapters {
 }
 
 /* ── the three annotation cards — the measured plan callouts ──────
-   Orange-ruled (1px #FA3600), the mono title in the accent voice +
+   Orange-ruled (1px #C43E16), the mono title in the accent voice +
    one honest line. Seated at the measured percentages of the stack;
    revealed with the annotation era (the layer-6 window). */
 .jt-anno {
@@ -630,7 +630,7 @@ section.chapters {
    * dark in BOTH themes (the plan's own pigment ruling: the drawing is
    * a dark-ink-on-paper artifact; the theme tokens flip the PAGE, not
    * the artifact). */
-  background: #282828; /* color-gate: allow — the measured head-chip ink, theme-pinned (the plan-artifact law) */
+  background: #262019; /* color-gate: allow — the measured head-chip ink, theme-pinned (the plan-artifact law) */
 }
 
 .jt-intro-labelw {

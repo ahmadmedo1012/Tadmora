@@ -25,7 +25,7 @@ import type { ForgotPasswordResponse } from '../../lib/api';
  *  - وضع الاختبار: حين تعيد الخلفية رابط devInbox (حسابات @test.ly
  *    الموجودة فقط) تُعرض لوحة mono واضحة العنوان بالرابط — لا شيء يُخفى.
  *
- * The sheet grammar is AuthPage's own (frame + grain + [TDMR-AUTH] mono
+ * The sheet grammar is AuthPage's own (frame + grain + the short-code AUTH mono
  * line + hairline numbered cells + the fill-wipe submit) — no new
  * visual language for a secondary flow.
  */
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
           العودة إلى تسجيل الدخول
         </Link>
         <span className="auth-context">
-          <Logo variant="mark" size={14} /> تادمورا
+          <Logo variant="mark" size={14} /> أُلارا
         </span>
       </header>
 

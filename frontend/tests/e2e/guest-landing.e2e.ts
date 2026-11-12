@@ -7,21 +7,21 @@
 import { test, expect } from './fixtures/e2e';
 
 test.describe('الصفحة العامة للزوار', () => {
-  test('الهبوط يعرض مشهد تادمورا: العنوان الجوهري وهوية المنصّة المستقلّة (r188)', async ({ page }) => {
+  test('الهبوط يعرض مشهد أُلارا: العنوان الجوهري وهوية المنصّة المستقلّة (r188)', async ({ page }) => {
     await page.goto('/');
 
     // العنوان الرئيسي — إعادة تثبيت R315 (B1·A.2): الهيرو صار عنوان
     // العرض ذا السطرين «رحلة تعلم واحدة / من المحاضرة إلى الإتقان»
     // (بلا تشكيل على سلّم --fs-h1)؛ التثبيت القديم «كلُّ معرفةٍ…» كان
-    // لعنوان جُهّز قبل r306. وهوية «تادمورا» نفسها في خلية العلامة بالترويسة.
+    // لعنوان جُهّز قبل r306. وهوية «أُلارا» نفسها في خلية العلامة بالترويسة.
     await expect(page.locator('.fo-hero-title')).toContainText('رحلة تعلم واحدة');
     await expect(page.locator('.fo-hero-title')).toContainText('من المحاضرة إلى الإتقان');
-    await expect(page.getByRole('banner').locator('.fo-brand-name')).toContainText('تادمورا');
+    await expect(page.getByRole('banner').locator('.fo-brand-name')).toContainText('أُلارا');
     // هوية المنصّة في الترويسة (r188: لا جامعة حقيقية — الاستقلالية؛ r191: العبارة المحذوفة صُنعت في ليبيا لم تعد اسم المنتج)
     await expect(page.locator('.fo-header-actions')).toBeVisible();
     await expect(page.getByText('نظام تشغيل الجامعة').first()).toBeVisible();
     // بيان الاستقلالية يسمّي المؤسّسة التجريبية الاصطناعية بالاسم
-    await expect(page.getByText('مساحة عمل تادمورا التجريبية').first()).toBeVisible();
+    await expect(page.getByText('مساحة عمل أُلارا التجريبية').first()).toBeVisible();
     // دفتر الصدق بعد r191: القسم يسمّي مصدر أرقامه (ما يعمل اليوم بدل ما يُشحن اليوم)
     await expect(page.getByText('ما يعمل اليوم').first()).toBeVisible();
     // RTL بالهيكل — التطبيق عربي بالكامل (قفل index.html)

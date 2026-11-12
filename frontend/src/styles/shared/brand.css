@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — R323 §A1 — r323-brand.css — the /__brand spec sheet
+   ULARA — R323 §A1 — r323-brand.css — the /__brand spec sheet
    ═════════════════════════════════════════════════════════════════════
    Styles for frontend/src/pages/BrandPage.tsx (route /__brand — the
    foreman's integration pass wires the route; the page imports this
@@ -17,7 +17,7 @@
      the hover-guard lint stays at zero).
 
    The brand mark styles itself (frontend/src/brand/Logo.tsx —
-   .tdmr-logo + inline keyframes); this sheet carries ONLY the sheet
+   .ula-logo + inline keyframes); this sheet carries ONLY the sheet
    chrome around it.
    ═════════════════════════════════════════════════════════════════════ */
 
@@ -140,9 +140,9 @@
   }
 
   /* the three literal brand colours live ONLY here, as data */
-  .r323b-chip-paper { background: #F6F6EE; } /* color-gate: allow — the /__brand specimen exhibits the literal constant as data */
-  .r323b-chip-ink { background: #282828; } /* color-gate: allow — the /__brand specimen exhibits the literal constant as data */
-  .r323b-chip-orange { background: #FA3600; } /* color-gate: allow — the /__brand specimen exhibits the literal constant as data */
+  .r323b-chip-paper { background: #F5F1E8; } /* color-gate: allow — the /__brand specimen exhibits the literal constant as data */
+  .r323b-chip-ink { background: #262019; } /* color-gate: allow — the /__brand specimen exhibits the literal constant as data */
+  .r323b-chip-sienna { background: #C43E16; } /* color-gate: allow — the /__brand specimen exhibits the literal constant as data */
 
   /* ── 6 · do / don't ─────────────────────────────────────────────── */
   .r323b-dd {

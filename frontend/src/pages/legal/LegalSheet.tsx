@@ -20,7 +20,7 @@ import '../../styles/legal.css';
 
 /** The canonical public URL every page's canonical/OG:url derives from
  * (index.html:33 — the one absolute base the site declares). */
-const CANONICAL_BASE = 'https://tadmora.vercel.app';
+const CANONICAL_BASE = 'https://ulara.vercel.app';
 
 /* ═══ useLegalMeta — per-page head metadata ══════════════════════════
  *
@@ -118,9 +118,9 @@ export function LegalSheet({
             <Icon icon={ArrowRight} size={14} />
             العودة إلى الصفحة الرئيسية
           </Link>
-          <Link to="/" className="lg-header-brand" aria-label="تادمورا — الصفحة الرئيسية">
+          <Link to="/" className="lg-header-brand" aria-label="أُلارا — الصفحة الرئيسية">
             <Logo variant="mark" size={22} />
-            تادمورا
+            أُلارا
           </Link>
         </div>
       </header>

@@ -222,7 +222,7 @@ export default function DesignPage(): React.JSX.Element {
     <div className="r323d" dir="rtl">
       <header className="r323d-head">
         <div className="r323d-head-row">
-          <h1 className="r323d-wordmark">نظام مكونات تادمورا</h1>
+          <h1 className="r323d-wordmark">نظام مكونات أُلارا</h1>
           <nav className="r323d-theme" aria-label="الثيم">
             {(['light', 'dark'] as const).map((m) => (
               <button
@@ -289,7 +289,7 @@ export default function DesignPage(): React.JSX.Element {
             </Cell>
             <Cell label="FormField — تلميح 13px">
               <FormField label="البريد الجامعي" hint="البريد المؤسسي ينتهي بـ .ly">
-                <Input defaultValue="s.tariq@tadmora.ly" />
+                <Input defaultValue="s.tariq@ulara.ly" />
               </FormField>
             </Cell>
             <Cell label="FormField — خطأ تحقق (الإشارة)">

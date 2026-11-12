@@ -12,7 +12,7 @@
  *
  * R314 §4.2 — the RENDERING WEIGHT is the reference's own: the plan
  * reads as a real poché drawing, not a hairline diagram. The walls
- * are SOLID CHARCOAL MASSES (#282828 — the exterior band 18 units
+ * are SOLID CHARCOAL MASSES (#262019 — the exterior band 18 units
  * and the corridor bands 16 units = 14.1px / 12.6px at the plan's
  * measured 942px desktop render; the interior partitions 11 units
  * = 8.6px), the openings break the mass with thin door-swing arcs
@@ -20,14 +20,14 @@
  * triple-line symbol, the service strip carries a 45° hatch (1px
  * ink at 55%, 8px rendered pitch ≈10.2 units), the furniture is
  * thin 1.6-unit guide-grey (#B3B3AF ≈1.25px rendered) outline work,
- * and the active stage's zone is the FINDING ROOM — a solid #FA3600
+ * and the active stage's zone is the FINDING ROOM — a solid #C43E16
  * fill whose label, area and door marker flip to white. The plan is
  * a PAPER artifact in BOTH themes (the reference's plan stays
  * dark-ink-on-paper when the app goes dark), so the drawing's
  * pigment is pinned in the sheet-scoped style block below instead of
  * riding the theme tokens — allow-comment: the raw hexes ARE the
- * spec (ink #282828 · paper #F6F6EE · guide #B3B3AF · signal
- * #FA3600, all measured from the reference's plan).
+ * spec (ink #262019 · paper #F5F1E8 · guide #B3B3AF · signal
+ * #C43E16, all measured from the reference's plan).
  *
  * The scene's stage contract (CSS, driven by .jt[data-stage]):
  *  · stage 0 (شاهد) — the envelope + grid + corridor + LECTURE zone
@@ -49,7 +49,7 @@
  * gains a second cross-hatch family, the entry apron a stipple
  * ground, and the STATION markers grow VIOLATION-CALLOUT chips —
  * the reference's own overlay grammar (its s06 frames: solid
- * #FA3600 blocks with white mono text at the reviewed rooms):
+ * #C43E16 blocks with white mono text at the reviewed rooms):
  * the active stage's door marker flips to a solid accent chip with
  * a dashed accent leader, the quiet ones stay bare mono. The FRAME
  * (sheet + column grid + bubbles + the title block) splits into its
@@ -85,7 +85,7 @@ export const PLAN_VB = { w: 1200, h: 760 } as const;
  * landing.css keep driving every element. The finding-room rules
  * mirror the landing.css wash selectors (+.jt-plan specificity) so
  * the ACTIVE zone's label, area and door marker read white on the
- * solid #FA3600 fill.
+ * solid #C43E16 fill.
  *
  * R322 (3-b) — the map transplant: the plan's build is now the SIX
  * PROGRESSIVE OPACITY LAYERS (the `data-xl` group tags below — the
@@ -143,7 +143,7 @@ const PLAN_INK_CSS = `
      comment's own math, honored at last. The station glyph keeps its
      pinned #1A1A1A (the one element that DOES sit on the accent chip). */
   /* R322 3-b-fix4 (review-c3 R3#4/ND1): the ACTIVE station glyph rides
-   * the #FA3600 chip block — white read 3.76:1 (R3's measured FAIL).
+   * the #C43E16 chip block — white read 3.76:1 (R3's measured FAIL).
    * The AA ink on that ground is #1A1A1A (4.63:1) — the paper
    * artifact's own dark ink, pinned like every pigment in this sheet
    * (the landing.css var() twin was dead code at (0,4,0) vs this
@@ -341,7 +341,7 @@ export function LearningPlanDrawing() {
       className="bp-svg jt-plan"
       viewBox={`0 0 ${PLAN_VB.w} ${PLAN_VB.h}`}
       role="img"
-      aria-label="مسطح معماري لطابق التعلّم في تادمورا: قاعة محاضرات بصفوف مدرّجة ومنصة، قاعة اختبارات بمصافّ منظمة، غرفة إتقان مدرّجة، كشك نقطة فحص، مكتبة بأرفف وطاولة قراءة، واستقبال — حول ممر مركزي يمتد من المدخل يمينًا إلى غرفة الإتقان يسارًا، مع شبكة أعمدة وسلاسل أبعاد ومسار متقطّع بأسهم عند كل باب"
+      aria-label="مسطح معماري لطابق التعلّم في أُلارا: قاعة محاضرات بصفوف مدرّجة ومنصة، قاعة اختبارات بمصافّ منظمة، غرفة إتقان مدرّجة، كشك نقطة فحص، مكتبة بأرفف وطاولة قراءة، واستقبال — حول ممر مركزي يمتد من المدخل يمينًا إلى غرفة الإتقان يسارًا، مع شبكة أعمدة وسلاسل أبعاد ومسار متقطّع بأسهم عند كل باب"
       preserveAspectRatio="xMidYMid meet"
     >
       {/* the poché pigment sheet — scoped .jt .jt-plan, after landing.css */}
@@ -380,9 +380,9 @@ export function LearningPlanDrawing() {
           </g>
         ))}
         {/* R322 V1 kill: the sheet's title-block mono labels
-            (TDMR · LEARNING FLOOR · PLAN / SCALE 1:150 · UNITS M) are
-            deleted — the long label also clipped mid-word at real
-            sizes (the owner's «TDMR · LI»); scale notes are debug
+            (the retired brand code · LEARNING FLOOR · PLAN /
+            SCALE 1:150 · UNITS M) are deleted — the long label also
+            clipped mid-word at real sizes; scale notes are debug
             text, not content. */}
       </g>
 

@@ -33,7 +33,7 @@
 }
 
 /* R321 §A2 — the TABLET COMPACT CUT (768–1099): the footer's three
-   Tadmora-own bands (wordmark, ink strip, legal row) ride one step
+   Ulara-own bands (wordmark, ink strip, legal row) ride one step
    tighter so docH stays inside ±1.5% of the reference at 768/1024 —
    the same register the phone already uses («its own band in its
    compact cut»). Every feature stays visible; the ≥1180 seats are
@@ -97,7 +97,7 @@
    The fresh Heron mobile capture (audits/evidence/r314/_local/
    captures/heron/390x844/light/meta.json — docH 11363) gives the true
    mobile distribution: hero 828 · st 837 · pm 869 · map 4819 · pr 517 ·
-   wy 806 · rl 948 · cta 500 · footer 1239. Tadmora was 13164 with every
+   wy 806 · rl 948 · cta 500 · footer 1239. Ulara was 13164 with every
    non-map section too tall. This block is the compaction pass: spacing,
    scale and typographic tightening ONLY — every Arabic line, link and
    disclosure stays (the established V13 folds are untouched).
@@ -1474,7 +1474,7 @@
 /* R332 W390b — the ≤767 display rungs: heron's own phone register is
    2.4rem on the 2.5445vw root = 23.8168px @390 (its cta h2 `.heading.h2
    .tb-h4.mb-h3` and footer h4 `.heading.h4.tb-h5.mb-h3` — run-003
-   like-for-like). Tadmora's base --fs-d2 rung (31.74px @390) governs ≥768
+   like-for-like). Ulara's base --fs-d2 rung (31.74px @390) governs ≥768
    only; these owner seats take the phone band. ONE definition per belt —
    the ≥992 3.2rem rungs (W5c/W6c) are untouched. */
 @media (max-width: 767px) {

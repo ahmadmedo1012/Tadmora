@@ -5,7 +5,7 @@ import { useEffect } from 'react';
  * entries, and screen-reader announcements (immersive-redesign wave 3;
  * live-site audit imm-2 P1: static title on every route).
  *
- * Arabic title pattern: «<سياق> · تادمورا» — the platform name as the
+ * Arabic title pattern: «<سياق> · أُلارا» — the platform name as the
  * constant suffix (house convention, mirrors the index.html default
  * title's ordering) so every route title stays scannable and
  * consistent in tabs, history lists, and bookmarks.
@@ -13,7 +13,7 @@ import { useEffect } from 'react';
  * Restores the previous title on unmount (route changes chain cleanly
  * without stale contexts leaking across pages). SSR-safe no-op.
  */
-const SITE_NAME = 'تادمورا';
+const SITE_NAME = 'أُلارا';
 
 export function usePageTitle(context?: string): void {
   useEffect(() => {

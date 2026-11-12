@@ -5,7 +5,7 @@
  * What every spec gets for free:
  *
  *  1. ISOLATION — a fresh browser context per test (own storage), so a
- *     login in one test can never leak its `tdmr-auth` into the next.
+ *     login in one test can never leak its `ula-auth` into the next.
  *     Project/test-level `viewport` / `locale` / `colorScheme` options
  *     still apply (they flow through the fixture dependencies).
  *
@@ -14,7 +14,7 @@
  *     serves the REAL SPA. No backend, no database, no network.
  *
  *  3. AUTH STATE BOOTSTRAP — `test.use({ e2eRole: 'STUDENT' })` seeds
- *     `tdmr-auth` localStorage exactly the way the zustand persist
+ *     `ula-auth` localStorage exactly the way the zustand persist
  *     store writes it, BEFORE any app script runs (reload-style
  *     session, ProtectedRoute happily serves guarded routes).
  *
@@ -41,14 +41,14 @@ import { installMockApi, seedSession, type MockRouteDef } from './mock-transport
 export type E2eRole = 'guest' | 'STUDENT' | 'TEACHER' | 'ADMIN' | 'QUALITY';
 
 export interface E2eOptions {
-  /** Seeded role boots the app signed-in (localStorage tdmr-auth). */
+  /** Seeded role boots the app signed-in (localStorage ula-auth). */
   e2eRole: E2eRole;
   /** Per-test mock routes — matched BEFORE the standard table.
    *  ⚠ 1 row maximum: Playwright's option plumbing eats a 2+ row array
    *  as a fixture tuple (the landmine guard below fires loudly). Specs
    *  with 2+ extra routes use installStatefulApi instead. */
   apiOverrides: MockRouteDef[];
-  /** Optional persisted theme to seed (tadmora-theme localStorage). */
+  /** Optional persisted theme to seed (ulara-theme localStorage). */
   themeSeed: 'light' | 'dark' | null;
   /** r305-A4: the standard Playwright context option, re-registered as an
    *  explicit option fixture so the custom context fixture below can
@@ -56,7 +56,7 @@ export interface E2eOptions {
   reducedMotion: 'reduce' | 'no-preference';
 }
 
-const BASE_URL = process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173';
+const BASE_URL = process.env.ULARA_E2E_BASE_URL ?? 'http://localhost:5173';
 
 /**
  * The seeded role's user. r164-k shipped STUDENT only; r165h opens
@@ -122,7 +122,7 @@ export const test = base.extend<E2eOptions>({
     // task-focused journeys boot straight into the page.
     await context.addInitScript(() => {
       try {
-        sessionStorage.setItem('tadmora-intro-skip', '1');
+        sessionStorage.setItem('ulara-intro-skip', '1');
         /* R318 (§C): the entrance now respects the navigator
          * environment (saveData/≤2g/≤2-core visitors skip). CI hosts
          * can be 2-core — stub the reported core count UP so the

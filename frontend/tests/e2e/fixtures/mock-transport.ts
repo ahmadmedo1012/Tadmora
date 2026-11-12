@@ -378,7 +378,7 @@ export async function statefulFail(
 
 /**
  * localStorage payload exactly as zustand's persist middleware writes
- * it for `tdmr-auth` (stores/auth.store.ts — safeSessionStorage
+ * it for `ula-auth` (stores/auth.store.ts — safeSessionStorage
  * JSON.stringify's { state, version }). Seeding this BEFORE any app
  * script boots the app fully signed-in, reload-style.
  */
@@ -386,7 +386,7 @@ export function authStorageJson(user: FixtureUser, token: string): string {
   return JSON.stringify({ state: { user, accessToken: token }, version: 0 });
 }
 
-/** localStorage payload for `tadmora-theme` (theme.store.ts v2). */
+/** localStorage payload for `ulara-theme` (theme.store.ts v2). */
 export function themeStorageJson(mode: 'light' | 'dark'): string {
   return JSON.stringify({ state: { mode, modeUpdatedAt: 0 }, version: 2 });
 }
@@ -410,15 +410,15 @@ export async function seedSession(
     ([auth, theme]) => {
       if (auth) {
         try {
-          if (localStorage.getItem('tdmr-auth') === null) {
-            localStorage.setItem('tdmr-auth', auth);
+          if (localStorage.getItem('ula-auth') === null) {
+            localStorage.setItem('ula-auth', auth);
           }
         } catch { /* storage unavailable — app falls back to guest */ }
       }
       if (theme) {
         try {
-          if (localStorage.getItem('tadmora-theme') === null) {
-            localStorage.setItem('tadmora-theme', theme);
+          if (localStorage.getItem('ulara-theme') === null) {
+            localStorage.setItem('ulara-theme', theme);
           }
         } catch { /* same probe-guard story as the auth store */ }
       }

@@ -127,7 +127,7 @@ test.describe('رابط التخطّي — هيكل التطبيق', () => {
 test.describe('رابط التخطّي — قناة الكلّيّات للزائر', () => {
   test('«تخطَّ إلى المحتوى» هو أول نقطة توقف ويعمل بمفتاح الإدخال', async ({ page }) => {
     await page.goto('/colleges');
-    await expect(page.getByRole('heading', { level: 1, name: 'مؤسستك، كلياتك… على تادمورا' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'مؤسستك، كلياتك… على أُلارا' })).toBeVisible();
 
     const skipLink = page.locator('a.skip-link');
     await expect(skipLink).toHaveText('تخطَّ إلى المحتوى');

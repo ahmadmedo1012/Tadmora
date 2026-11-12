@@ -202,9 +202,9 @@ const STUDENT = {
 const WORKSPACE: InstitutionSummary = {
   // Phase Ω: the demonstration workspace — labeled, synthetic, legacy id kept.
   id: 'inst-zawia-showcase',
-  name: 'مساحة عمل تادمورا التجريبية',
-  nameEn: 'Tadmora Experimental Workspace',
-  slug: 'tadmora-demo',
+  name: 'مساحة عمل أُلارا التجريبية',
+  nameEn: 'Ulara Experimental Workspace',
+  slug: 'ulara-demo',
 };
 
 const WORKSPACE2: InstitutionSummary = {
@@ -251,10 +251,10 @@ function changeLines(container: HTMLElement): string[] {
 }
 
 describe('r183-B3 → Ω — /student/university derives its identity from the session institution (A6 P2)', () => {
-  it('tadmora-demo session: the workspace facts stay, labeled as the demonstration workspace', () => {
+  it('ulara-demo session: the workspace facts stay, labeled as the demonstration workspace', () => {
     const { container } = renderUniversity(WORKSPACE, WORKSPACE_FACULTIES);
 
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مساحة عمل تادمورا التجريبية');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مساحة عمل أُلارا التجريبية');
     // r188: the real-university facts (1988/decree/memberships) are GONE —
     // the demo workspace's synthetic profile is the only fact story.
     expect(screen.queryByText('1988')).toBeNull();
@@ -273,7 +273,7 @@ describe('r183-B3 → Ω — /student/university derives its identity from the s
     renderUniversity(WORKSPACE2, WORKSPACE2_FACULTIES);
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مساحة عمل تجريبية ثانية');
-    expect(screen.getByText(/مؤسّستك على منصّة تادمورا/)).toBeInTheDocument();
+    expect(screen.getByText(/مؤسّستك على منصّة أُلارا/)).toBeInTheDocument();
 
     // The showcase-specific facts are dropped, never re-attributed.
     expect(screen.queryByText('سنة التأسيس')).toBeNull();

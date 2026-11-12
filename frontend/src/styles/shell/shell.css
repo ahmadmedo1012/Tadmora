@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   TADMORA — r305 «Heron» shell layer (R305-A4, Task 2-d)
+   ULARA — r305 «Heron» shell layer (R305-A4, Task 2-d)
    ─────────────────────────────────────────────────────────────────────
    The Heron Shell Contract's binding layer for the application chrome:
    precise outlines · structured grid · restrained signal · disciplined
@@ -346,7 +346,7 @@ html[dir="rtl"][data-theme="dark"][data-sidebar-collapsed] .topbar {
 }
 @media (min-width: 921px) {
   .nav-group[data-collapsible="true"][data-group-open="true"] > .nav-item {
-    animation: tadmora-group-reveal var(--motion-duration-medium)
+    animation: ulara-group-reveal var(--motion-duration-medium)
       var(--motion-ease-decelerate) backwards;
   }
   /* Row 1 (child 2 — child 1 is the toggle) enters with no delay. */
@@ -358,7 +358,7 @@ html[dir="rtl"][data-theme="dark"][data-sidebar-collapsed] .topbar {
   .nav-group[data-collapsible="true"][data-group-open="true"] > .nav-item:nth-child(8) { animation-delay: calc(var(--motion-stagger-step) * 6); }
   .nav-group[data-collapsible="true"][data-group-open="true"] > .nav-item:nth-child(n + 9) { animation-delay: calc(var(--motion-stagger-cap) * var(--motion-stagger-step)); }
 }
-@keyframes tadmora-group-reveal {
+@keyframes ulara-group-reveal {
   from { opacity: 0; transform: translateY(var(--motion-distance-small)); }
   to   { opacity: 1; transform: none; }
 }
