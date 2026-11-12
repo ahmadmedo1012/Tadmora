@@ -61,7 +61,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? [['github'], ['list']] : [['list']],
   use: {
-    baseURL: process.env.TADMORA_E2E_BASE_URL ?? 'http://localhost:5173',
+    baseURL: process.env.ULARA_E2E_BASE_URL ?? 'http://localhost:5173',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -71,8 +71,8 @@ export default defineConfig({
     // CI installs its own browsers via `npx playwright install
     // chromium --with-deps` and never sets this variable, so the
     // default path stays the bundled revision in both worlds).
-    launchOptions: process.env.TADMORA_E2E_EXECUTABLE
-      ? { executablePath: process.env.TADMORA_E2E_EXECUTABLE }
+    launchOptions: process.env.ULARA_E2E_EXECUTABLE
+      ? { executablePath: process.env.ULARA_E2E_EXECUTABLE }
       : {},
   },
   projects: [
@@ -133,7 +133,7 @@ export default defineConfig({
       // with a descriptor refresh. Runs in GitHub CI (job `ios-webkit` —
       // ubuntu runners CAN `playwright install webkit --with-deps`); in
       // the dev sandbox the specs skip cleanly when WebKit cannot launch
-      // (TADMORA_IOS_SKIP_UNSUPPORTED=1 or a failed launch — see
+      // (ULARA_IOS_SKIP_UNSUPPORTED=1 or a failed launch — see
       // r319-ios-contracts.ios.e2e.ts). Specs: tests/e2e/*.ios.e2e.ts.
       name: 'webkit-iphone',
       testDir: './tests/e2e',
@@ -150,8 +150,8 @@ export default defineConfig({
       // the local-truth layer for every contract the two engines share
       // (tap sticky-hover, contrast, geometry, stylesheet scans) while
       // real WebKit runs in CI. Local recipe:
-      //   cd frontend && TADMORA_IOS_SKIP_UNSUPPORTED=1 \
-      //     TADMORA_E2E_BASE_URL=http://localhost:<port> \
+      //   cd frontend && ULARA_IOS_SKIP_UNSUPPORTED=1 \
+      //     ULARA_E2E_BASE_URL=http://localhost:<port> \
       //     npx playwright test --project=chromium-iphone
       name: 'chromium-iphone',
       testDir: './tests/e2e',
@@ -170,9 +170,9 @@ export default defineConfig({
       // through the real-API storage states (tests/r325/flows/fixtures/
       // live.ts — the auth-storage.ts grammar with a shared session
       // cache). Reach it via:
-      //   cd frontend && TADMORA_E2E_BASE_URL=http://localhost:5173 \
-      //     TADMORA_E2E_EXECUTABLE=<chromium> npx playwright test --project=flows
-      // The specs never start their own server — TADMORA_E2E_BASE_URL
+      //   cd frontend && ULARA_E2E_BASE_URL=http://localhost:5173 \
+      //     ULARA_E2E_EXECUTABLE=<chromium> npx playwright test --project=flows
+      // The specs never start their own server — ULARA_E2E_BASE_URL
       // (or an already-running :5173 with reuseExistingServer) is expected.
       name: 'flows',
       testDir: './tests/r325/flows',
@@ -201,7 +201,7 @@ export default defineConfig({
       },
     },
   ],
-  webServer: process.env.TADMORA_E2E_BASE_URL
+  webServer: process.env.ULARA_E2E_BASE_URL
     ? undefined
     : {
         command: 'npm run dev',
