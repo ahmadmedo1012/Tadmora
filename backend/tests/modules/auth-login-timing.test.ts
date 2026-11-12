@@ -104,6 +104,43 @@ describe('loginUser — timing equalization (dummy hash)', () => {
     expect(prisma.user.update).not.toHaveBeenCalled();
     expect(prisma.user.updateMany).not.toHaveBeenCalled();
   });
+
+  // ULARA Ω 1-A(d): the lock message carries the remaining wait, with
+  // honest Arabic minute-count grammar (1 → دقيقة واحدة · 2 → دقيقتين ·
+  // 3–10 → N دقائق · 11+ → N دقيقة). The response already distinguishes
+  // locked from wrong-credentials by design — stating the wait adds
+  // honesty, not existence leakage (see auth.service.ts §ACCOUNT_LOCKED).
+  it('the locked message carries the remaining time (60s lock → دقيقة واحدة)', async () => {
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(
+      makeUser({ lockedUntil: new Date(Date.now() + 60_000) }),
+    );
+
+    await expect(loginUser('locked@zu.edu.ly', 'pw')).rejects.toMatchObject({
+      code: 'TOO_MANY_REQUESTS',
+      message: 'الحساب مقفل مؤقتاً — حاول مرة أخرى بعد دقيقة واحدة',
+    });
+  });
+
+  it('the locked message carries the remaining time (14min lock → 14 دقيقة)', async () => {
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(
+      makeUser({ lockedUntil: new Date(Date.now() + 14 * 60_000) }),
+    );
+
+    await expect(loginUser('locked@zu.edu.ly', 'pw')).rejects.toMatchObject({
+      code: 'TOO_MANY_REQUESTS',
+      message: 'الحساب مقفل مؤقتاً — حاول مرة أخرى بعد 14 دقيقة',
+    });
+  });
+
+  it('the locked message never claims zero minutes (sub-minute lock still rounds up to one)', async () => {
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(
+      makeUser({ lockedUntil: new Date(Date.now() + 5_000) }),
+    );
+
+    await expect(loginUser('locked@zu.edu.ly', 'pw')).rejects.toMatchObject({
+      message: 'الحساب مقفل مؤقتاً — حاول مرة أخرى بعد دقيقة واحدة',
+    });
+  });
 });
 
 describe('loginUser — LoginEvent telemetry', () => {
