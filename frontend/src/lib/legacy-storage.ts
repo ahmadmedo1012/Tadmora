@@ -27,9 +27,10 @@ export interface StringStorage {
   removeItem: (name: string) => void;
 }
 
-/* The retired keys, assembled (see the module header). */
+/* The retired keys, assembled (see the module header). The theme-profile
+ * row's migration lives in the index.html bootstrap (it must resolve
+ * pre-paint, before this module loads). */
 export const legacyThemeKey = ['tad', 'mora', '-theme'].join('');
-const legacyThemeProfileKey = ['td', 'mr', '-theme-profile'].join('');
 export const legacyAuthKey = ['td', 'mr', '-auth'].join('');
 export const legacyUiKey = ['td', 'mr', '-ui'].join('');
 
