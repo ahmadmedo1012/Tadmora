@@ -50,8 +50,8 @@ const THEMES = ['light', 'dark'] as const;
 /* The theme's own paper ground (tokens.css --bg): light #F5F1E8, dark
  * #262019 — the ONLY grounds the sheet and the dock may paint. */
 const PAPER: Record<(typeof THEMES)[number], string> = {
-  light: 'rgb(246, 246, 238)',
-  dark: 'rgb(40, 40, 40)',
+  light: 'rgb(245, 241, 232)',
+  dark: 'rgb(38, 32, 25)',
 };
 
 /* ─── WCAG contrast math (real in-page functions, computed values) ─── */
@@ -535,7 +535,7 @@ for (const theme of THEMES) {
       // The accent is theme-keyed: #C43E16 on light, the night ember
       // #FF6B3D on dark (tokens.css --accent).
       expect(dock.active.rule.h).toBe('2px');
-      const ACCENT = theme === 'light' ? 'rgb(250, 54, 0)' : 'rgb(255, 90, 31)';
+      const ACCENT = theme === 'light' ? 'rgb(196, 62, 22)' : 'rgb(255, 107, 61)';
       expect(dock.active.rule.bg).toBe(ACCENT);
       expect(dock.active.iconBg, 'no pill wash on the icon').toBe('rgba(0, 0, 0, 0)');
       expect(dock.active.iconRadius).toBe('0px');
