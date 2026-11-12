@@ -459,7 +459,36 @@ jobs:
           [ -f "$APK" ] || { echo "::error::release APK not found at $APK"; exit 1; }
           du -h "$APK"
 
-      # ── the emulator + the five-role journey ─────────────────────────
+      # ── pre-emulator preparation (normal steps — full bash, fail fast) ──
+
+      # Run #10 hard evidence (log line: "ProbeKVM: This user doesn't have
+      # permissions to use KVM (/dev/kvm)"): the ubuntu-24.04 runner image
+      # ships /dev/kvm without the runner user in the kvm group, so the
+      # action boots with -accel off → software emulation → 7-min boot and
+      # a 4.5-min `adb install`. Make the node accessible so the action's
+      # own probe re-enables hardware acceleration. Ephemeral single-tenant
+      # CI VM — a world-accessible /dev/kvm lives and dies with this job.
+      - name: Unblock KVM for the emulator (ubuntu-24.04 image quirk)
+        run: sudo chmod 666 /dev/kvm || true
+
+      - name: Install Maestro CLI (before the emulator — fail fast, ~15s)
+        env:
+          MAESTRO_CLI_NO_ANALYTICS: 1
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          "$HOME/.maestro/bin/maestro" --version
+
+      # ── the emulator + the five-role journey ─────────────────────
+      # Run #10 hard evidence: the action executes EACH script LINE as its
+      # own /usr/bin/sh -c — the log shows `export PATH=...` then, on the
+      # NEXT line, `maestro: not found` (exit 127) and the immediate
+      # emulator teardown. Cross-line state (exports, FAIL variables,
+      # multi-line for-loops) never worked here: no maestro command has
+      # EVER run in any android-smoke attempt. The rewrite below makes
+      # every line standalone: absolute paths (no PATH export), failure
+      # state in the fail.flag FILE (not a variable), the five-role loop
+      # single-lined, and the forensics capture runs BEFORE the only line
+      # allowed to exit non-zero (the last one).
       - name: Emulator + Maestro five-role journey
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -467,51 +496,16 @@ jobs:
           arch: x86_64
           target: default
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          emulator-boot-timeout: 720
           script: |
-            set -x
-            adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk
-            curl -Ls "https://get.maestro.mobile.dev" | bash
-            export PATH="$HOME/.maestro/bin:$PATH"
-            export MAESTRO_CLI_NO_ANALYTICS=1
-            maestro --version
-            # ALL FIVE roles must run even when one fails — the logcat is
-            # captured regardless; the job fails at the end if any did.
-            FAIL=0
-            for entry in \
-              "student@test.ly:STUDENT" \
-              "teacher@test.ly:TEACHER" \
-              "registrar@test.ly:ADMIN" \
-              "quality@test.ly:QUALITY" \
-              "owner@test.ly:OWNER"; do
-              EMAIL="${entry%%:*}"
-              ROLE="${entry##*:}"
-              echo "── android-smoke: $EMAIL ($ROLE)"
-              if ! maestro test apps/mobile/.maestro/smoke-role.yaml \
-                   -e EMAIL="$EMAIL" -e PASSWORD=12345678 -e ROLE="$ROLE"; then
-                echo "::error::maestro journey failed for $EMAIL ($ROLE) — see logcat in the artifacts"
-                FAIL=1
-              fi
-            done
-
-            # ── forensics capture MUST live INSIDE this script: the
-            # emulator-runner action tears the AVD down when the script
-            # exits, so any post-action `adb` would block forever on a
-            # dead device (observed: run #9's capture step hung 23 min →
-            # job timeout → the logcat artifact was LOST). Bound it too.
-            ADB="$ANDROID_HOME/platform-tools/adb"
-            "$ADB" devices > adb-devices.txt 2>&1 || true
-            if ! timeout 60 "$ADB" logcat -d > logcat.txt 2>&1; then
-              {
-                echo "(logcat capture failed — adb device state follows:)"
-                cat adb-devices.txt
-              } >> logcat.txt
-            fi
+            adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk || touch fail.flag
+            "$HOME/.maestro/bin/maestro" --version || touch fail.flag
+            for entry in student@test.ly:STUDENT teacher@test.ly:TEACHER registrar@test.ly:ADMIN quality@test.ly:QUALITY owner@test.ly:OWNER; do EMAIL="${entry%%:*}"; ROLE="${entry##*:}"; echo "── android-smoke: $EMAIL ($ROLE)"; "$HOME/.maestro/bin/maestro" test apps/mobile/.maestro/smoke-role.yaml -e EMAIL="$EMAIL" -e PASSWORD=12345678 -e ROLE="$ROLE" || { echo "::error::maestro journey failed for $EMAIL ($ROLE) — see logcat in the artifacts"; touch fail.flag; }; done
+            "$ANDROID_HOME/platform-tools/adb" devices > adb-devices.txt 2>&1 || true
+            timeout 60 "$ANDROID_HOME/platform-tools/adb" logcat -d > logcat.txt 2>&1; [ -s logcat.txt ] || echo "(logcat capture failed — adb device state follows:)" >> logcat.txt
+            cat adb-devices.txt >> logcat.txt 2>/dev/null || true
             wc -c logcat.txt || true
-            exit "$FAIL"
-
-      # ── the crash gate + upload read the workspace files the emulator
-      # script captured — no adb here, the AVD is already gone (see the
-      # note inside the script above). ────────────────────────────────
+            if [ -f fail.flag ]; then echo "::error::android-smoke stages failed — forensics are in the artifact"; exit 1; fi
       - name: Crash gate (logcat forensics — fails the job on signatures)
         # Deliberately OUTSIDE the emulator-runner script so it always
         # runs, whatever happened on the emulator. The grep redirect form
