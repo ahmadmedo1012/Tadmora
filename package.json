@@ -51,7 +51,8 @@
     "gate:contrast": "node scripts/r323/contrast-gate.mjs",
     "gate:height": "node scripts/r324/height-gate.mjs",
     "gate:size": "bash scripts/gates/size-gate.sh",
-    "gate:identity": "bash scripts/brand/identity-gate.sh"
+    "gate:identity": "bash scripts/brand/identity-gate.sh",
+    "db:ensure-test-accounts": "npm run ensure:accounts -w backend --"
   },
   "prepare": "node scripts/setup-hooks.mjs",
   "devDependencies": {

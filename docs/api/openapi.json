@@ -94,7 +94,7 @@
     },
     {
       "name": "jobs",
-      "description": "3 operation(s) under /api/v1/jobs"
+      "description": "4 operation(s) under /api/v1/jobs"
     },
     {
       "name": "labs",
@@ -7901,6 +7901,69 @@
           "jobs"
         ],
         "summary": "GET /api/v1/jobs/daily",
+        "description": "Declared in `backend/src/http/routes/jobs.routes.ts` (mounted at `/api/v1/jobs`).",
+        "x-mounted-at": "/api/v1/jobs",
+        "responses": {
+          "200": {
+            "description": "Success envelope `{ data }`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessEnvelope"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation / bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid or expired bearer token (TOKEN_EXPIRED on expiry — refresh)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited (global 1000 req/15 min/IP; auth surface 10 req/15 min/IP)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/v1/jobs/test-accounts": {
+      "post": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "POST /api/v1/jobs/test-accounts",
         "description": "Declared in `backend/src/http/routes/jobs.routes.ts` (mounted at `/api/v1/jobs`).",
         "x-mounted-at": "/api/v1/jobs",
         "responses": {
@@ -21196,9 +21259,9 @@
   },
   "x-generator": {
     "tool": "backend/scripts/generate-openapi.ts (hand-rolled: express-stack walk + zod-v3 walker)",
-    "generatedAt": "2026-11-12T18:12:49.018Z",
-    "operationCount": 254,
-    "pathCount": 217,
+    "generatedAt": "2026-11-12T22:35:39.101Z",
+    "operationCount": 255,
+    "pathCount": 218,
     "contractSnapshotCovered": 13,
     "snapshotCoveredRoutes": [
       "GET /api/v1/ai/config",
