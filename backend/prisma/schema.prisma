@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════
-//  Tadmora AI — Prisma schema (PostgreSQL)
+//  ULARA — Prisma schema (PostgreSQL)
 // ════════════════════════════════════════════════════════════════
 //  Models the full domain extracted from the prototype:
 //  users + role profiles, faculties, departments, courses,
@@ -9,7 +9,7 @@
 //  virtual labs, AR experiences, AI conversations, audit log.
 // ────────────────────────────────────────────────────────────────
 //  r178 — MULTI-INSTITUTION FOUNDATION:
-//  · NEW Institution + Membership models: one product/brand (تادمورا)
+//  · NEW Institution + Membership models: one product/brand (أُلارا)
 //    serving multiple institutions as CONTEXT labels (no per-university
 //    logos/themes/domains). Membership is the per-user, per-institution
 //    standing — the effective institutional role ALWAYS comes from
@@ -262,9 +262,9 @@ enum ThemePreference {
 //  r178 — Institutions & memberships (أساس المؤسسات المتعددة)
 // ────────────────────────────────────────────────────────────────
 
-// المؤسسة سياق تعليمي داخل تادمورا (ليست هوية بصرية — لا شعارات ولا
+// المؤسسة سياق تعليمي داخل أُلارا (ليست هوية بصرية — لا شعارات ولا
 // نطاقات). Phase Ω: المنصّة مستقلة متعددة المستأجرين ولا تنتمي لأي
-// جامعة؛ مساحتا العرض الموسومتان (tadmora-demo و alandalus-demo)
+// جامعة؛ مساحتا العرض الموسومتان (ulara-demo و alandalus-demo)
 // تحملان البيانات التجريبية وتثبتان تفرد رموز المقررات وأرقام
 // التسجيل على مستوى المؤسسة لا المنصة.
 model Institution {

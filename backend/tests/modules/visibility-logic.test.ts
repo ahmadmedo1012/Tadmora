@@ -228,7 +228,7 @@ describe('searchHit (audit 15-i TOP-9 — raw OR normalized candidate re-verific
   });
 
   it('any haystack hit wins (some, not every)', () => {
-    expect(searchHit(['شبكات الحاسوب', 'مساحة عمل تادمورا التجريبية'], 'تادمورا', normalizeArabicSearch('تادمورا'))).toBe(true);
+    expect(searchHit(['شبكات الحاسوب', 'مساحة عمل أُلارا التجريبية'], 'أُلارا', normalizeArabicSearch('أُلارا'))).toBe(true);
     expect(searchHit(['خوارزميات متقدمة', 'Cisco'], 'cisco', normalizeArabicSearch('cisco'))).toBe(true);
   });
 

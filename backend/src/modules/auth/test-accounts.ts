@@ -127,13 +127,13 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
  * composite key exactly. */
 async function ensureSkeleton(prisma: PrismaClient) {
   const zawia = await prisma.institution.upsert({
-    where: { slug: 'tadmora-demo' },
-    update: { name: 'مساحة عمل تادمورا التجريبية', nameEn: 'Tadmora Experimental Workspace', status: 'ACTIVE' },
+    where: { slug: 'ulara-demo' },
+    update: { name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', status: 'ACTIVE' },
     create: {
       id: 'inst-zawia-showcase',
-      name: 'مساحة عمل تادمورا التجريبية',
-      nameEn: 'Tadmora Experimental Workspace',
-      slug: 'tadmora-demo',
+      name: 'مساحة عمل أُلارا التجريبية',
+      nameEn: 'Ulara Experimental Workspace',
+      slug: 'ulara-demo',
       status: 'ACTIVE',
     },
   });

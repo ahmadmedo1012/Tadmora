@@ -117,12 +117,12 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
  * the boot plate moved with it. */
 const THEME_BOOTSTRAP_SHA256 = 'tO/4keZF3VQdQvB8dLt+56xSlTUloHZLxrPl9zM1XVM=';
 /* r188: pin refreshed — the JSON-LD block now describes the INDEPENDENT
- * Tadmora platform alone (WebSite node; the retired University-of-Zawia
+ * platform alone (WebSite node; the retired University-of-Zawia
  * `about` node is gone — the only demo-data story is the labeled neutral
- * workspace «مساحة عمل تادمورا التجريبية», clearly marked as demo data,
+ * workspace «مساحة عمل أُلارا التجريبية», clearly marked as demo data,
  * never as affiliation). Verified by check-csp-hash.sh. */
 // Phase Ω: pin refreshed — the JSON-LD description now names the demo
-// WORKSPACE (مساحة عمل تادمورا التجريبية) instead of the retired
+// WORKSPACE (مساحة عمل أُلارا التجريبية) instead of the retired
 // fictional-university tenant.
 const JSON_LD_SHA256 = 'Ru8IOrDGXkoTglyzfyKp5XtbFhETSRrsHAbdeclhjm4=';
 

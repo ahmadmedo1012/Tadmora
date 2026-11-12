@@ -85,7 +85,7 @@ describe('matchesNormalizedQuery', () => {
   });
 
   it('matches taa-marbuta folding (ة vs ه)', () => {
-    expect(matchesNormalizedQuery('مساحة تادمورا التجريبية', 'مساحه')).toBe(true);
+    expect(matchesNormalizedQuery('مساحة أُلارا التجريبية', 'مساحه')).toBe(true);
   });
 
   it('matches with the ال prefix tolerance', () => {
