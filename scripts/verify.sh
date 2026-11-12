@@ -76,6 +76,20 @@ else
   fail "logo gate"; tail -8 /tmp/verify-logogate.log
 fi
 
+# 3.7 axe a11y gate (ULARA Ω §7 — the "axe a11y serious/critical" row's
+#     instrument: the real axe-core bundle against the rendered public
+#     pages / · /auth · /404 × light/dark × 390/1280, RTL. Self-contained
+#     like footer-overlap.mjs: boots its own Vite on :5182 and kills the
+#     process group on exit. Ratcheted against scripts/brand/
+#     a11y-baseline.json (the floor only tightens); exit 1 = regression,
+#     exit 2 = infra — kept distinct from a11y failures)
+step "axe a11y gate (serious/critical)"
+if node scripts/brand/a11y-gate.mjs > /tmp/verify-a11ygate.log 2>&1; then
+  ok "a11y gate $(grep -oE '[0-9]+ serious/critical[^·]*' /tmp/verify-a11ygate.log | tail -1)"
+else
+  fail "a11y gate"; tail -12 /tmp/verify-a11ygate.log
+fi
+
 if [[ $FAST -eq 1 ]]; then
   step "--fast mode: stopping here"
   [[ $FAIL -eq 0 ]] && echo "verify.sh: FAST PASS" || echo "verify.sh: FAIL"

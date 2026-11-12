@@ -230,6 +230,16 @@ jobs:
       # stay green on every push instead of being local-only. Verified
       # 73/73 locally (~3m) inside this job's 12-minute budget.
       - run: npm --prefix frontend run test:r305
+      # ULARA Ω §7 — the axe a11y gate (scripts/brand/a11y-gate.mjs):
+      # real axe-core serious/critical on the rendered public pages
+      # (/ · /auth · /404) × light/dark × 390/1280, RTL, ratcheted
+      # against the committed baseline (scripts/brand/a11y-baseline.json
+      # — the floor only tightens; exit 2 = infra). Rides THIS job —
+      # not the dependency-free design-gates job — because it needs
+      # node_modules (playwright + the hoisted axe-core bundle) and a
+      # browser, both provided by the install steps above. Self-
+      # contained: boots its own Vite on :5182, kills it on exit.
+      - run: node scripts/brand/a11y-gate.mjs
       # Traces / screenshots / videos are retained-on-failure by
       # playwright.config.ts — publish them for post-mortem only then.
       - name: Upload failure artifacts
