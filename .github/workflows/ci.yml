@@ -97,11 +97,6 @@ jobs:
       # index-*.js ≤ 80KB · pdf-*.js ≤ 110KB — A11's LAB measurements
       # plus ~8-10% headroom, pinned in the script header).
       - run: node scripts/check-bundle-size.mjs
-      # ULARA Ω §7 — the Definition-of-Done dashboard, measured on every
-      # CI build (the bundle row reads the dist the step above just
-      # produced). Report-only: the scorecard MEASURES, the individual
-      # gates gate. Output lands in the job log for LEDGER pasting.
-      - run: node scripts/scorecard.mjs
 
   test-frontend:
     name: Test (frontend)
@@ -341,58 +336,6 @@ jobs:
       # اصطناعية تثبت أن كل فئة عمياء تُكتشف وأن العلامات المعيبة
       # تُرفض وأن الفشل يُغلق مغلقًا. تعمل بلا node_modules.
       - run: bash scripts/test-raw-css-gate.sh
-      # R342-11 — the shared rung-harvest instrument repair (reported
-      # by R342-09): the pages.mjs type-ladder regex dropped every
-      # digit-bearing --fs-* rung (fs-h1/h2/h3, fs-d1..d3, fs-app-h1..h3,
-      # fs-2xl..4xl), counting every on-token 28px h1 off-ladder. The
-      # repair's regression belt: mutation + live + narrow arms,
-      # dependency-free (the test-raw-css-gate.sh precedent).
-      - run: bash scripts/conformance/test-rung-harvest.sh
-      # R321 §A7 — the STATIC ledger scan: every occurrence of the
-      # retired admin-role label in the working trees must be covered by
-      # scripts/r321/r321-rename-keep.json (one term per concept: the role
-      # is «المسجل العام», the governance bucket is «الحوكمة»).
-      # Dependency-free (node:fs only).
-      - run: node scripts/r321/rename-ledger-scan.mjs
-
-  conform-gate:
-    name: Conformance gate (frozen product spec, ratchet)
-    # R337 CI fix: same ubuntu-latest → 26.04 roll that hit the e2e and
-    # ios-webkit jobs (R320) — @playwright/test 1.60 has no chromium
-    # builds for ubuntu26.04-x64, so `npx playwright install chromium`
-    # fails before the matrix even runs. Pinned to 24.04 like its siblings.
-    runs-on: ubuntu-24.04
-    timeout-minutes: 25
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      - run: npm ci
-      # R336 — the honest conformance gate. Full 9-section x 5-bp matrix
-      # against the frozen Heron specs; --gate fails below the committed
-      # ratchet (scripts/conformance/ratchet.json — monotonic, may never
-      # drop). Baseline set at the HONEST v2 instrument reading (39.6%:
-      # transformed expectations assert, unmatched elements FAIL as
-      # no-counterpart instead of being silently dropped).
-      - name: Install Playwright chromium
-        working-directory: frontend
-        run: npx playwright install chromium
-      - name: Boot Vite dev server
-        working-directory: frontend
-        run: nohup npx vite --port 5173 --strictPort > /tmp/vite.log 2>&1 &
-      - name: Wait for dev server
-        run: npx --yes wait-on http://localhost:5173/ --timeout 60000
-      - name: Conformance matrix vs ratchet (scroll + interaction extensions)
-        run: node scripts/conformance/run.mjs --gate --scroll --interact
-      - name: Upload results artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: conformance-results
-          path: scripts/conformance/results.json
-          retention-days: 14
 
   surface-drift:
     name: Surface drift
@@ -457,4 +400,4 @@ jobs:
         if: steps.baseline.outputs.captures == '0'
         run: |
           echo "::notice::surface-baseline.json has no captures yet — drift gate skipped."
-          echo "Capture a real baseline via 'npm --prefix frontend run audit:baseline' (specs/012 task T142), then this job becomes a hard gate."
+          echo "Capture a real baseline via 'npm --prefix frontend run audit:baseline', then this job becomes a hard gate."

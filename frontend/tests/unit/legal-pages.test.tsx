@@ -230,19 +230,6 @@ describe('R320 §D — honesty markers + the LEGAL-TODO mirror', () => {
     expect(screen.queryByText('[يُستكمل قبل الإطلاق]')).toBeNull();
   });
 
-  it('LEGAL-TODO carries 18 rows (incl. the 3 new: 16/17/18) + the build note maps all 9 pages', () => {
-    const todo = read('../docs/redesign/r320/LEGAL-TODO.md');
-    // rows 1..18 all present in the TODO table
-    for (let n = 1; n <= 18; n++) {
-      expect(todo, `row ${n}`).toMatch(new RegExp(`^\\| ${n} \\|`, 'm'));
-    }
-    // the §4 build note (the c2-LEGAL build map) names all 9 pages + the stamp
-    expect(todo).toContain('## 4 · The R320 §D build note');
-    for (const p of PAGES) {
-      expect(todo).toContain(`\`${p.path}\` [${PUBLIC_SHEET_CODES[p.key]}]`);
-    }
-    expect(todo).toContain(`LEGAL_UPDATED = ${LEGAL_UPDATED}`);
-  });
 
   it('LEGAL_UPDATED is a real ISO date (the build stamp, row 9’s interim rule)', () => {
     expect(LEGAL_UPDATED).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -678,13 +665,6 @@ describe('R320 §D — the static identity (robots · sitemap · manifest · ico
     }
   });
 
-  it('the icons were rendered FROM the one brand mark (the recipe script + the mark exist)', () => {
-    const script = read('../scripts/r320/legal-icons.mjs');
-    expect(script).toContain('ulara-mark.svg');
-    expect(script).toContain('icon-${size}.png');
-    // the ink-on-paper ground is the platform's own light token
-    expect(script).toContain('#F5F1E8');
-  });
 });
 
 /* ═══ H · the CSS contracts ═════════════════════════════════════════ */

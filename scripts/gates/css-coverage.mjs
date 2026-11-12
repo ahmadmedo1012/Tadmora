@@ -11,11 +11,11 @@
  * data-vite-dev-id → per-FILE attribution for free.
  *
  * OUTPUT
- *   docs/redesign/r331/css-coverage.json          — committed summary
- *   /home/z/heron-lab/css-coverage-full.json      — full selector map
- *     (override with CSS_COVERAGE_FULL; kept out of tree per repo
+ *   docs/design/css-coverage.json                  — committed summary
+ *   $CSS_COVERAGE_FULL (default /home/z/ulara-lab/css-coverage-full.json)
+ *     — full selector map (kept out of tree per repo
  *     hygiene — the committed file stays small; deadCandidatesSample
- *     is capped at 500, the full list rides the heron-lab copy)
+ *     is capped at 500, the full list rides the out-of-tree copy)
  *
  * Dead candidate = a selector from a style rule in a LOADED sheet that
  * matched zero elements on zero routes (union over viewports + themes).
@@ -51,8 +51,8 @@ import { ROLE_USERS } from '../../frontend/tests/e2e/fixtures/api-fixtures.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const BASE = (process.env.CSS_COVERAGE_URL ?? 'http://localhost:5173').replace(/\/+$/, '');
-const FULL_OUT = process.env.CSS_COVERAGE_FULL ?? '/home/z/heron-lab/css-coverage-full.json';
-const SUMMARY_OUT = resolve(HERE, '../../docs/redesign/r331/css-coverage.json');
+const FULL_OUT = process.env.CSS_COVERAGE_FULL ?? '/home/z/ulara-lab/css-coverage-full.json';
+const SUMMARY_OUT = resolve(HERE, '../../docs/design/css-coverage.json');
 const CKPT_OUT = FULL_OUT.replace(/\.json$/, '') + '.ckpt.json';
 
 const ROUTES = [

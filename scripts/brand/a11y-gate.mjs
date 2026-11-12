@@ -29,7 +29,7 @@
  *   direction  RTL only (index.html hard-locks dir="rtl"; the app is
  *              Arabic-first with no LTR locale — routes.ts DIRS agrees)
  *
- * Ratchet honesty (same philosophy as scripts/conformance/ratchet.json):
+ * Ratchet honesty (same philosophy as scripts/gates/stylelint-baseline.json):
  *   pre-existing violations must not block the gate forever — the
  *   committed baseline scripts/brand/a11y-baseline.json stores the
  *   current per-cell serious/critical counts; the gate fails ONLY when
@@ -297,7 +297,7 @@ if (WRITE_BASELINE) {
   }
   const floorTotals = { serious: report.totals.serious, critical: report.totals.critical };
   writeFileSync(BASELINE_PATH, JSON.stringify({
-    _comment: 'a11y ratchet floor (ULARA Ω §7 axe gate) — per-cell serious/critical node counts keyed route|viewport|theme|dir. The floor only tightens (same philosophy as scripts/conformance/ratchet.json): edit DOWN as violations are burned down (§4 loop), NEVER up to force green. A missing cell key means floor 0. Regenerate deliberately with: node scripts/brand/a11y-gate.mjs --write-baseline',
+    _comment: 'a11y ratchet floor (ULARA Ω §7 axe gate) — per-cell serious/critical node counts keyed route|viewport|theme|dir. The floor only tightens (same philosophy as scripts/gates/stylelint-baseline.json): edit DOWN as violations are burned down (§4 loop), NEVER up to force green. A missing cell key means floor 0. Regenerate deliberately with: node scripts/brand/a11y-gate.mjs --write-baseline',
     generatedAt: new Date().toISOString(),
     axe: axeVersion,
     cells,

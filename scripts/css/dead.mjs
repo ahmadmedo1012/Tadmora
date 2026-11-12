@@ -55,7 +55,7 @@
  *   node scripts/css/dead.mjs --url http://localhost:5208/ \
  *     [--routes subset.json | /,/auth,/student/dashboard] \
  *     [--bps 390,1440] [--themes light,dark] \
- *     [--out docs/redesign/r343/css-dead/]
+ *     [--out .audit-shots/css-dead/]  (default — gitignored working dir)
  *
  * Output: <out>/report.json (machine) + <out>/report.md (≤80 lines).
  */
@@ -89,13 +89,13 @@ const arg = (n, d) => (process.argv.indexOf(`--${n}`) > 0 ? process.argv[process
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   const header = fs.readFileSync(path.join(__dirname, "dead.mjs"), "utf8").match(/\/\*\*[\s\S]*?\*\//)?.[0] ?? "(no header)";
   console.log(header.replace(/^\/\*\*?\n?/, "").replace(/\*\/\s*$/, "").replace(/^ \* ?/gm, "").trim());
-  console.log(`\ndefaults: --bps 390,1440 · --themes light,dark · --url http://localhost:5173/ · --routes <D1 subset> · --out docs/redesign/r343/css-dead/`);
+  console.log(`\ndefaults: --bps 390,1440 · --themes light,dark · --url http://localhost:5173/ · --routes <D1 subset> · --out .audit-shots/css-dead/`);
   process.exit(0);
 }
 const URL_BASE = (arg("url", "http://localhost:5173/") ?? "").replace(/\/$/, "");
 const BPS = (arg("bps", "390,1440") ?? "").split(",").map((b) => Number(b.trim())).filter(Boolean);
 const THEMES = (arg("themes", "light,dark") ?? "").split(",").map((t) => t.trim()).filter((t) => t === "light" || t === "dark");
-const OUT_DIR = path.resolve(WORKTREE, arg("out", path.join("docs", "redesign", "r343", "css-dead")));
+const OUT_DIR = path.resolve(WORKTREE, arg("out", path.join(".audit-shots", "css-dead")));
 const ROUTES_ARG = arg("routes", null);
 
 /* viewport heights mirror the conformance suite (run.mjs BPS table) */

@@ -285,7 +285,7 @@ jobs:
   #
   # DATABASE_URL: postgresql://ulara@localhost:5433/ulara — the
   # documented boot-pg.sh URL is postgresql://ulara@127.0.0.1:5433/ulara
-  # (docs/05-setup.md §3), with one verified deviation: `localhost`, NOT
+  # (see tools/boot-pg.sh), with one verified deviation: `localhost`, NOT
   # `127.0.0.1` — backend/scripts/migrate-deploy.mjs's DNS pre-flight
   # (dns.resolve4) cannot resolve IP literals (ENOTFOUND — reproduced in
   # the 1-B sandbox: resolve4("127.0.0.1") → ENOTFOUND, resolve4("localhost")
@@ -365,8 +365,8 @@ jobs:
       - name: Boot embedded PostgreSQL (tools/boot-pg.sh, :5433)
         # `npm install`, not `npm ci`: tools/package-lock.json is DELIBERATELY
         # GITIGNORED (.gitignore:111) — a fresh CI checkout has no lockfile to
-        # `npm ci` against, and docs/05-setup.md §3 documents `cd tools &&
-        # npm install` as the one-time setup. Two pinned deps (~embedded-
+        # `npm ci` against, and `cd tools && npm install` is the
+        # one-time setup. Two pinned deps (~embedded-
         # postgres/linux-x64 + pg) — the install cost is seconds.
         run: |
           cd tools

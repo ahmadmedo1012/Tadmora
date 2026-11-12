@@ -376,34 +376,6 @@ describe('r325 Y4 — the type census gate (every heading level × every seat ×
     }
   });
 
-  /* ── 5 · the census harness coverage (routes × levels) ─────────── */
-  describe('the headless census harness stays whole (the evidence producer)', () => {
-    const probeSrc = readFileSync(path.join(HERE, '..', '..', '..', 'scripts', 'r324', 'type-probe.mjs'), 'utf8');
-
-    it('the probe sweeps every role: public + student + teacher + admin + quality + owner', () => {
-      for (const seg of ['/student/', '/teacher/', '/admin/', '/quality/', '/owner/']) {
-        expect(probeSrc.includes(seg), `the probe route table reaches ${seg} routes`).toBe(true);
-      }
-      for (const pub of ['/legal/privacy', '/help', '/auth', '/404', '/colleges']) {
-        expect(probeSrc.includes(pub), `the probe route table reaches ${pub}`).toBe(true);
-      }
-    });
-
-    it('the probe asserts the four hard laws (weight, rung tolerance, H1 lines, mono floor)', () => {
-      expect(probeSrc).toContain('> 600');
-      expect(probeSrc).toContain('1.3');
-      expect(probeSrc).toContain('lines > 3');
-      expect(probeSrc).toContain('MONO_FLOOR');
-    });
-
-    it('the probe seat list and this gate agree (no seat sweeps one gate misses)', () => {
-      const m = probeSrc.match(/HEADING_SEATS = '([^']+)'/);
-      expect(m, 'probe HEADING_SEATS exists').toBeTruthy();
-      const probeSeats = (m![1] ?? '').split(',').map((s) => s.trim().replace(/^\./, '').split(' ')[0] ?? '').filter(Boolean);
-      for (const seat of probeSeats) {
-        expect(HEADING_SEATS, `seat "${seat}" is pinned by the unit gate too`).toContain(seat);
-      }
-      expect(probeSeats.length).toBeGreaterThanOrEqual(30);
-    });
-  });
+  /* The r324 headless census probe (scripts/r324/type-probe.mjs) was
+   * deleted in the wave-2 purge; the unit pins above stay. */
 });

@@ -78,7 +78,7 @@ agentdb.rvf.lock
 # Secrets (contains credentials, never committed)
 secrets.txt
 
-# Playwright surface-inventory audit artifacts (specs/012 + WS-F6) —
+# Playwright surface-inventory audit artifacts (WS-F6) —
 # only the committed surface-baseline.json is tracked; screenshots +
 # generated inventories are local-only
 frontend/tests/audit/surface-inventory.json
@@ -159,15 +159,8 @@ apps/mobile/*.orig
 # Round harnesses (scripts/r3xx) still WRITE here when re-run locally —
 # output stays local-only now.
 /audits/
-# Screenshot/shot dirs under any redesign round (r323/evidence precedent)
-# — current-round evidence goes to the Release, never the tree.
-docs/redesign/**/screens/
-docs/redesign/**/shots/
-docs/redesign/**/evidence/
-# Network captures + reference-site live pulls (scripts/fidelity writes
-# docs/redesign/r3xx/heron-live/) — local-only.
+# Network captures (local-only).
 *.har
-**/heron-live/
 
 # Vercel CLI local link (per-machine project binding)
 .vercel/

@@ -6,7 +6,6 @@ audits/
 docs/
 frontend/
 backend/
-specs/
 tools/
 *.sqlite
 *.db

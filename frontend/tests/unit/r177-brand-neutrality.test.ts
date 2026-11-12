@@ -16,7 +16,8 @@
  * but legal-surface/asset/issuer shallow. The A2 census found LICENSE,
  * the certificate issuer, the backend boot banner, the admin settings
  * card, the product-chrome mark, the seed's platform voice, DESIGN.md's
- * identity line and docs/PROJECT-REFERENCE.md still speaking ZU. The
+ * identity line and the (since-deleted, wave-2 purge) PROJECT-REFERENCE.md
+ * still speaking ZU. The
  * r183 block below pins every one of those closed surfaces too.
  */
 import { describe, expect, it } from 'vitest';
@@ -213,7 +214,8 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
    * non-copy surfaces: the LICENSE legal paragraph, the certificate
    * issuer, the backend boot banner, the auth error voice, the admin
    * settings card, the product-chrome mark + favicon, DESIGN.md's
-   * identity line, docs/PROJECT-REFERENCE.md, the legacy planning docs,
+   * identity line, PROJECT-REFERENCE.md and the legacy planning docs
+   * (both deleted in the wave-2 purge — their pins went with them),
    * and the seed's platform voice. Zawia survives — legitimately — as
    * showcase DATA; what these pins forbid is ZU AS the platform's
    * identity ever coming back. */
@@ -237,16 +239,6 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     expect(license).not.toContain('ulara.onrender.com');
     // the proprietary grant itself must stay untouched
     expect(license).toContain('no right to\ndeploy, modify, or redistribute is granted');
-  });
-
-  it('docs/PROJECT-REFERENCE.md is affiliation-free and mirrors the real license', () => {
-    const ref = readRepo('docs/PROJECT-REFERENCE.md');
-    expect(ref).not.toContain('ZU University Operating System');
-    expect(ref).not.toContain('Ministry of Higher Education');
-    expect(ref).not.toContain('Internal — University of Zawia');
-    expect(ref).toContain('مستقلّة');
-    expect(ref).toContain('showcase/reference data');
-    expect(ref).toContain('Proprietary');
   });
 
   it('DESIGN.md header describes the independent platform; canon doc-accuracy stays true', () => {
@@ -311,29 +303,6 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     expect(favicon).not.toContain('#E9B44C');
     expect(favicon).not.toContain('#0E3F6C');
     expect(favicon).not.toContain('#3FB6C9');
-  });
-
-  it('the four legacy planning docs open with a superseded banner', () => {
-    for (const f of [
-      // the archived PRD keeps its ORIGINAL pre-rebrand filename (the
-      // archive is verbatim history) — constructed so the identity gate
-      // sees no literal old-brand token in product code.
-      `docs/archive/${'Mada' + 'rek'}_PRD_v2.md`,
-      'docs/archive/PROJECT_OVERVIEW.md',
-      'docs/archive/ARCHITECTURE.md',
-      'docs/archive/DOCUMENTATION.md',
-    ]) {
-      const doc = readRepo(f);
-      expect(doc.startsWith('> **[توثيق تاريخي — Historical record (superseded)]**'), `${f} lost its superseded banner`).toBe(true);
-      expect(
-        doc.includes('Arabic-first University Operating System') || doc.includes('مستقلّة عربية-أولًا'),
-        `${f} banner must state the independent-platform truth`,
-      ).toBe(true);
-      expect(
-        doc.includes('showcase/reference data') || doc.includes('بيانات عرض مرجعية'),
-        `${f} banner must label the Zawia records as showcase data`,
-      ).toBe(true);
-    }
   });
 
   it('seed.ts platform voice is affiliation-free (r183 lead fix, pinned here)', () => {
