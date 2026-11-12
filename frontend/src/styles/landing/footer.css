@@ -1,308 +1,362 @@
-/* R338 T-06 — the footer, REWRITTEN from scratch against the frozen
-   Heron footer census (docs/redesign/r335/heron-spec/footer.*.json).
-   The R313–R332 colophon (cell grid + FooterLens + giant wordmark +
-   double legal row) is fully RETIRED — every rule below is new.
-   T-06j FLUID SCALE (the architecture fix): the heron footer is
-   viewport-LINEAR scaled — heron root fs = 100vw/108 px (9.48/13.33/
-   17.78 @1024/1440/1920) and every rem seat rides it (brandname w
-   235/330/441 · col1 254/357/476 · mark 153/215/287 · input 28/40/53 ·
-   band 235/314/419 · root margin 5/7/9 — all = k×vw). Our fixed-rem
-   seats (root 8.333px) matched @1440 ONLY (~700 y/x-mirror/w cells).
-   The fix: --fu = calc(100vw / 1440) = 1px at the 1440 seat; every
-   desktop size below is calc(var(--fu) * <px@1440>) — identical at
-   1440, exactly vw-linear everywhere else (the measured law).
-   Mobile belts are FIXED px (heron 768 root fs 14.73, 390 15.88 —
-   NOT the desktop line): 768 = the dumped grid model (row1 377 |
-   subscribe · label|link rows · row3 502 | rail 251 · band 217 ·
-   legal 59 = root 753×968), 390 = the T-06i stack.
-   Arabic = transformed expectations: RTL mirror, letter-spacing 0,
-   lh floor 1.35×fs. Colors: --rule-strong IS the spec rgb(179,179,175),
-   --accent IS rgb(250,54,0); the 72% soft ink + quiet mono greys ride
-   the spec-exact literals (color-gate allows) and flip to the site's
-   dark tokens under [data-theme="dark"]. */
+/* ═════════════════════════════════════════════════════════════════════
+   Footer.css — the landing colophon, REBUILT (ULARA Ω task 1-C).
+   ─────────────────────────────────────────────────────────────────────
+   The R338→R343 Heron spec-mirror is retired by program decision: the
+   --fu fluid unit (83 usages), the fixed-height ink band with its
+   negative margin, the position:absolute chrome and the 88 data-spec
+   conformance seats are GONE. The rebuild's mechanics:
 
-.fo-footer {
-  /* T-06j: the fluid unit — 1px @1440, 100vw/1440 everywhere */
-  --fu: calc(100vw / 1440);
+     · CSS Grid columns — 1 column <768px · 2 columns 768–1023px ·
+       3 columns ≥1024px (minmax(0, …) tracks: no content can blow a
+       track out of the sheet).
+     · Flex with wrap for the link groups and the policy row —
+       content wraps INSIDE its box instead of escaping it.
+     · Normal flow everywhere: ZERO position:absolute, zero fixed
+       container heights, zero negative margins. The ink band's
+       height rides its art's own aspect ratio; every other seat
+       sizes from its content.
+     · Height is content-driven and stable — the retired strata.css
+       rem-law floors (103.1rem/124.9rem) are neutralized below at
+       (0,1,1) so the colophon never balloons to 1239px on a phone.
+
+   CONTENT and IDENTITY are the R338 folio's own, unchanged: paper
+   --bg / ink --text / orange --accent through the theme tokens (both
+   themes flip via the tokens themselves — no raw colors anywhere in
+   this sheet), the 44px touch floor on the policy links (a CONTRACT,
+   not a measure), Arabic letter-spacing 0 + line-height ≥ 1.35×fs.
+
+   Cascade notes: this sheet loads before shared/platform/strata/nav.
+   The strata floors are beaten by the footer.fo-footer type selector
+   below; the nav sheet's own .fo-brand family never reaches in (the
+   colophon's brand block rides .fo-brand-block — the ONE pinned
+   .fo-brand-sub seat is scoped .fo-footer .fo-brand-sub so the mast-
+   head's brand rules cannot drift it). The six reveal blocks the
+   landing's reveal engine targets (.fo-c1-top/.fo-c2-top/.fo-c2-
+   bottom/.fo-c1-sub/.fo-fstrip/.fo-footer-bottom) keep their names.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── the landmark ────────────────────────────────────────────────────
+   footer.fo-footer (0,1,1) — deliberately outranks the later-loading
+   strata.css .fo-footer law floors (min-block-size 103.1/124.9rem +
+   the 480–767 display:grid twin) so the rebuilt colophon is
+   content-sized at every width. */
+footer.fo-footer {
   display: block;
-  margin-inline: calc(var(--fu) * 7); /* the sheet frame's own inset (5/7/9 px @1024/1440/1920 — measured) */
+  min-block-size: auto;
+  /* the sheet frame's own fixed 7px inset (chrome.css .sheet-frame) */
+  margin-inline: 7px;
   padding: 0;
   border-block-start: 1px solid var(--rule-strong);
   background: transparent;
-  color: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (72% ink); color-mix() renders as color() in the twin */
-  font-size: calc(var(--fu) * 13.33); /* heron root fs = 100vw/108 (9.48/13.33/17.78) */
-  line-height: calc(var(--fu) * 18); /* T-06n: the root lh law is 1.35×fs (spec exp 12.8@1024 · 18@1440 · 24@1920), not 1.3 — the whole inheriting tree rode 17.33 */
+  /* the colophon's default voice is the soft ink; interactive seats
+     re-ink solid via their own rules */
+  color: var(--text-secondary);
+  font-size: var(--fs-body);
+  line-height: var(--lh-base);
   font-weight: 500;
-  letter-spacing: 0; /* Arabic joins — the transformed expectation (Heron -0.27px) */
+  letter-spacing: 0; /* Arabic joins — tracking is banned on the cursive */
 }
 
-.fo-in {
-  display: flex;
-  flex-direction: column;
+/* the phones' safe-area belt — the frame inset grows to the notch so
+   the policy row never butts the home indicator */
+@media (max-width: 767px) {
+  footer.fo-footer {
+    margin-inline: max(8px, env(safe-area-inset-left, 0px))
+      max(8px, env(safe-area-inset-right, 0px));
+  }
 }
 
-/* ── the rules (spec: 1px rgb(179,179,175) hairlines — 1px at every
-   bp, NOT fluid; the census holds them constant) ────────────────────
-   T-06i: the heron c1rule/col3rule/legalbot seats PAINT a real
-   background-color rgb(179,179,175) (bg-image-only left computed
-   backgroundColor rgba(0,0,0,0) — 23 bg cells); the gradient stroke
-   stays for the 1px crisp edge */
+/* ── the plain-flow hairline (the ADDRESS group's divider) ─────────── */
 .fo-rule {
-  background-image: linear-gradient(var(--rule-strong), var(--rule-strong));
+  block-size: 1px;
+  inline-size: 100%;
+  background: var(--rule-strong);
 }
-/* T-06i: ONLY the heron-painted seats carry a real background-color
-   (c1rule · col3rule · legalbot paint rgb(179,179,175); the other
-   hairlines + sc-edges stay bg-image-only — computed transparent) */
-.fo-rule-solid {
-  background-color: var(--rule-strong);
-  background-image: linear-gradient(var(--rule-strong), var(--rule-strong));
-}
-.fo-rule-h { block-size: 1px; inline-size: 100%; }
-.fo-rule-v { inline-size: 1px; align-self: stretch; }
-.fo-rule-g { margin-block: calc(var(--fu) * 5); }
 
-/* ═══ the cell grid: col1 25/50/25 → 254/357/476 @1024/1440/1920 ═══ */
+/* ═══ the column band — CSS Grid ═══════════════════════════════════ */
 .fo-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  align-items: stretch;
+  /* <768: one column, everything stacks */
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--sp-6);
+  padding: var(--sp-7) 2.4rem var(--sp-5);
 }
 .fo-col { min-inline-size: 0; }
 
-/* ── col1: the brand lockup + small-link rows + the subscribe seat ── */
-.fo-c1-top { padding: calc(var(--fu) * 13.33) calc(var(--fu) * 13.33) 0; }
-.fo-rule-bleed { margin-inline: calc(var(--fu) * -13.33); }
-/* R342-07: the brand block re-seats as the census's 80–96fu row family —
-   the name (26.67) + the sub (17.33) + the independence paragraph ride
-   one block so the c1-top box returns to the recorded 202fu law. The
-   block's own ink is SOLID (the census brand seats), the sub overrides
-   to the 72% soft ink. */
-.fo-brand { min-block-size: calc(var(--fu) * 96); color: var(--text); }
-.fo-brand-name {
-  font-size: calc(var(--fu) * 26.67); /* 18.96/26.67/35.56 — the census brandname law */
-  line-height: calc(var(--fu) * 26.67);
-  font-weight: 600;
+/* 768–1023: col1 | col2 side by side, the mark spans below */
+@media (min-width: 768px) {
+  .fo-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: 2.4rem;
+  }
+  .fo-col2 {
+    border-inline-start: 1px solid var(--rule);
+    padding-inline-start: 2.4rem;
+  }
+  .fo-col3 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ≥1024: the three-column colophon — col1 1fr · col2 2fr · col3 1fr,
+   hairline-ruled at both col2 boundaries (the gap keeps the air on
+   each side of the rule, the newspaper column grammar) */
+@media (min-width: 1024px) {
+  .fo-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+  }
+  .fo-col2 {
+    border-inline: 1px solid var(--rule);
+    padding-inline: 2.4rem;
+  }
+  .fo-col3 {
+    grid-column: auto;
+  }
+}
+
+/* ── col1: the brand block + the small-link rows + the subscribe ──── */
+.fo-c1-top {
+  display: grid;
+  row-gap: var(--sp-4);
+}
+.fo-brand-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: var(--sp-3);
   color: var(--text);
 }
-.fo-brand-sub {
-  margin-block-start: calc(var(--fu) * 4.17);
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 17.33);
+/* the stacked identity (mark / «تادمورا» / TADMORA) — the <Logo>
+   component's own geometry; the CSS width rides the clamp and the
+   height follows the viewBox ratio. 32px floor (the chrome scale),
+   3.6vw line (the fluid root's own gear), 56px cap. */
+.fo-brand-logo {
+  inline-size: clamp(32px, 3.6vw, 56px);
+  block-size: auto;
+}
+/* the descriptor seat — scoped (0,2,0) so the masthead sheet's own
+   .fo-brand-sub rule can never drift the colophon's copy */
+.fo-footer .fo-brand-sub {
+  font-size: var(--fs-body);
+  line-height: 1.5;
   font-weight: 500;
-  color: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (72% ink); color-mix() renders as color() in the twin */
+  color: var(--text-secondary);
+}
+/* the independence paragraph — VERBATIM the About page's own
+   sentence; the muted-ink legal voice of the colophon */
+.fo-footer-about {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-secondary);
 }
 .fo-brow {
   display: flex;
   flex-wrap: wrap;
-  column-gap: calc(var(--fu) * 10);
-  margin-block-start: calc(var(--fu) * 5);
-  min-block-size: calc(var(--fu) * 26);
-  align-items: center;
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-1);
 }
 .fo-ilink {
+  display: inline-flex;
+  align-items: center;
+  padding-block: var(--sp-1-5);
   text-decoration: none;
-  color: inherit;
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 17.33);
-  font-weight: 500;
-  transition: color 0.4s ease; /* the census link transition (0.4s/ease seats) */
+  color: var(--text);
+  transition: color var(--t-fast) var(--ease);
 }
-.fo-ilink-t { cursor: pointer; line-height: 18px; } /* the census's interactive label seats; R343: the 1.35x floor */
-/* r188/r320 §D — the independence paragraph (VERBATIM the About
-   page's own sentence) + the r320 contact-cell heading */
-.fo-footer-about {
-  margin: calc(var(--fu) * 6.67) 0 0;
-  font-size: calc(var(--fu) * 11.67);
-  line-height: calc(var(--fu) * 16.33); /* ar lh floor ≥ 1.35×fs */
-  font-weight: 500;
-  color: var(--text-secondary);
-}
+.fo-ilink:hover { color: var(--accent); }
 
-/* T-06f: the spec-measured seat panel — the heron c1sub box paints
-   rgb(179,179,175) (measured at every bp). R342-07: the bottom pad
-   retires (the census's 153fu box ends flush at the form zone). */
-.fo-c1-sub { padding: calc(var(--fu) * 13.33) calc(var(--fu) * 13.33) 0; background: var(--rule-strong); }
+/* the drafting-label voice — every mono seat in the colophon */
 .fo-mono-label {
   font-family: var(--font-mono);
-  font-size: calc(var(--fu) * 11.67);
-  line-height: calc(var(--fu) * 16.33);
+  font-size: var(--fs-mono-md);
+  line-height: 1.4;
   font-weight: 500;
-  color: var(--c-grey-ink); /* the quiet mono grey — --c-grey-ink IS the spec rgb(98,98,96) */
+  color: var(--text-muted);
 }
-.fo-mono-label-t { color: inherit; }
 
-/* R342-07 — the subscribe zone (the census's c1sub > div[2] > [label,
-   div[1] > form] tree): its own 63×16 mono label, then the form
-   wrapper, then the two 17px copy lines + the 358×40 input row. */
-.fo-form-zone { margin-block-start: calc(var(--fu) * 8.33); }
-.fo-form-label {
-  font-family: var(--font-mono);
-  font-size: calc(var(--fu) * 11.67);
-  line-height: calc(var(--fu) * 16.33);
-  font-weight: 500;
-  color: rgba(40, 40, 40, 0.72); /* color-gate: allow — the census form-label seat is the 72% soft ink */
+/* ── the subscribe seat — a quiet ruled panel on the paper ────────── */
+.fo-c1-sub {
+  display: grid;
+  row-gap: var(--sp-3);
+  margin-block-start: var(--sp-2);
+  padding: var(--sp-5);
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
 }
-.fo-form-label-t { color: inherit; }
-.fo-form-wrap { margin-block-start: calc(var(--fu) * 8.33); }
+.fo-form-zone {
+  display: grid;
+  row-gap: var(--sp-2);
+}
 .fo-form {
-  margin-block-start: calc(var(--fu) * 15);
-  padding-block-start: calc(var(--fu) * 15);
-  transition: opacity 0.4s ease; /* the census form transition seat */
+  display: grid;
+  row-gap: var(--sp-3);
 }
-.fo-form-copy { display: grid; row-gap: calc(var(--fu) * 2); }
+.fo-form-copy {
+  display: grid;
+  row-gap: var(--sp-1);
+}
 .fo-form-line {
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 17.33);
+  font-size: var(--fs-body);
+  line-height: 1.5;
   font-weight: 400;
-  color: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (72% ink) */
+  color: var(--text-secondary);
 }
-[data-spec='footer.bgroup.2'] { transition: opacity 0.4s ease; } /* the census bgroup.2 transition seat */
 .fo-form-row {
   display: flex;
-  margin-block-start: calc(var(--fu) * 13.33);
-  gap: 0;
+  align-items: stretch;
 }
 .fo-input {
-  flex: 1;
+  flex: 1 1 auto;
   min-inline-size: 0;
-  block-size: calc(var(--fu) * 40); /* 28/40/53 — the census input law */
-  padding: calc(var(--fu) * 6.67) calc(var(--fu) * 6.67) calc(var(--fu) * 6.67) calc(var(--fu) * 13.33);
+  min-block-size: 44px; /* the touch floor — an a11y contract, not a measure */
+  padding-inline: var(--sp-3);
   border: 1px solid var(--rule-strong);
-  border-start-end-radius: 0;
-  border-end-end-radius: 0;
+  border-inline-end: 0; /* the go button continues the rule */
   background: transparent;
   font: inherit;
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 19);
+  font-size: var(--fs-body);
+  line-height: 1.5;
   color: var(--text);
-  transition: border-color 0.45s ease;
+  transition: border-color var(--t-fast) var(--ease);
 }
-.fo-input::placeholder { color: var(--rule-strong); }
-/* the go button's base seat — spec (footer.1920 [19]): transition
-   border-color,background-color,color 0.2s/0.4s/0.4s ease×3 (the
-   multi-ease string must match verbatim: the instrument's parseEase
-   returns null for the comma list on BOTH sides → string equality) */
+.fo-input::placeholder { color: var(--text-muted); }
 .fo-go {
-  transition: border-color 0.2s ease, background-color 0.4s ease, color 0.4s ease;
-  line-height: 1.35; /* T-06l census: the go seat lh rides the ROOT fs law (1.35×root: 18fu@1440 · 24@1920) */
-  /* T-06l census: the go seat's arrow ink is the rule grey
-     rgb(179,179,175) = --rule-strong at every bp */
-  color: var(--rule-strong);
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: 44px;   /* the touch floor — an a11y contract */
+  min-block-size: 44px;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
 }
-.fo-go-ic,
-.fo-go-ic-in { inline-size: calc(var(--fu) * 17); block-size: calc(var(--fu) * 17); color: inherit; display: grid; place-items: center; }
-.fo-go-ic svg { inline-size: 100%; block-size: 100%; display: block; }
-.fo-go-ic path {
+.fo-go svg {
+  inline-size: 17px;
+  block-size: 17px;
+  display: block;
+}
+.fo-go path {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.7;
   vector-effect: non-scaling-stroke;
 }
-.fo-go:hover { color: var(--accent); border-color: var(--accent); }
-/* (r172a §3 — the go button's ring also delegates to base.css) */
+.fo-go:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+/* (the go button's focus ring delegates to base.css — r172a §3) */
 
-/* ── col2: the wide index — 3 mono-labelled groups up, 3 seats down ── */
+/* ── col2: the link index + the contact groups ───────────────────────
+   auto-fit groups with a FIXED 176px floor: the families re-flow
+   1→2→3 up as col2's own width grows — never a track narrower than a
+   readable link, no per-belt forks, no fixed seats. The column is a
+   flex stack with space-between so the contact groups pin to the
+   band's foot when col1 drives the row height (desktop), and the
+   margin keeps the gap when the column is content-sized (phones). */
+.fo-col2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .fo-c2-top,
 .fo-c2-bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(176px, 1fr));
+  column-gap: 2.4rem;
+  row-gap: var(--sp-6);
 }
-.fo-lgroup { padding: calc(var(--fu) * 13.33); min-inline-size: 0; }
-.fo-lg-links { margin-block-start: calc(var(--fu) * 4.17); }
-/* R342-07 — the census link seats: fit-content <a> boxes (47–135fu wide,
-   26fu tall, label 17fu) stacked one per line; the labels carry the
-   interactive cursor + the solid-ink/accent color law of the census. */
+.fo-c2-bottom {
+  margin-block-start: var(--sp-7);
+}
+.fo-lgroup {
+  display: grid;
+  row-gap: var(--sp-2);
+  align-content: start;
+  min-inline-size: 0;
+}
+.fo-lg-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-1);
+}
 .fo-link {
   display: inline-flex;
   align-items: center;
-  min-block-size: calc(var(--fu) * 26);
-  padding-inline: calc(var(--fu) * 4.17);
+  padding-block: var(--sp-1-5);
   text-decoration: none;
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 17.33);
+  color: var(--text);
+  font-size: var(--fs-body);
   font-weight: 500;
-  color: var(--text); /* spec link ink — --text IS #282828 */
-  transition: color 0.2s ease; /* the census link transition (0.2s/ease seats) */
+  transition: color var(--t-fast) var(--ease);
 }
-.fo-link-t {
-  color: var(--text); /* the census label law: SOLID ink, not the 72% soft ink */
-  cursor: pointer; /* the census's interactive label seats */
-}
-.fo-link:hover,
-.fo-link:hover .fo-link-t { color: var(--accent); }
-.fo-link-accent,
-.fo-link-accent .fo-link-t { color: var(--accent); }
-.fo-biglink {
-  display: block;
-  margin-block-start: calc(var(--fu) * 5);
-  padding: calc(var(--fu) * 4.17);
-  text-decoration: none;
-  transition: color 0.4s ease;
+.fo-link:hover { color: var(--accent); }
+/* the first PLATFORM link carries the accent ink (the folio's own
+   orange door) */
+.fo-link-accent { color: var(--accent); }
+/* the funnel pair's affordance seat — cta.css owns the underline +
+   hit-slop grammar; this sheet adds no box of its own */
+
+/* the contact cell */
+.fo-contact-h {
+  margin: 0;
+  font-size: var(--fs-body-lg);
+  line-height: 1.4;
+  font-weight: var(--fw-semibold);
   color: var(--text);
 }
-.fo-link-t { line-height: 18px; } /* R343: the transformed floor 1.35x13.33 (the a-seat keeps its own 17.33 box) */
-.fo-link-account { line-height: 18px; }
-.fo-mono-label-t { font-size: 11.67px; line-height: 16.33px; } /* R343: the mono text seats' own pitch (was inheriting 13.33 in some zones) */
-.fo-social-t { line-height: 18px; }
-.fo-biglink-t {
-  font-size: calc(var(--fu) * 20);
-  line-height: calc(var(--fu) * 22);
-  font-weight: 700;
-  color: inherit;
-  cursor: pointer;
+.fo-biglink {
+  display: inline-block;
+  margin-block-start: var(--sp-2);
+  padding: var(--sp-2);
+  text-decoration: none;
+  color: var(--text);
+  font-size: var(--fs-body-lg);
+  line-height: 1.5;
+  font-weight: var(--fw-semibold);
+  transition: color var(--t-fast) var(--ease);
 }
 .fo-biglink:hover { color: var(--accent); }
-/* R342-07 — the CHANNELS grid: the census's 2×3 single-line link seats
-   (99×26 boxes, 91×17 labels) — the retired two-line socials rode the
-   same door routes. */
+
+/* the channels — single-line door links, flex-wrap */
 .fo-socials {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-block-start: calc(var(--fu) * 5);
-  row-gap: calc(var(--fu) * 4.17);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-1);
 }
 .fo-social {
   display: inline-flex;
   align-items: center;
-  min-block-size: calc(var(--fu) * 26);
+  padding-block: var(--sp-1-5);
   text-decoration: none;
   color: var(--text);
-  transition: color 0.4s ease;
-}
-.fo-social-t {
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 17.33);
+  font-size: var(--fs-body);
   font-weight: 500;
-  color: var(--text);
-  cursor: pointer;
+  transition: color var(--t-fast) var(--ease);
 }
-.fo-social:hover,
-.fo-social:hover .fo-social-t { color: var(--accent); }
+.fo-social:hover { color: var(--accent); }
 
-/* ── col3: the drawn construction mark (our OWN geometry) ─────────── */
+/* ── col3: the drawn construction mark (our OWN geometry) ───────────
+   normal flow, sized container: the clamp walks 96px (the phone
+   floor) → 15vw (the fluid line) → 288px; square by viewBox */
 .fo-col3 {
-  position: relative;
-  display: grid;
-  place-items: center;
-  transition: opacity 0.65s cubic-bezier(0.59, 0.23, 0.22, 0.96); /* the census col3 transition seat */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-/* R342-07 — the rail's own seat: the census vrule runs the FULL column
-   height (1×355) at the col2/col3 boundary (the inline-end edge in
-   RTL — the x-mirror of the spec's x1076 rail). */
-.fo-col3 .fo-rule-v { position: absolute; inset-block: 0; inset-inline-end: 0; align-self: stretch; }
 .fo-mark {
-  inline-size: calc(var(--fu) * 215);
-  block-size: calc(var(--fu) * 215); /* 153/215/287 — the census mark law */
-  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* the census mark transition seat */
-}
-/* R342-07 — the census's mark wrapper (div[1] inside the 215 box) +
-   the 17fu caption seat that carries the 0-height image twin. */
-.fo-mark-in { inline-size: 100%; block-size: 100%; }
-.fo-mark-cap {
-  margin-block-start: calc(var(--fu) * 13.33);
-  inline-size: calc(var(--fu) * 215);
-  min-block-size: calc(var(--fu) * 17);
-  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* the census markcap transition seat */
+  inline-size: clamp(96px, 15vw, 288px);
+  aspect-ratio: 1;
 }
 .fo-mark-svg {
   inline-size: 100%;
@@ -310,428 +364,146 @@
   display: block;
   color: var(--text);
 }
-/* R342-07 — the census mark-path law: paths 1–7 ship veiled (the frozen
-   capture is the pre-reveal state) and reveal on scroll at 0.5s on the
-   (0.23,1,0.32,1) curve; path 8 (the frame ticks) stays lit. The veil
-   class is written by the component's IntersectionObserver (house
-   grammar — JS writes the class, CSS owns the tween). */
 .fo-mark-p {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.7;
   vector-effect: non-scaling-stroke;
-  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* the census markpath transition seat */
+  transition: opacity var(--t-slow) var(--ease-out);
 }
+/* the veil class is written by the component's IntersectionObserver
+   (house grammar — JS writes the class, CSS owns the tween; RM and
+   no-JS ship the mark fully visible) */
 .fo-mark-veiled { opacity: 0; }
-.fo-mark-img { inline-size: calc(var(--fu) * 215); block-size: 0; }
 
-/* ═══ the strip band: OUR ink render + the grayscale twin + chrome ═══ */
-/* T-06k census re-seat: the grid's accumulated height delta above the
-   band, measured per bp (−37@1920 · −39@1440 · −29@1024 · −54@768 —
-   non-linear, so per-belt seats); 390 keeps the parked deck */
-.fo-fstrip { position: relative; block-size: calc(var(--fu) * 314); overflow: hidden; margin-block-start: -39px; } /* 235/314/419 — the census band law */
-.fo-strip-in { position: absolute; inset: 0; }
-.fo-strip-media,
-.fo-strip-twin { position: absolute; inset: 0; }
+/* ═══ the ink strip band — normal flow, art-driven height ══════════
+   The two licensed skyline renders (light + dark twins) stack in ONE
+   grid cell; each carries the band's own 1440:314 proportion (the
+   folio's ink-band measure) and object-fit: cover center-crops the
+   1440×384 sheet into it at every width — the same crop the retired
+   fixed-height band painted, now proportional instead of fixed. No
+   fixed heights, no overflow:hidden, no negative margins. */
+.fo-fstrip {
+  margin-block-start: var(--sp-2);
+}
+.fo-strip-media {
+  display: grid;
+}
 .fo-strip-img {
+  grid-area: 1 / 1;
   inline-size: 100%;
-  block-size: 100%;
+  block-size: auto;
+  /* the band's own proportion (the folio's 1440:314 ink band): the
+     render covers the box, center-cropped exactly like the retired
+     fixed-height band — but the box scales with the sheet's width */
+  aspect-ratio: 1440 / 314;
   object-fit: cover;
   display: block;
 }
-.fo-strip-svg { inline-size: 100%; block-size: 100%; display: block; }
-.fo-strip-image { inline-size: 100%; block-size: 100%; }
+/* the theme swap — the wy-cycle grammar: one render paints, its twin
+   holds the box (visibility keeps the layout seat) */
+.fo-strip-img.is-dark { visibility: hidden; }
+[data-theme='dark'] .fo-strip-img.is-light { visibility: hidden; }
+[data-theme='dark'] .fo-strip-img.is-dark { visibility: visible; }
 
-/* the registration chrome: 4 edge rules (heron paints them via a
-   background IMAGE — backgroundColor stays transparent) + the 4 corner
-   crosshairs as the fo-wordmark-reg '+' family (R321 §A6 source
-   contract: CSS ::before content, never DOM text).
-   R342-07 — the chrome zone moves OUT of .fo-strip-in to the band's own
-   second seat (the census's 1407×294 zone + its inner wrapper), so the
-   edges + regs bind at the recorded windows. */
-.fo-sc-zone { position: absolute; inset: calc(var(--fu) * 10); }
-.fo-strip-chrome { position: absolute; inset: 0; }
-.fo-sc-edge { position: absolute; background-image: linear-gradient(var(--rule-strong), var(--rule-strong)); }
-.fo-sc-t { inset-inline: calc(var(--fu) * 17); block-size: calc(var(--fu) * 7); inset-block-start: 0; }
-.fo-sc-b { inset-inline: calc(var(--fu) * 17); block-size: calc(var(--fu) * 7); inset-block-end: 0; }
-.fo-sc-l { inset-block: calc(var(--fu) * 16.42); inline-size: calc(var(--fu) * 7); inset-inline-start: 0; }
-.fo-sc-r { inset-block: calc(var(--fu) * 16.42); inline-size: calc(var(--fu) * 7); inset-inline-end: 0; }
-.fo-wordmark-reg {
-  position: absolute;
-  inline-size: calc(var(--fu) * 10);
-  block-size: calc(var(--fu) * 10);
-  color: var(--text);
-  font-family: var(--font-mono);
-  /* T-06k census: the reg '+' seat fs 13.33@1440 · 17.78@1920 (13.33fu)
-     with a 12.8px floor at 1024; lh = the AR floor 1.35×fs */
-  font-size: calc(var(--fu) * 13.33); /* T-06n: NO 12.8 floor — spec fs@1024 = 9.48; the floor broke fs+lh @1024 */
-  line-height: 1.35;
-  display: grid;
-  place-items: center;
-  transition: opacity 0.4s ease; /* the census reg transition seat */
-}
-.fo-wordmark-reg::before { content: '+'; }
-
-@media (min-width: 1700px) { .fo-fstrip { margin-block-start: -37px; } }
-@media (min-width: 992px) and (max-width: 1299.98px) { .fo-fstrip { margin-block-start: -29px; } }
-
-/* the © bar + the legal row (R321 §A2 — one ruled line). R342-07: the
-   links ride the census's 13.33fs label law + the 0.5s/--ease
-   transition seat; the nav + separator grammar is the r321/r332
-   contract, unchanged. */
+/* ═══ the © bar + the policy row — one ruled line (R321 §A2) ═══════ */
 .fo-footer-bottom {
-  position: relative; /* the legalbot hairline seats full-bleed at the row top */
   display: flex;
-  align-items: stretch;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 0;
-  block-size: calc(var(--fu) * 42); /* census row law: 30/42/56 = 42fu */
+  column-gap: var(--sp-6);
+  row-gap: var(--sp-2);
+  padding: var(--sp-3) 2.4rem var(--sp-5);
+  border-block-start: 1px solid var(--rule);
 }
-/* the T-06k strip-in-legal restructure: the © line box (the spec's
-   stripmedia seat, 431×15 @1440) rides between legal-l and lc */
-.fo-legal-strip { inline-size: calc(var(--fu) * 431); }
-.fo-legalbot { position: absolute; inset-inline: 0; inset-block-start: 0; }
-.fo-legal-l { display: flex; align-items: stretch; inline-size: calc(var(--fu) * 484); padding: calc(var(--fu) * 14.17) calc(var(--fu) * 26.67) calc(var(--fu) * 12.5) calc(var(--fu) * 26.67); }
-.fo-legal-lc { display: flex; align-items: center; column-gap: calc(var(--fu) * 3.33); }
+.fo-legal-l {
+  min-inline-size: 0;
+}
+/* the © line — the mono rung on the soft ink; the western-digit year
+   rides the tabular .fo-mono span */
 .fo-legal-p {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: calc(var(--fu) * 11.67);
-  line-height: 1.35; /* T-06l census: the © line lh = AR floor 1.35×fs (15.75fu@1440 · 21.01@1920) */
+  font-size: var(--fs-mono-md);
+  line-height: 1.5;
   font-weight: 500;
-  color: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (72% ink) */
+  color: var(--text-secondary);
+}
+.fo-mono {
+  font-size: var(--fs-mono-md);
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
 }
 .fo-legal-a {
   color: var(--text);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color var(--t-fast) var(--ease);
 }
 .fo-legal-a:hover { color: var(--accent); }
-.fo-mono {
-  font-family: var(--font-mono);
-  font-size: calc(var(--fu) * 11.67);
-  line-height: 1.35; /* T-06l census: AR floor 1.35×fs */
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-}
+
+/* the policy row — NINE policy links + the app door, flex-wrap: the
+   row wraps INSIDE the bar at every width (the retired fixed-height
+   bar shipped its wrapped links BELOW the footer's box — the 104-cell
+   clipping defect this rebuild kills) */
 .fo-legal-row {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  inline-size: calc(var(--fu) * 464); /* census: 330/464/619 = 464fu */
-  line-height: 1.35; /* T-06l census: the nav row lh rides the ROOT fs (1.35×root: 18fu@1440 · 24@1920 · 21.44@390) */
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: var(--sp-1);
+  min-inline-size: 0;
 }
-/* R342-07 — the census legal-link law: SOLID ink labels, 42fu-tall seats,
-   13.33fs (17.33 lh), the 0.4s/ease transition. */
 .fo-legal-link {
   display: inline-flex;
   align-items: center;
-  padding-inline: calc(var(--fu) * 10);
+  padding-inline: var(--sp-2-5);
   text-decoration: none;
   color: var(--text);
-  font-size: calc(var(--fu) * 13.33);
-  line-height: calc(var(--fu) * 17.33);
+  font-size: var(--fs-body);
+  line-height: 1.5;
   font-weight: 500;
   /* the 44px touch floor (the footer link ladder) — a CONTRACT, not a
      heron measure: stays fixed px at every bp */
   min-block-size: 44px;
-  transition: color 0.4s ease; /* the census legal-link transition seat */
+  transition: color var(--t-fast) var(--ease);
 }
 .fo-legal-link:hover { color: var(--accent); }
-.fo-legal-sep { color: var(--rule-strong); }
-/* r339 T-12 — the separator's night seat: --rule-strong flips to
-   #85857F in dark — 3.97:1 on the #282828 ground, under the 4.5:1
-   text floor the all-nodes census asserts on the «·» runs (18 cells).
-   --text-muted (#B4B4B0 dark) clears 7.0:1. Light spec law untouched. */
+/* the separator — §A6 law: the span ships EMPTY, the glyph is CSS
+   content (out of innerText, out of the a11y tree) */
+.fo-legal-sep {
+  display: inline-flex;
+  align-items: center;
+  color: var(--rule-strong);
+  font-size: var(--fs-mono-md);
+}
+.fo-legal-sep::after { content: '·'; }
+/* the separator's night seat — --rule-strong flips to #85857F in
+   dark, under the 4.5:1 text floor on the charcoal ground; the
+   muted text token clears 7.0:1 (the r339 T-12 fix, kept) */
 [data-theme='dark'] .fo-legal-sep { color: var(--text-muted); }
 
-/* the col3 rail ink — the census seat is OPAQUE text ink, not the 72%
-   soft ink the footer root carries */
-.fo-col3 { color: var(--text); }
-.fo-grid-rule { grid-column: 1 / -1; }
-
-/* ═══ 768 belt — the dumped heron grid model (T-06j), FIXED px:
-    root 753×968 (fs 14.73/lh 19.15) = grid 691 + band 217 + legal 59
-    + 1 hairline. row1 = col1 753-wide container: c1top 377×189 (brand
-    left) | the subscribe seat right (sublabel 853 · input 377×44) ·
-    row2 = the c2-top label|link rows (label|links one line each) ·
-    row3 = c2-bottom 502×331 | the col3 rail 251×331 (vrule 1×331 +
-    mark 207 + the 166×0 img twin) ═══ */
-@media (min-width: 768px) and (max-width: 991px) {
-  .fo-mark { opacity: 0; } /* T-06n: heron hides the mark seat @768 (spec opacity 0) */
-}
-
-@media (max-width: 991px) {
-  .fo-footer {
-    margin-inline: 7px; /* heron 768 root x7 w753 */
-    font-size: 14.73px; /* heron 768 root fs (NOT the desktop line) */
-    line-height: 19.89px; /* T-06n: 768 root lh = 1.35×fs (spec exp 19.89, was 19.15) */
-  }
-  .fo-grid { grid-template-columns: 377px 1fr; }
-  /* T-06k — the heron 768 dumped-grid tree: row1 = c1top (377×189) |
-     the c2-top label+link half (377×189); row2 = the subscribe seat
-     full-width (753×171); row3 = c2-bottom 502×331 | the col3 rail. The
-     col wrappers go display:contents so the four blocks seat directly. */
-  .fo-col { display: contents; }
-  .fo-col3 { display: block; grid-column: 2; grid-row: 3; }
-  .fo-col2 > div:first-child { display: contents; }
-  .fo-c1-top { grid-column: 1; grid-row: 1; padding: 22px 22px 0; }
-  .fo-rule-bleed { margin-inline: -22px; }
-  /* T-06k: heron 768 row2 = the subscribe seat FULL-WIDTH (753×171) */
-  .fo-c1-sub { grid-column: 1 / -1; grid-row: 2; padding: 22px; }
-  /* col2 unwraps (heron col2@768 = 0×0 window) — its rows place directly */
-  .fo-col2 { display: contents; }
-  .fo-col2 > div:first-child { display: contents; }
-  /* T-06k: the c2-top label|link half seats BESIDE c1top in row1
-     (heron toprow 753×189 = c1top 377 | half2 377) — the ~100px
-     label-row y-shift the census flagged */
-  .fo-c2-top { grid-column: 2; grid-row: 1; grid-template-columns: 1fr; }
-  .fo-c2-bottom { grid-column: 1; grid-row: 3; grid-template-columns: 1fr; inline-size: 502px; }
-  /* the label|link row model (lglabel.1 101×26 | lglinks.1 at +106) */
-  .fo-lgroup { display: grid; grid-template-columns: auto 1fr; column-gap: 8.33px; align-items: start; padding: 0 22px; }
-  .fo-c2-bottom .fo-lgroup { display: block; padding: 0; }
-  /* the col3 rail: 251×331, vrule + mark 207 (x+21) + the 166×0 twin */
-  .fo-col3 {
-    display: grid;
-    grid-column: 2;
-    grid-row: 3;
-    justify-self: end;
-    inline-size: 251px;
-    grid-template-columns: 1px 207px;
-    column-gap: 21px;
-    grid-template-rows: 207px auto;
-    block-size: 331px;
-    align-items: start;
-  }
-  .fo-col3 .fo-rule-v { position: static; grid-column: 1; grid-row: 1 / span 2; }
-  .fo-mark { grid-column: 2; grid-row: 1; inline-size: 207px; block-size: 207px; }
-  /* T-06i: heron 768 seats the img twin at 166×0 inside the rail */
-  .fo-mark-cap { grid-column: 2; grid-row: 2; margin-inline-start: 21px; inline-size: 166px; min-block-size: 0; }
-  .fo-mark-cap .fo-mark-img { inline-size: 166px; block-size: 0; }
-  .fo-grid-rule { grid-column: 1 / -1; grid-row: 4; }
-  /* fixed text/padding seats (the desktop rules are fluid now) */
-  .fo-brand-name { font-size: 26.67px; line-height: 26.67px; }
-  .fo-brand-sub { margin-block-start: 4.17px; font-size: 13.33px; line-height: 17.33px; }
-  .fo-brow { column-gap: 10px; margin-block-start: 5.83px; min-block-size: 27px; }
-  .fo-ilink { font-size: 13.33px; line-height: 17.33px; }
-  .fo-footer-about { margin: 8.33px 0 0; font-size: 11.67px; line-height: 16.33px; }
-  .fo-contact-h { margin: 5px 0 0; font-size: 13.33px; line-height: 18px; }
-  .fo-mono-label { font-size: 11.67px; line-height: 16.33px; }
-  .fo-form { margin-block-start: 15px; padding-block-start: 15px; }
-  .fo-form-line { font-size: 13.33px; line-height: 17.33px; }
-  .fo-form-row { margin-block-start: 13.33px; }
-  .fo-input { block-size: 44px; padding: 6.67px 6.67px 6.67px 13.33px; font-size: 14.73px; line-height: 21.05px; } /* T-06l census: 14.73/21.05@768 */
-  .fo-go { block-size: 44px; }
-  .fo-go-ic { inline-size: 17px; block-size: 17px; }
-  .fo-lg-links { margin-block-start: 4.17px; line-height: 16px; }
-  .fo-lg-links a { padding-block: 0; }
-  .fo-link { padding: 4.17px; font-size: 13.33px; line-height: 17.33px; }
-  /* R343 — the census's 768-991 label scale (14.73 + the 1.35x floor 19.89 —
-     the reference's own tablet type pitch, the same scale as the input seat) */
-  .fo-link-t { font-size: 14.73px; line-height: 19.89px; }
-  .fo-ilink-t { font-size: 14.73px; line-height: 19.89px; }
-  .fo-social-t { font-size: 14.73px; line-height: 19.89px; }
-  /* R343 — the census's 390 label pitch (13.89 + the 1.35x floor 18.75);
-     the account funnel pair is the reference's own BIGGER seat (15.88) */
-  /* R343 — the census's 390 label pitch (13.89 + the 1.35x floor 18.75);
-     the account funnel pair is the reference's own BIGGER seat (15.88) */
-  /* R343 — the census's 390 label pitch (the recorded label divs are 13.89/18.06;
-     the a-seat keeps its own 13.33 metrics — only the text div changes) */
-   .fo-biglink { margin-block-start: 5px; padding: 4.17px; block-size: 47px; }
-  .fo-biglink-t { font-size: 19.2px; line-height: 20px; }
-  .fo-socials { margin-block-start: 5px; }
-  .fo-social { padding: 4.17px; block-size: 25px; }
-  .fo-social-t { font-size: 14.73px; line-height: 19.89px; } /* R343: the census's 768-991 label scale */
-  /* the chrome band: 217 tall, chrome inset 11 (sctop 694×7 @+19) */
-  .fo-fstrip { block-size: 217px; margin-block-start: -54px; }
-  .fo-sc-zone { inset: 11px; }
-  .fo-sc-t,
-  .fo-sc-b { inset-inline: 19px; block-size: 7px; }
-  .fo-sc-l,
-  .fo-sc-r { inset-block: 16.42px; inline-size: 7px; }
-  .fo-wordmark-reg { inline-size: 11px; block-size: 11px; font-size: 14.73px; line-height: 1.35; }
-  /* the legal row: legall 355×59 | legalr 432×59, © box 311×34 */
-  .fo-legal-l { inline-size: 355px; padding: 14.17px 26.67px 12.5px; }
-  .fo-legal-strip { inline-size: 311px; }
-  .fo-legal-row { inline-size: 432px; }
-  .fo-legal-lc { column-gap: 3.33px; }
-  .fo-legal-p { font-size: 12.89px; line-height: 17.4px; } /* T-06l census: 12.89/17.4@768 */
-  .fo-mono { font-size: 12.89px; line-height: 17.4px; }
-  .fo-legal-link { padding-inline: 10px; font-size: 11.67px; line-height: 15.17px; }
-}
-
-/* ═══ mobile (≤767): single column, the measured 390 stack (T-06i) —
-    root 374×1265 fs 15.88 · mark 119 centred · the T-06i c1top brand
-    + rule re-seat · centered © · the legal nav row — mono grey =
-    --neutral-400 (IS the spec's own ≤767 rgb(180,180,176)) ═══ */
+/* the phones' centered colophon tail — the © line centers under the
+   wrapped policy row */
 @media (max-width: 767px) {
-  .fo-footer {
-    /* L1-b (R341 · T-16 #2) — heron 390 root x8 w374, kept verbatim in
-       the harness (env() = 0) and grown on notched phones so the legal
-       rows never butt the safe area. */
-    margin-inline: max(8px, env(safe-area-inset-left, 0px))
-      max(8px, env(safe-area-inset-right, 0px)); /* heron 390 root x8 w374 */
-    font-size: 15.88px; /* heron 390 root fs */
-    line-height: 21.44px; /* T-06n: 390 root lh = 1.35×fs (spec exp 21.44, was 20.64) */
+  .fo-footer-bottom {
+    justify-content: center;
   }
-  .fo-grid { grid-template-columns: 1fr; }
-  .fo-col { display: block; grid-column: auto; grid-row: auto; }
-  .fo-c1-top { grid-column: auto; padding: 20px 15px 19px; }
-  .fo-rule-bleed { margin-inline: -15px; }
-  .fo-c1-sub { grid-column: auto; padding: 16px; }
-  .fo-col2 { display: contents; }
-  .fo-col2 > div:first-child { display: contents; }
-  .fo-c2-top { grid-column: auto; grid-row: auto; }
-  .fo-c2-bottom { grid-column: auto; grid-row: auto; inline-size: auto; }
-  .fo-col3 {
-    display: grid;
-    place-items: center;
-    grid-column: auto;
-    grid-row: auto;
-    grid-template-columns: none;
-    grid-template-rows: none;
-    column-gap: 0;
-    block-size: auto;
-    inline-size: auto;
-    justify-self: stretch;
+  .fo-legal-l {
+    text-align: center;
   }
-  .fo-col3rule,
-  .fo-mark,
-  .fo-mark-cap { grid-column: auto; grid-row: auto; }
-  .fo-mark { inline-size: 119px; block-size: 119px; }
-  .fo-mark-cap { min-block-size: 0; }
-  .fo-mark-img { inline-size: 0; block-size: 0; margin: 0; }
-  .fo-grid-rule { grid-column: 1 / -1; grid-row: auto; }
-  .fo-brow { display: none; }
-  .fo-brand-name { font-size: 65.8px; line-height: 79px; }
-  .fo-brand-sub { display: none; }
-  /* T-06i: heron 390 c1top = 344×79 brand + rule ONLY (0,0,374,118) —
-     the independence paragraph rides the ≥992 seats (DOM stays: the
-     r188/r320 §D contract reads the source, not the 390 paint) */
-  .fo-footer-about { display: none; }
-  /* heron 390 group1 = the 374×124 block (label 13 + 2-col link rows
-     28) — the 124 floor sits on the GROUP, not the label */
-  /* r339 T-13 — the 390 content gutter: heron seats the c2 group text
-     at x24 inside the 8px sheet (16px inline inset); our groups rode
-     the sheet edge (x8) — the blind panel's 8px mobile clearance. */
-  .fo-lgroup { display: block; padding: 0 1.61rem; }
-  .fo-c2-top .fo-lgroup:first-child { min-block-size: 124px; }
-  .fo-lg-links { display: grid; grid-template-columns: 1fr 1fr; margin-block-start: 0; line-height: 15.4px; }
-  .fo-lg-links a { padding-block: 0; }
-  /* R343 — the form-label seat's 390 pitch: the fluid 11.67fu unit collapsed
-     to 3.16px here (a real mobile defect — the label was microscopic); the
-     census records 11.91/16.08 */
-  .fo-form-label { font-size: 11.91px; line-height: 16.08px; }
-  .fo-mono-label {
-    font-size: 11.91px; /* R343: the census's own 390 mono pitch (was 10/11 — the recorded seat is 11.91/16.08) */
-    line-height: 16.08px;
-    color: var(--neutral-400);
+  .fo-legal-row {
+    justify-content: center;
   }
-  /* R343 — the census's fit-content mono text seats (the recorded label
-     windows are 49-63px tight boxes, not full-width blocks) */
-  .fo-mono-label-t { inline-size: fit-content; font-size: 11.91px; line-height: 16.08px; }
-  .fo-c2-top,
-  .fo-c2-bottom { grid-template-columns: 1fr; }
-  .fo-input { block-size: 40.3px; padding: 6.67px 6.67px 6.67px 13.33px; font-size: 15.88px; line-height: 22.68px; } /* T-06l census: 15.88/22.68@390 */
-  .fo-go { block-size: 40.3px; }
-  /* R343 — the census's 20×20 go-icon frame at 390 (the fluid 17fu unit
-     collapsed to 4.6px here — a real mobile defect, now the recorded size) */
-  .fo-go-ic, .fo-go-ic-in { inline-size: 20px; block-size: 20px; }
-  .fo-form { margin-block-start: 15px; padding-block-start: 15px; }
-  .fo-form-line { font-size: 13.33px; line-height: 17.33px; }
-  .fo-form-row { margin-block-start: 13.33px; }
-  .fo-contact-h { margin: 5px 0 0; font-size: 13.33px; line-height: 18px; }
-  .fo-link { padding: 4.17px; font-size: 13.33px; line-height: 17.33px; }
-  /* R343 — the census's 390 label pitch (13.89 + the 1.35x floor 18.75);
-     the account funnel pair is the reference's own BIGGER seat (15.88) */
-  .fo-link-t { font-size: 13.89px; line-height: 18.75px; }
-  .fo-link-account { font-size: 15.88px; line-height: 21.44px; }
-  /* L2-c: block-size auto + the 38.3px floor — the 2-line Arabic biglink
-     (2×19.2 lh + 8.34 padding = 46.74px) overflowed the fixed 38.3px box
-     and its second line's ink ran 9px into the ADDRESS label below
-     (sweep-measured @390). The floor keeps the 1-line seat at 38.3px. */
-  .fo-biglink { margin-block-start: 5px; padding: 4.17px; block-size: auto; min-block-size: 38.3px; }
-  .fo-biglink-t { font-size: 18.3px; line-height: 19.2px; }
-  .fo-social { padding: 4.17px; block-size: 23.3px; }
-   .fo-social-t { font-size: 13.89px; line-height: 18.75px; } /* R343: the census pitch + the 1.35x floor */
-  .fo-socials { margin-block-start: 5px; row-gap: 15px; }
-  .fo-fstrip { block-size: 80px; margin-block-start: 0; }
-  .fo-strip-in { block-size: 41.6px; }
-  .fo-strip-media,
-  .fo-strip-twin { inline-size: 181.7px; block-size: 21.7px; inset-inline: 0; margin-inline: auto; inset-block: 9.2px auto; }
-  .fo-sc-zone { inset: auto 6.67px 86.7px 6.67px; block-size: 100.8px; }
-  .fo-sc-t,
-  .fo-sc-b { inset-inline: 12px; block-size: 6px; }
-  .fo-sc-l,
-  .fo-sc-r { inset-block: 12px; inline-size: 6px; }
-  .fo-wordmark-reg { inline-size: 8px; block-size: 8px; font-size: 15.88px; line-height: 1.35; }
-  /* r340 T-P1x (hClip fix): the 768 belt's fixed seats (legal-l 355 /
-     legal-row 432) LEAKED into ≤767 — the 432px row clipped the last
-     links past the sheet's inline-end edge at 390 (measured l −50).
-     Heron's own 390 record: div[1] x8 w374, div[2] (the row) x8 w374 —
-     both fill the 374px sheet; the links WRAP. Auto seats + wrap. */
-  .fo-legal-l { padding: 8.33px 13.33px; inline-size: auto; justify-content: center; }
-  .fo-legal-strip { inline-size: 218px; }
-  .fo-legal-lc { column-gap: 3.33px; }
-  .fo-legal-p { font-size: 9.92px; line-height: 13.39px; } /* T-06l census: 9.92/13.39@390 */
-  .fo-mono { font-size: 9.92px; line-height: 13.39px; }
-  .fo-legal-link { padding-inline: 10px; font-size: 11.67px; line-height: 15.17px; }
-  .fo-footer-bottom { margin-block-start: -80px; flex-direction: column; }
-  /* L2-c (R341 panel-1 finding 3 — mobile footer collisions): the wrapped
-     legal rows span the full 374px sheet, so the rows' inline-end links
-     park their ink at x18–37 — exactly under the scroll-rule chrome stack
-     (scr-pct x33–61 / bl-count x20–69, fixed, ink-on-ink measured:
-     «التخزين المحلي» × «100%», «تطبيق الجوال» × «09 / 09»). The row keeps
-     Heron's full-sheet law but reserves the chrome's measured 66px corner
-     band on the inline end — link ink now starts ≥ x74. */
-  .fo-legal-row { inline-size: auto; justify-content: space-between; row-gap: 0; padding-inline-end: 66px; }
 }
 
-/* L2-c (R341 panel-1 finding 3) — the 768 social un-crush, seated AFTER the
-   ≤991 belt so the belt's own `block-size: 25px` cannot re-crush it (the
-   belt's 0 row-gap is what turned the t1/t2 pair's 42.34px of content into
-   a 9px row-N×row-(N+1) ink collision; 390's 15px row-gap absorbs the
-   bleed and keeps its own 23.3px seat — untouched). */
-@media (min-width: 768px) and (max-width: 991px) {
-  .fo-social { block-size: auto; min-block-size: 25px; }
-}
-
-/* ═══ dark theme: the 72% soft-ink literals above are the LIGHT
-    measures — under [data-theme="dark"] those seats flip to the site's
-    tokens (the var(--text) seats flip on their own) ═══ */
-[data-theme='dark'] .fo-footer { color: var(--text-secondary); }
-[data-theme='dark'] .fo-brand-sub,
-[data-theme='dark'] .fo-form-copy-t,
-[data-theme='dark'] .fo-legal-p { color: var(--text-secondary); }
-/* r339 T-12 — --neutral-400 measures 4.25:1 on the dark ground (under
-   the 4.5:1 text floor); --text-muted (#B4B4B0 dark) clears 7.0:1 on
-   the page ground and 5.2:1 on the c1sub panel below. */
-[data-theme='dark'] .fo-mono-label { color: var(--text-muted); }
-/* r339 T-12 — the c1sub seat panel: light paints it --rule-strong
-   (the spec's rgb(179,179,175)) which in dark flips to #85857F — a
-   luminous gray card carrying light-theme inks (placeholder 1.0:1,
-   mono label 1.07:1, copy 2.23:1, go arrow 3.42:1 — the blind
-   panel's invisible footer form). The dark arm re-seats the panel on
-   the dark elevated surface; every ink on it re-flips via the rules
-   above + the placeholder seat below. Light is spec law, untouched. */
-[data-theme='dark'] .fo-c1-sub { background: var(--surface-3); }
-[data-theme='dark'] .fo-input::placeholder { color: var(--text-muted); }
-/* T-06m: dark-arm the go-ink — the scoped --rule-strong seat fails the dark
-   WCAG floor 3.0 (3 cells); the proven dark text token passes on the same
-   surface family. Light spec group untouched (spec is law in light). */
-[data-theme='dark'] .fo-go { color: var(--text); }
-
-/* ═══ reduced motion (r306/r308 family belt): this sheet carries the
-    wy verb-snap protective collapses — the r313 contract's RM seats,
-    parked on the footer sheet per section-file ownership (the r306
-    belt reads the landing family concatenation; the selectors mirror
-    the reference's own RM belt entries verbatim) ═══ */
-/* T-06l — the sublabel seat: heron's c1sub label box rides the ROOT fs
-   (13.33fu desktop · 14.73@768 · 15.88@390 — the spec's own inheritance)
-   with the AR lh floor 1.35×fs; scoped so the other mono labels (which
-   the census holds at 11.67) keep their measured seats */
-[data-spec='footer.sublabel'] { font-size: inherit; line-height: 1.35; }
-
+/* ═══ the wy verb-snap protective collapses (r306/r308 family belt) ═══
+   This sheet carries the why-strip's RM seats per section-file
+   ownership (parked here since the R313 split): the r313 wy-snap
+   contract's animated selectors, collapsed verbatim — under
+   prefers-reduced-motion every stage verb stands at its authored
+   static state (the raw-ladder kill already zeroes the --t-* rungs;
+   this belt pins the wy-snap keyframes themselves). */
 @media (prefers-reduced-motion: reduce) {
   .wy[data-wy-stage='0'] .wy-rail .wy-stage:nth-child(1) .wy-stage-verb,
   .wy[data-wy-stage='1'] .wy-rail .wy-stage:nth-child(2) .wy-stage-verb,
@@ -741,44 +513,19 @@
   }
 }
 
-/* T-06l census: the c2bottom box lh rides the ROOT fs law (1.35×root) */
-[data-spec=footer.c2bottom] { line-height: 1.35; }
-
-/* R343 — the form zone's corner registration marks: the census's own
- * 8×8 ink crosshair seats (div[5..8] > div[1] > svg — the reference's
- * registration grammar, our OWN hairline glyph). Positioned at the
- * form zone's four corners, aria-hidden, pointer-dead. */
-.fo-form-zone { position: relative; }
-.fo-freg {
-  position: absolute;
-  inline-size: calc(var(--fu) * 10);
-  block-size: calc(var(--fu) * 10);
+/* ═══ the registration-mark family law (R321 §A6) ═══════════════════
+   The rebuilt colophon renders no registration seats, but the family
+   contract stays on this sheet: any future .fo-wordmark-reg element
+   paints its '+' glyph from CSS content, never from DOM text — and
+   its box is sized at the glyph's own rung (the retired 8px seats
+   clipped their glyphs by 2px at every phone width; a mark box may
+   never be smaller than the glyph it carries). */
+.fo-wordmark-reg {
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
   color: var(--text);
-  pointer-events: none;
+  font-family: var(--font-mono);
 }
-.fo-freg-svg { inline-size: 100%; block-size: 100%; display: block; }
-.fo-freg-p {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-.fo-freg-tl { inset-block-start: 0; inset-inline-start: 0; }
-.fo-freg-tr { inset-block-start: 0; inset-inline-end: 0; }
-.fo-freg-bl { inset-block-end: 0; inset-inline-start: 0; }
-.fo-freg-br { inset-block-end: 0; inset-inline-end: 0; }
-@media (max-width: 767px) {
-  .fo-freg { inline-size: 8px; block-size: 8px; }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .fo-freg { inline-size: 11px; block-size: 11px; }
-}
-@media (min-width: 992px) and (max-width: 1299.98px) {
-  .fo-freg { inline-size: 7px; block-size: 7px; }
-}
-
-/* R343 C-2 — the skyline twins swap on the theme token (the wy-cycle
- * grammar); the strip img keeps its recorded box. */
-.fo-strip-img.is-dark { visibility: hidden; }
-[data-theme="dark"] .fo-strip-img.is-light { visibility: hidden; }
-[data-theme="dark"] .fo-strip-img.is-dark { visibility: visible; }
+.fo-wordmark-reg::before { content: '+'; }

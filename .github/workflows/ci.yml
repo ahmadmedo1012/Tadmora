@@ -301,6 +301,7 @@ jobs:
       # brand port must match shared/design-tokens.json byte-for-byte.
       - run: node scripts/tokens/build.mjs --check
       - run: bash scripts/check-icons.sh
+      - run: bash scripts/brand/logo-gate.sh
       - run: bash scripts/check-motion-tokens.sh
       # CSP pin drift guard (dependency-free): r133 changed the inline
       # theme-bootstrap script without refreshing its sha256 pin and
