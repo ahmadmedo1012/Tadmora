@@ -13,7 +13,7 @@ import * as Device from "expo-device";
 
 const API_BASE =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-  "https://tadmora.vercel.app/api/v1";
+  "https://ulara.vercel.app/api/v1";
 
 export type ClientErrorKind = "crash" | "js_error" | "unhandled_rejection" | "api_error" | "render";
 
@@ -141,10 +141,10 @@ export function installGlobalErrorHandlers(): void {
         getGlobalHandler?: () => ((error: unknown, isFatal: boolean) => void) | undefined;
       };
       onunhandledrejection?: ((event: { reason?: unknown }) => void) | undefined;
-      __tdmrHandlersInstalled?: boolean;
-      __tdmrRejectionHooked?: boolean;
+      __ulaHandlersInstalled?: boolean;
+      __ulaRejectionHooked?: boolean;
     };
-    if (typeof g.ErrorUtils?.setGlobalHandler === "function" && !g.__tdmrHandlersInstalled) {
+    if (typeof g.ErrorUtils?.setGlobalHandler === "function" && !g.__ulaHandlersInstalled) {
       const previous = g.ErrorUtils.getGlobalHandler?.();
       g.ErrorUtils.setGlobalHandler((error: unknown, isFatal: boolean) => {
         const err = error as Error | undefined;
@@ -156,11 +156,11 @@ export function installGlobalErrorHandlers(): void {
         });
         previous?.(error, isFatal);
       });
-      g.__tdmrHandlersInstalled = true;
+      g.__ulaHandlersInstalled = true;
     }
     // Hermes ships onunhandledrejection support on RN ≥ 0.73-ish; set it
     // defensively — if the hook doesn't exist this is a no-op.
-    if (typeof g.onunhandledrejection === "undefined" || !g.__tdmrRejectionHooked) {
+    if (typeof g.onunhandledrejection === "undefined" || !g.__ulaRejectionHooked) {
       g.onunhandledrejection = (event: { reason?: unknown }) => {
         const reason = event?.reason;
         const err = reason instanceof Error ? reason : undefined;
@@ -171,7 +171,7 @@ export function installGlobalErrorHandlers(): void {
           route: getTelemetryRoute(),
         });
       };
-      g.__tdmrRejectionHooked = true;
+      g.__ulaRejectionHooked = true;
     }
   } catch {
     /* never */

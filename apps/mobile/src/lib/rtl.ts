@@ -7,11 +7,17 @@
  * keep the module-scope calls (they bake the preference), and on startup do
  * ONE controlled reload when the native side hasn't caught up — guarded by a
  * persisted flag so it can never loop.
+ *
+ * ULARA codemod §1.1: the flag key was renamed; an upgrade that already
+ * reloaded under the legacy key is treated as applied (adopted into the
+ * new key) so it never reloads a second time.
  */
 import { I18nManager } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const KEY = "tdmr.rtl.applied.v1";
+const KEY = "ula.rtl.applied.v1";
+/** The retired identity's key — read as "already applied" (§1.1). */
+const LEGACY_KEY = "tdmr.rtl.applied.v1";
 
 /**
  * Returns true when a reload was requested (caller should not render the app
@@ -23,10 +29,13 @@ export async function ensureRTL(): Promise<boolean> {
       await AsyncStorage.setItem(KEY, "1").catch(() => undefined);
       return false;
     }
-    const done = await AsyncStorage.getItem(KEY).catch(() => null);
-    if (done === "1") {
-      // Already reloaded once and the native side still reports LTR (expo-go
-      // / platform quirk). Render anyway — never loop.
+    const read = async (k: string) => AsyncStorage.getItem(k).catch(() => null);
+    const done = (await read(KEY)) === "1" || (await read(LEGACY_KEY)) === "1";
+    if (done) {
+      // Already reloaded once (this key or the legacy one) and the native
+      // side still reports LTR (expo-go / platform quirk). Adopt the legacy
+      // flag into the new key, render anyway — never loop.
+      await AsyncStorage.setItem(KEY, "1").catch(() => undefined);
       return false;
     }
     await AsyncStorage.setItem(KEY, "1").catch(() => undefined);
