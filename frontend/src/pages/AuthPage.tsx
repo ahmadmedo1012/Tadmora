@@ -67,6 +67,24 @@ function rateLimitMessage(error: unknown): string {
 const GENERIC_LOGIN_ERROR =
   'تعذَّر تسجيل الدخول. تحقَّق من البريد وكلمة المرور وتأكَّد من اتصالك بالشبكة، ثم أعد المحاولة.';
 
+/** ULARA 1-A (2026-11-12) — the cold-boot shape: the serverless platform
+ *  sleeps when idle (Neon scale-to-zero + a cold function instance), so
+ *  the FIRST login after idle can fail as network silence, a 5xx, or the
+ *  health surface's DB_UNAVAILABLE. These get SILENT auto-retries before
+ *  any error is shown (the owner's rule: waking is not a user problem). */
+function isWakingError(error: unknown): boolean {
+  const ax = error as ApiError<LoginErrorBody> | null;
+  if (!ax?.response) return true; // network silence — cold boot / wake
+  const status = ax.response.status;
+  return (status ?? 0) >= 500 || ax.response.data?.error?.code === 'DB_UNAVAILABLE';
+}
+
+const WAKING_MESSAGE =
+  'الخادم يستيقظ من السبات — أول طلب بعد فترة خمول قد يستغرق لحظات. أعد المحاولة بعد قليل.';
+
+const COLD_RETRIES = 2;
+const COLD_RETRY_DELAYS_MS = [2500, 5000] as const;
+
 const loginSchema = z.object({
   // Validation-first «مطلوب» (r157 F5): empty / whitespace-only input is
   // answered with the ONE word that names the problem, before any shape
@@ -99,18 +117,17 @@ type LoginInputs = z.infer<typeof loginSchema>;
  *  read lives INSIDE the component so the test belt can stub the env
  *  per-render.
  *
- *  R322 (board A8-prod) — OPEN-BY-DEFAULT is a DEVELOPMENT behaviour
- *  only: a production build shows the COLLAPSED chip («عرض الحسابات
- *  التجريبية» — still one tap away) unless `VITE_SHOW_TEST_ACCOUNTS=1`
- *  explicitly forces the open panel (demo presentations). The R321
- *  mobile improvements (H1 scale, nowrap in-row labels) are untouched. */
+ *  R322 → OWNER RULE (2026-11-12) — the panel starts OPEN in EVERY
+ *  build (development AND production): the panel is the documented
+ *  entry for the platform's development phase, and hiding it behind a
+ *  chip cost the owner a working login while a rotated password
+ *  looked like a broken login. Only the explicit
+ *  `VITE_SHOW_TEST_ACCOUNTS=0` removes the panel entirely. */
 const showTestAccounts = () => import.meta.env.VITE_SHOW_TEST_ACCOUNTS !== '0';
 
-/** R322 A8-prod — the demo panel's initial state: open in dev, or when
- *  `VITE_SHOW_TEST_ACCOUNTS === '1'` pins it open; collapsed chip
- *  otherwise (production default). */
-const demoOpenByDefault = () =>
-  import.meta.env.DEV || import.meta.env.VITE_SHOW_TEST_ACCOUNTS === '1';
+/** The demo panel's initial state: OPEN in every build (the owner's
+ *  2026-11-12 rule — see showTestAccounts above). */
+const demoOpenByDefault = () => true;
 
 /** Deep link a visitor was trying to reach when ProtectedRoute bounced
  *  them here (ProtectedRoute passes `state={{ from: location }}`). Only
@@ -183,23 +200,45 @@ export default function AuthPage() {
     staleTime: 5 * 60_000,
   });
 
+  // ULARA 1-A: wakingAttempt > 0 while a silent cold-start retry sleeps
+  // (drives the button label + the polite status line — never an error).
+  const [wakingAttempt, setWakingAttempt] = useState(0);
+
   const onLogin = loginForm.handleSubmit(async (values) => {
-    try {
-      const result = await login.mutateAsync({
-        ...values,
-        ...(ambiguitySlug ? { institutionSlug: ambiguitySlug } : {}),
-      });
-      // r178: multi-membership without an auto-selected context → the
-      // institution selection step owns the navigation from here.
-      if (
-        (result.user.memberships?.length ?? 0) > 1 &&
-        !result.user.currentInstitution
-      ) {
-        setPendingSelection(result.user.memberships ?? []);
-        return;
+    const payload = {
+      ...values,
+      ...(ambiguitySlug ? { institutionSlug: ambiguitySlug } : {}),
+    };
+    for (let attempt = 0; attempt <= COLD_RETRIES; attempt++) {
+      if (attempt > 0) {
+        setWakingAttempt(attempt);
+        await new Promise((r) => setTimeout(r, COLD_RETRY_DELAYS_MS[attempt - 1]));
       }
-      navigateAfterLogin(result.user.role);
-    } catch { /* error displayed below */ }
+      try {
+        const result = await login.mutateAsync(payload);
+        setWakingAttempt(0);
+        // r178: multi-membership without an auto-selected context → the
+        // institution selection step owns the navigation from here.
+        if (
+          (result.user.memberships?.length ?? 0) > 1 &&
+          !result.user.currentInstitution
+        ) {
+          setPendingSelection(result.user.memberships ?? []);
+          return;
+        }
+        navigateAfterLogin(result.user.role);
+        return;
+      } catch (err) {
+        // A real refusal (401/403/429) shows its banner immediately;
+        // a waking failure retries silently. On the LAST attempt the
+        // error stays in the mutation state — the banner shows it.
+        if (!isWakingError(err) || attempt === COLD_RETRIES) {
+          setWakingAttempt(0);
+          return;
+        }
+        login.reset(); // keep the retry SILENT — no error flash between attempts
+      }
+    }
   });
 
   /** r178: commit the visitor's institution choice — POST
@@ -217,18 +256,16 @@ export default function AuthPage() {
     } catch { /* error displayed in the chooser */ }
   };
 
-  /** R320 §C — one-click FILL of a test account's credentials. The
-   *  first tap only FILLS the form (the visitor reviews and stays in
-   *  control); the SAME row's button then reads «دخول» and the second
-   *  tap submits it. */
-  const fillTestAccount = (account: TestAccount) => {
-    if (filledEmail === account.email) {
-      formRef.current?.requestSubmit();
-      return;
-    }
+  /** R320 §C → OWNER RULE (2026-11-12) — QUICK LOGIN: one tap fills the
+   *  form AND submits it (the row keeps its filled highlight). Manual
+   *  typing stays first-class; the button is the documented fast path. */
+  const quickLoginTestAccount = (account: TestAccount) => {
     loginForm.setValue('email', account.email, { shouldValidate: false });
     loginForm.setValue('password', account.password, { shouldValidate: false });
     setFilledEmail(account.email);
+    // setValue lands synchronously in RHF state; the frame boundary
+    // guarantees requestSubmit reads the updated fields.
+    requestAnimationFrame(() => formRef.current?.requestSubmit());
   };
 
   // r157 F5 (finding 5 — alert storm): field-level errors are
@@ -509,7 +546,18 @@ export default function AuthPage() {
                       the generic line only when the server never answered. */}
                   {isRateLimitError(login.error)
                     ? rateLimitMessage(login.error)
-                    : (authFailure.serverMessage ?? GENERIC_LOGIN_ERROR)}
+                    : isWakingError(login.error)
+                      ? WAKING_MESSAGE
+                      : (authFailure.serverMessage ?? GENERIC_LOGIN_ERROR)}
+                  {isWakingError(login.error) && (
+                    <button
+                      type="button"
+                      className="auth-retry-link"
+                      onClick={() => formRef.current?.requestSubmit()}
+                    >
+                      إعادة المحاولة
+                    </button>
+                  )}
                 </span>
               </div>
             )}
@@ -527,10 +575,15 @@ export default function AuthPage() {
             <button
               type="submit"
               className="auth-submit"
-              disabled={login.isPending}
-              aria-busy={login.isPending}
+              disabled={login.isPending || wakingAttempt > 0}
+              aria-busy={login.isPending || wakingAttempt > 0}
             >
-              {login.isPending ? (
+              {wakingAttempt > 0 ? (
+                <>
+                  <span className="auth-submit-spinner" aria-hidden />
+                  <span>الخادم يستيقظ… إعادة محاولة تلقائية</span>
+                </>
+              ) : login.isPending ? (
                 <>
                   <span className="auth-submit-spinner" aria-hidden />
                   <span>جارٍ الدخول…</span>
@@ -560,7 +613,7 @@ export default function AuthPage() {
                 onClick={() => setDemoHintOpen(true)}
               >
                 <Icon icon={FlaskConical} size={14} />
-                <span>عرض الحسابات التجريبية</span>
+                <span>الحسابات التجريبية</span>
               </button>
             )}
 
@@ -568,7 +621,7 @@ export default function AuthPage() {
               <div className="auth-demo-hint">
                 <div className="auth-demo-hint-head">
                   <Icon icon={FlaskConical} size={14} />
-                  <span>حسابات تجريبية — بيئة التطوير</span>
+                  <span>حسابات تجريبية — دخول مباشر بلمسة</span>
                   <button
                     type="button"
                     className="auth-demo-hint-close"
@@ -579,7 +632,7 @@ export default function AuthPage() {
                   </button>
                 </div>
                 <p className="auth-demo-hint-body">
-                  حساب واحد لكل دور — اضغط «تعبئة» لملء الحقول ثم «دخول» لتسجيل الدخول.
+                  حساب واحد لكل دور — اضغط «دخول سريع» للدخول فورًا، أو عبّئ الحقول يدويًا.
                 </p>
                 {/* R320 §C — the hairline-cell account table (Heron sheet
                     grammar: 1px hairline rows, square cells, radius 0,
@@ -597,7 +650,10 @@ export default function AuthPage() {
                         <span className="auth-demo-group-rule" aria-hidden="true" />
                       </div>
                       {TEST_ACCOUNTS.filter((a) => a.group === group).map((account, i) => (
-                        <div className="auth-demo-row" key={account.email}>
+                        <div
+                          className={filledEmail === account.email ? 'auth-demo-row is-filled' : 'auth-demo-row'}
+                          key={account.email}
+                        >
                           <span className="auth-demo-row-index" dir="ltr" aria-hidden="true">
                             [{String(i + 1).padStart(2, '0')}]
                           </span>
@@ -609,15 +665,11 @@ export default function AuthPage() {
                           <button
                             type="button"
                             className="auth-demo-fill"
-                            onClick={() => fillTestAccount(account)}
-                            disabled={login.isPending}
-                            aria-label={
-                              filledEmail === account.email
-                                ? `دخول بحساب ${account.job}`
-                                : `تعبئة حساب ${account.job}`
-                            }
+                            onClick={() => quickLoginTestAccount(account)}
+                            disabled={login.isPending || wakingAttempt > 0}
+                            aria-label={`دخول سريع بحساب ${account.job}`}
                           >
-                            {filledEmail === account.email ? 'دخول' : 'تعبئة'}
+                            دخول سريع
                           </button>
                         </div>
                       ))}

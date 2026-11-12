@@ -16,22 +16,25 @@
  * (lib/authErrors.ts) — when the backend DID answer, ITS Arabic message
  * shows verbatim: 401 «البريد الإلكتروني أو كلمة المرور غير صحيحة»
  * (backend/src/lib/errors.ts:42), 403 «هذا الحساب معطّل — تواصل مع
- * إدارة الجامعة» (auth.service.ts:291). The authored generic survives
- * only for network silence (no `error.response`) and for Latin-only
- * transport prose the Arabic guard (apiErrorDetail, 15-j P0-1)
- * rejects.
+ * إدارة الجامعة» (auth.service.ts:291). ULARA 1-A (2026-11-12):
+ * network silence / 5xx / DB_UNAVAILABLE are the WAKING shape — the
+ * banner names it + offers a retry, and the login flow silently
+ * retries twice before showing anything (the owner's rule: waking is
+ * not a user problem). The authored generic survives only for
+ * Latin-only transport prose the Arabic guard rejects.
  */
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import type { AxiosError } from 'axios';
 
 type LoginState = {
-  mutateAsync: () => Promise<never>;
+  mutateAsync: (values?: unknown) => Promise<never>;
   isPending: boolean;
   isError: boolean;
   error: unknown;
+  reset: () => void;
 };
 
 const loginState = vi.hoisted(() => ({ current: {} as LoginState }));
@@ -81,6 +84,7 @@ describe('AuthPage — 429 lockout copy (4-A13 P2-1)', () => {
       isPending: false,
       isError: false,
       error: null,
+      reset: vi.fn(),
     };
   });
 
@@ -146,7 +150,11 @@ describe('AuthPage — 429 lockout copy (4-A13 P2-1)', () => {
     expect(alert).not.toHaveTextContent('تحقَّق من البريد وكلمة المرور');
   });
 
-  it('a network failure (no response) keeps the authored generic — nothing to quote', () => {
+  it('a network failure (no response) shows the WAKING banner + a retry affordance (ULARA 1-A)', () => {
+    /* Owner rule 2026-11-12: network silence on this serverless platform
+     * means the cold boot is waking — the banner names that honestly and
+     * offers the one-tap retry, instead of the credential-generic advice
+     * that sent the owner re-typing a password that was fine. */
     loginState.current.isError = true;
     loginState.current.error = {
       name: 'AxiosError',
@@ -157,10 +165,79 @@ describe('AuthPage — 429 lockout copy (4-A13 P2-1)', () => {
     renderPage();
 
     const alert = screen.getByRole('alert');
-    expect(alert).toHaveTextContent('تعذَّر تسجيل الدخول');
-    expect(alert).toHaveTextContent('اتصالك بالشبكة');
+    expect(alert).toHaveTextContent('الخادم يستيقظ من السبات');
+    expect(screen.getByRole('button', { name: 'إعادة المحاولة' })).toBeInTheDocument();
     // The raw Latin transport prose never reaches the RTL UI.
     expect(alert).not.toHaveTextContent('Network Error');
+  });
+
+  it('a 503 DB_UNAVAILABLE shows the WAKING banner too (the health surface shape)', () => {
+    loginState.current.isError = true;
+    loginState.current.error = axError(503, 'DB_UNAVAILABLE', 'Database unavailable');
+    renderPage();
+
+    const alert = screen.getByRole('alert');
+    expect(alert).toHaveTextContent('الخادم يستيقظ من السبات');
+    // The Latin transport message stays guarded out.
+    expect(alert).not.toHaveTextContent('Database unavailable');
+  });
+
+  it('silent cold-start retries: a waking failure is retried twice (3 attempts), a 401 once', async () => {
+    vi.useFakeTimers();
+    try {
+      const netErr = {
+        name: 'AxiosError',
+        message: 'Network Error',
+        isAxiosError: true,
+        config: {},
+      } as unknown as AxiosError;
+      const mutateAsync = vi.fn(() => Promise.reject(netErr));
+      loginState.current.mutateAsync = mutateAsync as unknown as LoginState['mutateAsync'];
+      const { unmount } = renderPage();
+
+      const email = screen.getByLabelText('البريد الإلكتروني أو رقم القيد');
+      const password = screen.getByLabelText('كلمة المرور');
+      fireEvent.change(email, { target: { value: 'student@test.ly' } });
+      fireEvent.change(password, { target: { value: '12345678' } });
+      fireEvent.click(screen.getByRole('button', { name: 'تسجيل الدخول' }));
+
+      // Attempt 1 fires immediately; the two silent retries ride the
+      // 2.5s + 5s delays — advance through them.
+      await vi.advanceTimersByTimeAsync(2500);
+      await vi.advanceTimersByTimeAsync(5000);
+      await vi.advanceTimersByTimeAsync(50);
+
+      expect(mutateAsync).toHaveBeenCalledTimes(3);
+      // The retries were SILENT — the mutation error state was reset
+      // between attempts (no error flash under the waking status).
+      expect(loginState.current.reset).toHaveBeenCalledTimes(2);
+      unmount();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('a real refusal (401) is NOT retried — exactly one attempt', async () => {
+    vi.useFakeTimers();
+    try {
+      const mutateAsync = vi.fn(() =>
+        Promise.reject(axError(401, 'INVALID_CREDENTIALS', 'البريد الإلكتروني أو كلمة المرور غير صحيحة')),
+      );
+      loginState.current.mutateAsync = mutateAsync as unknown as LoginState['mutateAsync'];
+      const { unmount } = renderPage();
+
+      const email = screen.getByLabelText('البريد الإلكتروني أو رقم القيد');
+      const password = screen.getByLabelText('كلمة المرور');
+      fireEvent.change(email, { target: { value: 'student@test.ly' } });
+      fireEvent.change(password, { target: { value: 'wrong-pass' } });
+      fireEvent.click(screen.getByRole('button', { name: 'تسجيل الدخول' }));
+
+      await vi.advanceTimersByTimeAsync(8000);
+      expect(mutateAsync).toHaveBeenCalledTimes(1);
+      unmount();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('a Latin-only "message" from the transport is guarded out — generic wins (15-j P0-1)', () => {

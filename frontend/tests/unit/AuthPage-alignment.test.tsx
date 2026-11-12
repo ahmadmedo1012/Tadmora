@@ -217,60 +217,60 @@ describe('AuthPage — journey alignment (imm-5)', () => {
     expect(toggle).toHaveAccessibleName('إخفاء كلمة المرور');
   });
 
-  it('dev demo rows FILL the form — they never submit it', async () => {
+  it('demo rows QUICK-LOGIN: one tap fills the form AND submits it (owner rule 2026-11-12)', async () => {
     renderPage();
 
-    // R321 §A8: the panel starts OPEN in development (the owner's
-    // one-tap-per-job rule) — no reopen step needed any more.
-
-    /* R320 override (§C): the five per-role chips (.btn.sm.auth-demo-btn)
-     * are retired — the panel is now the hairline test-account TABLE,
-     * one row per job from the SHARED table (@shared/testAccounts):
-     * grouped التعليم / الحوكمة / النظام (R321 §A7), email + password
-     * visible, and a square «تعبئة» button per row. The full panel
-     * contract lives in tests/unit/r320-test-accounts-panel.test.tsx;
-     * this pin keeps the form-integrity half here (fill only, never
-     * submit). */
-    const fillButtons = screen.getAllByRole('button', { name: /^تعبئة حساب / });
-    expect(fillButtons).toHaveLength(10);
-    for (const b of fillButtons) {
+    /* The panel is the hairline test-account TABLE, one row per job
+     * from the SHARED table (@shared/testAccounts): grouped
+     * التعليم / الحوكمة / النظام, email + password visible, and a
+     * square «دخول سريع» button per row. The full panel contract lives
+     * in tests/unit/r320-test-accounts-panel.test.tsx; this pin keeps
+     * the form-integrity half here (fill + submit in ONE tap). */
+    const quickButtons = screen.getAllByRole('button', { name: /^دخول سريع بحساب / });
+    expect(quickButtons).toHaveLength(12);
+    for (const b of quickButtons) {
       expect(b).toHaveClass('auth-demo-fill');
     }
 
     const email = screen.getByLabelText('البريد الإلكتروني أو رقم القيد') as HTMLInputElement;
     const password = screen.getByLabelText('كلمة المرور') as HTMLInputElement;
 
-    fireEvent.click(screen.getByRole('button', { name: 'تعبئة حساب طالب' }));
+    fireEvent.click(screen.getByRole('button', { name: 'دخول سريع بحساب طالب' }));
     await waitFor(() => {
       expect(email.value).toBe('student@test.ly');
       expect(password.value).toBe('12345678');
     });
-    // One-click FILL only — the visitor submits the form themselves.
-    expect(loginState.current.mutateAsync).not.toHaveBeenCalled();
+    // The single tap SUBMITS — the fast path is one tap, not two.
+    await waitFor(() => {
+      expect(loginState.current.mutateAsync).toHaveBeenCalledWith({
+        email: 'student@test.ly',
+        password: '12345678',
+      });
+    });
 
     // The panel is dismissible (and the quiet reopen chip returns).
     fireEvent.click(screen.getByRole('button', { name: 'إخفاء لوحة الحسابات التجريبية' }));
     await waitFor(() => {
-      expect(screen.queryByText('حسابات تجريبية — بيئة التطوير')).toBeNull();
+      expect(screen.queryByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeNull();
     });
-    expect(screen.getByRole('button', { name: 'عرض الحسابات التجريبية' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'الحسابات التجريبية' })).toBeInTheDocument();
   });
 
-  it('R321 §A8 — the demo hint panel starts OPEN in development (dismiss → reopen chip)', () => {
+  it('the demo hint panel starts OPEN in every build (owner rule 2026-11-12 — dismiss → reopen chip)', () => {
     renderPage();
 
-    // The owner's one-tap-per-job rule: all 10 jobs visible on load.
-    expect(screen.getByText('حسابات تجريبية — بيئة التطوير')).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /^تعبئة حساب / })).toHaveLength(10);
+    // All 12 jobs visible on load — in EVERY build (dev AND production).
+    expect(screen.getByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /^دخول سريع بحساب / })).toHaveLength(12);
 
     // Dismissible — the quiet reopen chip returns after a dismiss.
     fireEvent.click(screen.getByRole('button', { name: 'إخفاء لوحة الحسابات التجريبية' }));
-    const reopen = screen.getByRole('button', { name: 'عرض الحسابات التجريبية' });
+    const reopen = screen.getByRole('button', { name: 'الحسابات التجريبية' });
     expect(reopen).toHaveClass('auth-demo-hint-reopen');
 
     // One honest click brings it back.
     fireEvent.click(reopen);
-    expect(screen.getByText('حسابات تجريبية — بيئة التطوير')).toBeInTheDocument();
+    expect(screen.getByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeInTheDocument();
   });
 
   it('a pending login disables the submit button and says so honestly', () => {

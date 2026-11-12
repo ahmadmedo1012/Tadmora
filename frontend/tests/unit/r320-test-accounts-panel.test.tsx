@@ -11,17 +11,17 @@
  *   1. RENDER — every job in the table, grouped التعليم / الحوكمة /
  *      النظام (R321 §A7 — the governance bucket is «الحوكمة»), email +
  *      password VISIBLE (published test credentials).
- *   2. FILL → SUBMIT — «تعبئة» fills BOTH form fields (never submits);
- *      the SAME row's button then reads «دخول» and the second tap
- *      submits the form with those credentials.
+ *   2. QUICK LOGIN — ONE tap fills BOTH form fields AND submits them
+ *      (the owner's 2026-11-12 rule: the row button is «دخول سريع» —
+ *      the documented fast path; manual typing stays first-class).
  *   3. GATE — VITE_SHOW_TEST_ACCOUNTS=0 hides the panel AND its reopen
  *      chip (default: absent var = SHOW).
  *
- * R321 §A8 — the panel starts OPEN in development (the owner's
- * one-tap-per-job rule: first tap fills, second tap enters).
- * R322 override (board A8-prod) — open-by-default is DEV-only now:
- * a production build starts with the collapsed chip unless
- * VITE_SHOW_TEST_ACCOUNTS=1 pins the panel open (pinned below).
+ * OWNER RULE (2026-11-12) — the panel starts OPEN in EVERY build
+ * (development AND production): it is the documented entry for the
+ * platform's development phase. The R322 collapsed-chip production
+ * default is RETIRED (it cost the owner a working login while a
+ * rotated password looked like a broken login).
  */
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -35,6 +35,7 @@ type LoginState = {
   isPending: boolean;
   isError: boolean;
   error: unknown;
+  reset: () => void;
 };
 
 const loginState = vi.hoisted(() => ({ current: {} as LoginState }));
@@ -63,13 +64,6 @@ function renderPage() {
   );
 }
 
-/** R321 §A8 — the panel starts OPEN (the owner's one-tap-per-job
- * rule); the helper stays for the dismiss-and-reopen path only. */
-function openPanel() {
-  // no-op by default — kept for symmetry with the dismiss tests that
-  // re-open via the reopen chip.
-}
-
 describe('R320 §C — the test-account login panel', () => {
   beforeEach(() => {
     loginState.current = {
@@ -77,6 +71,7 @@ describe('R320 §C — the test-account login panel', () => {
       isPending: false,
       isError: false,
       error: null,
+      reset: vi.fn(),
     };
   });
 
@@ -86,7 +81,6 @@ describe('R320 §C — the test-account login panel', () => {
 
   it('renders EVERY job from the shared table, grouped, with email + password visible', () => {
     renderPage();
-    openPanel();
 
     // One group header per group, in the table's order.
     for (const group of TEST_ACCOUNT_GROUPS) {
@@ -96,7 +90,7 @@ describe('R320 §C — the test-account login panel', () => {
     // Every job row: the job label + the email, each exactly once; the
     // password is VISIBLE by design (published test credentials) — one
     // visible copy per account (they all share the easy value).
-    const rows = screen.getAllByRole('button', { name: /^تعبئة حساب / });
+    const rows = screen.getAllByRole('button', { name: /^دخول سريع بحساب / });
     expect(rows).toHaveLength(TEST_ACCOUNTS.length);
     for (const account of TEST_ACCOUNTS) {
       expect(screen.getByText(account.job)).toBeInTheDocument();
@@ -105,39 +99,31 @@ describe('R320 §C — the test-account login panel', () => {
     expect(screen.getAllByText(TEST_ACCOUNTS[0]!.password)).toHaveLength(TEST_ACCOUNTS.length);
   });
 
-  it('«تعبئة» fills BOTH fields and never submits; the same row flips to «دخول»', async () => {
+  it('«دخول سريع» fills BOTH fields AND submits them — one tap, the documented fast path', async () => {
     renderPage();
-    openPanel();
 
     const email = screen.getByLabelText('البريد الإلكتروني أو رقم القيد') as HTMLInputElement;
     const password = screen.getByLabelText('كلمة المرور') as HTMLInputElement;
     const student = TEST_ACCOUNTS.find((a) => a.email === 'student@test.ly')!;
 
-    fireEvent.click(screen.getByRole('button', { name: 'تعبئة حساب طالب' }));
+    fireEvent.click(screen.getByRole('button', { name: 'دخول سريع بحساب طالب' }));
     await waitFor(() => {
       expect(email.value).toBe(student.email);
       expect(password.value).toBe(student.password);
     });
-    // One-click FILL only — the visitor submits the form themselves.
-    expect(loginState.current.mutateAsync).not.toHaveBeenCalled();
-
-    // The filled row's button flips to «دخول» (other rows stay «تعبئة»).
-    expect(screen.getByRole('button', { name: 'دخول بحساب طالب' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'تعبئة حساب أستاذ' })).toBeInTheDocument();
+    // The single tap SUBMITS — the fast path is one tap, not two.
+    await waitFor(() => {
+      expect(loginState.current.mutateAsync).toHaveBeenCalledWith({
+        email: student.email,
+        password: student.password,
+      });
+    });
   });
 
-  it('the second tap («دخول») submits the form with the filled credentials', async () => {
+  it('quick login submits the filled credentials for ANY row (registrar)', async () => {
     renderPage();
-    openPanel();
 
-    fireEvent.click(screen.getByRole('button', { name: 'تعبئة حساب المسجل العام' }));
-    await waitFor(() => {
-      expect(
-        (screen.getByLabelText('البريد الإلكتروني أو رقم القيد') as HTMLInputElement).value,
-      ).toBe('registrar@test.ly');
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: 'دخول بحساب المسجل العام' }));
+    fireEvent.click(screen.getByRole('button', { name: 'دخول سريع بحساب المسجل العام' }));
     await waitFor(() => {
       expect(loginState.current.mutateAsync).toHaveBeenCalledWith({
         email: 'registrar@test.ly',
@@ -150,64 +136,44 @@ describe('R320 §C — the test-account login panel', () => {
     vi.stubEnv('VITE_SHOW_TEST_ACCOUNTS', '0');
     renderPage();
 
-    expect(screen.queryByRole('button', { name: 'عرض الحسابات التجريبية' })).toBeNull();
-    expect(screen.queryByText('حسابات تجريبية — بيئة التطوير')).toBeNull();
-    expect(screen.queryAllByRole('button', { name: /^تعبئة حساب / })).toHaveLength(0);
+    expect(screen.queryByRole('button', { name: 'الحسابات التجريبية' })).toBeNull();
+    expect(screen.queryByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeNull();
+    expect(screen.queryAllByRole('button', { name: /^دخول سريع بحساب / })).toHaveLength(0);
   });
 
-  it('the panel starts OPEN in development (R321 §A8) and is dismissible', () => {
+  it('the panel starts OPEN (owner rule 2026-11-12 — every build) and is dismissible', () => {
     renderPage();
 
-    // The owner's one-tap-per-job rule: the panel is the first thing a
-    // developer sees — all 10 jobs visible, no opener chip needed.
-    expect(screen.getByText('حسابات تجريبية — بيئة التطوير')).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'عرض الحسابات التجريبية' })).toBeNull();
-    expect(screen.getAllByRole('button', { name: /^تعبئة حساب / })).toHaveLength(
+    // The panel is the first thing a visitor sees — all jobs visible,
+    // no opener chip needed, in EVERY build (dev AND production).
+    expect(screen.getByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'الحسابات التجريبية' })).toBeNull();
+    expect(screen.getAllByRole('button', { name: /^دخول سريع بحساب / })).toHaveLength(
       TEST_ACCOUNTS.length,
     );
 
-    // Dismissible: the quiet close returns the collapsed chip.
+    // Dismissible: the quiet close returns the reopen chip.
     fireEvent.click(screen.getByRole('button', { name: 'إخفاء لوحة الحسابات التجريبية' }));
-    expect(screen.queryByText('حسابات تجريبية — بيئة التطوير')).toBeNull();
-    expect(screen.getByRole('button', { name: 'عرض الحسابات التجريبية' })).toHaveClass(
+    expect(screen.queryByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeNull();
+    expect(screen.getByRole('button', { name: 'الحسابات التجريبية' })).toHaveClass(
       'auth-demo-hint-reopen',
     );
 
     // …and the chip re-opens it (the r157 F5 affordance keeps working).
-    fireEvent.click(screen.getByRole('button', { name: 'عرض الحسابات التجريبية' }));
-    expect(screen.getByText('حسابات تجريبية — بيئة التطوير')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'الحسابات التجريبية' }));
+    expect(screen.getByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeInTheDocument();
   });
 
-  /* R322 override (board A8-prod): open-by-default is a DEV behaviour
-   * now — a production build starts with the COLLAPSED chip (still one
-   * tap away) unless VITE_SHOW_TEST_ACCOUNTS=1 pins the panel open for
-   * demo presentations. The R321 §A8 test above keeps the dev half. */
-  it('R322 A8-prod — a production build starts with the COLLAPSED chip (one tap away)', () => {
+  /* OWNER RULE (2026-11-12) — the R322 collapsed-chip production
+   * default is RETIRED: the panel starts OPEN in a production build
+   * too. VITE_SHOW_TEST_ACCOUNTS=0 remains the one honest off-switch. */
+  it('a production build ALSO starts with the panel OPEN (owner rule 2026-11-12)', () => {
     vi.stubEnv('DEV', false);
     renderPage();
 
-    // Not open on load — the quiet sheet shows the reopen chip only…
-    expect(screen.queryByText('حسابات تجريبية — بيئة التطوير')).toBeNull();
-    expect(screen.getByRole('button', { name: 'عرض الحسابات التجريبية' })).toHaveClass(
-      'auth-demo-hint-reopen',
-    );
-
-    // …and one honest tap still opens it (the funnel affordance holds).
-    fireEvent.click(screen.getByRole('button', { name: 'عرض الحسابات التجريبية' }));
-    expect(screen.getByText('حسابات تجريبية — بيئة التطوير')).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /^تعبئة حساب / })).toHaveLength(
-      TEST_ACCOUNTS.length,
-    );
-  });
-
-  it('R322 A8-prod — VITE_SHOW_TEST_ACCOUNTS=1 pins the panel OPEN even in a production build', () => {
-    vi.stubEnv('DEV', false);
-    vi.stubEnv('VITE_SHOW_TEST_ACCOUNTS', '1');
-    renderPage();
-
-    expect(screen.getByText('حسابات تجريبية — بيئة التطوير')).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'عرض الحسابات التجريبية' })).toBeNull();
-    expect(screen.getAllByRole('button', { name: /^تعبئة حساب / })).toHaveLength(
+    expect(screen.getByText('حسابات تجريبية — دخول مباشر بلمسة')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'الحسابات التجريبية' })).toBeNull();
+    expect(screen.getAllByRole('button', { name: /^دخول سريع بحساب / })).toHaveLength(
       TEST_ACCOUNTS.length,
     );
   });

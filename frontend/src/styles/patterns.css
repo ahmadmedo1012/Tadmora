@@ -1330,6 +1330,10 @@ a.pf-row-link {
     padding: var(--sp-2) var(--sp-3);
     border-block-start: 1px solid var(--rule);
   }
+  .auth-demo-row.is-filled {
+    background: color-mix(in oklab, var(--accent, sienna) 8%, transparent);
+  }
+
   .auth-demo-row-index {
     font-family: var(--font-mono);
     font-size: var(--fs-xs);
