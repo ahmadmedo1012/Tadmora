@@ -79,8 +79,12 @@ for (const account of TEST_ACCOUNTS) {
 
     // Type MANUALLY — character by character, NOT the quick-login
     // button, NOT .fill(): the owner's own hands' journey.
-    const emailField = page.getByLabel('البريد الإلكتروني أو رقم القيد');
-    const passwordField = page.getByLabel('كلمة المرور');
+    // exact: true — the password toggle carries the aria-label
+    // «إظهار كلمة المرور» and getByLabel's default SUBSTRING match
+    // resolves BOTH elements (a strict-mode violation, measured live in
+    // CI run 43323784883).
+    const emailField = page.getByLabel('البريد الإلكتروني أو رقم القيد', { exact: true });
+    const passwordField = page.getByLabel('كلمة المرور', { exact: true });
     await emailField.click();
     await emailField.pressSequentially(account.email, { delay: 12 });
     await passwordField.click();
