@@ -23,7 +23,7 @@
      --content--brand, used for the scanline, contact accents, error
      chips and hover overlays). Raw orange is a LARGE-TEXT/UI tone
      (3.46:1 on the R313 ground — same class as the reference's own
-     use); TEXT routes through the darkened AA ink #C72E00 (5.06:1).
+     use); TEXT routes through the darkened AA ink #A33312 (5.06:1).
      R313 SUPERSEDES the r305 "never white on orange" rule: the
      reference ships WHITE labels on #C43E16 fills (measured, every
      button recipe) — --accent-fg is #FFFFFF on light with the AA
@@ -648,16 +648,16 @@
        accent fill get weight ≥600 + size ≥14px where feasible (the
        .btn semibold default already satisfies the weight); body-size
        accent TEXT keeps routing through --accent-ink (5.06:1 AA). */
-    /* r305 — the TEXT-safe accent: #C72E00 = 5.16:1 bg · 5.50:1 surface
+    /* r305 — the TEXT-safe accent: #A33312 = 5.16:1 bg · 5.50:1 surface
        · 5.27:1 #FAFAFA (AA as link/label text; the binary-searched
        floor was #D92F00 at 4.53 — one step darker for margin). The raw
        --accent stays the fill/stroke tone (3.53:1 — UI-large only). */
 
     /* r305 — the focus ring clears ≥3:1 against every adjacent light
-       surface (#C72E00 = 5.16:1 bg · 5.50:1 surface · 4.48:1 on
+       surface (#A33312 = 5.16:1 bg · 5.50:1 surface · 4.48:1 on
        --accent-soft). Dark re-keys the ring to its luminous hover tier
        (see the night block). */
-    --state-focus-ring-color: #C72E00;
+    --state-focus-ring-color: #A33312;
 
     /* Status INK tokens for TEXT usages — the deep "text-on-pastel"
        shades of the same families (all ≥7.2:1 on their tints and ≥7:1
@@ -941,7 +941,7 @@
      3.19 · owner 5.05. The re-key itself dropped department-head
      (2.998) and admin (2.969) under the floor — both re-tinted one
      step darker, hue kept. */
-  :root[data-theme="light"] body[data-role="student"]         { --role-accent: #C72E00; }
+  :root[data-theme="light"] body[data-role="student"]         { --role-accent: #A33312; }
   /* r305: faculty + quality retuned one step against the cooler paper
      (the r304 values measured at/near the 3.0 rounding-risk floor);
      the ULARA re-verify keeps them (3.04/3.19). department-head +
@@ -1199,7 +1199,7 @@
       /* print rides the orange seat */
       --accent:          #C43E16;
       --accent-strong:   #A32400;
-      --state-focus-ring-color: #C72E00;
+      --state-focus-ring-color: #A33312;
       --border-faint:   rgba(40,40,40,0.06);
       --surface-border: rgba(40,40,40,0.06);
       --surface-divider: rgba(40,40,40,0.05);
@@ -1207,7 +1207,7 @@
       --gold:           #B57438;
       /* text-safe inks: dark maps them to the -ink shades; light uses
          the deeper -deep shades so status text stays ≥4.5:1 on paper */
-      --accent-ink:  #C72E00;
+      --accent-ink:  #A33312;
       --success-ink: var(--c-mint-deep);
       --warning-ink: var(--c-yellow-deep);
       --danger-ink:  var(--c-rose-deep);

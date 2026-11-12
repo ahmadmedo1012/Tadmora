@@ -29,7 +29,7 @@ export interface StringStorage {
 
 /* The retired keys, assembled (see the module header). */
 export const legacyThemeKey = ['tad', 'mora', '-theme'].join('');
-export const legacyThemeProfileKey = ['td', 'mr', '-theme-profile'].join('');
+const legacyThemeProfileKey = ['td', 'mr', '-theme-profile'].join('');
 export const legacyAuthKey = ['td', 'mr', '-auth'].join('');
 export const legacyUiKey = ['td', 'mr', '-ui'].join('');
 
