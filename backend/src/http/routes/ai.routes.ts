@@ -693,6 +693,27 @@ async function handleChatStream(args: ChatStreamArgs): Promise<void> {
     });
   };
 
+  /* ULARA 3-b: the degraded 429 path's telemetry HALF — persists the
+   * provider failure + logs it, but writes NO error frame: the local
+   * fallback that follows is the answer, and an error frame ahead of
+   * its tokens would flash a refusal the stream then contradicts. */
+  const recordFailureTelemetryOnly = async (e: unknown): Promise<void> => {
+    const failureKind = classifyProviderFailure(e);
+    const failureDetail = e instanceof AiProviderError && e.status ? ` (HTTP ${e.status})` : '';
+    try {
+      await writeAiTelemetry(prisma, {
+        userId,
+        latencyMs: Date.now() - startedAt,
+        success: false,
+        errorMessage: `${failureKind}${failureDetail} → local fallback`.slice(0, 200),
+        model: aiRouteId ?? undefined,
+      });
+    } catch (telemetryErr) {
+      logger.warn({ err: telemetryErr }, 'aiTelemetry write failed (non-blocking)');
+    }
+    logger.warn({ err: e, kind: failureKind }, 'AI stream 429 — honest local fallback follows');
+  };
+
   try {
     if (aiProvider) {
       // r323 B1.2: the RAG block rides AFTER the role prompt so the
@@ -756,7 +777,11 @@ async function handleChatStream(args: ChatStreamArgs): Promise<void> {
          * explains the degradation. Every other failure kind keeps the
          * honest typed error frame (see emitFailure). */
         if (classifyProviderFailure(e) === 'rate_limited') {
-          await emitFailure(e); // the provider 429 stays in telemetry
+          // The provider 429 stays in telemetry — but NO error frame:
+          // the local fallback streaming next IS the answer (the done
+          // frame carries degraded + notice; the UI must not flash a
+          // refusal the stream immediately contradicts).
+          await recordFailureTelemetryOnly(e);
           if (!abort.signal.aborted && !res.writableEnded) {
             const localReply = await composeReply(userId, message, req.user!.role, institutionId);
             if (!abort.signal.aborted && !res.writableEnded) {
