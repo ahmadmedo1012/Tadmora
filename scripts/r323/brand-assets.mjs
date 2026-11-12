@@ -6,23 +6,35 @@
  * card and the e-mail/pdf twins can never diverge again:
  *
  *   frontend/public/brand/mark.svg            (component twin, 32-grid)
- *   frontend/public/brand/tadmora-mark.svg    (byte-identical twin — the
- *       historical filename pinned by seed.ts, schema.org and tests)
  *   frontend/public/brand/lockup.svg          (RTL lockup: mark right,
- *       «تادمورا» left — same composition as <Logo variant="lockup">)
- *   frontend/public/brand/lockup-stacked.svg  (mark / تادمورا / TADMORA)
+ *       «أُلارا» left — same composition as <Logo variant="lockup">)
+ *   frontend/public/brand/lockup-stacked.svg  (mark / أُلارا / ULARA)
  *   frontend/public/favicon.svg               (thicker 16 px ratios — the
  *       ONLY sanctioned stroke deviation, BRAND.md §min-sizes)
  *   frontend/public/brand/icon-180|192|512.png (maskable, paper ground)
- *   frontend/public/brand/tadmora-og.jpg      (1200×630 social card)
+ *   frontend/public/brand/og.jpg              (1200×630 social card)
  *
- * Colours ONLY paper #F6F6EE · ink #282828 · orange #FA3600. Hairline
- * strokes, miter joins, radius 0, no gradients, ONE orange accent.
+ * The mark is the ULARA U-vessel: ONE ink stroke (round caps + joins)
+ * + the sienna cornerstone — the same constants frontend/src/brand/mark.ts
+ * owns (the unit belt pins the two together).
+ *
+ * Colours ONLY paper #F5F1E8 · ink #262019 · sienna #C43E16 — the
+ * Parchment & Sienna palette (shared/brand.json). Hairline strokes,
+ * radius 0, no gradients, ONE sienna accent.
+ *
+ * The OG card follows the kit source shared/brand/ulara/og-1200x630.svg
+ * (same translate/scale/anchor geometry) with the kit's staged system
+ * font stack REPLACED by the build-time brand typography (IBM Plex
+ * Sans Arabic 600 via a data-URI @font-face — the R344 rule: the card
+ * must render identically on any machine, and the kit's own note
+ * defers its typography to build time). sharp alone cannot guarantee
+ * that (no brand font lives in the system fontconfig), so the card
+ * rasterizes through the same Playwright/Chromium seat as the icons.
  *
  * Why a browser renderer: the worktree ships Playwright + Chromium (the
- * app's own rasterizer) and no sharp/canvas binding — the PNGs/JPG are
- * pixel-faithful to the product's rendering (the r320 precedent).
- * Deterministic: same inputs ⇒ same bytes (verified by the unit belt).
+ * app's own rasterizer) — the PNGs/JPG are pixel-faithful to the
+ * product's rendering (the r320 precedent). Deterministic: same inputs
+ * ⇒ same bytes (verified by the unit belt).
  *
  * Run AFTER scripts/r323/wordmark-build-r323.mjs (reads
  * frontend/src/brand/wordmark.generated.ts for the path data):
@@ -36,22 +48,23 @@ import path from 'node:path';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const BRAND_DIR = path.join(ROOT, 'frontend', 'public', 'brand');
 const GEN_TS = path.join(ROOT, 'frontend', 'src', 'brand', 'wordmark.generated.ts');
+const OG_KIT = path.join(ROOT, 'shared', 'brand', 'ulara', 'og-1200x630.svg');
 
-const PAPER = '#F6F6EE';
-const INK = '#282828';
-const ORANGE = '#FA3600';
+const PAPER = '#F5F1E8';
+const INK = '#262019';
+const SIENNA = '#C43E16';
 
 /* mark geometry — keep in sync with frontend/src/brand/mark.ts (the unit
  * belt pins the two together) */
 const MARK = {
   viewBox: '0 0 32 32',
-  arch: 'M8 27L8 15A8 8 0 0 1 24 15L24 27Z',
-  keystone: { x: 14, y: 5, size: 4 },
+  vessel: 'M9 7L9 19Q9 27 16 27Q23 27 23 19L23 7',
+  cornerstone: { x: 21, y: 3, size: 4 },
 };
 /* lockup composition — keep in sync with frontend/src/brand/lockups.ts
- * (derives from the generated wordmark metrics; MARK_INK.x = 8) */
-const LOCKUP_CANVAS = { w: 62.32, h: 32 };
-const STACKED_CANVAS = { w: 32, h: 59.5 };
+ * (derives from the generated wordmark metrics; MARK_INK.x = 9) */
+const LOCKUP_CANVAS = { w: 42.13, h: 32 };
+const STACKED_CANVAS = { w: 32, h: 62.61 };
 
 /* ── read the generated wordmark sheets ─────────────────────────────── */
 if (!existsSync(GEN_TS)) {
@@ -85,13 +98,15 @@ function place(sheetInkH, inkH, inkX, inkY) {
 const LOCKUP_AR_INK_H = 11;
 const lockupAr = place(AR.inkH, LOCKUP_AR_INK_H, 5, (32 - LOCKUP_AR_INK_H) / 2);
 const lockupArInkW = +(AR.inkW * lockupAr.scale).toFixed(3);
-const lockupMarkX = +(5 + lockupArInkW + 5 - 8).toFixed(3);
+const lockupMarkX = +(5 + lockupArInkW + 5 - 9).toFixed(3);
 if (Math.abs(lockupMarkX + 32 - LOCKUP_CANVAS.w) > 0.05) {
   console.error(`[brand-assets] lockup composition drifted from lockups.ts (${lockupMarkX + 32} ≠ ${LOCKUP_CANVAS.w})`);
   process.exit(1);
 }
-const STACKED_AR_INK_H = 10;
-const STACKED_LATIN_INK_H = 3.5;
+const STACKED_AR_INK_H = 14;
+const STACKED_AR_ASPECT = AR.inkW / AR.inkH;
+const STACKED_LATIN_ASPECT = LAT.inkW / LAT.inkH;
+const STACKED_LATIN_INK_H = +((STACKED_AR_INK_H * STACKED_AR_ASPECT) / STACKED_LATIN_ASPECT).toFixed(3);
 const stackedAr = place(AR.inkH, STACKED_AR_INK_H, (32 - AR.inkW * (STACKED_AR_INK_H / AR.inkH)) / 2, 37);
 const stackedArInkW = +(AR.inkW * stackedAr.scale).toFixed(3);
 const stackedLatin = place(LAT.inkH, STACKED_LATIN_INK_H, (32 - LAT.inkW * (STACKED_LATIN_INK_H / LAT.inkH)) / 2, 37 + STACKED_AR_INK_H + 4);
@@ -102,20 +117,20 @@ if (Math.abs(stackedH - STACKED_CANVAS.h) > 0.05) {
 }
 
 /* ── svg fragments ──────────────────────────────────────────────────── */
-const markGroup = (strokeWidth) => `<g fill="none" stroke="${INK}" stroke-width="${strokeWidth}" stroke-linejoin="miter">
-    <path d="${MARK.arch}"/>
+const markGroup = (strokeWidth) => `<g fill="none" stroke="${INK}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round">
+    <path d="${MARK.vessel}"/>
   </g>
-  <rect x="${MARK.keystone.x}" y="${MARK.keystone.y}" width="${MARK.keystone.size}" height="${MARK.keystone.size}" fill="${ORANGE}"/>`;
+  <rect x="${MARK.cornerstone.x}" y="${MARK.cornerstone.y}" width="${MARK.cornerstone.size}" height="${MARK.cornerstone.size}" fill="${SIENNA}"/>`;
 
-const HEADER_COMMENT = `<!-- TADMORA brand system — GENERATED by scripts/r323/brand-assets.mjs — do not edit by hand.
+const HEADER_COMMENT = `<!-- ULARA brand system — GENERATED by scripts/r323/brand-assets.mjs — do not edit by hand.
      Geometry source: frontend/src/brand/mark.ts (+ lockups.ts, wordmark.generated.ts).
-     Colours: paper ${PAPER} · ink ${INK} · orange ${ORANGE}. Hairline strokes, miter joins,
-     radius 0, no gradients. Regenerate: node scripts/r323/brand-assets.mjs -->`;
+     Colours: paper ${PAPER} · ink ${INK} · sienna ${SIENNA}. Hairline strokes, round caps/joins
+     on the vessel, radius 0, no gradients. Regenerate: node scripts/r323/brand-assets.mjs -->`;
 
-const markSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MARK.viewBox}" width="64" height="64" role="img" aria-label="شعار تادمورا">
+const markSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MARK.viewBox}" width="64" height="64" role="img" aria-label="شعار أُلارا">
   ${HEADER_COMMENT}
-  <title>تادمورا</title>
-  ${markGroup(1)}
+  <title>أُلارا</title>
+  ${markGroup(1.5)}
 </svg>
 `;
 
@@ -129,18 +144,18 @@ const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MARK.view
 `;
 
 const wordStroke = `fill="none" stroke="${INK}" stroke-width="3.5" stroke-linejoin="miter"`;
-const lockupSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LOCKUP_CANVAS.w} ${LOCKUP_CANVAS.h}" role="img" aria-label="تادمورا">
+const lockupSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LOCKUP_CANVAS.w} ${LOCKUP_CANVAS.h}" role="img" aria-label="أُلارا">
   ${HEADER_COMMENT}
-  <title>تادمورا</title>
+  <title>أُلارا</title>
   <g transform="translate(${lockupAr.x} ${lockupAr.y}) scale(${lockupAr.scale})"><path d="${AR.d}" ${wordStroke}/></g>
   <g transform="translate(${lockupMarkX} 0)">
   ${markGroup(1.5)}
   </g>
 </svg>
 `;
-const lockupStackedSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${STACKED_CANVAS.w} ${STACKED_CANVAS.h}" role="img" aria-label="تادمورا">
+const lockupStackedSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${STACKED_CANVAS.w} ${STACKED_CANVAS.h}" role="img" aria-label="أُلارا">
   ${HEADER_COMMENT}
-  <title>تادمورا</title>
+  <title>أُلارا</title>
   <g transform="translate(0 0)">
   ${markGroup(1.5)}
   </g>
@@ -150,14 +165,13 @@ const lockupStackedSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 $
 `;
 
 writeFileSync(path.join(BRAND_DIR, 'mark.svg'), markSvg);
-writeFileSync(path.join(BRAND_DIR, 'tadmora-mark.svg'), markSvg);
 writeFileSync(path.join(BRAND_DIR, 'lockup.svg'), lockupSvg);
 writeFileSync(path.join(BRAND_DIR, 'lockup-stacked.svg'), lockupStackedSvg);
 writeFileSync(path.join(ROOT, 'frontend', 'public', 'favicon.svg'), faviconSvg);
-console.log('[brand-assets] ✓ mark.svg · tadmora-mark.svg · lockup.svg · lockup-stacked.svg · favicon.svg');
+console.log('[brand-assets] ✓ mark.svg · lockup.svg · lockup-stacked.svg · favicon.svg');
 
 /* ── raster: PWA icons + the OG card (Playwright/Chromium) ──────────── */
-const EXECUTABLE = process.env.TADMORA_E2E_EXECUTABLE
+const EXECUTABLE = process.env.ULARA_E2E_EXECUTABLE
   ?? '/home/z/.cache/ms-playwright/chromium-1200/chrome-linux64/chrome';
 
 function pngIhdrSize(buf) {
@@ -166,12 +180,11 @@ function pngIhdrSize(buf) {
 }
 
 const FAVICON = readFileSync(path.join(ROOT, 'frontend', 'public', 'favicon.svg'), 'utf8');
-const LOCKUP = readFileSync(path.join(BRAND_DIR, 'lockup.svg'), 'utf8');
 
-/* the OG tagline — the brand copy, verbatim (Arabic NEVER letter-spaced;
- * the faces resolve from the self-hosted woff2s via file:// URLs so the
- * card renders identically on any machine). */
-const TAGLINE = 'تادمورا — الجامعة في منظومة واحدة';
+/* the build-time brand typography: the self-hosted IBM Plex Sans Arabic
+ * 600 (arabic + latin subsets) rides data URIs (the R344 rule — the
+ * card renders via page.setContent, an about:blank context, where every
+ * file:// subresource is cross-origin-blocked). */
 const plexArabicUrl = `data:font/woff2;base64,${readFileSync(path.join(ROOT, 'frontend/public/fonts/plex-sans-arabic-600-normal-arabic.woff2')).toString('base64')}`;
 const plexLatinUrl = `data:font/woff2;base64,${readFileSync(path.join(ROOT, 'frontend/public/fonts/plex-sans-arabic-600-normal-latin.woff2')).toString('base64')}`;
 
@@ -201,63 +214,42 @@ try {
     console.log(`[brand-assets] ✓ icon-${size}.png — IHDR ${ihdr.width}x${ihdr.height}, ${(png.length / 1024).toFixed(1)}KB`);
   }
 
-  /* the OG card — 1200×630 paper plate: hairline ink frame, the lockup,
-   * ONE orange accent (the mark's point), the Arabic tagline.
-   * R343: + the ORIGINAL skyline band + the [01] index — the card now
-   * speaks the same imagery system as the product itself. */
-  /* R344 fix — the skyline + the woff2 fonts must ride DATA URIs: the
-   * card renders via page.setContent (an about:blank context), where
-   * every file:// subresource is cross-origin-blocked — the skyline
-   * silently rendered as the torn-photo placeholder glyph (baked into
-   * og.jpg since R343) and the tagline rode system fallback fonts. */
-  const dataUri = (p, mime) => `data:${mime};base64,${readFileSync(path.join(ROOT, p)).toString('base64')}`;
-  const skylineUrl = dataUri('frontend/public/media/illustrations/r342/footer/footer-skyline-light.webp', 'image/webp');
+  /* the OG card — 1200×630 paper plate built from the kit source
+   * shared/brand/ulara/og-1200x630.svg: the SAME geometry (the mark at
+   * translate(960 238) scale(5), أُلارا right-anchored at x=900 y=353,
+   * the «نظام تشغيل الجامعة» descriptor at y=433) with the staged
+   * system font stack overridden by the brand's own IBM Plex Sans
+   * Arabic 600 — the kit's own note defers its typography to build
+   * time, and this rasterizer is that build time. */
+  const kit = readFileSync(OG_KIT, 'utf8');
   const W = 1200;
   const H = 630;
-  const lockupH = 150;
-  const lockupW = +(lockupH * (LOCKUP_CANVAS.w / LOCKUP_CANVAS.h)).toFixed(1);
   const html = `<!doctype html><html><head><meta charset="utf-8">
 <style>
-  @font-face { font-family: 'tdmr-og-ar'; src: url('${plexArabicUrl}') format('woff2'); font-weight: 600; font-display: block; }
-  @font-face { font-family: 'tdmr-og-lt'; src: url('${plexLatinUrl}') format('woff2'); font-weight: 600; font-display: block; }
+  @font-face { font-family: 'ula-og-brand'; src: url('${plexArabicUrl}') format('woff2'); font-weight: 600; font-display: block; }
+  @font-face { font-family: 'ula-og-brand-lt'; src: url('${plexLatinUrl}') format('woff2'); font-weight: 600; font-display: block; }
   html, body { margin: 0; padding: 0; }
-  body { width: ${W}px; height: ${H}px; background: ${PAPER}; overflow: hidden;
-         display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .frame { position: absolute; inset: 26px; border: 1.5px solid ${INK}; pointer-events: none; }
-  .lockup svg { display: block; width: ${lockupW}px; height: ${lockupH}px; }
-  .tagline { margin-top: 34px; font-family: 'tdmr-og-ar', 'tdmr-og-lt', sans-serif;
-             font-weight: 600; font-size: 33px; line-height: 1.7; color: ${INK};
-             direction: rtl; text-align: center; letter-spacing: 0; }
-  /* R343 — the OG card joins the imagery system: the ORIGINAL skyline
-     band (the r342 footer art, the system's own horizon) rides the
-     tagline's foot; the [01] mono index anchors the frame's corner. */
-  .skyline { margin-top: 38px; width: 1044px; height: 160px; display: block;
-             filter: grayscale(1) contrast(1.06); opacity: 0.9; }
-  .idx { position: absolute; top: 44px; inset-inline-start: 48px; direction: ltr;
-         font-family: 'tdmr-og-lt', monospace; font-size: 22px; letter-spacing: 0.12em;
-         color: ${INK}; opacity: 0.72; }
+  body { width: ${W}px; height: ${H}px; overflow: hidden; }
+  svg { display: block; }
+  /* the build-time typography substitution — every <text> in the kit
+     source resolves to the self-hosted brand faces. */
+  svg text { font-family: 'ula-og-brand', 'ula-og-brand-lt', sans-serif !important; font-weight: 600; }
 </style></head>
-<body>
-  <div class="frame"></div>
-  <div class="idx">[01]</div>
-  <div class="lockup">${LOCKUP}</div>
-  <div class="tagline">${TAGLINE}</div>
-  <img class="skyline" src="${skylineUrl}" alt="" />
-</body></html>`;
+<body>${kit}</body></html>`;
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   await page.setContent(html, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(120); /* font raster settle */
   const jpg = await page.screenshot({ type: 'jpeg', quality: 92, clip: { x: 0, y: 0, width: W, height: H } });
   await page.close();
-  writeFileSync(path.join(BRAND_DIR, 'tadmora-og.jpg'), jpg);
-  console.log(`[brand-assets] ✓ tadmora-og.jpg — ${W}×${H}, ${(jpg.length / 1024).toFixed(1)}KB`);
+  writeFileSync(path.join(BRAND_DIR, 'og.jpg'), jpg);
+  console.log(`[brand-assets] ✓ og.jpg — ${W}×${H}, ${(jpg.length / 1024).toFixed(1)}KB`);
 } finally {
   await browser.close();
 }
 
-/* ── manifest consistency check (the manifest itself needs no change —
- * its icon paths and paper theme already match the new system) ─────── */
+/* ── manifest consistency check (the manifest's icon paths + the paper
+ * theme must match the regenerated system) ─────────────────────────── */
 const manifest = JSON.parse(readFileSync(path.join(ROOT, 'frontend', 'public', 'manifest.webmanifest'), 'utf8'));
 for (const icon of manifest.icons) {
   const p = path.join(ROOT, 'frontend', 'public', icon.src.replace(/^\//, ''));

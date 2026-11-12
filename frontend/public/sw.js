@@ -25,9 +25,9 @@
  * Updates: a new SW activates immediately (skipWaiting) + tells the
  * clients (CONTENTS_UPDATED) so the app can toast «نسخة جديدة».
  */
-const VERSION = 'tadmora-1';
-const STATIC_CACHE = `tadmora-static-${VERSION}`;
-const ASSET_CACHE = `tadmora-assets-${VERSION}`;
+const VERSION = 'ulara-1';
+const STATIC_CACHE = `ulara-static-${VERSION}`;
+const ASSET_CACHE = `ulara-assets-${VERSION}`;
 
 /** Cap for the hashed-build-assets cache. A full build emits ~120
  *  chunk files; a visitor touches a fraction of them. 120 keeps a
@@ -36,7 +36,7 @@ const ASSET_CACHE_CAP = 120;
 
 const PRECACHE = [
   '/offline.html',
-  '/brand/tadmora-mark.svg',
+  '/brand/mark.svg',
   '/brand/icon-192.png',
   '/brand/icon-512.png',
   '/manifest.webmanifest',
