@@ -1,6 +1,6 @@
 # Deploy (Vercel — production) — Phase Ω infrastructure completion.
 #
-# The web platform deploys to Vercel (tadmora.vercel.app, fra1) from
+# The web platform deploys to Vercel (ulara.vercel.app, fra1) from
 # THIS repository's main branch. Until now that deploy was a manual
 # owner command (`npx vercel deploy --prod --regions fra1` —
 # docs/12-deployment.md). This workflow automates it on every
@@ -10,7 +10,7 @@
 # THREE repository secrets —
 #   VERCEL_TOKEN      an access token (vercel.com → Settings → Tokens)
 #   VERCEL_ORG_ID     from .vercel/project.json on the owner's machine
-#   VERCEL_PROJECT_ID same file (the EXISTING "tadmora" project — the
+#   VERCEL_PROJECT_ID same file (the EXISTING "ulara" project — the
 #                     ids pin the deploy to it; without them vercel
 #                     would create a duplicate project)
 # Until all three are set the job skips with a notice and stays green —
@@ -75,7 +75,7 @@ jobs:
         run: |
           npx vercel@latest deploy --prod --yes --regions fra1
           echo "## Production deploy" >> "$GITHUB_STEP_SUMMARY"
-          echo "https://tadmora.vercel.app" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://ulara.vercel.app" >> "$GITHUB_STEP_SUMMARY"
       # deploy-smoke.yml then polls the live buildId (it waits until the
       # deployed buildId == the pushed SHA) — the same belt as the manual
       # deploy path; no duplication here.
