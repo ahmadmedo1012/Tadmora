@@ -12,7 +12,7 @@
  *      established DB performs zero writes — these accounts are the ONE
  *      explicit, deliberate exception, and they are the ONLY rows the
  *      exception touches).
- *   2. BACKEND BOOT with `TADMORA_TEST_ACCOUNTS=1` (backend/src/index.ts)
+ *   2. BACKEND BOOT with `ULARA_TEST_ACCOUNTS=1` (backend/src/index.ts)
  *      — the self-healing dev/ops path; guarded, non-fatal, logged.
  *
  * Guarantees:
