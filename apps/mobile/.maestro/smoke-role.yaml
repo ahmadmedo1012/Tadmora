@@ -19,12 +19,12 @@
 #             headings) via the ${ROLE == … ? … : …} expressions below.
 #
 # THE JOURNEY (per role):
-#   fresh state (launchApp clearState ≡ `adb shell pm clear ly.tadmora.mobile`
+#   fresh state (launchApp clearState ≡ `adb shell pm clear ly.ulara.app`
 #   — the app's android package, app.config.ts) → the /auth Welcome → the
 #   login form (testID fields, the real POST /auth/login) → the role's
 #   dashboard (asserted by its always-rendered heading) → three of the
 #   role's tab bar (each tab screen asserted by its heading) → /settings
-#   via the app's `tadmora://` deep link (scheme: app.config.ts) — the ONE
+#   via the app's `ulara://` deep link (scheme: app.config.ts) — the ONE
 #   logout surface every role can reach; ADMIN/QUALITY/OWNER carry no
 #   profile tab, and TEACHER's profile logs out through /settings anyway →
 #   the destructive ConfirmSheet confirm → back at the auth entry (after
@@ -43,15 +43,21 @@
 # timeouts, and the one flaky tap (the submit button can lose the race
 # with the keyboard-dismiss animation) rides a retry.
 name: smoke-role (Ω 1-B — five-role login journey)
-appId: ly.tadmora.mobile
+appId: ly.ulara.app
 ---
-# 1 ── fresh launch → the /auth Welcome (a guest is routed there by /)
+# 1 ── fresh launch → the /auth Welcome (a guest is routed there by /).
+#      The CTA stack sits at marginTop:auto in a ScrollView — on the
+#      emulator profile the content exceeds the viewport and «ابدأ الآن»
+#      lands BELOW THE FOLD (run-43257920033 forensics, spec §4), so
+#      scrollUntilVisible (a no-op when already visible) replaces the
+#      plain extendedWaitUntil.
 - launchApp:
-    appId: ly.tadmora.mobile
+    appId: ly.ulara.app
     clearState: true
-- extendedWaitUntil:
-    visible:
+- scrollUntilVisible:
+    element:
       text: "ابدأ الآن"            # app/auth/index.tsx — the Welcome CTA
+    direction: DOWN
     timeout: 30000
 - tapOn:
     text: "ابدأ الآن"              # → /auth/login
@@ -120,7 +126,7 @@ appId: ly.tadmora.mobile
 #      carry no profile tab, and the destructive ConfirmSheet confirm is
 #      «خروج» (confirmLabel, app/settings.tsx).
 - openLink:
-    link: "tadmora://settings"
+    link: "ulara://settings"
 - extendedWaitUntil:
     visible:
       text: "الإعدادات"            # app/settings.tsx — PageHeader title
@@ -142,8 +148,10 @@ appId: ly.tadmora.mobile
 # 8 ── back at the auth entry: after logout the session is cleared and the
 #      shell routes the guest to /auth (app/index.tsx) — its CTA leads to
 #      the login form, so asserting it proves we are OUT and back at the
-#      start of the journey.
-- extendedWaitUntil:
-    visible:
+#      start of the journey. Same below-the-fold reality as step 1 →
+#      scrollUntilVisible, never a plain visible-wait.
+- scrollUntilVisible:
+    element:
       text: "ابدأ الآن"
+    direction: DOWN
     timeout: 30000
