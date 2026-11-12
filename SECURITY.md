@@ -1,7 +1,7 @@
 # الأمان | Security Policy
 
-> سياسة الإفصاح المسؤول لمنصة تادمورا.
-> The responsible-disclosure policy for the Tadmora platform.
+> سياسة الإفصاح المسؤول لمنصة أُلارا.
+> The responsible-disclosure policy for the Ulara platform.
 
 ## النسخ المدعومة | Supported Versions
 
@@ -23,11 +23,11 @@ a description, reproduction steps, and expected impact. Target response: 72h.
 
 ## النطاق | Scope
 
-**داخل النطاق | In scope** — منصة تادمورا وجميع مساراتها: كل واجهات `/api`،
+**داخل النطاق | In scope** — منصة أُلارا وجميع مساراتها: كل واجهات `/api`،
 المصادقة والجلسات، عزل نطاق الكليات (college scope)، تخزين الملفات وتقديم
 البحوث، وقاعدة البيانات ومعالجة البيانات الشخصية.
 
-The Tadmora platform: all `/api` routes, auth & sessions, college-scope
+The Ulara platform: all `/api` routes, auth & sessions, college-scope
 isolation, file storage & research submissions, data storage & PII handling.
 
 **خارج النطاق | Out of scope** — هجمات حجب الخدمة، الهندسة الاجتماعية، التقارير
@@ -39,7 +39,7 @@ deployments.
 
 | المستودع / Repo | CSP | تحديد المعدل / Rate limit | فحص الأسرار / Secret scan |
 |---|---|---|---|
-| تادمورا / tadmora | ✓ helmet + فحص هاش | ✓ وسيط الخلفية | — |
+| أُلارا / ulara | ✓ helmet + فحص هاش | ✓ وسيط الخلفية | — |
 
 ملف `.env` غير متتبَّع. | `.env` files are untracked.
 

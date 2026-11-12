@@ -36,9 +36,9 @@ condensed overview.
 ## 2. Middleware chain (order in `app.ts`)
 
 1. `app.disable('x-powered-by')`
-2. `app.set('trust proxy', 1)` (Vercel/Render-style reverse proxy)
+2. `app.set('trust proxy', 1)` (Vercel-style reverse proxy)
 3. **Helmet** — CSP **enabled** (D7 allow-list: `default-src 'self'`, plus a sha256 pin for the inline theme-bootstrap script), `crossOriginResourcePolicy: cross-origin`
-4. **CORS** — allow-list from `CORS_ORIGINS` env (default: `https://tadmora.vercel.app`, `http://localhost:5173`), `credentials: true`
+4. **CORS** — allow-list from `CORS_ORIGINS` env (default: `https://ulara.vercel.app`, `http://localhost:5173`), `credentials: true`
 5. **gzip compression** middleware (≥1 KB, text/JSON/JS/SVG; `Vary: Accept-Encoding` on all responses)
 6. `express.json({ limit: '1mb' })` + `express.urlencoded({ limit: '1mb' })` — the two PDF upload routes add route-level `express.raw({ type: 'application/pdf', limit: MAX_UPLOAD_PDF_BYTES })` (JSON/URLENCODED parsers skip non-matching content types, so the raw bodies pass through untouched). The limit is HOST-HONEST (lib/pdf-limits.ts): 20 MiB self-hosted, 4 MiB on Vercel — Vercel Functions cap any body at 4.5 MB (verified live 2026-11-11), so the app's own 4 MiB gate answers oversize uploads with the Arabic envelope BEFORE the platform's opaque 413. Advertised at `/api/v1/status` → `data.maxPdfUploadBytes`
 7. `cookieParser()`
@@ -59,7 +59,7 @@ condensed overview.
 | Aspect | Detail |
 |--------|--------|
 | Access token | JWT HS256, TTL 15m, payload `{ sub, role, type:'access' }`, `Authorization: Bearer` |
-| Refresh token | JWT, TTL 7d, payload `{ sub, ver, type:'refresh' }`, http‑only cookie `tdmr_refresh`, `sameSite:strict`, path `/api/v1/auth` |
+| Refresh token | JWT, TTL 7d, payload `{ sub, ver, type:'refresh' }`, http‑only cookie `ulara_refresh`, `sameSite:strict`, path `/api/v1/auth` |
 | Rotation | **Sliding session** — a normal refresh re‑issues tokens at the SAME `tokenVersion` (multi‑device survives). `tokenVersion` is bumped only on explicit revocation events (logout, password change, role change, deactivation), each an atomic conditional write |
 | Passwords | Argon2id — memoryCost ≈19 MiB, timeCost 2, parallelism 1 + common‑password blocklist (8–72 chars) |
 | Lockout | 5 failed logins → 15‑min lock (atomic increment + read‑back); reset on success |
@@ -281,7 +281,7 @@ condensed overview.
 | `JWT_REFRESH_SECRET` | ✅ | — | ≥32 chars |
 | `NODE_ENV` | ❌ | `development` | `production` enables static serving + secure cookies |
 | `PORT` | ❌ | `4000` | listen port |
-| `CORS_ORIGINS` | ❌ | tadmora.vercel.app + localhost:5173 | Comma-separated CORS allow-list (no wildcards — credentials are on) |
+| `CORS_ORIGINS` | ❌ | ulara.vercel.app + localhost:5173 | Comma-separated CORS allow-list (no wildcards — credentials are on) |
 | `INTERNAL_SERVICE_TOKEN` | ❌ | — | Service-to-service auth for `POST /api/v1/me/milestones/:id/fire` (≥16 chars; fail-closed when unset; constant-time compare) |
 | `DIRECT_DATABASE_URL` | ❌ | derived | Neon **direct** (non-pooled) URL for `prisma migrate deploy`; when unset, the deploy script derives it from `DATABASE_URL` (strips `-pooler` + pooling params) |
 | `STORAGE_DRIVER` | ❌ | `local` | Upload storage driver (`lib/storage.ts`): `local` filesystem or `s3` (any S3-compatible store). `s3` without the four `S3_*` vars → boot fails closed naming them; `local` in production logs a one-time ephemeral-disk warning |
@@ -309,7 +309,7 @@ condensed overview.
   (overlap-guarded); results recorded in `SyncRun`. Also prunes `LoginEvent`
   rows older than 180 days in bounded batches (never rejects, capped per day).
 - **Timezone model** (`lib/dates.ts` — 15-h, campaign 3): the server runs with
-  `TZ=UTC` (declared in `render.yaml`); every stored instant is UTC. Date-only
+  `TZ=UTC` (the Vercel serverless runtime is UTC); every stored instant is UTC. Date-only
   *data* concepts (attendance day-keys, `@@unique(offeringId, date)` buckets)
   use UTC day-keys via `utcDayKey()` — stable regardless of who computes them;
   *display* labels («اليوم»/«غداً», agenda weekdays, month buckets) use
@@ -417,7 +417,7 @@ daily wall.
 
 The 4 LLM‑only probes and citation presence on grounded cases are the
 production‑mode acceptance bar for the owner's rerun
-(`BASE_URL=https://tadmora.vercel.app` + eval creds; the bounded r176
+(`BASE_URL=https://ulara.vercel.app` + eval creds; the bounded r176
 harness `scripts/ai-eval-live.mjs` stays the free‑tier‑respectful
 12‑turn production probe).
 
@@ -439,9 +439,9 @@ harness `scripts/ai-eval-live.mjs` stays the free‑tier‑respectful
 
 | Driver | Bytes land in | Where it is the right choice |
 |---|---|---|
-| `local` (default) | `backend/storage/<namespace>/<file>` via fs/promises | dev only — Render's disk is EPHEMERAL (a boot log warns in prod); files vanish on every redeploy |
+| `local` (default) | `backend/storage/<namespace>/<file>` via fs/promises | dev only — the serverless filesystem is EPHEMERAL (a boot log warns in prod); files vanish on every invocation |
 | `s3` | any S3‑compatible store (AWS S3 / Cloudflare R2 / MinIO), path‑style, hand‑rolled SigV4 (no new npm deps) | production persistence — requires `S3_ENDPOINT`+`S3_REGION`+`S3_BUCKET`+`S3_ACCESS_KEY_ID`+`S3_SECRET_ACCESS_KEY`, otherwise boot refuses |
-| `postgres` | BYTEA rows in the app's own PostgreSQL (`BinaryObject`) | the bounded Render‑Free pilot mode (durable, no new infra — explicitly a 5–10‑student trade‑off, not an object‑store architecture) |
+| `postgres` | BYTEA rows in the app's own PostgreSQL (`BinaryObject`) | the bounded serverless pilot mode (durable, no new infra — explicitly a 5–10‑student trade‑off, not an object‑store architecture) |
 
 Namespaces: `papers/` (research PDFs), `materials/` (course PDFs),
 `lectures/` (r323: videos + `.vtt` transcript sidecars). Every driver
@@ -482,7 +482,7 @@ Platform‑hosted video uses **presigned direct upload** (r323 B2.1):
 `POST /api/v1/files/uploads/presign` (TEACHER+, 30/min) mints a
 server‑generated key `lectures/c<32hex>.<mp4|webm|m4v|ogv|ogg>` and a
 ≤15‑min SigV4‑query‑presigned PUT URL — the browser uploads straight
-to the store (single ≤100 MB or multipart ≤4 GB), Render's disk and
+to the store (single ≤100 MB or multipart ≤4 GB), the serverless disk and
 the backend's memory never see a lecture‑sized payload;
 `POST /files/uploads/complete` verifies and stamps `Lecture.videoUrl`.
 **This path requires `STORAGE_DRIVER=s3`** — on local/postgres the
@@ -555,7 +555,7 @@ and the roundtrip above then passed end‑to‑end.
 The registrar's bulk story is therefore: mint one code per cohort with
 `maxUses = N`, share it, and every registration lands enrolled + counted.
 `DELETE /users/demo-cohort` (ADMIN/OWNER) is the counterpart bulk
-**removal** — the one‑transaction sweep of the `@demo.tadmora.ly`
+**removal** — the one‑transaction sweep of the `@demo.ulara.ly`
 pilot sample (30 seeded users on the showcase institution).
 
 ### 11.2 What was proven live (seeded DB, real API)
@@ -568,7 +568,8 @@ throwaway students register with the code → **201 each**, and throwaway
 #1's `GET /enrollments/me` shows the scoped offering **active**; the
 teacher's `GET /invites` shows `usedCount 3/3`; a 4th registration with
 the same code → **400** «استُنفد هذا الكود (بلغ أقصى عدد للاستخدام).»
-Throwaways registered under `@demo.tadmora.ly` and were removed
+Throwaways registered under the demo‑cohort pilot domain (recorded
+under its retired spelling at the time) and were removed
 immediately after by id (ordered delete mirroring `removeDemoCohort`;
 the seed's own 30 demo users untouched — recorded in the evidence log).
 
