@@ -38,9 +38,8 @@ function collectProp(node: JsonNode | JsonNode[], prop: string): unknown[] {
 
 /**
  * react-native-svg serializes colour props in the test tree as processed
- * colour objects ({ payload: 0xAARRGGBB, type: 0 }) — the received run
- * proved it (payload 4280821800 = 0xFF282828). Assert against the same
- * processed form so the pin stays exact.
+ * colour objects ({ payload: 0xAARRGGBB, type: 0 }). Assert against the
+ * same processed form so the pin stays exact.
  */
 const processed = (hex: string) => ({ payload: 0xff000000 + Number.parseInt(hex.slice(1), 16), type: 0 });
 
@@ -77,17 +76,17 @@ describe("Logo (the R326 M0.4 RN port)", () => {
     );
   });
 
-  it("auto tone rides the live palette (light default: charcoal ink · the orange point)", async () => {
+  it("auto tone rides the live palette (light default: sepia ink · the sienna cornerstone)", async () => {
     const { toJSON } = await render(<Logo variant="mark" size={32} />);
-    expect(collectProp(toJSON(), "stroke")).toContainEqual(processed("#282828")); // the light palette ink
-    expect(collectProp(toJSON(), "fill")).toContainEqual(processed("#FA3600")); // the light palette accent — the orange point
+    expect(collectProp(toJSON(), "stroke")).toContainEqual(processed("#262019")); // the light palette ink
+    expect(collectProp(toJSON(), "fill")).toContainEqual(processed("#C43E16")); // the light palette accent — the cornerstone
   });
 
   it("tone=ink pins BOTH slots to the brand ink (fixed-ground recipe)", async () => {
     const { toJSON } = await render(<Logo variant="mark" size={32} tone="ink" />);
-    expect(collectProp(toJSON(), "stroke")).toContainEqual(processed("#282828"));
+    expect(collectProp(toJSON(), "stroke")).toContainEqual(processed("#262019"));
     const fills = collectProp(toJSON(), "fill");
-    expect(fills).toContainEqual(processed("#282828")); // the point rides the ink too
-    expect(fills).not.toContainEqual(processed("#FA3600"));
+    expect(fills).toContainEqual(processed("#262019")); // the cornerstone rides the ink too
+    expect(fills).not.toContainEqual(processed("#C43E16"));
   });
 });

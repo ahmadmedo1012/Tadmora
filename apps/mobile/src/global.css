@@ -10,10 +10,10 @@ body,
 }
 html {
   direction: rtl;
-  background: #f6f6ee;
+  background: #f5f1e8;
 }
 html[data-theme="dark"] {
-  background: #282828;
+  background: #262019;
 }
 body {
   font-family: "Body-Regular", "IBM Plex Sans Arabic", system-ui, sans-serif;

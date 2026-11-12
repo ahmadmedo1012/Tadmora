@@ -10,7 +10,7 @@
  * Heron discipline (unchanged, now testable):
  *   · Elevation WITHOUT shadows — cards rise by a surface step + a hairline
  *     frame. The presets below never emit any shadow or elevation key.
- *   · ONE orange accent per screen — `accent` is the only saturated brand
+ *   · ONE sienna accent per screen — `accent` is the only saturated brand
  *     hue (see the accent block below for the text-safe route).
  *   · success/warning/danger are FEEDBACK tones, never accents.
  *
@@ -51,7 +51,7 @@ function statusSeat(name: ThemeName, tone: StatusTone): StatusSeat {
 // ── the semantic color seats ───────────────────────────────────────────────
 
 export interface SemanticColors {
-  /** Page ground — the paper itself (light #F6F6EE · dark #282828). */
+  /** Page ground — the paper itself (light #F5F1E8 · dark #262019). */
   surface: string;
   /** Cards, sheets, popovers — one surface step up + hairline frame. */
   surfaceElevated: string;
@@ -64,12 +64,12 @@ export interface SemanticColors {
   /** Tertiary ink — metadata, timestamps. */
   textTertiary: string;
   /**
-   * THE orange — the single accent seat (light #FA3600 · dark #FF5A1F).
-   * UI/large-text tone only (light 3.53:1, dark 4.73:1); body-size accent
+   * THE sienna — the single accent seat (light #C43E16 · dark #FF6B3D).
+   * UI/large-text tone only (light 4.60:1, dark 5.70:1); body-size accent
    * TEXT routes through `accentInk`. One accented element per screen.
    */
   accent: string;
-  /** Text-safe accent (AA) — light #C72E00 · dark #FF6B33. */
+  /** Text-safe accent (AA) — light #A33312 · dark #FF8A5F. */
   accentInk: string;
   /** Tinted accent ground — soft washes behind the accent moment. */
   accentSoft: string;

@@ -37,12 +37,12 @@ describe("semanticColorsFor — light/dark resolution", () => {
 
   it("surfaces follow the Heron two-surface rule (ground / card / sunken)", () => {
     const light = semanticColorsFor("light");
-    expect(light.surface).toBe("#F6F6EE"); // paper ground
+    expect(light.surface).toBe("#F5F1E8"); // paper ground
     expect(light.surfaceElevated).toBe("#FFFFFF"); // card ground
-    expect(light.sunken).toBe("#F0F0E6"); // shared surface2/bkSoft
+    expect(light.sunken).toBe("#EFEBDF"); // shared surface2/bkSoft
 
     const dark = semanticColorsFor("dark");
-    expect(dark.surface).toBe("#282828");
+    expect(dark.surface).toBe("#262019");
     expect(dark.surfaceElevated).toBe("#2E2E2E"); // the Card component's dark ground
     expect(dark.sunken).toBe("#353535"); // shared surface2 (dark)
   });
@@ -57,29 +57,29 @@ describe("semanticColorsFor — light/dark resolution", () => {
 
   it("text tiers are distinct inks (primary → secondary → tertiary)", () => {
     const light = semanticColorsFor("light");
-    expect(light.textPrimary).toBe("#282828");
+    expect(light.textPrimary).toBe("#262019");
     expect(light.textSecondary).toBe("#414140");
     expect(light.textTertiary).toBe("#62625F");
     const dark = semanticColorsFor("dark");
-    expect(dark.textPrimary).toBe("#F6F6EE");
+    expect(dark.textPrimary).toBe("#F5F1E8");
     expect(dark.textSecondary).toBe("#C9C9C5");
     expect(dark.textTertiary).toBe("#B4B4B0");
   });
 });
 
 describe("the ONE accent", () => {
-  it("is the brand orange in light and the luminous ember in dark", () => {
-    expect(semanticColorsFor("light").accent).toBe("#FA3600");
-    expect(semanticColorsFor("dark").accent).toBe("#FF5A1F");
+  it("is the brand sienna in light and the luminous ember in dark", () => {
+    expect(semanticColorsFor("light").accent).toBe("#C43E16");
+    expect(semanticColorsFor("dark").accent).toBe("#FF6B3D");
   });
 
   it("body-size accent text has its own AA-safe ink (not the raw fill)", () => {
     const light = semanticColorsFor("light");
     expect(light.accentInk).not.toBe(light.accent);
-    expect(light.accentInk).toBe("#C72E00");
+    expect(light.accentInk).toBe("#A33312");
     const dark = semanticColorsFor("dark");
     expect(dark.accentInk).not.toBe(dark.accent);
-    expect(dark.accentInk).toBe("#FF6B33");
+    expect(dark.accentInk).toBe("#FF8A5F");
   });
 });
 
