@@ -11,6 +11,15 @@
  * the React level with the app's own useReduceMotion — double coverage, so
  * an entering preset can never animate for a reduced-motion user.
  *
+ * Emulators (2026-11-13, the android-smoke forensics): on the software-
+ * rendered emulator profile, DELAYED entering animations strand their
+ * content at opacity 0 — the first entrance fires, the staggered follow-
+ * ups never start (measured twice live: the Welcome rendered its eyebrow
+ * while the CTA stack stayed invisible for 30+s across 10 journeys). The
+ * emulator gate (lib/emulatorGate) disables entrances on non-physical
+ * devices — CI smoke proves the FUNCTIONAL journey; real devices keep the
+ * full motion design (the render-net + unit belts cover the structure).
+ *
  * RTL: SlideInFromStart reads the reading-start edge (right in RTL, left
  * otherwise) via I18nManager — direction never changes without a reload in
  * this app (see lib/rtl.ts), so module-lifetime reads are safe.
@@ -27,6 +36,7 @@ import {
   type BaseAnimationBuilder,
 } from "react-native-reanimated";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
+import { isEmulatorEntranceDisabled } from "@/lib/emulatorGate";
 import { durations, easings } from "./presets";
 
 export interface EntranceOptions {
@@ -140,7 +150,7 @@ export function enterStagger(index: number, { step, base, preset = "fadeUp", ...
  * useStaggerEntrance below (hooks can't live inside .map callbacks).
  */
 export function useEntrance<T extends BaseAnimationBuilder>(build: () => T): T | undefined {
-  return useReduceMotion() ? undefined : build();
+  return useReduceMotion() || isEmulatorEntranceDisabled() ? undefined : build();
 }
 
 /**
@@ -155,6 +165,6 @@ export function useEntrance<T extends BaseAnimationBuilder>(build: () => T): T |
  *   </Animated.View>
  */
 export function useStaggerEntrance(options?: StaggerOptions): (index: number) => BaseAnimationBuilder | undefined {
-  const reduced = useReduceMotion();
+  const reduced = useReduceMotion() || isEmulatorEntranceDisabled();
   return (index: number) => (reduced ? undefined : enterStagger(index, options));
 }

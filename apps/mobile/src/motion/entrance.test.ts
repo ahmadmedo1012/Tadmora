@@ -26,6 +26,12 @@ import {
   useStaggerEntrance,
 } from "./entrance";
 
+// The emulator gate is OFF in tests: jest's environment is a "non-device"
+// (the gate would disable entrances everywhere) — the reduced-motion
+// double-coverage and the emulator gate are tested by their own seams.
+jest.mock("@/lib/emulatorGate", () => ({
+  isEmulatorEntranceDisabled: jest.fn(() => false),
+}));
 jest.mock("@/hooks/useReduceMotion", () => ({
   useReduceMotion: jest.fn(() => false),
 }));
