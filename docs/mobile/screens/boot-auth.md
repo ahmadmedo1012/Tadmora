@@ -13,7 +13,7 @@
 - Update/min-version states never render here by construction: below the server floor the root layout's `BlockingUpdateGate` replaces the navigator entirely (`_layout.tsx` — untouched).
 
 ### `/auth` is the Welcome — the signature moment
-- The drafted facade **draws itself in** via the existing plan library (`PlanBuilding autoplay` — strokeDash reveal, ~900ms Heron ease-out, reduce-motion jumps to the finished drawing). Decisive Arabic display type («رحلة تعلم واحدة» / «من المحاضرة إلى الإتقان») over a faint drafting grid.
+- The drafted facade **draws itself in** via the existing plan library (`PlanBuilding autoplay` — strokeDash reveal, ~900ms ds ease-out, reduce-motion jumps to the finished drawing). Decisive Arabic display type («رحلة تعلم واحدة» / «من المحاضرة إلى الإتقان») over a faint drafting grid.
 - **ONE orange CTA** («ابدأ الآن» → `/auth/login`) + **ONE quiet text link** («إنشاء حساب جديد» → `/auth/register`). No boxed cards; the paper is the design.
 - Staggered entrance from `@/motion`: `useStaggerEntrance({ base: 120, step: 90 })` over 4 blocks (390ms total — under the 400ms rhythm cap). Reduced-motion lands instantly (hook-level gate; no layout properties animate).
 - `?continue=` rides every action for post-auth return.

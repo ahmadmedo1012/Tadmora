@@ -1,28 +1,28 @@
-# Ulara Design System — the Heron canon (R306)
+# Ulara Design System — the ds canon (R306)
 
 > **أُلارا** — منصّة تعليم ذكي مستقلّة عربية-أولًا · the design canon as it ships in code.
 >
 > **The single active authority.** One visual system across the whole product — the public
-> landing sheet, the authenticated shell, and every role page family. The reference grammar
-> (heronaiapp.com) was reverse-engineered LIVE — every value measured from the DOM and the
+> landing sheet, the authenticated shell, and every role page family. The grammar of the
+> retired reference site was reverse-engineered LIVE — every value measured from the DOM and the
 > shipped CSS bundle — and adapted for an Arabic-first, RTL, two-theme educational platform.
-> Full measured evidence: [`docs/redesign/r305-heron-reference-spec.md`](docs/redesign/r305-heron-reference-spec.md) ·
-> the R306 exclusivity decisions + rebuild plan: [`docs/redesign/r306-heron-exclusivity-spec.md`](docs/redesign/r306-heron-exclusivity-spec.md).
+> Full measured evidence: the retired r305 reference spec (purged with the match program) ·
+> the R306 exclusivity decisions + rebuild plan: the retired r306 exclusivity spec.
 > Historical eras (Orbit Ink, Superlist/OPTIKKA, ultramarine, the editorial poster) are
 > ARCHIVED in [`docs/archive/DESIGN-history.md`](docs/archive/DESIGN-history.md) — never
 > instructions.
 
 ---
 
-## 0. R313 — Heron parity canon (owner override)
+## 0. R313 — reference parity canon (owner override)
 
 **The authority statement.** In round R313 the owner ordered **full visual and
-behavioural identity with heronaiapp.com**. That order supersedes every prior
+behavioural identity with the retired reference site**. That order supersedes every prior
 adaptation decision — the r306 «adapted, not copied» stance, the r308 §G/§H
 non-adoptions, and any earlier canon text that contradicts the parity system below.
 It does **not** supersede the hard contracts: accessibility, honest copy, CSP, the
 funnel pins, and the no-proprietary-assets rule stand exactly as before. Measured
-basis: `audits/evidence/r313/` (live Heron census + production baseline; 3 match /
+basis: `audits/evidence/r313/` (live reference census + production baseline; 3 match /
 55 mismatch at base). The complete per-item ledger with commits and evidence:
 [`docs/redesign/r313/OVERRIDE-LEDGER.md`](docs/redesign/r313/OVERRIDE-LEDGER.md).
 
@@ -42,7 +42,7 @@ basis: `audits/evidence/r313/` (live Heron census + production baseline; 3 match
 - **D6** native scroll → **Lenis 1.1.5, guest pages only** (lerp 0.1,
   conductor-driven, scrollbar hidden while live, `.content` stays native; RM never
   inits).
-- **D7** landing 12 sections → **9 Heron sections** (the map/journey pin ≈51% of
+- **D7** landing 12 sections → **9 reference sections** (the map/journey pin ≈51% of
   the page; the documentary media band + capability ledger moved to `/campus` +
   `/capabilities`).
 - **D8** header 57px sticky no-hide → **56px fixed at the 7px inset** with the
@@ -60,7 +60,7 @@ basis: `audits/evidence/r313/` (live Heron census + production baseline; 3 match
 - **D15** cookie banner — **intentionally omitted** (Ulara sets no tracking
   cookies; a consent banner would be dishonest copy — see
   [`docs/redesign/r313/NOTES-D15.md`](docs/redesign/r313/NOTES-D15.md)).
-- **D16** all authenticated app surfaces re-skinned to the Heron grammar (square
+- **D16** all authenticated app surfaces re-skinned to the ds grammar (square
   chips/controls, hairline row rules `#E0E0DA`, structural seams `#B3B3AF`, flat
   tiles, mono headers).
 - **D17** dark theme re-derived from the new canon (the shadow-removal policy is
@@ -316,7 +316,7 @@ R305 copy), `CHANGELOG.md`, the release reports in `docs/releases/`.
 > the ONE display type scale, and the confirmed material. The tokens land
 > ADDITIVELY in `tokens.css` (`--fs-d1/d2/d3` + `--fs-st` · `--space-*` ·
 > `--grid-*`); the type rungs are FINAL (re-pinned by the 1-d migration off
-> the Heron extraction's own ladder) and the landing display seats consume
+> the reference extraction's own ladder) and the landing display seats consume
 > them now. Measured basis: `audits/evidence/r322/dsys/`
 > (`type-census.md` — the live landing type sweep; `font-vote.md` — the
 > blind 3-reviewer display-face election; `type-census-after.md` — the
@@ -328,7 +328,7 @@ R305 copy), `CHANGELOG.md`, the release reports in `docs/releases/`.
   the fluid root** so the grid breathes with the type exactly like the
   reference: `--grid-margin: 4rem` (≈33px @1440 / ≈40px @390) ·
   `--grid-gutter: 1.5rem` (≈12.5px @1440). **PROVISIONAL — re-pin after the
-  Heron extraction lands** (task 1-c; the brief's measured header cells
+  reference extraction lands** (task 1-c; the brief's measured header cells
   137px/166.67px @1440 and the 4-up/3-up hairline grids are the derivation
   source, not these first values).
 - **Logical properties only** (`inline-start/end`, `margin-inline`, …) — RTL
@@ -367,7 +367,7 @@ permanent exceptions 2).
 | **D3** | card (the title) | `--fs-d3` | `clamp(23.33px, 2.8vw, 2.8rem)` | 23.33px | 23.33px | 500 | 1.15 |
 | **ST** | the statement-band scrub title | `--fs-st` | `clamp(22.1px, 2.87vw, 4rem)` | 33.33px | 22.1px | 600 | 1.10 |
 
-- **Derivation (FINAL — the 1-d re-pin):** the rungs ARE the Heron
+- **Derivation (FINAL — the 1-d re-pin):** the rungs ARE the reference
   extraction's own display ladder (task 1-c; roots 8.33px @1440 · 9.21
   @768 · 9.92 @390 · 11.88 @991 · 19.52 @767-band): h1 5.6rem/46.67px ·
   h2 4.8rem/40px · statement title 4rem/33.33px · card title
@@ -376,14 +376,14 @@ permanent exceptions 2).
   (the 767-band root spike — 19.52px — can never touch them; the
   provisional rem floors would have resolved 2.5rem → 48.8px @767,
   the V5 blowup reborn), rem CAPS ride the desktop root like the R313
-  ladder, and the 4.8vw mid-terms reproduce Heron's 768/991 values
+  ladder, and the 4.8vw mid-terms reproduce the reference's 768/991 values
   EXACTLY (36.9px @768 · 47.6px @991 — its own tablet behavior, never
   the 85.55px amplification the census caught). The census
   (`type-census.md`) proved the pre-R322 tier ran 60–85.55px at five
   to six ad-hoc sizes, all weight 700; the after sweep
   (`type-census-after.md`) shows the migrated sheet at four rung
   values. Weights: D1/D2/ST 600 · D3 500 (the brief caps display at
-  400–600; Heron itself uses 600 below desktop).
+  400–600; the reference itself uses 600 below desktop).
 - **`text-wrap: balance`** on every display rung; zero tashkeel in display
   copy; zero letter-spacing on Arabic (joins).
 - **Body:** 15–17px at leading ≈1.7 — the existing `--fs-body-lg`
@@ -435,10 +435,10 @@ owner flagged, not a style.
   (every route × 1440/390) whose evidence lands in
   `audits/evidence/r324/type-probe.json`.
 
-## R325 — THE APP GRAMMAR (P2.1 — Heron material, no Heron counterpart)
+## R325 — THE APP GRAMMAR (P2.1 — ds material, no reference counterpart)
 
 The authenticated app has no reference page to trace: its grammar is
-**Heron's MATERIAL (§1, §4.d) applied with discipline to authenticated
+**The reference's MATERIAL (§1, §4.d) applied with discipline to authenticated
 density** — paper, ink, hairlines, radius 0, no elevation, the ONE
 orange signal — plus the drafting voice the landing already speaks
 (`[NN]` indices, mono micro-labels, ruled fields). The section pins the
@@ -663,7 +663,7 @@ fails `npm test`, and P2.2's gallery mounts every state primitive at
 > Measured 2026-10-31 on the running stack by
 > `scripts/r327/scroll-rules-probe.mjs` (22 hard rules, 0 failed, 6 soft
 > rows recorded honestly) and `scripts/r327/scroll-screencast.mjs` (the
-> Heron↔landing screencast + glide curves). Evidence:
+> reference↔landing screencast + glide curves). Evidence:
 > `audits/evidence/r327/p3/` — `scroll-rules.json` · `scroll-curve.json` ·
 > the two 1440×900 screencasts (reference + landing, recorded under the
 > retired name). The rules below quote their own
@@ -744,12 +744,12 @@ pause, up to 35%), both sites recorded on the same machine:
 
 | Glide, one 720px impulse | first motion | t63 | t98.6 | settle |
 |---|---|---|---|---|
-| **heronaiapp.com** (wrapper-Lenis + gsap ticker) | 179 ms | 562 ms | 806 ms | **887 ms** |
+| **the retired reference site** (wrapper-Lenis + gsap ticker) | 179 ms | 562 ms | 806 ms | **887 ms** |
 | **Ulara landing** (window-Lenis, lerp 0.1) | 107 ms | 278 ms | 810 ms | **868 ms** |
 
 Same exponential ease-out family, settle within **19 ms (2.2%)** on the
 same machine; both videos sit in the evidence folder for the eyeball
-verdict. Honest differences, recorded not hidden: Heron replays its
+verdict. Honest differences, recorded not hidden: the reference replays its
 entrance loader on every full load and scrolls an inner
 `.main-inner.lenis` wrapper (`window.scrollY` stays 0); Ulara's intro
 is hermetically skipped for the recording (the subject is scroll feel,

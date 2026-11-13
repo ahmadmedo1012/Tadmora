@@ -38,7 +38,7 @@ The static audit (route inventory, R334 1-b/1-c) flagged **32 screens** that ren
   stickyHeaderOffset={topBarHeight}
   // layout
   contentPadding={{ horizontal: 16, top: 12, bottom: 24 }}  // sp-ladder keys
-  rtl                                   // DEFAULT TRUE — Heron is Arabic-first
+  rtl                                   // DEFAULT TRUE — ds is Arabic-first
 />
 ```
 

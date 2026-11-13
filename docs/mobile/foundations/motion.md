@@ -1,4 +1,4 @@
-# R334 2-a — Motion System (Heron mobile)
+# R334 2-a — Motion System (ds mobile)
 
 **Status:** implemented on `r334/motion` · `apps/mobile/src/motion/` · reanimated 4.7.1 + worklets 0.13 + react-native-svg 15.16 (no new deps).
 **Verification honesty:** `tsc --noEmit` exit 0 · jest (render-net, mocked reanimated) 52/52 green. **Not** device-verified, **not** emulator-verified (no KVM in this sandbox) — UI-thread frame fidelity is asserted by construction (worklet code paths) and unit-pinned at rest frames only. RN-web compatibility is by-API (reanimated/svg web builds + the CountUp web mirror); not export-verified in this task.
@@ -7,7 +7,7 @@
 
 1. **Only `transform` and `opacity` animate** — never Yoga layout properties (width/height/margin/flex). The one deliberate exception is svg *paint* state (`strokeDashoffset` in `RingProgress`) set through reanimated native props: it triggers no layout pass.
 2. **prefers-reduced-motion degrades everything** — every primitive reads `useReduceMotion()` (`src/hooks/useReduceMotion.ts`) and lands on an honest static presentation (identity press, flat bone, instant number, frozen ring). Reanimated's layout builders additionally default to `ReduceMotion.System`; the `useEntrance`/`useStaggerEntrance` hooks gate at the React level too — double coverage.
-3. **Springs for interaction, timings for state**, one easing family — the shared Heron curve `cubic-bezier(0.23, 1, 0.32, 1)` (`heronEase` in `@/design/tokens`, generated from `shared/design-tokens.json`).
+3. **Springs for interaction, timings for state**, one easing family — the shared ds curve `cubic-bezier(0.23, 1, 0.32, 1)` (`dsEase` in `@/design/tokens`, generated from `shared/design-tokens.json`).
 4. **Exit beats entrance** (150ms < 240ms), stagger step 60ms, press settle 120ms.
 
 ## Token alignment
@@ -20,7 +20,7 @@ Durations that exist in the shared scale are **imported, not redefined**: `micro
 |---|---|---|
 | `durations`, `easings`, `springs`, `timing()`, `pressFeedback`, `clamp` | presets | `springs.snappy/default/gentle` (mass/damping/stiffness); `timing(ms, easing?)` → reanimated timing config |
 | `PressableScale` | component | wraps any pressable content; scale ≈0.98 + opacity ≈0.9 on press-in, UI thread; forwards **all** `PressableProps`; `disabled`/reduced-motion = identity no-ops |
-| `fadeIn/fadeInUp/fadeInDown/fadeOut/heronLayout` | builders | reanimated entering/exiting/layout factories with Heron timing baked in; each call returns a fresh builder |
+| `fadeIn/fadeInUp/fadeInDown/fadeOut/dsLayout` | builders | reanimated entering/exiting/layout factories with ds timing baked in; each call returns a fresh builder |
 | `slideInFromStart/slideInFromEnd` | builders | **RTL-aware**: reading-start = right in Arabic (via `I18nManager.isRTL`), left in LTR |
 | `staggerDelay(i, {base, step})`, `enterStagger(i, opts)` | helpers | list-stagger arithmetic (default step 60ms) |
 | `useEntrance(build)`, `useStaggerEntrance(opts)` | hooks | reduced-motion gates; the map-safe form for `.map()` children |
@@ -67,7 +67,7 @@ const childEntering = useStaggerEntrance({ base: 80, step: 60 });
 | `app/competitions/*`, `app/training/*` | `RingProgress` (determinate progress), `CountUp` for leaderboards |
 | `features/messages/MessagesUI.tsx` | `slideInFromEnd` detail push-in, `fadeIn` on list swaps |
 | `features/notifications/*` | `SkeletonText` while fetching, `fadeInDown` on banner drop |
-| Lists (2-d, `ui/data.tsx`) | `enterStagger` per row (cap stagger at ~8 children), `LinearTransition` via `heronLayout()` on reorder |
+| Lists (2-d, `ui/data.tsx`) | `enterStagger` per row (cap stagger at ~8 children), `LinearTransition` via `dsLayout()` on reorder |
 | Sheets/toasts (2-c) | `springs.gentle` for sheet settle; `fadeOut` for toast exit (150ms) |
 | Global loading (`ui/states.tsx`, 2-g) | `RingProgress indeterminate` replaces spinner; motion `Skeleton` replaces static bone |
 

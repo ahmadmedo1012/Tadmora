@@ -2,7 +2,7 @@
 
 Branch `r334/sheets`. Commits: `4095b9e` (AppSheet on `@gorhom/bottom-sheet` v5 + toast queue), `8be0817` (lazy native-graph load), `a6466f8` (RNTL nets).
 
-AppSheet is the Heron bottom sheet for the mobile app: one engine, snap
+AppSheet is the ds bottom sheet for the mobile app: one engine, snap
 presets, keyboard-aware inputs, RTL/Arabic-first, themed from the design
 tokens, safe-area aware, reduced-motion fast path. The legacy RN-`Modal`
 overlays (`Sheet` / `ConfirmDialog` / `OptionSheet` in `ui/surfaces.tsx`)

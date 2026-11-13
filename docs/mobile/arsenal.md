@@ -105,7 +105,7 @@ Verified-in-sandbox via tarball probe of `@expo/ui@58.0.27` (`npm pack` + file/`
 
 - `NativeTabs` exists in installed expo-router 58.0.28 (verified-in-sandbox: `build/native-tabs/*`; the root re-export is marked deprecated → import from `expo-router/native-tabs`).
 - It requires the optional peers `@expo/ui ^58.0.25` + `expo-symbols ^58.0.4` (verified-in-sandbox from expo-router's `peerDependenciesMeta`) — neither installed → **two new native modules → fingerprint bump**.
-- The custom bar already delivers the Heron chrome (paper surface, hairline rule, orange 2dp active underline, unread badge, light haptics — verified-in-sandbox from `TabBar.tsx`), is driven by the single source of truth `ROLE_TABS` (5 roles × 5 Arabic-labeled tabs, `roleTabs.ts`), mounts **once** outside screens (state-preserving, the R331 defect fix), and "mirrors automatically under I18nManager.forceRTL" (its own docblock, verified-in-sandbox).
+- The custom bar already delivers the ds chrome (paper surface, hairline rule, orange 2dp active underline, unread badge, light haptics — verified-in-sandbox from `TabBar.tsx`), is driven by the single source of truth `ROLE_TABS` (5 roles × 5 Arabic-labeled tabs, `roleTabs.ts`), mounts **once** outside screens (state-preserving, the R331 defect fix), and "mirrors automatically under I18nManager.forceRTL" (its own docblock, verified-in-sandbox).
 - Native `UITabBar`/`BottomNavigationView` follow the OS locale → same RTL risk as §3 (`unverified`, device-class) and would discard the custom underline/badge chrome.
 - **Verdict:** keep `RoleTabBar` for R334 (JS-only, tested, on-design). NativeTabs is a post-R334 experiment to run *inside* a fingerprint-bumping release, and only worth it if we accept locale-following RTL and the loss of custom tab chrome on Android/iOS.
 
@@ -117,7 +117,7 @@ Verified-in-sandbox via tarball probe of `@expo/ui@58.0.27` (`npm pack` + file/`
 
 ### (iv) Charts — **react-native-svg 15.16.0** (installed) for grades/results; defer Skia
 
-- SVG is already in the fingerprint and already ships (brand/plan illustrations — verified-in-sandbox); grades/results charts are small static datasets where Skia's GPU advantage is irrelevant; hand-rolled SVG chart primitives match the Heron design language exactly (the web frontend already hand-rolls its charts — `frontend/src/components/charts/`, verified-in-sandbox).
+- SVG is already in the fingerprint and already ships (brand/plan illustrations — verified-in-sandbox); grades/results charts are small static datasets where Skia's GPU advantage is irrelevant; hand-rolled SVG chart primitives match the ds design language exactly (the web frontend already hand-rolls its charts — `frontend/src/components/charts/`, verified-in-sandbox).
 - Skia 2.14.0 peers all fit (§1) but it is a heavy native module: fingerprint bump + binary-size pressure against the ≤8 MB Mobile gate (RELEASE.md, verified-in-sandbox). Same applies to Skia-based `victory-native` 43.0.1 ([npm](https://www.npmjs.com/package/victory-native)). SVG-based `react-native-gifted-charts` 1.4.81 adds little over hand-rolled SVG here.
 - **Verdict:** react-native-svg now; revisit Skia only for a perf-measured need (large live datasets) in a fingerprint-bumping release.
 

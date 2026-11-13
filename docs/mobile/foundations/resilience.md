@@ -21,7 +21,7 @@ behavior on real hardware is `unverified` by the mission's honesty rule.
 ### `src/lib/resilience/network.tsx`
 
 - `useNetworkStatus(): { isOnline, isResolved, type }` — the ONE NetInfo subscription hook; optimistic-online until first resolve (no false-offline flash at cold start).
-- `NetworkBanner` — self-subscribing banner for the app root. Offline: yellow tone «لا يوجد اتصال بالإنترنت — سيتم إعادة المحاولة تلقائيًا»; on reconnect: mint flash «عاد الاتصال» (~2.4s). Transform/opacity-only enter/exit (heronEase), safe-area top padding, `accessibilityRole="alert"` + live region polite; reduced-motion shows/hides statically.
+- `NetworkBanner` — self-subscribing banner for the app root. Offline: yellow tone «لا يوجد اتصال بالإنترنت — سيتم إعادة المحاولة تلقائيًا»; on reconnect: mint flash «عاد الاتصال» (~2.4s). Transform/opacity-only enter/exit (dsEase), safe-area top padding, `accessibilityRole="alert"` + live region polite; reduced-motion shows/hides statically.
 - `useOnlineManagerBridge()` — ref-counted NetInfo→TanStack `onlineManager` wiring, mounted by `<NetworkBanner/>`; queries PAUSE offline and auto-resume on reconnect (that's what makes the banner's promise honest).
 
 ### `src/lib/resilience/persistence.ts`
