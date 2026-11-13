@@ -1,6 +1,6 @@
 import { PREFERS_REDUCED_MOTION } from '../../../lib/motion-media';
 /**
- * Preloader — R333 «تتابع الدخول» — the entry overlay (heron-craft row 1).
+ * Preloader — R333 «تتابع الدخول» — the entry overlay (the retired craft sheet row 1).
  *
  * A full-screen paper overlay on the page ground (var(--bg)): the brand
  * mark + the «أُلارا» outlined wordmark draw in via the ONE brand
@@ -40,7 +40,7 @@ import { Logo } from '../../../brand';
 import { markIntroSeen } from '../../../lib/motion/introGate';
 import '../../../styles/landing/preloader.css';
 
-/* The clock is the r309-pinned measured window (heron-craft row 1 /
+/* The clock is the r309-pinned measured window (the retired craft sheet row 1 /
  * introGate V14): the counter is ASSET-GATED — 100% lands between
  * ~2.75s (assets resolved early) and the 4.9s fallback cap, then the
  * 700ms completed-state hold, then the 835ms sheet-exit wipe. */

@@ -1,7 +1,7 @@
 /* R332 — split from src/styles/landing.css · journey = the chapters
    band (the R308/R322 jt scroll story) + wr reveals.
    R342-04 — THE MEASURED-SEAT REBUILD: every geometry below is the
-   frozen Heron map spec re-expressed on the band's own em ladder
+   frozen reference map spec re-expressed on the band's own em ladder
    (the scaffold rung: 17.78@1920 · 13.33@1440 · 9.48@1024 · the
    mobile roots), so one rule holds every desktop breakpoint. The
    em constants, where they are constants, are the measurements:
@@ -9,7 +9,7 @@
    at 1.2em inset · marks 0.75em · intro card 17.5em × 2em insets ·
    closing col clamp(280px, 32.3vw, 464px) · chip 8.1em × 2.63em ·
    h2 9em box @3em rung · cms rows 4em, icons 2em · ledger texts 1em.
-   Full map + proof: docs/redesign/r335/heron-spec/home-map-wrap.*.json */
+   Full map + proof: the frozen r335 reference captures: home-map-wrap.*.json */
 
 /* ═══ الفصول — the pinned map band ═══
    The section height is the TRACK height exactly (the measured
@@ -33,23 +33,23 @@ section.chapters {
   /* T-09d — the band's measured ink model: #262019 at 72% alpha on
      every structural node, as a section-scoped var (the r338
      ADDENDUM 9 pattern; flips with the theme for the dark census). */
-  --jt-ink: rgb(40 40 40 / 72%); /* color-gate: allow — measured Heron map ink, scoped var not a global token mutation (r338 ADDENDUM 9 pattern). The computed value must serialise rgba(40,40,40,0.72); the dark twin below carries the same allowance. */
+  --jt-ink: rgb(40 40 40 / 72%); /* color-gate: allow — measured reference map ink, scoped var not a global token mutation (r338 ADDENDUM 9 pattern). The computed value must serialise rgba(40,40,40,0.72); the dark twin below carries the same allowance. */
   color: var(--jt-ink);
   line-height: 18px; /* 1440 measured */
   block-size: 700dvh;
   margin-block: 0;
   margin-inline: 0.78rem; /* spacing-gate: allow — the measured track gutters (6.5@1440 · 9@1920 on the fluid root) */
 
-  --jt-t-art: 0.4s; /* measured — heron home-map band art tween */
-  --jt-e-art: ease; /* measured — heron home-map band art tween */
-  --jt-cap: var(--neutral-400); /* R342-11 — the measured Heron caption ink (rgb(180,180,176)) rides the palette scale's own rung (light --neutral-400 IS #B4B4B0, tokens.generated.css); the dark twin re-points at the dark ramp's readable caption seat. The css rawHex ratchet stays at its frozen baseline — the two plan-artifact hexes below are the tokens' own documented unavoidable class (theme-pinned values var() cannot express) */
+  --jt-t-art: 0.4s; /* measured — the reference home-map band art tween */
+  --jt-e-art: ease; /* measured — the reference home-map band art tween */
+  --jt-cap: var(--neutral-400); /* R342-11 — the measured reference caption ink (rgb(180,180,176)) rides the palette scale's own rung (light --neutral-400 IS #B4B4B0, tokens.generated.css); the dark twin re-points at the dark ramp's readable caption seat. The css rawHex ratchet stays at its frozen baseline — the two plan-artifact hexes below are the tokens' own documented unavoidable class (theme-pinned values var() cannot express) */
 }
 
 
 /* r339 T-12 — the map ink's night seat (unchanged). */
 [data-theme='dark'] .jt {
   --jt-cap: var(--text-muted);
-  --jt-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink #F5F1E8 at the spec's 72% strength; the light arm keeps the frozen Heron literal */
+  --jt-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink #F5F1E8 at the spec's 72% strength; the light arm keeps the frozen reference literal */
 
   --jt-cap: var(--text-muted);
 }
@@ -594,7 +594,7 @@ section.chapters {
 
 /* ── the INTRODUCTION card — the measured corner card ─────────────
    17.5em wide, 2em from the map column's block-end + inline-start
-   edges (Heron's bottom-left mirrored to bottom-right in RTL,
+   edges (the reference's bottom-left mirrored to bottom-right in RTL,
    opposite the closing column). Paper ground, 1px hairline, the
    DARK head chip with the white mono label; rests at opacity 0
    (the spec's captured state) and flips on with the card era. */
@@ -789,7 +789,7 @@ section.chapters {
   position: static;
   flex: 0 0 auto;
   align-self: stretch;
-  inline-size: clamp(280px, 32.3vw, 464px); /* Heron's exact 464px @1440 (55.7rem) — 32.3vw clears the cap at 1436+ */
+  inline-size: clamp(280px, 32.3vw, 464px); /* the reference's exact 464px @1440 (55.7rem) — 32.3vw clears the cap at 1436+ */
   display: flex;
   flex-direction: column;
   contain: layout paint;
@@ -967,7 +967,7 @@ section.chapters {
 }
 
 /* ═══ the ≤991 architecture: the sticky moves INSIDE the plan
-   column (Heron's own mobile architecture) ═══ */
+   column (the reference's own mobile architecture) ═══ */
 @media (max-width: 991px) {
   .jt {
     block-size: auto;
@@ -999,7 +999,7 @@ section.chapters {
     flex: none;
     display: block;
     block-size: 466dvh;
-    padding-inline: 8px; /* spacing-gate: allow — the A8 sheet-frame inset seat (Heron's own mobile plan inset) */
+    padding-inline: 8px; /* spacing-gate: allow — the A8 sheet-frame inset seat (the reference's own mobile plan inset) */
   }
 
   /* the sticky window — FULL VIEWPORT HEIGHT below the fixed

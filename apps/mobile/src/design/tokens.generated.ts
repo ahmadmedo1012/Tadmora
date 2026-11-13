@@ -3,12 +3,12 @@
  * Source of truth: shared/design-tokens.json (R326 M0.4).
  * Regen (repo root): npm run tokens:build · Gate: npm run tokens:check
  *
- * The MOBILE half of the shared Heron set. The typed public surface
- * (HeronPalette · StatusTone · the toneFor* mappers) lives in ./tokens,
+ * The MOBILE half of the shared design-system set. The typed public surface
+ * (DsPalette · StatusTone · the toneFor* mappers) lives in ./tokens,
  * which re-exports this data — every existing import keeps working.
  */
 
-export const heron = {
+export const ds = {
   light: {
     bg: "#F5F1E8",
     surface: "#FFFFFF",
@@ -136,9 +136,9 @@ export const motion = {
   guestReveal: 700,
 } as const;
 
-export const heronEase = [0.23, 1, 0.32, 1] as const;
+export const dsEase = [0.23, 1, 0.32, 1] as const;
 
-// Heron radius discipline: 0 everywhere; circles only for round elements.
+// radius discipline: 0 everywhere; circles only for round elements.
 export const radius = {
   none: 0,
   full: 9999,

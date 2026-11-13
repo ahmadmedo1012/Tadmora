@@ -2,7 +2,7 @@
  * r313-lenis.test.ts — the 4-b (D6) scroll-engine belt.
  *
  * Pins the guest smooth-scroll integration end to end, against the
- * MEASURED Heron spec (audits/evidence/r313/reference/digest.json →
+ * MEASURED the reference spec (audits/evidence/r313/reference/digest.json →
  * `scroll`):
  *
  *   · Lenis 1.1.5, lerp 0.1 (lerp mode, duration undefined), the
@@ -12,7 +12,7 @@
  *     shared motion conductor;
  *   · reduced-motion NEVER initializes (native scroll under RM);
  *   · init/destroy lifecycle + the html engine chrome markers;
- *   · the 150ms scroll-quiet idle marker (Heron's contract);
+ *   · the 150ms scroll-quiet idle marker (the reference's contract);
  *   · the zero-idle property: the conductor holds ZERO subscribers
  *     while the page sits still, and the driver attaches on input;
  *   · base.css: scroll-behavior:smooth gone (the D6 pin — grep zero on
@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 import { isGuestLenisIdle,
-  HERON_LENIS_PARAMS,
+  DS_LENIS_PARAMS,
   getLenis,
   initGuestLenis,
   destroyGuestLenis,
@@ -86,31 +86,31 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-/* ═══ the measured Heron params ════════════════════════════════════ */
+/* ═══ the measured reference params ════════════════════════════════════ */
 
-describe('r313 4-b — Heron\'s measured Lenis params', () => {
+describe('r313 4-b — the reference\'s measured Lenis params', () => {
   it('exports the engine surface', async () => {
     const mod = await import('../../src/lib/motion/sheetLenis');
-    expect(mod.HERON_LENIS_PARAMS).toBeTruthy();
+    expect(mod.DS_LENIS_PARAMS).toBeTruthy();
     expect(mod.getLenis).toBeInstanceOf(Function);
     expect(mod.initGuestLenis).toBeInstanceOf(Function);
     expect(mod.destroyGuestLenis).toBeInstanceOf(Function);
     expect(mod.isGuestLenisOn).toBeInstanceOf(Function);
   });
 
-  it('HERON_LENIS_PARAMS matches the digest scroll section', () => {
+  it('DS_LENIS_PARAMS matches the digest scroll section', () => {
     // R313 override: smooth → Lenis (owner decision) — the pinned curve:
-    expect(HERON_LENIS_PARAMS.lerp).toBe(0.1);
-    expect(HERON_LENIS_PARAMS.duration).toBeUndefined();
-    expect(HERON_LENIS_PARAMS.smoothWheel).toBe(true);
-    expect(HERON_LENIS_PARAMS.syncTouch).toBe(true);
-    expect(HERON_LENIS_PARAMS.smoothTouch).toBe(false);
-    expect(HERON_LENIS_PARAMS.infinite).toBe(false);
-    expect(HERON_LENIS_PARAMS.wheelMultiplier).toBe(1);
-    expect(HERON_LENIS_PARAMS.touchMultiplier).toBe(1);
+    expect(DS_LENIS_PARAMS.lerp).toBe(0.1);
+    expect(DS_LENIS_PARAMS.duration).toBeUndefined();
+    expect(DS_LENIS_PARAMS.smoothWheel).toBe(true);
+    expect(DS_LENIS_PARAMS.syncTouch).toBe(true);
+    expect(DS_LENIS_PARAMS.smoothTouch).toBe(false);
+    expect(DS_LENIS_PARAMS.infinite).toBe(false);
+    expect(DS_LENIS_PARAMS.wheelMultiplier).toBe(1);
+    expect(DS_LENIS_PARAMS.touchMultiplier).toBe(1);
     // the 1.1.5 default easing, restated: min(1, 1.001 - 2^(-10t))
-    expect(typeof HERON_LENIS_PARAMS.easing).toBe('function');
-    const easing = HERON_LENIS_PARAMS.easing as (t: number) => number;
+    expect(typeof DS_LENIS_PARAMS.easing).toBe('function');
+    const easing = DS_LENIS_PARAMS.easing as (t: number) => number;
     expect(easing(0)).toBeCloseTo(0.001, 6);
     expect(easing(1)).toBe(1);
   });
@@ -123,9 +123,9 @@ describe('r313 4-b — Heron\'s measured Lenis params', () => {
     expect(engine?.options.duration).toBeUndefined();
     expect(engine?.options.smoothWheel).toBe(true);
     expect(engine?.options.syncTouch).toBe(true);
-    // smoothTouch is asserted on HERON_LENIS_PARAMS only: Lenis 1.1.5
+    // smoothTouch is asserted on DS_LENIS_PARAMS only: Lenis 1.1.5
     // DROPPED the key (touch smoothing is syncTouch alone — verified in
-    // node_modules/lenis/dist/lenis.js); Heron still passes it literally
+    // node_modules/lenis/dist/lenis.js); the reference still passes it literally
     // from its older config, so the param travels in the spec but never
     // lands in the resolved options.
     expect(engine?.options.infinite).toBe(false);
@@ -186,7 +186,7 @@ describe('r313 4-b — init/destroy lifecycle', () => {
     expect(sheetSubscriberCount()).toBe(0);
   });
 
-  it('the 150ms scroll-quiet idle FLAG (Heron contract; R321 §A1 JS seat)', async () => {
+  it('the 150ms scroll-quiet idle FLAG (the reference contract; R321 §A1 JS seat)', async () => {
     expect(initGuestLenis()).toBe(true);
     const html = document.documentElement;
 

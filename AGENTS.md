@@ -14,12 +14,12 @@ docs/modules/) are Arabic; generated references (docs/*-REFERENCE.md) are Englis
 | `frontend/` | `@ulara/frontend` — React 18 + Vite SPA: `src/App.tsx` shell, `src/pages/` (incl. `LandingPage.tsx`), `src/components/landing/sections/*.tsx` (landing seats), `src/styles/` (token + layer + feature CSS), `stores/` (zustand), `tests/` (vitest + Playwright e2e/audit/r305) |
 | `backend/` | Express + TS + Prisma workspace: `src/app.ts`, `src/http/routes/*.ts` (API), `src/modules/*`, `src/lib/` (permissions, governance, storage), `prisma/schema.prisma` + `migrations/` + `seed.ts` |
 | `apps/mobile/` | Expo ~58 (React Native) app with its own lockfile — see `apps/mobile/README.md` |
-| `scripts/` | `verify.sh` (the ONE gate set) + gates: `check-bundle-size.mjs`, `check-{icons,colors,raw-css,motion-tokens,csp-hash}.sh`, `tokens/build.mjs`, `verify-parity-export.mjs`, `spec/extract-heron.mjs`, round dirs (`r314…r333`, history), `gates/` (stylelint ratchet + css-counts/coverage), `deadcode/` (knip/jscpd ratchet) |
+| `scripts/` | `verify.sh` (the ONE gate set) + gates: `check-bundle-size.mjs`, `check-{icons,colors,raw-css,motion-tokens,csp-hash}.sh`, `tokens/build.mjs`, `verify-parity-export.mjs`, round dirs (`r314…r333`, history), `gates/` (stylelint ratchet + css-counts/coverage), `deadcode/` (knip/jscpd ratchet) |
 | `scripts/conformance/` | visual conformance instrument: `run.mjs`, `pages.mjs` (per-page ≥90 gate), `panel.mjs` (blind panel judging), `scroll.mjs`, `interact.mjs`, `tween.mjs`, `mapping/*.json` (section→DOM binding), `ratchet.json` (monotonic floor — 93.8), `results.json` |
 | `shared/` | `design-tokens.json` (source of generated tokens), `brand/`, `testAccounts.ts` |
 | `specs/` | SpeckKit feature specs (001–012); live status is `docs/SPECS-REFERENCE.md`, **not** `specs/*/spec.md` |
 | `tools/` | `boot-pg.sh` (local postgres), `daemon.js` |
-| `docs/` | Arabic platform docs 01–16 + `modules/` + `architecture/` + `redesign/` (round history r305…r341; `redesign/r335/heron-spec/*.json` = frozen reference; `redesign/r341/` = current program: QUEUE/HANDOFF/OWNERSHIP/tasks/arsenal; r338–r340 = closed rounds still on disk — r333/r335/r337 docs already under `docs/archive/redesign/`) |
+| `docs/` | Arabic platform docs 01–16 + `modules/` + `architecture/` + `redesign/` (round history r305…r341; `redesign/r341/` = current program: QUEUE/HANDOFF/OWNERSHIP/tasks/arsenal; r338–r340 = closed rounds still on disk — r333/r335/r337 docs already under `docs/archive/redesign/`) |
 | `.github/workflows/` | `ci.yml` (full gate matrix), `size-gate.yml`, `mobile.yml`, `android-apk.yml`, `deploy.yml` (Vercel), `deploy-smoke.yml`, `build-ios-sidestore.yml`, `mobile-builds-ledger.yml`, `deadcode.yml` — runners pinned to `ubuntu-24.04` |
 
 Sources of truth (don't guess, read): endpoints → `backend/src/app.ts` + `http/routes/`
@@ -57,7 +57,7 @@ Verification — the ONE local gate set (run before every push):
 bash scripts/verify.sh                       # full set = what CI runs (~8 min)
 bash scripts/verify.sh --fast                # tsc + vitest + bundle + stylelint/CSS-ratchet gate (~4 min)
 bash scripts/verify.sh --sections home-why-wrap   # scope conformance by section keys
-bash scripts/verify.sh --specs r305-shell-heron   # scope e2e by spec file stem
+bash scripts/verify.sh --specs r305-shell-ds   # scope e2e by spec file stem
 ```
 
 Conformance instrument (`scripts/conformance/run.mjs`) — always point it at YOUR OWN dev
@@ -92,7 +92,7 @@ these local gates — all runners pinned `ubuntu-24.04`:
 - **Conformance ratchet** — `scripts/conformance/ratchet.json` is monotonic: `--gate`
   checks, `--ratchet` raises, never lower. Section target = ≥90% on ALL 5 breakpoints +
   dark (+ WebKit where available). No-counterpart = FAIL. Skipped plumbing (defs/mask/
-  filter scaffolding) must be declared in the mapping's `plumbing: [{section, heron,
+  filter scaffolding) must be declared in the mapping's `plumbing: [{section, reference,
   skip, reason}]` — skipped cells are counted, never silent.
 - **Design gates** — `check-icons.sh` (Lucide icons only, via `Icon.tsx`),
   `check-colors.sh --strict` (no raw hex/rgb), `check-raw-css.sh --strict` (no raw
@@ -160,7 +160,7 @@ briefs in `docs/redesign/r341/tasks/`.
   document token values as loaded from the sheet.
 - Icons: Lucide only, imported through `Icon.tsx`.
 - Arabic-first rules: letter-spacing 0, RTL mirrors are transformed expectations, Arabic
-  line-height floor pattern `max(heronLh, 1.35×fs)`.
+  line-height floor pattern `max(dsLh, 1.35×fs)`.
 - Measured color deltas vs the frozen spec: define a **section-scoped** CSS var in the
   section's own sheet set to the MEASURED value (e.g. platform CTA orange
   `rgb(250,54,0)` in `platform.css`) — never mutate global tokens ad hoc (global token
@@ -169,10 +169,10 @@ briefs in `docs/redesign/r341/tasks/`.
 
 ## 7. Never-do list
 
-- Never raise a ceiling (770 / 92 / 110), re-pin the Heron spec baseline
-  (`scripts/spec/extract-heron.mjs`), weaken an assertion or test, lower the ratchet, or
+- Never raise a ceiling (770 / 92 / 110), re-pin the retired reference spec baseline,
+  weaken an assertion or test, lower the ratchet, or
   add `continue-on-error`.
-- Never paste Heron (heronaiapp.com) source, text, images or fonts — reproduce MEASURED
+- Never paste the retired reference site's source, text, images or fonts — reproduce MEASURED
   parameters (geometry, type, colour, durations, easings, triggers) in our own code.
   Fonts are Alexandria/IBM Plex (BT Grotesk is banned).
 - Never commit secrets (`GITHUB_TOKEN`, `EXPO_TOKEN`, `DATABASE_URL`…), never print

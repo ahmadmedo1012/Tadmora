@@ -35,8 +35,8 @@ import {
 } from '../../lib/calendar';
 import { formatDate } from '../../utils/numbers';
 /* ── r305-c (schedule family) imports — the only region agent 2-c edits above the components ── */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-schedule.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-schedule.css';
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the calendar's own grid/legend/detail
  * registers keep their r305-c pins; the week strip joins the sheet). */
@@ -356,7 +356,7 @@ export default function StudentCalendarPage() {
           </div>
         </header>
 
-        {/* Heron micro-label: the legend is a metadata block — classify
+        {/* the reference micro-label: the legend is a metadata block — classify
             it (the chips below carry the kinds; tone on the dot only). */}
         <div className="cal-legend" aria-label="مفتاح الرموز">
           <span className="r305s-eyebrow">أنواع المواعيد</span>
@@ -392,7 +392,7 @@ export default function StudentCalendarPage() {
             const eventCount = byDay.get(cell.key)?.length ?? 0;
             const isToday = cell.key === todayKey;
             const dayName = isToday ? `اليوم ${WEEKDAY_NAMES_AR[cell.dow]}` : WEEKDAY_NAMES_AR[cell.dow];
-            /* r305-c Heron chrome: the weekend (Libya: Friday + Saturday
+            /* r305-c the reference chrome: the weekend (Libya: Friday + Saturday
              * on the 0=Sunday contract) takes a quiet ink step — presentational
              * only, the cell's data/aria contract is untouched. */
             const isWeekend = cell.dow === 5 || cell.dow === 6;

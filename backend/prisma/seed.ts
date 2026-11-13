@@ -12,9 +12,9 @@
  *
  *   · مساحة عمل أُلارا التجريبية (slug ulara-demo) — the labeled
  *     demo workspace that owns the academic demo content. The row
- *     keeps its stable id inst-zawia-showcase, a legacy identifier
+ *     keeps its stable id inst-ulara-showcase, a legacy identifier
  *     from the retired showcase era, not identity.
- *   · مساحة عمل تجريبية ثانية (slug alandalus-demo) — the second
+ *   · مساحة عمل تجريبية ثانية (slug ulara-demo-2) — the second
  *     labeled demo workspace. Its course reuses the SAME code as the
  *     first workspace's CS course and its student reuses the SAME
  *     reg-number — both institution-scoped (unique per institution),
@@ -36,13 +36,13 @@
  * of truth is src/modules/auth/test-accounts.data.ts, re-exported at
  * the repo root as shared/testAccounts.ts):
  *   student@test.ly   → STUDENT (أحمد الزروق) — membership in ulara-demo
- *   student2@test.ly  → STUDENT (ليلى المهدي) — membership in alandalus-demo
+ *   student2@test.ly  → STUDENT (ليلى المهدي) — membership in ulara-demo-2
  *   teacher@test.ly   → TEACHER (د. سالم البوسيفي) — membership in ulara-demo
  *   registrar@test.ly → ADMIN   (المسجل العام) — membership in ulara-demo
  *   quality@test.ly   → QUALITY (ضمان الجودة) — membership in ulara-demo
  *   owner@test.ly     → OWNER   (مالك المنصة) — NO membership (platform owner)
- *   teacher2@test.ly  → TEACHER (خالد التربلسي) — membership in alandalus-demo
- *   admin2@test.ly    → ADMIN   (مسجل عام) — membership in alandalus-demo
+ *   teacher2@test.ly  → TEACHER (خالد التربلسي) — membership in ulara-demo-2
+ *   admin2@test.ly    → ADMIN   (مسجل عام) — membership in ulara-demo-2
  * Password for ALL seeded accounts: "12345678" (TEST_PASSWORD — the
  * pre-R320 demo domain/password pair is retired).
  *
@@ -145,21 +145,19 @@ async function main() {
   // التجريبية — a NEUTRAL workspace, not a university (Phase Ω: the
   // platform has no institutional affiliations; institutions self-
   // onboard and own their data). The row is created with the FIXED
-  // literal id 'inst-zawia-showcase' — a LEGACY stable identifier
-  // carried from the pre-r188 era (renaming ids would churn every FK
-  // for zero product value; the string is internal, never public
-  // identity) — the same id the migration backfill used, so migrated
-  // databases and fresh seeded databases agree on the reference id
-  // (tests rely on it). The r188 migration renamed an existing
-  // zawia-showcase row to the demo slug; the Phase Ω migration renamed
-  // the r188 university label to the workspace label; the ULARA rebrand
-  // migration renamed the slug + labels to the ULARA forms; fresh
-  // installs create it directly.
-  const zawia = await prisma.institution.upsert({
+  // literal id 'inst-ulara-showcase' — the stable FK anchor carried
+  // across the brand eras (renaming ids would churn every FK for zero
+  // product value; the string is internal, never public identity) —
+  // the same id the migration backfill used, so migrated databases
+  // and fresh seeded databases agree on the reference id (tests rely
+  // on it). The rebrand-era migrations each re-slugged/re-labeled this
+  // same row forward (showcase → demo workspace → ULARA forms); fresh
+  // installs create it directly in the final form.
+  const primary = await prisma.institution.upsert({
     where: { slug: 'ulara-demo' },
     update: { name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', status: 'ACTIVE' },
     create: {
-      id: 'inst-zawia-showcase',
+      id: 'inst-ulara-showcase',
       name: 'مساحة عمل أُلارا التجريبية',
       nameEn: 'Ulara Experimental Workspace',
       slug: 'ulara-demo',
@@ -168,13 +166,13 @@ async function main() {
   });
   // The second labeled demo workspace — the multi-tenant proof tenant
   // (all demo users live on the test.ly domain — R320 §C).
-  const alandalus = await prisma.institution.upsert({
-    where: { slug: 'alandalus-demo' },
+  const secondary = await prisma.institution.upsert({
+    where: { slug: 'ulara-demo-2' },
     update: { name: 'مساحة عمل تجريبية ثانية', nameEn: 'A Second Experimental Workspace', status: 'ACTIVE' },
     create: {
       name: 'مساحة عمل تجريبية ثانية',
       nameEn: 'A Second Experimental Workspace',
-      slug: 'alandalus-demo',
+      slug: 'ulara-demo-2',
       status: 'ACTIVE',
     },
   });
@@ -197,8 +195,8 @@ async function main() {
       { name: 'كلية الهندسة', nameEn: 'Engineering', iconEmoji: '⚙️', city: 'افتراضي' },
       { name: 'كلية إدارة الأعمال', nameEn: 'Business Administration', iconEmoji: '💼', city: 'افتراضي' },
     ].map((f) => prisma.faculty.upsert({
-      where: { institutionId_name_city: { institutionId: zawia.id, name: f.name, city: f.city } },
-      create: { ...f, institutionId: zawia.id },
+      where: { institutionId_name_city: { institutionId: primary.id, name: f.name, city: f.city } },
+      create: { ...f, institutionId: primary.id },
       update: { nameEn: f.nameEn, iconEmoji: f.iconEmoji },
     })),
   );
@@ -246,7 +244,7 @@ async function main() {
   const password = await hashPassword(TEST_PASSWORD);
 
   // r178: the demo reg-number literal — deliberately shared by BOTH demo
-  // students (demo university + Al-Andalus) to prove reg-number uniqueness is
+  // students (both demo workspaces) to prove reg-number uniqueness is
   // institution-scoped, not global.
   const DEMO_REG_NUMBER = 'UZ-2024-00001';
 
@@ -277,17 +275,17 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  const studentMembership = await ensureMembership(student.id, zawia.id, Role.STUDENT);
+  const studentMembership = await ensureMembership(student.id, primary.id, Role.STUDENT);
   // Keyed by the scoped unique (institutionId, universityId). On the
   // migrated dev DB this finds the migration-backfilled row (whose
   // membershipId points at the same membership upserted above).
   await prisma.studentProfile.upsert({
-    where: { institutionId_universityId: { institutionId: zawia.id, universityId: DEMO_REG_NUMBER } },
+    where: { institutionId_universityId: { institutionId: primary.id, universityId: DEMO_REG_NUMBER } },
     update: { membershipId: studentMembership.id, facultyId: csFaculty.id, departmentId: csDept.id },
     create: {
       userId: student.id,
       membershipId: studentMembership.id,
-      institutionId: zawia.id,
+      institutionId: primary.id,
       universityId: DEMO_REG_NUMBER,
       facultyId: csFaculty.id,
       departmentId: csDept.id,
@@ -312,12 +310,12 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  const teacherMembership = await ensureMembership(teacher.id, zawia.id, Role.TEACHER);
+  const teacherMembership = await ensureMembership(teacher.id, primary.id, Role.TEACHER);
   // TeacherProfile has no natural unique key (per-membership rows with
   // cuid ids) — resolve by (user, membership institution), create when
   // absent; re-runs and migrated DBs both find the existing row.
   let teacherProfile = await prisma.teacherProfile.findFirst({
-    where: { userId: teacher.id, membership: { institutionId: zawia.id } },
+    where: { userId: teacher.id, membership: { institutionId: primary.id } },
   });
   if (!teacherProfile) {
     teacherProfile = await prisma.teacherProfile.create({
@@ -347,7 +345,7 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  await ensureMembership(admin.id, zawia.id, Role.ADMIN);
+  await ensureMembership(admin.id, primary.id, Role.ADMIN);
 
   const quality = await prisma.user.upsert({
     where: { email: 'quality@test.ly' },
@@ -363,7 +361,7 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  await ensureMembership(quality.id, zawia.id, Role.QUALITY);
+  await ensureMembership(quality.id, primary.id, Role.QUALITY);
 
   // Platform owner — Master Control Panel demo account. Like ADMIN and
   // QUALITY it carries no profile and keeps scopeFacultyId NULL (the
@@ -393,14 +391,14 @@ async function main() {
   // two institution-scoped-uniqueness proofs of the r178 seed.
   const aaFaculty = await prisma.faculty.upsert({
     where: {
-      institutionId_name_city: { institutionId: alandalus.id, name: 'كلية تقنية المعلومات', city: 'افتراضي' },
+      institutionId_name_city: { institutionId: secondary.id, name: 'كلية تقنية المعلومات', city: 'افتراضي' },
     },
     create: {
       name: 'كلية تقنية المعلومات',
       nameEn: 'Information Technology',
       iconEmoji: '💻',
       city: 'افتراضي',
-      institutionId: alandalus.id,
+      institutionId: secondary.id,
     },
     update: {},
   });
@@ -426,16 +424,16 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  const student2Membership = await ensureMembership(student2.id, alandalus.id, Role.STUDENT);
+  const student2Membership = await ensureMembership(student2.id, secondary.id, Role.STUDENT);
   // SAME reg-number as the demo student — allowed because the
   // unique key is (institutionId, universityId), not universityId alone.
   await prisma.studentProfile.upsert({
-    where: { institutionId_universityId: { institutionId: alandalus.id, universityId: DEMO_REG_NUMBER } },
+    where: { institutionId_universityId: { institutionId: secondary.id, universityId: DEMO_REG_NUMBER } },
     update: { membershipId: student2Membership.id, facultyId: aaFaculty.id, departmentId: aaCsDept.id },
     create: {
       userId: student2.id,
       membershipId: student2Membership.id,
-      institutionId: alandalus.id,
+      institutionId: secondary.id,
       universityId: DEMO_REG_NUMBER,
       facultyId: aaFaculty.id,
       departmentId: aaCsDept.id,
@@ -459,7 +457,7 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  await ensureMembership(admin2.id, alandalus.id, Role.ADMIN);
+  await ensureMembership(admin2.id, secondary.id, Role.ADMIN);
 
   // ─── r179 (phase-5): second-workspace full academic + community demo ──
   // The second workspace gets a TEACHER, an offering of its SE301
@@ -481,9 +479,9 @@ async function main() {
       emailVerifiedAt: new Date(),
     },
   });
-  const teacher2Membership = await ensureMembership(teacher2.id, alandalus.id, Role.TEACHER);
+  const teacher2Membership = await ensureMembership(teacher2.id, secondary.id, Role.TEACHER);
   let teacher2Profile = await prisma.teacherProfile.findFirst({
-    where: { userId: teacher2.id, membership: { institutionId: alandalus.id } },
+    where: { userId: teacher2.id, membership: { institutionId: secondary.id } },
   });
   if (!teacher2Profile) {
     teacher2Profile = await prisma.teacherProfile.create({
@@ -503,7 +501,7 @@ async function main() {
   // below needs it — so a fresh database (no prior seed) resolves it
   // on the first run; the upsert keeps re-runs idempotent.
   const aaCourse = await prisma.course.upsert({
-    where: { institutionId_code: { institutionId: alandalus.id, code: 'SE301' } },
+    where: { institutionId_code: { institutionId: secondary.id, code: 'SE301' } },
     update: {},
     create: {
       code: 'SE301',
@@ -512,7 +510,7 @@ async function main() {
       iconEmoji: '💻',
       themeColor: '#4F8EF7',
       departmentId: aaCsDept.id,
-      institutionId: alandalus.id,
+      institutionId: secondary.id,
     },
   });
   const aaOffering = await prisma.courseOffering.upsert({
@@ -554,7 +552,7 @@ async function main() {
   ];
   for (const p of aaPostDefs) {
     const existing = await prisma.post.findFirst({ where: { authorId: p.authorId, body: p.body } });
-    if (!existing) await prisma.post.create({ data: { ...p, institutionId: alandalus.id } });
+    if (!existing) await prisma.post.create({ data: { ...p, institutionId: secondary.id } });
   }
 
   // ─── Courses (mirrors the prototype's `courses` array) ───────
@@ -571,7 +569,7 @@ async function main() {
   for (const c of courseDefs) {
     const created = await prisma.course.upsert({
       // r178: course code is unique PER INSTITUTION (demo CS dept here).
-      where: { institutionId_code: { institutionId: zawia.id, code: c.code } },
+      where: { institutionId_code: { institutionId: primary.id, code: c.code } },
       update: {},
       create: {
         code: c.code,
@@ -580,7 +578,7 @@ async function main() {
         iconEmoji: c.icon,
         themeColor: c.color,
         departmentId: csDept.id,
-        institutionId: zawia.id,
+        institutionId: primary.id,
       },
     });
     courses.push(created);
@@ -841,7 +839,7 @@ async function main() {
     });
     // r179 (phase-5): community posts are institution-scoped — the demo
     // demo community belongs to the showcase institution.
-    if (!existing) await prisma.post.create({ data: { ...p, institutionId: zawia.id } });
+    if (!existing) await prisma.post.create({ data: { ...p, institutionId: primary.id } });
   }
 
   // ─── Virtual labs + AR ─────────────────────────────────────
@@ -1206,7 +1204,7 @@ async function main() {
       where: { studentId: p.studentId, title: p.title },
     });
     // r179 (phase-5): papers carry the submission's institution.
-    if (!existing) await prisma.researchPaper.create({ data: { ...p, institutionId: zawia.id } });
+    if (!existing) await prisma.researchPaper.create({ data: { ...p, institutionId: primary.id } });
   }
 
   // ─── Watch events: honest progress + a live resume point ──
@@ -1798,28 +1796,28 @@ async function main() {
         description: 'تستقبل مساحة العمل البحوث الطلابية في مجال الذكاء الاصطناعي وتطبيقاته. الفائز يحصل على منحة لحضور مؤتمر دولي.',
         category: 'بحث', prize: 'منحة مؤتمر دولي + 2,000$',
         deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '🔬', themeColor: '#7B3AED',
+        organizerId: teacher.id, institutionId: primary.id, iconEmoji: '🔬', themeColor: '#7B3AED',
       },
       {
         title: 'هاكاثون أُلارا الأول',
         description: 'هاكاثون 48 ساعة لتطوير حلول رقمية لتحديات المؤسسات التعليمية. مفتوح لجميع الطلاب من جميع الكليات.',
         category: 'برمجة', prize: '5,000$ + فرصة تدريب',
         deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-        organizerId: admin.id, institutionId: zawia.id, iconEmoji: '💻', themeColor: '#2952C8',
+        organizerId: admin.id, institutionId: primary.id, iconEmoji: '💻', themeColor: '#2952C8',
       },
       {
         title: 'مسابقة الإلقاء العلمي بالإنجليزية',
         description: 'قدّم بحثك في 3 دقائق باللغة الإنجليزية. تنميةً لمهارات العرض والتواصل العلمي الدولي.',
         category: 'إلقاء', prize: 'دورة TOEFL مجانية + شهادة',
         deadline: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
-        organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '🎤', themeColor: '#D4A537',
+        organizerId: teacher.id, institutionId: primary.id, iconEmoji: '🎤', themeColor: '#D4A537',
       },
       {
         title: 'تحدي البرمجة الثاني',
         description: 'مسابقة برمجة لمتدربي مساحة العمل الثانية — حل ثلاث مسائل خوارزمية خلال 48 ساعة. الفائز يحصل على شهادة تفوق ودورة متقدمة مجانية.',
         category: 'برمجة', prize: 'دورة متقدمة مجانية',
         deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-        organizerId: teacher2.id, institutionId: alandalus.id, iconEmoji: '🏁', themeColor: '#2EC4B6',
+        organizerId: teacher2.id, institutionId: secondary.id, iconEmoji: '🏁', themeColor: '#2EC4B6',
       },
   ];
   for (const comp of competitionDefs) {
@@ -1832,19 +1830,19 @@ async function main() {
         title: 'يوم المهنة 2026', description: 'فعالية يوم كامل تجمع الطلاب بأكثر من 30 شركة ومؤسسة وطنية. فرص توظيف وتدريب للخريجين والطلاب في السنوات النهائية.',
         location: 'القاعة الكبرى — بث مباشر', startsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000),
-        capacity: 500, organizerId: admin.id, institutionId: zawia.id, iconEmoji: '💼', themeColor: '#0E5C2F',
+        capacity: 500, organizerId: admin.id, institutionId: primary.id, iconEmoji: '💼', themeColor: '#0E5C2F',
       },
       {
         title: 'ندوة: مستقبل التعليم الرقمي', description: 'ندوة حوارية حول رؤية التعليم 2030 وكيف تبني المؤسسات مسارها الخاص على منصّة أُلارا.',
         location: 'مدرج كلية الهندسة', startsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000),
-        capacity: 200, organizerId: quality.id, institutionId: zawia.id, iconEmoji: '🎓', themeColor: '#2952C8',
+        capacity: 200, organizerId: quality.id, institutionId: primary.id, iconEmoji: '🎓', themeColor: '#2952C8',
       },
       {
         title: 'ورشة عمل: مهارات البحث العلمي', description: 'ورشة عملية لمدة 4 ساعات تغطي صياغة سؤال البحث، البحث في قواعد البيانات، والاقتباس الصحيح.',
         location: 'المكتبة المركزية — بيانات عرض', startsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000),
-        capacity: 60, organizerId: teacher.id, institutionId: zawia.id, iconEmoji: '📚', themeColor: '#7B3AED',
+        capacity: 60, organizerId: teacher.id, institutionId: primary.id, iconEmoji: '📚', themeColor: '#7B3AED',
       },
       {
         title: 'ملتقى تقني تجريبي',
@@ -1852,7 +1850,7 @@ async function main() {
         location: 'قاعة رئيسية — بيانات عرض',
         startsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
         endsAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000 + 4 * 60 * 60 * 1000),
-        capacity: 80, organizerId: admin2.id, institutionId: alandalus.id, iconEmoji: '🧑‍💻', themeColor: '#2EC4B6',
+        capacity: 80, organizerId: admin2.id, institutionId: secondary.id, iconEmoji: '🧑‍💻', themeColor: '#2EC4B6',
       },
   ];
   for (const ev of campusEventDefs) {
@@ -1867,11 +1865,11 @@ async function main() {
   console.log(`✅ Test accounts ensured (${ensured} jobs on the test.ly domain).`);
 
   // r323 B4 — the pilot cohort: the 8-course floor, the per-course
-  // lecture packs, the 30 @demo.tadmora.ly students with their
+  // lecture packs, the 30 @demo.ulara.ly students with their
   // enrollments/grades/attendance. Create-once; re-runs are no-ops.
   const pilot = await seedPilotCohort(prisma);
   if (pilot.students > 0) {
-    console.log(`✅ بذرة العرض التجريبي: ${pilot.students} طالبًا + ${pilot.lectures} محاضرة جديدة (نطاق demo.tadmora.ly — قابل للحذف من مسار المسجل).`);
+    console.log(`✅ بذرة العرض التجريبي: ${pilot.students} طالبًا + ${pilot.lectures} محاضرة جديدة (نطاق demo.ulara.ly — قابل للحذف من مسار المسجل).`);
   }
 
   console.log('✅ Seed complete.');

@@ -94,8 +94,8 @@
 /* ════════════════════════════════════════════════════════════════════
    R314 CYCLE 2 (3-e) — MOBILE SECTION-HEIGHT PARITY @390×844
    ════════════════════════════════════════════════════════════════════
-   The fresh Heron mobile capture (audits/evidence/r314/_local/
-   captures/heron/390x844/light/meta.json — docH 11363) gives the true
+   The fresh reference mobile capture (audits/evidence/r314/_local/
+   captures/reference/390x844/light/meta.json — docH 11363) gives the true
    mobile distribution: hero 828 · st 837 · pm 869 · map 4819 · pr 517 ·
    wy 806 · rl 948 · cta 500 · footer 1239. Ulara was 13164 with every
    non-map section too tall. This block is the compaction pass: spacing,
@@ -171,14 +171,14 @@
   }
 
   /* ── wy: 995 → 825 (target 806) — R322 (1-d): the stage-verb re-pin
-     RETIRES (the D3 rung governs — 18.6px flat on phones, Heron's
+     RETIRES (the D3 rung governs — 18.6px flat on phones, the reference's
      own mobile item-title league); the rail tightens one rung ── */
   .wy-section {
-    padding-block: 0; /* R332 W390b — heron's phone band carries NO section pad (0/0 probed); the air moves INSIDE the blocks so the direct children butt (rhythm 0) */
+    padding-block: 0; /* R332 W390b — the reference's phone band carries NO section pad (0/0 probed); the air moves INSIDE the blocks so the direct children butt (rhythm 0) */
   }
 
   .wy-head {
-    padding-block: var(--sp-9) var(--sp-5); /* heron title-wrap 47.63/19.85 @390 */
+    padding-block: var(--sp-9) var(--sp-5); /* the reference title-wrap 47.63/19.85 @390 */
     gap: var(--sp-2);
     margin-block-end: 0;
   }
@@ -199,7 +199,7 @@
 
   .wy-note {
     margin-block-start: 0;
-    padding-block: var(--sp-5) var(--sp-6); /* R332 W390b −16: 817→≈801 (heron 805.6, −0.6%) — pulls the roles/cta/footer triggers back under 40 */
+    padding-block: var(--sp-5) var(--sp-6); /* R332 W390b −16: 817→≈801 (the reference 805.6, −0.6%) — pulls the roles/cta/footer triggers back under 40 */
   }
 
   /* ── rl: the R323 ledger's ≤640 seats (section pad + .rl-head/
@@ -276,7 +276,7 @@
   .st-section, .pr-section {
     min-block-size: 0;
   }
-  .st-section { padding-block: var(--sp-6) var(--sp-5); } /* R332 W390b −28px: the +13.1 statement overhang fed the whole downstream trigger cascade (heron 847.2, floor 821.8) */
+  .st-section { padding-block: var(--sp-6) var(--sp-5); } /* R332 W390b −28px: the +13.1 statement overhang fed the whole downstream trigger cascade (the reference 847.2, floor 821.8) */
   /* R337 A-problem: the .pm-section tablet pad/min block pair retired —
      the 144.8rem floor below is the spec-exact band height; the pads
      fought the rewrite's own head band (pad 4/1.5/3/1.5rem). */
@@ -284,7 +284,7 @@
 
   /* 2 — R322 (1-d): the sheet-title tablet clamp RETIRES — the rung
    * seats resolve the band-independent --fs-d2 here too (36.9px @768
-   * → 47.6px @991 — Heron's own tablet ladder), and .pr-title never
+   * → 47.6px @991 — the reference's own tablet ladder), and .pr-title never
    * renders in this slice (.pr-head display:none, rule 5 below). The
    * 7.2rem-era heads that wrapped 255–350px tall are gone with the
    * rung itself. */
@@ -324,7 +324,7 @@
 
 /* ═══ R315 cycle-2 (M3 · batch 3) — the rem law + the footer row grammar ══
  * THE LAW (measured from the fresh reference manifest, three widths):
- * every Heron ≤991 content band is a CONSTANT rem height on the 1.199vw
+ * every the reference ≤991 content band is a CONSTANT rem height on the 1.199vw
  * root — statement 57.2rem · problem 144.8 · platform 55.2 · why 95.2 ·
  * usecase 145.2 · cta 58.8 · footer 103.1 (each ±0.2rem across
  * 768/820/844L). The floors below pin our bands to the same law; the
@@ -362,7 +362,7 @@
 }
 
 /* R322 (2-c) — the phone stack: @390 the cells stack vertically
-   (Heron's own 85.41rem statement band; the square keeps the full
+   (the reference's own 85.41rem statement band; the square keeps the full
    reading width, the body cell opens under it). */
 @media (max-width: 767px) {
   .st-grid {
@@ -373,7 +373,7 @@
 
 /* ═══ R315 cycle-3 (W3) — THE DESKTOP LAW (≥992): constant-rem bands ══
  * Measured on the fresh cycle-2 manifest, cross-checked at all four
- * desktop viewports (±0.1rem): every Heron content band is a CONSTANT
+ * desktop viewports (±0.1rem): every the reference content band is a CONSTANT
  * REM height on the 0.5787vw root — statement 86.7 · problem 89.15 ·
  * platform 85.2 · why 81.65 · cta 83.75 · footer 85.3 (grid 42.6 +
  * strip 37.7 + legal 5.04). Hero/roles = 100vh − 1.6rem (the quartet
@@ -408,10 +408,10 @@
   .st-section { min-block-size: 86.7rem; }
   .pr-section { min-block-size: 85.2rem; }
   /* R324/X14: the problem band ran −142px @1440 / −57px @1024 short of
-   * the Heron problem (743/528 at the anchor pairs) — the only band
+   * the reference problem (743/528 at the anchor pairs) — the only band
    * with no floor on the desktop seat. The floor rides the same fluid
    * root the other rungs use: 89.1rem = 742.5px @1440 (8.333px root),
-   * 528.0px @1024 (5.926px root) — both Heron-exact. */
+   * 528.0px @1024 (5.926px root) — both reference-exact. */
   .pm-section { min-block-size: 89.1rem; }
 
   /* the sheet measure rides the frame like every reference band.
@@ -446,7 +446,7 @@
    * .fo-footer-link 3.36rem · .fo-fcell 11.5rem + 1.92/1.44rem ·
    * .fo-footer-about 1.5 · .fo-footer-addr 1.92rem pair ·
    * .fo-footer-addr-line 1.45 · .fo-fcell-addr 1.44/0.96rem (measured
-   * @1440: footer 936.9 → 710.1 vs Heron 710.7). The dead
+   * @1440: footer 936.9 → 710.1 vs the reference 710.7). The dead
    * .fo-subscribe-* / .fo-footer-mark-svg / .fo-fcell-mark twins die
    * with the block (no DOM element mounts those classes).
    * R319 §D1/D2 (kept): the definite 37.7rem (314px) strip band is
@@ -500,7 +500,7 @@
      seat verbatim — .wy-stage-text 1.55 at why.css's ≥992 tier; the
      head/note margins live in why.css's 992–1024 frozen slice and the
      ≥1025 block. The old 2.88rem head seat was the twin-visible 24px
-     rhythm gutter — Heron's why head butts the strip at 0). */
+     rhythm gutter — the reference's why head butts the strip at 0). */
 
   .fo-cta-inner { gap: 1.92rem; }
   .fo-cta-lede { line-height: 1.6; }
@@ -509,7 +509,7 @@
    * footer.css / colleges.css): .cg-strip rides the colleges.css base
    * seat (--sp-8/--sp-6 — the authored r313 rhythm; the strata
    * tightening ran the footer trigger 21.3px early @1440, the loose
-   * seat lands the colophon on Heron's own 11651.3 top); .fo-fcell /
+   * seat lands the colophon on the reference's own 11651.3 top); .fo-fcell /
    * .fo-footer-about / .fo-footer-addr / .fo-footer-addr-line /
    * .fo-fcell-addr moved to footer.css ≥992 (same values, one home);
    * the .fo-subscribe pair is dead (no element mounts the class). */
@@ -602,7 +602,7 @@
 
 /* ── R318 §A7 — the column captions' alignment rule: the reference
  * seats every footer column caption +14px from its column edge
- * (heron-footer.json: captionX 377/615/853 over columns 363/602/840 —
+ * (reference-footer.json: captionX 377/615/853 over columns 363/602/840 —
  * the 14px inner gutter). Ours sat +13 (12px padding + the collapsed
  * hairline). The ≥1025 desktop band takes the reference's own gutter:
  * 13px padding + the 1px border = +14px from the column's reading-
@@ -659,10 +659,10 @@
   /* ── THE LAW — every band pins the reference's constant-rem height ── */
   .st-section { min-block-size: 84.25rem; }
   .pm-section { min-block-size: 87.65rem; } /* R337 A-problem: pads retired — the rewrite owns the box */
-  .pr-section { min-block-size: 52.1rem; padding-block: 0.81rem 0.61rem; } /* R332 W390b −12px → ≈560 (heron 557.8) */
+  .pr-section { min-block-size: 52.1rem; padding-block: 0.81rem 0.61rem; } /* R332 W390b −12px → ≈560 (the reference 557.8) */
   /* R325 Y3: the wy 81.2rem floor RETIRES — the phone band folds the
      captures away (the rail carries the strip), so the floor pinned
-     Heron's capture-list height onto a band with no captures: ~270px
+     the reference's capture-list height onto a band with no captures: ~270px
      of dead air under the note (V4: no forced voids). */
   .fo-cta { min-block-size: 50.4rem; padding-block: 2.02rem 1.61rem; }
   .fo-footer { min-block-size: 124.9rem; }
@@ -673,7 +673,7 @@
    * The R322 transplant left .st-grid the band's ONLY child (the flex
    * seat had nothing left to distribute) and r330-home.css's
    * `.st-section { padding-block: 0 }` — a later import — already rules
-   * the pads: the cells ARE the band (Heron's home-intro anatomy). The
+   * the pads: the cells ARE the band (the reference's home-intro anatomy). The
    * stale `.fo-ticker` 4.03rem margin-top retired with them: it donated
    * 40px of dead air INSIDE .st-partner (the crawl has ridden there,
    * under its own gap, since 2-c) — the twin run-001 read that air in
@@ -705,14 +705,14 @@
   .pr-section .prf-caption { padding-block: 0.4rem; }
 
   /* ── why — R332 W390b: the ≤479 layout tiers RETIRE — the ≤767 seats
-   * (pad-inside, children butt — heron's probed 0/0 section pad and
+   * (pad-inside, children butt — the reference's probed 0/0 section pad and
    * 47.63/19.85 title-wrap rhythm) own the band at every phone width;
    * only the type line-height re-pins stay (the D3/D2 rungs). ── */
   .wy-lede { line-height: 1.5; }
 
   /* R322 (1-d) — the ≤479 .wy-stage-verb rem re-pin (2.82rem = 28px
      @390 on the spiked root) RETIRES: the D3 rung governs (18.6px
-     flat — Heron's own mobile item-title league). */
+     flat — the reference's own mobile item-title league). */
 
   /* ── roles — the ledger's phone seats (.rl-head/.rl-lede/.rl-more)
    * are RETIRED with the retired DOM (the r337 usecase rewrite —
@@ -818,7 +818,7 @@
    * seats rode the mobile-band root (19.52px @767 — the probe) and
    * rendered 39.1–62.5px titles inside this belt; every seat now
    * resolves its band-independent rung (D1 hero 31.74px · D2
-   * statements 31.74px · D3 cards 23.33px — Heron's own phone
+   * statements 31.74px · D3 cards 23.33px — the reference's own phone
    * ladder, and .pr-title rides the D2 rung too). The H1's 1.05
    * leading rides the base. */
 
@@ -847,7 +847,7 @@
   /* R332 W4 — the ≤399 FOOT RUNG lives TOP-LEVEL (after this block's
      close — the file stays flat, no nested media): the band's mono
      re-seat (the head's title/lede + the stacked closing column's
-     title/chip landed on the 1.6/1.4rem Heron rungs) released ≈171px
+     title/chip landed on the 1.6/1.4rem the reference rungs) released ≈171px
      of the X14-tuned 4819px band total @390 — and the 473dvh track
      rung is TEST-PINNED (r312-mobile-camera), so the air returns at
      the band's foot: the R322 1-d law (padding/margins only, never
@@ -1023,7 +1023,7 @@
 /* ═════════════════════════════════════════════════════════════════════
    r325 Y2 — THE PLATFORM BAND ON THE EXTRACTED 3/5/4 HAIRLINE GRID
    ═════════════════════════════════════════════════════════════════════
-   Source of record: docs/redesign/r324/heron/full-<bp>.json
+   Source of record: the retired r324 extraction docs (full-<bp>.json)
    (home-platform @1440: content-left 361 · img-wrap 601 ·
    content-right 464 — the 12-col grid, 103.6px cols, 16.67px gutters;
    @768/390 the same cells re-stack; the extraction trees carry the
@@ -1221,7 +1221,7 @@
    The D-rung migration shrank the map band by 466px @390 — the
    V5-bloated .chapters-title alone was 457px tall there (five
    one-word lines at 71.45px; it renders 31.74px / two balanced lines
-   on the D2 rung now) — and docH fell to 10846 (the Heron band floor
+   on the D2 rung now) — and docH fell to 10846 (the reference band floor
    is 11269). The air returned as the map section's own PADDING + its
    flow margins, ONLY from the --space-* scale (the migration's rule:
    never by inflating type back).
@@ -1347,8 +1347,8 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   R324/X14 — the docH wave: the Heron-ledger anchors re-verified at the
-   REAL device pairs (1024×768 · 768×1024 · 390×844 — heron-extract
+   R324/X14 — the docH wave: the reference-ledger anchors re-verified at the
+   REAL device pairs (1024×768 · 768×1024 · 390×844 — reference-extract
    §BPS). The pre-X14 probes read stale contain-intrinsic-size guesses,
    which is why the ledger drifted: this wave re-seats the four rungs
    the real measures named (the map track 658dvh desktop, the stacked
@@ -1356,7 +1356,7 @@
    floor 89.1rem) and compacts the phone seats the reference runs
    shorter (the hero mat + tail, the platform frame, the roles rows).
    Re-measured post-render (probe-x14-bands): every tracked band inside
-   ±0.4 % of its Heron counterpart (two documented riders: the
+   ±0.4 % of its the reference counterpart (two documented riders: the
    statement's Arabic copy +84px @1024, the identity wordmark re-pin
    +226px @1440); docH verdict per anchor:
    1440 +1.67 % · 1024 +1.90 % · 768 +0.76 % · 390 +0.63 % (±2 % contract).
@@ -1365,7 +1365,7 @@
 /* W6 R332 — the X14 wordmark re-cut RETIRES to footer.css (ONE
  * definition): the height-led letterbox seats live beside the base
  * .fo-wordmark rule now — 15.5rem @≥1200 (129.2px @1440; the strip
- * band lands on Heron's 314.2 and the footer on 710.7±3%) and the
+ * band lands on the reference's 314.2 and the footer on 710.7±3%) and the
  * 23.6rem tablet seat @768–1199 (unchanged values, moved home). The
  * 41.4rem seat measured here ran the strip band to 527.9px @1440
  * (+24.14% footer — the run-001 FAIL this wave kills). */
@@ -1471,7 +1471,7 @@
   }
 }
 
-/* R332 W390b — the ≤767 display rungs: heron's own phone register is
+/* R332 W390b — the ≤767 display rungs: the reference's own phone register is
    2.4rem on the 2.5445vw root = 23.8168px @390 (its cta h2 `.heading.h2
    .tb-h4.mb-h3` and footer h4 `.heading.h4.tb-h5.mb-h3` — run-003
    like-for-like). Ulara's base --fs-d2 rung (31.74px @390) governs ≥768
@@ -1483,7 +1483,7 @@
   }
 
   /* R332 W390b — the registry strip sits FLUSH under the resolve on
-     phones too (heron's rhythm-0 children; the ≥1025 flush seat's
+     phones too (the reference's rhythm-0 children; the ≥1025 flush seat's
      mobile twin) — the 12px gutter rode the base 2.4rem margin. */
   .cg-strip {
     margin-block-start: 0;

@@ -402,7 +402,7 @@ export function Assistant({
                       style={[
                         {
                           backgroundColor: colors.surfaceElevated,
-                          // M9 — chips go SQUARE (the Heron radius ruling);
+                          // M9 — chips go SQUARE (the ds radius ruling);
                           // the quick chips ride muted ink like the web's
                           // .ai-suggestion-text (text-muted), so the
                           // screen's ONE accent stays on the send action.

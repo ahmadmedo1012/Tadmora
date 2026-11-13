@@ -1,7 +1,7 @@
 {
-  "name": "ulara-heron",
+  "name": "ulara-ds",
   "version": 1,
-  "$doc": "R326 M0.4 — the ONE source of truth for the shared Heron design tokens (web + mobile). Provenance: frontend/src/styles/tokens/tokens.css (R313/R322/R323/R324 canon) and the r325-era apps/mobile/src/design/tokens.ts hand-copy it replaces. Regen: npm run tokens:build (repo root). Outputs: frontend/src/styles/tokens/tokens.generated.css (web CSS vars, imported BEFORE tokens.css, same @layer tokens) + apps/mobile/src/design/tokens.generated.ts (mobile TS). Drift gate: npm run tokens:check (CI-enforced). Reference grammar: 'neutral.50' | 'triad.<family>.<bg|ink|deep>' | 'brand.<key>' | a semantic seat name (another ref, one tier up) | a literal '#hex'. External seat: brand.warmInk emits var(--warm-ink) on web — its definition stays hand-written in tokens.css base :root. NOT shared (deliberately): the web fluid-rem type ladder + font stacks (tokens.css hand section — web-only), the mobile px ladder lives here under typography.mobile; --state-focus-ring-color / --danger-fg / glass / veils / chrome / charts stay hand-written in tokens.css (web-only seats).",
+  "$doc": "R326 M0.4 — the ONE source of truth for the shared ds design tokens (web + mobile). Provenance: frontend/src/styles/tokens/tokens.css (R313/R322/R323/R324 canon) and the r325-era apps/mobile/src/design/tokens.ts hand-copy it replaces. Regen: npm run tokens:build (repo root). Outputs: frontend/src/styles/tokens/tokens.generated.css (web CSS vars, imported BEFORE tokens.css, same @layer tokens) + apps/mobile/src/design/tokens.generated.ts (mobile TS). Drift gate: npm run tokens:check (CI-enforced). Reference grammar: 'neutral.50' | 'triad.<family>.<bg|ink|deep>' | 'brand.<key>' | a semantic seat name (another ref, one tier up) | a literal '#hex'. External seat: brand.warmInk emits var(--warm-ink) on web — its definition stays hand-written in tokens.css base :root. NOT shared (deliberately): the web fluid-rem type ladder + font stacks (tokens.css hand section — web-only), the mobile px ladder lives here under typography.mobile; --state-focus-ring-color / --danger-fg / glass / veils / chrome / charts stay hand-written in tokens.css (web-only seats).",
   "color": {
     "brand": {
       "$doc": "The ULARA brand colours — «Parchment & Sienna» (Ω takeover): paper #F5F1E8 · ink #262019 · burnt sienna #C43E16 — plus the dark-theme luminous ember #FF6B3D and the warm label ink #17130E. The deliberate evolution from the retired palette (paper #F6F6EE · ink #282828 · orange #FA3600): a warmer parchment ground, a sepia-black ink, and a sienna accent that clears AA on paper (4.60:1) with white-on-accent at 5.19:1. Consumed by the RN <Logo> tones and the mobile palette; web emits var(--warm-ink) refs only.",
@@ -336,7 +336,7 @@
     "full": 9999
   },
   "motion": {
-    "$doc": "The measured Heron register (r305 census: .4s ×174 dominant; decel standard .23,1,.32,1). Web: the prefers-reduced-motion kill in tokens.css zeroes the rungs by import order. The --ease-out/in/linear/soft/spring family stays hand-written in tokens.css (web-only).",
+    "$doc": "The measured ds register (r305 census: .4s ×174 dominant; decel standard .23,1,.32,1). Web: the prefers-reduced-motion kill in tokens.css zeroes the rungs by import order. The --ease-out/in/linear/soft/spring family stays hand-written in tokens.css (web-only).",
     "micro": 80,
     "fast": 200,
     "base": 400,

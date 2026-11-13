@@ -1,5 +1,5 @@
 /* R338 T-03 — [2] البيان — the statement band, REWRITTEN against the
- * frozen Heron spec (docs/redesign/r335/heron-spec/home-intro-wrap.
+ * frozen reference spec (the frozen r335 reference captures: home-intro-wrap.
  * {390,768,1024,1440,1920}.json — the r337 A-intro rebuild, r338
  * conformance pass). The reference's home-intro is a hairline ledger
  * band — three same-box wrappers (wrap > section > grid) over a
@@ -71,7 +71,7 @@ const STATEMENT_LINES = [
  * (intro.wchar.N.M) so every reference char box has an explicit 1:1
  * counterpart; the shaped Arabic text itself stays whole per word — the
  * joining law (per-word splits only) is never broken. */
-const HERON_CHAR_COUNTS = [
+const DS_CHAR_COUNTS = [
   3, 10, 5, 2, 9, 9, 3, 4, 4, 5, 7, 3, 7, 6, 4, 2, 3, 3, 4, 7, 2, 3, 7, 3, 3, 9,
 ] as const;
 
@@ -180,12 +180,12 @@ export function Statement({ sectionRef, titleRef }: StatementProps) {
                      * cells explicitly instead of heuristic-gluing them. */
                     wordSpec={(gi: number) => `intro.word.${gi + 1}`}
                     /* R338 T-03d: the reference's per-char tween scaffold,
-                     * mirrored 1:1 — every heron char box (h2 > line > box >
+                     * mirrored 1:1 — every the reference char box (h2 > line > box >
                      * mask > word > char) binds its own intro.wchar.N.M box
                      * explicitly; typography + color asserted per char box
                      * (it inherits the title's own type), geometry rides the
                      * word/line level (English↔Arabic char runs differ). */
-                    charCounts={HERON_CHAR_COUNTS}
+                    charCounts={DS_CHAR_COUNTS}
                     charSpec={(gi: number, ci: number) => `intro.wchar.${gi + 1}.${ci + 1}`}
                     /* R343 A-I1: the ink-roll twin census — the reference's
                      * split-text tween parks a second masked word copy per

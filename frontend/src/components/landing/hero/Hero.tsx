@@ -1,9 +1,9 @@
 /**
- * Hero — R331 (A-Web-Hero) — the Heron-mechanics rebuild of the landing
- * hero, Ulara's own content on Heron's construction.
+ * Hero — R331 (A-Web-Hero) — the reference-mechanics rebuild of the landing
+ * hero, Ulara's own content on the reference's construction.
  *
- * Port source of record: docs/redesign/r331/heron-program.md (§4 hero
- * recipe + §7 motion values) / heron-program.json (`imagery.hero`).
+ * Port source of record: the retired r331 program doc (§4 hero
+ * recipe + §7 motion values) / the program digest (`imagery.hero`).
  * The reference's hero anatomy, mirrored for RTL:
  *
  *   .home-hero (full-bleed band, 100svh-class height)
@@ -19,16 +19,16 @@
  *      viewport frame over the full-bleed drawing, never a box
  *      hugging an inner window)
  *
- * Mechanics (the reveal grammar, exact Heron values):
+ * Mechanics (the reveal grammar, exact reference values):
  *   · hairline wipes — the frame's 4 edges scaleX/scaleY 0→1,
- *     1.2s LINEAR, origin mirrored for RTL (top right — Heron's
+ *     1.2s LINEAR, origin mirrored for RTL (top right — the reference's
  *     top-left in LTR);
  *   · title mask-lines — each display line rides its own
  *     overflow-hidden mask, translateY(103%)→0, 0.8s power2.out,
  *     0.02s stagger (y is direction-neutral — no RTL mirror);
  *   · img/frame/deco fades — 1s power3.out;
  *   · the ink itself DRAWS (the staged ink-in belt — Ulara's
- *     superior substitute for Heron's static img fade);
+ *     superior substitute for the reference's static img fade);
  *   · block/work rise — y 3.2rem→0, 1s power3.out.
  *
  * The motion engine is CSS transitions + the landing's OWN gates —
@@ -86,9 +86,9 @@ const DECO_CARDS = [
   { code: '03', text: MASTERY_MATRIX, seat: '9' },
 ] as const;
 
-/* r338 T-13b — the hero's interaction-state seat ordinals: the heron
+/* r338 T-13b — the hero's interaction-state seat ordinals: the reference
  * census recorded 21 interactive twins in div.home-hero-sub-wrap
- * (docs/redesign/r335/heron-spec/home-hero-wrap.<bp>.json `hovers`).
+ * (the frozen r335 reference captures: home-hero-wrap.<bp>.json `hovers`).
  * data-spec-hover=N binds each twin to its counterpart so
  * scripts/conformance/interact.mjs resolves every recorded delta;
  * the per-bp gating (a NOCHANGE record at a bp = no twin arm there)
@@ -250,7 +250,7 @@ export function Hero() {
             <div
               key={cap}
               className="hro-work-item"
-              /* r338 T-13b — the census twin seat (heron's strip items
+              /* r338 T-13b — the census twin seat (the reference's strip items
                  carry hover twins at the recorded bps; tabIndex -1 keeps
                  the programmatic-focus parity path without turning the
                  labels into tab stops — the strip stays decorative) */

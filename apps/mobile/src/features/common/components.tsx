@@ -73,7 +73,7 @@ export function apiMessage(e: unknown, fallback = "حدث خطأ غير متوق
   return humanized === GENERIC_AR ? fallback : humanized;
 }
 
-/** Competition status → Arabic label + Heron tone (task mapping). */
+/** Competition status → Arabic label + ds tone (task mapping). */
 export function competitionStatus(status: string): { label: string; tone: StatusToneName } {
   switch (status) {
     case "OPEN":

@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "frontend/src/App.tsx @ 3fef72ebb8a177a1cadaa638f285692dea0e34e0 (branch redesign/r305-heron-auth-public-qa, HEAD 1ff6110a)",
+  "generatedFrom": "frontend/src/App.tsx @ 3fef72ebb8a177a1cadaa638f285692dea0e34e0 (branch redesign/r305-reference-auth-public-qa, HEAD 1ff6110a)",
   "generatedAt": "R305-A9 task 3 (cross-route visual audit)",
   "routeRowCount": 113,
   "qaCoverageLegend": {

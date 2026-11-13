@@ -116,7 +116,7 @@ export const test = base.extend<E2eOptions>({
     });
 
     // r308 → R313: the entrance loader REPLAYS ON EVERY FULL PAGE LOAD
-    // (Heron parity — the seen-flag no longer suppresses; the loader's
+    // (the reference parity — the seen-flag no longer suppresses; the loader's
     // own spec clears the skip key when it needs the entrance to
     // play). Seed the dedicated skip key BEFORE any app script so
     // task-focused journeys boot straight into the page.

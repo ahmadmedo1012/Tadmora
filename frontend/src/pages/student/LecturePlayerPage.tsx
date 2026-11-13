@@ -22,11 +22,11 @@ import { useAuthStore } from '../../stores/auth.store';
 import { apiBaseURL } from '../../lib/api';
 import { countAr, formatMmSs } from '../../lib/format';
 import { formatInt } from '../../utils/numbers';
-/* R305-A5 (Heron): the shared student vocabulary + this family's sheet.
+/* R305-A5 (the reference): the shared student vocabulary + this family's sheet.
  * The video/progress/checkpoint logic is untouched — this pass only
  * refines the surfaces around it. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-courses.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-courses.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy every converted
  * student page mounts (SectionBar/BarCount/EmptyCell + the family's
  * unlayered masthead tail precedent). */
@@ -649,7 +649,7 @@ export default function LecturePlayerPage() {
             </div>
           )}
 
-          {/* R305 (Heron): the now-playing block — the page's ONE deep
+          {/* R305 (the reference): the now-playing block — the page's ONE deep
               band. The meta under the video reads as the player chrome
               world: ink ground in light, paper ground in dark (the
               foundation band flips with the theme), with the h1 and the

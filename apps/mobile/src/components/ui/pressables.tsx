@@ -27,7 +27,7 @@ export interface ButtonProps {
 }
 
 /**
- * Heron buttons: charcoal slab (primary), orange fill (accent),
+ * ds buttons: charcoal slab (primary), orange fill (accent),
  * hairline ghost. Loading never double-submits; 44px touch floor.
  */
 export function Button({

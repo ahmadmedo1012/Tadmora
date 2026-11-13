@@ -23,7 +23,7 @@
  *   CSS_SHOTS_VPS="1440,390" \
  *   node ../scripts/gates/css-shots.mjs
  *
- * OUTPUT: ${CSS_SHOTS_OUT:-/home/z/heron-lab/css-shots}/<base>-<route>-<vp>.png
+ * OUTPUT: ${CSS_SHOTS_OUT:-/tmp/ulara-css-shots}/<base>-<route>-<vp>.png
  * (route slugged: "/" → home, "/login" → login …). Prints each path.
  */
 import { mkdirSync, readdirSync, existsSync } from 'node:fs';
@@ -38,7 +38,7 @@ const BASES = (process.env.CSS_SHOTS_BASES ?? 'wt=http://localhost:5173,main=htt
   });
 const ROUTES = (process.env.CSS_SHOTS_ROUTES ?? '/,/login,/about').split(',');
 const VPS = (process.env.CSS_SHOTS_VPS ?? '1440,390').split(',').map(Number);
-const OUT = process.env.CSS_SHOTS_OUT ?? '/home/z/heron-lab/css-shots';
+const OUT = process.env.CSS_SHOTS_OUT ?? '/tmp/ulara-css-shots';
 const SETTLE_MS = Number(process.env.CSS_SHOTS_SETTLE ?? 2000);
 
 const slug = (r) => (r === '/' ? 'home' : r.replace(/^[/?&]+|\/+/g, (m) => (m === '/' ? '-' : '-')).replace(/-+$/, '') || 'home');

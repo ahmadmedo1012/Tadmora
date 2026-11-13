@@ -63,10 +63,9 @@
 #                                    R332 A-CSS renames moved them out of
 #                                    styles/r331/. journey/sections/footer
 #                                    never landed as files. Same contract
-#                                    as landing.css above: the Heron
-#                                    port's authored choreography IS the
-#                                    numbers from
-#                                    docs/redesign/r331/heron-program.{md,json}.
+#                                    as landing.css above: the authored
+#                                    choreography numbers live in the
+#                                    sheets themselves.
 #                                    Each file is imported by exactly its
 #                                    section component, every rule is
 #                                    scoped to the section's root class,
@@ -390,7 +389,7 @@ if kept:
         print()
     print(f'FAIL: {len(kept)} motion-token violation(s) detected.')
     print('Use --motion-duration-* and --motion-ease-* tokens.')
-    print('See specs/001-premium-motion-system/contracts/motion-tokens.md')
+    print('See the canonical motion token files (frontend/src/styles/tokens/tokens.css)')
     sys.exit(1)
 
 if debts_seen:

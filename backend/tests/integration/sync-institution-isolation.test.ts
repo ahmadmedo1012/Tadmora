@@ -73,10 +73,10 @@ async function seedWorld(): Promise<World> {
   // alpha mirrors prisma/seed.ts: the FIXED showcase id + slug — the
   // registry's configured source applies to it.
   const alpha = await prisma.institution.create({
-    data: { id: 'inst-zawia-showcase', name: 'مساحة عمل أُلارا التجريبية', slug: 'ulara-demo' },
+    data: { id: 'inst-ulara-showcase', name: 'مساحة عمل أُلارا التجريبية', slug: 'ulara-demo' },
   });
   const beta = await prisma.institution.create({
-    data: { name: 'مساحة عمل عزل تجريبية', slug: `alandalus-${uniqueSuffix()}` },
+    data: { name: 'مساحة عمل عزل تجريبية', slug: `secondary-${uniqueSuffix()}` },
   });
 
   await prisma.universityFact.create({
@@ -201,7 +201,7 @@ describe('S2 — POST /api/v1/admin/sync/trigger (institution rules)', () => {
     const body = (await res.json()) as ErrorEnvelope;
     expect(body.error.code).toBe('BAD_REQUEST');
     // D17-3: honest Arabic message — no source configured for THIS
-    // institution (the Zawia source is not a global default).
+    // institution (the primary source is not a global default).
     expect(body.error.message).toContain('لا يوجد مصدر مزامنة');
     // No run row was ever created for B.
     expect(await db().syncRun.count({ where: { institutionId: beta.id } })).toBe(0);
@@ -313,7 +313,7 @@ describe('S3 — GET /api/v1/admin/sync (scoped views)', () => {
 
     const resPivot = await get(
       `/api/v1/admin/sync?institution=${beta.slug}`,
-      bearer(adminA.id, Role.ADMIN, 'inst-zawia-showcase'),
+      bearer(adminA.id, Role.ADMIN, 'inst-ulara-showcase'),
     );
     expect(resPivot.status).toBe(403);
     expect(((await resPivot.json()) as ErrorEnvelope).error.code).toBe('FORBIDDEN');

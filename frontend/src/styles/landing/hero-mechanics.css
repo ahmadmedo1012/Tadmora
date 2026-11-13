@@ -1,9 +1,9 @@
 /* ════════════════════════════════════════════════════════════════════
-   r331/hero.css — R331 · A-Web-Hero — the landing hero's Heron-mechanics
+   r331/hero.css — R331 · A-Web-Hero — the landing hero's reference-mechanics
    rebuild (imported ONLY by components/landing/hero/Hero.tsx).
 
-   Source of record: docs/redesign/r331/heron-program.md (§2 rem + type
-   ladder, §4 hero recipe, §7 motion values) and heron-program.json
+   Source of record: the retired r331 program doc (§2 rem + type
+   ladder, §4 hero recipe, §7 motion values) and the program digest
    (`imagery.hero`, `durations`, `staggers`). The old hero rules this
    file replaces were deleted from landing.css / r330-home.css (the
    R330 file-ownership contract, inverted: this file owns the hero now).
@@ -50,7 +50,7 @@
    the measured 100svh-class fold (887px @1440×900) + the consent
    card's bottom-stack reserve (R328 H1 — unchanged contract).
    R332 W1: position:relative — the band is the bg-border frame's
-   containing block (Heron's bgBorderFrame is inset 1.2rem of the hero
+   containing block (the reference's bgBorderFrame is inset 1.2rem of the hero
    wrap, over the full-bleed drawing — never around an inner box). ═════ */
 .fo-hero.hro {
   position: relative;
@@ -99,7 +99,7 @@
   border: 0; /* R332 W1: kills landing.css .bp-stage's 1px box — the frame is the section's 4 wiping edges */
   margin-inline: 0; /* kills .bp-stage's auto centering (the dead paper margins) */
   padding-block: 12px; /* the window's own 12px mat seat (drafting chrome) */
-  padding-inline: 0; /* R332 W1: full-bleed — the ink runs to the viewport edges (Heron's tree breaks the edge) */
+  padding-inline: 0; /* R332 W1: full-bleed — the ink runs to the viewport edges (the reference's tree breaks the edge) */
   min-inline-size: 0;
 }
 
@@ -189,7 +189,7 @@
    WIPE in (scaleX/scaleY 0→1 · 1.2s · linear), origin mirrored for RTL
    (the reference wipes from top-left in LTR; we wipe from the reading
    start — top right in RTL). R332 W1: seated on the SECTION, inset
-   1.2rem from the viewport edges (Heron's bgBorderFrame: "absolute
+   1.2rem from the viewport edges (the reference's bgBorderFrame: "absolute
    inset 1.2rem; 4 edge items ~7px thick" — the 1px hairline is the
    sheet's documented chrome deviation). 1px hairlines on the page's
    own frame grammar. */
@@ -217,9 +217,9 @@
 .hro-edge-s { inset-inline-start: 1.2rem; transform-origin: 100% 0; }
 .hro-edge-e { inset-inline-end: 1.2rem; transform-origin: 0 0; }
 
-/* ≤767 — Heron's own mobile frame inset (0.8rem) */
+/* ≤767 — the reference's own mobile frame inset (0.8rem) */
 @media (max-width: 767px) {
-  /* r339 T-13 — the phone sheet seat: heron's 390 hero root sits at
+  /* r339 T-13 — the phone sheet seat: the reference's 390 hero root sits at
      x8 w374 (the 8px sheet gutter — spec home-hero-wrap.390.json
      div[1]); our full-bleed paper (the R332 W1 desktop verdict) ran
      the art edge-to-edge — the 390 census read 0/0 gutters (Δ-8, the
@@ -275,7 +275,7 @@
 /* ══ [4] THE RULER CHROME — dashed ticks, corner registration marks,
    measure graticule (the reference's ruler layer, visible at rest at
    op .64 — the R322 extraction's settled state). R332 W1: inset 3.2rem
-   (Heron's ruler: "inset 3.2rem, dashed tick lines") — the chrome sits
+   (the reference's ruler: "inset 3.2rem, dashed tick lines") — the chrome sits
    INBOARD of the now full-bleed paper, never on the viewport edge. */
 .hro .bp-rulers {
   position: absolute;
@@ -363,7 +363,7 @@
 
 /* the corner plus marks — the reference's registration marks, now the
    SECTION frame's corner chrome (R332 W1: they ride the bg-border
-   frame, centred on its 1.2rem corners — Heron's corner plus marks). */
+   frame, centred on its 1.2rem corners — the reference's corner plus marks). */
 .bp-plus {
   position: absolute;
   color: var(--rule);
@@ -381,7 +381,7 @@
 
 /* r339 T-13 — the registration marks ride the sheet frame on phones:
  * the section-anchored 0.5rem seat put them at x5/x385 (3px outside
- * the 8px sheet — the census union's binding edge, Δ-3). Heron's own
+ * the 8px sheet — the census union's binding edge, Δ-3). the reference's own
  * marks sit inside the window corner (spec: x15 vs window x16); the
  * phone seat aligns them with the art band's 0.81rem sheet edge.
  * Seated BELOW the base rules — the equal-specificity tie breaks on
@@ -514,7 +514,7 @@
    tracking (cursive joins). Two authored lines = the spec's 2-line box. */
 .hro-title {
   font-family: var(--font-display);
-  font-size: var(--fs-d1); /* 5.6rem on the shared fluid root — the Heron ladder */
+  font-size: var(--fs-d1); /* 5.6rem on the shared fluid root — the reference ladder */
   font-weight: 700;
   line-height: 1.35; /* the Arabic floor (the spec's 1.0 box is the Latin seat) */
   text-wrap: balance;
@@ -532,7 +532,7 @@
 .hro-lmask {
   display: block;
   overflow: hidden;
-  /* T-11b2 — Heron's hero load scales ride the MASK boxes (scaleX
+  /* T-11b2 — the reference's hero load scales ride the MASK boxes (scaleX
      0→1 on the title lines, scaleX+scaleY 0→1 on the lead lines —
      fromTo, timing unrecorded → the page signature 0.8s power2.out,
      the same --hro-line-dur/--hro-p2-out register the inner rise
@@ -592,7 +592,7 @@
    full ink (the reference's rgb(40,40,40) seat — the muted ramp ends);
    the 51.8rem column IS the measured 432px box (no ch clamp) */
 .hro-lead {
-  font-size: var(--fs-body); /* 1.6rem — Heron txt-16 on the shared root */
+  font-size: var(--fs-body); /* 1.6rem — the reference txt-16 on the shared root */
   font-weight: 400; /* the spec's own lead weight */
   line-height: 1.35; /* the Arabic floor — the spec's 1.3 box is the Latin seat */
   color: var(--text);
@@ -750,7 +750,7 @@
 }
 
 .hro-work-item .fo-mono {
-  /* L1-e (R341 · T-16 #2) — the index-numeral rung: Heron's measured
+  /* L1-e (R341 · T-16 #2) — the index-numeral rung: the legacy measured
      Geistmono register (chrome.<bp>.json 11.67 @1440 · 13.89 @390 =
      --fs-mono-md). The (0,2,0) belt keeps the footer's own ≤767 ©
      census (9.92px) from leaking onto the strip — the [01]–[06] index
@@ -979,16 +979,16 @@
 
   .hro-title-cell {
     padding-block: 1.6rem 1.2rem;
-    /* r339 T-13 — heron 390 seats the h1 at x18 w354 (the 14px content
+    /* r339 T-13 — the reference 390 seats the h1 at x18 w354 (the 14px content
        box + 0.4rem); the 1.8rem seat read 31.9/326 — the phone title
-       gutter now measures Heron's own. */
+       gutter now measures the reference's own. */
     padding-inline: 0.4rem;
   }
 
   .hro-sub-cell {
     border-inline-start: 0;
     padding-block: 1.2rem 0;
-    /* r339 T-13 — heron 390 seats the lead + link row at x24 w342
+    /* r339 T-13 — the reference 390 seats the lead + link row at x24 w342
        (the 14px content box + 1rem); was 1.8rem (31.9). */
     padding-inline: 1rem;
     flex-direction: column;
@@ -1094,7 +1094,7 @@
 
 /* ══ R338 T-11c — the measured restyle pass. Every value below is a
    MEASURED parameter from the frozen reference spec
-   (docs/redesign/r335/heron-spec/home-hero-wrap.*.json) reproduced in
+   (the frozen r335 reference captures: home-hero-wrap.*.json) reproduced in
    Ulara's own construction — never pasted reference styling. Scoped
    vars carry the measured inks per the r338 wave-9 token ruling. ══ */
 .hro {
@@ -1107,10 +1107,10 @@
    night seat: the same 72% strength pointed at the dark ramp's own ink
    (--text = #F5F1E8, the paper twin); 7.9:1 on the charcoal #262019
    ground (WCAG AAA; the --dark contrast floor >=3.0 passes with room).
-   The light arm keeps the frozen Heron literal byte-identical; the
+   The light arm keeps the frozen reference literal byte-identical; the
    theme flip moves no box — only the color changes. */
 [data-theme="dark"] .hro {
-  --hro-ink-72: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink --text #F5F1E8 at the spec's 72% strength (7.9:1 on the #262019 ground); the light arm keeps the frozen Heron literal */
+  --hro-ink-72: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink --text #F5F1E8 at the spec's 72% strength (7.9:1 on the #262019 ground); the light arm keeps the frozen reference literal */
   /* r339 T-12 — the secondary flare's night seat: the measured literal
      rgb(250,54,0) is the LIGHT copper — on the #262019 dark ground it
      reads 3.93:1 (under the 4.5:1 text floor; the blind panel's
@@ -1127,7 +1127,7 @@
 @media (min-width: 1920px) { .hro.fo-hero { min-block-size: calc(100svh - 17px); } }
 
 /* [T] the display title — measured fs (31.76/36.83px, 3.241vw ≥1024)
-   with the Arabic line-height floor max(heronLh, 1.35×fs) */
+   with the Arabic line-height floor max(dsLh, 1.35×fs) */
 section.fo-hero .hro-title.fo-hero-title { font-size: 31.76px; line-height: 1.35; }
 @media (min-width: 768px) and (max-width: 1023px) {
   section.fo-hero .hro-title.fo-hero-title { font-size: 36.83px; }
@@ -1335,7 +1335,7 @@ section.fo-hero .hro-alt {
    measured data table); this sheet holds only the layer laws. The glyph
    geometry inside each icon svg is Ulara's own line art (stroked
    arrows and crosses, filled pin squares/dots) authored to the measured
-   boxes — never Heron's asset. The wrapper is visibility:hidden with
+   boxes — never the reference's asset. The wrapper is visibility:hidden with
    visible children so the edge-390 gutter census — which unions every
    visible descendant — sees only the chrome, never the layer box. ── */
 .hro .hro-chrome {
@@ -1366,7 +1366,7 @@ section.fo-hero .hro-alt {
    the same way the seat boxes win over the wrapper seat */
 .hro .hro-chrome path.hro-ch,
 .hro .hro-chrome circle.hro-ch { color: var(--ch-ink, inherit); }
-/* the measured interactive flag (Heron's accent arrow seats sit inside
+/* the measured interactive flag (the reference's accent arrow seats sit inside
    real links); the pointer mirrors it without a tab stop (aria-hidden) */
 .hro .hro-chrome .hro-ch[data-act] { cursor: pointer; }
 /* our own glyph art: stroked line/diagonal arrows and stroke crosses,

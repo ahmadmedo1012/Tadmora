@@ -287,7 +287,7 @@ const USER_ROW = {
   id: 'u-1', firstName: 'سالم', lastName: 'الفيتوري', email: 'salim@zu.edu.ly',
   role: 'TEACHER', isActive: true, avatarInitials: 'سف', avatarColor: null,
   createdAt: '2026-01-01T00:00:00.000Z',
-  memberships: [{ institution: { id: 'inst-1', name: 'مساحة عمل تجريبية ثانية', slug: 'alandalus-demo', status: 'SUSPENDED' } }],
+  memberships: [{ institution: { id: 'inst-1', name: 'مساحة عمل تجريبية ثانية', slug: 'ulara-demo-2', status: 'SUSPENDED' } }],
 };
 
 describe('OwnerUsersPage — «الفئة الأكبر» honesty + suspended chip tone (r299)', () => {

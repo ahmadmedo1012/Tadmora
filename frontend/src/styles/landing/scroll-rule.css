@@ -1,6 +1,6 @@
 /* ═══ ScrollRule — r339 T-18 (A6) — the landing's scroll progress rule.
  *
- * The reference's measured chrome (live https://heronaiapp.com/,
+ * The reference's measured chrome (recorded live on the retired reference site,
  * 2026-11-07, 1440×900): a 1px accent rule PAIR spanning the content
  * width at the viewport's vertical centre (x7 → x1434 — the page
  * frame's own 7px inset), that splits apart as the page scrolls: the

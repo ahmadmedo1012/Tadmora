@@ -416,7 +416,11 @@ describe('POST /api/v1/ai/chat — OPENAI mode (provider wire stubbed)', () => {
    * provider failure class reaches the student as its own actionable
    * Arabic sentence (previously ALL classes collapsed into one generic
    * 500) and telemetry as its own greppable kind. */
-  it('r176a: a 429 surfaces the WAIT-A-MINUTE Arabic message + rate_limited telemetry kind', async () => {
+  it('ULARA 3-b: a 429 degrades to the honest LOCAL fallback — 200 + the notice + rate_limited telemetry (owner rule 2026-11-12)', async () => {
+    /* The OLD r176a contract (429 → the honest Arabic 500) is RETIRED:
+     * the owner's rule is a safe local fallback instead of a dead end —
+     * the reply is honestly labeled (the composer model + a notice
+     * line) and the provider 429 stays in failure telemetry. */
     stubProviderTransport(
       () => new Response(JSON.stringify({ error: { message: 'Rate limit exceeded' } }), { status: 429 }),
     );
@@ -425,12 +429,22 @@ describe('POST /api/v1/ai/chat — OPENAI mode (provider wire stubbed)', () => {
       headers: { ...bearer(), 'content-type': 'application/json' },
       body: chatBody('سؤال'),
     });
-    expect(res.status).toBe(500);
-    const body = (await res.json()) as { error: { message: string } };
-    expect(body.error.message).toBe('تجاوزنا حدّ الاستخدام المجاني مؤقتًا — انتظر دقيقة ثم أعد المحاولة');
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as {
+      data: { reply: string; model: string; degraded?: boolean; notice?: string };
+    };
+    expect(body.data.degraded).toBe(true);
+    expect(body.data.model).toBe('gap-aware-composer');
+    expect(body.data.notice).toContain('نفدت حصة النماذج المجانية');
     expect(telemetryCreate).toHaveBeenCalledWith({
-      data: expect.objectContaining({ success: false, errorMessage: 'rate_limited (HTTP 429)' }),
+      data: expect.objectContaining({
+        success: false,
+        errorMessage: 'rate_limited (chain exhausted) → local fallback',
+      }),
     });
+    // The degraded turn IS persisted (the composer's reply, honestly
+    // attributed) — the student keeps the help.
+    expect(transaction).toHaveBeenCalledTimes(1);
   });
 
   it('r176a: a provider TIMEOUT surfaces the retry-inviting Arabic message; the telemetry kind is timeout', async () => {
@@ -532,7 +546,7 @@ describe('POST /api/v1/ai/chat — OPENAI mode (provider wire stubbed)', () => {
     expect(msgCreate).toHaveBeenCalledTimes(2);
   });
 
-  it('r176a: a 429-twice sequence surfaces the honest rate_limited 500 after exactly ONE retry — no loop, nothing persisted', async () => {
+  it('a 429-twice sequence exhausts the single-model chain → the honest LOCAL fallback (200); never a loop', async () => {
     const calls: Array<{ url: string; init: RequestInit }> = [];
     stubProviderTransport(
       () => new Response(JSON.stringify({ error: { message: 'Rate limit exceeded' } }), { status: 429 }),
@@ -543,12 +557,23 @@ describe('POST /api/v1/ai/chat — OPENAI mode (provider wire stubbed)', () => {
       headers: { ...bearer(), 'content-type': 'application/json' },
       body: chatBody('سؤال'),
     });
-    expect(res.status).toBe(500);
-    const body = (await res.json()) as { error: { message: string } };
-    expect(body.error.message).toBe('تجاوزنا حدّ الاستخدام المجاني مؤقتًا — انتظر دقيقة ثم أعد المحاولة');
+    // ULARA 3-b: the chain exhausted (429 through attempt + retry) →
+    // the local composer answers, honestly labeled.
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { data: { degraded?: boolean } };
+    expect(body.data.degraded).toBe(true);
     expect(calls).toHaveLength(2); // one attempt + one retry — never more
-    expect(telemetryCreate).toHaveBeenCalledTimes(1);
-    expect(transaction).not.toHaveBeenCalled();
+    // The provider 429 (failure row) + the degraded turn's success row.
+    expect(telemetryCreate).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        success: false,
+        errorMessage: 'rate_limited (chain exhausted) → local fallback',
+      }),
+    });
+    expect(telemetryCreate).toHaveBeenCalledWith({
+      data: expect.objectContaining({ success: true, model: 'gap-aware-composer' }),
+    });
+    expect(transaction).toHaveBeenCalledTimes(1);
   });
 
   it('GET /ai/config reports the openai mode + the configured model string (the ROUTE, not a per-response fact)', async () => {
@@ -750,7 +775,7 @@ describe('POST /api/v1/ai/chat — OPENROUTER mode (free router)', () => {
     expect(body.data).toEqual({ provider: 'openrouter', model: 'openrouter/free' });
   });
 
-  it('a free-router failure surfaces the honest classified Arabic 500 with failure telemetry — no local-composer fallback', async () => {
+  it('a free-router 429 degrades to the honest LOCAL fallback — labeled with the composer model, never a silent template (ULARA 3-b)', async () => {
     stubProviderTransport(
       () =>
         new Response(JSON.stringify({ error: { message: 'Rate limit exceeded: free tier' } }), {
@@ -763,19 +788,28 @@ describe('POST /api/v1/ai/chat — OPENROUTER mode (free router)', () => {
       headers: { ...bearer(), 'content-type': 'application/json' },
       body: chatBody('سؤال سيفشل'),
     });
-    expect(res.status).toBe(500);
-    const body = (await res.json()) as { error: { message: string } };
-    // r176a: a free-tier 429 now says WAIT, not the generic line.
-    expect(body.error.message).toBe('تجاوزنا حدّ الاستخدام المجاني مؤقتًا — انتظر دقيقة ثم أعد المحاولة');
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as {
+      data: { reply: string; model: string; degraded?: boolean; notice?: string; citations: unknown[] };
+    };
+    expect(body.data.degraded).toBe(true);
+    expect(body.data.model).toBe('gap-aware-composer');
+    expect(body.data.notice).toContain('نفدت حصة النماذج المجانية');
+    // The degraded turn NEVER carries citations (the r327 P4b rule —
+    // the template composer never read the retrieved sources).
+    expect(body.data.citations).toEqual([]);
 
     // Failure telemetry: attributed to the ATTEMPTED (configured) route
     // with the classified kind (r176a — greppable, no body excerpts).
     expect(telemetryCreate).toHaveBeenCalledWith({
-      data: expect.objectContaining({ model: 'openrouter/free', success: false, errorMessage: 'rate_limited (HTTP 429)' }),
+      data: expect.objectContaining({
+        model: 'openrouter/free',
+        success: false,
+        errorMessage: 'rate_limited (chain exhausted) → local fallback',
+      }),
     });
-    // NO silent fallback: nothing persisted.
-    expect(transaction).not.toHaveBeenCalled();
-    expect(msgCreate).not.toHaveBeenCalled();
+    // The degraded turn persists (honestly attributed to the composer).
+    expect(transaction).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -944,7 +978,7 @@ describe('POST /api/v1/ai/chat — OPENROUTER mode with the AI_MODELS list (r176
     });
   });
 
-  it('failure telemetry attributes the ATTEMPTED route = the joined list (not openrouter/free)', async () => {
+  it('failure telemetry attributes the ATTEMPTED route = the joined list; the degraded local turn follows (ULARA 3-b)', async () => {
     stubProviderTransport(
       () => new Response(JSON.stringify({ error: { message: 'Rate limit exceeded: free tier' } }), { status: 429 }),
     );
@@ -954,16 +988,18 @@ describe('POST /api/v1/ai/chat — OPENROUTER mode with the AI_MODELS list (r176
       headers: { ...bearer(), 'content-type': 'application/json' },
       body: chatBody('سؤال سيفشل'),
     });
-    expect(res.status).toBe(500);
+    // The whole 3-model chain answered 429 → the honest local fallback.
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { data: { degraded?: boolean; model: string } };
+    expect(body.data.degraded).toBe(true);
+    expect(body.data.model).toBe('gap-aware-composer');
     expect(telemetryCreate).toHaveBeenCalledWith({
       data: expect.objectContaining({
         model: 'google/gemma-4-31b-it:free,nvidia/nemotron-3-super-120b-a12b:free,dots-studio/dots-3-note-preview:free',
         success: false,
       }),
     });
-    // NO silent fallback — nothing persisted.
-    expect(transaction).not.toHaveBeenCalled();
-    expect(msgCreate).not.toHaveBeenCalled();
+    expect(transaction).toHaveBeenCalledTimes(1);
   });
 });
 

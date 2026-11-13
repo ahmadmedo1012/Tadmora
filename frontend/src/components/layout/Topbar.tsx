@@ -29,7 +29,7 @@ interface TopbarProps {
   onOpenCommandPalette?: () => void;
 }
 
-/** The quiet group-context kicker (R305-A4 Heron pass): the section
+/** The quiet group-context kicker (R305-A4 the reference pass): the section
  *  label the active route lives under in the sidebar, derived from the
  *  SAME nav.ts data the sidebar renders — nav and title can never
  *  drift. Truthful by construction: it renders only when the current

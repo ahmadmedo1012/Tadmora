@@ -2,7 +2,7 @@
 
 **App:** `apps/mobile` (Expo SDK 58 · RN 0.88.1 · expo-router · TypeScript strict)
 **API:** `https://ulara.vercel.app/api/v1` — deployed `buildId 74dd870c76d0` (= GitHub `74dd870`, Ω+1) at revalidation time (2026-11-11, Ω+2.0); deploys are Vercel-automatic from `main` (deploy.yml), so the deployed service tracks `main` closely — `GET /api/v1/status` carries the live `buildId` to check against.
-**Sources of truth:** `frontend/src/App.tsx` (113 web routes), `backend/src/app.ts` + `backend/src/http/routes/*` (real contract), `DESIGN.md` + `frontend/src/styles/tokens/tokens.css` (Heron).
+**Sources of truth:** `frontend/src/App.tsx` (113 web routes), `backend/src/app.ts` + `backend/src/http/routes/*` (real contract), `DESIGN.md` + `frontend/src/styles/tokens/tokens.css` (ds).
 
 **Status legend:**
 - ✅ implemented & wired to the real API

@@ -1,5 +1,5 @@
-/* R337 A-usecase — الأدوار, REBUILT against the frozen Heron spec
-   (docs/redesign/r335/heron-spec/home-usecase-wrap.*.json).
+/* R337 A-usecase — الأدوار, REBUILT against the frozen reference spec
+   (the frozen r335 reference captures: home-usecase-wrap.*.json).
    The old R323 ledger (cards → hairline rows) is RETIRED with this
    rewrite; every rule below is new. The DOM (Roles.tsx):
      section > ruleTop · ruleBottom · frame
@@ -19,14 +19,14 @@
   padding: 0;
   margin: 0;
   background: var(--bg);
-  /* the frozen Heron soft-ink measure (rgba(40,40,40,.72) = --text 72%):
+  /* the frozen reference soft-ink measure (rgba(40,40,40,.72) = --text 72%):
      color-mix() serializes as color(srgb …) which the conformance
      twin cannot parse — statement.css precedent for the literal.
      R338 T-14b/T-02e: the literal rides a section-scoped var so the
      dark arm can re-point it (a raw literal never flips with the
      theme — 43 text seats sat at contrast 1.0 on the charcoal
      ground); the LIGHT computed style is byte-identical. */
-  --rl-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
+  --rl-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen reference soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
   color: var(--rl-soft-ink);
   font-size: 1.6rem;
   line-height: 2.16rem;
@@ -40,7 +40,7 @@
    floor ≥3.0 passes with room). The theme flip must not move a
    box: only the color changes, no geometry rule differs. */
 [data-theme="dark"] .rl-section {
-  --rl-soft-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink --text #F5F1E8 at the spec's 72% strength (≈7.7:1 composited on the #262019 ground); the light arm keeps the frozen Heron literal */
+  --rl-soft-ink: rgba(246, 246, 238, 0.72); /* color-gate: allow — the dark ramp's own ink --text #F5F1E8 at the spec's 72% strength (≈7.7:1 composited on the #262019 ground); the light arm keeps the frozen reference literal */
 }
 
 /* the frame's top + bottom hairlines */

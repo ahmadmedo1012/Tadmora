@@ -260,7 +260,7 @@
      cells. */
   gap: 0;
   /* R313 override (D3/D16): dock lift shadow retired — depth comes from
-     the rule hairline alone (owner decision — Heron grammar, no
+     the rule hairline alone (owner decision — the reference grammar, no
      decorative shadows anywhere). The polish layer's 1px rule border
      carries the separation. */
 }

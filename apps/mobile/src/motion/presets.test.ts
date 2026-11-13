@@ -9,7 +9,7 @@
  *     documented values and are flagged in docs/mobile/foundations/motion.md.
  */
 import { describe, expect, it } from "@jest/globals";
-import { heronEase, motion } from "@/design/tokens";
+import { dsEase, motion } from "@/design/tokens";
 import { clamp, durations, easings, pressFeedback, springs, timing } from "./presets";
 
 describe("durations — shared token alignment", () => {
@@ -45,13 +45,13 @@ describe("durations — shared token alignment", () => {
 });
 
 describe("easings", () => {
-  it("carries the shared heronEase token as the lead curve", () => {
+  it("carries the shared dsEase token as the lead curve", () => {
     // the shared source of truth (generated from shared/design-tokens.json)
-    expect(heronEase).toEqual([0.23, 1, 0.32, 1]);
-    // easings.heron is built from exactly those numbers (EasingFunctionFactory
+    expect(dsEase).toEqual([0.23, 1, 0.32, 1]);
+    // easings.ds is built from exactly those numbers (EasingFunctionFactory
     // shape — holds under both the real runtime and the jest mock)
-    const heron = easings.heron as unknown as { factory?: unknown };
-    expect(typeof heron.factory).toBe("function");
+    const ds = easings.ds as unknown as { factory?: unknown };
+    expect(typeof ds.factory).toBe("function");
   });
 
   it("exposes the settle/crossfade/loop curves", () => {
@@ -79,17 +79,17 @@ describe("springs — physical parameters, one per feel", () => {
 });
 
 describe("timing / pressFeedback / clamp", () => {
-  it("timing() bakes duration + the Heron ease by default", () => {
+  it("timing() bakes duration + the ds ease by default", () => {
     const cfg = timing(durations.fast);
     expect(cfg.duration).toBe(200);
-    expect(cfg.easing).toBe(easings.heron);
+    expect(cfg.easing).toBe(easings.ds);
   });
 
   it("timing() accepts an explicit curve", () => {
     expect(timing(10, easings.linear).easing).toBe(easings.linear);
   });
 
-  it("pressFeedback is the Heron press state (≈0.98 / ≈0.9)", () => {
+  it("pressFeedback is the ds press state (≈0.98 / ≈0.9)", () => {
     expect(pressFeedback.scale).toBeCloseTo(0.98);
     expect(pressFeedback.opacity).toBeCloseTo(0.9);
   });

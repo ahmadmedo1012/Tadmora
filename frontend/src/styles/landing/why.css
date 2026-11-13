@@ -1,5 +1,5 @@
-/* ═══ T-05 (r338) — لماذا أُلارا (why) — REWRITTEN from the frozen Heron
-   home-why-wrap spec (docs/redesign/r335/heron-spec/home-why-wrap.*.json).
+/* ═══ T-05 (r338) — لماذا أُلارا (why) — REWRITTEN from the frozen reference
+   home-why-wrap spec (the frozen r335 reference captures: home-why-wrap.*.json).
    Layered architecture: this sheet owns ONLY the why strip — the ruled
    editorial head (eyebrow + display h2 | vertical rule + lede + muted
    note), the full-width hairline, and the TALL pinned stage (centred
@@ -12,7 +12,7 @@
    only (house law — no gsap); the reveal engine drives the intro and
    the ONE scrub var --wy-p drives the accent progress rule. ═══ */
 
-/* ── the section shell — heron: fluid 171.24rem wide (1427 @1440 ·
+/* ── the section shell — the reference: fluid 171.24rem wide (1427 @1440 ·
    1902 @1920 · 1015 @1024), centred, ZERO padding — the head, the
    hairline and the stage all run full-bleed to the measured rect ── */
 .wy-section {
@@ -21,14 +21,14 @@
   margin-inline: auto;
   padding-inline: 0;
   padding-block: 0;
-  /* W9 (r341) — the measured heron soft-ink wash: the frozen spec seats
+  /* W9 (r341) — the measured reference soft-ink wash: the frozen spec seats
      the strip's default voice at rgba(40,40,40,0.72) (the div[1] census
      record — every inheriting wrapper carries it). Light keeps the
      literal (a color-mix() form serialises color(srgb…) and misses the
      spec string); the dark arm re-points at the flipping house token
      (the platform --pr-ink-72 / footer precedent). */
-  --wy-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — measured heron why soft ink (r338 ADDENDUM 9 pattern; T-25 owns unification) */
-  --wy-note-ink: rgb(180, 180, 176); /* color-gate: allow — measured heron muted note ink */
+  --wy-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — measured reference why soft ink (r338 ADDENDUM 9 pattern; T-25 owns unification) */
+  --wy-note-ink: rgb(180, 180, 176); /* color-gate: allow — measured reference muted note ink */
   color: var(--wy-soft-ink);
 }
 
@@ -37,7 +37,7 @@
   --wy-note-ink: var(--text-muted);
 }
 
-/* ── the ruled editorial head — heron @1440: 0,0 1427×269 two-column:
+/* ── the ruled editorial head — the reference @1440: 0,0 1427×269 two-column:
    left lane (1fr ≈ 962: eyebrow y133 + h2w y162) | side rail (464px:
    rule + lede + note, pad-top 133). Explicit grid seats — the h2w
    stays in the left lane, the side rail spans both rows at col 2 ── */
@@ -57,7 +57,7 @@
 
 .wy-eyebrow-t {
   font-family: var(--font-mono);
-  font-size: var(--fs-mono-md);        /* 11.67px @1440 — Heron txt-14 */
+  font-size: var(--fs-mono-md);        /* 11.67px @1440 — the reference txt-14 */
   font-weight: 500;
   line-height: 1.4;                    /* 16.33px @1440 */
   letter-spacing: 0;                   /* Arabic joins forbid tracking */
@@ -78,14 +78,14 @@
   font-family: var(--font-display);
   font-size: var(--fs-d2);             /* 40px @1440 — the D2 rung */
   font-weight: 600;
-  line-height: 1.35;                   /* heron 72/53.33 @1920 · 54/40 @1440 — the ar-floor rung */
+  line-height: 1.35;                   /* the reference 72/53.33 @1920 · 54/40 @1440 — the ar-floor rung */
   letter-spacing: 0;                   /* Arabic: ls 0 by law */
   text-wrap: balance;
   min-block-size: 9.6rem;            /* the measured 2-line box */
   color: var(--text);
 }
 
-/* the side rail — heron: x962 y0 464x269, pad 133.33/26.67/26.67 —
+/* the side rail — the reference: x962 y0 464x269, pad 133.33/26.67/26.67 —
    mirrored RTL: the rule rides the rail's inline-start, full height */
 .wy-side {
   position: relative;
@@ -108,14 +108,14 @@
 
 .wy-lede-t {
   font-family: var(--font-body);
-  font-size: var(--fs-body);           /* 13.33px @1440 — Heron txt-16 */
+  font-size: var(--fs-body);           /* 13.33px @1440 — the reference txt-16 */
   font-weight: 500;
   line-height: 1.35;                   /* …Arabic ascenders law */
   color: var(--wy-soft-ink);           /* W9: the measured 0.72 wash (spec lede ink) */
 }
 
 /* W9 (r341) — the measured lede box heights (spec: 69px @1440 · 92px
-   @1920 — heron's own 3/4-line seats; the 992–1100 band already sits
+   @1920 — the reference's own 3/4-line seats; the 992–1100 band already sits
    within tolerance). Measured px, not rem: the band roots differ. */
 @media (min-width: 1101px) { .wy-lede-t { min-block-size: 69px; } }
 @media (min-width: 1601px) { .wy-lede-t { min-block-size: 92px; } }
@@ -279,7 +279,7 @@
   inset-block-start: var(--wy-sy);
   inline-size: var(--wy-sw);
   block-size: var(--wy-sh);
-  transition: opacity 0.4s ease; /* motion-token: allow — R344: heron-measured census seat (0.4s/ease on the mini family) */
+  transition: opacity 0.4s ease; /* motion-token: allow — R344: reference-measured census seat (0.4s/ease on the mini family) */
 }
 
 .wy-mini-in {
@@ -340,7 +340,7 @@
   block-size: 0.48rem;
   background: var(--accent-ink);
 
-  transition: opacity 0.4s ease; /* motion-token: allow — R344: heron-measured census seat (0.4s/ease) */
+  transition: opacity 0.4s ease; /* motion-token: allow — R344: reference-measured census seat (0.4s/ease) */
 }
 
 .wy-ic-svg {
@@ -398,7 +398,7 @@
    * law); ours carried none. */
   border: 1px solid var(--rule-strong);
   /* R344: the census transition seat (0.4s/ease on the vid family) */
-  transition: opacity 0.4s ease; /* motion-token: allow — heron-measured vid seats */
+  transition: opacity 0.4s ease; /* motion-token: allow — reference-measured vid seats */
 }
 
 .wy-vid-in {
@@ -422,7 +422,7 @@
   block-size: 100%;
   display: block;
 }
-.wy-vic-in { transition: opacity 0.4s ease; } /* motion-token: allow — R344: heron-measured census seat */
+.wy-vic-in { transition: opacity 0.4s ease; } /* motion-token: allow — R344: reference-measured census seat */
 
 .wy-spinz,
 .wy-loadz {
@@ -781,7 +781,7 @@
 @media (max-width: 767px) {
   /* r339 T-13 + W9 (r341) — the phone sheet seat: the shared ≤767
      sheet-frame margin (shared.css, 7px) used to push the 100%
-     inline-size section 7px past the edge; the measured heron 390 root
+     inline-size section 7px past the edge; the measured reference 390 root
      is x8 w374 (spec div[1] vr) — a full 8px margin seat on the ROOT
      (not padding: the spec's own children sit at sr.x 0, so the
      padding form read x-mirror 0 vs the spec's 8 on every in-section
@@ -793,7 +793,7 @@
     inline-size: auto;                  /* W9: the root box IS x8 w374 (margin, not padding+overflow) */
   }
 
-  /* W9 (r341) — the measured 390 stack: heron's own head seats the
+  /* W9 (r341) — the measured 390 stack: the reference's own head seats the
      title at y75 and the side at y158 with NO internal air (the
      eyebrow 18.75 + 8 gap + title 64 + 8 gap + 3 ≈ 158). The strata
      rhythm seats (title mb 20 · lede mb 16 · note pad 20/24 + mt 12)
@@ -809,7 +809,7 @@
   }
 
   .wy-eyebrow {
-    /* L1-a — 0: strata's ≤767 .wy-head already seats heron's title-wrap
+    /* L1-a — 0: strata's ≤767 .wy-head already seats the reference's title-wrap
        pad (47.63px, strata.css ≤767 block — L1-b's sheet); the old
        4.73rem seat stacked on it (text y95 vs the spec's y48).
        W9 (r341) — the measured eyebrow lane seat: x16 w342 (spec
@@ -856,7 +856,7 @@
   }
 
   /* W9 (r341) — the measured 390 lede seat: x16 w342 h103 (spec
-     …div[1] > div[2] > div[2] = 16,158,342,103 — heron's own 5-line
+     …div[1] > div[2] > div[2] = 16,158,342,103 — the reference's own 5-line
      box; the ar-floor lh 1.35×15.88 = 21.44). */
   .wy-lede {
     margin-inline-start: 16px;
@@ -1169,11 +1169,11 @@
 /* T05I-CAP-END */
 
 /* ═══ T-05l — the measured tween-wrapper arms: per-bp wrapper line-height
-   (heron's own box: 24 @1920 · 22 @1440 · 12.8 @1024 · 24.31 @768 ·
+   (the reference's own box: 24 @1920 · 22 @1440 · 12.8 @1024 · 24.31 @768 ·
    21.44 @390 — empty wrappers, the ar-floor text seats above keep their
    own ratios), the scene tween transitions (0.4s/ease scrub grammar,
    0.3s route-map arm, 0.1s micro seats, per-bp mobile arms) and the
-   measured radii (heron 0 on the icon-cluster shells + dots; 99 on the
+   measured radii (the reference 0 on the icon-cluster shells + dots; 99 on the
    mini2_1c cluster core/box @≥992, its ring @≤599, the card3 capture
    shell @1024/390, the vid2/vid3 + load-tail shells @768, the mini2_2
    shell @1024/390) ═══ */
@@ -1183,13 +1183,13 @@
 @media (min-width: 600px) and (max-width: 991px) { .wy-section { line-height: 19.89px; } }
 @media (max-width: 599px) { .wy-section { line-height: 21.44px; } }
 
-/* eyebrow — heron seats it at 0.875× the wrapper fs in the tablet/mobile/
+/* eyebrow — the reference seats it at 0.875× the wrapper fs in the tablet/mobile/
    1024 bands (12.89 @768 · 13.89 @390 · 8.3 @1024); ≥1101 keeps the
    mono rung (11.67 @1440 = 0.875×13.33 — same law, token-native) */
 @media (min-width: 992px) and (max-width: 1100px), (max-width: 991px) {
   .wy-eyebrow-t { font-size: 0.875em; }
 }
-/* radii — the icon-cluster shells + dots are heron-square */
+/* radii — the icon-cluster shells + dots are reference-square */
 .wy-ic-box, .wy-ic-bg, .wy-ic-ring, .wy-dot { border-radius: 0; }
 
 /* transitions — desktop (≥992) arms */

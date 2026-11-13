@@ -32,7 +32,7 @@ import type { ReactNode } from 'react';
  *   - RTL correctness is inherited: the CSS family uses logical
  *     properties only; no direction-aware code belongs here.
  *
- * R319 (C2-G2 · the Heron title bar, additive):
+ * R319 (C2-G2 · the reference title bar, additive):
  *   - `index` — the optional mono `[01]` gutter label rendered INSIDE
  *     the h1 (aria-hidden; the accessible name stays the title alone).
  *     Default: none. Sections opt in per G1/Cycle-3.

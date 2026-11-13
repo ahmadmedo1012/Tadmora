@@ -11,7 +11,7 @@
  *     app root (Round 2 wiring). While offline it reads «لا يوجد اتصال
  *     بالإنترنت — سيتم إعادة المحاولة تلقائيًا»; when the connection
  *     returns it flashes «عاد الاتصال» (mint) for ~2.4s then exits.
- *     Enter/exit is opacity + translateY only (the Heron motion
+ *     Enter/exit is opacity + translateY only (the ds motion
  *     discipline — no layout animation); reduced-motion shows/hides
  *     statically. Safe-area aware (pads `insets.top`).
  *
@@ -33,7 +33,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import WifiOff from "lucide-react-native/icons/wifi-off";
 import Wifi from "lucide-react-native/icons/wifi";
 import { useStatusTones } from "@/design/theme";
-import { heronEase, sp } from "@/design/tokens";
+import { dsEase, sp } from "@/design/tokens";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
 import { T } from "@/components/ui/text";
 
@@ -111,7 +111,7 @@ export function useOnlineManagerBridge(): void {
 
 /* ── NetworkBanner ───────────────────────────────────────────────────── */
 
-const EASE = Easing.bezier(heronEase[0], heronEase[1], heronEase[2], heronEase[3]);
+const EASE = Easing.bezier(dsEase[0], dsEase[1], dsEase[2], dsEase[3]);
 const ENTER_MS = 220;
 const EXIT_MS = 180;
 /** How long «عاد الاتصال» stays up before exiting. */

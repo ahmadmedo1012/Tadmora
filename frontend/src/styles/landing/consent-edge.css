@@ -38,7 +38,7 @@
    permitted shadow, the entrance delay) — each carries its own
    allow-comment, the landing.css precedent for hand-tuned chrome.
 
-   Z-LADDER (the repo's actual scale — the spec's Heron numbers
+   Z-LADDER (the repo's actual scale — the spec's the reference numbers
    100008/900 are mapped onto it, intent preserved):
      content/header ≤100  <  et-tab 55*  <  sheet-frame 50*
      (*et sits above the frame's right hairline, below the 60 masthead)
@@ -538,7 +538,7 @@
 }
 
 /* R322 V10 (reviewer-confirmed 4/4 phone shots): below 768px the edge
-   chrome is GONE — Heron shows no edge element on phones, and the
+   chrome is GONE — the reference shows no edge element on phones, and the
    flush x=0 orange square read as a stray dev-tool artifact, not a
    drafting mark. The gutter marker stays a 768–991 tablet-only mark
    (where the page frame's gutter makes it read as deliberate). */

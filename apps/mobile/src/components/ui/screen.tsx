@@ -28,7 +28,7 @@ export interface ScreenProps {
 
 /**
  * PageFrame — paper ground, safe areas, optional scroll.
- * The Heron drafting sheet: background = paper, no decorative chrome.
+ * The ds drafting sheet: background = paper, no decorative chrome.
  */
 export function Screen({ children, scroll = true, padded = true, style, contentContainerStyle }: ScreenProps) {
   const p = usePalette();

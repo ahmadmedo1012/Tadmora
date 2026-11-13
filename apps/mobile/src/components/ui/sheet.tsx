@@ -6,7 +6,7 @@ import Check from "lucide-react-native/icons/check";
 import X from "lucide-react-native/icons/x";
 import type { BottomSheetFooterProps } from "@gorhom/bottom-sheet";
 import { usePalette } from "@/design/theme";
-import { heronEase, motion, sp, touchFloor } from "@/design/tokens";
+import { dsEase, motion, sp, touchFloor } from "@/design/tokens";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
 import { T } from "./text";
 import { Button } from "./pressables";
@@ -33,7 +33,7 @@ type BottomSheetBackdropComp = (typeof import("@gorhom/bottom-sheet"))["BottomSh
 type BottomSheetTextInputComp = (typeof import("@gorhom/bottom-sheet"))["BottomSheetTextInput"];
 
 /**
- * R334 2-c — AppSheet: the Heron bottom sheet, on @gorhom/bottom-sheet v5.
+ * R334 2-c — AppSheet: the ds bottom sheet, on @gorhom/bottom-sheet v5.
  *
  * Contract notes (the WHY of the local providers):
  *   · BottomSheetModal REQUIRES a BottomSheetModalProvider ancestor and the
@@ -90,12 +90,12 @@ const SNAP_FRACTIONS: Record<SheetSnap, number> = {
 
 /** Tunable sheet motion (exported — screens may override via AppSheet props). */
 export const SHEET_ANIMATION = {
-  /** Heron nav cadence (tokens.motion.durationNav). */
+  /** ds nav cadence (tokens.motion.durationNav). */
   durationMs: motion.durationNav,
   /** Reduced-motion fast path — near-instant, still not a teleport. */
   reducedDurationMs: 90,
-  /** The Heron ease (tokens.heronEase as a reanimated bezier). */
-  easing: Easing.bezier(...heronEase),
+  /** The ds ease (tokens.dsEase as a reanimated bezier). */
+  easing: Easing.bezier(...dsEase),
 } as const;
 
 export interface AppSheetProps {
@@ -108,7 +108,7 @@ export interface AppSheetProps {
   snap?: SheetSnap | (string | number)[];
   /**
    * Content-sized sheet capped at `snap` (enableDynamicSizing +
-   * maxDynamicContentSize). Default true — the Heron default is "as tall as
+   * maxDynamicContentSize). Default true — the ds default is "as tall as
    * the content, never taller than the cap". Pass false for a fixed-height
    * sheet (e.g. a scrollable filter body).
    */
@@ -310,7 +310,7 @@ export function AppSheet({
   );
 }
 
-/** Themed backdrop — ink scrim, tap to close (Heron hairline world: no blur). */
+/** Themed backdrop — ink scrim, tap to close (ds hairline world: no blur). */
 function SheetBackdrop(props: ComponentProps<BottomSheetBackdropComp>) {
   const { BottomSheetBackdrop } = bs();
   return (
@@ -327,7 +327,7 @@ function SheetBackdrop(props: ComponentProps<BottomSheetBackdropComp>) {
 /**
  * SheetTextInput — the keyboard-aware input for sheet bodies. Wraps
  * BottomSheetTextInput (a GestureHandler TextInput) so `keyboardBehavior`
- * tracks the focused field instead of covering it; Heron hairline styling,
+ * tracks the focused field instead of covering it; ds hairline styling,
  * Arabic-first (RTL) text alignment. Use INSIDE AppSheet instead of a bare
  * TextInput — plain TextInputs ignore the sheet's keyboard tracking.
  */

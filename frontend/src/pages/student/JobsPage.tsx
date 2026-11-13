@@ -14,9 +14,9 @@ import { PageFrame, PageHeader, FilterBar } from '../../components/patterns';
 import { useJobs, useApplyJob, apiErrorMessage, type Job } from '../../hooks/useResources';
 import { formatDate, formatInt } from '../../utils/numbers';
 import { countAr } from '../../lib/format';
-/* R305 Heron: the shared student vocabulary + this family's refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+/* R305 DS: the shared student vocabulary + this family's refinements. */
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy + the family's
  * harmonics. */
 import '../../styles/student/pages.css';
@@ -253,7 +253,7 @@ export default function JobsPage() {
           />
 
           {/* The counted line — honest about the filtered subset. */}
-          {/* R305 Heron: the counted line is page metadata — it rides the
+          {/* R305 DS: the counted line is page metadata — it rides the
               chip register (accent dot = live fact) when a count exists. */}
           <p className="jobs-count" aria-live="polite">
             {filtered.length === 0 ? (

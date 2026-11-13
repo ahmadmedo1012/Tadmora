@@ -1,8 +1,8 @@
 /**
  * r306 — the landing drawing-sheet contract («لوحة أُلارا»).
  *
- * r306 rebuilds the landing page in the single Heron canon
- * (docs/redesign/r306-heron-exclusivity-spec.md): the OPTIKKA
+ * r306 rebuilds the landing page in the single the reference canon
+ * (the retired r306 exclusivity spec): the OPTIKKA
  * editorial poster (the 3D knowledge world, the copper climax, the
  * --poster-* namespace, the alternating spreads, the giant wordmark)
  * is retired. This sheet pins the new contract that interaction
@@ -133,7 +133,7 @@ describe('r306 — the drawing sheet ships', () => {
     /* R313 override (WP-B2 · D8): the bar keeps the 56px height + the
      * bottom hairline, but now rides the reference's own seat — FIXED
      * at the 7px frame inset, transparent at rest (the old blurred
-     * glass is gone — Heron has no backdrop-filter). The nav hover is
+     * glass is gone — the reference has no backdrop-filter). The nav hover is
      * the reference's fill-WIPE recipe: the charcoal slab is the
      * ::before layer (never a background swap on the cell), the label
      * rolls one row (the dual-label track), and the 5×5 mark pair
@@ -162,7 +162,7 @@ describe('r306 — the drawing sheet ships', () => {
   });
 
   it('the mono bracketed indices carry the drafting voice (Latin, dir=ltr, tabular)', () => {
-    // R337: the Heron census for the section is 8 accordion rows; the
+    // R337: the reference census for the section is 8 accordion rows; the
     // rewrite renders the numeral from the row data (ROLE_ROWS.num
     // 01–08), so the PIN is the voice — mono, Latin glyphs, dir=ltr,
     // tabular numerals — on the template, plus the full 01–08 ladder
@@ -274,7 +274,7 @@ describe('r306 → r310 — the elevation illustration (the honest interactive)'
     expect(live).toMatch(/\.bp-svg\s*\{[\s\S]*?block-size:\s*auto/s);
     // R322 override (1-d FINAL · the type-scale migration): the ≤767 H1
     // re-clamp RETIRED — the D1 rung (--fs-d1, band-independent) governs
-    // from the base seat: 31.74px floor across the phone band (Heron's
+    // from the base seat: 31.74px floor across the phone band (the reference's
     // own 3.2rem phone h1), rising on the 4.8vw mid-term to 36.9px
     // @767. The old clamp(30px, 8.4vw, 40px) was a counter-measure
     // against the fluid root's mobile-band spike (root 19.52px @767),
@@ -338,7 +338,7 @@ describe('r306 — the honest ledger is a hairline table', () => {
     expect(campusCss).toMatch(/\.lv-row\s*\{[^}]*border-block-end:\s*1px solid var\(--rule\)/);
     expect(live).not.toContain('.lv-window');
     expect(liveTsx).not.toContain('lv-window');
-    // R322 override (2-d): the four pains are Heron's OPEN COLUMNS
+    // R322 override (2-d): the four pains are the reference's OPEN COLUMNS
     // now (.pm-col — no boxed cards): the ruled-row contract rides the
     // meta row's dashed rule + the column family; the boxed .pm-card
     // grammar (border + surface slab) is RETIRED with the boxes.
@@ -439,9 +439,9 @@ describe('r306 hygiene — the sheet stays clean', () => {
       'fo-ticker-rtl', // the capabilities crawl
       'wy-snap', // R313: the why-stage verb snap (the 74%-hold plateau — supersedes vs-tag-snap, which moved to campus.css with the status rows)
       'hro-fade-loop', // R331: the hero deco ledger cards' idle fade (the reference's own deco loop, 1.5s, ≥992 only) — collapsed by the hero RM belt
-      'pr-item-fade', // r338 T-08: the platform rows' cross-fade marquee (heron's row pair, 14s, ≥992 only) — collapsed by the platform RM belt
+      'pr-item-fade', // r338 T-08: the platform rows' cross-fade marquee (the reference's row pair, 14s, ≥992 only) — collapsed by the platform RM belt
       'rl-rule-widen', // r339 T-11b1: the usecase row rules' once-only scroll-reveal WIDEN (width 0→100%, 800ms power2.out, fill both — the tween census' width family is reachable ONLY through a declared @keyframes; the transition envelope records no width). Not a loop: fires once on .in-view, collapsed by the roles RM belt (.rl-rule-w).
-      // T-11b2 (r339): the two scroll-driven scrub entrances — Heron's
+      // T-11b2 (r339): the two scroll-driven scrub entrances — the reference's
       // home-map scrub scene + the platform-content-title flourish. NOT
       // ambient loops: view()-timeline entrances (animation-timeline:
       // view(), @supports-gated with the IO reveal-up fallback for

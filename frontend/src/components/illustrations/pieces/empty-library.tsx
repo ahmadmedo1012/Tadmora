@@ -6,7 +6,7 @@
  * rhythm; the empty slot is the subject.
  *
  * r313 two-tone: ink (--ill-stroke) + paper + signal (--accent, one
- * spine + the binding dot) — square spines, the Heron drafting
+ * spine + the binding dot) — square spines, the reference drafting
  * grammar. No text. RTL: the row reads as a shelf in either
  * direction — no mirroring needed.
  */

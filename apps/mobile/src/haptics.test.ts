@@ -28,8 +28,6 @@ const mockNotify = Haptics.notificationAsync as unknown as jest.Mock;
 const storageGet = AsyncStorage.getItem as unknown as jest.Mock;
 
 const STORAGE_KEY = "ula-mobile-haptics-enabled";
-/** §1.1: the retired identity's key — read as fallback, then adopted. */
-const LEGACY_STORAGE_KEY = "tdmr-mobile-haptics-enabled";
 
 /* ── deterministic clock (injected via __hapticsInternals.setClock) ──── */
 
@@ -116,15 +114,6 @@ describe("haptics — persistence", () => {
     expect(haptics.isEnabled()).toBe(true);
   });
 
-  it("§1.1 rename shim: a legacy-key '0' hydrates OFF and adopts the new key", async () => {
-    __hapticsInternals.setPlatform("ios");
-    await AsyncStorage.setItem(LEGACY_STORAGE_KEY, "0");
-    await haptics.hydrate();
-    expect(haptics.isEnabled()).toBe(false);
-    await flush(); // the adopt write-through is fire-and-forget
-    expect(await AsyncStorage.getItem(STORAGE_KEY)).toBe("0");
-  });
-
   it("a failing storage read never disables feedback (default ON)", async () => {
     __hapticsInternals.setPlatform("ios");
     storageGet.mockImplementationOnce(() => Promise.reject(new Error("disk gone")));
@@ -149,9 +138,8 @@ describe("haptics — persistence", () => {
     const before = storageGet.mock.calls.length;
     await haptics.hydrate();
     await haptics.hydrate();
-    // §1.1 shim: one hydrate = new-key read + legacy probe (both empty
-    // here) — still exactly one pass however many times it is called.
-    expect(storageGet.mock.calls.length - before).toBe(2);
+    // one hydrate = exactly one new-key read — however many times it runs.
+    expect(storageGet.mock.calls.length - before).toBe(1);
   });
 });
 

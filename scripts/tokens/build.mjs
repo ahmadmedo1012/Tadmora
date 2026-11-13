@@ -2,7 +2,7 @@
 /**
  * scripts/tokens/build.mjs — R326 M0.4 `npm run tokens:build`.
  *
- * THE ONE SOURCE OF TRUTH: shared/design-tokens.json (the shared Heron
+ * THE ONE SOURCE OF TRUTH: shared/design-tokens.json (the shared design-system
  * set: neutrals · triads · semantic seats · spacing · radius · motion ·
  * the mobile type ladder). This script emits BOTH platform halves:
  *
@@ -12,8 +12,8 @@
  *       written seats in tokens.css compose on top, and its
  *       prefers-reduced-motion kill still wins by import order.
  *   apps/mobile/src/design/tokens.generated.ts
- *     — the typed mobile data (heron palettes · statusTones · tierColors
- *       · type · sp · motion · heronEase · radius · touchFloor). The
+ *     — the typed mobile data (ds palettes · statusTones · tierColors
+ *       · type · sp · motion · dsEase · radius · touchFloor). The
  *       public typed surface stays in ./tokens (re-exports + the mapping
  *       functions) so every existing import keeps working.
  *
@@ -144,7 +144,7 @@ function buildCss() {
   L.push('   Source of truth: shared/design-tokens.json (R326 M0.4).');
   L.push('   Regen: npm run tokens:build · Drift gate: npm run tokens:check');
   L.push('');
-  L.push('   The WEB half of the shared Heron token set: the spacing/radius/');
+  L.push('   The WEB half of the shared design-system token set: the spacing/radius/');
   L.push('   motion ladder + both theme palettes (neutrals · triads · semantic');
   L.push('   seats). Imported by main.tsx BEFORE tokens.css, inside the same');
   L.push('   @layer tokens — the hand-written seats in tokens.css compose on');
@@ -163,7 +163,7 @@ function buildCss() {
   L.push('    /* ── Radius — R313: the ladder collapses to 0; full = circular primitives ── */');
   for (const [k, v] of Object.entries(data.radius)) L.push(`    --r-${k}: ${v}px;`);
   L.push('');
-  L.push('    /* ── Motion — the measured Heron register (r305) ── */');
+  L.push('    /* ── Motion — the measured motion register (r305) ── */');
   for (const [k, v] of Object.entries(data.motion)) {
     if (k === 'ease') continue;
     L.push(`    --t-${kebab(k)}: ${v}ms;`);
@@ -199,7 +199,7 @@ function buildCss() {
     return B;
   };
 
-  L.push('  /* LIGHT THEME — the Heron blueprint paper */');
+  L.push('  /* LIGHT THEME — the ds blueprint paper */');
   L.push(...themeBlock('light', ['  :root,', '  [data-theme="light"] {']));
   L.push('');
   L.push('  /* DARK THEME — the charcoal night */');
@@ -217,8 +217,8 @@ function buildTs() {
   T.push(' * Source of truth: shared/design-tokens.json (R326 M0.4).');
   T.push(' * Regen (repo root): npm run tokens:build · Gate: npm run tokens:check');
   T.push(' *');
-  T.push(' * The MOBILE half of the shared Heron set. The typed public surface');
-  T.push(' * (HeronPalette · StatusTone · the toneFor* mappers) lives in ./tokens,');
+  T.push(' * The MOBILE half of the shared design-system set. The typed public surface');
+  T.push(' * (DsPalette · StatusTone · the toneFor* mappers) lives in ./tokens,');
   T.push(' * which re-exports this data — every existing import keeps working.');
   T.push(' */');
   T.push('');
@@ -253,7 +253,7 @@ function buildTs() {
     };
   };
 
-  T.push('export const heron = {');
+  T.push('export const ds = {');
   for (const t of THEMES) {
     T.push(`  ${t}: {`);
     for (const [k, v] of Object.entries(palette(t))) T.push(`    ${k}: "${v}",`);
@@ -303,10 +303,10 @@ function buildTs() {
   T.push('');
 
   const [e1, e2, e3, e4] = data.motion.ease;
-  T.push(`export const heronEase = [${e1}, ${e2}, ${e3}, ${e4}] as const;`);
+  T.push(`export const dsEase = [${e1}, ${e2}, ${e3}, ${e4}] as const;`);
   T.push('');
 
-  T.push('// Heron radius discipline: 0 everywhere; circles only for round elements.');
+  T.push('// radius discipline: 0 everywhere; circles only for round elements.');
   T.push('export const radius = {');
   T.push(`  none: ${data.radius.xs},`);
   T.push(`  full: ${data.radius.full},`);

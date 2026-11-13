@@ -170,7 +170,7 @@ export function gradeBand(avg: number): { label: string; tone: StatusToneName; r
  * The risk vocabulary. The wire sends riskLevel (OK/WATCH/AT_RISK/
  * CRITICAL — teacher.routes.ts) and the mobile API module also allows a
  * legacy `risk` (high/medium/low); both vocabularies map to the web's
- * Arabic labels + Heron chip tones.
+ * Arabic labels + ds chip tones.
  */
 const RISK_LEVEL: Record<string, { label: string; tone: StatusToneName }> = {
   OK: { label: "مستقر", tone: "mint" },

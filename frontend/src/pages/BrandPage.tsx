@@ -94,7 +94,7 @@ function ConstructionPlate(): React.JSX.Element {
         </g>
       </svg>
       <figcaption>
-        MARK_VIEWBOX «{MARK_VIEWBOX}» · الشعرة 1.5px غير قياسية · وصلات round · حجر الزاوية على قمّة الساق اليمنى (21,3)
+        MARK_VIEWBOX «{MARK_VIEWBOX}» · الشعرة 1.5px غير قياسية · وصلات round · حجر الأساس على قمّة الساق اليمنى (21,3)
       </figcaption>
     </figure>
   );
@@ -133,7 +133,7 @@ const TONE_ROWS: ReadonlyArray<readonly [string, string, React.JSX.Element]> = [
 const SWATCHES: ReadonlyArray<readonly [string, string, string, string]> = [
   ['الورق · paper', 'r323b-chip-paper', '#F5F1E8', 'الأرضية (فاتح) + النسخ الساكنة'],
   ['الحبر · ink', 'r323b-chip-ink', '#262019', 'الشعيرات والكلمة — يركب currentColor'],
-  ['السيينا المحروقة · sienna', 'r323b-chip-sienna', '#C43E16', 'حجر الزاوية — الإشارة الوحيدة · var(--accent)'],
+  ['السيينا المحروقة · sienna', 'r323b-chip-sienna', '#C43E16', 'حجر الأساس — الإشارة الوحيدة · var(--accent)'],
 ];
 
 export default function BrandPage(): React.JSX.Element {

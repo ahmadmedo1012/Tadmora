@@ -32,11 +32,11 @@ import {
   type Submission,
 } from '../../hooks/useResources';
 import { formatDate } from '../../utils/numbers';
-/* R305-A5 (Heron): the shared student vocabulary + this family's sheet.
+/* R305-A5 (the reference): the shared student vocabulary + this family's sheet.
  * student.css (global shell import) styles the base page classes; these
- * two carry the Heron primitives and the page-scoped refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-courses.css';
+ * two carry the reference primitives and the page-scoped refinements. */
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-courses.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy (loaded
  * by every student page that renders the kit) + this family's own
  * harmonics (thumb-card hairline re-seat, the row progress seat). */
@@ -154,7 +154,7 @@ function CourseRow({ e, actNow }: { e: MyEnrollment; actNow?: boolean }) {
         </span>
       }
       title={c.name}
-      /* R305 (Heron): the row's quiet metadata line — code · teacher ·
+      /* R305 (the reference): the row's quiet metadata line — code · teacher ·
        * lecture count — rides the foundation meta-row; separators are
        * technical hairlines (divider color, not text opacity), the code
        * stays bidi-isolated mono. Same data, same voice as before. */

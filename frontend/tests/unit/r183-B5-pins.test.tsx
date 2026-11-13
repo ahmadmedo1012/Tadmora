@@ -127,7 +127,7 @@ const faculty = (over: Partial<Parameters<typeof dedupeFacultyCensus>[0][number]
   name: 'كلية التربية',
   nameEn: null,
   iconEmoji: null,
-  city: 'الزاوية',
+  city: 'افتراضي',
   departmentCount: 0,
   studentCount: 0,
   teacherCount: 0,
@@ -139,7 +139,7 @@ const faculty = (over: Partial<Parameters<typeof dedupeFacultyCensus>[0][number]
 describe('r183-B5 [A9 P1] — dedupeFacultyCensus (the duplicate seed fold)', () => {
   it('folds N identical empty rows (same name+city, zero counts) into ONE annotated entry', () => {
     const rows = [
-      faculty({ id: 'a', name: 'كلية العلوم', city: 'الزاوية', departmentCount: 2, courseCount: 6, studentCount: 10 }),
+      faculty({ id: 'a', name: 'كلية العلوم', city: 'افتراضي', departmentCount: 2, courseCount: 6, studentCount: 10 }),
       faculty({ id: 'b' }),
       faculty({ id: 'c' }),
       faculty({ id: 'd' }),
@@ -155,7 +155,7 @@ describe('r183-B5 [A9 P1] — dedupeFacultyCensus (the duplicate seed fold)', ()
 
   it('same name in DIFFERENT cities never folds (name+city is the key)', () => {
     const census = dedupeFacultyCensus([
-      faculty({ id: 'a', city: 'الزاوية' }),
+      faculty({ id: 'a', city: 'افتراضي' }),
       faculty({ id: 'b', city: 'طرابلس' }),
     ]);
     expect(census).toHaveLength(2);
@@ -173,8 +173,8 @@ describe('r183-B5 [A9 P1] — dedupeFacultyCensus (the duplicate seed fold)', ()
 
   it('name/city trimming is part of the key, and an empty list stays empty', () => {
     const census = dedupeFacultyCensus([
-      faculty({ id: 'a', name: '  كلية العلوم  ', city: ' الزاوية ' }),
-      faculty({ id: 'b', name: 'كلية العلوم', city: 'الزاوية' }),
+      faculty({ id: 'a', name: '  كلية العلوم  ', city: ' افتراضي ' }),
+      faculty({ id: 'b', name: 'كلية العلوم', city: 'افتراضي' }),
     ]);
     expect(census).toHaveLength(1);
     expect(census[0]?.duplicateCount).toBe(2);

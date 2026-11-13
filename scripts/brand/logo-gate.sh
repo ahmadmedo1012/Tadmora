@@ -15,11 +15,9 @@
 #   · node_modules / frontend/dist — never committed decisions
 #   · prose (.md) — docs/ops/ULARA-CODEMOD-SPEC.md §0 DEFINES the
 #     forbidden signature, LEDGER.md records the old audit, and the
-#     legal rights audit (docs/legal/THIRD_PARTY-RIGHTS.md) + the brand
-#     bible (docs/brand/BRAND.md) document the retired mark's geometry
-#     as history/legal evidence — prose quotes are not renderable
-#     duplications (the 1-C precedent); the docs owners re-key their
-#     prose on their own cadence
+#     prose is not a renderable duplication (the 1-C precedent);
+#     docs/ops/ULARA-CODEMOD-SPEC.md §0 defines the forbidden
+#     signature and LEDGER.md records the old audit
 #
 # ── 2. the U-vessel path signature + MARK_* constants — the sanctioned
 # seats (spec §3 + the takeover instruction):
@@ -27,8 +25,6 @@
 #   · apps/mobile/src/brand/**        the RN port (byte-identical, tokens:check)
 #   · apps/mobile/src/components/ui/brand.tsx  the RN <BrandMark> renderer
 #   · frontend/tests/**               the pin tests (r323-brand-system.test.ts)
-#   · scripts/r323/brand-assets.mjs   the documented static-twin re-stater
-#   · scripts/r323/wordmark-build-r323.mjs  the wordmark generator
 #   · scripts/brand/build-app-icons.mjs     the shared-mark/icon builder
 #   · scripts/brand/ulara-kit.mjs    the owner-approved staged-geometry kit
 #                                     that AUTHORS the vessel (the spec §0
@@ -84,8 +80,6 @@ VESSELViol=$(
     | grep -v '^frontend/src/brand/' \
     | grep -v '^frontend/tests/' \
     | grep -v '^apps/mobile/src/brand/' \
-    | grep -v '^scripts/r323/brand-assets.mjs$' \
-    | grep -v '^scripts/r323/wordmark-build-r323.mjs$' \
     | grep -v '^scripts/brand/build-app-icons.mjs$' \
     | grep -v '^scripts/brand/ulara-kit.mjs$' \
     | grep -v '^shared/brand/' \

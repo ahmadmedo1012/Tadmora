@@ -49,7 +49,7 @@ import { prisma } from '../../src/db.js';
 const runSyncMock = vi.mocked(runSync);
 const institutionFindMany = vi.mocked(prisma.institution.findMany);
 
-const ZAWIA = { id: DEFAULT_SYNC_INSTITUTION_ID, slug: 'ulara-demo' };
+const PRIMARY = { id: DEFAULT_SYNC_INSTITUTION_ID, slug: 'ulara-demo' };
 const OTHER = { id: 'inst-other', slug: 'other-demo' };
 
 beforeEach(() => {
@@ -97,7 +97,7 @@ describe('planScheduledSyncs — pure decision', () => {
   });
 
   it('an empty registry plans nothing', () => {
-    expect(planScheduledSyncs([], [ZAWIA, OTHER])).toEqual([]);
+    expect(planScheduledSyncs([], [PRIMARY, OTHER])).toEqual([]);
   });
 
   it('keeps registry order across several configured institutions', () => {
@@ -122,15 +122,15 @@ describe('planScheduledSyncs — pure decision', () => {
 describe('the real INSTITUTION_SYNC_CONFIGS registry', () => {
   it('configures exactly ONE institution: the demo tenant (ulara-demo) with the static-markdown source', () => {
     expect(INSTITUTION_SYNC_CONFIGS).toEqual([
-      { institutionId: 'inst-zawia-showcase', institutionSlug: 'ulara-demo', source: 'static-markdown' },
+      { institutionId: 'inst-ulara-showcase', institutionSlug: 'ulara-demo', source: 'static-markdown' },
     ]);
   });
 
   it('findInstitutionSyncConfig resolves the showcase by id OR slug, and any other institution to null', () => {
-    expect(findInstitutionSyncConfig({ id: 'inst-zawia-showcase', slug: 'whatever' })).not.toBeNull();
+    expect(findInstitutionSyncConfig({ id: 'inst-ulara-showcase', slug: 'whatever' })).not.toBeNull();
     expect(findInstitutionSyncConfig({ id: 'cuid-x', slug: 'ulara-demo' })).not.toBeNull();
     // The demo source is NOT a global source for every university:
-    expect(findInstitutionSyncConfig({ id: 'cuid-x', slug: 'alandalus-demo' })).toBeNull();
+    expect(findInstitutionSyncConfig({ id: 'cuid-x', slug: 'ulara-demo-2' })).toBeNull();
     expect(findInstitutionSyncConfig({ id: 'cuid-x', slug: 'other' })).toBeNull();
   });
 
@@ -143,7 +143,7 @@ describe('the real INSTITUTION_SYNC_CONFIGS registry', () => {
 
 describe('runScheduledSyncs', () => {
   it('runs a guarded sync for every configured institution with its own source', async () => {
-    institutionFindMany.mockResolvedValue([ZAWIA, OTHER] as never);
+    institutionFindMany.mockResolvedValue([PRIMARY, OTHER] as never);
     runSyncMock.mockResolvedValue({
       runId: 'r1', status: 'SUCCESS', factsAdded: 38, factsUpdated: 0,
       durationMs: 5, errorMsg: null, notes: null,
@@ -151,10 +151,10 @@ describe('runScheduledSyncs', () => {
 
     const plan = await runScheduledSyncs('test');
 
-    expect(plan).toEqual([{ institutionId: ZAWIA.id, source: 'static-markdown' }]);
+    expect(plan).toEqual([{ institutionId: PRIMARY.id, source: 'static-markdown' }]);
     // ONLY the configured institution — OTHER is never synced.
     expect(runSyncMock).toHaveBeenCalledTimes(1);
-    expect(runSyncMock).toHaveBeenCalledWith({ institutionId: ZAWIA.id, source: 'static-markdown' });
+    expect(runSyncMock).toHaveBeenCalledWith({ institutionId: PRIMARY.id, source: 'static-markdown' });
   });
 
   it('skips unconfigured institutions entirely (real registry, directory without the showcase)', async () => {

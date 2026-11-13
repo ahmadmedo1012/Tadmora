@@ -16,7 +16,7 @@
  *     already owns the single status announcement (e.g. the shell's
  *     ServerWakePill): the mark renders fully aria-hidden with no
  *     role — the caller's outer live region is the only voice.
- *   - r313 Heron-loader grammar (the reference's loading instrument,
+ *   - r313 reference-loader grammar (the reference's loading instrument,
  *     reduced to an indeterminate mark): a 1px guide track
  *     (#B3B3AF via --grid-line) carrying TWO 1px signal segments
  *     gliding in opposite directions (the loading-progress

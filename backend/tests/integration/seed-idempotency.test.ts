@@ -92,7 +92,7 @@ describe('r182 — deploy-time seed repeat safety (stage 09-C)', () => {
         select: { slug: true },
       });
       const slugs = institutions.map((i) => i.slug).sort();
-      expect(slugs).toContain('alandalus-demo');
+      expect(slugs).toContain('ulara-demo-2');
       expect(slugs).toContain('ulara-demo');
 
       // R320 §C: the documented STUDENT account lives on @test.ly.

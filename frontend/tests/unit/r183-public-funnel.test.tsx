@@ -37,7 +37,7 @@ const h = vi.hoisted(() => ({
     name: 'كلية الآداب',
     nameEn: null,
     iconEmoji: null,
-    city: 'الزاوية',
+    city: 'افتراضي',
     departmentCount: 0,
     studentCount: 0,
     teacherCount: 0,

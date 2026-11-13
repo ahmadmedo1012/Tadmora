@@ -4,7 +4,7 @@
  * Four composing roles (display / title / body / numeric) on the LOADED
  * IBM Plex Sans Arabic weights (400 Regular · 500 Medium · 600 SemiBold ·
  * 700 Bold — see ./fonts). Hierarchy = weight + size rungs, never tracking
- * or uppercase (Heron). These are TextStyle building blocks for direct
+ * or uppercase (ds). These are TextStyle building blocks for direct
  * composition; the <T> component (ui/text) stays the default way to render
  * prose — its `display` variant keeps the Alexandria brand face, this
  * module's display role is the Plex Arabic hero when the brand voice is

@@ -1,16 +1,16 @@
 /* ═══════════════════════════════════════════════════════════════════
    Self-hosted fonts — served from /public/fonts. (r305 → r313)
 
-   LICENSING (r305 audit — r305-heron-reference-spec.md §fonts; R313
+   LICENSING (r305 audit — r305-reference-reference-spec.md §fonts; R313
    re-ruling): every face below is SIL OFL 1.1 and legally self-hosted.
    The design reference's display/body grotesk (BT Grotesk) remains
    PROPRIETARY and is NOT reused — a PERMANENT exception (documented;
    the Arabic-first OFL stack below carries the display/body voice).
-   R313 (owner decision, Heron parity): the reference's mono voice
+   R313 (owner decision, the reference parity): the reference's mono voice
    Geist Mono (OFL, self-hosted below — the exact woff2 the Google
    Fonts CSS2 API serves, latin subset) is ADOPTED as the first entry
    of --font-mono; IBM Plex Mono stays as the self-hosted fallback.
-   The Heron voice is carried by Alexandria (display) + IBM Plex Sans
+   The reference voice is carried by Alexandria (display) + IBM Plex Sans
    Arabic (body, Latin runs included) + Geist Mono / IBM Plex Mono
    (technical micro-labels). Archivo (OFL) remains the documented
    future addition if a distinct Latin display voice is ever required.
@@ -41,7 +41,7 @@
      woff2s deleted from disk. Arabic emphasis stays upright weight +
      accent ink. Do not re-add without re-shipping files.
    · IBM Plex Mono 400/500 (latin) — codes, IDs, numbers, emails.
-   · Geist Mono 400/500 (latin) — R313: the Heron instrument voice,
+   · Geist Mono 400/500 (latin) — R313: the reference instrument voice,
      first entry of --font-mono (loader readouts, coordinates, Latin
      micro-labels). Both weights resolve from the same variable-font
      woff2 Google Fonts serves (wght axis 100–900, default 400); the
@@ -156,8 +156,8 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* ── Geist Mono — latin subset (R313: the Heron instrument voice) ──
-   The reference's mono face (Geistmono 500 on heronaiapp.com —
+/* ── Geist Mono — latin subset (R313: the reference instrument voice) ──
+   The reference's mono face (Geistmono 500 on the retired reference site —
    loader %, X:Y readouts, button micro-labels). OFL, self-hosted:
    the exact latin-subset woff2 the Google Fonts CSS2 API serves.
    Latin-only voice — Arabic runs in mono contexts continue in IBM

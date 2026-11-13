@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { legacyThemeKey, withLegacyFallback } from '../lib/legacy-storage';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type ResolvedTheme = 'light' | 'dark';
@@ -49,12 +48,11 @@ export const useThemeStore = create<ThemeState>()(
       },
     }),
     {
-      /* ULARA takeover §1.1: 't*'-era key renamed to ulara-theme; the
-       * storage adapter adopts the retired row once (lib/legacy-storage)
-       * and the index.html bootstrap carries the same migration — a
-       * visitor's persisted theme survives the rename. */
+      /* The persisted theme rides the ulara-theme key alone (the retired
+       * pre-ULARA row fallback was removed — dev-phase visitors re-choose
+       * once); the index.html bootstrap reads the same key pre-paint. */
       name: 'ulara-theme',
-      storage: createJSONStorage(() => withLegacyFallback(localStorage, legacyThemeKey)),
+      storage: createJSONStorage(() => localStorage),
       version: 2,
       migrate: (persisted: unknown, version) => {
         // v1 → v2: add modeUpdatedAt = 0 so any saved server-side

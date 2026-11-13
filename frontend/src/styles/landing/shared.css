@@ -7,16 +7,16 @@
 
 /* R315 cycle-2 (M2): the boundary rides the reference's own rung — the
  * tablet composition must NOT fire at 992–1024. Measured live (fresh
- * manifest): Heron @1024×768 keeps the DESKTOP composition on the 5.93px
+ * manifest): the reference @1024×768 keeps the DESKTOP composition on the 5.93px
  * desktop root (docH 9926, hero = 100svh − 13) while this block's max-1024
  * seat restacked ours to 12209 (+23%: pm +695 · cta +335 · ft +590 — the
  * top root cause of the DOM judge's ranked list). The 1024px gate was an
- * r155d-era rung, not the reference's: Heron's live inline CSS carries
+ * r155d-era rung, not the reference's: its live inline CSS carries
  * exactly three composition boundaries — 991 / 767 / 479 (census on the
  * live stylesheet). Tablet rules now seat ≤991 where the 1.199vw root
  * actually runs; ≥992 keeps desktop (the min-992 twins above). */
 @media (max-width: 991px) {
-  /* R322 (2-c) re-pin: Heron KEEPS the 6+6 split @768 (section
+  /* R322 (2-c) re-pin: the reference KEEPS the 6+6 split @768 (section
      57.22rem — the square shrinks to its cell, ~40.9rem); the stack
      is the ≤767 phone form alone. The side gutters step 12xl→4xl on
      the belt (the 15rem isolation pads are the desktop's own). */
@@ -140,7 +140,7 @@
      pains' non-negotiable). */
 
   /* R322 (1-d) — the .pm-card-title mobile body-scale re-pin retires:
-   * the D3 rung governs (18.6px @390 — Heron's own mobile item-title
+   * the D3 rung governs (18.6px @390 — the reference's own mobile item-title
    * is 2rem/19.8px @390, so the rung lands IN the reference's league,
    * not below it). */
 
@@ -199,7 +199,7 @@
 
   /* the footer: the strip thins, the wordmark caps, cells pad down.
    * R315 (K-F · B9): the tablet mark rides the reference's own
-   * proportional ladder — 166px (Heron 165.75 @768, seated in the
+   * proportional ladder — 166px (the reference 165.75 @768, seated in the
    * ≤991 block above) with the cell's breathing room, not the
    * desktop's 215. */
 
@@ -258,7 +258,7 @@
 
 
   /* R322 (2-d): the pains' phone art-drop retires — the carousel
-     keeps the drawings (Heron's own mobile problem swiper shows the
+     keeps the drawings (the reference's own mobile problem swiper shows the
      art; the art stays decorative aria-hidden).
      PI-B2: the ≤640 .rl-cards single-column rung is GONE with the
      retired tile grid (markup-dead). */
@@ -325,7 +325,7 @@
    keeps the authored static sheet outcome. */
 .reveal-up {
   /* R344 (item 0): the frozen census measures the top-of-page state at
-     opacity 1 (Heron's own signature completes pre-measurement) — the
+     opacity 1 (the reference's own signature completes pre-measurement) — the
      pre-state fade is conformance debt; the 14px rise keeps the motion. */
   opacity: 1;
   transform: translateY(14px);
@@ -346,7 +346,7 @@
   .reveal-up { opacity: 1; transform: none; }
 }
 
-/* ── R339 T-11b — the Heron-register reveal seat ────────────────────
+/* ── R339 T-11b — the reference-register reveal seat ────────────────────
    The frozen census' page-wide signature (T-11A-TWEEN.md): from
    {opacity: 0, y: 26.667} → to {autoAlpha: 1, y: 0}, 800 ms,
    power2.out, 20 ms stagger — the footer/usecase/cta scroll-reveals.
@@ -356,7 +356,7 @@
    T-11A's match rule); the DISTANCE is not a match key, and it is
    pinned to the HOUSE 14px (.reveal-up's own contract) by the
    conformance law: run.mjs's walk captures boxes mid-transition and
-   at-rest, and geometry tolerance is ±2% vh (18px @900) — the Heron
+   at-rest, and geometry tolerance is ±2% vh (18px @900) — the reference
    26.667/31.756 armed distance exceeds it (measured: 11 new y-fails,
    footer 89.9→86.8%), while the pm-cols' 14px precedent passes. The
    module (lib/reveals.ts) owns the per-element 20/4 ms
@@ -380,7 +380,7 @@
   opacity: 1;
   transform: translateY(0);
 }
-/* the intro band's own beat — Heron records 600 ms there (not 800) */
+/* the intro band's own beat — the reference records 600 ms there (not 800) */
 .reveal-rise-h--beat {
   --rise-h-dur: 600ms;
 }

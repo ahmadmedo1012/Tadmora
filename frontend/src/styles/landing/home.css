@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════
-   r330-home.css — R330 · A-Web-Home — the homepage's Heron-composition
+   r330-home.css — R330 · A-Web-Home — the homepage's reference-composition
    pass (hero · statement · pains). Imported from LandingPage.tsx AFTER
    landing.css, so these rules win by cascade order: same-or-higher
    specificity, zero !important, zero edits to any other stylesheet
@@ -7,7 +7,7 @@
    namespaced mrk330-*; everything else re-seats the sheet's own
    selectors.
 
-   The owner's verdict: the homepage read 25% Heron despite a lenient
+   The owner's verdict: the homepage read 25% reference despite a lenient
    75% metric. The deltas are COMPOSITION deltas — visible from 1 metre
    in 1 second, not 2px tweaks:
 
@@ -17,11 +17,11 @@
      components/landing/hero/Hero.tsx); the old hero rules were deleted
      from landing.css and this file.
    · STATEMENT — the band loses its vertical padding (the cells ARE
-     the band — Heron's home-intro anatomy), the art cell goes SQUARE
+     the band — the reference's home-intro anatomy), the art cell goes SQUARE
      (the measured 85.64×86.73rem cell) and drives the band height,
      the scrub title lifts to the 44px display rung, the partner
      strip tightens to the label register.
-   · PAINS — the 3rem-gap column row becomes Heron's ruled table:
+   · PAINS — the 3rem-gap column row becomes the reference's ruled table:
      zero gap, shared 1px hairlines between the columns, each column
      with its own top rule, generous cell padding, the meta dot tied
      to the reveal (the reference's opacity-0 dot), the H2's em
@@ -38,7 +38,7 @@
 
 /* ═══ [2] STATEMENT — the cells ARE the band; the square art rules ══ */
 
-/* Heron's home-intro has NO section padding — the 6+6 cells run
+/* the reference's home-intro has NO section padding — the 6+6 cells run
  * edge-to-edge between the hero's closing strip and the pains' top
  * rule (the r320 docH ratchet re-lands within its ±1.5% band: the
  * removed padding returns as the square art cell's height below). */

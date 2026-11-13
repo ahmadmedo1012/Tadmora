@@ -64,7 +64,7 @@ export function OwnerRealtimePage() {
   const anyDegraded = refreshFailed || alerts.isError;
 
   return (
-    /* r305-A8 «Heron»: page-root marker — one root covers every branch
+    /* r305-A8 «ds»: page-root marker — one root covers every branch
        (pending skeleton, initial-load error, live band): all render
        inside this div, so the scoped sheet reaches them all. */
     <div className="page r305ao">

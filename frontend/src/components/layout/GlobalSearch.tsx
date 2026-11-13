@@ -515,7 +515,7 @@ export function GlobalSearch({ onOpenCommandPalette }: { onOpenCommandPalette?: 
           {!loading && !isError && totalOptions > 0 && (
             <div className="search-footer" role="presentation">
               {/* kbd glyphs are a Latin/symbol run — dir="ltr" pins the
-                  bidi order inside the RTL footer line (Heron grammar:
+                  bidi order inside the RTL footer line (the reference grammar:
                   mixed-direction runs ride an explicit direction). */}
               <span className="kbd" dir="ltr">↑</span><span className="kbd" dir="ltr">↓</span> للتنقّل
               <span className="kbd" dir="ltr">↵</span> للفتح

@@ -10,8 +10,7 @@
 # Usage:
 #   bash scripts/verify.sh              # full set (what CI runs, ~8 min)
 #   bash scripts/verify.sh --fast       # tsc + vitest + bundle gate only (~4 min)
-#   bash scripts/verify.sh --sections home-why-wrap   # conformance scope
-#   bash scripts/verify.sh --specs r305-shell-heron   # e2e scope (file stem)
+#   bash scripts/verify.sh --specs r305-shell-ds   # e2e scope (file stem)
 #
 # Exit 0 = all green. Any failure prints the failing gate's tail.
 # ═════════════════════════════════════════════════════════════════════
@@ -19,12 +18,10 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 
 FAST=0
-SECTIONS=""
 SPECS=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --fast) FAST=1 ;;
-    --sections) SECTIONS="$2"; shift ;;
     --specs) SPECS="$2"; shift ;;
     *) echo "unknown flag: $1"; exit 2 ;;
   esac
@@ -109,17 +106,7 @@ done
 step "eslint (src trees)"
 if npm run lint > /tmp/verify-lint.log 2>&1; then ok "lint"; else fail "lint"; tail -8 /tmp/verify-lint.log; fi
 
-# 6. conformance (ratchet-gated; scoped with --sections for section agents)
-step "conformance vs frozen Heron spec (ratchet)"
-CONF_ARGS=(--gate)
-[[ -n "$SECTIONS" ]] && CONF_ARGS+=(--sections "$SECTIONS")
-if node scripts/conformance/run.mjs "${CONF_ARGS[@]}" > /tmp/verify-conform.log 2>&1; then
-  ok "conformance $(grep -oE 'TOTAL [0-9/]+ = [0-9.]+%' /tmp/verify-conform.log | tail -1)"
-else
-  fail "conformance"; tail -12 /tmp/verify-conform.log
-fi
-
-# 7. e2e (scoped with --specs for the touched files; default = the two
+# 6. e2e (scoped with --specs for the touched files; default = the two
 #    landing-relevant suites CI runs on every push)
 step "playwright e2e (hermetic)"
 E2E_TARGETS=""

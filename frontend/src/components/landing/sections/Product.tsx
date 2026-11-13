@@ -1,24 +1,24 @@
-/* r338 T-08c — [5] المنصّة فعليًا — pass-3 REWRITE on the frozen heron
- * spec (docs/redesign/r335/heron-spec/home-platform-wrap.<bp>.json).
- * The DOM mirrors heron's measured tree one-to-one (every element
+/* r338 T-08c — [5] المنصّة فعليًا — pass-3 REWRITE on the frozen reference
+ * spec (the frozen r335 reference captures: home-platform-wrap.<bp>.json).
+ * The DOM mirrors the legacy measured tree one-to-one (every element
  * below has a spec counterpart; geometry/type/colour live in
  * platform.css as MEASURED rem-exact values — see that header).
  *
  *   · the band: top/bottom sheet rules + a 3-col row grid ≥992
  *     (head | two stacked real captures | side) — the two platform
- *     items cross-fade on the SAME measured rects (heron's marquee
+ *     items cross-fade on the SAME measured rects (the reference's marquee
  *     row pair); ≤991 each item takes its own row (768 two-col,
  *     390 stacked) with its own capture.
  *   · head cell: label (1.4rem/lh1.4 muted) + title (3.2rem/lh1)
- *     on heron's body-voice wrappers, ruled top/end.
+ *     on the reference's body-voice wrappers, ruled top/end.
  *   · side cell: the long text, then the CTA strip — rule + two
- *     short lines + heron's DUAL circular 50×50 arrow rings (22×22
+ *     short lines + the reference's DUAL circular 50×50 arrow rings (22×22
  *     line-art, authored via the house Icon) — and the dark hover
  *     menu (624×156, the المساعد الأكاديمي panel) on the measured
  *     rect. The anchor carries the measured orange rgb(250,54,0).
  *   · ≥992 the per-row image and ≤991 the central image column
- *     collapse to 0×0 — heron's own census state at those bps.
- *   · entrance = heron's own reveal voice (opacity/y → power2.out,
+ *     collapse to 0×0 — the reference's own census state at those bps.
+ *   · entrance = the reference's own reveal voice (opacity/y → power2.out,
  *     stagger 0.02) via the house RevealCssClass rung.
  * Arabic = transformed expectations; the copy is ours. */
 import { ChevronLeft } from 'lucide-react';
@@ -28,7 +28,7 @@ import { Hairline, Numeral } from '../patterns';
 import examShot from '../../../assets/product/exam-active.webp';
 import aiTutorShot from '../../../assets/product/ai-tutor.webp';
 
-/* the two platform items — copy-driven, mirroring heron's two
+/* the two platform items — copy-driven, mirroring the reference's two
  * carousel items (label/title/long-text/two CTA lines each).
  * r342-06 — the capture pair is capability-disjoint from the
  * neighbouring sections: Why's gallery owns the lecture-player
@@ -61,7 +61,7 @@ const PLATFORM_ITEMS = [
 export function Product() {
   return (
     <section id="product" className="pr-section" aria-labelledby="pr-title" data-spec="platform.section">
-      {/* the sheet's top rule (heron section div[1]) */}
+      {/* the sheet's top rule (the reference section div[1]) */}
       <div className="pr-sheet-rule" data-spec="platform.sheetruleA" aria-hidden="true" />
 
       <div className="pr-grid" data-spec="platform.grid">
@@ -70,9 +70,9 @@ export function Product() {
         <div className="pr-rows" data-spec="platform.rows">
           <PlatformRow item={PLATFORM_ITEMS[0]} idx={1} />
           <PlatformRow item={PLATFORM_ITEMS[1]} idx={2} hidden />
-          {/* heron's marquee loop copies C/D/E — REAL clones of OUR marquee
-           * content (never heron assets), seated on the recorded band rect:
-           * heron's engine keeps ~5 loop-translated copies of the band and
+          {/* the reference's marquee loop copies C/D/E — REAL clones of OUR marquee
+           * content (never the reference assets), seated on the recorded band rect:
+           * the reference's engine keeps ~5 loop-translated copies of the band and
            * the census records the extra twins on the cross-fade rects; the
            * clones give every recorded twin a same-shaped counterpart
            * (loop seats: out of flow, never visible, never focusable) */}
@@ -83,7 +83,7 @@ export function Product() {
 
         {/* ≥992 the central image column — two stacked captures
             (473+473 @1920) flanked by hairlines; ≤991 display:none
-            (heron's own 0×0 census at 768/390) */}
+            (the reference's own 0×0 census at 768/390) */}
         <div className="pr-imgs" data-spec="platform.imgs" aria-hidden="true">
           <div className="pr-imgs-vrule" data-spec="platform.imgsvruleA" aria-hidden="true" />
           <div className="pr-img" data-spec="platform.img1">
@@ -110,13 +110,13 @@ export function Product() {
         </div>
       </div>
 
-      {/* the sheet's bottom rule (heron section div[2]) */}
+      {/* the sheet's bottom rule (the reference section div[2]) */}
       <div className="pr-sheet-rule pr-sheet-rule-end" data-spec="platform.sheetruleB" aria-hidden="true" />
     </section>
   );
 }
 
-/* one platform item — heron's row copy: head cell (label · title on
+/* one platform item — the reference's row copy: head cell (label · title on
  * the body-voice wrappers, ruled top/end), side cell (the text box +
  * the CTA strip with its dual circular arrows and the dark hover
  * menu), and the ≤991 per-row image with its flanking rule. */
@@ -148,12 +148,12 @@ function PlatformRow({ item, idx, hidden, clone }: { item: typeof PLATFORM_ITEMS
         </div>
         <a href="#cta" className="pr-cta" data-spec={ds('cta')}>
           <div className="pr-cta-rule" data-spec={ds('ctarule')} aria-hidden="true" />
-          {/* r338 T-08c2 — heron's CTA internals are divs (a[2] > div[2] >
+          {/* r338 T-08c2 — the reference's CTA internals are divs (a[2] > div[2] >
               div[1] > …, measured): the structural wrappers re-tagged
               span → div so the explicit pairs pass tag asserts */}
           <div className="pr-cta-body" data-spec={ds('ctabody')}>
             <div className="pr-cta-row" data-spec={ds('ctarow')}>
-              {/* heron's dark hover menu (624×156) — the assistant
+              {/* the reference's dark hover menu (624×156) — the assistant
                   panel; opens on hover/focus, rect never moves */}
               <div className="pr-menu" data-spec={ds('aicell')}>
                 <span className="pr-menu-k" data-spec={ds('menuk')}>المساعد الأكاديمي</span>
@@ -180,8 +180,8 @@ function PlatformRow({ item, idx, hidden, clone }: { item: typeof PLATFORM_ITEMS
         <div className="pr-cell-rule is-end" data-spec={ds('sideruleB')} aria-hidden="true" />
       </div>
 
-      {/* the ≤991 per-row image (heron row div[3]; ≥992 it collapses
-          to heron's own 0×0 census state) */}
+      {/* the ≤991 per-row image (the reference row div[3]; ≥992 it collapses
+          to the reference's own 0×0 census state) */}
       <div className="pr-rowimg" data-spec={ds('rowimg')}>
         <img src={item.img} data-spec={ds('rowimgimg')} alt={item.alt} loading="lazy" decoding="async" width={1440} height={870} />
         <div className="pr-rowimg-rule" data-spec={ds('rowimgrule')} aria-hidden="true" />

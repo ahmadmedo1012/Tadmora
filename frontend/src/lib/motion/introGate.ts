@@ -2,7 +2,7 @@
  * introGate — R308 → R313 — the loader's pure logic, extracted for
  * honest testing (no DOM inside the decisions).
  *
- * R313 (D10 · owner decision — Heron parity): the gating rule changes
+ * R313 (D10 · owner decision — the reference parity): the gating rule changes
  * class. The reference's loader REPLAYS ON EVERY FULL PAGE LOAD — its
  * own sessionStorage flag exists but never suppresses (measured live:
  * reloadGate replays 15%@258ms → 100%@4680ms; audits/evidence/r313/

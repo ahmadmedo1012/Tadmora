@@ -11,7 +11,7 @@ import { GuestSheetChrome } from '../../components/layout/GuestSheetChrome';
 // patterns.css §10 (r341/D9) — the guest sub-page sheet (ex
 // campus.css, deleted): the honest capability matrix (ما يعمل اليوم) +
 // the status pairs (إلى أين) moved here VERBATIM from the landing when
-// D7 recomposed the sheet to Heron's 9 sections; the colleges registry
+// D7 recomposed the sheet to the reference's 9 sections; the colleges registry
 // links to /colleges (the real registry page).
 
 /** /capabilities — «السجلّ» (R313 · WP-A1).

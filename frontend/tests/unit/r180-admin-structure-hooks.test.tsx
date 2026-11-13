@@ -80,7 +80,7 @@ describe('useCreateFaculty — POST /admin/faculties (r180)', () => {
     const { result } = renderHook(() => useCreateFaculty(), { wrapper });
 
     await act(async () => {
-      result.current.mutate({ name: 'كلية العلوم', city: 'الزاوية' });
+      result.current.mutate({ name: 'كلية العلوم', city: 'افتراضي' });
     });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -90,7 +90,7 @@ describe('useCreateFaculty — POST /admin/faculties (r180)', () => {
     expect(postMock).toHaveBeenCalledTimes(1);
     expect(postMock).toHaveBeenCalledWith('/admin/faculties', {
       name: 'كلية العلوم',
-      city: 'الزاوية',
+      city: 'افتراضي',
     }, { params: undefined });
     // The invalidation map: the admin page list + the public catalogue.
     expect(invalidatedKeys()).toContainEqual(['admin', 'faculties']);
@@ -119,17 +119,17 @@ describe('useCreateFaculty — POST /admin/faculties (r180)', () => {
    * binding that keeps an owner write inside ONE institution. */
   it('r181: binds the OWNER construction to ?institutionSlug=', async () => {
     const { wrapper } = makeClient();
-    const { result } = renderHook(() => useCreateFaculty('zawia-showcase'), { wrapper });
+    const { result } = renderHook(() => useCreateFaculty('ulara-showcase'), { wrapper });
 
     await act(async () => {
-      result.current.mutate({ name: 'كلية الهندسة', city: 'الزاوية' });
+      result.current.mutate({ name: 'كلية الهندسة', city: 'افتراضي' });
     });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(postMock).toHaveBeenCalledWith('/admin/faculties', {
       name: 'كلية الهندسة',
-      city: 'الزاوية',
-    }, { params: { institutionSlug: 'zawia-showcase' } });
+      city: 'افتراضي',
+    }, { params: { institutionSlug: 'ulara-showcase' } });
   });
 });
 
@@ -156,7 +156,7 @@ describe('useCreateDepartment — POST /admin/departments (r180)', () => {
    * write too (the backend re-verifies the faculty chain against it). */
   it('r181: binds the OWNER construction to ?institutionSlug=', async () => {
     const { wrapper } = makeClient();
-    const { result } = renderHook(() => useCreateDepartment('zawia-showcase'), { wrapper });
+    const { result } = renderHook(() => useCreateDepartment('ulara-showcase'), { wrapper });
 
     await act(async () => {
       result.current.mutate({ name: 'قسم الفيزياء', facultyId: 'clsfaculty1' });
@@ -166,7 +166,7 @@ describe('useCreateDepartment — POST /admin/departments (r180)', () => {
     expect(postMock).toHaveBeenCalledWith('/admin/departments', {
       name: 'قسم الفيزياء',
       facultyId: 'clsfaculty1',
-    }, { params: { institutionSlug: 'zawia-showcase' } });
+    }, { params: { institutionSlug: 'ulara-showcase' } });
   });
 });
 

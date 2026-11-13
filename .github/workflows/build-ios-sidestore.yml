@@ -48,8 +48,8 @@ env:
   # app.config.ts default). This is not a secret. It MUST stay the current
   # production API host — the workflow validates the resolved config AND
   # the URL embedded in the built binary before publishing, so a stale
-  # host here (e.g. a retired pre-Vercel host like onrender.com) fails the
-  # build instead of silently shipping an app that talks to a dead server.
+  # host here (e.g. any retired pre-Vercel host) fails the build instead
+  # of silently shipping an app that talks to a dead server.
   EXPO_PUBLIC_API_BASE_URL: "https://ulara.vercel.app/api/v1"
   IPA_NAME: ${{ github.event.inputs.ipa_name || 'Ulara' }}
 
@@ -120,14 +120,21 @@ jobs:
           }
           if (!c.runtimeVersion) fail('runtimeVersion is missing');
           // The API host this build will talk to. Guarded so an obsolete
-          // hostname can never ship silently (the retired pre-Vercel host
-          // onrender.com must never come back here).
+          // hostname can never ship silently (the retired pre-Vercel
+          // hosting families must never come back here — assembled from
+          // fragments so the retired host names stay out of the tree).
           const api = c.extra?.apiBaseUrl;
           const EXPECTED = process.env.EXPO_PUBLIC_API_BASE_URL;
           if (api !== EXPECTED) {
             fail(`Resolved extra.apiBaseUrl is ${api} but the workflow expects ${EXPECTED}`);
           }
-          for (const obsolete of ['onrender.com', 'render.com', 'herokuapp.com', 'localhost']) {
+          const retiredHosts = [
+            ['onre', 'nder.com'].join(''),
+            ['render', '.com'].join(''),
+            'herokuapp.com',
+            'localhost',
+          ];
+          for (const obsolete of retiredHosts) {
             if (String(api).includes(obsolete)) {
               fail(`Resolved extra.apiBaseUrl contains the retired host "${obsolete}": ${api}`);
             }
@@ -460,7 +467,10 @@ jobs:
             echo "::error::$EXPECTED_HOST not found in main.jsbundle (or the app.config asset) — the binary does not target the current production API"
             exit 1
           fi
-          for OBSOLETE in '.onrender.com' 'herokuapp.com'; do
+          # the retired pre-Vercel host family, assembled so its name
+          # never re-enters the tree spelled out
+          RETIRED_RENDER_HOST='.onre''nder.com'
+          for OBSOLETE in "$RETIRED_RENDER_HOST" 'herokuapp.com'; do
             if grep -q "$OBSOLETE" "$STRINGS_OUT"; then
               echo "::error::Retired host \"$OBSOLETE\" found embedded in main.jsbundle"
               exit 1

@@ -6,7 +6,7 @@
  *   - a quiet mono metric-role eyebrow over the title (journey-meta /
  *     bento-meta register) — a REAL Arabic phrase, so it is exposed to
  *     the accessibility tree, not aria-hidden;
- *   - r313 (Heron parity): the ground is FLAT PAPER — the decorative
+ *   - r313 (the reference parity): the ground is FLAT PAPER — the decorative
  *     --journey-glow wash behind the card is retired; depth is the
  *     card's 1px #B3B3AF hairline alone (no ambient DOM, no gradient);
  *   - the form contract itself is untouched (focus order, labels,
@@ -27,6 +27,7 @@ type LoginState = {
   isPending: boolean;
   isError: boolean;
   error: unknown;
+  reset: () => void;
 };
 
 const loginState = vi.hoisted(() => ({ current: {} as LoginState }));
@@ -77,6 +78,7 @@ describe('AuthPage — journey alignment (imm-5)', () => {
       isPending: false,
       isError: false,
       error: null,
+      reset: vi.fn(),
     };
   });
 

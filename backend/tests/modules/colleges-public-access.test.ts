@@ -307,17 +307,17 @@ describe('GET /api/v1/colleges(+/leaderboard) — institution-aware listing (r17
 
   it('?institution=slug wins: the target resolves by that slug', async () => {
     vi.mocked(prisma.institution.findUnique).mockResolvedValue({
-      id: 'inst-alandalus',
+      id: 'inst-secondary',
       status: 'ACTIVE',
     } as never);
     vi.mocked(prisma.faculty.findMany).mockResolvedValue([] as never);
-    await get('/api/v1/colleges?institution=alandalus-demo');
+    await get('/api/v1/colleges?institution=ulara-demo-2');
     expect(prisma.institution.findUnique).toHaveBeenCalledWith({
-      where: { slug: 'alandalus-demo' },
+      where: { slug: 'ulara-demo-2' },
       select: { id: true, status: true },
     });
     expect(prisma.faculty.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { institutionId: 'inst-alandalus' } }),
+      expect.objectContaining({ where: { institutionId: 'inst-secondary' } }),
     );
   });
 

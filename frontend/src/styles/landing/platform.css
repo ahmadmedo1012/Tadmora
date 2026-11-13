@@ -1,15 +1,15 @@
-/* ══ r338 T-08c — المنصّة فعليًا (pass-3 rewrite on the frozen heron
- * spec docs/redesign/r335/heron-spec/home-platform-wrap.<bp>.json).
+/* ══ r338 T-08c — المنصّة فعليًا (pass-3 rewrite on the frozen reference
+ * spec the frozen r335 reference captures: home-platform-wrap.<bp>.json).
  * Every geometry/type/colour value below is MEASURED from the spec
  * (rem-exact on the site's fluid root: 11.11px @1920 · 8.33 @1440 ·
- * 9.2 @768 · 9.925 @390), never heron source.
+ * 9.2 @768 · 9.925 @390), never the reference source.
  *
  * MEASURED GRAMMAR — the band is a hairline-ruled sheet:
  *   · top/bottom 1px rules rgb(179,179,175) + a 3-col row grid ≥992
  *     (head 25.24% | images 42.16% | side 32.6% — 481/802/619 @1920,
  *     rem-exact 361/601/464 @1440), rows 42.57rem ×2 (473+473 @1920).
  *   · TWO platform items: ≥992 the row copies cross-fade on the SAME
- *     measured rects (heron's marquee pair); ≤991 each item takes a
+ *     measured rects (the reference's marquee pair); ≤991 each item takes a
  *     row (768: img 377 | head 85 + side 169; 390: img 226 + head 87
  *     + side 161 stacked, rows 474/474).
  *   · head cell 17.37rem: label 1.4rem/lh1.4 rgb(180,180,176) @3.15rem,
@@ -18,7 +18,7 @@
  *     4.77rem (rule + two 1.4rem/lh1.4 lines + dual circular 4.5rem
  *     arrows with 2rem line-art) and the dark hover menu 56.16×14.04rem.
  *   · ≥992 the per-row image and ≤991 the central image column both
- *     collapse to 0×0 — heron's own census state at those bps.
+ *     collapse to 0×0 — the reference's own census state at those bps.
  * COLOURS: section-scoped MEASURED vars per the r338 ADDENDUM 9 TOKEN
  * RULING (the global --accent stays rgb(199,46,0) until T-25 unifies
  * it); literals also serialize as the spec's own rgb() strings. The
@@ -30,19 +30,19 @@ section.pr-section {
    * fully retired by this pass — the band is the 3-track sheet */
   grid-template-columns: none;
   padding: 0;
-  /* r338 T-08c — MEASURED heron platform palette (spec
+  /* r338 T-08c — MEASURED the reference platform palette (spec
    * home-platform-wrap.*.json). Section-scoped per ADDENDUM 9 TOKEN
    * RULING; the global token unification is queued as T-25. */
-  --pr-ink: rgb(40, 40, 40);          /* color-gate: allow — measured heron ink (T-25 unifies) */
-  --pr-ink-72: rgb(40, 40, 40, 0.72); /* color-gate: allow — measured heron body voice */
-  --pr-label: rgb(180, 180, 176);     /* color-gate: allow — measured heron label muted */
-  --pr-rule-ink: rgb(179, 179, 175);  /* color-gate: allow — measured heron hairline */
+  --pr-ink: rgb(40, 40, 40);          /* color-gate: allow — measured reference ink (T-25 unifies) */
+  --pr-ink-72: rgb(40, 40, 40, 0.72); /* color-gate: allow — measured reference body voice */
+  --pr-label: rgb(180, 180, 176);     /* color-gate: allow — measured reference label muted */
+  --pr-rule-ink: rgb(179, 179, 175);  /* color-gate: allow — measured reference hairline */
   --pr-cta: rgb(250, 54, 0);          /* color-gate: allow — ADDENDUM 9 TOKEN RULING: measured CTA orange */
   margin-inline: 0.81rem; /* 9px @1920 · 7 @1440 · 8 @390 — measured sheet margins */
   font-size: 1.6rem;      /* 17.78 @1920 · 14.73 @768 — the measured body voice */
-  /* r338 T-08c1 — heron measures lh 23.11 @1920 (ratio 1.3); the
+  /* r338 T-08c1 — the reference measures lh 23.11 @1920 (ratio 1.3); the
    * instrument's TRANSFORMED Arabic expectation floors lh at
-   * max(heronLh, 1.35 × fs) — so our adaptation runs the SAME voice
+   * max(dsLh, 1.35 × fs) — so our adaptation runs the SAME voice
    * at ratio 1.35: 24.0 @1920 · 18.0 @1440 · 12.8 @1024 · 19.89
    * @768 · 21.44 @390 (every inheriting element, every bp). */
   line-height: 1.35;
@@ -84,14 +84,14 @@ html[data-theme='dark'] .pr-section .pr-cta {
   transition: opacity 0.4s ease, background-color 0.4s ease;
 }
 
-/* the sheet's top/bottom rules (heron section div[1]/div[2]) */
+/* the sheet's top/bottom rules (the reference section div[1]/div[2]) */
 .pr-section .pr-sheet-rule {
   display: block;
   block-size: 1px;
   background: var(--pr-rule-ink);
 }
 
-/* the per-cell hairlines (heron's absolute 1px rule divs) — R344: the
+/* the per-cell hairlines (the reference's absolute 1px rule divs) — R344: the
  * census records these seats bg-IMAGE-ONLY (computed backgroundColor
  * rgba(0,0,0,0), the paint rides the gradient stroke) — the footer's own
  * recorded convention (only the c1rule/col3rule/legalbot seats paint). */
@@ -105,7 +105,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 .pr-cell-rule.is-top { inset-block-start: 0; }
 .pr-cell-rule.is-end { inset-block-end: 0; }
 
-/* ── the head cell — label + title on heron's body-voice wrappers ── */
+/* ── the head cell — label + title on the reference's body-voice wrappers ── */
 .pr-section .pr-head {
   position: relative;
   display: block;
@@ -117,7 +117,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 }
 
 .pr-section .pr-label {
-  /* r338 T-08c1 — the measured heron label node IS the base voice
+  /* r338 T-08c1 — the measured reference label node IS the base voice
    * (fs 17.78 · lh 23.11 · gray rgb(180,180,176) · fw 500 @1920;
    * 15.88/20.64 @390 — i.e. fs 1.6rem on the fluid root at every
    * bp), NOT a 1.4rem sub-voice. lh inherits the floored 1.35. */
@@ -128,13 +128,13 @@ html[data-theme='dark'] .pr-section .pr-cta {
 
 .pr-section .pr-title-wrap {
   font-size: 1.6rem;
-  line-height: 1.35;    /* the floored base voice (heron 1.3 → ar-floor 1.35) */
+  line-height: 1.35;    /* the floored base voice (the reference 1.3 → ar-floor 1.35) */
   color: var(--pr-ink); /* the wrapper carries the full ink (measured) */
 }
 
 .pr-section .pr-title {
   margin: 0;
-  white-space: nowrap; /* heron's title is a one-line 392×36 box (measured) */
+  white-space: nowrap; /* the reference's title is a one-line 392×36 box (measured) */
   /* L2-b (r341, h2 rung belt — type-gate note): the frozen spec's
      platform section carries NO h2; its section titles are 26.67px
      w600 DIVs @1440, and our h2 seats mirror that measured voice
@@ -159,18 +159,18 @@ html[data-theme='dark'] .pr-section .pr-cta {
 
 .pr-section .pr-sidebox {
   min-inline-size: 0;
-  line-height: 1.35; /* 24.0 @1920 — heron's measured wrapper voice */
+  line-height: 1.35; /* 24.0 @1920 — the legacy measured wrapper voice */
 }
 
 .pr-section .pr-text {
   margin: 0;
   font-size: 1.6rem;
-  line-height: 1.35;    /* the floored base voice (heron 1.3 → ar-floor 1.35) */
+  line-height: 1.35;    /* the floored base voice (the reference 1.3 → ar-floor 1.35) */
   font-weight: 500;
   color: var(--pr-ink-72);
 }
 
-/* the CTA strip — heron's a[2]: rule + body(row[line1 + dual arrows],
+/* the CTA strip — the reference's a[2]: rule + body(row[line1 + dual arrows],
  * line2). The anchor itself carries the measured orange; the inner
  * rows carry the full ink (both measured). */
 .pr-section .pr-cta {
@@ -179,7 +179,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   margin-block-start: auto;
   color: var(--pr-cta);
   text-decoration: none;
-  transition: color 0.4s ease; /* motion-token: allow — heron-measured a[2] hover fade (TR 0.4s/ease) */
+  transition: color 0.4s ease; /* motion-token: allow — reference-measured a[2] hover fade (TR 0.4s/ease) */
 }
 
 .pr-section .pr-cta-rule {
@@ -202,7 +202,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 }
 
 .pr-section .pr-cta-line, .pr-cta-ic {
-  transition: all 0.48s cubic-bezier(0.625, 0.05, 0, 1); /* motion-token: allow — heron-measured line/icon easing */
+  transition: all 0.48s cubic-bezier(0.625, 0.05, 0, 1); /* motion-token: allow — reference-measured line/icon easing */
 }
 
 .pr-section .pr-cta-line {
@@ -218,7 +218,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   display: flex;
 }
 
-/* heron's dual circular arrows — two tangent 50×50 rings (measured
+/* the reference's dual circular arrows — two tangent 50×50 rings (measured
  * 37 @1440 · 41 @768), each centring 22×22 line-art (17/18 measured) */
 .pr-section .pr-cta-ic {
   inline-size: 4.5rem;
@@ -227,7 +227,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   place-items: center;
   border: 1px solid var(--pr-ink);
   border-radius: 0; /* R344 (item 0): the frozen census records radius 0 on
-   * every arrow seat (all bps) — Heron's outline boxes are SQUARE rings
+   * every arrow seat (all bps) — the reference's outline boxes are SQUARE rings
    * (the house law: radius 0 everywhere). The r338 "circular arrows"
    * reading was a visual guess; the spec is unambiguous. */
   color: var(--pr-ink);
@@ -245,10 +245,10 @@ html[data-theme='dark'] .pr-section .pr-cta {
   block-size: 2rem;
 }
 
-/* the dark hover menu — heron's a[2] > div[2] > div[1] > div[1]:
+/* the dark hover menu — the reference's a[2] > div[2] > div[1] > div[1]:
  * 624×156 rgb(40,40,40) hanging 52px above the strip (measured).
  * The assistant panel; opens on hover/focus, rect never moves. */
-/* r338 T-08c1 — the measured heron menu nodes carry the SOLID ink
+/* r338 T-08c1 — the measured reference menu nodes carry the SOLID ink
  * rgb(40,40,40) (their readable light text lives outside the walked
  * census tree); our panel matches the ink on the paired container
  * and keeps the readable cream on the inner text spans. */
@@ -263,11 +263,11 @@ html[data-theme='dark'] .pr-section .pr-cta {
   align-content: start;
   padding: 1.44rem 2.7rem;
   background: var(--pr-ink);
-  color: var(--pr-ink); /* the paired container = heron's solid ink (measured) */
+  color: var(--pr-ink); /* the paired container = the reference's solid ink (measured) */
   visibility: hidden; /* r338 T-08c2 — the spec measures opacity 1 on this
      node, so the rest state is visibility-only (layout + opacity stay
      measured); the reveal is the hover/focus flip below */
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* motion-token: allow — heron-measured menu fade */
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* motion-token: allow — reference-measured menu fade */
   z-index: 1;
 }
 
@@ -281,7 +281,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 .pr-section .pr-menu-q,
 .pr-section .pr-menu-a {
   font-size: 1.4rem;
-  /* lh 2.16rem = the floored heron menu voice (1.35 × its 1.6rem
+  /* lh 2.16rem = the floored the reference menu voice (1.35 × its 1.6rem
    * fs) at every bp — absolute so our 1.4rem text still matches */
   line-height: 2.16rem;
   color: var(--bg); /* readable cream on the dark panel (our adaptation) */
@@ -291,7 +291,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 .pr-section .pr-menu-q { font-weight: 500; }
 .pr-section .pr-menu-a { font-weight: 500; opacity: 0.72; }
 
-/* the per-row image — ≥992 display:none (heron's own 0×0 census) */
+/* the per-row image — ≥992 display:none (the reference's own 0×0 census) */
 .pr-section .pr-rowimg {
   position: relative;
   min-inline-size: 0;
@@ -312,7 +312,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   background-image: linear-gradient(var(--pr-rule-ink), var(--pr-rule-ink)); /* R344: bg-image-only (census) */
 }
 
-/* the central image column — ≥992 only (≤991 display:none = heron 0×0) */
+/* the central image column — ≥992 only (≤991 display:none = the reference 0×0) */
 .pr-section .pr-imgs {
   position: relative;
   display: grid;
@@ -371,12 +371,12 @@ html[data-theme='dark'] .pr-section .pr-cta {
     grid-template-rows: 42.57rem 42.57rem;
   }
 
-  /* the two row copies share the SAME rects (heron's marquee pair);
+  /* the two row copies share the SAME rects (the reference's marquee pair);
    * the cross-fade is opacity-only so no measured box ever moves */
   .pr-section .pr-row {
     grid-column: 1 / -1;
     grid-row: 1;
-    transition: opacity 0.4s ease; /* motion-token: allow — heron row cross-fade (TR 0.4s/ease) */
+    transition: opacity 0.4s ease; /* motion-token: allow — the reference row cross-fade (TR 0.4s/ease) */
     align-self: start;
     block-size: 17.37rem; /* 193 @1920 · 145 @1440 (measured) */
     display: grid;
@@ -448,7 +448,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   }
 
   .pr-section .pr-rowimg {
-    display: none; /* heron's per-row img is 0×0 ≥992 (measured census) */
+    display: none; /* the reference's per-row img is 0×0 ≥992 (measured census) */
   }
 
   .pr-section .pr-imgs {
@@ -459,7 +459,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 }
 
 /* ── the marquee loop copies C/D/E (.pr-clone) ────────────────────────
- * r338 T-08c4 — heron's marquee keeps ~5 loop-translated copies of the
+ * r338 T-08c4 — the reference's marquee keeps ~5 loop-translated copies of the
  * band; the census records the extra twins on the cross-fade rects. The
  * clones are REAL copies of our own marquee content seated on the same
  * recorded band rect (grid row 1 ≥992 / row-1 top ≤991), out of flow so
@@ -477,7 +477,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   pointer-events: none;
   user-select: none;
   animation: none; /* loop copies never cross-fade; opacity stays 1 */
-  /* the measured marquee tween voice (heron loop copies: 0.48s cubic-bezier(0.625, 0.05, 0, 1)) */
+  /* the measured marquee tween voice (the reference loop copies: 0.48s cubic-bezier(0.625, 0.05, 0, 1)) */
   transition: transform 0.48s cubic-bezier(0.625, 0.05, 0, 1);
   opacity: 1;
 }
@@ -486,10 +486,10 @@ html[data-theme='dark'] .pr-section .pr-cta {
 @media (max-width: 991px) {
   /* r338 T-08c2 — specificity seat: the base .pr-section .pr-imgs
      (display:grid) outranked the old bare .pr-imgs selector, so the
-     ≤991 fold never collapsed the column (measured 753×911 vs heron's
+     ≤991 fold never collapsed the column (measured 753×911 vs the reference's
      own 0×0 census at 768/390) */
   .pr-section .pr-imgs {
-    display: none; /* heron's central column is 0×0 ≤991 (measured census) */
+    display: none; /* the reference's central column is 0×0 ≤991 (measured census) */
   }
 
   .pr-section .pr-row {
@@ -570,7 +570,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
     grid-column: 1;
     grid-row: 2;
     block-size: 8.77rem; /* 87 @390 (measured) */
-    /* r339 T-13 — the 390 content gutter: heron seats the label/title
+    /* r339 T-13 — the 390 content gutter: the reference seats the label/title
        at x24 inside the 8px sheet (16px inline); the 2.42rem seat read
        x32/w326. Light spec values above stay (comment record: label
        @x24 y7630 measured). */
@@ -578,7 +578,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
   }
 
   .pr-section .pr-cta-line {
-    line-height: 1.35; /* heron's 390 line voice 13.89/15.28 → ar-floor 18.75 */
+    line-height: 1.35; /* the reference's 390 line voice 13.89/15.28 → ar-floor 18.75 */
   }
 
   .pr-section .pr-title-wrap {
@@ -613,7 +613,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 
 
 /* ── T-08c5 — crossover role voices on the clone seats ──────────────
- * The heron wrapper-crossover records (duplicate marquee copies + the
+ * The reference wrapper-crossover records (duplicate marquee copies + the
  * neighbouring bands the wrap census swallowed) carry the band's own
  * interaction/tween voices: cursor-pointer inherited through the
  * a-subtrees, the 0.48s loop voice on the band wrappers, the CTA's
@@ -631,7 +631,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 }
 .pr-section .pr-clone .pr-menu { transition: opacity 0.4s ease; }
 
-/* ── T-08c5b — heron's ≤991 band voices (measured spec @390/768) ────
+/* ── T-08c5b — the reference's ≤991 band voices (measured spec @390/768) ────
  * The mobile row wrappers carry a 0.4s ease; the clone CTA strip
  * children carry the 0.48s loop voice; the hover icon boxes the 0.3s
  * dual-ease. Desktop voices stay as measured above. */
@@ -652,11 +652,11 @@ html[data-theme='dark'] .pr-section .pr-cta {
 @media (min-width: 992px) {
   .pr-section .pr-clone .pr-cta-row,
   .pr-section .pr-clone .pr-cta-icons,
-  .pr-section .pr-clone .pr-cta-ic { transition: all 0.48s cubic-bezier(0.625, 0.05, 0, 1); } /* motion-token: allow — heron-measured loop voice (T-11A census) */
+  .pr-section .pr-clone .pr-cta-ic { transition: all 0.48s cubic-bezier(0.625, 0.05, 0, 1); } /* motion-token: allow — reference-measured loop voice (T-11A census) */
 }
 
 /* ══ T-11b2 — the band's scrubbed title flourish ═════════════════════
- * Heron's home-platform scrub pair (T-11A census: platform-content-
+ * the reference's home-platform scrub pair (T-11A census: platform-content-
  * title, opacity + translateY FROM-side, 1 unit each — the small
  * pinned/scrubbed flourish beside the marquee; recorded window
  * «top bottom → bottom top» on the row-group wrap, 7765→9362 recorded
@@ -664,7 +664,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
  * y 26.667). Same view() route as the map head (T-11b2's
  * jt-head-scrub): the FIRST row's title wrap (#pr-title — the
  * section's labelled head) scrubs in over its entry→cover window.
- * DELIBERATE seat deviation, documented: Heron's span is the wrap's
+ * DELIBERATE seat deviation, documented: the reference's span is the wrap's
  * full traversal (the title keeps scrubbing until the wrap's tail
  * exits the fold); ours is the brief's «small flourish» — entry 0% →
  * cover 30% so the title settles by a third of the viewport instead
@@ -677,7 +677,7 @@ html[data-theme='dark'] .pr-section .pr-cta {
 @keyframes pr-title-scrub {
   from {
     opacity: 0;
-    transform: translateY(26.667px); /* Heron's recorded y @1440 */
+    transform: translateY(26.667px); /* the reference's recorded y @1440 */
   }
   to {
     opacity: 1;

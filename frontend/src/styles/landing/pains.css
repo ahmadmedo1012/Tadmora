@@ -1,5 +1,5 @@
-/* R337 A-problem — التحديات, REBUILT against the frozen Heron spec
-   (docs/redesign/r335/heron-spec/home-problem-wrap.{390,768,1024,
+/* R337 A-problem — التحديات, REBUILT against the frozen reference spec
+   (the frozen r335 reference captures: home-problem-wrap.{390,768,1024,
    1440,1920}.json). The R322 open-column transplant is RETIRED with
    this rewrite; every rule below is new. The DOM (Live.tsx) mirrors
    the spec census — a RULED LEDGER of four columns:
@@ -12,7 +12,7 @@
        > tgrid > titlebox>itemtitle · anszone>bodytext) · zonerule
 
    Measured spec, ALL VALUES rem ON THE FLUID ROOT (identical to
-   Heron's: ≥992 0.5787037vw · ≤991 1.1990407674vw · ≤767
+   the reference's: ≥992 0.5787037vw · ≤991 1.1990407674vw · ≤767
    2.5445292621vw — spec-px ÷ root-px, bp-exact by construction):
 
    ≥992 (1920/1440/1024)
@@ -56,8 +56,8 @@
      literal never flips with the theme, and under [data-theme="dark"]
      the rgba(40,40,40,.72) ink composites to 1.0:1 on the charcoal
      ground (#262019) — the blind panel's invisible labels. The LIGHT
-     computed style stays byte-identical to the frozen Heron measure. */
-  --pm-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
+     computed style stays byte-identical to the frozen reference measure. */
+  --pm-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen reference soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
   color: var(--pm-soft-ink);
   font-family: var(--font-sans);
   font-size: 1.6rem;
@@ -326,7 +326,7 @@
   margin: 0;
   line-height: 2.16rem; /* the section's own ar-floor register (1.35 × 1.6rem) — base.css's global p rule (--lh-base 1.65) would otherwise clobber the inherited floor at every bp */
   font-weight: 400;
-  color: var(--pm-soft-ink); /* r339 T-12 — the scoped soft-ink var (dark arm flips; light stays the frozen Heron literal) */
+  color: var(--pm-soft-ink); /* r339 T-12 — the scoped soft-ink var (dark arm flips; light stays the frozen reference literal) */
 }
 .pm-ans {
   font-weight: 500;
@@ -395,7 +395,7 @@
 
   .pm-cols {
     /* R332 W3 (twin run-001 · 390 defect, kept): `none` hands the
-       track list to the implicit carousel columns — Heron's own
+       track list to the implicit carousel columns — the reference's own
        mobile anatomy (swiper 11, problem list) as a snap carousel.
        R342 re-measure: the census pitch is 311.67px on the 374 band
        = 83.33% (5/6) with BUTT slides (no gap — the 1px column rules

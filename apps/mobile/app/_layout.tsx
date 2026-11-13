@@ -21,7 +21,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { queryClient } from "@/lib/queryClient";
 import { ThemeProvider, useTheme } from "@/design/theme";
-import { heron } from "@/design/tokens";
+import { ds } from "@/design/tokens";
 import { fontMap } from "@/design/fonts";
 // R334 2-f — the status bar derives its style from the EFFECTIVE app theme
 // (a user preference), never the device scheme (`auto` was wrong).
@@ -99,7 +99,7 @@ function RootNavigator() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: heron[name].bg },
+        contentStyle: { backgroundColor: ds[name].bg },
         gestureEnabled: true,
       }}
     >

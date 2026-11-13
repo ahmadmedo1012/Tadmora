@@ -24,7 +24,7 @@ vi.mock('../../src/lib/zu-sync/index.js', () => ({
   runSync: vi.fn(),
   INSTITUTION_SYNC_CONFIGS: [],
   findInstitutionSyncConfig: vi.fn(),
-  PUBLIC_FACTS_DEFAULT_SLUG: 'zawia-showcase',
+  PUBLIC_FACTS_DEFAULT_SLUG: 'ulara-showcase',
 }));
 vi.mock('../../src/logger.js', () => ({
   logger: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },
@@ -48,7 +48,7 @@ const successResult = (runId: string): SyncResult => ({
   notes: null,
 });
 
-const INST_A = 'inst-zawia-showcase';
+const INST_A = 'inst-ulara-showcase';
 const INST_B = 'inst-other';
 
 describe('runSyncGuarded', () => {

@@ -61,11 +61,11 @@ import { cartesianOptions, valueLabels, chartColors, useChartThemeKey } from '..
 // (its ownership banner) — the students-toolbar/pagination/trend-table
 // families the courses page + papers register now consume too.
 import '../../styles/admin.css'; // r150e: the roster chrome left colleges.css
-/* R305-A8: the Heron admin/owner grammar — imported directly AFTER
+/* R305-A8: the reference admin/owner grammar — imported directly AFTER
  * admin.css so it wins the @layer pages tie. Every rule in the sheet
  * is scoped under the .r305ao page-root marker class, so teacher /
  * quality / community screens are untouched. */
-import '../../styles/shared/heron-admin-owner.css';
+import '../../styles/shared/ds-admin-owner.css';
 /* R332 W11 — the dashboard grammar bridge (styles/landing/inner.css §W11):
  * the [nn] section-index chips (.w11-idx) the dashboard's cards mount +
  * the .w11-quick metric lift on the «مؤشرات سريعة» stat rows — marker-
@@ -1821,7 +1821,7 @@ export function AdminCoursesPage() {
                           تعديل
                         </button>
                         {/* R305-A8: the destructive verb stands apart —
-                            the Heron danger fill rides the standalone
+                            the reference danger fill rides the standalone
                             .r305ao-btn-danger class (the scoped sheet's
                             §9 hierarchy) while the ghost danger variant
                             stays for non-scoped surfaces. The confirm

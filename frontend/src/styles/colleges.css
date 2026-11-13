@@ -1147,7 +1147,7 @@ a.comp-card {
 }
 /* (r313: the r297 overlay micro-interactions — the close glyph's
    rotate(90deg) and the icon button's scale(1.1) hover breath — are
-   RETIRED with the Heron re-key. The reference's hovers are colour /
+   RETIRED with the reference re-key. The reference's hovers are colour /
    fill steps only; nothing under the cursor rotates or grows. The
    close keeps its quiet surface wash, the picker keeps the accent
    border step.) */

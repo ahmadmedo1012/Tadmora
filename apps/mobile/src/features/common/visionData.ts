@@ -60,7 +60,7 @@ export const VISION_STATUS_LABEL: Record<VisionStatus, string> = {
   beta: "تجريبي",
 };
 
-/** Heron status tones per the task mapping (grey/sky/yellow/mint). */
+/** ds status tones per the task mapping (grey/sky/yellow/mint). */
 export const VISION_STATUS_TONE: Record<VisionStatus, StatusToneName> = {
   research: "grey",
   planning: "sky",

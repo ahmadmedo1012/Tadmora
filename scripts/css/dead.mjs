@@ -55,7 +55,7 @@
  *   node scripts/css/dead.mjs --url http://localhost:5208/ \
  *     [--routes subset.json | /,/auth,/student/dashboard] \
  *     [--bps 390,1440] [--themes light,dark] \
- *     [--out docs/redesign/r343/css-dead/]
+ *     [--out .audit-shots/css-dead/]  (default — gitignored working dir)
  *
  * Output: <out>/report.json (machine) + <out>/report.md (≤80 lines).
  */
@@ -89,13 +89,13 @@ const arg = (n, d) => (process.argv.indexOf(`--${n}`) > 0 ? process.argv[process
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
   const header = fs.readFileSync(path.join(__dirname, "dead.mjs"), "utf8").match(/\/\*\*[\s\S]*?\*\//)?.[0] ?? "(no header)";
   console.log(header.replace(/^\/\*\*?\n?/, "").replace(/\*\/\s*$/, "").replace(/^ \* ?/gm, "").trim());
-  console.log(`\ndefaults: --bps 390,1440 · --themes light,dark · --url http://localhost:5173/ · --routes <D1 subset> · --out docs/redesign/r343/css-dead/`);
+  console.log(`\ndefaults: --bps 390,1440 · --themes light,dark · --url http://localhost:5173/ · --routes <D1 subset> · --out .audit-shots/css-dead/`);
   process.exit(0);
 }
 const URL_BASE = (arg("url", "http://localhost:5173/") ?? "").replace(/\/$/, "");
 const BPS = (arg("bps", "390,1440") ?? "").split(",").map((b) => Number(b.trim())).filter(Boolean);
 const THEMES = (arg("themes", "light,dark") ?? "").split(",").map((t) => t.trim()).filter((t) => t === "light" || t === "dark");
-const OUT_DIR = path.resolve(WORKTREE, arg("out", path.join("docs", "redesign", "r343", "css-dead")));
+const OUT_DIR = path.resolve(WORKTREE, arg("out", path.join(".audit-shots", "css-dead")));
 const ROUTES_ARG = arg("routes", null);
 
 /* viewport heights mirror the conformance suite (run.mjs BPS table) */
@@ -203,12 +203,12 @@ const RESULTS = {
 };
 const CATALOG = {
   data: [
-    { id: "crs_e2e_algorithms", code: "CS-201", name: "مقدمة في الخوارزميات", iconEmoji: "🧮", themeColor: "#7c3aed", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "جامعة الزاوية", slug: "zu" } },
-    { id: "crs_e2e_databases", code: "CS-310", name: "قواعد البيانات المتقدمة", iconEmoji: "🗄️", themeColor: "#0ea5e9", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "جامعة الزاوية", slug: "zu" } },
-    { id: "crs_e2e_stats", code: "MA-210", name: "الإحصاء التطبيقي", iconEmoji: "📊", themeColor: "#15803d", credits: 2, department: { id: "dep_e2e_math", name: "قسم الرياضيات" }, institution: { id: "inst_e2e_zu", name: "جامعة الزاوية", slug: "zu" } },
-    { id: "crs_e2e_net", code: "CS-304", name: "شبكات الحاسوب", iconEmoji: "🌐", themeColor: "#b45309", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "جامعة الزاوية", slug: "zu" } },
-    { id: "crs_e2e_ai", code: "CS-410", name: "أساسيات الذكاء الاصطناعي", iconEmoji: "🤖", themeColor: "#dc2626", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "جامعة الزاوية", slug: "zu" } },
-    { id: "crs_e2e_se", code: "CS-330", name: "هندسة البرمجيات", iconEmoji: "🧩", themeColor: "#0891b2", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "جامعة الزاوية", slug: "zu" } },
+    { id: "crs_e2e_algorithms", code: "CS-201", name: "مقدمة في الخوارزميات", iconEmoji: "🧮", themeColor: "#7c3aed", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", slug: "zu" } },
+    { id: "crs_e2e_databases", code: "CS-310", name: "قواعد البيانات المتقدمة", iconEmoji: "🗄️", themeColor: "#0ea5e9", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", slug: "zu" } },
+    { id: "crs_e2e_stats", code: "MA-210", name: "الإحصاء التطبيقي", iconEmoji: "📊", themeColor: "#15803d", credits: 2, department: { id: "dep_e2e_math", name: "قسم الرياضيات" }, institution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", slug: "zu" } },
+    { id: "crs_e2e_net", code: "CS-304", name: "شبكات الحاسوب", iconEmoji: "🌐", themeColor: "#b45309", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", slug: "zu" } },
+    { id: "crs_e2e_ai", code: "CS-410", name: "أساسيات الذكاء الاصطناعي", iconEmoji: "🤖", themeColor: "#dc2626", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", slug: "zu" } },
+    { id: "crs_e2e_se", code: "CS-330", name: "هندسة البرمجيات", iconEmoji: "🧩", themeColor: "#0891b2", credits: 3, department: { id: "dep_e2e_cs", name: "قسم علوم الحاسوب" }, institution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", slug: "zu" } },
   ],
   meta: { page: 1, limit: 12, total: 6, totalPages: 1 },
 };
@@ -479,7 +479,7 @@ const NEED_STUDENT = CRAWL.groups.some((g) => g.auth === "student");
 /* the D7a seeded session (pages-authed.mjs, byte-equal): STUDENT_USER +
  * the institution context the institution-scoped queries key on. */
 const seededUser = NEED_STUDENT
-  ? { ...STUDENT_USER, memberships: [], currentInstitution: { id: "inst_e2e_zu", name: "جامعة الزاوية", nameEn: "Zawia University", slug: "zu" }, membershipRole: "STUDENT" }
+  ? { ...STUDENT_USER, memberships: [], currentInstitution: { id: "inst_e2e_zu", name: "مساحة عمل أُلارا التجريبية", nameEn: "Ulara Experimental Workspace", slug: "zu" }, membershipRole: "STUDENT" }
   : null;
 const meJson = NEED_STUDENT
   ? JSON.stringify({

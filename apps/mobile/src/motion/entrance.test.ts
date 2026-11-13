@@ -18,7 +18,7 @@ import {
   fadeInDown,
   fadeInUp,
   fadeOut,
-  heronLayout,
+  dsLayout,
   slideInFromEnd,
   slideInFromStart,
   staggerDelay,
@@ -26,6 +26,12 @@ import {
   useStaggerEntrance,
 } from "./entrance";
 
+// The emulator gate is OFF in tests: jest's environment is a "non-device"
+// (the gate would disable entrances everywhere) — the reduced-motion
+// double-coverage and the emulator gate are tested by their own seams.
+jest.mock("@/lib/emulatorGate", () => ({
+  isEmulatorEntranceDisabled: jest.fn(() => false),
+}));
 jest.mock("@/hooks/useReduceMotion", () => ({
   useReduceMotion: jest.fn(() => false),
 }));
@@ -67,8 +73,8 @@ describe("factories route to the right builders (RTL-aware)", () => {
     expect(fadeOut()).toBe(FadeOut);
   });
 
-  it("heronLayout is the LinearTransition", () => {
-    expect(heronLayout()).toBe(LinearTransition);
+  it("dsLayout is the LinearTransition", () => {
+    expect(dsLayout()).toBe(LinearTransition);
   });
 
   it("LTR: reading-start is the LEFT edge", () => {

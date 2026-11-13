@@ -13,9 +13,9 @@ import { useCampusEvents, useLiveSessions } from '../../hooks/useResources';
 import { formatDate, formatInt, formatNum, formatTime } from '../../utils/numbers';
 import { countAr } from '../../lib/format';
 
-/* R305 Heron: the shared student vocabulary + this family's refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+/* R305 DS: the shared student vocabulary + this family's refinements. */
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy + the family's
  * harmonics (the copper destination rails keep their r305s-next pin). */
 import '../../styles/student/pages.css';
@@ -190,7 +190,7 @@ export default function WebinarsPage() {
         {/* R319 (c3-S2): [02] — the honest-destinations section's bar. */}
         <SectionBar index="02" title="أين أجد الفعاليّات الحقيقيّة؟" />
         <p className="r319sp-sec-note">الفعاليّات الرسميّة تُنشر على لوحة المجتمع، وجلسات مقرّراتك تعيش في صفحة البثّ.</p>
-        {/* R305 Heron: the two destinations fold from card tiles into the
+        {/* R305 DS: the two destinations fold from card tiles into the
             copper-edged rails (the shared .r305s-next emphasis) — quiet
             paths, not boxes. */}
         <div className="r305w-dests">

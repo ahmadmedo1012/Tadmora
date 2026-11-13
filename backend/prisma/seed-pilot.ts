@@ -12,7 +12,7 @@
  *   - ≥ 3 lectures (3 chapters + 1 checkpoint each) per course that
  *     lacks them — SE301's authored set is never touched
  *   - one material + one assignment per offering that lacks them
- *   - 30 demo students (@demo.tadmora.ly — the flag the registrar's
+ *   - 30 demo students (@demo.ulara.ly — the flag the registrar's
  *     «حذف بيانات العرض» action sweeps), enrolled across 5 of the 8
  *     offerings each, with a QUIZ_1 grade on their first course and
  *     an attendance row on today's SE301 session
@@ -30,7 +30,7 @@ import { utcDayStart } from '../src/lib/dates.js';
 
 /** The demo-cohort flag: every pilot-sample student carries this
  *  domain — the registrar's removal action sweeps exactly it. */
-export const DEMO_EMAIL_DOMAIN = '@demo.tadmora.ly';
+export const DEMO_EMAIL_DOMAIN = '@demo.ulara.ly';
 
 const TERM = '2024-FALL';
 

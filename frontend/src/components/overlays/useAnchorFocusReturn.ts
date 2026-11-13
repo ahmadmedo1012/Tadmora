@@ -1,6 +1,6 @@
 /**
  * useAnchorFocusReturn — closes the anchored-overlay focus loop on EVERY
- * keyboard-relevant close path (r305 Heron overlay grammar).
+ * keyboard-relevant close path (r305 ds overlay grammar).
  *
  * The anchored primitives (Dropdown / Popover / NotificationPanel) have
  * always restored focus to their trigger on the keyboard exits they own

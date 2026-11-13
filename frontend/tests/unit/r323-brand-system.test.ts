@@ -284,9 +284,8 @@ describe('R323 gate (c) — favicon + brand twins are the ULARA system', () => {
     expect(LOCKUP.mark.x).toBeGreaterThan(LOCKUP.ar.x);
   });
 
-  it('mark.ts and scripts/r323/brand-assets.mjs state the SAME geometry', () => {
+  it('mark.ts states the pinned geometry (the r323 generator twin was deleted in the wave-2 purge)', () => {
     const mark = read('src/brand/mark.ts');
-    const gen = repoRead('scripts/r323/brand-assets.mjs');
     for (const fact of [
       `MARK_VESSEL_PATH = '${MARK_VESSEL_PATH}'`,
       `MARK_CORNERSTONE = { x: ${MARK_CORNERSTONE.x}, y: ${MARK_CORNERSTONE.y}, size: ${MARK_CORNERSTONE.size} }`,
@@ -295,12 +294,6 @@ describe('R323 gate (c) — favicon + brand twins are the ULARA system', () => {
       `MARK_GRID_POINTS: readonly (readonly [number, number])[] = [`,
     ]) {
       expect(mark, `mark.ts missing ${fact}`).toContain(fact);
-    }
-    for (const fact of [
-      `vessel: '${MARK_VESSEL_PATH}'`,
-      `cornerstone: { x: ${MARK_CORNERSTONE.x}, y: ${MARK_CORNERSTONE.y}, size: ${MARK_CORNERSTONE.size} }`,
-    ]) {
-      expect(gen, `brand-assets.mjs missing ${fact}`).toContain(fact);
     }
     /* the grid anchors are exactly the construction's judged points */
     expect(MARK_GRID_POINTS).toHaveLength(9);
@@ -321,12 +314,9 @@ describe('R323 gate (c) — favicon + brand twins are the ULARA system', () => {
      * substantial and the sheet carries its own viewBox */
     expect(WORDMARK_AR.d.length).toBeGreaterThan(1000);
     expect(WORDMARK_AR.viewBox).toBe('0 0 94.99 112.00');
-    /* the shaper's INPUT WORD carries the damma — the generator pins
-     * the word itself, and its own runtime assert rejects a missing/
-     * misplaced damma mark */
-    const shaper = repoRead('scripts/r323/wordmark-build-r323.mjs');
-    expect(shaper).toContain("const WORD = 'أُلارا'");
-    expect(shaper).not.toContain('ألارا');
+    /* the shaper (scripts/r323/wordmark-build-r323.mjs) was deleted in
+     * the wave-2 purge; the damma contract stays pinned by the sheet
+     * assertions above and the brand tests below. */
   });
 });
 

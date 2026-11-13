@@ -7,7 +7,7 @@
  *
  * r313 two-tone: ink (--ill-stroke) + paper + signal (--accent, the
  * tab only) — ghost rows sit on the paper STEP (--neutral-100), and
- * every corner is square (the Heron drafting grammar). No text.
+ * every corner is square (the reference drafting grammar). No text.
  * RTL: centred composition — direction-neutral by design.
  */
 import {

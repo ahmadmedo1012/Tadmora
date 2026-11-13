@@ -11,7 +11,7 @@
  * What it seeds (all upsert/guarded-create → re-runs are no-ops):
  *   - reuses the labeled demo workspace مساحة عمل أُلارا التجريبية
  *     (slug ulara-demo — the same row seed.ts maintains; the fixed
- *     legacy id 'inst-zawia-showcase' is only on the fresh-create
+ *     legacy id 'inst-ulara-showcase' is only on the fresh-create
  *     branch so migrated and fresh databases agree on the reference id)
  *   - 8 courses with real Arabic names (codes CS101…NT101 — a fresh
  *     grammar that cannot collide with the 30x codes of seed.ts /
@@ -19,7 +19,7 @@
  *     inside the Phase Ω three-faculty set (علوم الحاسوب · الهندسة ·
  *     إدارة الأعمال — no campus names, no per-college identity)
  *   - 6 teachers with Arabic names + full TeacherProfiles
- *   - 40 students — emails userNN@demo.tadmora.ly (the SAME demo
+ *   - 40 students — emails userNN@demo.ulara.ly (the SAME demo
  *     domain the registrar's «حذف بيانات العرض» action already sweeps
  *     for the pilot cohort — so this pack is removable by that one
  *     action too), reg numbers DEMO-2026-101…140 (no overlap with the
@@ -72,7 +72,7 @@ interface TeacherSeedDef {
 
 const TEACHERS: TeacherSeedDef[] = [
   {
-    email: 'khaled.mansouri@demo.tadmora.ly',
+    email: 'khaled.mansouri@demo.ulara.ly',
     firstName: 'خالد',
     lastName: 'المنصوري',
     rank: AcademicRank.PROFESSOR,
@@ -86,7 +86,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#4F8EF7',
   },
   {
-    email: 'salma.benissa@demo.tadmora.ly',
+    email: 'salma.benissa@demo.ulara.ly',
     firstName: 'سلمى',
     lastName: 'بن عيسى',
     rank: AcademicRank.ASSOCIATE_PROFESSOR,
@@ -100,7 +100,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#3DD68C',
   },
   {
-    email: 'omar.sherif@demo.tadmora.ly',
+    email: 'omar.sherif@demo.ulara.ly',
     firstName: 'عمر',
     lastName: 'الشريف',
     rank: AcademicRank.LECTURER,
@@ -114,7 +114,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#F5A623',
   },
   {
-    email: 'hoda.taher@demo.tadmora.ly',
+    email: 'hoda.taher@demo.ulara.ly',
     firstName: 'هدى',
     lastName: 'الطاهر',
     rank: AcademicRank.ASSISTANT_PROFESSOR,
@@ -128,7 +128,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#9B59B6',
   },
   {
-    email: 'youssef.warshafana@demo.tadmora.ly',
+    email: 'youssef.warshafana@demo.ulara.ly',
     firstName: 'يوسف',
     lastName: 'ورشفاني',
     rank: AcademicRank.ASSISTANT_PROFESSOR,
@@ -142,7 +142,7 @@ const TEACHERS: TeacherSeedDef[] = [
     color: '#EF6C00',
   },
   {
-    email: 'mariam.ahmar@demo.tadmora.ly',
+    email: 'mariam.ahmar@demo.ulara.ly',
     firstName: 'مريم',
     lastName: 'الأحمر',
     rank: AcademicRank.LECTURER,
@@ -186,7 +186,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🐍',
     color: '#3B82F6',
     departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
-    teacherEmail: 'khaled.mansouri@demo.tadmora.ly',
+    teacherEmail: 'khaled.mansouri@demo.ulara.ly',
     room: 'قاعة 101',
     lectures: [
       { title: 'أول برنامج لك في بايثون', description: 'تشغيل المفسّر، أمر الطباعة، وأخطاء البداية الشائعة.', durationSec: 1560 },
@@ -204,7 +204,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '⚡',
     color: '#EF5350',
     departmentKey: 'كلية الهندسة::الهندسة الكهربائية',
-    teacherEmail: 'salma.benissa@demo.tadmora.ly',
+    teacherEmail: 'salma.benissa@demo.ulara.ly',
     room: 'معمل الدوائر',
     lectures: [
       { title: 'الجهد والتيار وقانون أوم', description: 'المفاهيم الثلاثة الأولى في الدوائر: فرق الجهد، شدة التيار، والعلاقة بينهما.', durationSec: 1500 },
@@ -222,7 +222,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '📊',
     color: '#7E57C2',
     departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
-    teacherEmail: 'omar.sherif@demo.tadmora.ly',
+    teacherEmail: 'omar.sherif@demo.ulara.ly',
     room: 'قاعة 204',
     lectures: [
       { title: 'ماهية الإدارة ووظائفها', description: 'تعريف الإدارة وأربع وظائفها الكبرى بمثال مشروع طالب.', durationSec: 1380 },
@@ -239,7 +239,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '➗',
     color: '#26A69A',
     departmentKey: 'كلية علوم الحاسوب::نظم المعلومات',
-    teacherEmail: 'hoda.taher@demo.tadmora.ly',
+    teacherEmail: 'hoda.taher@demo.ulara.ly',
     room: 'قاعة 305',
     lectures: [
       { title: 'المنطق والبراهين', description: 'القضايا المنطقية، الكمّيات، وأشكال البرهان الشائعة.', durationSec: 1500 },
@@ -257,7 +257,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '📊',
     color: '#00897B',
     departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
-    teacherEmail: 'youssef.warshafana@demo.tadmora.ly',
+    teacherEmail: 'youssef.warshafana@demo.ulara.ly',
     room: 'معمل الحاسوب 2',
     lectures: [
       { title: 'ما هو تحليل البيانات', description: 'مراحل التحليل وأدواره: من السؤال إلى الإجابة.', durationSec: 1380 },
@@ -275,7 +275,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🚀',
     color: '#8D6E63',
     departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
-    teacherEmail: 'omar.sherif@demo.tadmora.ly',
+    teacherEmail: 'omar.sherif@demo.ulara.ly',
     room: 'قاعة 12',
     lectures: [
       { title: 'من المشكلة إلى الفكرة', description: 'كيف تُكتشف المشكلة الحقيقية قبل اقتراح الحل.', durationSec: 1380 },
@@ -292,7 +292,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🔤',
     color: '#2952C8',
     departmentKey: 'كلية إدارة الأعمال::إدارة الأعمال',
-    teacherEmail: 'mariam.ahmar@demo.tadmora.ly',
+    teacherEmail: 'mariam.ahmar@demo.ulara.ly',
     room: 'معمل اللغة 1',
     lectures: [
       { title: 'مهارات القراءة الأكاديمية', description: 'القراءة السريعة، الفكرة الرئيسة، وتدوين الملاحظات.', durationSec: 1380 },
@@ -309,7 +309,7 @@ const COURSES: CourseSeedDef[] = [
     icon: '🌐',
     color: '#5C6BC0',
     departmentKey: 'كلية علوم الحاسوب::علوم الحاسوب',
-    teacherEmail: 'khaled.mansouri@demo.tadmora.ly',
+    teacherEmail: 'khaled.mansouri@demo.ulara.ly',
     room: 'معمل الشبكات',
     lectures: [
       { title: 'مقدمة في شبكات الحاسوب', description: 'لماذا شبكات؟ أنواعها حسب المدى وأمثلة من بيئة العمل الرقمية.', durationSec: 1320 },
@@ -322,7 +322,7 @@ const COURSES: CourseSeedDef[] = [
   },
 ];
 
-// ─── Students (40) — Arabic names, emails userNN@demo.tadmora.ly ─
+// ─── Students (40) — Arabic names, emails userNN@demo.ulara.ly ─
 const STUDENT_NAMES: string[] = [
   'أحمد بن يونس', 'سارة الفيتوري', 'محمد الزروق', 'هدى بن عامر',
   'عبد السلام الككلي', 'ريم الشريف', 'منصور العجيلي', 'آية المغربي',
@@ -379,7 +379,7 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
     where: { slug: INSTITUTION_SLUG },
     update: {},
     create: {
-      id: 'inst-zawia-showcase',
+      id: 'inst-ulara-showcase',
       name: 'مساحة عمل أُلارا التجريبية',
       nameEn: 'Ulara Experimental Workspace',
       slug: INSTITUTION_SLUG,
@@ -577,7 +577,7 @@ export async function seedDemoR330(prisma: PrismaClient): Promise<DemoSummary> {
   for (const [i, fullName] of STUDENT_NAMES.entries()) {
     const [firstName, ...rest] = fullName.split(' ');
     const lastName = rest.join(' ') || 'العرض';
-    const email = `user${String(i + 1).padStart(2, '0')}@demo.tadmora.ly`;
+    const email = `user${String(i + 1).padStart(2, '0')}@demo.ulara.ly`;
     const universityId = `DEMO-2026-${String(i + 101).padStart(3, '0')}`;
     // spread the roster across the departments the 8 courses live in
     const homeDeptKey = COURSES[i % COURSES.length]!.departmentKey;

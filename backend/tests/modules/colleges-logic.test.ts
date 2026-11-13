@@ -205,7 +205,7 @@ describe('buildLeaderboardRow (wire shape + zero defaults)', () => {
 describe('parseInstitutionSlug + resolveCollegesTarget (public colleges funnel)', () => {
   it('parses ?institution= only when it is a non-empty string (trimmed)', () => {
     expect(parseInstitutionSlug({ institution: 'tenant-a' })).toBe('tenant-a');
-    expect(parseInstitutionSlug({ institution: '  alandalus-demo  ' })).toBe('alandalus-demo');
+    expect(parseInstitutionSlug({ institution: '  ulara-demo-2  ' })).toBe('ulara-demo-2');
     expect(parseInstitutionSlug({ institution: '' })).toBeUndefined();
     expect(parseInstitutionSlug({ institution: '   ' })).toBeUndefined();
     expect(parseInstitutionSlug({ institution: 42 })).toBeUndefined();
@@ -214,17 +214,17 @@ describe('parseInstitutionSlug + resolveCollegesTarget (public colleges funnel)'
   });
 
   it('an explicit ?institution=slug ALWAYS wins over the authed context', () => {
-    expect(resolveCollegesTarget('alandalus-demo', 'inst-zawia')).toEqual({
+    expect(resolveCollegesTarget('ulara-demo-2', 'inst-primary')).toEqual({
       kind: 'slug',
-      slug: 'alandalus-demo',
+      slug: 'ulara-demo-2',
       explicit: true,
     });
   });
 
   it('an authed caller without an explicit slug gets THEIR institution (explicit id target)', () => {
-    expect(resolveCollegesTarget(undefined, 'inst-zawia')).toEqual({
+    expect(resolveCollegesTarget(undefined, 'inst-primary')).toEqual({
       kind: 'id',
-      id: 'inst-zawia',
+      id: 'inst-primary',
       explicit: true,
     });
   });
@@ -243,9 +243,9 @@ describe('parseInstitutionSlug + resolveCollegesTarget (public colleges funnel)'
   });
 
   it('the showcase slug constant matches the seeded reference institution', () => {
-    // seed.ts upserts the showcase institution by slug `zawia-showcase`
+    // seed.ts upserts the showcase institution by slug `ulara-showcase`
     // r188: the demo tenant keeps the legacy fixed id
-    // `inst-zawia-showcase` — the public default names the r188 slug.
+    // `inst-ulara-showcase` — the public default names the r188 slug.
     expect(SHOWCASE_INSTITUTION_SLUG).toBe('ulara-demo');
   });
 });

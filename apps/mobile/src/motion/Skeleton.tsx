@@ -27,7 +27,7 @@ export interface SkeletonProps {
   width?: DimensionValue;
   /** bone height in px (default 14 — one line of body text). */
   height?: number;
-  /** corner radius (default 0 — the Heron radius discipline). */
+  /** corner radius (default 0 — the ds radius discipline). */
   radius?: number;
   /** override the bone color (defaults are theme-aware). */
   color?: string;

@@ -8,9 +8,9 @@ import { Icon } from '../../components/Icon';
 import { EmojiIcon } from '../../components/EmojiIcon';
 import { useFaculties, useCurrentInstitutionSlug } from '../../hooks/useResources';
 
-/* R305 Heron: the shared student vocabulary + this family's refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+/* R305 DS: the shared student vocabulary + this family's refinements. */
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy every converted
  * student page mounts (SectionBar/BarCount/EmptyCell + the family's
  * unlayered masthead tail precedent). */
@@ -183,7 +183,7 @@ export default function CampusMapPage() {
         </div>
       </section>
 
-      {/* R305 Heron: a card holding one link is box noise — the
+      {/* R305 DS: a card holding one link is box noise — the
           cross-link rides the copper rail instead. */}
       <div className="r305s-next r305p-rail">
         <Link to="/student/university" className="btn primary sm">

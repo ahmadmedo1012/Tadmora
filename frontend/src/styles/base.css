@@ -1,13 +1,13 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — Base layer (r305 — the Heron blueprint foundation)
+   ULARA — Base layer (r305 — the reference blueprint foundation)
    Reset · document · shell · browser surfaces · RTL · typography
 
-   r305: this sheet stays fully token-routed — the Heron re-key
+   r305: this sheet stays fully token-routed — the reference re-key
    (blueprint paper #F6F8FA, charcoal ink #262019, the #C43E16 signal
    with its AA ink/label registers, squared radii, the 0.4s
    cubic-bezier(.23,1,.32,1) register) flows through var() with zero
    structural change here. Evidence + decisions:
-   docs/redesign/r305-heron-reference-spec.md
+   the retired r305 reference spec
    ════════════════════════════════════════════════════════════════════ */
 
 @layer base {
@@ -108,7 +108,7 @@
 
   /* R329 (gate:clean): `color` is split off the shared reset — the
      text-like controls (textarea/select + the typed inputs) carry
-     `color: var(--text)` in components.css's Heron input recipe
+     `color: var(--text)` in components.css's the reference input recipe
      (components layer beats base), while BARE inputs keep the
      inherit here so check/radio/file controls never fall to the UA
      default. One color seat per selector segment, no cross-file
@@ -143,7 +143,7 @@
   /* ═══ R313 (4-b · D6) — the guest Lenis engine chrome ══════════
      While the smooth engine is live on a public/window-scrolled route,
      lib/motion/sheetLenis.ts sets html[data-lenis-on] and the native
-     scrollbar disappears — Heron shows none (its content lives in an
+     scrollbar disappears — the reference shows none (its content lives in an
      overflow:hidden wrapper; on our window-Lenis the equivalent is
      this rule). Scoped to the engine's LIFETIME: authenticated routes
      destroy the engine, the attribute drops, and the app shell keeps

@@ -75,8 +75,8 @@ export const PRODUCT_CAPTURES: [
   },
 ];
 
-/* ── P-A2 R333 (INV-08 · heron-craft row 13) — the 2× capture seats ──
- * The same seeded surfaces re-captured @2880×1740 (the heron platform
+/* ── P-A2 R333 (INV-08 · the retired craft sheet row 13) — the 2× capture seats ──
+ * The same seeded surfaces re-captured @2880×1740 (the reference platform
  * frame's 1440×870 @1× — docs/redesign/r333/media-capture.md). These
  * ride the Vite asset pipeline (src/assets/product/*.webp → hashed
  * dist assets) through ProductFrame's `twoXSrc` override; the public

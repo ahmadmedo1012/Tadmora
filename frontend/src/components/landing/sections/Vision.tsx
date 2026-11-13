@@ -1,5 +1,5 @@
 /* P2-0 (r335 split) — [8] الخاتمة (the reference's cta) — the resolve.
- * R338 T-10b: the band closes on heron's RULED LEDGER — a drafting-table
+ * R338 T-10b: the band closes on the reference's RULED LEDGER — a drafting-table
  * grid: top ledger band (three mono-labelled cells), title band (kicker
  * rail + centered resolve + flank rule), sketch band (AUTHORED inline-SVG
  * line-art — the registration path as a drafting sketch; no reference
@@ -13,7 +13,7 @@ import { Icon } from '../../Icon';
 import { LIVE_COUNT } from '../../../data/landing-ledger';
 import { LOGIN, REGISTER } from '../copy';
 
-/* T-10f: heron's resolve label is a TWO-LINE stack inside a fixed label
+/* T-10f: the reference's resolve label is a TWO-LINE stack inside a fixed label
  * column (w80 @phone) — the register copy splits on its natural Arabic
  * phrase break (copy.ts stays the single source). */
 const REGISTER_WORDS = REGISTER.split(' ');
@@ -120,7 +120,7 @@ export function Vision({ year }: { year: number }) {
                   </h2>
                 </div>
                 <div className="fo-cta-lede-wrap" data-spec="cta.lede-wrap">
-                  {/* T-10f: the instrument asserts tags — heron's lede seat is a
+                  {/* T-10f: the instrument asserts tags — the reference's lede seat is a
                       div (p margins are globally reset, so the swap is neutral). */}
                   <div className="fo-cta-lede" data-spec="cta.lede" data-ula-reveal="item">
                     أنشئ حسابك الجامعي في دقائق — ببريدك الإلكتروني ورقم قيدك،
@@ -128,7 +128,7 @@ export function Vision({ year }: { year: number }) {
                   </div>
                 </div>
                 <div className="fo-cta-actions" data-spec="cta.actions" data-ula-reveal="item" id="cta">
-                  {/* T-10f RESTRUCTURE — heron's measured resolve-button tree:
+                  {/* T-10f RESTRUCTURE — the legacy measured resolve-button tree:
                       a (transparent interactive shell) > bg div (the orange
                       wash + border-color/color voice) > label column (two
                       masked two-line wrappers, transform tween) + icon box

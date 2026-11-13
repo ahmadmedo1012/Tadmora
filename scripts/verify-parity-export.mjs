@@ -278,7 +278,7 @@ const maps = {
    theme blocks, so those rows assert through the normal path. */
 const CHECKS = [
   // ── :root primitives — radius ladder (R313: collapsed to 0) ──
-  ['root', '--r-xs', '0px', 'radius rung 1 — 0 (R313 override: 2px → 0px (owner decision — Heron parity; the reference measures radius 0 on 2770/2774 surfaces))'],
+  ['root', '--r-xs', '0px', 'radius rung 1 — 0 (R313 override: 2px → 0px (owner decision — ds parity; the reference measures radius 0 on 2770/2774 surfaces))'],
   ['root', '--r-sm', '0px', 'radius rung 2 — 0 (R313 override: 4px → 0px (owner decision))'],
   ['root', '--r-md', '0px', 'radius rung 3 — 0 (R313 override: 6px → 0px (owner decision))'],
   ['root', '--r-lg', '0px', 'radius rung 4 — 0 (R313 override: 8px → 0px (owner decision))'],
@@ -294,9 +294,9 @@ const CHECKS = [
   ['root', '--sp-8', '40px', 'divergent revision had 32px'],
   ['root', '--sp-10', '56px', 'missing from the divergent revision'],
   ['root', '--sp-16', '240px', 'full ladder top'],
-  // ── :root primitives — motion ladder (r305: the measured Heron register) ──
+  // ── :root primitives — motion ladder (r305: the measured ds register) ──
   ['root', '--t-micro', '80ms', 'motion rung 1 — press feedback (unranged)'],
-  ['root', '--t-fast', '200ms', 'motion rung 2 (r305 Heron re-key; was 160)'],
+  ['root', '--t-fast', '200ms', 'motion rung 2 (r305 ds re-key; was 160)'],
   ['root', '--t-base', '400ms', 'motion rung 3 — the reference dominant (.4s x174; was 240)'],
   ['root', '--t-slow', '500ms', 'motion rung 4 (r305; was 380)'],
   ['root', '--t-slower', '650ms', 'motion rung 5 (r305; was 520)'],
@@ -318,7 +318,7 @@ const CHECKS = [
   ['root', '--motion-duration-short', '200ms', 'semantic short (r305)'],
   ['root', '--motion-duration-medium', '400ms', 'semantic medium (r305)'],
   ['root', '--motion-duration-long', '500ms', 'semantic long (r305)'],
-  ['root', '--motion-duration-page', '400ms', 'page transition (r305 Heron register; was 320)'],
+  ['root', '--motion-duration-page', '400ms', 'page transition (r305 ds register; was 320)'],
   ['root', '--motion-duration-reveal', '480ms', 'reveal (r305; was 360)'],
   ['root', '--motion-duration-stat', '700ms', 'stat counter + sheen (unchanged)'],
   ['root', '--motion-duration-skeleton', '1200ms', 'shimmer loop (unchanged)'],
@@ -359,15 +359,15 @@ const CHECKS = [
   ['root', '--fs-xs', '13px', 'the 13px Arabic floor (kept in R313)'],
   ['root', '--fs-sm', '13px', 'label base (kept in R313)'],
   ['root', '--fs-chrome', 'max(13px,1.6rem)', 'R313 override: 0.875rem → max(13px,1.6rem) (owner decision — the reference\'s uniform 13.33px chrome/body run on the fluid root, Arabic-floored)'],
-  ['root', '--fs-h1', '5.6rem', 'R313 override: 30px → 5.6rem (owner decision — Heron h1 46.67px @1440 on the fluid root)'],
-  ['root', '--fs-h2', '4.8rem', 'R313 override: 24px → 4.8rem (owner decision — Heron h2 40px @1440)'],
-  ['root', '--fs-h3', '4rem', 'R313: Heron h3 33.33px @1440 on the fluid root'],
+  ['root', '--fs-h1', '5.6rem', 'R313 override: 30px → 5.6rem (owner decision — ds h1 46.67px @1440 on the fluid root)'],
+  ['root', '--fs-h2', '4.8rem', 'R313 override: 24px → 4.8rem (owner decision — ds h2 40px @1440)'],
+  ['root', '--fs-h3', '4rem', 'R313: ds h3 33.33px @1440 on the fluid root'],
   ['root', '--fs-display-xl', '8rem', 'R313: the +0.8rem h-ladder continuation (66.67px @1440)'],
-  ['root', '--fs-body', 'max(13px,1.6rem)', 'R313 override: 16px → max(13px,1.6rem) (owner decision — Heron txt-16 13.33px @1440, Arabic-floored)'],
+  ['root', '--fs-body', 'max(13px,1.6rem)', 'R313 override: 16px → max(13px,1.6rem) (owner decision — ds txt-16 13.33px @1440, Arabic-floored)'],
   ['root', '--fs-body-lg', 'max(13px,1.8rem)', 'R313 override: 18px → max(13px,1.8rem) (owner decision — the lead step, Arabic-floored)'],
-  ['root', '--fs-mono-md', 'max(11.67px,1.4rem)', 'R313 Heron txt-14 mono micro-label — R325 Y4 re-pin: the 11.67px mono rung'],
-  ['root', '--fs-mono-sm', 'max(11px,1.2rem)', 'R313 Heron txt-12 — R325 Y4 re-pin: the 11px floor (mono ≥11 per §R324)'],
-  ['root', '--fs-mono-xs', 'max(11px,1rem)', 'R313 Heron txt-10 — R325 Y4 re-pin: the 11px floor'],
+  ['root', '--fs-mono-md', 'max(11.67px,1.4rem)', 'R313 ds txt-14 mono micro-label — R325 Y4 re-pin: the 11.67px mono rung'],
+  ['root', '--fs-mono-sm', 'max(11px,1.2rem)', 'R313 ds txt-12 — R325 Y4 re-pin: the 11px floor (mono ≥11 per §R324)'],
+  ['root', '--fs-mono-xs', 'max(11px,1rem)', 'R313 ds txt-10 — R325 Y4 re-pin: the 11px floor'],
   ['root', '--ls-display-tight', '-0.02em', 'R313: the reference\'s Latin display tracking (−0.93px on the 46.67px h1); Arabic stays 0'],
   ['root', '--type-display-line-height', '1.28', 'r192 measured-safe Arabic display leading'],
   ['root', '--type-metric-letter-spacing', '0', 'tracking misaligns tnum columns'],
@@ -593,7 +593,7 @@ const FORBIDDEN_VALUES = [
   '#f6f8fa', '#F6F8FA',
   '#f0f2f5', '#F0F2F5', '#e9ecef', '#E9ECEF', '#c8c8c8', '#C8C8C8',
   '--ln-', '--stage-', '--aura-', '--glow-accent', '--shell-aurora-azure', // retired landing vocabulary
-  // r306: the poster divergence namespace retired with the Heron-only
+  // r306: the poster divergence namespace retired with the ds-only
   // landing rebuild (the spelling guards BOTH export files — a future
   // reintroduction of the alias layer fails the gate)
   '--poster-paper', '--poster-ink', '--poster-signal',

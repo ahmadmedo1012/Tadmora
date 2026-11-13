@@ -18,7 +18,7 @@ import TriangleAlert from "lucide-react-native/icons/triangle-alert";
 import CircleCheck from "lucide-react-native/icons/circle-check";
 import { z } from "zod";
 import { usePalette, useStatusTones } from "@/design/theme";
-import { heron, sp } from "@/design/tokens";
+import { ds, sp } from "@/design/tokens";
 import { FormFieldsContext, type FormFieldsApi } from "./fields";
 import { T } from "./text";
 import { Button, type ButtonKind } from "./pressables";
@@ -127,10 +127,10 @@ export interface FormScreenProps {
   style?: StyleProp<ViewStyle>;
 }
 
-/** The Heron toolbar theme — ink on paper, both appearances. */
+/** The ds toolbar theme — ink on paper, both appearances. */
 const TOOLBAR_THEME = {
-  light: { primary: heron.light.text, disabled: heron.light.textFaint, background: heron.light.surface, ripple: heron.light.surfaceHover },
-  dark: { primary: heron.dark.text, disabled: heron.dark.textFaint, background: heron.dark.surface, ripple: heron.dark.surfaceHover },
+  light: { primary: ds.light.text, disabled: ds.light.textFaint, background: ds.light.surface, ripple: ds.light.surfaceHover },
+  dark: { primary: ds.dark.text, disabled: ds.dark.textFaint, background: ds.dark.surface, ripple: ds.dark.surfaceHover },
 };
 
 export function FormScreen({

@@ -104,8 +104,8 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
  * now resolves the theme and syncs theme-color only.
  * r197: pin refreshed — syncThemeColor paints the r197 grounds
  * (dark #16140F / light #F3EEE4, BLUEPRINT §4); the metas moved with it.
- * r305: pin refreshed — syncThemeColor paints the Heron foundation
- * grounds (dark #282828 / light #F6F8FA, r305-heron-reference-spec);
+ * r305: pin refreshed — syncThemeColor paints the ds foundation
+ * grounds (dark #282828 / light #F6F8FA, the r305 reference spec);
  * the metas moved with it. */
 /* r309 (§4.2): pin refreshed — the bootstrap DEFAULT flipped 'dark' → 'light',
  * aligning with the theme store's actual default (r302): the stale 'dark'
@@ -117,7 +117,7 @@ const FRONTEND_DIST = path.resolve(__dirname, '..', '..', 'frontend', 'dist');
  * the boot plate moved with it. */
 const THEME_BOOTSTRAP_SHA256 = 'Hy5F/tCbEeaIMasMwdvRGNWsI8JS12izIgn4vXf5LtA=';
 /* r188: pin refreshed — the JSON-LD block now describes the INDEPENDENT
- * platform alone (WebSite node; the retired University-of-Zawia
+ * platform alone (WebSite node; the retired pre-ULARA university
  * `about` node is gone — the only demo-data story is the labeled neutral
  * workspace «مساحة عمل أُلارا التجريبية», clearly marked as demo data,
  * never as affiliation). Verified by check-csp-hash.sh. */

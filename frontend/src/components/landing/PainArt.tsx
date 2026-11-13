@@ -1,5 +1,5 @@
 /**
- * PainArt — R313 (WP-A1 · D7 §3) → R322 (2-d · the Heron problem
+ * PainArt — R313 (WP-A1 · D7 §3) → R322 (2-d · the reference problem
  * transplant): the four pains' line art, re-composed to the measured
  * SQUARE seat.
  *

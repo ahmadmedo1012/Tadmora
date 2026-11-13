@@ -3,7 +3,7 @@
    Source of truth: shared/design-tokens.json (R326 M0.4).
    Regen: npm run tokens:build · Drift gate: npm run tokens:check
 
-   The WEB half of the shared Heron token set: the spacing/radius/
+   The WEB half of the shared design-system token set: the spacing/radius/
    motion ladder + both theme palettes (neutrals · triads · semantic
    seats). Imported by main.tsx BEFORE tokens.css, inside the same
    @layer tokens — the hand-written seats in tokens.css compose on
@@ -45,7 +45,7 @@
     --r-3xl: 0px;
     --r-full: 9999px;
 
-    /* ── Motion — the measured Heron register (r305) ── */
+    /* ── Motion — the measured motion register (r305) ── */
     --t-micro: 80ms;
     --t-fast: 200ms;
     --t-base: 400ms;
@@ -57,7 +57,7 @@
     --ease: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
-  /* LIGHT THEME — the Heron blueprint paper */
+  /* LIGHT THEME — the ds blueprint paper */
   :root,
   [data-theme="light"] {
     /* The warm vintage-paper neutral ramp (light) */

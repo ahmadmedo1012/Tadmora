@@ -105,7 +105,7 @@ export function KpiCard({
   );
 }
 
-/** Hairline progress bar (Heron: ink bar + hairline track). */
+/** Hairline progress bar (ds: ink bar + hairline track). */
 export function ProgressBar({
   ratio,
   height = 4,
@@ -132,7 +132,7 @@ export function ProgressBar({
   );
 }
 
-/** Initials avatar — circle (the one Heron round primitive). */
+/** Initials avatar — circle (the one ds round primitive). */
 export function Avatar({
   initials,
   color,
@@ -296,7 +296,7 @@ export interface DataListProps<T> {
 
   /* ── layout ────────────────────────────────────────────────────────── */
   contentPadding?: DataListContentPadding;
-  /** Heron is Arabic-first: content direction defaults to RTL. */
+  /** ds is Arabic-first: content direction defaults to RTL. */
   rtl?: boolean;
 
   /* ── FlatList view windowing (M5) ────────────────────────────────── */

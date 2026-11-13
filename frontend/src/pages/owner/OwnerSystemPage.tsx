@@ -193,7 +193,7 @@ export function OwnerSystemPage() {
     const unknownValue = sys.isError ? '—' : '…';
 
   return (
-    /* r305-A8 «Heron»: page-root marker — the scoped ops sheet keys
+    /* r305-A8 «ds»: page-root marker — the scoped ops sheet keys
        every rule off .r305ao (stack fields, error entries, meters,
        health rows all live under it). */
     <div className="page r305ao">

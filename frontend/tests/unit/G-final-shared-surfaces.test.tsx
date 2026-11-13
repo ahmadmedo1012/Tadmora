@@ -93,7 +93,7 @@ vi.mock('../../src/hooks/useResources', async (importOriginal) => {
           id: 'fac-1',
           name: 'كلية تقنية المعلومات',
           iconEmoji: '💻',
-          city: 'الزاوية',
+          city: 'افتراضي',
           departments: [{ id: 'dep-1', name: 'علوم الحاسوب' }],
         },
       ],
@@ -120,7 +120,7 @@ vi.mock('../../src/hooks/useAuth', () => ({
 
 vi.mock('../../src/hooks/useInstitutions', () => ({
   useInstitutions: () => ({
-    data: [{ id: 'inst-zawia', name: 'جامعة الزاوية', nameEn: 'University of Zawia', slug: 'zawia' }],
+    data: [{ id: 'inst-primary', name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', slug: 'primary' }],
     isPending: false,
     isError: false,
   }),

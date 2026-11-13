@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist, type PersistStorage, type StorageValue } from 'zustand/middleware';
-import { legacyAuthKey, withLegacyFallback } from '../lib/legacy-storage';
 
 /**
  * Session token architecture — orchestrator decision D4 (wave 12).
@@ -161,11 +160,9 @@ function resolveStringStorage(): SyncStringStorage {
  * `<HydrationSplash/>` forever.
  */
 function safeSessionStorage(): PersistStorage<PersistedSession> {
-  /* ULARA takeover §1.1: the persist key renamed to ula-auth; the
-   * adapter adopts the retired row ONCE (read new first → adopt →
-   * drop the old row, writes only the new key) so an established
-   * session survives the rename — see lib/legacy-storage. */
-  const ls = withLegacyFallback(resolveStringStorage(), legacyAuthKey);
+  /* The persist key is ula-auth — one spelling, one row (the retired
+   * pre-ULARA fallback was removed: dev-phase users re-login once). */
+  const ls = resolveStringStorage();
   return {
     getItem: (name) => {
       try {

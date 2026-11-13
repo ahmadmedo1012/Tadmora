@@ -109,7 +109,7 @@ export default defineConfig({
     },
     {
       // r305 — the auth/public/shared-surfaces + independent-QA area
-      // (redesign/r305-heron-auth-public-qa). Isolated testDir so the
+      // (redesign/r305-reference-auth-public-qa). Isolated testDir so the
       // existing e2e/audit projects and the vitest suites are untouched;
       // specs self-configure viewport/theme/emulation per test, so the
       // project ships no opinionated device bundle. `.e2e.ts` suffix for

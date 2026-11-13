@@ -341,7 +341,7 @@
 
 /* ═══ §10 — CTA HOVER: the two-channel contract (r341/D6) ═════════════
    The interaction grammar the landing proved (cta.css T-13/T-18,
-   heron ordinals 1/4/6/9): a primary CTA's hover changes ≥2 computed
+   the reference ordinals 1/4/6/9): a primary CTA's hover changes ≥2 computed
    channels — the translateX nudge + the accent-strong border. The
    shared .btn recipe (components.css, frozen) delivers ONE: the
    fill-wipe travels on ::before (invisible to the element's own

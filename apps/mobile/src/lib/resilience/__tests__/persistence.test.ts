@@ -31,12 +31,10 @@ afterEach(() => {
 
 const KEY = "test-query-cache";
 const MODULE_KEY = "ula-mobile-query-cache";
-const LEGACY_MODULE_KEY = "tadmora-mobile-query-cache"; // §1.1 read-fallback
 
 beforeEach(async () => {
   await AsyncStorage.removeItem(KEY);
   await AsyncStorage.removeItem(MODULE_KEY);
-  await AsyncStorage.removeItem(LEGACY_MODULE_KEY);
 });
 
 describe("createAsyncStoragePersister", () => {
@@ -147,26 +145,22 @@ describe("persistQueryClient", () => {
   });
 });
 
-describe("§1.1 storage-key rename shim (queryCachePersister)", () => {
-  it("restores a cache persisted under the legacy key and adopts it", async () => {
+describe("queryCachePersister (the app-root default)", () => {
+  it("persists and restores under the module key alone", async () => {
     const client: PersistedClient = {
       buster: QUERY_CACHE_BUSTER,
       timestamp: Date.now(),
       clientState: { queries: [], mutations: [] } as never,
     };
-    await AsyncStorage.setItem(LEGACY_MODULE_KEY, JSON.stringify(client));
+    await queryCachePersister.persistClient(client);
     const restored = await queryCachePersister.restoreClient();
     expect(restored).toEqual(client);
-    // the adopt write-through is fire-and-forget — let it land
-    await new Promise((r) => setTimeout(r, 0));
     expect(await AsyncStorage.getItem(MODULE_KEY)).toBe(JSON.stringify(client));
   });
 
-  it("removeClient clears BOTH the new and the legacy key", async () => {
+  it("removeClient clears the module key", async () => {
     await AsyncStorage.setItem(MODULE_KEY, JSON.stringify({ buster: "b" }));
-    await AsyncStorage.setItem(LEGACY_MODULE_KEY, JSON.stringify({ buster: "b" }));
     await queryCachePersister.removeClient();
     expect(await AsyncStorage.getItem(MODULE_KEY)).toBeNull();
-    expect(await AsyncStorage.getItem(LEGACY_MODULE_KEY)).toBeNull();
   });
 });

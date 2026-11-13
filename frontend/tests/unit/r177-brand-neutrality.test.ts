@@ -3,8 +3,8 @@
  *
  * Ulara presents itself as an INDEPENDENT educational platform. No
  * official adoption/endorsement by any university or ministry exists, so
- * no public surface may claim one. The University of Zawia records remain
- * — as explicitly labeled SHOWCASE data (مؤسّسة العرض) — never as the
+ * no public surface may claim one. The retired real-university identity's
+ * records are long gone from the product (Phase Ω) — and never as the
  * platform's identity.
  *
  * Pure fs pins on the public identity surfaces: index.html meta/OG/JSON-LD,
@@ -16,7 +16,8 @@
  * but legal-surface/asset/issuer shallow. The A2 census found LICENSE,
  * the certificate issuer, the backend boot banner, the admin settings
  * card, the product-chrome mark, the seed's platform voice, DESIGN.md's
- * identity line and docs/PROJECT-REFERENCE.md still speaking ZU. The
+ * identity line and the (since-deleted, wave-2 purge) PROJECT-REFERENCE.md
+ * still speaking the university brand. The
  * r183 block below pins every one of those closed surfaces too.
  */
 import { describe, expect, it } from 'vitest';
@@ -58,6 +59,14 @@ const OFFICIAL_CLAIMS = [
   'رسمية لجامعة',
 ] as const;
 
+/* The retired real-university identity strings — ASSEMBLED from
+ * fragments (the identity-gate convention): the banned literals must
+ * never re-enter the tree spelled out, not even inside the gate that
+ * bans them. */
+const RETIRED_UNI_AR = ['جامعة الزا', 'وية'].join('');
+const RETIRED_UNI_EN = ['University of Zaw', 'ia'].join('');
+const RETIRED_PLATFORM_AR = ['منصّة الزا', 'وية'].join('');
+
 describe('r177 — public metadata is platform-neutral (index.html)', () => {
   const html = read('index.html');
 
@@ -71,8 +80,8 @@ describe('r177 — public metadata is platform-neutral (index.html)', () => {
 
   it('OG / Twitter cards describe Ulara, not a university', () => {
     expect(html).toContain('<meta property="og:site_name" content="أُلارا — نظام تشغيل الجامعة" />');
-    expect(html).not.toMatch(/og:(site_name|title)" content="[^"]*جامعة الزاوية/);
-    expect(html).not.toMatch(/twitter:title" content="[^"]*جامعة الزاوية/);
+    expect(html).not.toMatch(new RegExp(`og:(site_name|title)" content="[^"]*${RETIRED_UNI_AR}`));
+    expect(html).not.toMatch(new RegExp(`twitter:title" content="[^"]*${RETIRED_UNI_AR}`));
   });
 
   it('r188 — JSON-LD site node is Ulara ALONE: no `about` university node exists at all', () => {
@@ -128,14 +137,14 @@ describe('r177 — landing/auth copy is affiliation-free', () => {
     // synthetic label (a workspace, never a university).
     expect(landing).toContain('مساحة عمل أُلارا التجريبية');
     expect(landing).toContain('اصطناعية بالكامل');
-    expect(landing).not.toContain('جامعة الزاوية');
+    expect(landing).not.toContain(RETIRED_UNI_AR);
     // brand subtitle is a product descriptor, not a university
     // R315 override (K-B): the desktop header's logo cell is the
     // reference's measured mark+wordmark seat — the tagline stack is
     // retired from the masthead; the descriptor lives on in the footer
     // brand block (exactly one seat on the sheet) + <title>/meta.
     expect(landing.match(/fo-brand-sub">\s*([^<\s])/g)?.length ?? 0).toBe(1);
-    expect(landing).not.toMatch(/fo-brand-sub">\s*جامعة الزاوية/);
+    expect(landing).not.toMatch(new RegExp(`fo-brand-sub">\\s*${RETIRED_UNI_AR}`));
     expect(landing.match(/fo-brand-sub">\s*نظام تشغيل الجامعة/g)?.length).toBe(1);
     // the copyright is the platform's alone
     // r193: the year renders in WESTERN digits — the platform's one
@@ -169,7 +178,7 @@ describe('r177 — root manifests describe the independent platform', () => {
     /* workstream B seat — root package.json (takeover §1.5) */
     takeoverSeat(JSON.stringify(pkg), '"name":"ulara"', '', 'root package.json name');
     expect(pkg['description']).toContain('مستقلّة');
-    expect(pkg['description']).not.toContain('جامعة الزاوية');
+    expect(pkg['description']).not.toContain(RETIRED_UNI_AR);
   });
 
   it('README headers claim independence, not university ownership', () => {
@@ -188,8 +197,8 @@ describe('r177 — root manifests describe the independent platform', () => {
 });
 
 describe('r182 — the docs center intro stays affiliation-free', () => {
-  /* docs/README.md escaped the r177 sweep: its intro still said
-   * «منصة التعلم الذكية لجامعة الزاوية» while the brand audit
+  /* docs/README.md escaped the r177 sweep: its intro still carried
+   * a university co-branding claim while the brand audit
    * (brand-audit-and-changes.md) documents it as already fixed.
    * Pin the corrected wording so the docs index can never drift
    * back into university co-branding. */
@@ -203,8 +212,8 @@ describe('r182 — the docs center intro stays affiliation-free', () => {
     takeoverSeat(docsIndex, 'مساحة عمل أُلارا التجريبية', '', 'docs/README.md demo tenant');
     expect(docsIndex).toContain('اصطناعية');
     expect(docsIndex).not.toContain('مؤسّسة العرض المرجعية');
-    expect(docsIndex).not.toContain('منصة التعلم الذكية\nلجامعة الزاوية');
-    expect(docsIndex).not.toMatch(/مشروع \*\*أُلارا\*\* — منصة[^\n]*جامعة الزاوية/);
+    expect(docsIndex).not.toContain(['منصة التعلم الذكية\nل', RETIRED_UNI_AR].join(''));
+    expect(docsIndex).not.toMatch(new RegExp(`مشروع \\*\\*أُلارا\\*\\* — منصة[^\\n]*${RETIRED_UNI_AR}`));
   });
 });
 
@@ -213,10 +222,11 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
    * non-copy surfaces: the LICENSE legal paragraph, the certificate
    * issuer, the backend boot banner, the auth error voice, the admin
    * settings card, the product-chrome mark + favicon, DESIGN.md's
-   * identity line, docs/PROJECT-REFERENCE.md, the legacy planning docs,
-   * and the seed's platform voice. Zawia survives — legitimately — as
-   * showcase DATA; what these pins forbid is ZU AS the platform's
-   * identity ever coming back. */
+   * identity line, PROJECT-REFERENCE.md and the legacy planning docs
+   * (both deleted in the wave-2 purge — their pins went with them),
+   * and the seed's platform voice. What these pins forbid is the
+   * retired university identity ever coming back AS the platform's
+   * identity. */
 
   it('LICENSE states the independent platform + demo-workspace disclosure (grant intact)', () => {
     const license = readRepo('LICENSE');
@@ -229,30 +239,22 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     );
     takeoverSeat(license, 'deployed at ulara.vercel.app', '', 'LICENSE host line');
     // Ω+2.0: the disclosure names the LABELED DEMO-WORKSPACE data (the
-    // Phase Ω identity-purity retirement removed the Zawia showcase —
-    // the license must not name a removed tenant) + the current host.
+    // Phase Ω identity-purity retirement removed the retired-university
+    // showcase — the license must not name a removed tenant) + the
+    // current host.
     expect(license).toContain('labeled demo-workspace data, not affiliation');
-    expect(license).not.toContain('developed and deployed for University of Zawia');
-    expect(license).not.toContain('University of Zawia records');
-    expect(license).not.toContain('ulara.onrender.com');
+    expect(license).not.toContain(`developed and deployed for ${RETIRED_UNI_EN}`);
+    expect(license).not.toContain(`${RETIRED_UNI_EN} records`);
+    // the retired pre-Vercel host, assembled (identity-gate convention)
+    expect(license).not.toContain(['ulara.onre', 'nder.com'].join(''));
     // the proprietary grant itself must stay untouched
     expect(license).toContain('no right to\ndeploy, modify, or redistribute is granted');
-  });
-
-  it('docs/PROJECT-REFERENCE.md is affiliation-free and mirrors the real license', () => {
-    const ref = readRepo('docs/PROJECT-REFERENCE.md');
-    expect(ref).not.toContain('ZU University Operating System');
-    expect(ref).not.toContain('Ministry of Higher Education');
-    expect(ref).not.toContain('Internal — University of Zawia');
-    expect(ref).toContain('مستقلّة');
-    expect(ref).toContain('showcase/reference data');
-    expect(ref).toContain('Proprietary');
   });
 
   it('DESIGN.md header describes the independent platform; canon doc-accuracy stays true', () => {
     const design = readRepo('DESIGN.md');
     expect(design).toContain('منصّة تعليم ذكي مستقلّة عربية-أولًا · the design canon as it ships in code');
-    expect(design).not.toContain('نظام تشغيل الجامعة لجامعة الزاوية');
+    expect(design).not.toContain(`نظام تشغيل الجامعة لـ${RETIRED_UNI_AR}`);
     // A3 read-verified doc accuracy: CI census, spinner arc reality, polish header name
     expect(design).toContain(
       '9 jobs: lint · typecheck · build · frontend tests · backend tests · db-integration · e2e · design gates',
@@ -271,7 +273,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     const training = readRepo('backend/src/http/routes/training.routes.ts');
     /* workstream B seat — certificate issuer */
     takeoverSeat(training, "issuer: 'منصّة أُلارا التعليميّة'", '', 'certificate issuer');
-    expect(training).not.toContain('منصة جامعة الزاوية للتعليم الذكي');
+    expect(training).not.toContain(`منصة ${RETIRED_UNI_AR} للتعليم الذكي`);
   });
 
   it('backend auth errors address platform administration, not university administration', () => {
@@ -283,7 +285,7 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
   it('admin settings card names the platform consistently (no self-contradicting rows)', () => {
     const admin = read('src/pages/admin/AdminExtraPages.tsx');
     expect(admin).toContain('أُلارا — نظام تشغيل الجامعة');
-    expect(admin).not.toContain('منصّة الزاوية للتعليم الذكيّ');
+    expect(admin).not.toContain(`${RETIRED_PLATFORM_AR} للتعليم الذكيّ`);
   });
 
   it('the product chrome renders the Ulara mark; the favicon is the neutral mark', () => {
@@ -313,41 +315,16 @@ describe('r183 — brand-identity closure (the surfaces r177 missed)', () => {
     expect(favicon).not.toContain('#3FB6C9');
   });
 
-  it('the four legacy planning docs open with a superseded banner', () => {
-    for (const f of [
-      // the archived PRD keeps its ORIGINAL pre-rebrand filename (the
-      // archive is verbatim history) — constructed so the identity gate
-      // sees no literal old-brand token in product code.
-      `docs/archive/${'Mada' + 'rek'}_PRD_v2.md`,
-      'docs/archive/PROJECT_OVERVIEW.md',
-      'docs/archive/ARCHITECTURE.md',
-      'docs/archive/DOCUMENTATION.md',
-    ]) {
-      const doc = readRepo(f);
-      expect(doc.startsWith('> **[توثيق تاريخي — Historical record (superseded)]**'), `${f} lost its superseded banner`).toBe(true);
-      expect(
-        doc.includes('Arabic-first University Operating System') || doc.includes('مستقلّة عربية-أولًا'),
-        `${f} banner must state the independent-platform truth`,
-      ).toBe(true);
-      expect(
-        doc.includes('showcase/reference data') || doc.includes('بيانات عرض مرجعية'),
-        `${f} banner must label the Zawia records as showcase data`,
-      ).toBe(true);
-    }
-  });
-
   it('seed.ts platform voice is affiliation-free (r183 lead fix, pinned here)', () => {
     /* KNOWN-PENDING at r183-B2 time: the lead's parallel seed.ts rewrite
      * (A2 census: ministry-collaboration announcement, old platform
      * names in track/lesson/vision/MCQ/competition copy) lands with this
-     * wave — this pin is red until it does, by design. The showcase
-     * institution NAME (جامعة الزاوية as data rows) is legitimate and
-     * NOT pinned here; what is pinned is the platform speaking in the
-     * university's voice. */
+     * wave — this pin is red until it does, by design. What is pinned
+     * here is the platform never speaking in a university's voice. */
     const seed = readRepo('backend/prisma/seed.ts');
-    expect(seed).not.toContain('منصة جامعة الزاوية للتعليم الذكي');
-    expect(seed).not.toContain('منصة الزاوية');
-    expect(seed).not.toContain('منصّة الزاوية');
+    expect(seed).not.toContain(`منصة ${RETIRED_UNI_AR} للتعليم الذكي`);
+    expect(seed).not.toContain(['منصة الزا', 'وية'].join(''));
+    expect(seed).not.toContain(RETIRED_PLATFORM_AR);
     expect(seed).not.toContain('بالتعاون مع وزارة التعليم العالي');
   });
 });

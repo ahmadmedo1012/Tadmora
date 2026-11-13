@@ -69,9 +69,9 @@ interface UsersMeta { page: number; limit: number; total: number; totalPages: nu
 const usersBody = (rows: AdminUserRow[], meta: UsersMeta) => ({ data: rows, meta });
 
 const faculties = [
-  { id: 'f1', name: 'كلية الهندسة', iconEmoji: null, city: 'الزاوية', departments: [{ id: 'd1', name: 'الحاسوب' }] },
-  { id: 'f2', name: 'كلية الطب', iconEmoji: null, city: 'الزاوية', departments: [{ id: 'd2', name: 'الجراحة' }] },
-  { id: 'f3', name: 'كلية القانون', iconEmoji: null, city: 'الزاوية', departments: [{ id: 'd3', name: 'القانون العام' }] },
+  { id: 'f1', name: 'كلية الهندسة', iconEmoji: null, city: 'افتراضي', departments: [{ id: 'd1', name: 'الحاسوب' }] },
+  { id: 'f2', name: 'كلية الطب', iconEmoji: null, city: 'افتراضي', departments: [{ id: 'd2', name: 'الجراحة' }] },
+  { id: 'f3', name: 'كلية القانون', iconEmoji: null, city: 'افتراضي', departments: [{ id: 'd3', name: 'القانون العام' }] },
 ];
 
 const suggestion = (over: {

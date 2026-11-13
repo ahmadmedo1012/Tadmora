@@ -273,7 +273,7 @@ function freshState() {
       _count: { enrollments: 2, assignments: 1, lectures: 4, examTemplates: 0 },
       schedule: [],
     }],
-    faculties: [{ id: 'f1', name: 'كلّيّة تقنية المعلومات', iconEmoji: null, city: 'الزاوية', departments: [] }],
+    faculties: [{ id: 'f1', name: 'كلّيّة تقنية المعلومات', iconEmoji: null, city: 'افتراضي', departments: [] }],
   };
 }
 

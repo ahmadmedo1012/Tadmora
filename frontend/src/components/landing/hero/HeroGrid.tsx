@@ -1,7 +1,7 @@
 /**
  * HeroGrid — R341 H1-a: the per-div drafting-grid hairline layer.
  *
- * Heron draws the hero's drafting grid as ~95 real div hairlines; the
+ * the reference draws the hero's drafting grid as ~95 real div hairlines; the
  * R335 census excused the whole family wholesale. This layer retires
  * that excusal: ONE div per spec element, appended AFTER the section's
  * frame seats so no census ordinal shifts. The MEASURED VALUES (seat
@@ -10,12 +10,12 @@
  * is the single source of truth for the numbers, keeping the JS chunk
  * lean; the bundle gate is law). This module owns only the STRUCTURE:
  * the class census and the dash direction of the background-image
- * hairlines (our own dash rhythm, never Heron's asset).
+ * hairlines (our own dash rhythm, never the reference's asset).
  *
  * Decorative chrome: aria-hidden, pointer-events none. The wrapper is
  * visibility:hidden with visible children — a full-bleed wrapper box
  * would collapse the edge-390 gutter census. Wide-band rows (the art
- * panel grid — Heron repacks it below 1440) are hidden by the sheet's
+ * panel grid — the reference repacks it below 1440) are hidden by the sheet's
  * :is() list below 1440.
  */
 type GridRow = { cls: string; dash?: 'dx' | 'dy' };

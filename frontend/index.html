@@ -55,8 +55,8 @@
     <meta name="twitter:description" content="أُلارا — نظام تشغيل الجامعة: منظومة متكاملة، عربية أولًا، لإدارة المؤسّسة الأكاديمية والتعلّم والبحث — كليات وأقسام ومقرّرات ومحاضرات واختبارات ومصفوفة إتقان وبحوث" />
     <meta name="twitter:image" content="https://ulara.vercel.app/brand/ulara-og.jpg" />
     <!-- 8-a — structured data. r188: the site node describes the
-         INDEPENDENT ULARA platform alone. The retired University-of-
-         Zawia `about` node is gone — the only demo-data story is the
+         INDEPENDENT ULARA platform alone. The retired pre-ULARA demo
+         `about` node is gone — the only demo-data story is the
          explicitly-fictional «مساحة عمل أُلارا التجريبية», mentioned
          in the description as synthetic data, never as affiliation. -->
     <script type="application/ld+json">
@@ -95,25 +95,7 @@
              wins over a stale stored local choice (the old bootstrap
              painted light and flipped to dark ~1–2s later once `me`
              resolved). A cached 'SYSTEM' means the profile made no
-             explicit choice — the local mode governs.
-             ULARA takeover (§1.1): both keys renamed with a ONE-TIME
-             migration — read the new key first; if absent, adopt the
-             retired key's value under the new name (and retire the
-             old row), so an established visitor's stored theme
-             survives the rename. Writes only ever touch the new key. */
-          var migrateKey = function (next, retired) {
-            try {
-              if (localStorage.getItem(next) === null) {
-                var legacy = localStorage.getItem(retired);
-                if (legacy !== null) {
-                  localStorage.setItem(next, legacy);
-                  localStorage.removeItem(retired);
-                }
-              }
-            } catch (_) {}
-          };
-          migrateKey('ulara-theme', ['tad', 'mora', '-theme'].join(''));
-          migrateKey('ula-theme-profile', ['td', 'mr', '-theme-profile'].join(''));
+             explicit choice — the local mode governs. */
           /* r309 (§4.2): the default is 'light' — ALIGNED with the theme
              store's actual default (r302). The r148 script default
              ('dark') went stale when the store flipped: a first-visit

@@ -112,7 +112,7 @@ describe('landing funnel — source contract (r164b → r331)', () => {
 
   it('login affordances ride the R331 register: six surfaces (header, mobile, hero secondary, finale ghost, colleges strip, footer)', () => {
     /* R331 delta (documented): the rebuilt hero carries its own login
-     * secondary (the Heron pattern: ONE orange primary + one quiet alt),
+     * secondary (the reference pattern: ONE orange primary + one quiet alt),
      * joining the previous five (header, mobile, finale ghost, colleges
      * strip, footer). The register primary count stays 5; login grows
      * 5→6 by product decision — the hero alt is a ghost, never a second

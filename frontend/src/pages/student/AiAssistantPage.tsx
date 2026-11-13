@@ -59,7 +59,7 @@ import {
 import { queryClient } from '../../lib/queryClient';
 import { formatReplyBlocks } from './aiReplyFormat';
 import '../../styles/ai.css'; /* r261: سطح المحادثة المركّز — البنية الجديدة فقط (.ai-layout/.ai-surface/.ai-gaps/.ai-composer) */
-import '../../styles/shared/research-heron.css'; /* R305-A7 «Heron»: لغة العائلة التقنيّة — يُستورد مباشرة بعد ai.css (عقد §0) */
+import '../../styles/shared/ds-research.css'; /* R305-A7 «ds»: لغة العائلة التقنيّة — يُستورد مباشرة بعد ai.css (عقد §0) */
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the same pair every converted student
  * page rides; the r305rp deep band + the copper input rail keep their

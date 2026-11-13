@@ -35,7 +35,7 @@ declare module '*.svg' {
   export default url;
 }
 
-/* P-A2 R333 (INV-08 · heron-craft row 13) — the 2× product captures
+/* P-A2 R333 (INV-08 · the retired craft sheet row 13) — the 2× product captures
  * (src/assets/product/*.webp) ride Vite's asset pipeline: the default
  * export IS the emitted, fingerprinted dist asset URL. */
 declare module '*.webp' {

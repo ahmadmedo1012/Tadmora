@@ -9,14 +9,6 @@
  *              (httpOnly on web; the native client captures Set-Cookie and
  *               persists the value via SecureStore — no backend change needed).
  *
- * Cookie transition (ULARA codemod §1.2): the refresh cookie was renamed
- * from the retired identity's name to `ulara_refresh`. The Set-Cookie
- * capture parses the NEW name first and falls back to the legacy name
- * until every installed client has re-logged-in once (a fresh login sets
- * ONLY the new name). The replay header always carries the new name —
- * the backend reads it first and falls back to the legacy name, so both
- * pre- and post-rename captured values authenticate.
- *
  * CORS: native requests carry no Origin header → allowed by the backend
  * allow-list policy (origin omitted ⇒ pass).
  */
@@ -26,11 +18,9 @@ export const API_BASE =
   (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
   "https://ulara.vercel.app/api/v1";
 
-/** The refresh cookie's name (ULARA codemod §1.2 rename). */
+/** The refresh cookie's name — the ONE spelling (the retired pre-ULARA
+ * fallback was removed; dev-phase installs re-login once). */
 const REFRESH_COOKIE = "ulara_refresh";
-/** The legacy cookie name — read-only fallback during the transition
- * window; a fresh login re-issues only the new name. */
-const LEGACY_REFRESH_COOKIE = "tdmr_refresh";
 
 export class ApiError extends Error {
   code: string;
@@ -93,12 +83,8 @@ function extractRefreshCookie(res: Response): string | null {
     "";
   if (!raw) return null;
   const header = Array.isArray(raw) ? raw.join("; ") : raw;
-  // New name first; the legacy name only appears until the user's first
-  // re-login after the rename (§1.2 transition window).
   const fresh = new RegExp(`${REFRESH_COOKIE}=([^;]+)`).exec(header);
-  if (fresh) return fresh[1];
-  const legacy = new RegExp(`${LEGACY_REFRESH_COOKIE}=([^;]+)`).exec(header);
-  return legacy ? legacy[1] : null;
+  return fresh ? fresh[1] : null;
 }
 
 async function parseEnvelope<T>(res: Response): Promise<T> {

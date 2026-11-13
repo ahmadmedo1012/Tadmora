@@ -1,7 +1,7 @@
 /**
  * sheetLenis — R313 (4-b · D6) — the guest smooth-scroll engine.
  *
- * Heron's measured engine (audits/evidence/r313/reference/digest.json →
+ * the legacy measured engine (audits/evidence/r313/reference/digest.json →
  * `scroll`): Lenis 1.1.5 driven by the single ticker — `lenis.raf(time)`
  * per frame, a ScrollTrigger.update on every lenis scroll event, an
  * 'idle' class after 150ms of scroll-quiet, and NO visible scrollbar.
@@ -12,12 +12,12 @@
  *    imperative landing chrome, CSS-sticky pins, ScrollResetOnPush and
  *    the e2e programmatic scrolls — and window-Lenis with lerp 0.1
  *    produces the identical inertia curve (probe tail ≈1540ms
- *    exponential glide). Heron's inner-wrapper architecture is NOT
+ *    exponential glide). the reference's inner-wrapper architecture is NOT
  *    reproduced on purpose; the curve is.
- *  · Heron's exact effective params: lerp 0.1 (lerp mode — duration
+ *  · the reference's exact effective params: lerp 0.1 (lerp mode — duration
  *    undefined), the constructor easing, wheelMultiplier 1,
  *    touchMultiplier 1, smoothWheel true, syncTouch true,
- *    smoothTouch false, infinite false (see HERON_LENIS_PARAMS).
+ *    smoothTouch false, infinite false (see DS_LENIS_PARAMS).
  *  · The CONDUCTOR drives it (sheetConductor.ts — «الناظم»): a frame
  *    subscriber calls lenis.raf(now) on the shared rAF clock. Lenis
  *    1.1.5 starts nothing by itself — no internal loop exists — so the
@@ -37,13 +37,13 @@
  *    NOT resynced by 1.1.5 (onNativeScroll only syncs when it is not
  *    smooth-animating), which is why ScrollResetOnPush resets through
  *    lenis.scrollTo(0, { immediate: true }) while the engine is live.
- *  · The scrollbar disappears while the engine is live (Heron shows
+ *  · The scrollbar disappears while the engine is live (the reference shows
  *    none): html[data-lenis-on] in base.css. An ATTRIBUTE, not a
  *    class, on purpose — Lenis 1.1.5's cleanUpClassName strips every
  *    *class* whose name contains "lenis" (/lenis(-\w+)?/g) on each
  *    scroll-state flip, so a ".lenis-on" class would be silently
  *    deleted by the library mid-scroll.
- *  · Heron's idle contract: 150ms of scroll-quiet → the engine's
+ *  · the reference's idle contract: 150ms of scroll-quiet → the engine's
  *    IDLE FLAG (JS-side). R321 §A1 — the flag was a
  *    html[data-lenis-idle] ATTRIBUTE before: every idle↔active flip
  *    mutated <html>, and an attribute change on the ROOT invalidates
@@ -62,17 +62,17 @@ import Lenis from 'lenis';
 import { subscribeSheetFrame } from './sheetConductor';
 
 /**
- * Heron's measured scroll params (digest r313 · `scroll`, read from
- * heronai-bp.netlify.app/main.js: `new Lenis({ wrapper, content,
+ * the legacy measured scroll params (digest r313 · `scroll`, read from
+ * the reference bp-mirror main.js: `new Lenis({ wrapper, content,
  * syncTouch: !0, smoothWheel: !0, smoothTouch: !1, infinite: !1 })` —
  * everything else is the 1.1.5 constructor default). Declared in full
  * so the parity is test-pinned, never accidental. The wrapper stays
  * the WINDOW and the content document.documentElement — the 1.1.5
- * defaults this module relies on by omission, exactly like Heron
+ * defaults this module relies on by omission, exactly like the reference
  * omits what it does not override.
  */
-export const HERON_LENIS_PARAMS = {
-  /** lerp mode (duration stays undefined) — Heron's 0.1 glide. */
+export const DS_LENIS_PARAMS = {
+  /** lerp mode (duration stays undefined) — the reference's 0.1 glide. */
   lerp: 0.1,
   /** undefined → the constructor's lerp branch, never a fixed duration. */
   duration: undefined,
@@ -80,7 +80,7 @@ export const HERON_LENIS_PARAMS = {
   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: true,
   syncTouch: true,
-  /** Heron passes `smoothTouch: !1` literally from its pre-1.1 config;
+  /** the reference passes `smoothTouch: !1` literally from its pre-1.1 config;
    *  Lenis 1.1.5 DROPPED the key (touch smoothing is syncTouch alone —
    *  verified in dist/lenis.js). Kept in the spec for digest parity;
    *  inert at runtime by construction. */
@@ -90,7 +90,7 @@ export const HERON_LENIS_PARAMS = {
   touchMultiplier: 1,
 } as const;
 
-/** Heron's idle contract: ms of scroll-quiet before the idle marker. */
+/** the reference's idle contract: ms of scroll-quiet before the idle marker. */
 const IDLE_QUIET_MS = 150;
 
 let lenis: Lenis | null = null;
@@ -157,7 +157,7 @@ function onInput(): void {
 
 /** Lenis 'scroll' events: keep the driver alive through the glide (and
  *  re-attach if an external native scroll woke the engine), then bump
- *  the 150ms idle timer (Heron's scroll-quiet contract). */
+ *  the 150ms idle timer (the reference's scroll-quiet contract). */
 function onLenisScroll(): void {
   attachFrame();
   bumpIdle();
@@ -264,7 +264,7 @@ export function initGuestLenis(): boolean {
   if (lenis) return true;
   if (reducedMotion()) return false; /* RM: NEVER init — native scroll */
 
-  lenis = new Lenis({ ...HERON_LENIS_PARAMS });
+  lenis = new Lenis({ ...DS_LENIS_PARAMS });
   document.documentElement.setAttribute('data-lenis-on', '');
   /* R328 (H7) — the e2e/screenshot introspection seam: a read-only
    * handle so probes can seat the scroll EXACTLY (lenis.scrollTo

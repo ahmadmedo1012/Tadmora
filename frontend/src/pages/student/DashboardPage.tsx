@@ -35,12 +35,12 @@ import { formatInt, formatNum, formatDate, formatTime } from '../../utils/number
 import {
   arDate, sanitizeInstitutionName, sanitizeVisibleText,
 } from '../../utils/display-text';
-/* R305 Heron — the shared student vocabulary + this page's family sheet.
+/* R305 DS — the shared student vocabulary + this page's family sheet.
  * Page-chunk CSS loads after main.tsx's global sheets, so the family
  * refinements win same-specificity ties over the frozen student.css
  * recipes they restyle (the deep-band hero). */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-dashboard.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-dashboard.css';
 /* R319 (c2-G1) — §B2: the dashboard joins the sheet system. The 7px
  * frame + grain + the ambient `SHEET S-01 · STUDENT` title line are
  * the shared shell's (C2-G2, live on every authenticated route); this
@@ -357,7 +357,7 @@ function formatClock(totalSec: number): string {
 }
 
 /* The hero band — the dashboard's ONE primary action, restyled by the
-   R305 Heron pass as the page's deep surface (r305s-band--deep: ink
+   R305 DS pass as the page's deep surface (r305s-band--deep: ink
    ground in light, paper ground in dark — theme-reactive) with the
    PP-X2 copper edge kept as the r305s-next rail grammar. The eyebrow
    lifts into the shared .r305s-eyebrow register; the course name is
@@ -580,7 +580,7 @@ export default function StudentDashboardPage() {
                It collapses honestly when BOTH arms settle to null.
                R305: the mirror carries the DEEP band classes so the
                skeleton reads as the same ink/paper surface the resolved
-               hero lands on (the Heron pending mirror anatomy). */
+               hero lands on (the reference pending mirror anatomy). */
             <div className="dash-resume-card stu-hero stu-hero-skel r305s-band--deep dash-hero-deep" aria-hidden="true">
               <div className="dash-resume-main">
                 <Skeleton width={120} height={13} />
@@ -596,7 +596,7 @@ export default function StudentDashboardPage() {
           )}
           <ListSkeleton rows={3} />
           {/* R305: the momentum strip mirrors the resolved anatomy — the
-              labeled rule (the Heron annotated divider) above the stat
+              labeled rule (the reference annotated divider) above the stat
               line. Same slots, same order, nothing moves at handoff. */}
           <div className="dash-momentum" aria-busy="true">
             <div className="r305s-rule-labeled" aria-hidden="true">زخم الفصل</div>
@@ -1062,7 +1062,7 @@ export default function StudentDashboardPage() {
       </div>
 
       {/* الحالة — the momentum strip (r220 facts, R305 register): the
-          Heron labeled rule classifies the line as the page's metadata
+          the reference labeled rule classifies the line as the page's metadata
           band; the StatLine pattern below stays untouched. R319
           (c2-G1): the KPI block's summary instrument — the AVG
           CourseBar under the line (the same avgEnrollmentProgressPct

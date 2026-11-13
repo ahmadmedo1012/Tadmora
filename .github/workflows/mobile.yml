@@ -285,7 +285,7 @@ jobs:
   #
   # DATABASE_URL: postgresql://ulara@localhost:5433/ulara — the
   # documented boot-pg.sh URL is postgresql://ulara@127.0.0.1:5433/ulara
-  # (docs/05-setup.md §3), with one verified deviation: `localhost`, NOT
+  # (see tools/boot-pg.sh), with one verified deviation: `localhost`, NOT
   # `127.0.0.1` — backend/scripts/migrate-deploy.mjs's DNS pre-flight
   # (dns.resolve4) cannot resolve IP literals (ENOTFOUND — reproduced in
   # the 1-B sandbox: resolve4("127.0.0.1") → ENOTFOUND, resolve4("localhost")
@@ -365,8 +365,8 @@ jobs:
       - name: Boot embedded PostgreSQL (tools/boot-pg.sh, :5433)
         # `npm install`, not `npm ci`: tools/package-lock.json is DELIBERATELY
         # GITIGNORED (.gitignore:111) — a fresh CI checkout has no lockfile to
-        # `npm ci` against, and docs/05-setup.md §3 documents `cd tools &&
-        # npm install` as the one-time setup. Two pinned deps (~embedded-
+        # `npm ci` against, and `cd tools && npm install` is the
+        # one-time setup. Two pinned deps (~embedded-
         # postgres/linux-x64 + pg) — the install cost is seconds.
         run: |
           cd tools
@@ -496,15 +496,34 @@ jobs:
       # same sh -c constraint), ALWAYS — a green run's output is exactly
       # as diagnostic as a red one's, and run #10's post-mortem had no
       # UI evidence at all.
+      # ── The owner's emulator prescription (2026-11-12) ────────────
+      # Run #43321515440 forensics: the DEFAULT 320×640 AOSP AVD rendered
+      # an EMPTY app surface (screen hierarchy = the status-bar clock
+      # alone, 5/5 journeys, logcat clean) — the software-GPU surface
+      # never presented the React tree. The prescription: a pixel_6
+      # profile (1080×2400) on the google_apis API-34 image with
+      # swiftshader_indirect, -no-snapshot-save, and animations OFF.
       - name: Emulator + Maestro five-role journey
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           arch: x86_64
-          target: default
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          target: google_apis
+          profile: pixel_6
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save -memory 4096 -cores 4
           emulator-boot-timeout: 720
           script: |
+            # Maestro's own recommendation + the owner's: zero animations.
+            adb shell settings put global window_animation_scale 0
+            adb shell settings put global transition_animation_scale 0
+            adb shell settings put global animator_duration_scale 0
+            # Run 43354154702 forensics: the system LAUNCHER ANR'd during
+            # the first cold-start transition (software rendering at
+            # 1080×2400) and its dialog covered the app. Give the system
+            # a settle window before the first launch + revive it if the
+            # dialog still appears (the flow's optional «Wait» tap).
+            sleep 20
+            adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1 || true
             adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk || touch fail.flag
             "$HOME/.maestro/bin/maestro" --version || touch fail.flag
             for entry in student@test.ly:STUDENT teacher@test.ly:TEACHER registrar@test.ly:ADMIN quality@test.ly:QUALITY owner@test.ly:OWNER; do EMAIL="${entry%%:*}"; ROLE="${entry##*:}"; echo "── android-smoke: $EMAIL ($ROLE)"; "$HOME/.maestro/bin/maestro" test apps/mobile/.maestro/smoke-role.yaml -e EMAIL="$EMAIL" -e PASSWORD=12345678 -e ROLE="$ROLE" || { echo "::error::maestro journey failed for $EMAIL ($ROLE) — see logcat in the artifacts"; touch fail.flag; }; done

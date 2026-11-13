@@ -13,7 +13,7 @@ import { sp, type StatusToneName } from "@/design/tokens";
 import { T } from "./text";
 import { Button } from "./pressables";
 
-/** Hairline divider — the Heron separator. */
+/** Hairline divider — the ds separator. */
 export function Hairline({ style }: { style?: StyleProp<ViewStyle> }) {
   const p = usePalette();
   return <View style={[{ height: StyleSheet.hairlineWidth, backgroundColor: p.border }, style]} />;
@@ -41,7 +41,7 @@ export function HairlineRows({ children, style }: { children: ReactNode; style?:
   );
 }
 
-/** Card — surface + hairline border, radius 0 (Heron discipline). */
+/** Card — surface + hairline border, radius 0 (ds discipline). */
 export function Card({
   children,
   style,

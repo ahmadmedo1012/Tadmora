@@ -48,7 +48,7 @@ const DISTANCE_TOKEN: Record<NonNullable<RevealProps['distance']>, string> = {
  * reveals, and a `scrollend` belt (rAF-throttled `scroll` fallback
  * where scrollend is unsupported) reconciles anything IO never saw.
  *
- * variant="line" — Heron-style rule wipe (data-reveal-variant="line",
+ * variant="line" — reference-style rule wipe (data-reveal-variant="line",
  * styled in motion.css's r305 section). Same one-shot belt/lifecycle;
  * the default 'lift' treatment renders no variant attribute at all, so
  * existing DOM/snapshots are untouched.

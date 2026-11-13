@@ -10,7 +10,7 @@ import { Button } from '../../src/components/primitives/Form';
  * in a real browser; this suite pins the DOM contracts the CSS hangs
  * off of:
  *   · default Button markup carries the ROLL by default (R313 WP-D
- *     override: the Heron dual-label roll is the default grammar —
+ *     override: the reference dual-label roll is the default grammar —
  *     plain-text labels wrap, so data-motion-label + the duplicate
  *     row render; the accessible name stays a single copy)
  *   · rich (non-text) children skip the roll — markup unchanged

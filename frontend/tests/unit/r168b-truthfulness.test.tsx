@@ -23,7 +23,7 @@
  *  4. AR/VR PAGE: the subtitle says catalog + unavailable launch.
  *  5. TRAINING: certificates are «سجلّ إتمام» records, hours are
  *     «تقديرية» (estimated), not accredited claims.
- *  6. docs/02: the student surfaces row documents its exceptions.
+ *  6. docs/02 pin — removed in the wave-2 purge (the doc tree is gone).
  */
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
@@ -140,19 +140,5 @@ describe('r168b — training certificates are honest records', () => {
     expect(page).not.toContain('معتمدة من المنصة');
     expect(page).not.toContain('ساعة معتمدة');
     expect(page).toContain('ساعات تقديرية');
-  });
-});
-
-describe('r168b — docs/02 documents the student-surface exceptions', () => {
-  it('the row is no longer a blanket [منفَّذة]', () => {
-    const doc = read('../docs/02-features.md');
-    expect(doc).toContain('بقية سطوح الطالب — [منفَّذة مع استثناءات موثَّقة]');
-    expect(doc).toContain('تجارب AR (فهرس بلا تشغيل)');
-    // r171a closed the r168b student-inbox gap: the doc now documents
-    // the SHIPPED inbox (and the honest remaining ceiling — staff roles
-    // still have no inbox route) instead of «لا صندوق طالب بعد».
-    expect(doc).toContain('صندوق رسائل كامل للطالب');
-    expect(doc).toContain('بلا صندوق رسائل خاص');
-    expect(doc).not.toContain('لا صندوق طالب بعد');
   });
 });

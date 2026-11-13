@@ -231,7 +231,7 @@ describe("FilterSheet", () => {
 });
 
 describe("SHEET_ANIMATION (reduced-motion fast path)", () => {
-  test("exposes the Heron cadence + a faster reduced path", () => {
+  test("exposes the ds cadence + a faster reduced path", () => {
     expect(SHEET_ANIMATION.durationMs).toBeGreaterThan(SHEET_ANIMATION.reducedDurationMs);
     expect(SHEET_ANIMATION.easing).toBeTruthy();
   });

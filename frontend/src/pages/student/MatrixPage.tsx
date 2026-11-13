@@ -17,8 +17,8 @@ import { courseIcon, courseTint } from '../../lib/courseMeta';
 import { countAr } from '../../lib/format';
 import { formatInt } from '../../utils/numbers';
 /* ── r305-c (schedule family) imports — the only region agent 2-c edits above the components ── */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-schedule.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-schedule.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the matrix course-head mastery bar). */
 import '../../styles/student/pages.css';
@@ -73,7 +73,7 @@ const FILTER_LABEL: Record<Exclude<LevelFilter, 'all'>, string> = {
   'lvl-untouched': 'لم يُختبر',
 };
 
-/* r305-c (Heron): the cell's status renders as the shared chip register
+/* r305-c (the reference): the cell's status renders as the shared chip register
  * — tone on the DOT, the status word stays the body text (never hue
  * alone; the r220 contract). Pure presentation map over MasteryClass. */
 const LEVEL_CHIP_TONE: Record<MasteryClass, string> = {

@@ -111,7 +111,7 @@ const OFFERINGS = [
 ];
 
 const FACULTIES = [
-  { id: 'f1', name: 'كلية الهندسة', iconEmoji: null, city: 'الزاوية', departments: [] },
+  { id: 'f1', name: 'كلية الهندسة', iconEmoji: null, city: 'افتراضي', departments: [] },
 ];
 
 /** GET /admin/students request params, in order. */

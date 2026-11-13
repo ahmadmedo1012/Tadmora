@@ -1,7 +1,7 @@
 /**
  * R334 2-a — entrance/exit/layout presets for reanimated layout animations.
  *
- * Thin factories over reanimated's builders that bake in the Heron motion
+ * Thin factories over reanimated's builders that bake in the ds motion
  * scale (durations/easing from ./presets) so screens never hand-roll a
  * timing again. Each call returns a FRESH builder (the reanimated builder
  * statics are immutable; instance methods mutate — never share instances).
@@ -10,6 +10,15 @@
  * self-skip when the OS setting is on), AND `useEntrance` gates the prop at
  * the React level with the app's own useReduceMotion — double coverage, so
  * an entering preset can never animate for a reduced-motion user.
+ *
+ * Emulators (2026-11-13, the android-smoke forensics): on the software-
+ * rendered emulator profile, DELAYED entering animations strand their
+ * content at opacity 0 — the first entrance fires, the staggered follow-
+ * ups never start (measured twice live: the Welcome rendered its eyebrow
+ * while the CTA stack stayed invisible for 30+s across 10 journeys). The
+ * emulator gate (lib/emulatorGate) disables entrances on non-physical
+ * devices — CI smoke proves the FUNCTIONAL journey; real devices keep the
+ * full motion design (the render-net + unit belts cover the structure).
  *
  * RTL: SlideInFromStart reads the reading-start edge (right in RTL, left
  * otherwise) via I18nManager — direction never changes without a reload in
@@ -27,6 +36,7 @@ import {
   type BaseAnimationBuilder,
 } from "react-native-reanimated";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
+import { isEmulatorEntranceDisabled } from "@/lib/emulatorGate";
 import { durations, easings } from "./presets";
 
 export interface EntranceOptions {
@@ -36,25 +46,25 @@ export interface EntranceOptions {
   delay?: number;
 }
 
-/** Fade in place — 200ms, the Heron curve. For subtle content swaps. */
+/** Fade in place — 200ms, the ds curve. For subtle content swaps. */
 export function fadeIn({ duration, delay }: EntranceOptions = {}) {
   return FadeIn.duration(duration ?? durations.fast)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Fade + rise — the default content entrance (240ms rhythm). */
 export function fadeInUp({ duration, delay }: EntranceOptions = {}) {
   return FadeInUp.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Fade + drop — for content entering from above (sheets, headers). */
 export function fadeInDown({ duration, delay }: EntranceOptions = {}) {
   return FadeInDown.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /**
@@ -67,7 +77,7 @@ export function slideInFromStart({ duration, delay }: EntranceOptions = {}) {
   const fromStartEdge = I18nManager.isRTL ? SlideInRight : SlideInLeft;
   return fromStartEdge.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Mirror of slideInFromStart — from the reading-END edge (detail push-ins). */
@@ -75,19 +85,19 @@ export function slideInFromEnd({ duration, delay }: EntranceOptions = {}) {
   const fromEndEdge = I18nManager.isRTL ? SlideInLeft : SlideInRight;
   return fromEndEdge.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Exit — always faster than the entrance (150ms), same curve. */
 export function fadeOut({ duration, delay }: EntranceOptions = {}) {
   return FadeOut.duration(duration ?? durations.exit)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
-/** Layout transitions (reposition on data change) — 200ms linear-ish Heron. */
-export function heronLayout({ duration }: EntranceOptions = {}) {
-  return LinearTransition.duration(duration ?? durations.fast).easing(easings.heron);
+/** Layout transitions (reposition on data change) — 200ms linear-ish ds. */
+export function dsLayout({ duration }: EntranceOptions = {}) {
+  return LinearTransition.duration(duration ?? durations.fast).easing(easings.ds);
 }
 
 /* ─── stagger ──────────────────────────────────────────────────────────── */
@@ -140,7 +150,7 @@ export function enterStagger(index: number, { step, base, preset = "fadeUp", ...
  * useStaggerEntrance below (hooks can't live inside .map callbacks).
  */
 export function useEntrance<T extends BaseAnimationBuilder>(build: () => T): T | undefined {
-  return useReduceMotion() ? undefined : build();
+  return useReduceMotion() || isEmulatorEntranceDisabled() ? undefined : build();
 }
 
 /**
@@ -155,6 +165,6 @@ export function useEntrance<T extends BaseAnimationBuilder>(build: () => T): T |
  *   </Animated.View>
  */
 export function useStaggerEntrance(options?: StaggerOptions): (index: number) => BaseAnimationBuilder | undefined {
-  const reduced = useReduceMotion();
+  const reduced = useReduceMotion() || isEmulatorEntranceDisabled();
   return (index: number) => (reduced ? undefined : enterStagger(index, options));
 }

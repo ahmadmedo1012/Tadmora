@@ -262,13 +262,13 @@ describe('runSync — SyncRun finalization', () => {
 
 // ── r179d (phase-5): per-institution scoping ────────────────────────
 //
-// The Zawia static source is the ZAWIA SHOWCASE institution's source,
+// The primary static source is the PRIMARY SHOWCASE institution's source,
 // not a global default for every university. These pins enforce that
 // a run for institution B can never read, write, or stale-mark
 // institution A's rows: EVERY prisma call (reap, run-row create, fact
 // upsert, stale-marking, key listing) must carry the run institution.
 describe('runSync — institution scoping (r179d)', () => {
-  const INST_A = 'inst-zawia-showcase';
+  const INST_A = 'inst-ulara-showcase';
   const INST_B = 'inst-other-university';
 
   it('threads an explicit institutionId through EVERY prisma call', async () => {

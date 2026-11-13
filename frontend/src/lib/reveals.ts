@@ -1,7 +1,7 @@
 import { PREFERS_REDUCED_MOTION } from '../lib/motion-media';
 /**
  * reveals — R333 (P-C) — the ONE scroll-reveal recipe for the landing's
- * second half, riding the HOUSE reveal contract (heron-craft §2 themes
+ * second half, riding the HOUSE reveal contract (the retired craft sheet §2 themes
  * 6–7: a single reused grammar with hierarchy from SCALE, never from
  * recipe proliferation).
  *
@@ -9,7 +9,7 @@ import { PREFERS_REDUCED_MOTION } from '../lib/motion-media';
  *   `.reveal-up`          opacity 0 + translateY(14px)
  *   `.reveal-up.in-view`  opacity 1 + translateY(0)
  *   transition            var(--t-slower) var(--ease-out)  ← the r305
- *                         Heron-register re-key (expo-family curve)
+ *                         reference-register re-key (expo-family curve)
  *   `.reveal-d-1..5`      transition-delay 80/160/240/320/400ms
  *   `.reveal-card`        this sheet's card rung (below): scale
  *                         0.8→1 + fade on var(--motion-duration-card)
@@ -82,7 +82,7 @@ const ITEM_SEL =
    the .pr-shot figures get row 13's imgCardReveal (scale 0.8→1) on the
    same IO pair + RM bail as the drawn panels. */
 const CARD_SEL = '.pm-artzone .pm-art, .fo-cta-sketch, .pr-shots .pr-shot'; // drawn panels + the product-proof shots
-/* ── R339 T-11b — the footer's Heron-register rise (work-list #1: the
+/* ── R339 T-11b — the footer's reference-register rise (work-list #1: the
    biggest single gap, 107 els × 2 props). The six structural blocks
    (column stacks, ink strip, © bar) ride `.reveal-rise-h` — shared.css's
    800ms/power2.out seat — with the module's 20ms stagger ladder written
@@ -95,7 +95,7 @@ const CARD_SEL = '.pm-artzone .pm-art, .fo-cta-sketch, .pr-shots .pr-shot'; // d
    .fo-col3, .fo-form, bgroup.2 keep their recorded transitions). ── */
 const RISE_SEL = '.fo-c1-top, .fo-c2-top, .fo-c2-bottom';
 const RISE_TY_SEL = '.fo-c1-sub, .fo-fstrip, .fo-footer-bottom';
-/** the rise family's stagger step — Heron's recorded 20ms ladder. */
+/** the rise family's stagger step — the reference's recorded 20ms ladder. */
 const RISE_STAGGER_MS = 20;
 
 /* ── R339 T-11b1 — the intro band's own beat (work-list #3: intro 0/2,
@@ -109,11 +109,11 @@ const RISE_STAGGER_MS = 20;
    — LEAF level only (no parent+child seats: nested rises compound). */
 const BEAT_SEL =
   '.st-plabel, .st-plabel-rule, .st-plabel-toprule, .st-parrow, .st-crawl-cell, .st-desc-text, .st-desc-rule';
-/** the intro band's stagger step — Heron's recorded 4ms ladder. */
+/** the intro band's stagger step — the reference's recorded 4ms ladder. */
 const BEAT_STAGGER_MS = 4;
 
 /* ── R339 T-11b1 — the usecase rules (work-list #2: the width + scaleX
-   groups). Heron records width 0→auto on the accordion rows' rule
+   groups). The reference records width 0→auto on the accordion rows' rule
    children (16 units) and a scaleX 0→1 draw on the frame pair (2
    units). Our counterparts ride roles.css keyframe seats — the -w
    widen on each row's bottom hairline, the -x draw on the section
@@ -164,7 +164,7 @@ export function initReveals(): RevealsHandle {
    * rides the house `.reveal-d-N` delay classes, assigned HERE (at
    * intersect time, within the entering batch — document order, capped
    * at d-5) so an element entering alone never waits on a group index.
-   * T-11b — rise-family elements take the Heron ladder instead
+   * T-11b — rise-family elements take the reference ladder instead
    * (inline `--rise-h-delay`, consumed by the rise seat's transition
    * shorthand; never the .reveal-d-N longhand, which would fight it);
    * T-11b1 — the intro beat rides its own 4ms step (not the footer's
@@ -209,7 +209,7 @@ export function initReveals(): RevealsHandle {
   pendingItems.forEach((el) => arm(el, 'reveal-up'));
   observe(pendingItems, OBSERVER_ROOT_MARGIN_ITEMS);
 
-  /* ── Cards — the Heron imgCardReveal: scale 0.8→1 + fade on the
+  /* ── Cards — the reference imgCardReveal: scale 0.8→1 + fade on the
    * dedicated card rung. Scale/opacity only — direction-agnostic. ── */
   const pendingCards = cards.filter((el) => !isPassed(el));
   cards.filter(isPassed).forEach(reveal);
@@ -217,7 +217,7 @@ export function initReveals(): RevealsHandle {
   observe(pendingCards, OBSERVER_ROOT_MARGIN_LINES);
 
   /* ── T-11b — the footer rise: the six structural blocks on the
-   * Heron register (see RISE_SEL). `.reveal-up` rides along for the
+   * the reference register (see RISE_SEL). `.reveal-up` rides along for the
    * grammar + house contract; `.reveal-rise-h` owns the tween (it
    * wins the cascade — later in shared.css); the last three blocks
    * add `--ty` (instant opacity, rise-only). Same IO bucket as the

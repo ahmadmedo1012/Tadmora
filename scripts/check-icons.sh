@@ -46,7 +46,8 @@
 # then exited 1 on empty input, and pipefail reported the rightmost
 # status: 1, read as "clean".
 #
-# See specs/002-visual-uplift/contracts/icon-policy.md
+# The icon policy lives in this gate's header above (Lucide-only, no
+# emoji presentation, no raw <svg> outside the allowlist).
 #
 # Exit codes: 0 = clean · 1 = violations · 4 = scanner error.
 
@@ -132,7 +133,7 @@ PYEOF
 )" || emoji_status=$?
 if [[ $emoji_status -ne 0 ]]; then
   echo "✗ Emoji scanner error (python3 exit $emoji_status) — real failure, not a clean pass." >&2
-  echo "See specs/002-visual-uplift/contracts/icon-policy.md" >&2
+  echo "See the icon policy in the scripts/check-icons.sh header" >&2
   exit 4
 fi
 
@@ -163,7 +164,7 @@ svg_out="$(grep -RInE -e '<svg[[:space:]>/]' -e '<svg$' frontend/src \
   --include='*.tsx' --include='*.ts')" || svg_status=$?
 if [[ $svg_status -ge 2 ]]; then
   echo "✗ svg check scanner error (svg grep exit $svg_status) — real failure, not a clean pass." >&2
-  echo "See specs/002-visual-uplift/contracts/icon-policy.md" >&2
+  echo "See the icon policy in the scripts/check-icons.sh header" >&2
   exit 4
 fi
 svg_hits=""
@@ -193,7 +194,7 @@ fi
 
 if [[ $violations -gt 0 ]]; then
   echo "FAIL: $violations icon-discipline violation(s) detected."
-  echo "See specs/002-visual-uplift/contracts/icon-policy.md"
+  echo "See the icon policy in the scripts/check-icons.sh header"
   exit 1
 fi
 

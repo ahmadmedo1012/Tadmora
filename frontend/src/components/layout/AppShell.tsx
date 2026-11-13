@@ -1,7 +1,7 @@
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { Suspense, useEffect, useRef, useState } from 'react';
-// R305-A4 Heron shell layer — the shell's own r305 treatment, scoped
+// R305-A4 the reference shell layer — the shell's own r305 treatment, scoped
 // here and UNLAYERED by design so it is the cascade's last word after
 // polish.css's overrides. Imported ONLY by the shell (the file itself
 // is owned by the 2-d CSS agent; this line is the 2-e coordination

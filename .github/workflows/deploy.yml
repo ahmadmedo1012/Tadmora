@@ -2,8 +2,8 @@
 #
 # The web platform deploys to Vercel (ulara.vercel.app, fra1) from
 # THIS repository's main branch. Until now that deploy was a manual
-# owner command (`npx vercel deploy --prod --regions fra1` —
-# docs/12-deployment.md). This workflow automates it on every
+# owner command (`npx vercel deploy --prod --regions fra1`).
+# This workflow automates it on every
 # production-affecting push.
 #
 # Credential gate (the repo's honest-skip pattern): the deploy needs

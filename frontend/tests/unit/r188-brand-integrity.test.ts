@@ -1,7 +1,7 @@
 /**
  * r188 — BRAND-INTEGRITY GATE.
  *
- * The R188 brand reset removed the real University of Zawia identity
+ * The R188 brand reset removed the retired real-university identity
  * from every ACTIVE product surface, replacing it with the explicitly
  * labeled demonstration workspace (مساحة عمل أُلارا التجريبية). This gate
  * fails loudly if that identity — or any real-university imagery or
@@ -18,10 +18,6 @@
  *     audits/**, specs/**, prisma/migrations/** (applied history),
  *     tests/** (fixtures quoting the retired strings on purpose),
  *     README demo-account history notes.
- *   · ALLOWLISTED strings: the legacy fixed institution id
- *     `inst-zawia-showcase` (an internal FK anchor whose string never
- *     renders to users — documented in seed.ts) and the zu-sync module
- *     path comment.
  */
 import { describe, expect, it } from 'vitest';
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
@@ -32,18 +28,20 @@ import path from 'node:path';
 // BOTH workspaces, so a frontend-relative root would vacuously pass.
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 
-/** The retired real-university identity strings, active-surface-banned. */
+/** The retired real-university identity strings, active-surface-banned.
+ * ASSEMBLED from fragments (the identity-gate convention): the banned
+ * literals must never re-enter the tree spelled out, not even inside
+ * the gate that bans them. */
+const RETIRED_UNI_AR = ['جامعة الزا', 'وية'].join('');
+const RETIRED_UNI_EN = ['University of Zaw', 'ia'].join('');
 const BANNED = [
-  'جامعة الزاوية',
-  'University of Zawia',
+  RETIRED_UNI_AR,
+  RETIRED_UNI_EN,
   'مؤسّسة العرض المرجعية', // the r177 showcase framing (superseded by the r188 fictional tenant)
   'zu.edu.ly', // the real university's domain (demo emails live on the @test.ly domain, R320 §C)
   'main_photo', // the retired real-campus photography family
   'zu-mark', // the retired ZU crest asset
 ];
-
-/** Internal anchors that never render to users (documented legacy). */
-const ALLOW = ['inst-zawia-showcase'];
 
 /** Recursively collect files with the given extensions under dir.
  * __tests__ directories are skipped: backend test fixtures quote the
@@ -73,23 +71,15 @@ function scan(relDir: string, exts: string[]): string[] {
     const rel = path.relative(root, file);
     const live = stripComments(readFileSync(file, 'utf8'));
     for (const banned of BANNED) {
-      let idx = live.indexOf(banned);
-      while (idx !== -1) {
-        // allowlist: the legacy internal id only, exactly spelled
-        const context = live.slice(Math.max(0, idx - 40), idx + banned.length + 20);
-        const isAllowed = ALLOW.some((a) => context.includes(a));
-        if (!isAllowed) {
-          violations.push(`${rel}: «${banned}»`);
-          break;
-        }
-        idx = live.indexOf(banned, idx + 1);
+      if (live.includes(banned)) {
+        violations.push(`${rel}: «${banned}»`);
       }
     }
   }
   return violations;
 }
 
-describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () => {
+describe('r188 — brand-integrity gate (active surfaces stay university-identity-free)', () => {
   it('frontend active code: pages/components/data/styles carry no university identity', () => {
     const violations = [
       ...scan('frontend/src/pages', ['.tsx', '.ts']),
@@ -123,23 +113,8 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
   it('the fictional demonstration tenant IS the public sample-data story', () => {
     // positive pins: the new identity exists where users see it.
     const seed = readFileSync(path.join(root, 'backend/prisma/seed.ts'), 'utf8');
-    /* ULARA TAKEOVER TRANSITION SEAT (spec §1.7/§2): the seed's demo
-     * tenant slug/name are workstream B seats — backend/prisma/seed.ts
-     * renames to the ULARA values (guarded migration 20261112000000)
-     * in workstream B's own branch. Until the integration merge this
-     * pin accepts the documented pre-takeover literal (ASSEMBLED from
-     * fragments — the identity-gate convention, lib/legacy-storage.ts)
-     * with a loud warning; TODO(integration): delete the retired arms. */
-    const retiredSlug = "slug: 'tad" + "mora-demo'";
-    const retiredName = 'name: \'مساحة عمل تاد' + 'مورا التجريبية\'';
-    const seedSeat = (ulara: string, retired: string): void => {
-      if (!seed.includes(ulara) && seed.includes(retired)) {
-        console.warn(`[r188] pre-integration seat — backend seed still carries the retired literal (${retired.slice(0, 12)}…)`);
-      }
-      expect(seed.includes(ulara) || seed.includes(retired), `seed: expected ${ulara} (or the pre-integration retired value)`).toBe(true);
-    };
-    seedSeat("slug: 'ulara-demo'", retiredSlug);
-    seedSeat("name: 'مساحة عمل أُلارا التجريبية'", retiredName);
+    expect(seed).toContain("slug: 'ulara-demo'");
+    expect(seed).toContain("name: 'مساحة عمل أُلارا التجريبية'");
     /* P2-0 (r335 split): the demo-tenant copy rides the guest surface
      * (LandingPage + the nine section bands) — the pin reads all of it. */
     const landing = [
@@ -158,18 +133,19 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
     expect(landing).toContain('اصطناعية بالكامل');
   });
 
-  it('regression: the old Zawia landing behaviors would FAIL this gate', () => {
+  it('regression: the old pre-r188 landing behaviors would FAIL this gate', () => {
     // Simulated string set from the pre-r188 landing (hero eyebrow +
     // campus caption + footer note) — proves each banned string would
-    // have been caught, so the gate cannot silently rot.
+    // have been caught, so the gate cannot silently rot. The retired
+    // strings ride in ASSEMBLED (identity-gate convention, see BANNED).
     const preR188Landing = [
-      'مؤسّسة العرض: جامعة الزاوية · 25 كلية · 1988',
-      'ZAWIYA · 1988',
-      'مؤسّسة العرض المرجعية على منصّة أُلارا — مؤسّسة تعليميّة حكوميّة',
-      'بيانات جامعة الزاوية الظاهرة في المنصّة بيانات عرض مرجعية',
+      `مؤسّسة العرض: ${RETIRED_UNI_AR} · 25 كلية · 1988`,
+      ['ZAW', 'IYA · 1988'].join(''),
+      `مؤسّسة العرض المرجعية على منصّة أُلارا — مؤسّسة تعليميّة حكوميّة`,
+      `بيانات ${RETIRED_UNI_AR} الظاهرة في المنصّة بيانات عرض مرجعية`,
       'student@zu.edu.ly',
     ].join('\n');
     const hits = BANNED.filter((b) => preR188Landing.includes(b));
-    expect(hits).toEqual(['جامعة الزاوية', 'مؤسّسة العرض المرجعية', 'zu.edu.ly']);
+    expect(hits).toEqual([RETIRED_UNI_AR, 'مؤسّسة العرض المرجعية', 'zu.edu.ly']);
   });
 });

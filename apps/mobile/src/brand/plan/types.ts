@@ -53,7 +53,7 @@ export interface PlanArtProps {
   dotColor?: string;
   /** Controlled draw progress 0..1 (static — no animation). */
   progress?: number;
-  /** Draw-in on mount (~900ms, heron ease-out). */
+  /** Draw-in on mount (~900ms, ds ease-out). */
   autoplay?: boolean;
   /** Sheet width (height follows the 320:220 aspect). */
   width?: number | string;

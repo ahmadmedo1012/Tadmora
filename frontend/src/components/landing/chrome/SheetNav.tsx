@@ -1,7 +1,7 @@
 /**
  * SheetNav — R331 (A-Web-Nav) — the landing masthead, rebuilt to the
- * Heron header's MEASURED mechanics (docs/redesign/r331/heron-program.md
- * §6 + heron-program.json `header`, evidence /home/z/heron-lab/data/
+ * the reference header's MEASURED mechanics (the retired r331 program doc
+ * §6 + the program digest `header`, evidence the retired lab captures:
  * nav-1440.json / nav-390.json):
  *
  *  · fixed 56px bar at the sheet frame's 7px inset, TRANSPARENT paper in
@@ -240,7 +240,7 @@ export function SheetNav() {
   }, [menuOpen]);
 
   /* ═══ R331 — the header state machine (the reference's updateOnScroll,
-   * decoded in heron-program.md §6):
+   * decoded in the retired program doc §6):
    *     on-scroll  ⇔ y > 1 × bar height
    *     on-hide    ⇔ scrolling DOWN past 5 × bar height, debounced
    *                  100ms, suppressed while the pointer is over the
@@ -343,8 +343,8 @@ export function SheetNav() {
 
   return (
     <header className="fo-header" ref={headerRef} data-spec="nav.bar">
-      {/* r339 (T-10) — the chrome grammar mirrors the frozen Heron spec
-          tree (docs/redesign/r335/heron-spec/chrome.<bp>.json): the
+      {/* r339 (T-10) — the chrome grammar mirrors the frozen reference spec
+          tree (the frozen r335 reference captures: chrome.<bp>.json): the
           transform SEAT (.fo-header-inner ≡ her container div[1] — the
           on-hide -101% lift + transform .4s ease live here, exactly the
           reference's own seat) wraps the BAR ROW (.fo-header-bar ≡ her

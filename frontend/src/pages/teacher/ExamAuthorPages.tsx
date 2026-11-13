@@ -74,7 +74,7 @@ import {
 } from '../../hooks/useResources';
 import '../../styles/owner.css'; // ConfirmDialog + ToggleSwitch surfaces (D11 css split, 12-15)
 import '../../styles/training.css'; // shared .back-link family (D11 css split, 12-15)
-import '../../styles/teacher/heron.css'; // R305 — the Heron layer (exa2- section lives here)
+import '../../styles/teacher/ds-core.css'; // R305 — the ds layer (exa2- section lives here)
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the exam
  * surfaces' section heads read on the numeral axis. */
@@ -352,7 +352,7 @@ function TemplateStatusBadge({ status }: { status: ExamStatusFE }) {
   );
 }
 
-/* R305 Heron — the row severity edge per template status: the same
+/* R305 DS — the row severity edge per template status: the same
  * truth the status chip tells, spoken as the inline-start 3px bar
  * (.hr-edge). Presentation only — the chip beside the title stays the
  * source of truth; DRAFT/CLOSED carry no edge (neutral states). */
@@ -372,7 +372,7 @@ const TEMPLATE_EDGE: Record<ExamStatusFE, 'info' | 'soon' | 'overdue' | 'ember' 
  * status Badge beside the title stays the source of truth) — a rejected
  * review step wears the danger state, a closed template shows the whole
  * rail done. Presentation only. R305: the strip now speaks the shared
- * Heron .hr-rail grammar (done/current/rejected data-states); the ol's
+ * the reference .hr-rail grammar (done/current/rejected data-states); the ol's
  * aria-label and the current step's aria-current are the locator
  * contract and are preserved verbatim. */
 const LIFECYCLE_STEPS = ['مسودة', 'مراجعة الجودة', 'الاعتماد', 'النشر للطلاب'] as const;
@@ -616,7 +616,7 @@ export default function ExamAuthoringPage() {
       <div className="page">
         <header className="page-header">
           <div className="page-title-block">
-            {/* R305 Heron — the workflow brow: the exam lifecycle opens
+            {/* R305 DS — the workflow brow: the exam lifecycle opens
                 every authoring surface with its stage strip. */}
             <span className="hr-brow exa2-brow">مسار الاختبارات</span>
             <h1 className="page-title">بنك الأسئلة والاختبارات</h1>
@@ -670,7 +670,7 @@ function PermissionDeniedBlock() {
 
 /* ═══════════════ My templates tab ═══════════════ */
 
-/** 4C-a — the tab opener (Superlist grammar → R305 Heron): a large-type
+/** 4C-a — the tab opener (Superlist grammar → R305 DS): a large-type
  *  section title, ONE honest Arabic line, and the tab's actions at the
  *  inline-end. R305: the head wears the shared .hr-section-head layer
  *  (hairline anchor + strong heading ink) and an optional .hr-section-count
@@ -2190,12 +2190,12 @@ function TemplateDetailBody({ template }: { template: ExamTemplateDetail }) {
       <header className="exa-detail-head">
         <div className="exa-detail-top">
           <div className="exa-detail-heading">
-            {/* R305 Heron — the lifecycle brow above the authored title.
+            {/* R305 DS — the lifecycle brow above the authored title.
              * R342-09: the DETAIL surface swaps .hr-brow for the
              * .hr-eyebrow classification register — a param route resolves
              * no topbar group kicker, so the surface carries its own
              * classification line (same §0 brow anatomy, the eyebrow
-             * name — see heron.css §E). */}
+             * name — see ds-core.css §E). */}
             <span className="hr-eyebrow exa2-brow">دورة حياة القالب</span>
             {/* A6 P3 (22-a): 2-line clamp lives in the exa sheet —
                 authored titles run long and pushed the whole page down;
@@ -2215,7 +2215,7 @@ function TemplateDetailBody({ template }: { template: ExamTemplateDetail }) {
               )}
             </div>
             {/* R304/R305: the workflow rail — where this template stands
-                on draft → review → approval → publish (the Heron .hr-rail). */}
+                on draft → review → approval → publish (the reference .hr-rail). */}
             <TemplateLifecycle status={template.status} />
           </div>
           <AuthorActions template={template} />

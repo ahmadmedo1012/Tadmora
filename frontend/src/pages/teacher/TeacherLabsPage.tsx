@@ -30,7 +30,7 @@ import { Icon } from '../../components/Icon';
 import { useLabs, type VirtualLab } from '../../hooks/useResources';
 import { countAr } from '../../lib/format';
 import { formatNum } from '../../utils/numbers';
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 DS: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the labs
  * directory's section head reads on the numeral axis. */
@@ -219,7 +219,7 @@ export default function TeacherLabsPage() {
 /** r241 (Superlist): one lab = one row — icon well leading, category·
  * platform kicker, name prominent, honest experiment count, and the
  * معاينة كطالب action trailing (44px zone). R305: the count rides the
- * shared Heron chip (tabular digits stay .tq-num). */
+ * shared the reference chip (tabular digits stay .tq-num). */
 function LabRow({ lab }: { lab: VirtualLab }) {
   const Ico = iconFor(lab.category);
   // --tq-accent feeds the color-mix tint owned by patterns.css §11;

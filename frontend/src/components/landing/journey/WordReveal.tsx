@@ -82,7 +82,7 @@ interface ScrubRevealProps {
   /** the element carrying --wr-p (defaults to self) */
   progressRef?: React.RefObject<HTMLElement | null>;
   /**
-   * R337 (A-intro): an optional explicit line split. The frozen Heron
+   * R337 (A-intro): an optional explicit line split. The frozen reference
    * spec records the intro title as one div per LINE (its own
    * split-text tween leaves the line boxes in the DOM); Arabic keeps
    * its natural wrapping, so the caller may author the line breaks and

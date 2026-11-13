@@ -35,9 +35,9 @@ import { formatDate } from '../../utils/numbers';
 /* ── r305-c (schedule family) + r305-d (supplemental family) imports —
    collapsed by the R305 integrator (handoff N1): the duplicated
    r305-student.css import was legal (Vite dedupes) but confusing. ── */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-schedule.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-schedule.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the same pair every converted student
  * page rides; this file's pages opt in per-page via .r319s-page). */
@@ -129,7 +129,7 @@ export function GamificationPage() {
         ]}
       />
 
-      {/* R305 Heron: the level statement rides the page's ONE deep band;
+      {/* R305 DS: the level statement rides the page's ONE deep band;
           the achievements + leaderboard lists stay quiet page-surface rows
           under shared kickers (no card wall). The gold discipline holds:
           --gold rides the tier orb / xp fill / +XP chips (training.css),
@@ -604,7 +604,7 @@ export function AlertsPage() {
       )}
 
       {/* سطح القائمة الصامت — الترويسة أعلاه هي صاحبة العنوان والإجراءات.
-          R305 Heron: البطاقة تُسْقَط — الصفوف الشعرية تسكن سطح الصفحة مباشرة
+          R305 DS: البطاقة تُسْقَط — الصفوف الشعرية تسكن سطح الصفحة مباشرة
           (القائمة أولًا) واللاصق المشترك يصنّف الكتلة. هذا المقطع محايد
           الدور: نفس المكوّن يخدم /admin/alerts و /teacher/alerts
           و /quality/notifications و /owner/notifications. */}
@@ -803,7 +803,7 @@ export function SchedulePage() {
     .map(([dow, items]) => ({ dow: Number(dow), items }))
     .filter((d) => d.items.length > 0);
 
-  /* r305-c (Heron): the header's meta line carries the week's real
+  /* r305-c (the reference): the header's meta line carries the week's real
    * load — the counted slot total (honest data, never decoration). */
   const totalSlots = daysWithItems.reduce((sum, d) => sum + d.items.length, 0);
 
@@ -1011,12 +1011,12 @@ export function ResultsPage() {
           the same fact line the dashboard and the course page open
           with. The r164-a canonical grade band still colors each value
           (tone is derived from the band, never re-invented here).
-          r305-c (Heron): the strip is the page's ONE deep band — the
+          r305-c (the reference): the strip is the page's ONE deep band — the
           theme-reactive inversion earns the hierarchy; the sheet
           re-derives every inner ink toward the band's own fg pole so
           the canonical tones stay AA in both themes.
           R341 (D7c): the ink pole now rides the SHARED band class
-          (heron.css §3); this seat keeps the test-pinned
+          (ds-core.css §3); this seat keeps the test-pinned
           .results-summary hook with the layout on utilities. */}
       <div className="r305s-band r305s-band--deep results-summary flex-col gap-3">
         <p className="r305s-eyebrow">ملخّص الدرجات</p>
@@ -1309,7 +1309,7 @@ export function ArVrPage() {
 
       {q.isPending ? (
         /* r148 (AUDIT-2 L8): هيكل مطابق الشكل بدل السبينر الصفحي —
-           R305 Heron: نفس صفوف القائمة (بئر + عنوان + سطران). */
+           R305 DS: نفس صفوف القائمة (بئر + عنوان + سطران). */
         <ListSkeleton rows={3} />
       ) : q.isError ? (
         <ErrorState error={q.error} onRetry={() => q.refetch()} />
@@ -1611,7 +1611,7 @@ function MaterialAction({ material }: { material: StudentMaterial }) {
     );
   }
   /* المحجوزات (RFC 2606) والروابط غير الآمنة — الحالة الصادقة:
-     نص بلا مرساة؛ مرساة ميّتة أسوأ من لا مرساة. R305 Heron: الحالة
+     نص بلا مرساة؛ مرساة ميّتة أسوأ من لا مرساة. R305 DS: الحالة
      تصنيفٌ، فتصعد على الرقاقة المحايدة المشتركة. */
   return (
     <span className="r305s-chip" role="note">
@@ -1793,7 +1793,7 @@ export function UniversityInfoPage() {
           />
         </div>
 
-      {/* R305 Heron: the identity card is the page's ONE deep band — the
+      {/* R305 DS: the identity card is the page's ONE deep band — the
           authority surface. Facts ride the band-safe .r305u-fact anatomy
           (the deep FactRow variant) inside the .r305u-facts grid.
           R342-08: the section opener is the §B2 bar — [01] + the h2
@@ -1932,7 +1932,7 @@ export function UniversityInfoPage() {
         </Card>
       </div>
 
-      {/* R305 Heron: the identity card is the page's ONE deep band — the
+      {/* R305 DS: the identity card is the page's ONE deep band — the
           authority surface. Facts ride the band-safe .r305u-fact anatomy
           (the deep FactRow variant) inside the .r305u-facts grid.
           R342-08: the section opener is the §B2 bar — [01] + the h2
@@ -2011,7 +2011,7 @@ export function UniversityInfoPage() {
               demo workspace's fact sheet (backend zu-sync
               static-source.ts — one source, never hand-retyped: the
               r155b lesson carries over). */}
-          {/* R305 Heron: the inline surface-2 wells become hairline ledger
+          {/* R305 DS: the inline surface-2 wells become hairline ledger
               rows (.r305u-row). The membership Badge drops the gold tone —
               gold is the ACHIEVEMENTS-only signal on the Ulara canon;
               institutional classifications ride the neutral chip. */}
@@ -2086,7 +2086,7 @@ export function UniversityInfoPage() {
 }
 
 function FactRow({ label, value, mono, deep }: { label: string; value: string; mono?: boolean; deep?: boolean }) {
-  /* R305 Heron deep variant: on the identity band the frozen .fact-tile
+  /* R305 DS deep variant: on the identity band the frozen .fact-tile
      well (light surface-2) would fight the inverted ground — the deep
      anatomy is label-over-value with a hairline base instead. */
   if (deep) {

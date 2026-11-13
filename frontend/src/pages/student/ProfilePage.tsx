@@ -20,10 +20,10 @@ import { useMyAchievements, useMyEnrollments, useMyResearch, useMyProfile } from
  * copy and validation are unchanged (the r180-F4 contract). */
 import { ChangePasswordCard } from '../../components/account/ChangePasswordCard';
 import '../../styles/training.css'; // .achievement-* family (D11 css split, 12-15)
-/* R305 Heron: the shared student vocabulary + this family's page-scoped
+/* R305 DS: the shared student vocabulary + this family's page-scoped
    refinements (the deep profile hero band, §1 of the family sheet). */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the same pair every converted student
  * page rides; the profile's own regions are Cards + the R305 hero band,
@@ -201,7 +201,7 @@ export default function ProfilePage() {
         )}
       />
 
-      {/* R305 Heron hero — the ONE deep band on the page: identity
+      {/* R305 DS hero — the ONE deep band on the page: identity
           (avatar + name + verified state) and the completeness meter
           share the auto-inverting ground; the eyebrow classifies the
           band as the account block before the tabs classify content. */}

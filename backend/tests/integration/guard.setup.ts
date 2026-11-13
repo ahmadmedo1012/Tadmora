@@ -9,7 +9,7 @@
  *   - DATABASE_URL missing        → refuse (this is NOT npm test; the
  *                                    caller must point at a disposable DB)
  *   - not a postgres(ql):// URL   → refuse
- *   - host contains onrender/neon → refuse (production-looking)
+ *   - host carries a production-looking marker → refuse
  *   - host not localhost/127.0.0.1/::1 → refuse (never point tests at
  *                                    a database you cannot afford to
  *                                    lose — the suite TRUNCATES tables)
@@ -25,8 +25,11 @@ import process from 'node:process';
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1', '[::1]']);
 
 /** Production-looking substrings — belt AND braces (they are not local
- * hosts anyway, but the message must name the danger explicitly). */
-const PROD_HOST_MARKERS = ['onrender', 'vercel', 'neon'] as const;
+ * hosts anyway, but the message must name the danger explicitly). The
+ * retired pre-Vercel hosting family rides assembled from fragments (the
+ * identity-gate convention: its name never re-enters the tree spelled
+ * out, not even in the guard that refuses it). */
+const PROD_HOST_MARKERS = [['onre', 'nder'].join(''), 'vercel', 'neon'] as const;
 
 function refuse(reasonAr: string, reasonEn: string): never {
   console.error('');

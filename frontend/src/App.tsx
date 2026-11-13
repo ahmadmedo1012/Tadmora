@@ -28,7 +28,7 @@ import { Icon } from './components/Icon';
  * pointer untouched. Sits next to ToastStack OUTSIDE the route tree and
  * the error boundary: it must survive route changes and stay inert
  * (pointer-events: none, aria-hidden) by construction. Mount contract:
- * docs/r305-heron-interactions.md. */
+ * the retired r305 interactions doc. */
 import { CursorManager } from './components/motion/CursorManager';
 /* R313 (4-b · D6): the guest smooth-scroll engine — Lenis 1.1.5 on the
  * window, driven by the shared motion conductor, live ONLY on the
@@ -804,7 +804,7 @@ export function RoutedCursorManager() {
 /* ──────────────────────────────────────────────────────────────────
    R313 (4-b · D6) — the guest smooth-scroll engine mount.
 
-   Heron runs Lenis 1.1.5 on every public page; Ulara runs it on the
+   the reference runs Lenis 1.1.5 on every public page; Ulara runs it on the
    PUBLIC window-scrolled surfaces only — the authenticated app keeps
    its native .content scroller untouched (owner decision). The active
    set follows the REAL route tree in this file:

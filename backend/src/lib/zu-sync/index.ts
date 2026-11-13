@@ -81,7 +81,7 @@ function sourceLabelAr(label: string): string {
  * keyed by institutionId). The fixed default keeps existing callers
  * (runSync with no opts) on the labeled demo workspace.
  */
-export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
+export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-ulara-showcase';
 
 /**
  * r179d (phase-5) → r188 → Phase Ω: the per-institution CONFIGURED sync
@@ -92,12 +92,12 @@ export const DEFAULT_SYNC_INSTITUTION_ID = 'inst-zawia-showcase';
  * neutral «مساحة عمل أُلارا التجريبية» fact sheet) is the DEMO
  * workspace's source, NOT a global source for every institution. An
  * institution absent from this registry (today: every institution other
- * than the demo workspace, e.g. alandalus-demo) has NO configured
+ * than the demo workspace, e.g. ulara-demo-2) has NO configured
  * source — the scheduler never syncs it, and a manual trigger for it
  * answers an honest 400.
  *
  * Matching is by institution id OR slug (both unique in the DB): the
- * demo row keeps the FIXED legacy id `inst-zawia-showcase` (stable FK
+ * demo row keeps the FIXED legacy id `inst-ulara-showcase` (stable FK
  * anchor) with the ulara-demo slug (prisma/seed.ts), so either
  * identity resolves the same row. This is deliberately a simple in-code
  * registry — there is no operator-editable source-config surface yet,

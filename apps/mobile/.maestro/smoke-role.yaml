@@ -54,6 +54,12 @@ appId: ly.ulara.app
 - launchApp:
     appId: ly.ulara.app
     clearState: true
+# System hardening (run 43354154702): the emulator's LAUNCHER can ANR
+# during the cold-start transition and its dialog covers the app.
+# OPTIONAL — absent on a healthy boot.
+- tapOn:
+    text: "Wait"
+    optional: true
 - scrollUntilVisible:
     element:
       text: "ابدأ الآن"            # app/auth/index.tsx — the Welcome CTA
@@ -75,13 +81,21 @@ appId: ly.ulara.app
 - tapOn:
     id: "login-password"
 - inputText: "${PASSWORD}"
+# Submit via the keyboard's OWN DONE action: the last field carries
+# returnKeyType=done + onSubmitEditing → the form's primary action
+# (ui/fields.tsx autoSubmit). IMMUNE to the pixel_6 forensics failure:
+# the coordinate tap on «دخول» (y≈2074) was swallowed by the IME that
+# hideKeyboard had not fully dismissed (run 43348648092 — the tap
+# landed, "something changed", and the resting form stayed: no request,
+# no error, no loading state).
+- pressKey: enter
 - hideKeyboard
-# the submit can lose the race with the keyboard-dismiss animation → retry
-- retry:
-    maxRetries: 2
-    commands:
-      - tapOn:
-          text: "دخول"             # FormScreen submitLabel (app/auth/login.tsx)
+# Belt: if the IME action did not submit, the button is now uncovered —
+# tap it. OPTIONAL so an already-submitted (navigated-away) form does
+# not fail the journey.
+- tapOn:
+    text: "دخول"               # FormScreen submitLabel (app/auth/login.tsx)
+    optional: true
 
 # 3 ── the role's dashboard landed (always-rendered heading per role:
 #      STUDENT → student/(tabs)/dashboard.tsx SectionBar «أرقامك هذا الفصل»;

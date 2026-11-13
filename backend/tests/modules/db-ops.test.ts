@@ -50,7 +50,6 @@ const backendPackage = JSON.parse(readSource('../../package.json')) as {
 const backupScriptSource = readSource('../../../scripts/db-backup.mjs');
 const restoreScriptSource = readSource('../../../scripts/db-restore.mjs');
 const verifyScriptSource = readSource('../../../scripts/db-verify.mjs');
-const exerciseLogSource = readSource('../../../docs/runbooks/restore-exercise-log.md');
 const opsLibSource = readSource('../../../scripts/db-ops-lib.mjs');
 const rotateScriptSource = readSource('../../scripts/rotate-demo-passwords.mjs');
 const passwordLibSource = readSource('../../src/lib/password.ts');
@@ -586,20 +585,9 @@ describe('db:verify (r167) — script wiring', () => {
   });
 });
 
-// ─── r167: the exercise log is honest about what ran ───────────────
-
-describe('restore-exercise log (r167)', () => {
-  it('entry 1 records the executed local exercise with measured values', () => {
-    expect(exerciseLogSource).toContain('مدخل 1 — 2026-10-15');
-    expect(exerciseLogSource).toContain('4b5ede93ab5d487006333979ee956f317861ab313f27376a100cf935fd03904c');
-    expect(exerciseLogSource).toContain('_prisma_migrations');
-    // honesty: local seed data, NOT production
-    expect(exerciseLogSource).toContain('ليست بيانات إنتاج');
-  });
-  it('keeps a blank template for future entries', () => {
-    expect(exerciseLogSource).toContain('قالب فارغ لمدخل جديد');
-  });
-});
+// ─── r167: the restore-exercise log pins were RETIRED with the file —
+// the retired-eras purge (f27f7fcb) deleted docs/runbooks/
+// restore-exercise-log.md; no pin may read a purged runbook.
 
 // ─── Source pins: boot-pg readiness probe ──────────────────────────
 

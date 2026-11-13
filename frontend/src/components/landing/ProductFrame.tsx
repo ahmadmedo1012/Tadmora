@@ -38,7 +38,7 @@ export interface ProductFrameProps {
    */
   viewTag?: string;
   /**
-   * P-A2 R333 (INV-08 · heron-craft row 13) — the 2× asset seat: when
+   * P-A2 R333 (INV-08 · the retired craft sheet row 13) — the 2× asset seat: when
    * set, the <img> rides the imported Vite asset (src/assets/product/
    * *.webp, 2880×1740 @2× = 1440×870 @1×) instead of the public
    * /media/product ladder. CLS-safe by construction: the width/height
@@ -173,7 +173,7 @@ export function ProductFrame({
         <div className="prf-photo">
           {twoXSrc ? (
             /* P-A2 — the 2× seat: one fingerprinted asset, the 1×
-               intrinsic 1440×870 box (CLS-safe, the heron platform
+               intrinsic 1440×870 box (CLS-safe, the reference platform
                frame's own ratio) */
             <img
               src={twoXSrc}

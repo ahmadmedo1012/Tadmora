@@ -17,9 +17,9 @@ import { toast } from '../../lib/toast';
    (§B2): placeholder test names / revision codes never render as the
    student's faculty. */
 import { sanitizeInstitutionName } from '../../utils/display-text';
-/* R305 Heron: the shared student vocabulary + this family's refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+/* R305 DS: the shared student vocabulary + this family's refinements. */
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy + the family's
  * harmonics (the copper disclosure rail keeps its r305s-next pin). */
 import '../../styles/student/pages.css';
@@ -107,7 +107,7 @@ export default function PaymentPage() {
       <Reveal distance="small">
         <SectionBar index="02" title="حالة الرسوم" />
         <Card>
-          {/* R305 Heron: the honest fees disclosure is the page's ONE
+          {/* R305 DS: the honest fees disclosure is the page's ONE
               emphasized region — the copper rail (.r305s-next) instead of
               the neutral panel well. */}
           <div className="r305s-next r305p-rail">

@@ -197,7 +197,7 @@ export function OwnerActivityPage() {
   const kpiKnown = activity.isSuccess;
 
   return (
-    /* r305-A8 «Heron»: the scoped sheet keys every rule off the .r305ao
+    /* r305-A8 «ds»: the scoped sheet keys every rule off the .r305ao
        page-root marker (PageFrame owns rhythm/width and takes no
        className, so the grammar rides a root wrapper). */
     <div className="r305ao">

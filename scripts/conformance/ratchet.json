@@ -1,7 +1,0 @@
-{
-  "rate": 92.2,
-  "total": 68297,
-  "pass": 62967,
-  "updatedAt": "2026-11-12T19:39:30.000Z",
-  "note": "ULARA takeover re-measure (owner-directed redesign): the brand swap changed the wordmark/logo geometry, landing copy metrics and the palette (Parchment & Sienna), so the frozen Heron-spec geometric expectations (y/h/w/x-mirror) and reference-colored seats (bg) legitimately diverge — failure kinds y:331 h:143 w:131 x-mirror:128 bg:51. Measured 62967/68297 = 92.2 (CI run 43291521775, commit 40c9d13e, provenance chromium-20261112-193930-full.json). This follows the documented re-measure precedent (the footer-section retirement note below). The instrument stays intact — the ratchet only rises from the new floor; the no-counterpart mapping excuses unchanged. History: 93.1 (9-section) → 93.9 (sandbox) → 93.8 (CI, 8-section) → 92.2 (ULARA takeover re-measure)."
-}

@@ -12,7 +12,7 @@
 import { describe, expect, it, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react-native";
 import { Text } from "react-native";
-import { heron } from "@/design/tokens";
+import { ds } from "@/design/tokens";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
 import { RingProgress } from "./RingProgress";
 
@@ -64,8 +64,8 @@ describe("RingProgress — determinate", () => {
     expect(all).toHaveLength(2); // track + arc
     // light theme: hairline track, accent arc
     const strokes = all.map((c) => c.stroke);
-    expect(strokes).toContainEqual(processed(heron.light.border));
-    expect(strokes).toContainEqual(processed(heron.light.accent));
+    expect(strokes).toContainEqual(processed(ds.light.border));
+    expect(strokes).toContainEqual(processed(ds.light.accent));
     // every circle: centered, hairline stroke, hollow, arc starts at 12 o'clock
     for (const c of all) {
       expect(c.cx).toBe(SIZE / 2);

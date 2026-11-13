@@ -21,11 +21,11 @@ import { render, screen, fireEvent, cleanup, within } from '@testing-library/rea
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { OwnerInstitutionDetailPage } from '../../src/pages/owner/OwnerInstitutionDetailPage';
 
-const ZAWIA = {
-  id: 'inst-zawia-showcase',
-  name: 'جامعة الزاوية',
-  nameEn: 'University of Zawia',
-  slug: 'zawia-showcase',
+const PRIMARY = {
+  id: 'inst-ulara-showcase',
+  name: 'مساحة عمل أُلارا التجريبية',
+  nameEn: 'Ulara Experimental Workspace',
+  slug: 'ulara-showcase',
   status: 'ACTIVE',
   createdAt: '2026-10-01T00:00:00.000Z',
   updatedAt: '2026-10-01T00:00:00.000Z',
@@ -34,12 +34,12 @@ const ZAWIA = {
   admins: [],
 };
 
-const ALANDALUS = {
-  ...ZAWIA,
-  id: 'inst-alandalus-demo',
+const SECONDARY = {
+  ...PRIMARY,
+  id: 'inst-ulara-demo-2',
   name: 'مساحة عمل تجريبية ثانية',
   nameEn: 'Second Experimental Workspace',
-  slug: 'alandalus-demo',
+  slug: 'ulara-demo-2',
   status: 'SUSPENDED',
   activeMembershipCount: 2,
   facultyCount: 1,
@@ -50,7 +50,7 @@ const FACULTY_SCIENCE = {
   name: 'كلية العلوم',
   nameEn: 'Faculty of Science',
   iconEmoji: null,
-  city: 'الزاوية',
+  city: 'افتراضي',
   departmentCount: 2,
   studentCount: 10,
   teacherCount: 4,
@@ -85,7 +85,7 @@ const TEACHERS = [
 
 const mocks = vi.hoisted(() => ({
   listing: {
-    data: null as typeof ZAWIA[] | null,
+    data: null as typeof PRIMARY[] | null,
     isPending: false,
     isError: false,
     error: null,
@@ -191,16 +191,16 @@ function renderAt(slug: string) {
 
 describe('OwnerInstitutionDetailPage — header + honest states (r181)', () => {
   it('renders the institution context: name, slug, status badge, and the way back', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = {
       data: [COURSE_CS101],
       meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
     };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
-    expect(screen.getByRole('heading', { level: 1, name: 'جامعة الزاوية' })).toBeInTheDocument();
-    expect(screen.getByText('zawia-showcase')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'مساحة عمل أُلارا التجريبية' })).toBeInTheDocument();
+    expect(screen.getByText('ulara-showcase')).toBeInTheDocument();
     expect(screen.getByText('نشطة')).toBeInTheDocument();
     // The back link — the console's context never disappears.
     expect(screen.getByRole('link', { name: /كل المؤسسات/ })).toHaveAttribute(
@@ -213,7 +213,7 @@ describe('OwnerInstitutionDetailPage — header + honest states (r181)', () => {
   });
 
   it('shows the honest not-found state for an unknown slug, with the way back', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     renderAt('no-such-institution');
 
     expect(screen.getByRole('heading', { level: 1, name: 'المؤسسة غير موجودة' })).toBeInTheDocument();
@@ -226,7 +226,7 @@ describe('OwnerInstitutionDetailPage — header + honest states (r181)', () => {
 
   it('renders skeletons while the listing is pending', () => {
     mocks.listing.isPending = true;
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     expect(screen.getByRole('heading', { level: 1, name: /جارٍ تحميل المؤسسة/ })).toBeInTheDocument();
   });
@@ -234,31 +234,31 @@ describe('OwnerInstitutionDetailPage — header + honest states (r181)', () => {
 
 describe('OwnerInstitutionDetailPage — the institution binding (r181 load-bearing)', () => {
   it('constructs every academic query/mutation with the selected institution\'s slug/id', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [];
     mocks.courses.data = { data: [], meta: { page: 1, limit: 20, total: 0, totalPages: 1 } };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     // Faculties listing + structure writes + teacher roster: the slug.
-    expect(construction.useAdminFaculties).toHaveBeenCalledWith('zawia-showcase');
-    expect(construction.useCreateFaculty).toHaveBeenCalledWith('zawia-showcase');
-    expect(construction.useCreateDepartment).toHaveBeenCalledWith('zawia-showcase');
-    expect(construction.useOwnerInstitutionTeachers).toHaveBeenCalledWith('zawia-showcase', true);
+    expect(construction.useAdminFaculties).toHaveBeenCalledWith('ulara-showcase');
+    expect(construction.useCreateFaculty).toHaveBeenCalledWith('ulara-showcase');
+    expect(construction.useCreateDepartment).toHaveBeenCalledWith('ulara-showcase');
+    expect(construction.useOwnerInstitutionTeachers).toHaveBeenCalledWith('ulara-showcase', true);
     // Course create: the OWNER-only institutionId wire field.
-    expect(construction.useCreateCourse).toHaveBeenCalledWith('inst-zawia-showcase');
+    expect(construction.useCreateCourse).toHaveBeenCalledWith('inst-ulara-showcase');
     // Courses listing: the institutionSlug query param.
     expect(construction.useAdminCourses).toHaveBeenCalledWith(
-      expect.objectContaining({ institutionSlug: 'zawia-showcase' }),
+      expect.objectContaining({ institutionSlug: 'ulara-showcase' }),
     );
   });
 });
 
 describe('OwnerInstitutionDetailPage — suspended institutions (r181)', () => {
   it('shows the suspension banner and disables every academic write affordance', () => {
-    mocks.listing.data = [ALANDALUS];
+    mocks.listing.data = [SECONDARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = { data: [COURSE_CS101], meta: { page: 1, limit: 20, total: 1, totalPages: 1 } };
-    renderAt('alandalus-demo');
+    renderAt('ulara-demo-2');
 
     expect(screen.getByText('هذه المؤسسة معلّقة')).toBeInTheDocument();
     expect(screen.getByText('معلّقة')).toBeInTheDocument();
@@ -273,24 +273,24 @@ describe('OwnerInstitutionDetailPage — suspended institutions (r181)', () => {
 
 describe('OwnerInstitutionDetailPage — faculty create flow (r181)', () => {
   it('drafts and submits the faculty form through the slug-bound mutation', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [];
     mocks.courses.data = { data: [], meta: { page: 1, limit: 20, total: 0, totalPages: 1 } };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     fireEvent.click(screen.getByRole('button', { name: /إضافة كلّيّة/ }));
 
     const dialog = screen.getByRole('dialog');
     // The modal names the target institution — an owner write must
     // always say WHERE it lands.
-    expect(within(dialog).getByText(/ستُضاف الكلّيّة إلى «جامعة الزاوية»/)).toBeInTheDocument();
+    expect(within(dialog).getByText(/ستُضاف الكلّيّة إلى «مساحة عمل أُلارا التجريبية»/)).toBeInTheDocument();
 
     fireEvent.change(within(dialog).getByLabelText(/اسم الكلّيّة/), { target: { value: 'كلية الهندسة' } });
-    fireEvent.change(within(dialog).getByLabelText(/المدينة/), { target: { value: 'الزاوية' } });
+    fireEvent.change(within(dialog).getByLabelText(/المدينة/), { target: { value: 'افتراضي' } });
     fireEvent.click(within(dialog).getByRole('button', { name: 'إضافة الكلّيّة' }));
 
     expect(mocks.createFaculty.mutate).toHaveBeenCalledWith(
-      { name: 'كلية الهندسة', nameEn: '', iconEmoji: '', city: 'الزاوية' },
+      { name: 'كلية الهندسة', nameEn: '', iconEmoji: '', city: 'افتراضي' },
       expect.objectContaining({ onSuccess: expect.any(Function) }),
     );
   });
@@ -298,15 +298,15 @@ describe('OwnerInstitutionDetailPage — faculty create flow (r181)', () => {
 
 describe('OwnerInstitutionDetailPage — department create flow (r181)', () => {
   it('binds the department draft to the card it rode on and names both faculty and institution', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = { data: [], meta: { page: 1, limit: 20, total: 0, totalPages: 1 } };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     fireEvent.click(screen.getByRole('button', { name: 'إضافة قسم' }));
 
     const dialog = screen.getByRole('dialog');
-    expect(within(dialog).getByText(/سيُضاف القسم إلى «كلية العلوم» في «جامعة الزاوية»/)).toBeInTheDocument();
+    expect(within(dialog).getByText(/سيُضاف القسم إلى «كلية العلوم» في «مساحة عمل أُلارا التجريبية»/)).toBeInTheDocument();
 
     fireEvent.change(within(dialog).getByLabelText(/اسم القسم/), { target: { value: 'قسم الفيزياء' } });
     fireEvent.click(within(dialog).getByRole('button', { name: 'إضافة القسم' }));
@@ -320,15 +320,15 @@ describe('OwnerInstitutionDetailPage — department create flow (r181)', () => {
 
 describe('OwnerInstitutionDetailPage — course create flow (r181)', () => {
   it('drafts code/name/credits + an institution department and submits the body', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = { data: [], meta: { page: 1, limit: 20, total: 0, totalPages: 1 } };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     fireEvent.click(screen.getByRole('button', { name: /إضافة مقرّر/ }));
 
     const dialog = screen.getByRole('dialog');
-    expect(within(dialog).getByText(/سيُضاف المقرّر إلى «جامعة الزاوية»/)).toBeInTheDocument();
+    expect(within(dialog).getByText(/سيُضاف المقرّر إلى «مساحة عمل أُلارا التجريبية»/)).toBeInTheDocument();
 
     fireEvent.change(within(dialog).getByLabelText(/كود المقرّر/), { target: { value: 'CS210' } });
     fireEvent.change(within(dialog).getByLabelText(/اسم المقرّر/), { target: { value: 'هياكل البيانات' } });
@@ -345,20 +345,20 @@ describe('OwnerInstitutionDetailPage — course create flow (r181)', () => {
 
 describe('OwnerInstitutionDetailPage — offering create flow (r181)', () => {
   it('binds the offering to the course row, picks an institution teacher, and submits', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = {
       data: [COURSE_CS101],
       meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
     };
     mocks.teachers.data = TEACHERS;
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     fireEvent.click(screen.getByRole('button', { name: /فتح شعبة لمقرّر مقدمة في علوم الحاسب/ }));
 
     const dialog = screen.getByRole('dialog');
     expect(within(dialog).getByText(/سيُدرَّس مقرّر «مقدمة في علوم الحاسب»/)).toBeInTheDocument();
-    expect(within(dialog).getByText(/داخل «جامعة الزاوية»/)).toBeInTheDocument();
+    expect(within(dialog).getByText(/داخل «مساحة عمل أُلارا التجريبية»/)).toBeInTheDocument();
 
     fireEvent.change(within(dialog).getByLabelText(/الفصل الدراسي/), { target: { value: '2027-SPRING' } });
     const teacherSelect = within(dialog).getByLabelText(/الأستاذ/) as HTMLSelectElement;
@@ -379,14 +379,14 @@ describe('OwnerInstitutionDetailPage — offering create flow (r181)', () => {
   });
 
   it('gates the offering submit on term + teacher + capacity', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = {
       data: [COURSE_CS101],
       meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
     };
     mocks.teachers.data = TEACHERS;
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     fireEvent.click(screen.getByRole('button', { name: /فتح شعبة لمقرّر مقدمة في علوم الحاسب/ }));
 
@@ -415,13 +415,13 @@ describe('OwnerInstitutionDetailPage — offering create flow (r181)', () => {
 
 describe('OwnerInstitutionDetailPage — one owner per datum (r299)', () => {
   it('renders NO StatStrip — the header line and the cards\' subtitles own the four numbers', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = {
       data: [COURSE_CS101],
       meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
     };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     // The duplicated KPI band never renders…
     expect(document.querySelector('.stat-strip')).toBeNull();
@@ -434,13 +434,13 @@ describe('OwnerInstitutionDetailPage — one owner per datum (r299)', () => {
 
 describe('OwnerInstitutionDetailPage — modal close contract (r299)', () => {
   it('every create-modal\'s close affordance is the styled icon-btn chip, not the dead modal-close class', () => {
-    mocks.listing.data = [ZAWIA];
+    mocks.listing.data = [PRIMARY];
     mocks.faculties.data = [FACULTY_SCIENCE];
     mocks.courses.data = {
       data: [COURSE_CS101],
       meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
     };
-    renderAt('zawia-showcase');
+    renderAt('ulara-showcase');
 
     // Every close button the modals ever mount rides the icon chip —
     // modal-close had zero CSS rules (a naked X). Asserting on ALL of

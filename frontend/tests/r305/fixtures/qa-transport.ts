@@ -1,6 +1,6 @@
 /**
  * qa-transport — the r305 QA area's hermetic stand-in for the Express
- * API (Task 4, redesign/r305-heron-auth-public-qa).
+ * API (Task 4, redesign/r305-reference-auth-public-qa).
  *
  * RE-IMPLEMENTATION NOTICE (per the R305-A9 file contract): this file
  * deliberately re-implements the MINIMAL transport machinery the QA

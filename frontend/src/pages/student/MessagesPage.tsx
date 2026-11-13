@@ -19,16 +19,16 @@ import {
 } from '../../components/messages/MessageComposeModal';
 import { useMyEnrollments } from '../../hooks/useResources';
 
-/* R305 Heron: the shared student vocabulary + this family's refinements.
+/* R305 DS: the shared student vocabulary + this family's refinements.
    The page itself is a thin shell — title, subtitle, and the compose
    recipient discovery ride `MessagesInbox`, whose DOM (list rows, day
    groups, honest loading/error/empty states, mark-all sweep) is the
    r171a shared contract pinned by its own unit suites and byte-shared
-   with the teacher inbox. The Heron register therefore lands on the
+   with the teacher inbox. The reference register therefore lands on the
    student surface through those shared states unchanged — no wrapper
    markup is added that would fork the two inboxes' anatomy. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy + the family's
  * harmonics ride the shared inbox the page shells (the inbox component
  * owns its own r319 imports; the page-level pair mirrors the family

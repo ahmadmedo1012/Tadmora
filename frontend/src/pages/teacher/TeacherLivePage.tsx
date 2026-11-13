@@ -22,7 +22,7 @@ import { useDiscardGuard } from '../../components/curriculum/AuthoringModal';
 import { Icon } from '../../components/Icon';
 import { EmojiIcon } from '../../components/EmojiIcon';
 import '../../styles/owner.css'; // ConfirmDialog surfaces via the discard guard (D11 css split, 12-15)
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 DS: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the live
  * board's section heads read on the numeral axis. Fixed category
@@ -41,7 +41,7 @@ const STATUS_LABEL: Record<LiveSessionRow['status'], string> = {
   ENDED: 'منتهية',
   CANCELLED: 'ملغاة',
 };
-/* Status vocabulary (R305 Heron .hr-chip tones): SCHEDULED warn (amber
+/* Status vocabulary (R305 DS .hr-chip tones): SCHEDULED warn (amber
  * waiting), ENDED ok (done) — and CANCELLED neutral: a cancelled
  * session is a void state, not an accent one (the dashboard's
  * done=neutral grammar; brand is an accent, never a status). LIVE
@@ -488,7 +488,7 @@ function SessionRow({
           {STATUS_LABEL[s.status]}
         </span>
       ) : (
-        /* R305: the settled states speak the shared Heron chip vocabulary
+        /* R305: the settled states speak the shared the reference chip vocabulary
             (warn=waiting · ok=done · neutral=void). */
         <span className="hr-chip" data-tone={STATUS_TONE[s.status]}>
           {STATUS_LABEL[s.status]}

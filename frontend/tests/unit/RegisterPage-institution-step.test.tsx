@@ -17,16 +17,16 @@ const mocks = vi.hoisted(() => ({
   institutions: {
     data: [
       {
-        id: 'inst-zawia-showcase',
-        name: 'جامعة الزاوية',
-        nameEn: 'University of Zawia',
-        slug: 'zawia-showcase',
+        id: 'inst-ulara-showcase',
+        name: 'مساحة عمل أُلارا التجريبية',
+        nameEn: 'Ulara Experimental Workspace',
+        slug: 'ulara-showcase',
       },
       {
-        id: 'inst-alandalus-demo',
+        id: 'inst-ulara-demo-2',
         name: 'مساحة عمل تجريبية ثانية',
-        nameEn: 'Al-Andalus Education Institute',
-        slug: 'alandalus-demo',
+        nameEn: 'A Second Experimental Workspace',
+        slug: 'ulara-demo-2',
       },
     ] as Array<{ id: string; name: string; nameEn?: string | null; slug: string }>,
     isLoading: false,
@@ -101,16 +101,16 @@ afterEach(() => {
   // Restore the default two-institution listing between tests.
   mocks.institutions.data = [
     {
-      id: 'inst-zawia-showcase',
-      name: 'جامعة الزاوية',
-      nameEn: 'University of Zawia',
-      slug: 'zawia-showcase',
+      id: 'inst-ulara-showcase',
+      name: 'مساحة عمل أُلارا التجريبية',
+      nameEn: 'Ulara Experimental Workspace',
+      slug: 'ulara-showcase',
     },
     {
-      id: 'inst-alandalus-demo',
+      id: 'inst-ulara-demo-2',
       name: 'مساحة عمل تجريبية ثانية',
-      nameEn: 'Al-Andalus Education Institute',
-      slug: 'alandalus-demo',
+      nameEn: 'A Second Experimental Workspace',
+      slug: 'ulara-demo-2',
     },
   ];
 });
@@ -121,7 +121,7 @@ describe('RegisterPage — institution step (r178)', () => {
     chooseStudent();
 
     const options = Array.from(institutionSelect().options).map((o) => o.textContent);
-    expect(options).toEqual(['اختر…', 'جامعة الزاوية', 'مساحة عمل تجريبية ثانية']);
+    expect(options).toEqual(['اختر…', 'مساحة عمل أُلارا التجريبية', 'مساحة عمل تجريبية ثانية']);
 
     // The institution is the FIRST link of the academic chain — its
     // control must precede the faculty select in the DOM (RTL reading
@@ -147,10 +147,10 @@ describe('RegisterPage — institution step (r178)', () => {
     renderPage();
     chooseStudent();
 
-    fireEvent.change(institutionSelect(), { target: { value: 'inst-zawia-showcase' } });
+    fireEvent.change(institutionSelect(), { target: { value: 'inst-ulara-showcase' } });
 
     expect(mocks.facultiesCalls.at(-1)).toMatchObject({
-      slug: 'zawia-showcase',
+      slug: 'ulara-showcase',
       enabled: true,
     });
     expect(facultySelect()).not.toBeDisabled();
@@ -161,19 +161,19 @@ describe('RegisterPage — institution step (r178)', () => {
   it('preselects the single institution of a single-institution deployment', () => {
     mocks.institutions.data = [
       {
-        id: 'inst-alandalus-demo',
+        id: 'inst-ulara-demo-2',
         name: 'مساحة عمل تجريبية ثانية',
-        nameEn: 'Al-Andalus Education Institute',
-        slug: 'alandalus-demo',
+        nameEn: 'A Second Experimental Workspace',
+        slug: 'ulara-demo-2',
       },
     ];
     renderPage();
     chooseStudent();
 
-    expect(institutionSelect().value).toBe('inst-alandalus-demo');
+    expect(institutionSelect().value).toBe('inst-ulara-demo-2');
     // The faculties lookup fires scoped to the auto-selected institution.
     expect(mocks.facultiesCalls.at(-1)).toMatchObject({
-      slug: 'alandalus-demo',
+      slug: 'ulara-demo-2',
       enabled: true,
     });
     expect(facultySelect()).not.toBeDisabled();
@@ -194,7 +194,7 @@ describe('RegisterPage — institution step (r178)', () => {
     fireEvent.change(screen.getByLabelText('رقم القيد الجامعي'), {
       target: { value: '2024-CS-1234' },
     });
-    fireEvent.change(institutionSelect(), { target: { value: 'inst-zawia-showcase' } });
+    fireEvent.change(institutionSelect(), { target: { value: 'inst-ulara-showcase' } });
     fireEvent.change(facultySelect(), { target: { value: 'fac-1' } });
     fireEvent.change(screen.getByLabelText('القسم'), { target: { value: 'dep-1' } });
 
@@ -205,7 +205,7 @@ describe('RegisterPage — institution step (r178)', () => {
     });
     expect(mocks.registerCalls[0]).toMatchObject({
       role: 'STUDENT',
-      institutionId: 'inst-zawia-showcase',
+      institutionId: 'inst-ulara-showcase',
       facultyId: 'fac-1',
       departmentId: 'dep-1',
     });

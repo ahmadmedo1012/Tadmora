@@ -15,7 +15,7 @@
  * Modes:
  *   · `progress` given          → controlled, static (no animation).
  *   · `autoplay` true           → one 0→1 run on mount (motion.cinema
- *     ≈ 900ms, the Heron ease-out), honouring reduce-motion (jumps to
+ *     ≈ 900ms, the ds ease-out), honouring reduce-motion (jumps to
  *     the finished drawing).
  *   · neither                   → fully drawn, static.
  *
@@ -27,14 +27,14 @@
  */
 import { useEffect, useState } from "react";
 import { Easing } from "react-native";
-import { heronEase, motion } from "@/design/tokens";
+import { dsEase, motion } from "@/design/tokens";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
 import type { PlanDash, PlanDrawHandle } from "./types";
 
 const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n);
 
-/** The Heron ease-out as a pure curve — the same solver RN's Animated driver runs. */
-const heronBezier = Easing.bezier(heronEase[0], heronEase[1], heronEase[2], heronEase[3]);
+/** The ds ease-out as a pure curve — the same solver RN's Animated driver runs. */
+const dsBezier = Easing.bezier(dsEase[0], dsEase[1], dsEase[2], dsEase[3]);
 
 export function usePlanDraw(
   progress?: number,
@@ -65,7 +65,7 @@ export function usePlanDraw(
     const tick = (now: number) => {
       if (!start) start = now;
       const lin = clamp01((now - start) / durationMs);
-      setValue(heronBezier(lin));
+      setValue(dsBezier(lin));
       if (lin < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);

@@ -440,19 +440,19 @@ describe('Topbar — institution context chip (r178)', () => {
         user: STUDENT,
         memberships: [
           {
-            institutionId: 'inst-zawia-showcase',
-            name: 'جامعة الزاوية',
-            nameEn: 'University of Zawia',
-            slug: 'zawia-showcase',
+            institutionId: 'inst-ulara-showcase',
+            name: 'مساحة عمل أُلارا التجريبية',
+            nameEn: 'Ulara Experimental Workspace',
+            slug: 'ulara-showcase',
             role: 'STUDENT',
             isActive: true,
           },
         ],
         currentInstitution: {
-          id: 'inst-zawia-showcase',
-          name: 'جامعة الزاوية',
-          nameEn: 'University of Zawia',
-          slug: 'zawia-showcase',
+          id: 'inst-ulara-showcase',
+          name: 'مساحة عمل أُلارا التجريبية',
+          nameEn: 'Ulara Experimental Workspace',
+          slug: 'ulara-showcase',
         },
         membershipRole: 'STUDENT',
       });
@@ -460,7 +460,7 @@ describe('Topbar — institution context chip (r178)', () => {
     renderTopbar();
 
     // Passive pill (the .topbar-scope vocabulary) — no switcher.
-    const chip = screen.getByText('جامعة الزاوية');
+    const chip = screen.getByText('مساحة عمل أُلارا التجريبية');
     expect(chip).toHaveClass('topbar-scope');
     expect(screen.queryByRole('button', { name: 'المؤسسة الحالية' })).toBeNull();
   });
@@ -471,27 +471,27 @@ describe('Topbar — institution context chip (r178)', () => {
         user: STUDENT,
         memberships: [
           {
-            institutionId: 'inst-zawia-showcase',
-            name: 'جامعة الزاوية',
-            nameEn: 'University of Zawia',
-            slug: 'zawia-showcase',
+            institutionId: 'inst-ulara-showcase',
+            name: 'مساحة عمل أُلارا التجريبية',
+            nameEn: 'Ulara Experimental Workspace',
+            slug: 'ulara-showcase',
             role: 'STUDENT',
             isActive: true,
           },
           {
-            institutionId: 'inst-alandalus-demo',
+            institutionId: 'inst-ulara-demo-2',
             name: 'مساحة عمل تجريبية ثانية',
             nameEn: 'Second Experimental Workspace',
-            slug: 'alandalus-demo',
+            slug: 'ulara-demo-2',
             role: 'ADMIN',
             isActive: true,
           },
         ],
         currentInstitution: {
-          id: 'inst-zawia-showcase',
-          name: 'جامعة الزاوية',
-          nameEn: 'University of Zawia',
-          slug: 'zawia-showcase',
+          id: 'inst-ulara-showcase',
+          name: 'مساحة عمل أُلارا التجريبية',
+          nameEn: 'Ulara Experimental Workspace',
+          slug: 'ulara-showcase',
         },
         membershipRole: 'STUDENT',
       });
@@ -511,18 +511,18 @@ describe('Topbar — institution context chip (r178)', () => {
         user: STUDENT,
         memberships: [
           {
-            institutionId: 'inst-zawia-showcase',
-            name: 'جامعة الزاوية',
-            nameEn: 'University of Zawia',
-            slug: 'zawia-showcase',
+            institutionId: 'inst-ulara-showcase',
+            name: 'مساحة عمل أُلارا التجريبية',
+            nameEn: 'Ulara Experimental Workspace',
+            slug: 'ulara-showcase',
             role: 'STUDENT',
             isActive: true,
           },
           {
-            institutionId: 'inst-alandalus-demo',
+            institutionId: 'inst-ulara-demo-2',
             name: 'مساحة عمل تجريبية ثانية',
             nameEn: 'Second Experimental Workspace',
-            slug: 'alandalus-demo',
+            slug: 'ulara-demo-2',
             role: 'ADMIN',
             isActive: true,
           },

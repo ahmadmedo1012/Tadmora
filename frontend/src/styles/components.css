@@ -207,7 +207,7 @@
      strip's own width (phones AND narrow side-columns alike). */
 
   /* ╔═══════════════════════════════════════════════════════════════╗
-     ║  BUTTONS — R313 (WP-D · D4): the Heron fill-wipe grammar.      ║
+     ║  BUTTONS — R313 (WP-D · D4): the reference fill-wipe grammar.      ║
      ║  Every variant is a FLAT slab: radius 0 (token ladder), no     ║
      ║  shadow, transparent-or-solid rest fill. Hover = COLOUR-SWAP   ║
      ║  FILL-WIPE: a solid layer (var(--_btn-wipe)) slides down over  ║
@@ -555,7 +555,7 @@
   /* R319 (C2-G2 · §C3): the .tab.on soft accent selection halo is
      RETIRED (the old `box-shadow: 0 0 0 4px accent 14%` wash) — the
      active state is the 2px hairline underline alone (::after below:
-     ink on light, accent on dark — no pill, no wash, the Heron tab
+     ink on light, accent on dark — no pill, no wash, the reference tab
      grammar). */
   .tab:active {
     transform: scale(0.96);
@@ -707,7 +707,7 @@
        pdf.css's page-number/search inputs are handed off with it. */
     font-size: max(16px, var(--type-body-size));
     color: var(--text);
-    /* R313 (WP-D · D16): the Heron input recipe — TRANSPARENT ground
+    /* R313 (WP-D · D16): the reference input recipe — TRANSPARENT ground
        (the paper IS the field), 1px #B3B3AF hairline (--border-strong),
        radius 0 (token ladder). No fills, no wells. */
     background: transparent;
@@ -729,7 +729,7 @@
      note for the lead). No halo, no box-shadow — hairline only. */
   .input:focus,
   input:focus, textarea:focus, select:focus {
-    border-color: #ED4C1F; /* color-gate: allow — R313 D16: Heron's measured input-focus orange (live digest inputs.focus; no token seat exists yet) */
+    border-color: #ED4C1F; /* color-gate: allow — R313 D16: the legacy measured input-focus orange (live digest inputs.focus; no token seat exists yet) */
     outline: none;
   }
   /* R313 (D16): the FILLED state — autofilled fields carry the accent
@@ -767,7 +767,7 @@
     /* Same iOS 16px focus-zoom floor as the shared recipe (A10 P1-2):
        this pill resolved to --type-label-size (13px). */
     font-size: max(16px, var(--type-label-size));
-    /* R313 (D16): the search field joins the Heron input recipe —
+    /* R313 (D16): the search field joins the reference input recipe —
        transparent ground, #B3B3AF hairline, square corners (the old
        surface-1 well + pill radius are retired). */
     background: transparent;
@@ -2762,7 +2762,7 @@
 }
 
 /* ╔════════════════════════════════════════════════════════════════════╗
-   ║  r305-A2 · lane 2-b — CONTROL MICROINTERACTIONS (Heron-style,     ║
+   ║  r305-A2 · lane 2-b — CONTROL MICROINTERACTIONS (reference-style,     ║
    ║  ORIGINAL Ulara implementation). Opt-in only: every rule here    ║
    ║  targets r305 namespaced classes (.btn-motion-* / .link-underline- ║
    ║  -motion) or the gated .btn.outline / .nav-item pseudos below —    ║

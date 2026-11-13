@@ -25,8 +25,6 @@ import { T } from "@/components/ui/text";
 import { haptics } from "@/haptics";
 
 const LOCK_FLAG = "ula-biometric-lock";
-/** The retired identity's key — read-fallback, cleared on disable (§1.1). */
-const LEGACY_LOCK_FLAG = "tdmr-biometric-lock";
 
 /** Hardware present AND a biometric enrolled — the honest availability. */
 export async function biometricAvailable(): Promise<boolean> {
@@ -43,15 +41,10 @@ export async function biometricAvailable(): Promise<boolean> {
 
 export async function getBiometricLockEnabled(): Promise<boolean> {
   try {
-    // §1.1 rename shim: new key first, legacy fallback, adopt + write-through.
+    // The ula-biometric-lock key is the ONLY spelling (the retired
+    // pre-ULARA fallback was removed — dev-phase installs re-enable once).
     const fresh = await SecureStore.getItemAsync(LOCK_FLAG);
-    if (fresh !== null) return fresh === "1";
-    const legacy = await SecureStore.getItemAsync(LEGACY_LOCK_FLAG);
-    if (legacy === "1") {
-      await SecureStore.setItemAsync(LOCK_FLAG, "1").catch(() => undefined);
-      return true;
-    }
-    return false;
+    return fresh === "1";
   } catch {
     return false;
   }
@@ -60,13 +53,7 @@ export async function getBiometricLockEnabled(): Promise<boolean> {
 export async function setBiometricLockEnabled(v: boolean): Promise<void> {
   try {
     if (v) await SecureStore.setItemAsync(LOCK_FLAG, "1");
-    else {
-      // disabling clears BOTH spellings — no legacy orphan re-locks later
-      await Promise.all([
-        SecureStore.deleteItemAsync(LOCK_FLAG).catch(() => undefined),
-        SecureStore.deleteItemAsync(LEGACY_LOCK_FLAG).catch(() => undefined),
-      ]);
-    }
+    else await SecureStore.deleteItemAsync(LOCK_FLAG).catch(() => undefined);
   } catch {
     // SecureStore failures must never brick the lock state — worst case
     // the toggle doesn't persist and the next cold start is unlocked.

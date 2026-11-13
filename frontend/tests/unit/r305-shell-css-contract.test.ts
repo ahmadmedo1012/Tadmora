@@ -1,8 +1,8 @@
 /**
- * r305 — Heron shell CSS contract (Task 2-d).
+ * r305 — the reference shell CSS contract (Task 2-d).
  *
  * Reads the shell sheets (layout.css + shell/shell.css) as TEXT and
- * asserts the design-gate contract the Heron Shell Contract binds this
+ * asserts the design-gate contract the reference Shell Contract binds this
  * round to:
  *
  *  1. zero raw hex/rgb()/hsl() colors outside documented
@@ -21,7 +21,7 @@
  *     margin-left/right are findings in both sheets (logical
  *     properties only)
  *  6. layer hygiene: r305-shell.css is UNLAYERED (the house precedent
- *     that gives the Heron layer the last word without !important)
+ *     that gives the reference layer the last word without !important)
  *     and carries no !important of its own
  *  7. the A4 «كل مسار له علامة جانبية واحدة» vocabulary holds: the
  *     retired `.nav-item[aria-current]` twin never returns, and the
@@ -32,7 +32,7 @@
  *     drawer band), the institution context-lost urgency pair, the
  *     role-line clamp — and the conservation pass holds (collapse-btn
  *     hover is a surface step, the scope chip's hairline is neutral).
- *  9. restraint meta-contract: the Heron layer itself never paints
+ *  9. restraint meta-contract: the reference layer itself never paints
  *     the copper signal (it only retires others' spending) and never
  *     retimes the overlay exit choreography (2-c's --motion-duration-
  *     short + --motion-ease-accelerate uniformity stays untouched).
@@ -467,7 +467,7 @@ describe('r305 shell CSS contract — logical properties', () => {
 describe('r305 shell CSS contract — layer hygiene & A4 vocabulary', () => {
   const shell = parsed.find((s) => s.name === 'shell/shell.css')!;
 
-  it('shell/shell.css is unlayered — the Heron layer wins the cascade without !important', () => {
+  it('shell/shell.css is unlayered — the reference layer wins the cascade without !important', () => {
     expect(shell.stripped).not.toMatch(/@layer\b/);
     expect(shell.stripped).not.toMatch(/!important/);
   });
@@ -480,7 +480,7 @@ describe('r305 shell CSS contract — layer hygiene & A4 vocabulary', () => {
 
   it('the one-active-marker stand-down (nav rail dot ::after) is present', () => {
     // A4: one bar + one surface step + one icon tint — the polish v16
-    // ::after dot stays retired by the Heron layer.
+    // ::after dot stays retired by the reference layer.
     expect(shell.stripped).toMatch(/\.nav-item\.on::after\s*\{[^}]*content:\s*none/);
   });
 });
@@ -563,7 +563,7 @@ describe('r305 shell CSS contract — 2-a/2-b hook grammar', () => {
 describe('r305 shell CSS contract — restraint meta-contract', () => {
   const shell = parsed.find((s) => s.name === 'shell/shell.css')!;
 
-  it('the Heron layer itself never paints the copper signal — it only retires others’ spending', () => {
+  it('the reference layer itself never paints the copper signal — it only retires others’ spending', () => {
     // The restrained-signal grammar's five copper sites are all owned
     // by the owning sheets (marker/focus/CTA/urgency/⌘K). This layer's
     // job is retirement and register-unification: if a refinement here
@@ -574,7 +574,7 @@ describe('r305 shell CSS contract — restraint meta-contract', () => {
   it('the overlay exit choreography (2-c) is never retimed here', () => {
     // Exit uniformity = --motion-duration-short + --motion-ease-
     // accelerate on every data-closing surface; the useDelayedUnmount
-    // safety net reads the matching token. The Heron layer authors no
+    // safety net reads the matching token. The reference layer authors no
     // overlay exit rules at all — keep it that way.
     expect(shell.stripped).not.toMatch(/data-closing/);
     expect(shell.stripped).not.toMatch(/--motion-ease-accelerate/);
