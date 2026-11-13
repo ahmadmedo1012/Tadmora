@@ -1867,11 +1867,11 @@ async function main() {
   console.log(`✅ Test accounts ensured (${ensured} jobs on the test.ly domain).`);
 
   // r323 B4 — the pilot cohort: the 8-course floor, the per-course
-  // lecture packs, the 30 @demo.tadmora.ly students with their
+  // lecture packs, the 30 @demo.ulara.ly students with their
   // enrollments/grades/attendance. Create-once; re-runs are no-ops.
   const pilot = await seedPilotCohort(prisma);
   if (pilot.students > 0) {
-    console.log(`✅ بذرة العرض التجريبي: ${pilot.students} طالبًا + ${pilot.lectures} محاضرة جديدة (نطاق demo.tadmora.ly — قابل للحذف من مسار المسجل).`);
+    console.log(`✅ بذرة العرض التجريبي: ${pilot.students} طالبًا + ${pilot.lectures} محاضرة جديدة (نطاق demo.ulara.ly — قابل للحذف من مسار المسجل).`);
   }
 
   console.log('✅ Seed complete.');

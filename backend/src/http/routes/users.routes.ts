@@ -28,13 +28,13 @@ import {
 } from '../../lib/governance.js';
 import { resolveCallerInstitutionScope, institutionContextRequiredError } from '../../lib/profile-scoping.js';
 // r323 B4 — the demo cohort sweep («حذف بيانات العرض»): the registrar's
-// one-action removal of the @demo.tadmora.ly pilot sample.
+// one-action removal of the @demo.ulara.ly pilot sample.
 import { demoCohortStats, removeDemoCohort } from '../../modules/users/demo-cohort.js';
 
 const router = Router();
 router.use(authMiddleware);
 
-// ── r323 B4 — the demo cohort (نطاق demo.tadmora.ly فقط) ──────────
+// ── r323 B4 — the demo cohort (نطاق demo.ulara.ly فقط) ──────────
 // GET  /users/demo-cohort  — the confirm-dialog preview (count + the
 //                            activity that would go with them)
 // DELETE /users/demo-cohort — the ordered sweep (one transaction;

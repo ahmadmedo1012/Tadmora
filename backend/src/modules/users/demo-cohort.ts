@@ -2,7 +2,7 @@
  * r323 B4 — the demo cohort («حذف بيانات العرض»): the registrar's
  * one-action removal of the pilot's sample students.
  *
- * The cohort is flagged by its email domain (@demo.tadmora.ly — set
+ * The cohort is flagged by its email domain (@demo.ulara.ly — set
  * by prisma/seed-pilot.ts and by NOTHING else), so the sweep can never
  * touch a real account: the WHERE clause reads the domain, not a flag
  * column that could drift.
@@ -17,7 +17,7 @@
  */
 import { type Prisma, type PrismaClient } from '@prisma/client';
 
-export const DEMO_EMAIL_SUFFIX = '@demo.tadmora.ly';
+export const DEMO_EMAIL_SUFFIX = '@demo.ulara.ly';
 
 /** The demo users' ids — the ONLY selector the sweep may use. */
 export async function demoCohortIds(prisma: PrismaClient | Prisma.TransactionClient): Promise<string[]> {
