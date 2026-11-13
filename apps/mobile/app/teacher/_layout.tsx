@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { RoleGate } from "@/components/shell/RoleGate";
 import { useTheme } from "@/design/theme";
-import { heron } from "@/design/tokens";
+import { ds } from "@/design/tokens";
 
 /**
  * /teacher — the role shell: ONE stack whose first child is the `(tabs)`
@@ -25,7 +25,7 @@ export default function TeacherLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          contentStyle: { backgroundColor: heron[name].bg },
+          contentStyle: { backgroundColor: ds[name].bg },
           gestureEnabled: true,
         }}
       >

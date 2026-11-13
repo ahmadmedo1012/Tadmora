@@ -6,7 +6,7 @@
  * theme.tsx extension (existing consumers keep their exact shape).
  */
 import { semanticColorsFor, semanticThemeFor, hairlinesFor, SHADOW_KEYS, type SemanticColors } from "./semantic";
-import { heron, statusTones } from "./tokens";
+import { ds, statusTones } from "./tokens";
 import { themeFor } from "./theme";
 
 const SEMANTIC_KEYS: (keyof SemanticColors)[] = [
@@ -35,7 +35,7 @@ describe("semanticColorsFor — light/dark resolution", () => {
     }
   });
 
-  it("surfaces follow the Heron two-surface rule (ground / card / sunken)", () => {
+  it("surfaces follow the ds two-surface rule (ground / card / sunken)", () => {
     const light = semanticColorsFor("light");
     expect(light.surface).toBe("#F5F1E8"); // paper ground
     expect(light.surfaceElevated).toBe("#FFFFFF"); // card ground
@@ -112,15 +112,15 @@ describe("hairlines — elevation WITHOUT shadows", () => {
       const h = hairlinesFor(name);
       expect(h.border.borderWidth).toBeGreaterThan(0);
       expect(h.border.borderWidth).toBeLessThanOrEqual(1);
-      expect(h.border.borderColor).toBe(heron[name].border);
+      expect(h.border.borderColor).toBe(ds[name].border);
       expect(h.borderStrong.borderWidth).toBe(1);
-      expect(h.borderStrong.borderColor).toBe(heron[name].rule);
+      expect(h.borderStrong.borderColor).toBe(ds[name].rule);
       expect(h.separator.height).toBe(h.border.borderWidth);
-      expect(h.separator.backgroundColor).toBe(heron[name].border);
+      expect(h.separator.backgroundColor).toBe(ds[name].border);
     }
   });
 
-  it("NO preset ever emits a shadow/elevation key (the Heron contract)", () => {
+  it("NO preset ever emits a shadow/elevation key (the ds contract)", () => {
     for (const name of ["light", "dark"] as const) {
       const h = hairlinesFor(name);
       const allStyles = [h.border, h.borderStrong, h.separator] as Record<string, unknown>[];
@@ -146,7 +146,7 @@ describe("semanticThemeFor — the bundle + the additive theme.tsx extension", (
       const t = themeFor(name);
       // the pre-R334 contract, byte-for-byte:
       expect(t.name).toBe(name);
-      expect(t.palette).toBe(heron[name]);
+      expect(t.palette).toBe(ds[name]);
       expect(t.tones).toBe(statusTones[name]);
       // the additive seat:
       expect(t.semantic).toEqual(semanticThemeFor(name));

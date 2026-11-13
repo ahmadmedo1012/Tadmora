@@ -19,7 +19,7 @@ import { apiMessage } from "@/features/common/components";
 /**
  * /colleges/leaderboard — the inter-college comparison board. Ranked rows
  * (rank latn · name · score) with gold-tone accents on the leaders (the
- * Heron gold palette role — p.goldInk). Web twin: CollegesLeaderboardPage
+ * ds gold palette role — p.goldInk). Web twin: CollegesLeaderboardPage
  * (mobile keeps the ranked-list anatomy; the 7-column table is not a
  * phone surface).
  */

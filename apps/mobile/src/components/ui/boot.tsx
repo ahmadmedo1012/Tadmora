@@ -2,7 +2,7 @@
  * boot.tsx — R327 B2 «منظّم المحمّلات» — the ONE loader system.
  *
  * Rules (enforced app-wide by LoadingScreen/InlineBusy routing here):
- *   · ONE loader vocabulary: the brand mark converging (Heron rhythm) —
+ *   · ONE loader vocabulary: the brand mark converging (ds rhythm) —
  *     no generic spinners anywhere in the app.
  *   · <Boot> is the boot/transition state: the mark at the SAME size and
  *     position as the native splash (120 · centred) so the splash → app
@@ -32,12 +32,12 @@ import {
 } from "react-native";
 import { usePalette } from "@/design/theme";
 import { sp } from "@/design/tokens";
-import { heronEase } from "@/design/tokens.generated";
+import { dsEase } from "@/design/tokens.generated";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
 import { T } from "./text";
 import { Button } from "./pressables";
 
-const EASE = Easing.bezier(heronEase[0], heronEase[1], heronEase[2], heronEase[3]);
+const EASE = Easing.bezier(dsEase[0], dsEase[1], dsEase[2], dsEase[3]);
 const CYCLE = 520;
 
 /* ── core-Animated helpers ──────────────────────────────────────────── */

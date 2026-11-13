@@ -5,7 +5,7 @@
  * hairline ink (stroke 1–1.5), lettered axis scaffolds, dimension
  * ticks, 45° hatch, double-drafted walls — and exactly ONE orange
  * signal per sheet. Every sheet draws itself in progressively via
- * usePlanDraw (strokeDash reveal, ~900ms heron ease-out) when
+ * usePlanDraw (strokeDash reveal, ~900ms ds ease-out) when
  * `autoplay` is set, honours `progress` for controlled reveals, and
  * renders fully drawn by default.
  *

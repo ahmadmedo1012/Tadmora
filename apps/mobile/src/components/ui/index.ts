@@ -1,4 +1,4 @@
-/** UI kit barrel — the Heron primitives shared by every screen. */
+/** UI kit barrel — the ds primitives shared by every screen. */
 export * from "./text";
 export * from "./screen";
 export * from "./pressables";

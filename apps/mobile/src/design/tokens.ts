@@ -1,5 +1,5 @@
 /**
- * The Heron design system — native tokens.
+ * The ds design system — native tokens.
  *
  * R326 M0.4 — the DATA now lives in ./tokens.generated (generated from
  * shared/design-tokens.json — the ONE source of truth shared with the
@@ -17,8 +17,8 @@
  * Zero shadows; emphasis comes from ink weight, hairlines, and the accent.
  */
 import {
-  heron as heronData,
-  heronEase,
+  ds as dsData,
+  dsEase,
   motion as motionData,
   radius,
   sp,
@@ -30,7 +30,7 @@ import {
 
 export type ThemeName = "light" | "dark";
 
-export interface HeronPalette {
+export interface DsPalette {
   bg: string;
   surface: string;
   surfaceHover: string;
@@ -55,7 +55,7 @@ export interface HeronPalette {
   onSurfaceMuted: string;
 }
 
-export const heron: Record<ThemeName, HeronPalette> = heronData;
+export const ds: Record<ThemeName, DsPalette> = dsData;
 
 export interface StatusTone {
   bg: string;
@@ -131,13 +131,13 @@ export const type = {
 export type Spacing = keyof typeof sp;
 
 // R330 (signature): motion roles merge into the generated durations —
-// the existing keys stay untouched, heronEase rides along for callers
+// the existing keys stay untouched, dsEase rides along for callers
 // that want the single easing curve object.
 export const motion = {
   ...motionData,
-  heronEase,
+  dsEase,
   durationPress: 120,
   durationNav: 240,
 } as const;
 
-export { sp, heronEase, radius, touchFloor };
+export { sp, dsEase, radius, touchFloor };

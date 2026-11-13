@@ -16,7 +16,7 @@
  *    known-key map, never fabricated values.
  *  - Label/tone maps mirrored from the web console (paper lifecycle,
  *    alert severities/categories, audit actions, exam kinds, feedback).
- *  - FlagToggle — the Heron square switch (44px floor) for owner flags.
+ *  - FlagToggle — the ds square switch (44px floor) for owner flags.
  *  - Local row types for the endpoints the frozen API modules type as
  *    `unknown` (defensive optional fields — render what is present).
  */
@@ -740,9 +740,9 @@ export const CAPABILITY_LABEL: Record<string, string> = {
   EVENTS_RUN: "إدارة الفعاليات",
 };
 
-/* ══════════════════════ FlagToggle (Heron switch) ════════════════ */
+/* ══════════════════════ FlagToggle (ds switch) ════════════════ */
 
-/** Square Heron toggle — 44px floor, hairline frame, no shadows. */
+/** Square ds toggle — 44px floor, hairline frame, no shadows. */
 export function FlagToggle({
   checked,
   disabled,
@@ -812,7 +812,7 @@ export function useExpanded(initial: string[] = []) {
 /**
  * MetricHero — the ONE hero number of a governance dashboard: a large
  * CountUp with an optional determinate RingProgress (rates only). One
- * accent (paper/ink) — no decorative color stacking (Heron rule).
+ * accent (paper/ink) — no decorative color stacking (ds rule).
  */
 export function MetricHero({
   label,

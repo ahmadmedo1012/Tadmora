@@ -10,7 +10,7 @@
  */
 import { describe, expect, it, beforeEach } from "@jest/globals";
 import { render, screen } from "@testing-library/react-native";
-import { heron } from "@/design/tokens";
+import { ds } from "@/design/tokens";
 import { useReduceMotion } from "@/hooks/useReduceMotion";
 import { Skeleton, SkeletonText } from "./Skeleton";
 
@@ -70,7 +70,7 @@ describe("Skeleton", () => {
     expect(geometries[0].height).toBe(16);
     expect(geometries[0].borderRadius).toBe(0);
     // light theme default bone — the hairline tier under paper
-    expect(geometries[0].backgroundColor).toBe(heron.light.border);
+    expect(geometries[0].backgroundColor).toBe(ds.light.border);
 
     // band = max(200 × 0.4, 24) = 80px; at sweep=0 it rests fully clipped
     // past the reading-start edge (LTR under jest): translateX = -80
@@ -81,9 +81,9 @@ describe("Skeleton", () => {
     const gradients = collectProps(toJSON(), (p) => Array.isArray(p.gradient));
     expect(gradients).toHaveLength(1);
     const gradient = gradients[0].gradient as number[];
-    expect(gradient[1]).toBe(hexToInt(heron.light.bg));
+    expect(gradient[1]).toBe(hexToInt(ds.light.bg));
     expect(gradient[2]).toBeCloseTo(0.5, 6);
-    expect(gradient[5]).toBe(hexToInt(heron.light.bg));
+    expect(gradient[5]).toBe(hexToInt(ds.light.bg));
   });
 
   it("gives every instance a unique gradient id (svg resolves url(#id) globally)", async () => {

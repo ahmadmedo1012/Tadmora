@@ -1,7 +1,7 @@
 /**
  * R334 2-a — entrance/exit/layout presets for reanimated layout animations.
  *
- * Thin factories over reanimated's builders that bake in the Heron motion
+ * Thin factories over reanimated's builders that bake in the ds motion
  * scale (durations/easing from ./presets) so screens never hand-roll a
  * timing again. Each call returns a FRESH builder (the reanimated builder
  * statics are immutable; instance methods mutate — never share instances).
@@ -36,25 +36,25 @@ export interface EntranceOptions {
   delay?: number;
 }
 
-/** Fade in place — 200ms, the Heron curve. For subtle content swaps. */
+/** Fade in place — 200ms, the ds curve. For subtle content swaps. */
 export function fadeIn({ duration, delay }: EntranceOptions = {}) {
   return FadeIn.duration(duration ?? durations.fast)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Fade + rise — the default content entrance (240ms rhythm). */
 export function fadeInUp({ duration, delay }: EntranceOptions = {}) {
   return FadeInUp.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Fade + drop — for content entering from above (sheets, headers). */
 export function fadeInDown({ duration, delay }: EntranceOptions = {}) {
   return FadeInDown.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /**
@@ -67,7 +67,7 @@ export function slideInFromStart({ duration, delay }: EntranceOptions = {}) {
   const fromStartEdge = I18nManager.isRTL ? SlideInRight : SlideInLeft;
   return fromStartEdge.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Mirror of slideInFromStart — from the reading-END edge (detail push-ins). */
@@ -75,19 +75,19 @@ export function slideInFromEnd({ duration, delay }: EntranceOptions = {}) {
   const fromEndEdge = I18nManager.isRTL ? SlideInLeft : SlideInRight;
   return fromEndEdge.duration(duration ?? durations.entrance)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
 /** Exit — always faster than the entrance (150ms), same curve. */
 export function fadeOut({ duration, delay }: EntranceOptions = {}) {
   return FadeOut.duration(duration ?? durations.exit)
     .delay(delay ?? 0)
-    .easing(easings.heron);
+    .easing(easings.ds);
 }
 
-/** Layout transitions (reposition on data change) — 200ms linear-ish Heron. */
-export function heronLayout({ duration }: EntranceOptions = {}) {
-  return LinearTransition.duration(duration ?? durations.fast).easing(easings.heron);
+/** Layout transitions (reposition on data change) — 200ms linear-ish ds. */
+export function dsLayout({ duration }: EntranceOptions = {}) {
+  return LinearTransition.duration(duration ?? durations.fast).easing(easings.ds);
 }
 
 /* ─── stagger ──────────────────────────────────────────────────────────── */

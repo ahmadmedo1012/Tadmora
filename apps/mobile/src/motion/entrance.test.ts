@@ -18,7 +18,7 @@ import {
   fadeInDown,
   fadeInUp,
   fadeOut,
-  heronLayout,
+  dsLayout,
   slideInFromEnd,
   slideInFromStart,
   staggerDelay,
@@ -67,8 +67,8 @@ describe("factories route to the right builders (RTL-aware)", () => {
     expect(fadeOut()).toBe(FadeOut);
   });
 
-  it("heronLayout is the LinearTransition", () => {
-    expect(heronLayout()).toBe(LinearTransition);
+  it("dsLayout is the LinearTransition", () => {
+    expect(dsLayout()).toBe(LinearTransition);
   });
 
   it("LTR: reading-start is the LEFT edge", () => {

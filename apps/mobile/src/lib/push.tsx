@@ -26,7 +26,7 @@ import { router } from "expo-router";
 import { get, post, del } from "@/api/client";
 import { useSession } from "@/auth/session";
 
-/** The Android channels (id, importance, name) — Heron: one honest bell. */
+/** The Android channels (id, importance, name) — ds: one honest bell. */
 export const CHANNEL_ALERTS = "alerts";
 
 let channelsReady = false;

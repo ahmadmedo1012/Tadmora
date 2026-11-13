@@ -1,7 +1,7 @@
 /**
  * R334 2-a — the mobile motion system barrel.
  *
- * One import for the whole Heron motion vocabulary:
+ * One import for the whole ds motion vocabulary:
  *
  *   import { PressableScale, fadeInUp, Skeleton, CountUp, RingProgress } from "@/motion";
  *
@@ -19,7 +19,7 @@ export {
   slideInFromStart,
   slideInFromEnd,
   fadeOut,
-  heronLayout,
+  dsLayout,
   staggerDelay,
   enterStagger,
   useEntrance,

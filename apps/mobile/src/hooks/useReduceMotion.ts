@@ -3,7 +3,7 @@ import { AccessibilityInfo } from "react-native";
 
 /**
  * prefers-reduced-motion — every animated affordance in the app reads this
- * once and degrades to a static (or opacity-only) presentation. The Heron
+ * once and degrades to a static (or opacity-only) presentation. The ds
  * loaders converge instantly instead of animating (B2 rule).
  */
 export function useReduceMotion(): boolean {

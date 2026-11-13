@@ -94,7 +94,7 @@ export function CountUp({
     if (reduced) {
       progress.value = value; // instant set
     } else {
-      progress.value = withTiming(value, { duration, easing: easings.heron });
+      progress.value = withTiming(value, { duration, easing: easings.ds });
     }
   }, [value, duration, reduced, progress]);
 

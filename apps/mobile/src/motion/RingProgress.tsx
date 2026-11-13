@@ -8,7 +8,7 @@
  * indeterminate spin — is a plain rotate transform).
  *
  *   · determinate — `progress` (0..1) fills the ring; changes re-animate
- *     from the current position with the Heron curve;
+ *     from the current position with the ds curve;
  *   · indeterminate — a fixed 25% arc rotating once per `durations.spin`
  *     (linear, forever) — the busy ring for unknown-duration loads.
  *
@@ -89,7 +89,7 @@ export function RingProgress({
     if (reduced) {
       fill.value = target; // instant — no timing
     } else {
-      fill.value = withTiming(target, { duration, easing: easings.heron });
+      fill.value = withTiming(target, { duration, easing: easings.ds });
     }
   }, [progress, duration, reduced, indeterminate, fill]);
 

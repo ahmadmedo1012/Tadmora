@@ -35,7 +35,7 @@
 import { useEffect } from "react";
 import { Platform } from "react-native";
 import { StatusBar, type StatusBarStyle } from "expo-status-bar";
-import { heron, type ThemeName } from "./tokens";
+import { ds, type ThemeName } from "./tokens";
 import { useTheme } from "./theme";
 
 /**
@@ -78,7 +78,7 @@ export function AppStatusBar({ style, animated = true }: AppStatusBarProps) {
     void (async () => {
       try {
         const { setBackgroundColorAsync } = await import("expo-system-ui");
-        await setBackgroundColorAsync(heron[name].bg);
+        await setBackgroundColorAsync(ds[name].bg);
       } catch {
         // Root-view tint is cosmetic; never let it break a screen.
       }

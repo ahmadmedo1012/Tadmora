@@ -1,5 +1,5 @@
 /**
- * R334 2-a — the Heron motion presets (reanimated 4.7 / worklets 0.13).
+ * R334 2-a — the ds motion presets (reanimated 4.7 / worklets 0.13).
  *
  * The DURATION scale is the shared one from @/design/tokens (generated from
  * shared/design-tokens.json — micro 80 · fast 200 · base 400 · slow 500 ·
@@ -13,7 +13,7 @@
  *   · only transform/opacity are ever animated — never layout properties;
  *   · every consumer degrades under prefers-reduced-motion (B2 rule);
  *   · springs for interaction, timings for state — one easing curve (the
- *     Heron cubic-bezier 0.23 1 0.32 1) for both.
+ *     ds cubic-bezier 0.23 1 0.32 1) for both.
  */
 import { Easing } from "react-native-reanimated";
 import type {
@@ -22,7 +22,7 @@ import type {
   WithSpringConfig,
   WithTimingConfig,
 } from "react-native-reanimated";
-import { heronEase, motion } from "@/design/tokens";
+import { dsEase, motion } from "@/design/tokens";
 
 /** Duration scale — ms. Shared tokens where they exist, mobile-only rest. */
 export const durations = {
@@ -55,10 +55,10 @@ export const durations = {
 /** Anything a reanimated config accepts as `easing`. */
 export type EasingFn = EasingFunction | EasingFunctionFactory;
 
-/** The single easing family — the Heron curve leads everywhere. */
+/** The single easing family — the ds curve leads everywhere. */
 export const easings = {
-  /** cubic-bezier(0.23, 1, 0.32, 1) — the shared heronEase token. */
-  heron: Easing.bezier(heronEase[0], heronEase[1], heronEase[2], heronEase[3]),
+  /** cubic-bezier(0.23, 1, 0.32, 1) — the shared dsEase token. */
+  ds: Easing.bezier(dsEase[0], dsEase[1], dsEase[2], dsEase[3]),
   /** for content that settles into place. */
   outCubic: Easing.out(Easing.cubic),
   /** symmetric — rare; reserved for cross-fades. */
@@ -81,12 +81,12 @@ export const springs = {
   gentle: { mass: 1.1, damping: 30, stiffness: 170, overshootClamping: false },
 } as const satisfies Record<string, WithSpringConfig>;
 
-/** Timing config builder — the default curve is the Heron ease. */
-export function timing(duration: number, easingFn: EasingFn = easings.heron): WithTimingConfig {
+/** Timing config builder — the default curve is the ds ease. */
+export function timing(duration: number, easingFn: EasingFn = easings.ds): WithTimingConfig {
   return { duration, easing: easingFn };
 }
 
-/** The Heron press state — scale ≈0.98 · opacity ≈0.9 (spec defaults). */
+/** The ds press state — scale ≈0.98 · opacity ≈0.9 (spec defaults). */
 export const pressFeedback = {
   scale: 0.98,
   opacity: 0.9,

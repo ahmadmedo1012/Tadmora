@@ -1,5 +1,5 @@
 /**
- * R334 2-a — PressableScale: the Heron press feedback primitive.
+ * R334 2-a — PressableScale: the ds press feedback primitive.
  *
  * A NEW sibling of ui/pressables (that file stays untouched — its Button /
  * IconButton own their own pressed styles). This one wraps ANY pressable
@@ -29,7 +29,7 @@ import { durations, easings, pressFeedback, springs } from "./presets";
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export interface PressableScaleProps extends PressableProps {
-  /** scale while pressed (default 0.98 — the Heron press). */
+  /** scale while pressed (default 0.98 — the ds press). */
   pressedScale?: number;
   /** opacity while pressed (default 0.9). */
   pressedOpacity?: number;

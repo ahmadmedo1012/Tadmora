@@ -2,12 +2,12 @@
  * R334 2-f — the SEMANTIC color layer.
  *
  * Role names for what screens actually mean, resolved per theme through the
- * EXISTING mechanism (heron palette + statusTones from ./tokens → the
+ * EXISTING mechanism (ds palette + statusTones from ./tokens → the
  * generated shared source of truth). Screens should reach for these seats
  * instead of raw palette keys, so a future token reshuffle only edits this
  * one mapping.
  *
- * Heron discipline (unchanged, now testable):
+ * ds discipline (unchanged, now testable):
  *   · Elevation WITHOUT shadows — cards rise by a surface step + a hairline
  *     frame. The presets below never emit any shadow or elevation key.
  *   · ONE sienna accent per screen — `accent` is the only saturated brand
@@ -28,7 +28,7 @@
  *     `ink` (the luminous rung).
  */
 import { StyleSheet, type ViewStyle } from "react-native";
-import { heron, statusTones, type StatusTone, type ThemeName } from "./tokens";
+import { ds, statusTones, type StatusTone, type ThemeName } from "./tokens";
 
 // ── status seats ───────────────────────────────────────────────────────────
 
@@ -84,7 +84,7 @@ export interface SemanticColors {
 }
 
 export function semanticColorsFor(name: ThemeName): SemanticColors {
-  const p = heron[name];
+  const p = ds[name];
   const t = statusTones[name];
   return {
     surface: p.bg,
@@ -115,7 +115,7 @@ export interface Hairlines {
 }
 
 export function hairlinesFor(name: ThemeName): Hairlines {
-  const p = heron[name];
+  const p = ds[name];
   return {
     border: { borderWidth: StyleSheet.hairlineWidth, borderColor: p.border },
     borderStrong: { borderWidth: 1, borderColor: p.rule },

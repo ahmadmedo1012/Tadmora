@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { useTheme } from "@/design/theme";
-import { heron } from "@/design/tokens";
+import { ds } from "@/design/tokens";
 
 /**
  * /auth — the guest stack (login · register · forgot/reset password).
@@ -15,7 +15,7 @@ export default function AuthLayout() {
       screenOptions={{
         headerShown: false,
         animation: "fade",
-        contentStyle: { backgroundColor: heron[name].bg },
+        contentStyle: { backgroundColor: ds[name].bg },
       }}
     >
       <Stack.Screen name="index" />
