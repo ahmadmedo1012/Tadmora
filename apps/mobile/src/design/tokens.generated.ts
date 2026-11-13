@@ -3,7 +3,7 @@
  * Source of truth: shared/design-tokens.json (R326 M0.4).
  * Regen (repo root): npm run tokens:build · Gate: npm run tokens:check
  *
- * The MOBILE half of the shared ds set. The typed public surface
+ * The MOBILE half of the shared design-system set. The typed public surface
  * (DsPalette · StatusTone · the toneFor* mappers) lives in ./tokens,
  * which re-exports this data — every existing import keeps working.
  */
@@ -138,7 +138,7 @@ export const motion = {
 
 export const dsEase = [0.23, 1, 0.32, 1] as const;
 
-// ds radius discipline: 0 everywhere; circles only for round elements.
+// radius discipline: 0 everywhere; circles only for round elements.
 export const radius = {
   none: 0,
   full: 9999,

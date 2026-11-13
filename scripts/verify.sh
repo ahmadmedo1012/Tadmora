@@ -10,7 +10,7 @@
 # Usage:
 #   bash scripts/verify.sh              # full set (what CI runs, ~8 min)
 #   bash scripts/verify.sh --fast       # tsc + vitest + bundle gate only (~4 min)
-#   bash scripts/verify.sh --specs r305-shell-heron   # e2e scope (file stem)
+#   bash scripts/verify.sh --specs r305-shell-ds   # e2e scope (file stem)
 #
 # Exit 0 = all green. Any failure prints the failing gate's tail.
 # ═════════════════════════════════════════════════════════════════════
