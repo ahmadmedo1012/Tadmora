@@ -39,7 +39,7 @@ export function roleLabel(role: AppRole): string {
 
 /** Arabic dashboard title per role (the h1 / breadcrumb root / tab
  * title of each role's home surface — ADMIN: «لوحة المسجل العام»). */
-export const ROLE_DASHBOARD_LABELS: Record<AppRole, string> = {
+const ROLE_DASHBOARD_LABELS: Record<AppRole, string> = {
   STUDENT: 'لوحة التحكم',
   TEACHER: 'لوحة الأستاذ',
   ADMIN: 'لوحة المسجل العام',
@@ -52,14 +52,3 @@ export function roleDashboardLabel(role: AppRole): string {
   return ROLE_DASHBOARD_LABELS[role];
 }
 
-/** The AuthPage demo-account buttons' short labels — the established
- * wording of the demo panel (R320 §B: only ADMIN's entry moved to the
- * role's canonical name; the retired label is documented in the
- * RENAME-LEDGER). */
-export const AUTH_DEMO_ROLE_LABELS: Record<AppRole, string> = {
-  STUDENT: 'طالب',
-  TEACHER: 'أستاذ',
-  ADMIN: 'المسجل العام',
-  QUALITY: 'ضمان الجودة',
-  OWNER: 'المالك',
-};

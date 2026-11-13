@@ -81,5 +81,3 @@ export const provisionAdminSchema = z
     }
   });
 
-/** Membership revoke / restore take no body — ids ride in the path. */
-export const membershipActionSchema = z.object({}).strict();

@@ -20,8 +20,8 @@ import rateLimit, { type Options, type RateLimitRequestHandler } from 'express-r
  * documentation — exported, unconsumed, while the limiters repeated the
  * literals below). The admin settings display (AdminExtraPages) and
  * any future docs quote THEM, not retyped digits. */
-export const GLOBAL_RATE = { max: 1000, windowMinutes: 15 };
-export const AUTH_RATE = { max: 10, windowMinutes: 15 };
+const GLOBAL_RATE = { max: 1000, windowMinutes: 15 };
+const AUTH_RATE = { max: 10, windowMinutes: 15 };
 const FIFTEEN_MIN = GLOBAL_RATE.windowMinutes * 60 * 1000;
 
 /**

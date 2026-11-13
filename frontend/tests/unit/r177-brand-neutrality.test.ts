@@ -204,7 +204,9 @@ describe('r182 — the docs center intro stays affiliation-free', () => {
    * back into university co-branding. */
   it('docs/README.md presents Ulara as the independent platform with the fictional demo tenant', () => {
     const docsIndex = readRepo('docs/README.md');
-    expect(docsIndex).toContain('منصّة تعليم');
+    // The W4-docs consolidation rewrote the index — the independent
+    // identity line is the new contiguous wording.
+    expect(docsIndex).toContain('تعليم ذكي، عربية-أولًا، مستقلّة');
     expect(docsIndex).toContain('مستقلّة');
     // Phase Ω: the demo tenant is the labeled «مساحة عمل أُلارا
     // التجريبية» — synthetic data, never a university.

@@ -22,8 +22,12 @@ import {
 const aiRouteSource = readFileSync(new URL('../../src/http/routes/ai.routes.ts', import.meta.url), 'utf8');
 const aiLibSource = readFileSync(new URL('../../src/lib/ai.ts', import.meta.url), 'utf8');
 const schemaSource = readFileSync(new URL('../../prisma/schema.prisma', import.meta.url), 'utf8');
+/* The 33 era migrations were replaced by the single 0001_ulara_baseline
+ * (2026-11-13 — the zero-trace policy retired the era names the old
+ * dirs carried). The quota DDL pins read the BASELINE now: it carries
+ * the accumulated schema, same tables, same unique indexes. */
 const migrationSource = readFileSync(
-  new URL('../../prisma/migrations/20261029013000_r323_ai_quota/migration.sql', import.meta.url),
+  new URL('../../prisma/migrations/0001_ulara_baseline/migration.sql', import.meta.url),
   'utf8',
 );
 const envExampleSource = readFileSync(new URL('../../../.env.example', import.meta.url), 'utf8');

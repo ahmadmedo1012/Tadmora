@@ -17,7 +17,7 @@
  */
 import { type Prisma, type PrismaClient } from '@prisma/client';
 
-export const DEMO_EMAIL_SUFFIX = '@demo.ulara.ly';
+const DEMO_EMAIL_SUFFIX = '@demo.ulara.ly';
 
 /** The demo users' ids — the ONLY selector the sweep may use. */
 export async function demoCohortIds(prisma: PrismaClient | Prisma.TransactionClient): Promise<string[]> {

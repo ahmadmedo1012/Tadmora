@@ -30,7 +30,7 @@ import { utcDayStart } from '../src/lib/dates.js';
 
 /** The demo-cohort flag: every pilot-sample student carries this
  *  domain — the registrar's removal action sweeps exactly it. */
-export const DEMO_EMAIL_DOMAIN = '@demo.ulara.ly';
+const DEMO_EMAIL_DOMAIN = '@demo.ulara.ly';
 
 const TERM = '2024-FALL';
 

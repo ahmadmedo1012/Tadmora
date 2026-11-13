@@ -62,7 +62,7 @@ export interface TestAccount {
 export const TEST_PASSWORD = '12345678';
 
 /** The demo marker — an email on this domain IS a demonstration account. */
-export const TEST_ACCOUNTS_DOMAIN = '@test.ly';
+const TEST_ACCOUNTS_DOMAIN = '@test.ly';
 
 export const TEST_ACCOUNTS: readonly TestAccount[] = [
   { job: 'طالب', email: 'student@test.ly', password: TEST_PASSWORD, role: 'STUDENT', group: 'التعليم' },
