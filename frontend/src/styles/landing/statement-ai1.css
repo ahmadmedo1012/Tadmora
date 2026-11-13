@@ -3,7 +3,7 @@
  * of every word below the word cell; ours rides the SAME --wr-k scrub the
  * fill rides: parked at translateY(100%) (clipped by the .wr-w mask), it
  * rolls up into place as the scrub passes the word — real scroll-tied
- * motion, the Heron roll grammar, never a count-only box.
+ * motion, the reference roll grammar, never a count-only box.
  *
  * Rest serialization (the conformance twin's own law, r338 T-03g): the
  * twin rests at the ghost gray (--neutral-400, the spec's recorded rest

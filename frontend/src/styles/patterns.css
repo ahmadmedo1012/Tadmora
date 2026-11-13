@@ -372,7 +372,7 @@ a.pf-row-link {
   inline-size: 100%;
   block-size: 44px;
   padding-inline: var(--sp-9) var(--sp-4);
-  /* R313 (WP-D · D16): the Heron input recipe — transparent ground,
+  /* R313 (WP-D · D16): the reference input recipe — transparent ground,
      #B3B3AF hairline, square corners (the old surface well + pill
      radius are retired). */
   border: 1px solid var(--border-strong);
@@ -876,7 +876,7 @@ a.pf-row-link {
   }
 
   /* ══ 4 · THE RULED CELL COMPOSITION (R315 · K-I) ═════════════════
-     The Heron contact-sheet grammar: the form is a ruled block of
+     The reference contact-sheet grammar: the form is a ruled block of
      hairline-separated rows. Each row = a mono [NN] index cell
      (dir=ltr, Latin, tabular) + the Arabic label + the control
      filling the row. 1px var(--rule) separators BETWEEN rows; the
@@ -1788,7 +1788,7 @@ a.pf-row-link {
     color: var(--text-muted);
   }
 
-  /* ══ 7 · 404 — the Heron guest sheet (r313) ════════════════════════ */
+  /* ══ 7 · 404 — the reference guest sheet (r313) ════════════════════════ */
 
   .nf-shell {
     min-block-size: 100dvh;
@@ -3905,8 +3905,8 @@ a.pf-row-link {
    deviation precedent — import-line + comment re-key only). Cascade:
    the block keeps its own @layer pages wrapper (same named layer,
    source-order append — the family grammar now loads with the global
-   sheet BEFORE the lazy page css; relative order vs teacher/heron.css
-   is preserved: heron still follows and keeps its paired-class wins
+   sheet BEFORE the lazy page css; relative order vs teacher/ds-core.css
+   is preserved: the reference still follows and keeps its paired-class wins
    per its §443 note; .pf-filterbar .pill (0,2,0) beats components.css
    .pill (0,1,0) by specificity, order-independent). ═══════════════ */
 @layer pages {

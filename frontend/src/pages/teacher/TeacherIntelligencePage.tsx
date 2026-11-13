@@ -30,7 +30,7 @@ import { countAr } from '../../lib/format';
 import { useEntityPageTitle } from '../../components/layout/AppShell'; // r183-B6 (A4 P3-4): entity tab title, one call only
 import '../../styles/owner.css'; // ConfirmDialog surfaces via curriculum authoring (D11 css split, 12-15)
 import '../../styles/training.css'; // shared .track-hero/.filter-pill/.back-link families (D11 css split, 12-15)
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the teacher dashboard's Card titles and the
  * done daily-work pages speak (TeacherPages.tsx:54), so the
@@ -428,7 +428,7 @@ export function TeacherOfferingDetailPage() {
         </div>
         <div className="track-hero-main">
           {/* R342-09 — the detail-surface classification eyebrow (.hr-eyebrow,
-           * heron.css §E): a param route resolves no topbar group kicker, so
+           * ds-core.css §E): a param route resolves no topbar group kicker, so
            * the surface carries its own classification line — which board this
            * drill-down belongs to. A real classification, never decoration. */}
           <p className="hr-eyebrow">الذكاء الأكاديمي · تحليل المقرّر</p>

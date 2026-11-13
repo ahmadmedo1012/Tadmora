@@ -39,8 +39,8 @@ import {
  * Page-chunk CSS loads after main.tsx's global sheets, so the family
  * refinements win same-specificity ties over the frozen student.css
  * recipes they restyle (the deep-band hero). */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-dashboard.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-dashboard.css';
 /* R319 (c2-G1) — §B2: the dashboard joins the sheet system. The 7px
  * frame + grain + the ambient `SHEET S-01 · STUDENT` title line are
  * the shared shell's (C2-G2, live on every authenticated route); this

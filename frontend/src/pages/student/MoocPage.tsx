@@ -16,8 +16,8 @@ import { formatInt, formatNum } from '../../utils/numbers';
 import { matchesNormalizedQuery } from '../../lib/search';
 import { countAr } from '../../lib/format';
 /* R305 Heron: the shared student vocabulary + this family's refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the mooc thumb-cards' hairline re-seat). */
 import '../../styles/student/pages.css';

@@ -1,7 +1,7 @@
 /* ═════════════════════════════════════════════════════════════════════
    Footer.css — the landing colophon, REBUILT (ULARA Ω task 1-C).
    ─────────────────────────────────────────────────────────────────────
-   The R338→R343 Heron spec-mirror is retired by program decision: the
+   The R338→R343 the reference spec-mirror is retired by program decision: the
    --fu fluid unit (83 usages), the fixed-height ink band with its
    negative margin, the position:absolute chrome and the 88 data-spec
    conformance seats are GONE. The rebuild's mechanics:
@@ -464,7 +464,7 @@ footer.fo-footer {
   line-height: 1.5;
   font-weight: 500;
   /* the 44px touch floor (the footer link ladder) — a CONTRACT, not a
-     heron measure: stays fixed px at every bp */
+     the reference measure: stays fixed px at every bp */
   min-block-size: 44px;
   transition: color var(--t-fast) var(--ease);
 }

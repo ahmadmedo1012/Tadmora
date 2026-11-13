@@ -147,7 +147,7 @@ describe('R305 calendar — today is the ONE emphasized cell, weekend goes quiet
   });
 
   it('stylesheet: today rides the accent wash + copper edge (the ONE emphasized cell)', () => {
-    const sheet = read('src/styles/student/heron-schedule.css');
+    const sheet = read('src/styles/student/ds-schedule.css');
     const rule = sheet.match(/\.cal-cell\[data-today='true'\]\s*\{[^}]*\}/);
     expect(rule).not.toBeNull();
     expect(rule![0]).toContain('color-mix(in srgb, var(--accent) 7%, var(--surface))');
@@ -273,7 +273,7 @@ describe('R305 schedule — day sections + the honest week load', () => {
      * days render .r319s-bar; the skeleton path renders no
      * .schedule-day wrapper — no DOM ever matched) and is deleted. The
      * in-header hairline now provably rides the shared bar's own rule. */
-    const sheet = read('src/styles/student/heron-schedule.css');
+    const sheet = read('src/styles/student/ds-schedule.css');
     expect(sheet).toMatch(/\.schedule-day \+ \.schedule-day\s*\{[^}]*border-block-start:\s*1px solid var\(--surface-divider\)/);
     const bars = read('src/styles/student/pages.css');
     expect(bars).toMatch(/\.r319s-bar-rule\s*\{[^}]*background:\s*var\(--surface-divider\)/);
@@ -330,9 +330,9 @@ describe('R305 results — the summary strip is the ONE deep band', () => {
 
   it('stylesheet: the band re-derives the PATTERN inks via scoped tokens (cascade-proof)', () => {
     /* R341 (D7c) re-key: the ink pole was promoted from the results
-     * page's local .results-summary rule (heron-schedule.css §4,
+     * page's local .results-summary rule (ds-schedule.css §4,
      * deleted) to the SHARED foundation band — .r305s-band--deep in
-     * heron.css §3 — so every deep band inherits the same AA
+     * ds-core.css §3 — so every deep band inherits the same AA
      * re-derivation. The declarations are verbatim; only the rule's
      * home moved (the DOM seat .results-summary.r305s-band--deep is
      * unchanged — see the DOM pins above). patterns.css (the StatLine
@@ -341,7 +341,7 @@ describe('R305 results — the summary strip is the ONE deep band', () => {
      * anywhere in a layer would be dead CSS; the band re-derives the
      * TOKENS the pattern rules resolve — inheritance feeds the winning
      * rules instead of fighting them. */
-    const sheet = read('src/styles/student/heron.css');
+    const sheet = read('src/styles/student/ds-core.css');
     const band = sheet.match(/\.r305s-band--deep\s*\{[^}]*--text: var\(--neutral-0\)[^}]*\}/);
     expect(band).not.toBeNull();
     expect(band![0]).toContain('--text: var(--neutral-0)');
@@ -358,7 +358,7 @@ describe('R305 results — the summary strip is the ONE deep band', () => {
     expect(band![0]).toContain('--accent-ink: color-mix(in srgb, var(--accent) 62%, var(--neutral-0))');
     // No layered color override on the pattern's own classes — that is
     // the exact shape the cascade silently kills (both homes).
-    for (const home of ['src/styles/student/heron.css', 'src/styles/student/heron-schedule.css']) {
+    for (const home of ['src/styles/student/ds-core.css', 'src/styles/student/ds-schedule.css']) {
       expect(read(home)).not.toMatch(/\.(?:results-summary|r305s-band--deep) \.pf-stat[^{]*\{[^}]*color:/);
     }
   });
@@ -453,15 +453,15 @@ describe('R305 schedule family sheet — wiring + gate shape', () => {
   ];
 
   it('the foundation + family sheet are imported by every owned page (and only there)', () => {
-    const sheet = read('src/styles/student/heron-schedule.css');
+    const sheet = read('src/styles/student/ds-schedule.css');
     for (const p of PAGES) {
       const src = read(p);
-      expect(src).toContain("import '../../styles/student/heron.css';");
-      expect(src).toContain("import '../../styles/student/heron-schedule.css';");
+      expect(src).toContain("import '../../styles/student/ds-core.css';");
+      expect(src).toContain("import '../../styles/student/ds-schedule.css';");
     }
     // No other page module pulls the schedule family sheet.
     for (const other of ['src/pages/student/DashboardPage.tsx', 'src/pages/student/CoursesPage.tsx']) {
-      expect(read(other)).not.toContain('student/heron-schedule.css');
+      expect(read(other)).not.toContain('student/ds-schedule.css');
     }
     // The sheet sits in the pages layer with the rest of the family.
     expect(sheet).toMatch(/@layer pages \{/);

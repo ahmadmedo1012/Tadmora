@@ -25,8 +25,8 @@ import { formatInt } from '../../utils/numbers';
 /* R305-A5 (Heron): the shared student vocabulary + this family's sheet.
  * The video/progress/checkpoint logic is untouched — this pass only
  * refines the surfaces around it. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-courses.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-courses.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy every converted
  * student page mounts (SectionBar/BarCount/EmptyCell + the family's
  * unlayered masthead tail precedent). */

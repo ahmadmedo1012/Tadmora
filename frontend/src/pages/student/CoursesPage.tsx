@@ -35,8 +35,8 @@ import { formatDate } from '../../utils/numbers';
 /* R305-A5 (Heron): the shared student vocabulary + this family's sheet.
  * student.css (global shell import) styles the base page classes; these
  * two carry the Heron primitives and the page-scoped refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-courses.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-courses.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy (loaded
  * by every student page that renders the kit) + this family's own
  * harmonics (thumb-card hairline re-seat, the row progress seat). */

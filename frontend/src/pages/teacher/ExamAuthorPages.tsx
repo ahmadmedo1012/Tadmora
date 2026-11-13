@@ -74,7 +74,7 @@ import {
 } from '../../hooks/useResources';
 import '../../styles/owner.css'; // ConfirmDialog + ToggleSwitch surfaces (D11 css split, 12-15)
 import '../../styles/training.css'; // shared .back-link family (D11 css split, 12-15)
-import '../../styles/teacher/heron.css'; // R305 — the Heron layer (exa2- section lives here)
+import '../../styles/teacher/ds-core.css'; // R305 — the Heron layer (exa2- section lives here)
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the exam
  * surfaces' section heads read on the numeral axis. */
@@ -2195,7 +2195,7 @@ function TemplateDetailBody({ template }: { template: ExamTemplateDetail }) {
              * .hr-eyebrow classification register — a param route resolves
              * no topbar group kicker, so the surface carries its own
              * classification line (same §0 brow anatomy, the eyebrow
-             * name — see heron.css §E). */}
+             * name — see ds-core.css §E). */}
             <span className="hr-eyebrow exa2-brow">دورة حياة القالب</span>
             {/* A6 P3 (22-a): 2-line clamp lives in the exa sheet —
                 authored titles run long and pushed the whole page down;

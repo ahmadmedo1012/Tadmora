@@ -65,7 +65,7 @@ import '../../styles/admin.css'; // r150e: the roster chrome left colleges.css
  * admin.css so it wins the @layer pages tie. Every rule in the sheet
  * is scoped under the .r305ao page-root marker class, so teacher /
  * quality / community screens are untouched. */
-import '../../styles/shared/heron-admin-owner.css';
+import '../../styles/shared/ds-admin-owner.css';
 /* R332 W11 — the dashboard grammar bridge (styles/landing/inner.css §W11):
  * the [nn] section-index chips (.w11-idx) the dashboard's cards mount +
  * the .w11-quick metric lift on the «مؤشرات سريعة» stat rows — marker-

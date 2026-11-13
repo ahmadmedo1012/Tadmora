@@ -132,12 +132,12 @@ describe('R305-A7 — the scoped Heron sheet wiring', () => {
   const pageSrc = () =>
     readFileSync(resolvePath(__dirname, '../../src/pages/teacher/ResearchReviewPage.tsx'), 'utf8');
   const sheetSrc = () =>
-    readFileSync(resolvePath(__dirname, '../../src/styles/shared/research-heron.css'), 'utf8');
+    readFileSync(resolvePath(__dirname, '../../src/styles/shared/ds-research.css'), 'utf8');
 
-  it('research-heron.css is imported directly after research.css (later import wins the layer tie)', () => {
+  it('ds-research.css is imported directly after research.css (later import wins the layer tie)', () => {
     const source = pageSrc();
     const familyAt = source.indexOf("import '../../styles/research.css'");
-    const heronAt = source.indexOf("import '../../styles/shared/research-heron.css'");
+    const heronAt = source.indexOf("import '../../styles/shared/ds-research.css'");
     expect(familyAt).toBeGreaterThan(-1);
     expect(heronAt).toBeGreaterThan(familyAt);
   });

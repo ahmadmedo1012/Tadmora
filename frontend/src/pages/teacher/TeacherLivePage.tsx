@@ -22,7 +22,7 @@ import { useDiscardGuard } from '../../components/curriculum/AuthoringModal';
 import { Icon } from '../../components/Icon';
 import { EmojiIcon } from '../../components/EmojiIcon';
 import '../../styles/owner.css'; // ConfirmDialog surfaces via the discard guard (D11 css split, 12-15)
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the live
  * board's section heads read on the numeral axis. Fixed category

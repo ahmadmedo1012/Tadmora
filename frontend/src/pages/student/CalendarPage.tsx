@@ -35,8 +35,8 @@ import {
 } from '../../lib/calendar';
 import { formatDate } from '../../utils/numbers';
 /* ── r305-c (schedule family) imports — the only region agent 2-c edits above the components ── */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-schedule.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-schedule.css';
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the calendar's own grid/legend/detail
  * registers keep their r305-c pins; the week strip joins the sheet). */

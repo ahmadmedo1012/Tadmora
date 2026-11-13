@@ -1,9 +1,9 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — R305-A5 · Heron design language — student DASHBOARD family
+   ULARA — R305-A5 · the reference design language — student DASHBOARD family
    Branch: redesign/r305-student-a-dashboard
    Owner: Agent 2-a · /student/dashboard only (DashboardPage.tsx)
 
-   The Heron VISUAL PASS on the r220–r285 dashboard composition. This
+   The reference VISUAL PASS on the r220–r285 dashboard composition. This
    sheet is the family layer ON TOP of the shared vocabulary
    (r305-student.css) and the frozen recipes it restyles (student.css's
    .dash-resume-card/.stu-hero hero anatomy, patterns.css .pf-*). It
@@ -29,7 +29,7 @@
 
   /* ── 1 · The hero band — the ONE next action ─────────────────────
      The PP-X2 .dash-resume-card recipe (copper inline-start edge) now
-     sits on the Heron DEEP band (r305s-band--deep: ink ground in the
+     sits on the reference DEEP band (r305s-band--deep: ink ground in the
      light theme, paper ground in the dark — the neutral ramp inverts,
      so the band always contrasts its page). Inner inks re-derive from
      the band's own fg/ground pair at the AA-safe 85/15 mix (85% band

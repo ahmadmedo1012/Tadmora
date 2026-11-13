@@ -15,8 +15,8 @@ import { useJobs, useApplyJob, apiErrorMessage, type Job } from '../../hooks/use
 import { formatDate, formatInt } from '../../utils/numbers';
 import { countAr } from '../../lib/format';
 /* R305 Heron: the shared student vocabulary + this family's refinements. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy + the family's
  * harmonics. */
 import '../../styles/student/pages.css';

@@ -1,6 +1,6 @@
 /* T-14 (r339) — the landing pattern library: the 7 canonical patterns
  * (numeral · hairline · eyebrow · CTA pair · card grid · marquee · pin).
- * Every param below is the MEASURED grammar of the Heron-conformant
+ * Every param below is the MEASURED grammar of the reference-conformant
  * sections — chrome's .fo-label/.fo-mono (eyebrow/numeral), cta's
  * .fo-cta-actions pair, roles' 1fr 1fr grid, hero's .fo-ticker,
  * journey's .jt-pin. No invented values; existing tokens only;
@@ -10,7 +10,7 @@
 /* ── Numeral `[nn]` — the mono bracketed index (chrome .fo-mono). ── */
 .lp-numeral {
   font-family: var(--font-mono);
-  /* L1-e (R341 · T-16 #2) — the numeral rides Heron's measured
+  /* L1-e (R341 · T-16 #2) — the numeral rides the legacy measured
      Geistmono rung (--fs-mono-md: 11.67 @1440 · 13.89 @390), a tier
      BELOW the fs-sm label voice — body / label / numeral read as
      distinct rungs; ≥11px at 390 (the panel's legibility finding). */

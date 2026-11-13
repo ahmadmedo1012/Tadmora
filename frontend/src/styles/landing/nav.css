@@ -1,8 +1,8 @@
 /* ════════════════════════════════════════════════════════════════════
    r331/nav.css — R331 · A-Web-Nav — the landing masthead's whole
-   stylesheet, rebuilt to the Heron header's MEASURED mechanics
-   (docs/redesign/r331/heron-program.md §6 + heron-program.json
-   `header`; probes /home/z/heron-lab/data/nav-{1440,390}.json).
+   stylesheet, rebuilt to the reference header's MEASURED mechanics
+   (the retired r331 program doc §6 + the program digest
+   `header`; probes from the retired lab captures, nav-{1440,390}.json).
 
    Imported by components/landing/chrome/SheetNav.tsx — the block ships
    with its component; landing.css keeps NOTHING header-shaped after
@@ -10,7 +10,7 @@
    header/nav surface, r314-chrome.css and r305-shell.css carry no
    landing-header rules at all — verified by grep before the cut).
 
-   The measured reference grammar (heronaiapp.com, computed + CSS):
+   The measured reference grammar (the retired reference site, computed + CSS):
      · fixed bar at the sheet frame's inset, ~56px tall, TRANSPARENT
        paper in every state — no blur, no shadow, no on-scroll wash
        (verified at scrollY 0…900; the task brief's "ink paper tone"
@@ -72,13 +72,13 @@
    * @1920 — exactly 0.9259vw) with a mobile ladder below (14.73px @768,
    * 15.88px @390); her row is 1.3 × the size at EVERY recorded bp
    * (23.11/17.78, 17.33/13.33, 12.33/9.48, 19.15/14.73, 20.64/15.88). */
-  font-size: clamp(9.48px, 0.9259vw, 17.78px); /* font-gate: allow — the frozen Heron chrome scale, vw-exact at every recorded desktop bp */
+  font-size: clamp(9.48px, 0.9259vw, 17.78px); /* font-gate: allow — the frozen reference chrome scale, vw-exact at every recorded desktop bp */
   line-height: 1.35;         /* the Arabic metric floor over her 1.3 row (23.11 → 24px @1920) — the tolerances.mjs transformed expectation */
   /* r339 (T-10) — the measured chrome ink: every her bar container
    * carries rgba(40,40,40,.72); the literal (not color-mix — the
    * conformance twin reads the computed string) per the --rl-soft-ink
    * precedent (roles.css). */
-  --nv-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (rgba(40,40,40,.72) = --text 72%), the roles.css/statement.css precedent */
+  --nv-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen reference soft-ink measure (rgba(40,40,40,.72) = --text 72%), the roles.css/statement.css precedent */
   color: var(--nv-soft-ink);
 }
 
@@ -90,10 +90,10 @@ html[data-theme='dark'] .fo-header {
  * (her desktop range is vw-fluid; below it the scale steps UP for the
  * touch register — the frozen measures, both rungs). */
 @media (max-width: 991px) {
-  .fo-header { font-size: 14.73px; } /* font-gate: allow — the frozen Heron tablet chrome scale (@768) */
+  .fo-header { font-size: 14.73px; } /* font-gate: allow — the frozen reference tablet chrome scale (@768) */
 }
 @media (max-width: 640px) {
-  .fo-header { font-size: 15.88px; } /* font-gate: allow — the frozen Heron phone chrome scale (@390) */
+  .fo-header { font-size: 15.88px; } /* font-gate: allow — the frozen reference phone chrome scale (@390) */
 }
 
 /* on-scroll — the >1×bar state marker, exactly the reference's class
@@ -374,7 +374,7 @@ html[data-theme='dark'] .fo-header {
    * (11.67px on the 13.33px root @1440, at every recorded bp) while the
    * nav CELL box carries the root register itself; her label row is
    * 1.4 × the label size (16.33px @1440). */
-  font-size: 0.875em;      /* font-gate: allow — the measured Heron label factor (11.67/13.33), vw-exact via the root */
+  font-size: 0.875em;      /* font-gate: allow — the measured reference label factor (11.67/13.33), vw-exact via the root */
   line-height: 1.4;        /* the measured label row (16.33px @1440) */
 }
 
@@ -549,7 +549,7 @@ html[data-theme='dark'] .fo-header {
   /* r339 (T-10) — her menu LABEL: 0.875 × the root size (13.89px on the
    * 15.88px root @390, 12.89 on 14.73 @768) with the 1.35–1.4 label row
    * (18.75px @390, 18.05 @768 — 1.375 splits both within the ±0.5 box). */
-  font-size: 0.875em;      /* font-gate: allow — the measured Heron label factor */
+  font-size: 0.875em;      /* font-gate: allow — the measured reference label factor */
   line-height: 1.375;      /* the measured label row, both mobile rungs within ±0.5px */
 }
 

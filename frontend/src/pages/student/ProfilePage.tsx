@@ -22,8 +22,8 @@ import { ChangePasswordCard } from '../../components/account/ChangePasswordCard'
 import '../../styles/training.css'; // .achievement-* family (D11 css split, 12-15)
 /* R305 Heron: the shared student vocabulary + this family's page-scoped
    refinements (the deep profile hero band, §1 of the family sheet). */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the same pair every converted student
  * page rides; the profile's own regions are Cards + the R305 hero band,

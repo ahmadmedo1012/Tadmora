@@ -1606,7 +1606,7 @@
 
   /* ╔═══════════════════════════════════════════════════════════════╗
      ║  INPUT / SELECT / TEXTAREA — R313 (WP-D · D16)                 ║
-     ║  Heron focus recipe: the #ED4C1F signal border, hairline-only  ║
+     ║  the reference focus recipe: the #ED4C1F signal border, hairline-only  ║
      ║  (the accent HALO is retired — no box-shadows on fields).      ║
      ╚═══════════════════════════════════════════════════════════════╝ */
   .input,
@@ -1620,7 +1620,7 @@
   }
   .input:focus,
   input:focus, textarea:focus, select:focus {
-    border-color: #ED4C1F; /* color-gate: allow — R313 D16: Heron's measured input-focus orange (live digest inputs.focus; token seat pending — worklog note) */
+    border-color: #ED4C1F; /* color-gate: allow — R313 D16: the legacy measured input-focus orange (live digest inputs.focus; token seat pending — worklog note) */
   }
 
 

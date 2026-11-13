@@ -165,7 +165,7 @@
   }
 
   /* ── Progress track ──────────────────────────────────────────────
-     R313 (WP-E): the Heron scrubber — a 2px square rail, ACCENT
+     R313 (WP-E): the reference scrubber — a 2px square rail, ACCENT
      progress, an 8×8 SQUARE handle (no rounded knobs, no glow); the
      generous block padding keeps the ~24px hit area. Full-bleed
      (negates the bar's inline padding) so the rail spans the frame. */

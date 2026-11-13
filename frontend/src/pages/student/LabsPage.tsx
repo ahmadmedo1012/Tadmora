@@ -23,8 +23,8 @@ import { formatNum } from '../../utils/numbers';
    The labs catalog rides the FOUNDATION classes only (kicker section
    register, meta-row separators, status chips) — the family sheet adds
    no page-scoped rules for this page. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the lab thumb-cards' hairline re-seat). */
 import '../../styles/student/pages.css';

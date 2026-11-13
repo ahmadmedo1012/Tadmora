@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — R305-A5 · Heron design language, student courses family
+   ULARA — R305-A5 · the reference design language, student courses family
    Branch: redesign/r305-student-b-courses · Agent 2-b
 
    Family sheet for the four learning routes:
@@ -10,7 +10,7 @@
 
    Layering contract: the FROZEN student.css owns the base page classes
    (.courses-*, .course-continue, .lecture-*, .chapter-*, .cp-*) and the
-   shared foundation r305-student.css owns the Heron vocabulary. THIS
+   shared foundation r305-student.css owns the reference vocabulary. THIS
    sheet only ADDS page-scoped refinements on top of both — every
    selector is anchored to a class these four pages render, and no
    frozen/foundation rule is rewritten. Import order (per page):
@@ -26,7 +26,7 @@
 @layer pages {
 
   /* ── 1 · Courses list (/student/courses) ──────────────────────────
-     RowList rows: quiet Heron metadata + precise progress. The code/
+     RowList rows: quiet the reference metadata + precise progress. The code/
      teacher/lecture-count line rides the foundation .r305s-meta-row
      (TSX); the row's progress is the §B2 CourseBar (the hairline +
      end-tick instrument — r319-student-pages.css §3 seats it), so the
@@ -112,7 +112,7 @@
      (zero horizontal overflow at 320px). */
 
   /* ── 4 · Lecture player (/student/lectures/:lectureId) ────────────
-     4a · The now-playing block — the page's ONE --deep band (Heron's
+     4a · The now-playing block — the page's ONE --deep band (the reference's
      dark/light section contrast): the meta under the video reads as the
      player chrome world (ink ground in light, paper ground in dark —
      the foundation band flips with the theme). The h1 re-derives from

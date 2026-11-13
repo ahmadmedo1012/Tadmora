@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   ULARA — R305-A8 «Heron» admin + platform-owner sheet
+   ULARA — R305-A8 «ds» admin + platform-owner sheet
    (r305-admin-owner.css)
    ───────────────────────────────────────────────────────────────────
    The administration & owner console reads as ONE technical surface:
@@ -76,7 +76,7 @@
      dialogs      .modal-overlay .modal-card .modal-header/-title/-body
                   /-footer .owner-confirm-title/-message/-actions
    NEW classes introduced here (page agents opt in):
-     .r305ao-panel / .r305ao-panel-title   — the standard Heron surface
+     .r305ao-panel / .r305ao-panel-title   — the standard the reference surface
                  for settings groups & operational panels
      .r305ao-toolbar                       — generic wrapping toolbar rail
      .r305ao-bulkbar / -count / -actions   — table selection action bar
@@ -137,7 +137,7 @@
    with the 44px touch floor. */
 
 /* Section headers — 18px semibold display (patterns.css pins size/weight
-   already; the display face + ink are restated as the Heron voice).
+   already; the display face + ink are restated as the reference voice).
    Card titles step DOWN to 16px semibold: page 24 → section 18 → card
    16 keeps one scan ladder inside the console column. */
 .r305ao .card-title {
@@ -422,7 +422,7 @@
    Scope: .modal-* surfaces + the ConfirmDialog (.owner-confirm-*).
    ⚠ These portal to document.body OUTSIDE the page root, so every
    rule here is gated by `body:has(.r305ao)`: the dialog only inherits
-   the Heron register when an admin/owner page (which always carries
+   the reference register when an admin/owner page (which always carries
    the marker) is mounted. Teacher/quality dialogs never match.
    Grammar: restrained corner, flat accent hairline (the gradient bar
    retires), confirm titles step down to the section voice, and the
@@ -824,7 +824,7 @@ body:has(.r305ao) .owner-confirm-actions .btn.danger {
   overflow: auto;
 }
 
-.bimp-table { inline-size: 100%; border-collapse: collapse; font-size: 12.5px; /* type-gate: allow — the r305 Heron overlay admin rungs (authored literals, reviewed) */ }
+.bimp-table { inline-size: 100%; border-collapse: collapse; font-size: 12.5px; /* type-gate: allow — the r305 the reference overlay admin rungs (authored literals, reviewed) */ }
 .bimp-table th {
   position: sticky;
   inset-block-start: 0;

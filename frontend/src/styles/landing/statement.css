@@ -1,5 +1,5 @@
-/* R338 T-03 — البيان, REWRITTEN against the frozen Heron spec
-   (docs/redesign/r335/heron-spec/home-intro-wrap.{390,768,1024,1440,
+/* R338 T-03 — البيان, REWRITTEN against the frozen reference spec
+   (the frozen r335 reference captures: home-intro-wrap.{390,768,1024,1440,
    1920}.json). Every rule below is the r338 rewrite of the r337 sheet;
    the retired transplant rules die with it. The DOM (Statement.tsx)
    mirrors the spec census:
@@ -36,9 +36,9 @@
 .st-section {
   /* R338 T-03g — the soft 72%-ink as a section-scoped var so the dark arm
      can carry a compliant ink (the light value stays byte-identical to the
-     frozen Heron measure; under [data-theme=dark] the rgba(40,40,40,.72)
+     frozen the reference measure; under [data-theme=dark] the rgba(40,40,40,.72)
      ink composites to ~1.0:1 on the dark surface — invisible, WCAG fail) */
-  --st-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen Heron soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
+  --st-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen reference soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
   position: relative;
   display: block;
   margin: 0;
@@ -131,7 +131,7 @@
    reference's line containers are full-width boxes, one per line) */
 .st-titlebox {
   inline-size: 100%;
-  /* R338 T-03i — the measured titlebox→pill gap: heron sits the pill
+  /* R338 T-03i — the measured titlebox→pill gap: the reference sits the pill
      3.2rem under the last line (1920: 35px · 1440: 27 · 1024: 19) */
   margin-block-end: 3.2rem;
   /* R338 T-03g — the reference's titlebox carries the ghost title ink
@@ -151,7 +151,7 @@
      off-d2 h2 measurement and keeps its own rung. */
   font-size: var(--fs-h3);
   /* R338 T-03g — the Arabic line-height floor: the conformance twin
-     transforms the reference's lh expectation to max(heronLh, 1.35×fs)
+     transforms the reference's lh expectation to max(dsLh, 1.35×fs)
      for Arabic text (the joining script needs the taller leading); the
      reference's own 1.0×fs measure is the Latin-culture value */
   line-height: 5.4rem;
@@ -520,7 +520,7 @@
   text-align: end;
   font-size: 1.2rem;
   line-height: 1.62rem;
-  color: var(--st-soft-ink); /* the scoped soft-ink var (light = the frozen Heron measure, dark = the compliant arm) */
+  color: var(--st-soft-ink); /* the scoped soft-ink var (light = the frozen reference measure, dark = the compliant arm) */
 }
 .st-desc-text .fo-text-link {
   color: inherit;

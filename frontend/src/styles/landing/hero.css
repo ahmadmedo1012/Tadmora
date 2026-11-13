@@ -1,8 +1,8 @@
 /* R332 — split VERBATIM from src/styles/landing.css · hero = R322 hero transplant + bp drawing + title block (371-1095) + R308 hi instrument (4028-4405) + fo-ticker (4406-4453)
    full map + proof: docs/redesign/r332/css-split-landing.md */
 
-/* ═══ HERO — R322 (2-b): the measured Heron transplant ══════════════
- * docs/redesign/r322/heron/hero-{1440,768,390}.json — the reference
+/* ═══ HERO — R322 (2-b): the measured reference transplant ══════════════
+ * the retired r322 extraction docs (hero-{1440,768,390}.json) — the reference
  * hero is ONE full-viewport screen built as TWO stacked bands inside
  * the page frame: the ART band (the whole illustration, ink filling
  * the band width, on transparent paper inside a hairline drafting
@@ -46,7 +46,7 @@
  * mechanics rebuild — the band floor merged into .fo-hero-work below. */
 .fo-hero-title {
   font-family: var(--font-display);
-  /* R322 (1-d): the H1 rides the D1 rung — --fs-d1 (the Heron-measured
+  /* R322 (1-d): the H1 rides the D1 rung — --fs-d1 (the legacy-measured
      5.6rem h1 @1440, band-independent clamp; see tokens.css R322),
      weight 600 (the display voice's top rung — the 700 era ends),
      lh 1.05 (the D1 leading; also the minimum IBM Plex Sans Arabic's
@@ -478,7 +478,7 @@
   position: absolute;
   background: var(--border);
   opacity: 0;
-  mix-blend-mode: difference; /* the reference's cursor line (heron-program colors.heroCursorLine) */
+  mix-blend-mode: difference; /* the reference's cursor line (the program digest's colors.heroCursorLine) */
   transition: opacity var(--t-base) var(--ease);
 }
 
@@ -896,7 +896,7 @@
 /* ── sl — the entrance loader («لوحة البدء») ──────────────────────── */
 
 /* ═══ r338 T-13b — interaction-state seats (interact.mjs parity) ═════
- * The heron census twins (div.home-hero-sub-wrap > interactive[N])
+ * The reference census twins (div.home-hero-sub-wrap > interactive[N])
  * bound with data-spec-hover=N in Hero.tsx. Each twin fires on pointer
  * hover AND on focus (:focus-within matches the seat itself holding
  * focus — r172a §3: ZERO :focus-visible rules in the landing family;
@@ -909,8 +909,8 @@
  *   0 login · 3 register · 1/2/5/7/4/6 work strip · 8/9 deco ·
  *   11–14 ± dmarks · 15–20 the graticule measures. */
 .hro {
-  --hro-seat-ink: rgb(250, 54, 0); /* color-gate: allow — measured heron hover ink (the login twin's recorded after-color); ADDENDUM 9 scoped-var pattern, T-25 owns the global token unification */
-  --hro-seat-ghost: rgb(255, 243, 239); /* color-gate: allow — measured heron register-hover wash-off (the primary's ghost after-state: fill → transparent, ink → rgb(255,243,239)) */
+  --hro-seat-ink: rgb(250, 54, 0); /* color-gate: allow — measured reference hover ink (the login twin's recorded after-color); ADDENDUM 9 scoped-var pattern, T-25 owns the global token unification */
+  --hro-seat-ghost: rgb(255, 243, 239); /* color-gate: allow — measured reference register-hover wash-off (the primary's ghost after-state: fill → transparent, ink → rgb(255,243,239)) */
   --hro-seat-lift: translateY(-0.12rem);
 }
 

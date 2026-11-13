@@ -1,13 +1,13 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — R305-A5 · Heron design language, student workspace foundation
-   Branch: redesign/r305-heron-student · baseline 1b766512 (r304 follow-up)
+   ULARA — R305-A5 · the reference design language, student workspace foundation
+   Branch: redesign/r305-reference-student · baseline 1b766512 (r304 follow-up)
 
-   The shared Heron vocabulary every student family sheet builds on.
+   The shared reference vocabulary every student family sheet builds on.
    Family sheets (r305-student-*.css) own their page-specific sections;
    THIS file owns only the cross-family primitives below — append-only
    per section, never rewrite another section.
 
-   Heron translation onto the Ulara canon (no token changes, gates
+   the reference translation onto the Ulara canon (no token changes, gates
    unmodified — every value rides the r197/r303 ladders):
    • Surface geometry  — surface STEPS (bg → surface → surface-2/3),
      hairline frames, radius chosen per task (r-sm wells, r-lg panels,
@@ -36,7 +36,7 @@
 
 @layer pages {
 
-  /* ── 1 · Micro-label (the Heron overline) ─────────────────────────
+  /* ── 1 · Micro-label (the reference overline) ─────────────────────────
      Classifies the block that follows: a status, a metadata family,
      an action group. 13px floor, semibold, secondary ink. Pairs with
      .r305s-eyebrow-rule for the leading tick. */
@@ -84,7 +84,7 @@
 
   /* ── 3 · Surface bands — the dark/light section contrast ─────────
      .r305s-band       : the quiet step (surface-2 ground, hairline frame).
-     .r305s-band--deep : the Heron inversion — ink ground in light theme,
+     .r305s-band--deep : the reference inversion — ink ground in light theme,
                          paper ground in dark (the neutral scale flips),
                          so the band always contrasts its page.
      Inner ink on the deep band re-derives from the SAME theme ramp:
@@ -101,7 +101,7 @@
     border-color: transparent;
   }
   /* R341 (D7c) — the band's INK POLE, promoted from the results page's
-     local .results-summary recipe (heron-schedule.css §4, deleted) to
+     local .results-summary recipe (ds-schedule.css §4, deleted) to
      the shared foundation: every deep band re-derives the tokens the
      pattern children resolve (--text + the -ink tones toward the
      band's own fg pole) so canonical StatLine/badge tones stay AA on
@@ -206,7 +206,7 @@
      no trailing action span) — deleted. */
 
   /* ── 7 · The one-action emphasis ──────────────────────────────────
-     Heron restraint: exactly one emphasized action per view region.
+     the reference restraint: exactly one emphasized action per view region.
      The shared .btn.accent system carries the fill; this wrapper adds
      the copper edge-tint rail for the non-button hero strips. */
   .r305s-next {
@@ -216,7 +216,7 @@
   }
 
   /* ── 8 · Density helpers for rows and ledgers ─────────────────────
-     The pattern RowList remains the product; these only tune Heron
+     The pattern RowList remains the product; these only tune the reference
      rhythm inside student sections (never re-style .pf-* globally). */
   .r305s-meta-row {
     display: flex;

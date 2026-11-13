@@ -8,13 +8,13 @@
    components.css) and deleted — the cascade speaks in layers again:
    tokens → base → layout/components → pages → overrides. The shell
    recipes below are the single source for sidebar/topbar/nav chrome.
-   r305 (Heron shell): conservation pass — the recipes below were
-   reconciled with the Heron Shell Contract (precise outlines ·
+   r305 (the reference shell): conservation pass — the recipes below were
+   reconciled with the reference Shell Contract (precise outlines ·
    structured grid · restrained signal · disciplined type · crisp
    transitions): resting controls lost their at-rest shadows (hairline
    carries depth), hover states are surface steps (the accent never
    previews on hover), and the active row keeps ONE marker (bar +
-   surface step + icon tint). The Heron layer that binds the whole
+   surface step + icon tint). The reference layer that binds the whole
    shell lives in r305-shell.css (imported by AppShell.tsx, unlayered
    — last word in the cascade); this sheet remains the base recipes.
    ════════════════════════════════════════════════════════════════════ */
@@ -144,7 +144,7 @@
     background: var(--surface);
     border: 1px solid var(--rule);
     color: var(--text-muted);
-    /* r305 (Heron conservation): the 1px «hairline depth cue» shadow is
+    /* r305 (the reference conservation): the 1px «hairline depth cue» shadow is
        retired — resting chrome is FLAT (the hairline border IS the
        outline; --elev-* is reserved for true overlays). Press/hover
        registers for this control live in r305-shell.css's one
@@ -159,7 +159,7 @@
      sticks after a tap on touch) — R329 gate:clean wraps it (it was
      an unguarded tap-stick seat). */
   .sidebar-collapse-btn:hover {
-    /* r305 (Heron conservation): hover is a SURFACE STEP — the copper
+    /* r305 (the reference conservation): hover is a SURFACE STEP — the copper
        border/ink here spent the signal on an uncommitted state (grammar
        §3: copper only at the active marker / focus / primary CTA /
        unread urgency / ⌘K chip). The ink steps with the surface; FOCUS
@@ -392,7 +392,7 @@
   /* r294 (polish v8 fold): the mobile drawer's close button + the
      ≤920px sidebar overrides. The X button is drawer-only; the rail
      collapse control dies on mobile (open vs closed, no rail).
-     R319 (c1-A · B1b): Heron menu grammar — a square 44px cell on the
+     R319 (c1-A · B1b): the reference menu grammar — a square 44px cell on the
      1px hairline, radius 0, paper ground (the tinted-surface chip
      retires; the drawer IS the sheet). The state pair travels whole
      (see the paired-state contract on .nav-item) and hover is guarded
@@ -467,7 +467,7 @@
     /* R319 (c1-A · B1b): the scrim is INK over paper — the translucent
        veil retires (it read as a flat grey wash on the phone). Light:
        the ink #262019 (= --text light) at 58%; dark: the paper twin
-       #F6F8FA (= --text dark) at 92% — Heron's own menu veils. The
+       #F6F8FA (= --text dark) at 92% — the reference's own menu veils. The
        theme fork below keys off the existing [data-theme] mechanism;
        the rgba literals are the precomputed rgb(from var(--text) …)
        equivalents. */
@@ -482,7 +482,7 @@
     /* R319 (c1-A · B1b): dark scrim — the paper twin at 92% (the
        reference's own night menu veil: the sheet reads as paper over
        paper, not a black hole). */
-    background: rgba(246,248,250,0.92); /* color-gate: allow — R319 (c1-A · B1b): drawer scrim, dark theme — paper twin #F6F8FA (var(--text) dark) at 92%, Heron's night menu veil */
+    background: rgba(246,248,250,0.92); /* color-gate: allow — R319 (c1-A · B1b): drawer scrim, dark theme — paper twin #F6F8FA (var(--text) dark) at 92%, the reference's night menu veil */
   }
 
   /* ═══ أُلارا night shell (r211 Superlist re-skin) ═══
@@ -509,7 +509,7 @@
     [data-theme="dark"] .sidebar { position: relative; }
   }
 
-  /* mobile drawer — R319 (c1-A · B1b): rebuilt on Heron's menu grammar.
+  /* mobile drawer — R319 (c1-A · B1b): rebuilt on the reference's menu grammar.
      The drawer IS the sheet: full-bleed opaque paper, hairline rows,
      mono gutter indexes, one accent rule per active row. See each
      rule's comment for the grammar decision. */
@@ -584,7 +584,7 @@
     .sidebar-mobile-close { min-inline-size: 44px; min-block-size: 44px; }
     .sidebar-logout { min-inline-size: 44px; min-block-size: 44px; }
 
-    /* ── R319 (c1-A · B1b): Heron's menu grammar, drawer band ────── */
+    /* ── R319 (c1-A · B1b): the reference's menu grammar, drawer band ────── */
 
     /* Rows: square hairline-separated cells, 48px tall (inside the
        48–56 band; the (hover:none) 44px floor below stays the legal
@@ -731,7 +731,7 @@
        chip at 13px (axe, browser check); secondary clears AA both themes. */
     color: var(--text-secondary);
     background: var(--surface-2);
-    /* r305 (Heron conservation): the 20% copper tint on this hairline
+    /* r305 (the reference conservation): the 20% copper tint on this hairline
        is retired — the scope chip is CONTEXT, not signal (grammar §3's
        five copper sites don't include a passive chip); the plain rule
        hairline carries it in both themes.
@@ -1010,7 +1010,7 @@
     letter-spacing: normal;
     color: var(--text-muted);
     font-weight: var(--fw-semibold);
-    /* r305 (Heron conservation): the 90deg surface-fade backdrop is
+    /* r305 (the reference conservation): the 90deg surface-fade backdrop is
        retired — decorative gradient paint in the chrome (the quiet
        muted label carries the section; the dropdown hairlines carry
        the structure). The [dir=rtl] gradient twin retired with it. */
@@ -1058,7 +1058,7 @@
     transform-origin: center;
     transition: transform var(--motion-duration-short) var(--ease-spring-soft);
   }
-  /* r305 (Heron conservation): hover is a SURFACE STEP — the accent
+  /* r305 (the reference conservation): hover is a SURFACE STEP — the accent
      wash + accent bar used to preview on plain hover, spending the
      signal before the user committed. The bar + tinted step are the
      SELECTED grammar (.active / aria-selected — the list's one
@@ -1235,7 +1235,7 @@
       transform var(--motion-duration-short) var(--ease-spring-soft);
   }
   @media (hover: hover) and (pointer: fine) {
-    /* r305 (Heron conservation): hover is a surface step + a stronger
+    /* r305 (the reference conservation): hover is a surface step + a stronger
        hairline — was an accent wash + accent border (copper spent on
        hover). The pill's ink steps up to keep the affordance legible.
        R319 (c1-A · B1): guarded fine-pointer wash, pair whole. */
@@ -1325,7 +1325,7 @@
     --_fg: var(--text);
     background: var(--_bg);
     color: var(--_fg);
-    /* r305 (Heron conservation): the thumb floats by SURFACE STEP + an
+    /* r305 (the reference conservation): the thumb floats by SURFACE STEP + an
        inset hairline now (precise outlines) — the at-rest --shadow-card
        on a chrome control read as elevation the overlay ladder doesn't
        sanction. Inset ring, not a border: no layout shift inside the

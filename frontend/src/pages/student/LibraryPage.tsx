@@ -31,7 +31,7 @@ import '../../styles/research.css';
 /* R305-A7 «Heron»: the scoped research/PDF/library sheet — loaded
  * DIRECTLY AFTER the family sheet so later source order inside
  * @layer pages wins the equal-specificity ties (§0 scoping contract). */
-import '../../styles/shared/research-heron.css';
+import '../../styles/shared/ds-research.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics. The .r319s-page class on the same root
  * as .r305rp opts this route into the masthead re-seat (one display

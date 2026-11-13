@@ -1,12 +1,12 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — R305-A7 «Heron» research · PDF reader · library · AI sheet
+   ULARA — R305-A7 «ds» research · PDF reader · library · AI sheet
    (r305-research-pdf-ai.css)
    ───────────────────────────────────────────────────────────────────
-   Branch: redesign/r305-heron-research-pdf-ai · baseline 1b766512
+   Branch: redesign/r305-reference-research-pdf-ai · baseline 1b766512
    (r304 follow-up). The research & document family — student library,
    student research, teacher review, the shared PDF workspace, and the
    AI assistant — reads as ONE technical, restrained surface in the
-   Heron grammar established by R305-A5/A8:
+   the reference grammar established by R305-A5/A8:
 
    • surface STEPS (bg → surface → surface-2/3), hairline frames,
      radius per task (r-sm wells, r-lg panels, r-full chips);
@@ -41,7 +41,7 @@
    student/AiAssistantPage · DocumentViewerPage (+ components/pdf/*).
 
    ── SECTION MAP (append-only ownership — never edit another §) ─────
-     §1–§8   shared Heron primitives (integration-owned; consumers may
+     §1–§8   shared reference primitives (integration-owned; consumers may
              RELY on them, not restyle them)
      §A      student library + student research   (a7-lib)
      §B      teacher research review              (a7-teach)
@@ -78,7 +78,7 @@
 
 @layer pages {
 
-  /* ══ §1 · Micro-label (the Heron overline) ════════════════════════
+  /* ══ §1 · Micro-label (the reference overline) ════════════════════════
      Classifies the block that follows: a status, a metadata family,
      an action group. 13px floor via --fs-sm, semibold, secondary ink. */
   /* The short technical tick before the label text. */
@@ -86,11 +86,11 @@
   /* ══ §2 · Thin technical dividers ═════════════════════════════════
      Hairlines carry the layout: horizontal section rule, vertical
      column rule, and the labeled variant that stamps a micro-label
-     INTO the line (Heron's annotated divider). */
+     INTO the line (the reference's annotated divider). */
 
   /* ══ §3 · Surface bands — the dark/light section contrast ═════════
      .r305rp-band       : the quiet step (surface-2 ground, hairline).
-     .r305rp-band--deep : the Heron inversion — ink ground in light
+     .r305rp-band--deep : the reference inversion — ink ground in light
                           theme, paper ground in dark (the neutral
                           scale flips), so the band always contrasts
                           its page. Inner ink re-derives from the SAME
@@ -118,7 +118,7 @@
      instead of a boxed card header. */
 
   /* ══ §7 · The one-action emphasis ═════════════════════════════════
-     Heron restraint: exactly one emphasized action per view region.
+     the reference restraint: exactly one emphasized action per view region.
      The shared .btn system carries the fill; this wrapper adds the
      copper edge-tint rail for hero strips. */
 
@@ -141,7 +141,7 @@
      Long Arabic titles and mixed Arabic/Latin/numeral strings never
      break a row: the title clamps at two lines, meta lines wrap, and
      the flexible children keep a min-inline-size floor. The rowlist
-     also drops its elevation — Heron frames are fine outlines, not
+     also drops its elevation — the reference frames are fine outlines, not
      shadows. */
   .r305rp .pf-rowlist { box-shadow: none; }
   .r305rp .pf-row-title {
@@ -552,7 +552,7 @@
 
   /* ── a7-ai appends here ── */
 
-  /* ══ §D · AI assistant — the Heron ledger (a7-ai) ═════════════════
+  /* ══ §D · AI assistant — the reference ledger (a7-ai) ═════════════════
      The conversation reads as a TECHNICAL LEDGER: each turn is a hairline
      separated row carrying a role micro-label («المساعد» / «أنت») and a
      quiet content panel; roles differ by label + indent + panel ground —

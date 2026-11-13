@@ -132,7 +132,7 @@
   /* R313 (WP-F · D16): focus = the reference's #ED4C1F signal border,
      no halo (mirrors components.css's input focus; no token seat
      exists yet). */
-  border-color: #ED4C1F; /* color-gate: allow — R313 D16: Heron's measured input-focus orange (live digest inputs.focus; no token seat exists yet) */
+  border-color: #ED4C1F; /* color-gate: allow — R313 D16: the legacy measured input-focus orange (live digest inputs.focus; no token seat exists yet) */
 }
 .admin-students-search input {
   /* r294 (polish v8 fold): the bare-input reset comes home — the
@@ -175,7 +175,7 @@
   /* R313 (WP-F · D16): focus = the reference's #ED4C1F signal border,
      no halo (mirrors components.css's input focus; no token seat
      exists yet). */
-  border-color: #ED4C1F; /* color-gate: allow — R313 D16: Heron's measured input-focus orange (live digest inputs.focus; no token seat exists yet) */
+  border-color: #ED4C1F; /* color-gate: allow — R313 D16: the legacy measured input-focus orange (live digest inputs.focus; no token seat exists yet) */
 }
 
 /* r299: the -name content class stays (the papers register's cell

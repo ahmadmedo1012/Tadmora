@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════════════
-   R333 P-D — the cursor sheet (heron-craft row 8 · INV-05).
+   R333 P-D — the cursor sheet (the retired craft sheet row 8 · INV-05).
    The custom pointer instrument's dedicated stylesheet, re-landed out
    of chrome.css: a full-viewport 2D canvas carrying the 10px signal
    square + velocity trail, and the DOM ring that GROWS over real
@@ -58,7 +58,7 @@
   opacity: 0.68;
 }
 
-/* Difference-blend OPTION over hero art (heron-craft row 8): opt in by
+/* Difference-blend OPTION over hero art (the retired craft sheet row 8): opt in by
    stamping data-blend='on' on the canvas — where mix-blend-mode is
    supported the instrument inverts against the art beneath it, exactly
    like the reference's difference-blend measuring lines. */

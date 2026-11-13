@@ -50,7 +50,7 @@ import { ASSIGNMENT_KIND_LABEL, MATERIAL_TYPE_LABEL, gradeBand, GRADE_BANDS } fr
 import { validatePdfFile, pdfUploadErrorMessage } from '../../lib/pdfUpload';
 import ResearchReviewPage from './ResearchReviewPage';
 import { formatDate, formatNum, formatPct1 } from '../../utils/numbers';
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 hr- primitives + §A tqd- deltas (mounted via .hr-scope)
+import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 hr- primitives + §A tqd- deltas (mounted via .hr-scope)
 /* R341 D8 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the teacher dashboard's Card titles and the
  * student SectionBar speak, so every daily-work section head reads on

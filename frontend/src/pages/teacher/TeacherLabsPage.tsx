@@ -30,7 +30,7 @@ import { Icon } from '../../components/Icon';
 import { useLabs, type VirtualLab } from '../../hooks/useResources';
 import { countAr } from '../../lib/format';
 import { formatNum } from '../../utils/numbers';
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the labs
  * directory's section head reads on the numeral axis. */

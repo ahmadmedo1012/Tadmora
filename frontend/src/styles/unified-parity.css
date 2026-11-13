@@ -1,6 +1,6 @@
 /* ═════════════════════════════════════════════════════════════════════
    Canonical Ulara parity export v2 — faithful distillation of
-   tokens.css @ R313 (the Heron FULL-parity foundation).
+   tokens.css @ R313 (the reference FULL-parity foundation).
 
    Reference artifact for the design canon — the verification surface
    the parity gate diffs against tokens.css. This file is NOT imported
@@ -18,9 +18,9 @@
    r305 RE-SYNC: the export had drifted through two eras (it still
    shipped the r197 ultramarine/warm-paper values while canonical had
    moved through r303/r304) — the parity gate ran red at the r305
-   baseline (76/190). That revision re-distilled the Heron foundation.
+   baseline (76/190). That revision re-distilled the reference foundation.
 
-   R313 RE-SYNC (owner decision — FULL Heron parity; supersedes the
+   R313 RE-SYNC (owner decision — FULL the reference parity; supersedes the
    r305/r306/r308 divergence rulings): warm vintage paper #F5F1E8,
    radius ladder collapsed to 0, decorative shadows removed (elev +
    shadow aliases → none; the prefers-contrast a11y rings stay), the
@@ -80,7 +80,7 @@
     /* (r136: --sp-*x legacy aliases deleted with the canon — see tokens.css) */
 
     /* ─── Radius — Notion-soft, 7 rungs + full ────────────────────── */
-    /* R313 override: radius ladder collapsed to 0 (owner decision — Heron parity) */
+    /* R313 override: radius ladder collapsed to 0 (owner decision — the reference parity) */
     --r-xs: 0px;
     --r-sm: 0px;
     --r-md: 0px;
@@ -123,12 +123,12 @@
     --fs-display-lg: 7.2rem;
     --fs-display-md: 6.4rem;
 
-    --fs-h1: 5.6rem;          /* 46.67px @1440 — the measured Heron h1 */
-    --fs-h2: 4.8rem;          /* 40px    @1440 — Heron h2 */
-    --fs-h3: 4rem;            /* 33.33px @1440 — Heron h3 */
+    --fs-h1: 5.6rem;          /* 46.67px @1440 — the measured reference h1 */
+    --fs-h2: 4.8rem;          /* 40px    @1440 — the reference h2 */
+    --fs-h3: 4rem;            /* 33.33px @1440 — the reference h3 */
 
     /* r325 Y4 — the CLAMPED display ladder (tokens.css:1337): floors are
-       Heron's own phone sizes; the 4.8vw mid-term reproduces Heron's
+       the reference's own phone sizes; the 4.8vw mid-term reproduces the reference's
        768/991 values exactly. The export defines them so its var() chains
        resolve standalone (the R326 undefined-var audit). */
     --fs-d1: clamp(31.74px, 4.8vw, 5.6rem);
@@ -147,9 +147,9 @@
 
     /* R313 — mono micro-label sizes (r325 Y4 — 11px floors, mirrors
        tokens.css: the mono rung is 11–12 per §R324) */
-    --fs-mono-md: max(11.67px, 1.4rem); /* 11.67px @1440 — Heron txt-14 */
-    --fs-mono-sm: max(11px, 1.2rem);    /* 11px floor (was 10px) — Heron txt-12 */
-    --fs-mono-xs: max(11px, 1rem);      /* 11px floor (was 8.33px) — Heron txt-10 */
+    --fs-mono-md: max(11.67px, 1.4rem); /* 11.67px @1440 — the reference txt-14 */
+    --fs-mono-sm: max(11px, 1.2rem);    /* 11px floor (was 10px) — the reference txt-12 */
+    --fs-mono-xs: max(11px, 1rem);      /* 11px floor (was 8.33px) — the reference txt-10 */
 
     /* legacy aliases (r148-d: --fs-base/-4xl + headline/label pairs
        deleted with the canon — zero consumers) */
@@ -1148,7 +1148,7 @@
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
     /* R313 override (D3): badge elevation retired — flat badge on hairline
-       grammar (owner decision — Heron parity, zero decorative shadows) */
+       grammar (owner decision — the reference parity, zero decorative shadows) */
     transition: color var(--t-base) var(--ease);
   }
   @media (hover: hover) and (pointer: fine) {

@@ -25,8 +25,8 @@ import { countAr, formatDateAr, WEEKDAY_NAMES_AR } from '../../lib/format';
 import { formatInt } from '../../utils/numbers';
 import { courseTint, ASSIGNMENT_KIND_LABEL, MATERIAL_TYPE_LABEL, type AssignmentKind, type MaterialType } from '../../lib/courseMeta';
 /* R305-A5 (Heron): the shared student vocabulary + this family's sheet. */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-courses.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-courses.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + this
  * family's own harmonics (r319-student-pages.css). */
 import '../../styles/student/pages.css';

@@ -1,10 +1,10 @@
 /* ==================================================================
-   ULARA — R305 HERON · teacher, quality & exam workflow sheet
+   ULARA — R305 DS · teacher, quality & exam workflow sheet
    (r305-teacher-quality.css)
    ------------------------------------------------------------------
-   R305-A6 (the Heron round): the second, optional LAYER the family's
+   R305-A6 (the reference round): the second, optional LAYER the family's
    lazy page modules import AFTER `teacher-quality.css`. It carries the
-   Heron-inspired workflow visual system — strong headings, restrained
+   reference-inspired workflow visual system — strong headings, restrained
    ember (orange) emphasis, disciplined outlines, legible status
    vocabulary, dense-but-readable tables, consistent toolbars and
    crisp button/form feedback — WITHOUT touching the R304 family sheet
@@ -19,7 +19,7 @@
      family suffixes below — never extend a section from outside it.
 
    Sections (each owned by exactly ONE workstream — merge walls):
-     §0  hr-    shared Heron primitives (owned by the coordinator —
+     §0  hr-    shared reference primitives (owned by the coordinator —
                 read/consume freely, edit by coordinator only)
      §A  tqd-   Teacher dashboard + daily workflows (Agent 2-a:
                 TeacherDashboardPage.tsx · TeacherPages.tsx)
@@ -30,7 +30,7 @@
      §D  qlt2-  Quality oversight boards (Agent 2-c: QualityPages.tsx)
      §E  tax-   Teacher intelligence/profile/live/labs (Agent 2-d)
 
-   Grammar (Heron — translated, never copied):
+   Grammar (the reference — translated, never copied):
    - Workflow hierarchy first: a page reads brow → title → stat strip
      → primary action zone → dense rows/tables. No generic card grids.
    - ONE restrained signal: the ember (orange) accent, derived locally
@@ -52,11 +52,11 @@
 @layer pages {
 
 /* ────────────────────────────────────────────────────────────────────
-   §0 · hr- — shared Heron primitives (coordinator-owned)
+   §0 · hr- — shared reference primitives (coordinator-owned)
    ──────────────────────────────────────────────────────────────── */
 
 /* The scope hook: boxless wrapper inside PageFrame. Declares the
-   Heron ember family locally — derived, theme-reactive, gate-clean. */
+   the reference ember family locally — derived, theme-reactive, gate-clean. */
 .hr-scope {
   display: contents;
 
@@ -233,7 +233,7 @@
   padding-block: var(--sp-2-5);
 }
 
-/* ─── Scoped feedback: crisp press states inside Heron surfaces ──── */
+/* ─── Scoped feedback: crisp press states inside the reference surfaces ──── */
 
 .hr-scope .btn { transition: transform var(--t-micro) var(--ease-out), box-shadow var(--t-fast) var(--ease-out); }
 
@@ -272,22 +272,22 @@
    the TeacherPages routes wrap their `.page` root; dialogs wrap their
    Modal children) so the §0 primitives and the ember family resolve
    locally. The R304 tpg- layer stays live underneath — this section
-   only adds the Heron deltas: workflow hierarchy anchors, the ONE
+   only adds the reference deltas: workflow hierarchy anchors, the ONE
    ember signal per view, the chip vocabulary, severity edges, sort
    buttons, crisp press feedback and the mobile floors.
 
    Table note: the rosters keep the shared .table/.tbl-stack DOM (the
    mobile row-card ladder + R304 sort pins ride on it), so §0's
-   .hr-table frame is NOT re-tagged onto them; the Heron table deltas
+   .hr-table frame is NOT re-tagged onto them; the reference table deltas
    ride scoped .hr-scope .table rules below instead. */
 
 /* ── A1 · Page head: brow → title → hairline anchor ────────────────
    The TeacherPages routes open with the family's own .page-header
-   markup (h1.page-title is e2e-pinned). The Heron anchor is a hairline
+   markup (h1.page-title is e2e-pinned). The reference anchor is a hairline
    under the head block, and the header's leading .hr-brow names the
    workflow area (a real classification, never decoration). The
    dashboard's contract header keeps its own anatomy — its .pf-eyebrow
-   line is re-voiced as the Heron brow under the scope. */
+   line is re-voiced as the reference brow under the scope. */
 .hr-scope .page-header {
   padding-block-end: var(--sp-3);
   border-block-end: 1px solid var(--border);
@@ -318,7 +318,7 @@
 /* ── A2 · Dashboard section heads: strong title, hairline anchor ───
    The dashboard trio (queue / today / at-risk) reads brow → strong
    section heading → rows. SectionHeader is a shared pattern; the
-   Heron weight rides the scope, one rule deep, dashboard-only. */
+   the reference weight rides the scope, one rule deep, dashboard-only. */
 .hr-scope .pf-section-header {
   padding-block-end: var(--sp-2);
   border-block-end: 1px solid var(--border);
@@ -336,7 +336,7 @@
    lifted to the KPI register and inked ember. The at-risk %s beside
    it keep the quiet .tq-num voice. */
 
-/* ── A4 · Roster tables — Heron deltas over the shared .table ──────
+/* ── A4 · Roster tables — the reference deltas over the shared .table ──────
    Softer row hairlines (the 62% rule §0's .hr-table uses) so a dense
    roster scans as rows, not a grid, and the active sort column reads
    ember (the ONE signal on a read table). */
@@ -364,7 +364,7 @@
    a .hr-sort-glyph span so it can take the ember without touching the
    column's accessible name. */
 
-/* ── A5 · Grading queue — severity edges keep the Heron frame ──────
+/* ── A5 · Grading queue — severity edges keep the reference frame ──────
    .queue-group.tpg-queue-section carries the R304 frame (r-xl) and the
    data-due edge colors; adopting §0's .hr-edge adds the 3px
    inline-start rule, so the frame's start corners are re-asserted to
@@ -397,7 +397,7 @@
 }
 
 /* ── A8 · Weekly schedule — today is THE ember signal ──────────────
-   The R304 today rule used the accent; under Heron the marked day
+   The R304 today rule used the accent; under the reference the marked day
    (border + day name + the «اليوم» chip) moves to the ember family so
    a scanning teacher stops at one color.
    P-G3b RESTORE: this pair went live-deleted in this tree's dead-CSS
@@ -442,11 +442,11 @@
    ──────────────────────────────────────────────────────────────── */
 /* [§B-START — Agent 2-b edits ONLY between these markers]
 
-   §B · exa2- — the Heron layer over the exam authoring lifecycle
+   §B · exa2- — the reference layer over the exam authoring lifecycle
    (ExamAuthorPages.tsx: the /teacher/exams hub + /teacher/exams/:id
    detail). The R304 exa- sheet stays the layout foundation and keeps
    every class the suite pins (exa-order, exa-grade-card, the row
-   sheet, the form scaffolding); this layer adds the Heron workflow
+   sheet, the form scaffolding); this layer adds the reference workflow
    grammar on top — brow → strong heading → hairline-anchored section
    head → toolbar → edge-marked status rows → the hr-rail lifecycle
    strip → the one ember CTA per surface. Loaded after
@@ -481,7 +481,7 @@
    build surface speaks the ember family (derived in .hr-scope),
    replacing the generic accent wash its R304 twin used. */
 
-/* Status rows wear the Heron severity edge (markup pairs .hr-edge +
+/* Status rows wear the reference severity edge (markup pairs .hr-edge +
    data-severity beside .exa-row): the 3px inline-start bar mirrors
    the row's chip tone so a row's state reads before its text. Square
    rows inside the rounded .exa-rows sheet inherit its end radii —
@@ -502,7 +502,7 @@
    ──────────────────────────────────────────────────────────────── */
 /* [§C-START — Agent 2-b edits ONLY between these markers]
 
-   §C · oex2- — the Heron layer over the student exam surfaces and the
+   §C · oex2- — the reference layer over the student exam surfaces and the
    quality moderation queue (OnlineExamsPages.tsx: the list, the
    taker, /quality/exam-moderation). The taker is behavior-critical —
    its DOM changes here ONLY by the .hr-scope wrapper (press feedback
@@ -536,11 +536,11 @@
 
    §D · qlt2- — Quality oversight boards (Agent 2-c)
    ------------------------------------------------------------------
-   The Heron overlay for the seven /quality/* boards (dashboard,
+   The reference overlay for the seven /quality/* boards (dashboard,
    courses, professors, engagement, curriculum, reports, alerts).
    The R304 §3 qlt-* rules stay verbatim BENEATH this layer: the
    quality pages import this sheet AFTER teacher-quality.css, so
-   equal-specificity conflicts resolve toward Heron. Everything here
+   equal-specificity conflicts resolve toward the reference. Everything here
    is scoped to the mounting .hr-scope wrapper — a surface without it
    keeps the R304 grammar untouched.
 
@@ -587,14 +587,14 @@
    training.css pressed rules needs the extra scope class only; both
    themes resolve from one declaration. */
 
-/* ── D2 · Heron rosters ───────────────────────────────────────────
+/* ── D2 · the reference rosters ───────────────────────────────────────────
    The rosters carry .hr-table alongside .table.tbl-stack. §0's rules
    land after teacher-quality.css, so the filled header supersedes the
    R304 transparent-header rung and the rows densify; nothing else in
    the shared recipe (stack, scroll, labels) is touched here. */
 
 /* ── D3 · Alert rows — the 3px severity edge ──────────────────────
-   The R304 2px edge joins the Heron hairline weight (3px, rounded
+   The R304 2px edge joins the reference hairline weight (3px, rounded
    start corners — the .hr-edge geometry). Severity colors stay the
    R304 semantic washes: critical→danger, warning→warn, info→info. */
 
@@ -651,7 +651,7 @@
 
 /* ── 3 · Composition seams ─────────────────────────────────────────── */
 
-/* The Heron brow rides above each page title with a rung of air so
+/* The reference brow rides above each page title with a rung of air so
    it reads as an eyebrow, not a floating pill. */
 .hr-scope .page-title-block .hr-brow { margin-block-end: var(--sp-2); }
 

@@ -15,7 +15,7 @@
 
 .cg-strip-label {
   color: var(--cta-ink);
-  /* T-10c: heron's registry voice = 0.875× the body root on every bp
+  /* T-10c: the reference's registry voice = 0.875× the body root on every bp
      (15.56/11.67/8.3/12.89/13.89) — 1.4rem of our html root hits each
      rung exactly. */
   font-size: 1.4rem;
@@ -29,8 +29,8 @@
   line-height: 1.35;
 }
 
-/* heron's registry rows speak lh 1.4 ≥768 (21.78/16.33/11.61/18.05);
-   at 390 heron reads 1.1 and the Arabic floor carries it (1.35×13.89
+/* the reference's registry rows speak lh 1.4 ≥768 (21.78/16.33/11.61/18.05);
+   at 390 the reference reads 1.1 and the Arabic floor carries it (1.35×13.89
    = 18.75) — inherited from the section voice. */
 @media (min-width: 768px) {
   .cg-strip-text {

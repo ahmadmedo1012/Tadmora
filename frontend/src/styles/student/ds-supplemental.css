@@ -1,12 +1,12 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — R305-A5 · Heron design language, student SUPPLEMENTAL family
+   ULARA — R305-A5 · the reference design language, student SUPPLEMENTAL family
    Agent 2-d · branch redesign/r305-student-d-supplemental
 
    Page-scoped refinements for the supplemental long tail, layered on the
    shared vocabulary in r305-student.css (imported beside this sheet by
    every page below). Gamification/achievement ANATOMY stays in
    training.css (shared sheet — read-only here); this file only adds the
-   Heron surface register around it:
+   the reference surface register around it:
 
    §1  profile      — the deep identity band (/student/profile hero)
    §2  achievements — the gold register (/achievements KPI strip)

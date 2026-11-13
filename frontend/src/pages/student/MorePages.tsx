@@ -35,9 +35,9 @@ import { formatDate } from '../../utils/numbers';
 /* ── r305-c (schedule family) + r305-d (supplemental family) imports —
    collapsed by the R305 integrator (handoff N1): the duplicated
    r305-student.css import was legal (Vite dedupes) but confusing. ── */
-import '../../styles/student/heron.css';
-import '../../styles/student/heron-schedule.css';
-import '../../styles/student/heron-supplemental.css';
+import '../../styles/student/ds-core.css';
+import '../../styles/student/ds-schedule.css';
+import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 component anatomy + the
  * academic family's harmonics (the same pair every converted student
  * page rides; this file's pages opt in per-page via .r319s-page). */
@@ -1016,7 +1016,7 @@ export function ResultsPage() {
           re-derives every inner ink toward the band's own fg pole so
           the canonical tones stay AA in both themes.
           R341 (D7c): the ink pole now rides the SHARED band class
-          (heron.css §3); this seat keeps the test-pinned
+          (ds-core.css §3); this seat keeps the test-pinned
           .results-summary hook with the layout on utilities. */}
       <div className="r305s-band r305s-band--deep results-summary flex-col gap-3">
         <p className="r305s-eyebrow">ملخّص الدرجات</p>

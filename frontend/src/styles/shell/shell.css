@@ -1,7 +1,7 @@
 /* ═════════════════════════════════════════════════════════════════════
-   ULARA — r305 «Heron» shell layer (R305-A4, Task 2-d)
+   ULARA — r305 «ds» shell layer (R305-A4, Task 2-d)
    ─────────────────────────────────────────────────────────────────────
-   The Heron Shell Contract's binding layer for the application chrome:
+   The reference Shell Contract's binding layer for the application chrome:
    precise outlines · structured grid · restrained signal · disciplined
    typography · crisp transitions · both themes.
 
@@ -16,7 +16,7 @@
      regardless of specificity, so these refinements get the last word
      over the overrides layer WITHOUT !important. Keep it that way.
    · Discipline: this file only (a) resolves grammar conflicts where a
-     layered sheet predates the Heron contract — every override names
+     layered sheet predates the reference contract — every override names
      the rule it retires and why; (b) unifies the chrome control
      recipe and its press register; (c) completes the collapsed /
      expanded rail as ONE grid; (d) styles the 2-a/2-b markup hooks
@@ -173,7 +173,7 @@
    ═══════════════════════════════════════════════════════════════════
    polish v22 §B1 tints the collapsed-rail topbar with a directional
    surface gradient — four rules (LTR/RTL × light/dark) anchoring a
-   decorative fade at the rail edge. The Heron grammar bans decorative
+   decorative fade at the rail edge. The reference grammar bans decorative
    gradient chrome paint, and the expanded topbar's treatment
    (--topbar-bg warm glass + blur, r304's documented state) is the
    coherent flat recipe for the collapsed state too — one topbar, one
@@ -242,7 +242,7 @@ html[dir="rtl"][data-theme="dark"][data-sidebar-collapsed] .topbar {
    geometry: pf-page-title t=113 vs modal-card t=121 — which a human
    reads as clipped/corrupted text (two independent VLM reviews flagged
    "heavily clipped stubs"). The first-run tour is a full-bleed takeover
-   moment, not a context-keeping dialog: it gets Heron's menu-scrim
+   moment, not a context-keeping dialog: it gets the reference's menu-scrim
    language (the R319 §B1 prescription) — paper at 92 % in light, ink at
    92 % in dark (--glass-bg-strong, already theme-paired) — so the page
    behind recedes to an 8 % ghost and nothing slices the card's top edge.

@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════════════
    R333 P-D → r335 (W-chrome) → r339 (T-11c) — the entry preloader sheet,
-   conformed to the FROZEN r335 Heron motion spec (docs/redesign/r335/
-   heron-spec/_motion.1440.json + _motion.390.json, targets `.loading-*`):
+   conformed to the FROZEN r335 reference motion spec (the retired
+   r335 captures: _motion.1440.json + _motion.390.json, targets `.loading-*`):
 
      · the loading CONTENT fades out first — recorded
        `to { duration:0.4, ease:power2.out, opacity:0 }` on
@@ -202,7 +202,7 @@
 }
 
 /* ── the instrument chrome (r309/r311 contract): the measuring
-   crosshairs (heron-craft row 6 — the overlay is an instrument, not
+   crosshairs (the retired craft sheet row 6 — the overlay is an instrument, not
    a splash), the progress seat and the mono meta row. ── */
 .pl-cross-h,
 .pl-cross-v {

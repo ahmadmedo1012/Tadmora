@@ -31,7 +31,7 @@ import {
 } from '../../hooks/useResources';
 import { countAr } from '../../lib/format';
 import { formatDate } from '../../utils/numbers';
-import '../../styles/teacher/heron.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the done teacher pages speak, so the
  * profile's section heads read on the numeral axis. */

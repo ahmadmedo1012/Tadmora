@@ -1,13 +1,13 @@
 /* ═════════════════════════════════════════════════════════════════════
-   «أُلارا» — Design System (r305 — the HERON token foundation)
+   «أُلارا» — Design System (r305 — the DS token foundation)
    ─────────────────────────────────────────────────────────────────────
-   R305 re-keys the canon to the Heron-inspired visual system (the
-   reference reverse-engineered live at heronaiapp.com — full evidence,
+   R305 re-keys the canon to the reference-inspired visual system
+   (reverse-engineered live from the retired reference site — full evidence,
    measurements and licensing decisions in
-   docs/redesign/r305-heron-reference-spec.md). This SUPERSEDES the
+   the retired r305 reference spec). This SUPERSEDES the
    OPTIKKA / Superlist / Notion directions (kept below as history).
 
-   The Heron system, as measured and semantically mapped (R313 —
+   The reference system, as measured and semantically mapped (R313 —
    FULL parity re-key; the r305/r306/r308 divergence rulings are
    SUPERSEDED by the owner decision):
 
@@ -42,7 +42,7 @@
      2774 sampled — near-absolute square corners. The whole ladder
      collapses to 0; ONLY genuinely circular primitives (avatars,
      status dots) keep --r-full: 9999px.
-   · The measured Heron motion register: 0.4s-dominant transitions
+   · The measured reference motion register: 0.4s-dominant transitions
      (174×.4s in the bundle) on cubic-bezier(.23,1,.32,1) with the
      .48s roll/exit curve cubic-bezier(.625,.05,0,1) — adopted into the
      raw ladder (80/200/400/500/650/900) and the semantic page/reveal
@@ -81,7 +81,7 @@
    ACHIEVEMENT GOLD pair — the old signal demoted to the achievement
    tone, distinct from the new orange signal again. Contrast notes in
    the comments are recomputed for the new grounds (WCAG 2.1, engine:
-   docs/redesign/r305-heron-reference-spec.md §verification).
+   the retired r305 reference spec §verification).
    ════════════════════════════════════════════════════════════════════ */
 
 /* Lineage (condensed — full history in docs/redesign + git): r132-F5 /
@@ -90,8 +90,8 @@
    Alexandria display; r197 rebuilt the ladder system (§4 BLUEPRINT);
    r303 recovered the historical Notion-style palette; r304 restored
    the historical radii/elevation register and the fleet alias layer;
-   r305 re-keyed the canon to the Heron system; R313 (this round,
-   owner decision — FULL Heron parity) re-keys the paper to the warm
+   r305 re-keyed the canon to the reference system; R313 (this round,
+   owner decision — FULL the reference parity) re-keys the paper to the warm
    vintage #F5F1E8, collapses the radius ladder to 0, removes every
    decorative shadow, lands the fluid rem root + the rem type ladder
    + Geist Mono, and re-seats the accent label/hairline tokens —
@@ -116,8 +116,8 @@
     --sp-12x:var(--sp-9); --sp-16x:var(--sp-13);
 
     /* ─── r306 — the poster namespace is RETIRED ─────────────────────
-       The landing page now speaks the single Heron canon directly
-       (docs/redesign/r306-heron-exclusivity-spec.md); the r197 diver-
+       The landing page now speaks the single the reference canon directly
+       (the retired r306 exclusivity spec); the r197 diver-
        gence hook (--poster-paper/ink/signal) was migrated with it —
        every consumer reads the canonical roles below. The parity
        gate's FORBIDDEN needle list guards the spelling. */
@@ -144,7 +144,7 @@
     /* ─── Type — bold + warm, Arabic-friendly (r305: UNCHANGED — the
        re-key touches colors/radii/motion only; the reference's BT
        Grotesk is not licensed so the OFL stacks below carry the voice —
-       audit: docs/redesign/r305-heron-reference-spec.md §4) ────────── */
+       audit: the retired r305 reference spec §4) ────────── */
     --font-sans:    'IBM Plex Sans Arabic', 'Tajawal', system-ui, -apple-system,
                     'Segoe UI', Roboto, sans-serif;
     /* Alexandria — the Arabic-native geometric display voice (r190).
@@ -162,8 +162,8 @@
        html rule below: 0.5787037037vw base, Webflow bands ≤991/≤767)
        so every rung is rem ON that root and scales with the viewport
        exactly like the reference. At 1440 (root 8.333px): h1 renders
-       46.67px, h2 40, h3 33.33 — the measured Heron heading ladder
-       (h4 26.67 continues the +0.8rem steps); body 13.33px (Heron
+       46.67px, h2 40, h3 33.33 — the measured reference heading ladder
+       (h4 26.67 continues the +0.8rem steps); body 13.33px (the reference
        txt-16). Arabic READING sizes keep the r197 13px legibility
        floor via max(); the mono micro-label sizes below them are
        Latin-only (uppercase Geist Mono) and take NO floor — the
@@ -173,12 +173,12 @@
     --fs-display-lg: 7.2rem;  /* 60px    @1440 */
     --fs-display-md: 6.4rem;  /* 53.33px @1440 */
 
-    --fs-h1: 5.6rem;          /* 46.67px @1440 — Heron h1 (700 · lh 1.0 · ls −0.02em · UPPER for Latin) */
-    --fs-h2: 4.8rem;          /* 40px    @1440 — Heron h2 */
-    --fs-h3: 4rem;            /* 33.33px @1440 — Heron h3 */
+    --fs-h1: 5.6rem;          /* 46.67px @1440 — the reference h1 (700 · lh 1.0 · ls −0.02em · UPPER for Latin) */
+    --fs-h2: 4.8rem;          /* 40px    @1440 — the reference h2 */
+    --fs-h3: 4rem;            /* 33.33px @1440 — the reference h3 */
 
     --fs-body-lg: max(13px, 1.8rem);   /* 15px @1440 — the lead step, floor-gated */
-    --fs-body:    max(13px, 1.6rem);   /* 13.33px @1440 — Heron txt-16, floor-gated */
+    --fs-body:    max(13px, 1.6rem);   /* 13.33px @1440 — the reference txt-16, floor-gated */
     /* r140 → R313 — the chrome step joins the reference's uniform
        body run (nav/footer/labels all ride 13.33px there), floor-gated
        for Arabic. */
@@ -196,9 +196,9 @@
        rungs now floor at 11px like --fs-body's 13px floor — the 8.33px
        «coords» register read 8.3px computed on every viewport, under
        the legibility rung the type census asserts. */
-    --fs-mono-md: max(11.67px, 1.4rem); /* 11.67px @1440 — Heron txt-14 (button labels) */
-    --fs-mono-sm: max(11px, 1.2rem);    /* 11px floor @1440 (was 10px) — Heron txt-12 (loader %) */
-    --fs-mono-xs: max(11px, 1rem);      /* 11px floor @1440 (was 8.33px) — Heron txt-10 (coords) */
+    --fs-mono-md: max(11.67px, 1.4rem); /* 11.67px @1440 — the reference txt-14 (button labels) */
+    --fs-mono-sm: max(11px, 1.2rem);    /* 11px floor @1440 (was 10px) — the reference txt-12 (loader %) */
+    --fs-mono-xs: max(11px, 1rem);      /* 11px floor @1440 (was 8.33px) — the reference txt-10 (coords) */
 
     /* type aliases — the live steps plus the r304 restorations
        (--fs-base, --fs-4xl, headline/label pairs — historical mapping). */
@@ -237,7 +237,7 @@
        (cursive joins); the Arabic 0 pins above are untouched. */
     --ls-display-tight: -0.02em;
 
-    /* ─── Motion — the measured Heron register (r305) ─────────────────
+    /* ─── Motion — the measured reference register (r305) ─────────────────
        The reference's transition census: .4s ×174 (dominant), .2/.3/.5s
        secondary, .48s for the rolling dual-label device; easings
        cubic-bezier(.23,1,.32,1) ×11 (decel standard) and
@@ -312,7 +312,7 @@
     /* ─── Motion (semantic layer — see contracts/motion-tokens.md) ───
        Canonical names new code MUST consume. Mapped to the raw --t-* /
        --ease-* rungs so they remain a single source. r305: page/reveal
-       re-keyed to the Heron register (400/480); stat/skeleton keep
+       re-keyed to the reference register (400/480); stat/skeleton keep
        their existing rhythm (independent of the reference). */
     --motion-duration-micro:    var(--t-micro);   /*  80ms */
     --motion-duration-short:    var(--t-fast);    /* 200ms */
@@ -320,7 +320,7 @@
     --motion-duration-long:     var(--t-slow);    /* 500ms */
     --motion-duration-page:     400ms;
     --motion-duration-reveal:   480ms;
-    /* R333 (P-C) — the drawn-card reveal rung: heron-craft row 13's
+    /* R333 (P-C) — the drawn-card reveal rung: the retired craft sheet row 13's
        imgCardReveal (1.6s expo.out) re-keyed to the r305 house
        register, one step above the 480ms block rise. */
     --motion-duration-card:     900ms;
@@ -490,8 +490,8 @@
     --warm-ink:  #17130E;
   }
 
-  /* ─── R313 — the FLUID REM ROOT (the Heron D5 foundation) ──────────
-     Measured live on heronaiapp.com (reference/digest.json →
+  /* ─── R313 — the FLUID REM ROOT (the reference D5 foundation) ──────────
+     Measured live on the retired reference site (reference/digest.json →
      rootFontSize; the EXACT rules read from the site's inline CSS):
        html { font-size: 0.5787037037vw }  desktop/base  (1440 → 8.333px · 1024 → 5.926px)
        ≤991px → 1.1990407674vw               tablet band  (768 → 9.209px)
@@ -540,7 +540,7 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════
-     LIGHT THEME — the Heron blueprint paper
+     LIGHT THEME — the reference blueprint paper
      ════════════════════════════════════════════════════════════════════ */
 
   :root,
@@ -719,7 +719,7 @@
 
     /* sidebar / topbar */
     --sidebar-bg:        var(--neutral-50);
-    --sidebar-rule:      var(--border-strong); /* R313 (5-f deferral): structural seam rides the strong hairline #B3B3AF (Heron grammar) */
+    --sidebar-rule:      var(--border-strong); /* R313 (5-f deferral): structural seam rides the strong hairline #B3B3AF (the reference grammar) */
     --sidebar-item:      var(--neutral-700);
     --sidebar-item-hover-bg:    var(--neutral-100);
     --sidebar-item-active-bg:   var(--neutral-150);
@@ -755,7 +755,7 @@
     --journey-glow:        rgba(250, 54, 0, 0.10);   /* ember ambient wash */
 
     /* R341 H1-a — the hero drafting-grid hairline family, measured from
-       the frozen Heron spec (docs/redesign/r335/heron-spec/
+       the frozen reference spec (the frozen r335 reference captures: 
        home-hero-wrap.1440/390.json): the grid's own paper-tinted
        hairline, rule grey, 72% ink, and full ink. Constant in BOTH
        themes (the frozen spec is the light census; the grid divs carry
@@ -884,7 +884,7 @@
     --overlay-veil-max:  rgb(0 0 0 / 0.66);
 
     --sidebar-bg:        var(--neutral-50);
-    --sidebar-rule:      var(--border-strong); /* R313 (5-f deferral): structural seam rides the strong hairline #B3B3AF (Heron grammar) */
+    --sidebar-rule:      var(--border-strong); /* R313 (5-f deferral): structural seam rides the strong hairline #B3B3AF (the reference grammar) */
     --sidebar-item:      var(--neutral-700);
     --sidebar-item-hover-bg:    var(--neutral-100);
     --sidebar-item-active-bg:   rgb(255 90 31 / 0.16);  /* night ember wash — the traveller's current orbit */
@@ -1163,7 +1163,7 @@
      unavoidable here — it IS the light palette, quoted by value because
      var() would resolve dark. Placed AFTER the dark block inside this
      layer so source order wins during print. The color-scheme: light
-     lock itself stays in polish.css. r305: synced to the Heron
+     lock itself stays in polish.css. r305: synced to the reference
      palette; R313: synced to the warm vintage paper (AA muted/faint,
      orange text inks, white accent-fill labels). ═════ */
   @media print {
@@ -1242,14 +1242,14 @@
      seats, arabic + latin subsets), so this layer ships zero font
      bytes; Alexandria 600/700 stays wired for legacy consumers.
 
-   Type rungs: FINAL (the 1-d re-pin, measured from the Heron
+   Type rungs: FINAL (the 1-d re-pin, measured from the reference
    extraction's own ladder — task 1-c landed; the rungs are no longer
    provisional). px FLOORS are band-independent like the vw mid-terms
    (the 767-band root spike — 19.52px — can never touch them); rem
    CAPS ride the desktop root exactly like the R313 ladder; the 4.8vw
-   mid-terms reproduce Heron's 768/991 values exactly (36.9px @768 ·
+   mid-terms reproduce the reference's 768/991 values exactly (36.9px @768 ·
    47.6px @991 — its own tablet behavior, never the 85.55px
-   amplification). @1440 = Heron's measured display ladder (h1 46.67 ·
+   amplification). @1440 = the legacy measured display ladder (h1 46.67 ·
    h2 40 · statement 33.33 · card 23.33px); @390 floors = its phone
    sizes (H1/H2 31.74px = 3.2rem · cards 23.33px · statement 22.1px).
    Display weights 400–600 ONLY (the 800/900 era ends; --fw-medium/
@@ -1264,7 +1264,7 @@
 
    Grid: 12 columns; margin/gutter in rem; logical properties only
    (inline-start/end) so RTL is native. PROVISIONAL — re-pin after
-   the Heron extraction lands (measured header cells 137px/166.67px
+   the reference extraction lands (measured header cells 137px/166.67px
    @1440 are the derivation source). ═══════════════════════════ */
 
 @layer tokens {
@@ -1278,22 +1278,22 @@
        text-wrap: balance at the consumer; zero tashkeel; zero
        letter-spacing on Arabic (permanent exception 2).
 
-       FINAL RE-PIN (1-d) — computed from the Heron extraction ladder
+       FINAL RE-PIN (1-d) — computed from the reference extraction ladder
        (roots 8.33px @1440 · 9.21 @768 · 9.92 @390 · 11.88 @991 ·
        19.52 @767-band): the px FLOORS kill the 767-band root spike by
        construction (the provisional rem floors would have resolved
        2.5rem → 48.8px @767 — the V5 blowup reborn inside the mobile
        band), the rem CAPS ride the desktop root like the R313 ladder,
-       and the 4.8vw mid-term reproduces Heron's 768/991 values
-       EXACTLY. Floors are Heron's own phone sizes: H1/H2 3.2rem/
+       and the 4.8vw mid-term reproduces the reference's 768/991 values
+       EXACTLY. Floors are the reference's own phone sizes: H1/H2 3.2rem/
        31.76px @390 · cards 23.33px · statement band 22.1px — type
        GROWS at phone widths (31.74 vs the provisional 24.8px floor),
        which is the brief's legibility intent. Evidence: the
-       extraction ladder (docs/redesign/r322/heron/*.md) +
+       extraction ladder (the retired r322 extraction docs, *.md) +
        audits/evidence/r322/dsys/type-census-after.md. */
-    --fs-d1: clamp(31.74px, 4.8vw, 5.6rem);  /* 46.7 @1440 · 47.6 @991 · 36.9 @768 · 31.74 @390 — Heron's own ladder */
+    --fs-d1: clamp(31.74px, 4.8vw, 5.6rem);  /* 46.7 @1440 · 47.6 @991 · 36.9 @768 · 31.74 @390 — the reference's own ladder */
     --fs-d2: clamp(31.74px, 4.8vw, 4.8rem);  /* 40 @1440 · 47.6 @991 · 36.9 @768 · 31.74 @390 */
-    --fs-d3: clamp(23.33px, 2.8vw, 2.8rem);  /* 23.3 @1440 · 23.3 @768/390 (flat, like Heron's card titles) */
+    --fs-d3: clamp(23.33px, 2.8vw, 2.8rem);  /* 23.3 @1440 · 23.3 @768/390 (flat, like the reference's card titles) */
     --fs-st:  clamp(22.1px, 2.87vw, 4rem);   /* the statement-band scrub seat: 33.3 @1440 · 22.1 @768/390 */
 
     /* r324 P3 — the APP-DENSITY ladder (dashboards/data surfaces; the

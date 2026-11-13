@@ -5,7 +5,7 @@
    The AUTHENTICATED app joins the drawing-sheet system. The landing
    (landing.css .sheet-frame + body.ula-grain::before) and the guest
    doors (auth.css .auth-frame/.auth-grain via GuestSheetChrome) already
-   seat every public face on the Heron sheet; this layer carries the
+   seat every public face on the reference sheet; this layer carries the
    same grammar through AppShell so every authed route renders on the
    one reference sheet:
 
