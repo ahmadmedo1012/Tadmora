@@ -9,7 +9,7 @@
 > Full measured evidence: the retired r305 reference spec (purged with the match program) ·
 > the R306 exclusivity decisions + rebuild plan: the retired r306 exclusivity spec.
 > Historical eras (Orbit Ink, Superlist/OPTIKKA, ultramarine, the editorial poster) are
-> ARCHIVED in [`docs/archive/DESIGN-history.md`](docs/archive/DESIGN-history.md) — never
+> The design history is retired with the archived eras — the canon in THIS file is the only truth.
 > instructions.
 
 ---
@@ -277,7 +277,7 @@ library. No unlayered bolt-on sheets.
 
 CI design gates: `check-icons` · `check-motion-tokens` · `check-csp-hash` ·
 `verify-parity-export` · `check-colors --strict` · `check-raw-css --strict` (+ its
-self-test) · `check-bundle-size`. Era history: `docs/archive/DESIGN-history.md` (frozen
+self-test) · `check-bundle-size`. (The era-history file is retired with the archived eras
 R305 copy), `CHANGELOG.md`, the release reports in `docs/releases/`.
 
 
