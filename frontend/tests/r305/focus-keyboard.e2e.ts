@@ -81,22 +81,21 @@ test.describe('لوحة الدخول — لوحة المفاتيح', () => {
     ).toBeGreaterThan(0);
 
     // Mouse focus on a NON-submitting control: :focus:not(:focus-visible)
-    // must suppress the ring (no outline on pointer focus). R320 (c2-FLOW):
-    // the retired seat was the forgot-password TOGGLE button — the flow's
-    // M3 made «نسيت كلمة المرور؟» a real <Link to="/auth/forgot-password">
-    // (a click NAVIGATES now), so the pointer-focus contract moves to the
-    // demo panel: open it with the reopen toggle, then the FILL button —
-    // type=button, no navigation, fillTestAccount only setValue's (the
-    // clicked button keeps focus and stays mounted — its label flips
-    // تعبئة→دخول, the element persists).
-    // R321 §A8 re-pin: the panel starts OPEN in development (the owner's
-    // one-tap-per-job rule) — the reopen toggle is no longer the door;
-    // the fill button is directly visible.
-    const fill = page.locator('.auth-demo-fill').first();
-    await expect(fill).toBeVisible();
-    await fill.click();
-    await expect(fill).toBeFocused();
-    const mouseRing = await readFocusRing(page, '.auth-demo-fill');
+    // must suppress the ring (no outline on pointer focus). The seat
+    // history: the forgot-password link (now navigates), then the demo
+    // FILL button (filled only — the owner's 2026-11-12 rule made it
+    // «دخول سريع»: ONE tap fills AND submits, so it navigates away and
+    // can no longer hold the pointer-focus contract). The password
+    // VISIBILITY TOGGLE is the stable seat: type=button, no navigation,
+    // stays mounted, keeps focus.
+    // NOTE: the class selector, not the accessible name — clicking the
+    // toggle FLIPS its aria-label (إظهار ↔ إخفاء), so a name-based
+    // locator stops matching its own element after the click.
+    const toggle = page.locator('.auth-input-toggle');
+    await expect(toggle).toBeVisible();
+    await toggle.click();
+    await expect(toggle).toBeFocused();
+    const mouseRing = await readFocusRing(page, '.auth-input-toggle');
     expect(
       mouseRing.style === 'none' || parseFloat(mouseRing.width) === 0,
       `mouse focus must NOT paint the ring (got style=${mouseRing.style}, width=${mouseRing.width})`,
