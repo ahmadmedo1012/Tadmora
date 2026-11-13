@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { legacyUiKey, withLegacyFallback } from '../lib/legacy-storage';
 
 /** Most-recently-run command-palette actions, newest first (5-D3 /
  *  5-A10 P3-5). Ids are the palette's stable action ids (`nav:<to>` /
@@ -50,11 +49,10 @@ export const useUiStore = create<UiState>()(
     }),
     {
       name: 'ula-ui',
-      /* ULARA takeover §1.1: the key renamed with the brand; the
-       * storage adapter adopts the retired row once (see
-       * lib/legacy-storage) so a visitor's persisted sidebar/palette
-       * state survives. */
-      storage: createJSONStorage(() => withLegacyFallback(localStorage, legacyUiKey)),
+      /* The persisted sidebar/palette state rides the ula-ui key alone
+       * (the retired pre-ULARA row fallback was removed — dev-phase
+       * visitors re-toggle once). */
+      storage: createJSONStorage(() => localStorage),
       // Persist the desktop state + the palette recents — the mobile
       // drawer is session-scoped.
       partialize: (s) => ({

@@ -332,22 +332,10 @@ describe('R320 §D — the real facts (every sentence from real code)', () => {
     expect(read('src/pages/DocumentViewerPage.tsx')).toContain('ula-doc-side-w');
     expect(read('src/pages/student/ProfilePage.tsx')).toContain('ula-academic-links');
     // the ONE cookie + its attributes — the backend routes file.
-    // ULARA TAKEOVER TRANSITION SEAT (spec §1.2/§2): the refresh cookie
-    // rename (→ ulara_refresh, with the retired name kept as a read-only
-    // fallback) is workstream B's seat in backend/src/http/routes/
-    // auth.routes.ts. Until the integration merge this pin accepts the
-    // pre-takeover literal — ASSEMBLED from fragments (the identity-gate
-    // convention, lib/legacy-storage.ts) — with a loud warning;
-    // TODO(integration): delete the retired arm.
-    const retiredCookie = "'" + 'td' + "mr_refresh'";
     const routes = read('../backend/src/http/routes/auth.routes.ts');
-    if (!routes.includes("'ulara_refresh'")) {
-      console.warn('[legal-pages] pre-integration seat — backend auth routes still set the retired refresh-cookie name (workstream B renames it at integration)');
-    }
-    expect(
-      routes.includes("'ulara_refresh'") || routes.includes(retiredCookie),
-      'auth.routes.ts: expected the ulara_refresh cookie (or, pre-integration, the retired name)',
-    ).toBe(true);
+    expect(routes, 'auth.routes.ts: expected the ulara_refresh cookie').toContain(
+      "'ulara_refresh'",
+    );
     expect(routes).toContain('httpOnly: true');
     expect(routes).toContain("sameSite: 'strict'");
     expect(routes).toContain("path: '/api/v1/auth'");

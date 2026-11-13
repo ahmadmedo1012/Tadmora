@@ -123,23 +123,8 @@ describe('r188 — brand-integrity gate (active surfaces stay Zawia-free)', () =
   it('the fictional demonstration tenant IS the public sample-data story', () => {
     // positive pins: the new identity exists where users see it.
     const seed = readFileSync(path.join(root, 'backend/prisma/seed.ts'), 'utf8');
-    /* ULARA TAKEOVER TRANSITION SEAT (spec §1.7/§2): the seed's demo
-     * tenant slug/name are workstream B seats — backend/prisma/seed.ts
-     * renames to the ULARA values (guarded migration 20261112000000)
-     * in workstream B's own branch. Until the integration merge this
-     * pin accepts the documented pre-takeover literal (ASSEMBLED from
-     * fragments — the identity-gate convention, lib/legacy-storage.ts)
-     * with a loud warning; TODO(integration): delete the retired arms. */
-    const retiredSlug = "slug: 'tad" + "mora-demo'";
-    const retiredName = 'name: \'مساحة عمل تاد' + 'مورا التجريبية\'';
-    const seedSeat = (ulara: string, retired: string): void => {
-      if (!seed.includes(ulara) && seed.includes(retired)) {
-        console.warn(`[r188] pre-integration seat — backend seed still carries the retired literal (${retired.slice(0, 12)}…)`);
-      }
-      expect(seed.includes(ulara) || seed.includes(retired), `seed: expected ${ulara} (or the pre-integration retired value)`).toBe(true);
-    };
-    seedSeat("slug: 'ulara-demo'", retiredSlug);
-    seedSeat("name: 'مساحة عمل أُلارا التجريبية'", retiredName);
+    expect(seed).toContain("slug: 'ulara-demo'");
+    expect(seed).toContain("name: 'مساحة عمل أُلارا التجريبية'");
     /* P2-0 (r335 split): the demo-tenant copy rides the guest surface
      * (LandingPage + the nine section bands) — the pin reads all of it. */
     const landing = [
