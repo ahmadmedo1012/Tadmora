@@ -27,6 +27,23 @@ env:
   NODE_VERSION: '22'
 
 jobs:
+  zero-trace:
+    # The ZERO-TRACE gate (2026-11-13): the retired identities may not
+    # exist anywhere in the repository — content, file/dir names, or the
+    # git log. No whitelists; the ONE documented lockfile-integrity
+    # exclusion (npm registry digest coincidences, proven in the script
+    # header) lives inside the gate itself. The DATABASE half of the
+    # policy rides the post-deploy smoke.
+    name: Zero-trace (retired identities)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The git-history check needs the full ref set.
+          fetch-depth: 0
+      - run: bash scripts/brand/zero-trace.sh
+
   lint:
     name: Lint (eslint, src trees)
     runs-on: ubuntu-24.04

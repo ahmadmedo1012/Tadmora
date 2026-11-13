@@ -90,6 +90,13 @@ jobs:
             -H "Authorization: Bearer $TOK" "$BASE/me/dashboard")
           echo "GET /me/dashboard → $CODE"
           [ "$CODE" = "200" ] || exit 1
+      - name: Zero-trace DB scan (every text column + the migrations ledger)
+        # The DATABASE half of the zero-trace policy (the repository half
+        # is the CI zero-trace job). psql ships on ubuntu-24.04 runners.
+        env:
+          DATABASE_URL: ${{ secrets.ULARA_DB_URL }}
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f scripts/sql/zero-trace-scan.sql
+
       - name: Live OpenAPI vs committed contract (no route may disappear)
         run: |
           # The live site serves the SPA at /openapi.json (the spec is a
