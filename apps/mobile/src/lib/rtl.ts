@@ -22,9 +22,6 @@ import { I18nManager } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const KEY = "ula.rtl.applied.v1";
-/** The retired r326-era key — read once so an upgrading install that
- * already completed the (now-retired) reload dance is treated as applied. */
-const LEGACY_KEY = ["td", "mr", ".rtl.applied.v1"].join("");
 
 /**
  * Returns true when the caller should hold the splash (never in the
@@ -37,9 +34,7 @@ export async function ensureRTL(): Promise<boolean> {
       return false;
     }
     // Already baked by a previous session (or the retired r326 flow)?
-    const done =
-      (await AsyncStorage.getItem(KEY).catch(() => null)) ??
-      (await AsyncStorage.getItem(LEGACY_KEY).catch(() => null));
+    const done = await AsyncStorage.getItem(KEY).catch(() => null);
     if (done === null) {
       // First-ever launch in an LTR process: bake the preference now; the
       // direction goes live on the NEXT natural launch. NO reload — see

@@ -5,15 +5,12 @@
  *  - user JSON (non-secret profile) persisted in AsyncStorage under
  *    ula-mobile-user. Cache clearing happens at every session boundary.
  *
- * ULARA codemod §1.1: the keys were renamed away from the retired
- * identity's mobile key family; reads fall back to the legacy keys and
- * adopt (write-through), so an upgrading user keeps their session, and
- * logout clears BOTH spellings.
+ * The ula-mobile-* key family is the ONLY spelling (the retired
+ * pre-ULARA fallback was removed — dev-phase installs re-login once).
  */
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { setToken } from "@/lib/tokenStorage";
-import { getTokenRenamed, removeTokenRenamed, getItemRenamed, removeItemRenamed } from "@/lib/storageRename";
+import { getToken, setToken } from "@/lib/tokenStorage";
 import { apiWithCookieCapture, post, registerAuthBridge, get as apiGet } from "@/api/client";
 import type { AuthUser, SessionResponse } from "@/api/types";
 
@@ -21,11 +18,6 @@ const KEY_USER = "ula-mobile-user";
 const KEY_ACCESS = "ula-mobile-access-token";
 const KEY_REFRESH = "ula-mobile-refresh-cookie";
 const KEY_INST = "ula-mobile-active-institution";
-/* Legacy spellings — read-fallback + cleared on logout only (§1.1). */
-const LEGACY_KEY_USER = "tdmr-mobile-user";
-const LEGACY_KEY_ACCESS = "tdmr-mobile-access-token";
-const LEGACY_KEY_REFRESH = "tdmr-mobile-refresh-cookie";
-const LEGACY_KEY_INST = "tdmr-mobile-active-institution";
 
 export interface SessionState {
   user: AuthUser | null;
@@ -78,12 +70,11 @@ export const useSession = create<SessionState>((set, get) => ({
 
   hydrate: async () => {
     try {
-      // §1.1 shims: new key first, legacy fallback, adopt + write-through.
       const [accessToken, refreshCookie, userJson, instId] = await Promise.all([
-        getTokenRenamed(KEY_ACCESS, LEGACY_KEY_ACCESS),
-        getTokenRenamed(KEY_REFRESH, LEGACY_KEY_REFRESH),
-        getItemRenamed(KEY_USER, LEGACY_KEY_USER),
-        getItemRenamed(KEY_INST, LEGACY_KEY_INST),
+        getToken(KEY_ACCESS),
+        getToken(KEY_REFRESH),
+        AsyncStorage.getItem(KEY_USER),
+        AsyncStorage.getItem(KEY_INST),
       ]);
       const user = userJson ? (JSON.parse(userJson) as AuthUser) : null;
       set({
@@ -117,11 +108,8 @@ export const useSession = create<SessionState>((set, get) => ({
   clearSession: async () => {
     await Promise.all([
       persistTokens(null, null),
-      // §1.1: logout clears BOTH spellings — no legacy orphan survives.
-      removeTokenRenamed(KEY_ACCESS, LEGACY_KEY_ACCESS),
-      removeTokenRenamed(KEY_REFRESH, LEGACY_KEY_REFRESH),
-      removeItemRenamed(KEY_USER, LEGACY_KEY_USER),
-      removeItemRenamed(KEY_INST, LEGACY_KEY_INST),
+      AsyncStorage.removeItem(KEY_USER).catch(() => undefined),
+      AsyncStorage.removeItem(KEY_INST).catch(() => undefined),
     ]);
     set((s) => ({
       user: null,

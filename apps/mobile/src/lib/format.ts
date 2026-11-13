@@ -28,7 +28,7 @@
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { renamedAsyncStorage } from "@/lib/storageRename";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TZ = "Africa/Tripoli";
 
@@ -134,9 +134,6 @@ interface NumeralsState {
   setPreference: (p: NumeralsPreference) => void;
 }
 
-/** The retired identity's numerals key — read-fallback only (§1.1). */
-const LEGACY_NUMERALS_KEY = "tadmora-mobile-numerals";
-
 const useNumeralsStore = create(
   persist<NumeralsState>(
     (set) => ({
@@ -144,11 +141,10 @@ const useNumeralsStore = create(
       setPreference: (preference) => set({ preference }),
     }),
     {
-      // §1.1 rename shim: adopts the legacy persisted preference once.
+      // The ula-mobile-numerals key is the ONLY spelling (the retired
+      // pre-ULARA fallback was removed — dev-phase installs re-choose once).
       name: "ula-mobile-numerals",
-      storage: createJSONStorage(() =>
-        renamedAsyncStorage("ula-mobile-numerals", LEGACY_NUMERALS_KEY),
-      ),
+      storage: createJSONStorage(() => AsyncStorage),
     },
   ),
 );
