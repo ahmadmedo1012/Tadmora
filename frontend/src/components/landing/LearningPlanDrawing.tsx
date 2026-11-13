@@ -388,7 +388,7 @@ export function LearningPlanDrawing() {
 
       {/* ═══ the envelope — poché wall masses + the corridor spine ═══
           R322 3-b-fix (review-c3 R1#3): the envelope JOINS layer 1 —
-          Heron's statement era is QUIET paper (0.00% ink measured);
+          the reference's statement era is QUIET paper (0.00% ink measured);
           the walls draw in with the first findings-era layer, never
           under the statement plaques. */}
       <g className="pl-l-envelope" data-xl="1" aria-hidden="true">

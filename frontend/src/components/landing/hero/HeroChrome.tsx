@@ -5,7 +5,7 @@
  * One seat per frozen-spec chrome element (103 explicit bindings; the
  * wholesale excusal family retired). STRUCTURE lives here (class
  * census, svg kids, the interactive flag — cursor: pointer mirrors
- * Heron's link seats without joining the tab order); the MEASURED
+ * the reference's link seats without joining the tab order); the MEASURED
  * VALUES (seat geometry/colour/transition, per breakpoint) live as CSS
  * custom properties in hero-mechanics.css — one rule per element, the
  * sheet as the single source of truth for the numbers (the bundle gate
@@ -15,7 +15,7 @@
  * HeroGrid so no census ordinal shifts. The wrapper is
  * visibility:hidden with visible children (the edge-390 gutter census
  * unions every visible descendant rect). Wide-band rows are hidden by
- * the sheet's :is() list below 1440 (Heron repacks them there); every
+ * the sheet's :is() list below 1440 (the reference repacks them there); every
  * seat with a measured 390 box re-seats onto it under the <=991 belt.
  */
 type ChromeKid = { cls: string; act?: boolean } & ({ k: string; d: string } | { cx: number; cy: number; r: number });

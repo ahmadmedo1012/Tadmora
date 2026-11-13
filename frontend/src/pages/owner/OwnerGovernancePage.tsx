@@ -152,7 +152,7 @@ export function OwnerGovernancePage() {
     : 'مخطط خطّي لنموّ المستخدمين — مستخدمون جدد أسبوعياً';
 
   return (
-    /* r305-A8 «Heron»: page-root marker — stat strips, chart containers
+    /* r305-A8 «ds»: page-root marker — stat strips, chart containers
        and tables all key off the scoped sheet's .r305ao selector. */
     <div className="page r305ao">
       <PatternsPageHeader

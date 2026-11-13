@@ -314,7 +314,7 @@ export function Sidebar() {
             <div
               className="nav-group"
               key={g.label}
-              /* r305 (Heron markup pass, task 2-a): state hooks on the
+              /* r305 (the reference markup pass, task 2-a): state hooks on the
                  group wrapper, not a DOM redesign — data-nav-group marks
                  the group for the shell CSS, and the accordion groups
                  expose their derived state as data-collapsible /

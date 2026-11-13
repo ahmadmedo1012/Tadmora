@@ -19,7 +19,7 @@ import { useLabs, useMyLabSessions, useCompleteLabSession, type VirtualLab } fro
 import { courseTint } from '../../lib/courseMeta';
 import { countAr } from '../../lib/format';
 import { formatNum } from '../../utils/numbers';
-/* R305 Heron: the shared student vocabulary + this family's refinements.
+/* R305 DS: the shared student vocabulary + this family's refinements.
    The labs catalog rides the FOUNDATION classes only (kicker section
    register, meta-row separators, status chips) — the family sheet adds
    no page-scoped rules for this page. */
@@ -227,7 +227,7 @@ export default function LabsPage() {
             />
           )}
 
-          {/* R305 Heron: the catalog is ONE editorial section — every
+          {/* R305 DS: the catalog is ONE editorial section — every
               honest state (loading/error/empty/resolved) lives inside it.
               R319 (c3-S1): the section heading joins the §B2 title-bar
               register — [01] + the resolved labs count as quiet mono meta
@@ -287,7 +287,7 @@ export default function LabsPage() {
                     </div>
                     <div className="thumb-card-body">
                       <div className="thumb-card-title" title={l.name}>{l.name}</div>
-                      {/* R305 Heron: the row's metadata rides the meta-row
+                      {/* R305 DS: the row's metadata rides the meta-row
                           register — hairline separators instead of bare
                           middots; the counted noun follows D17-2. */}
                       <div className="r305s-meta-row">
@@ -491,7 +491,7 @@ function LabRunner({ lab, onExit }: { lab: VirtualLab; onExit: () => void }) {
         style={{ '--lab-accent': lab.themeColor ?? 'var(--accent)' } as CSSProperties}
       >
         <div className="lab-hero-head">
-          {/* R305 Heron: the shared chip register carries the session
+          {/* R305 DS: the shared chip register carries the session
               status (semantic success dot + neutral well) — the same
               anatomy the courses family uses for its state chips. */}
           <span className="r305s-chip r305s-chip--success">

@@ -28,7 +28,7 @@ import {
  * the count meta (the DashboardPage conversion's components). */
 import { SectionBar, BarCount } from '../../components/student';
 import '../../styles/research.css';
-/* R305-A7 «Heron»: the scoped research/PDF/library sheet — loaded
+/* R305-A7 «ds»: the scoped research/PDF/library sheet — loaded
  * DIRECTLY AFTER the family sheet so later source order inside
  * @layer pages wins the equal-specificity ties (§0 scoping contract). */
 import '../../styles/shared/ds-research.css';
@@ -616,7 +616,7 @@ export default function LibraryPage() {
   );
 
   return (
-    /* R305-A7 marker root — every Heron rule in the scoped sheet hangs
+    /* R305-A7 marker root — every the reference rule in the scoped sheet hangs
      * off .r305rp; portals (the filter Sheet) reach through §9's
      * body:has(.r305rp). The patterns PageFrame rides INSIDE.
      * R319 (c3-S1): + .r319s-page — the sheet-system opt-in (the §B2
@@ -652,7 +652,7 @@ export default function LibraryPage() {
       {/* Search-first: the page opens with the field, not a KPI wall.
           Both tabs share one debounced query; the count at the bar's
           trailing edge names the searched scope so it never lies about
-          what it covers. The field sits in the Heron well; the eyebrow
+          what it covers. The field sits in the reference well; the eyebrow
           classifies the block. */}
       <div className="rs-toolbar" role="search">
         <span className="r305rp-eyebrow r305rp-lib-searcheyebrow">

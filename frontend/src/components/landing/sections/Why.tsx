@@ -1,5 +1,5 @@
-/* T-05 (r338) — [06] لماذا أُلارا — REWRITTEN from the frozen Heron
- * home-why-wrap spec (docs/redesign/r335/heron-spec/home-why-wrap.*.json).
+/* T-05 (r338) — [06] لماذا أُلارا — REWRITTEN from the frozen reference
+ * home-why-wrap spec (the frozen r335 reference captures: home-why-wrap.*.json).
  *
  * The reference's why strip: a ruled editorial head (eyebrow + display
  * h2 | vertical rule + lede + muted note), a full-width hairline, then

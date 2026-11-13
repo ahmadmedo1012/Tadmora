@@ -1,8 +1,8 @@
 /* P2-0 (r335 split) — [3] التحديات — R337 (A-problem): the section
- * is REBUILT against the frozen Heron spec (docs/redesign/r335/
- * heron-spec/home-problem-wrap.{390,768,1024,1440,1920}.json).
+ * is REBUILT against the frozen reference spec (docs/redesign/r335/
+ * the frozen r335 reference captures (home-problem-wrap.{390),768,1024,1440,1920}.json).
  *
- * Heron's problem band is a RULED LEDGER of four columns — the
+ * the reference's problem band is a RULED LEDGER of four columns — the
  * inverse of the old open-column transplant (R322 2-d, retired with
  * this rewrite):
  *

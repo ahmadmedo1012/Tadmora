@@ -224,7 +224,7 @@ export default function DocumentViewerPage() {
      * back to the caller's context (بحوثي / المقرر / المراجعة). */
     const missing = !params.filename;
     return (
-      // r305-a7: the Heron marker rides EVERY rendered root — including
+      // r305-a7: the reference marker rides EVERY rendered root — including
       // this refusal branch, so the styled sheet never flashes off.
       <div className="page document-viewer-page r305rp">
         <PageFrame width="full">

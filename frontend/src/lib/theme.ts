@@ -55,7 +55,7 @@ function contrastRatio(a: RGB, b: RGB): number {
  * this surface in the active theme.
  */
 const CHROME_BG: Record<ThemeSurface, RGB> = {
-  /* R313: mirrors tokens.css --bg (the Heron FULL-parity foundation) —
+  /* R313: mirrors tokens.css --bg (the reference FULL-parity foundation) —
      light warm vintage paper #F5F1E8, dark charcoal night #262019. The
      college-accent gate measures against the real shipped canvas in
      both themes. (r305 values #F6F8FA/#262019 retired with the

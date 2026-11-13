@@ -105,7 +105,7 @@ export function OwnerContentPage() {
     [themeVersion],
   );
   return (
-    /* r305-A8 «Heron»: page-root marker — swatches, notices and card
+    /* r305-A8 «ds»: page-root marker — swatches, notices and card
        surfaces all key off the scoped sheet's .r305ao selector. */
     <div className="page r305ao">
       <PatternsPageHeader

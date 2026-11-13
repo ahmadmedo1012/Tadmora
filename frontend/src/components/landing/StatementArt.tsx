@@ -1,10 +1,10 @@
 import { BP_DRAWABLE, BP_DRAWABLE_HAIR } from './copy';
 /**
- * StatementArt — R315 cycle-4 (c4-C) → R322 (2-c · the Heron intro
+ * StatementArt — R315 cycle-4 (c4-C) → R322 (2-c · the reference intro
  * transplant): the statement band's SQUARE drafted architectural
  * illustration.
  *
- * The measured reference seat (docs/redesign/r322/heron/statement.md):
+ * The measured reference seat (the retired r322 extraction docs, statement.md):
  * a square ink cell — the 1766×1766 contain-fitted illustration filling
  * the 6-column art cell edge to edge (85.64×86.73rem @1440, a perfect
  * square at 768/390). The old 1386×132 panorama strip could never fill
@@ -14,7 +14,7 @@ import { BP_DRAWABLE, BP_DRAWABLE_HAIR } from './copy';
  * ONE orange sun rising behind the tower's shoulder, the row-band of
  * small drafted blocks and figures, the dashed journey path, the ground
  * datum with its hatched strip — as a TALL-FORMAT massing study (never
- * Heron's artwork; the grammar is ours, drawn in the site's own
+ * the reference's artwork; the grammar is ours, drawn in the site's own
  * bp-ink/bp-hair/st-* token classes).
  *
  * Ink language: the same token ladder as the hero elevation

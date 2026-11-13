@@ -1,7 +1,7 @@
 /**
  * NotFoundPage — the designed 404 surface for routes that don't match.
  *
- * r313: the Heron guest-sheet grammar — full-bleed warm paper carrying
+ * r313: the reference guest-sheet grammar — full-bleed warm paper carrying
  * the LANDING FRAME SYSTEM (a fixed 1px #B3B3AF hairline at the 7px
  * viewport inset with 10×10 mono plus marks centered on its corners —
  * the .sheet-frame/.sheet-mark recipe, D9) over the Arabic explanation

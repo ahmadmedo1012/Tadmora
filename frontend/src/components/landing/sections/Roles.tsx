@@ -1,6 +1,6 @@
 /* P2-0 (r335 split) — [7] الأدوار — R337 (A-usecase): the section is
- * REBUILT against the frozen Heron spec (docs/redesign/r335/heron-spec/
- * home-usecase-wrap.*.json). Heron's usecase band is a hairline-framed
+ * REBUILT against the frozen reference spec (the frozen r335 reference captures: 
+ * home-usecase-wrap.*.json). the reference's usecase band is a hairline-framed
  * full-bleed scene: a media pane on one side (an 8-slide image deck,
  * one slide per accordion row) and a ruled accordion on the other — a
  * label, a three-line display title, and eight rows (title + plus
@@ -111,7 +111,7 @@ const slideSrcSet = (img: string) => {
   return `/media/product/${base}-720.webp 720w, /media/product/${base}-1280.webp 1280w`;
 };
 
-/* T-13: heron faq hover ordinals (spec hovers: 5/6/7 · 20/21/22 · 35). */
+/* T-13: the reference faq hover ordinals (spec hovers: 5/6/7 · 20/21/22 · 35). */
 const ROLE_HOVER_ORD = [5, 6, 7, 20, 21, 22, 35];
 
 export function Roles() {

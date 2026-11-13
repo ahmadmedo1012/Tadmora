@@ -29,7 +29,7 @@ import type {
  *     submission is blocked during the request.
  *
  * r305-A2 (lane 2-b) — control microinteractions; R313 (WP-D · D4)
- * makes the label roll the DEFAULT grammar (the reference's Heron
+ * makes the label roll the DEFAULT grammar (the reference's the reference
  * dual-label roll), guarded to plain-text labels:
  *
  *   labelMotion?: boolean
@@ -45,7 +45,7 @@ import type {
  *     motion snaps via the global token belt.
  *
  *     R313 (WP-D · D4): the roll is now the DEFAULT grammar — the
- *     reference's dual-label roll plays on every Heron button. The
+ *     reference's dual-label roll plays on every the reference button. The
  *     wrapper renders only for PLAIN TEXT labels (string/number
  *     children): rich children (icons, badges, JSX) render exactly as
  *     before (no duplicate risk) and simply skip the roll — the
@@ -87,7 +87,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Optional leading icon, rendered before children. */
   leadingIcon?: ReactNode;
   /** r305 (lane 2-b) → R313 (WP-D · D4) default ON: duplicate-label
-   *  vertical slide on hover/focus-visible — the Heron roll grammar.
+   *  vertical slide on hover/focus-visible — the reference roll grammar.
    *  Only plain-text labels wrap (string/number children); rich
    *  children skip the roll (the fill-wipe hover still lands via the
    *  pure-CSS .btn::before layer). The loading branch always wins

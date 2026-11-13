@@ -28,7 +28,7 @@ import { StatusPipeline } from '../../components/paper/StatusPipeline';
 import { ScanResults } from '../../components/paper/ScanResults';
 import { formatInt } from '../../utils/numbers';
 import '../../styles/research.css';
-/* R305-A7 «Heron»: the scoped research/PDF/library sheet — loaded
+/* R305-A7 «ds»: the scoped research/PDF/library sheet — loaded
  * DIRECTLY AFTER the family sheet so later source order inside
  * @layer pages wins the equal-specificity ties (§0 scoping contract). */
 import '../../styles/shared/ds-research.css';
@@ -176,7 +176,7 @@ export default function StudentResearchPage() {
   };
 
   return (
-    /* R305-A7 marker root — every Heron rule in the scoped sheet hangs
+    /* R305-A7 marker root — every the reference rule in the scoped sheet hangs
      * off .r305rp; the upload Modal (a portal) reaches through §9's
      * body:has(.r305rp). The patterns PageFrame rides INSIDE.
      * R319 (c3-S1): + .r319s-page — the sheet-system opt-in (the §B2

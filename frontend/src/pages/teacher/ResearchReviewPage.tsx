@@ -33,7 +33,7 @@ import '../../styles/shared/ds-research.css';
  * the very same notes in the PDF reader, so both surfaces agree on one
  * instant (15-h P2-2, 16-E10).
  *
- * R305-A7 «Heron» — the review surface rebuilds in the research-family
+ * R305-A7 «ds» — the review surface rebuilds in the research-family
  * grammar (r305-research-pdf-ai.css §B, marker .r305rp on the page
  * root): status is a dot+label chip (never color alone), the decisive
  * action rides the one-action rail with an explicit before→after of
@@ -53,7 +53,7 @@ const STATUS_LABEL: Record<PaperStatus, string> = {
   PUBLISHED: 'مُنشور',
 };
 
-/* Heron chip tones — the dot carries the tone; the Arabic label rides
+/* the reference chip tones — the dot carries the tone; the Arabic label rides
  * beside it, so state never rides color alone (§4 contract). */
 type ChipTone = 'accent' | 'success' | 'warning' | 'danger' | 'info' | 'gold';
 
@@ -533,7 +533,7 @@ function StatLineSkeleton() {
 
 /** Shape-matched split skeleton — queue rows + the workspace panel's
  * shell, so the resolved layout doesn't reflow the page. The rows
- * mirror the Heron row anatomy (r305rp-rev-row). */
+ * mirror the reference row anatomy (r305rp-rev-row). */
 function SplitSkeleton() {
   return (
     <div className="rs-review-split" aria-busy="true" aria-live="polite">
@@ -614,7 +614,7 @@ function QueueItem({ paper, selected, onSelect }: {
 }
 
 /* ─── The review workspace — the split's review half ────────────────
-   Heron territories, each with a kicker heading and hairline bounds:
+   the reference territories, each with a kicker heading and hairline bounds:
      1. The masthead — the ONE deep band: who/what/status + the title.
      2. «سجل الحالة» — the decision record (API timestamps).
      3. «نتائج الفحص الأوتوماتيكي» — the declared simulation cells.

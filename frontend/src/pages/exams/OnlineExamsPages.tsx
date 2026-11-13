@@ -43,7 +43,7 @@ import '../../styles/training.css'; // shared .back-link family (D11 css split, 
 /* ── r305-c (schedule family) imports — the only region agent 2-c edits above the components ── */
 import '../../styles/student/ds-core.css';
 import '../../styles/student/ds-schedule.css';
-import '../../styles/teacher/ds-core.css'; // R305 — the Heron layer (oex2- section lives here)
+import '../../styles/teacher/ds-core.css'; // R305 — the ds layer (oex2- section lives here)
 /* ── R321 B1a (student sweep) — the exams LIST joins the sheet system:
  * the shared §B2 anatomy sheet (page-chunked like every converted
  * family page — the JobsPage/SettingsPage precedent). r341 D7b: the
@@ -233,7 +233,7 @@ function withQid(prev: ReadonlySet<string>, qid: string, present: boolean): Read
    for the document outline. R321 B1b (student sweep): the inline
    H1_AS_H2_STYLE pin is retired with the sheet conversion — the var(
    --fs-h2) seat read 40px @1440 on the fluid root (the 22px note in
-   the old comment predated the Heron ladder), over the ≤32px inner
+   the old comment predated the reference ladder), over the ≤32px inner
    brief. The h1s keep the belt-pinned .oex-result-title class and now
    seat at the INNER display rung (31.5px @1440 / ~31.8px @390) via
    the family sheet r321-exams.css — one seat, three moment screens.
@@ -427,7 +427,7 @@ export default function OnlineExamsPage() {
   );
 }
 
-/* r305-c (Heron): the list's attempt/window states render as the shared
+/* r305-c (the reference): the list's attempt/window states render as the shared
  * .r305s-chip register — tone rides the DOT, the honest words stay the
  * chip body (never hue alone). This map projects the r164-e verdict
  * colors onto the chip tones; the r164-e wire contract itself is
@@ -456,7 +456,7 @@ function ExamCard({ exam, canStart, actNow }: { exam: MyExam; canStart: boolean;
     && (exam.myAttempt.status === 'GRADED' || exam.myAttempt.status === 'SUBMITTED')
     && exam.kind !== 'PRACTICE';
 
-  /* R305 Heron — the row's severity edge: the window/attempt truth as the
+  /* R305 DS — the row's severity edge: the window/attempt truth as the
    * inline-start bar (.hr-edge). A live attempt is THE actionable signal
    * (ember); a shut window is overdue; a not-yet-open one informational;
    * an open window with a deadline rides 'soon'. Neutral otherwise. */
@@ -1966,7 +1966,7 @@ export function ExamModerationPage() {
   return (
     <div className="hr-scope">
     <div className="page">
-      {/* R305 Heron — the oversight brow above the page header. R342-11:
+      {/* R305 DS — the oversight brow above the page header. R342-11:
           the [05] QUALITY_NAV seat numeral rides the brow (the §B2
           cover precedent — the family's own page-index mono label
           carried by the brow line), closing the quality register:

@@ -1,9 +1,9 @@
 /**
  * WhyScene — T-05 (r338) — the why stage, REWRITTEN from the frozen
- * Heron home-why-wrap spec (5 bps, docs/redesign/r335/heron-spec/).
+ * reference home-why-wrap spec (5 bps, the frozen r335 reference captures).
  *
  * The measured reference grammar, reproduced with OUR surfaces (never
- * Heron assets): inside the tall .wy-stage —
+ * the reference assets): inside the tall .wy-stage —
  *  · the centred 1px axis + two 10px svg way-markers (+/– paths);
  *  · the scrubbed accent progress rule (pinned above the fold at the
  *    spec's scroll-0 transform — CSS var --wy-ty, per-bp);

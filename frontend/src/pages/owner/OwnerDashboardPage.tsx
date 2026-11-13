@@ -222,7 +222,7 @@ function OwnerActionStrip({ alerts }: { alerts: OperationalAlert[] }) {
   );
 }
 
-/* R305-A8 «Heron» scoping: the r305-admin-owner.css sheet styles every
+/* R305-A8 «ds» scoping: the r305-admin-owner.css sheet styles every
  * rule under the .r305ao page-root marker, and the patterns PageFrame
  * (a read-only shared primitive) renders no className of its own — so
  * the dashboard's root is this one-div frame that carries the marker

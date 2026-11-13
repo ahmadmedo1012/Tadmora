@@ -33,10 +33,10 @@ export { PageTransition } from './PageTransition';
 export { Skeleton } from './Skeleton';
 export type { SkeletonVariant } from './Skeleton';
 export { Reveal, RevealGroup } from './Reveal';
-/* r305-A2: the Heron-style cursor layer — mounted ONCE globally in
+/* r305-A2: the reference-style cursor layer — mounted ONCE globally in
  * App.tsx (next to <ToastStack/>), not consumed per-page. Re-exported
  * here so the motion kit stays the single import surface. Contract:
- * docs/r305-heron-interactions.md */
+ * the retired r305 interactions doc */
 export { CursorManager } from './CursorManager';
 /* R312 (§R D7): the guest surface's route transition — see the
  * component header (GuestReveal.tsx). */

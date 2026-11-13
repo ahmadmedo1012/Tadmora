@@ -31,9 +31,9 @@ import { formatDate, formatNum, formatPct1 } from '../../utils/numbers';
 // — the quality sector's qlt-* rules consolidated there, and the roster
 // toolbar migrated OFF the borrowed .admin-students-* chrome onto the
 // family-owned .tq-toolbar/.tq-search pill.
-// R305 Heron (§0+§D): the shared hr- primitives + this family's
+// R305 DS (§0+§D): the shared hr- primitives + this family's
 // quality-boards overlay. Imported AFTER the R304 family sheet so the
-// equal-specificity Heron rules land last.
+// equal-specificity the reference rules land last.
 import '../../styles/teacher/ds-core.css';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Filler, Tooltip, Legend);
@@ -218,7 +218,7 @@ const SEVERITY_TONE: Record<QualityAlert['severity'], 'red' | 'amber' | 'brand'>
   warning: 'amber',
   info: 'brand',
 };
-/* R305 Heron (§D): the alert row chip rides §0's vocabulary — the same
+/* R305 DS (§D): the alert row chip rides §0's vocabulary — the same
  * severity semantics the R304 edge paints, in the one chip lexicon. */
 const SEVERITY_CHIP_TONE: Record<QualityAlert['severity'], 'danger' | 'warn' | 'info'> = {
   critical: 'danger',
@@ -244,7 +244,7 @@ function ReadOnlyBadge() {
   );
 }
 
-/* R305 Heron (§D): the sector brow — every oversight board opens
+/* R305 DS (§D): the sector brow — every oversight board opens
  * brow → strong heading so the seven surfaces read as ONE governance
  * face. A separate element (never inside the h1) keeps heading names
  * and pinned strings byte-identical. */
@@ -252,7 +252,7 @@ function QualityBrow() {
   return <span className="hr-brow">قطاع ضمان الجودة</span>;
 }
 
-/** R305 Heron (§D): the status vocabulary rides §0's .hr-chip tones —
+/** R305 DS (§D): the status vocabulary rides §0's .hr-chip tones —
  *  the R304 ThemeColor bands (r299 E6) translated to the chip lexicon.
  *  Same bands, one vocabulary: content scores 80/50 (courses), the
  *  professor compliance band 75/50. Zero/no-data stays neutral (the
@@ -342,7 +342,7 @@ export function QualityDashboardPage() {
   const pageHeader = (
     <header className="page-header">
       <div className="page-title-block">
-        {/* R305 Heron (§D): the sector brow opens the governance face. */}
+        {/* R305 DS (§D): the sector brow opens the governance face. */}
         <QualityBrow />
         <h1 className="page-title">
           {/* R341 D10: the [01] nav-order gutter numeral — the R319
@@ -710,7 +710,7 @@ export function QualityCoursesPage() {
       <div className="hr-scope">
       <header className="page-header">
         <div className="page-title-block">
-          {/* R305 Heron (§D): the sector brow opens the governance face. */}
+          {/* R305 DS (§D): the sector brow opens the governance face. */}
           <QualityBrow />
           <h1 className="page-title">
             {/* R341 D10: [02] nav-order index register. */}
@@ -753,7 +753,7 @@ export function QualityCoursesPage() {
           title="المقرّرات النشطة"
           subtitle={total != null
             ? (
-              /* R305 Heron (§D): the roster count line rides the §0
+              /* R305 DS (§D): the roster count line rides the §0
                  section-count chip (text unchanged — tests pin it). */
               <span className="hr-section-count">
                 {`${countAr(total, ['مقرّر واحد', 'مقرّران', 'مقرّرات', 'مقرّراً'])}${debouncedQ ? ' مطابقة للبحث' : ''}${courses && courses.length < total ? ` · تُعرض أول ${courses.length}` : ''}`}
@@ -775,7 +775,7 @@ export function QualityCoursesPage() {
           {/* R304: the roster search chrome — now the family-owned
               .tq-toolbar/.tq-search pill (migrated off the borrowed
               admin-students-* chrome) wired to the debounced
-              server-side `q`. R305 Heron (§D): .hr-toolbar joins for
+              server-side `q`. R305 DS (§D): .hr-toolbar joins for
               the one placement grammar. */}
           <div className="tq-toolbar hr-toolbar">
             <div className="tq-search">
@@ -795,7 +795,7 @@ export function QualityCoursesPage() {
               every admin roster (OwnerUsersPage reference). 4C-b: the
               page-scoped qlt-table restyle keeps the ONE shared DOM —
               mono tabular metric columns, identity cell (name + code)
-              leading. R305 Heron (§D): .hr-table layers the filled
+              leading. R305 DS (§D): .hr-table layers the filled
               header + denser hairline rows over the shared recipe. */}
           <div className="table-wrap">
             <table className="table tbl-stack qlt-table hr-table">
@@ -823,7 +823,7 @@ export function QualityCoursesPage() {
                   // Score 0 = no content yet — a neutral state, never a
                   // danger register (A8 P2-4: red “0%” spent the danger
                   // color on “no data”). r299 (E item 6): typed tones —
-                  // the `as never` casts retired. R305 Heron (§D): the
+                  // the `as never` casts retired. R305 DS (§D): the
                   // bands ride the .hr-chip vocabulary verbatim.
                   const tone = completionChipTone(score);
                   const mv = metric ? metricValue(o) : undefined;
@@ -932,7 +932,7 @@ export function QualityProfessorsPage() {
         <div className="hr-scope">
         <header className="page-header">
           <div className="page-title-block">
-            {/* R305 Heron (§D): the sector brow. */}
+            {/* R305 DS (§D): the sector brow. */}
             <QualityBrow />
             <h1 className="page-title">
               {/* R341 D10: [03] nav-order index register. */}
@@ -960,7 +960,7 @@ export function QualityProfessorsPage() {
         <div className="hr-scope">
         <header className="page-header">
           <div className="page-title-block">
-            {/* R305 Heron (§D): the sector brow. */}
+            {/* R305 DS (§D): the sector brow. */}
             <QualityBrow />
             <h1 className="page-title">
               {/* R341 D10: [03] nav-order index register. */}
@@ -990,7 +990,7 @@ export function QualityProfessorsPage() {
       <div className="hr-scope">
       <header className="page-header">
         <div className="page-title-block">
-          {/* R305 Heron (§D): the sector brow. */}
+          {/* R305 DS (§D): the sector brow. */}
           <QualityBrow />
           <h1 className="page-title">
             {/* R341 D10: [03] nav-order index register. */}
@@ -1050,7 +1050,7 @@ export function QualityProfessorsPage() {
         title={lowOnly ? `هيئة التدريس · بحاجة لمتابعة (${lowComp})` : 'هيئة التدريس'}
         subtitle={total != null
           ? (
-            /* R305 Heron (§D): the count line rides the §0
+            /* R305 DS (§D): the count line rides the §0
                section-count chip (text unchanged — tests pin it). */
             <span className="hr-section-count">
               {`${countAr(total, ['أستاذ واحد', 'أستاذان', 'أساتذة', 'أستاذاً'])}${searching ? ' مطابقة للبحث' : ''}${professors.length < total ? ` · تُعرض أول ${professors.length}` : ''}`}
@@ -1067,7 +1067,7 @@ export function QualityProfessorsPage() {
             live. r299 (E item 5): the toolbar stays up even when the
             roster is empty (searched or not) — a fresh institution
             reads an honest empty state below, never a header-only
-            table. R305 Heron (§D): .hr-toolbar joins for the one
+            table. R305 DS (§D): .hr-toolbar joins for the one
             placement grammar; the pressed pill reads the ember. */}
         <div className="tq-toolbar hr-toolbar">
           <div className="tq-search">
@@ -1123,7 +1123,7 @@ export function QualityProfessorsPage() {
           <>
         {lowOnly && (
           <div className="qlt-filter-note">
-            {/* R305 Heron (§D): the filter state rides the chip lexicon. */}
+            {/* R305 DS (§D): the filter state rides the chip lexicon. */}
             <span className="hr-chip" data-tone="danger">مصفّى: التزام أقلّ من 50%</span>
             <button type="button" className="btn ghost sm" onClick={() => setLowOnly(false)}>
               <Icon icon={X} size={13} />
@@ -1134,7 +1134,7 @@ export function QualityProfessorsPage() {
         {/* tbl-stack (A8 P1-1): 8 columns sideways-scrolled 524px at
             390px — the roster now collapses to labelled cards like the
             admin siblings. At ≤1024 the compact diet (above) keeps the
-            tablet band inside the wrap. R305 Heron (§D): .hr-table
+            tablet band inside the wrap. R305 DS (§D): .hr-table
             layers the filled header + denser hairline rows. */}
         <div className="table-wrap">
           <table className="table tbl-stack qlt-roster hr-table">
@@ -1153,7 +1153,7 @@ export function QualityProfessorsPage() {
             <tbody>
               {visible.map((t) => {
                 // r299 (E item 6): the typed compliance band (75/50) —
-                // the `as never` cast retired. R305 Heron (§D): the
+                // the `as never` cast retired. R305 DS (§D): the
                 // band rides the .hr-chip vocabulary verbatim.
                 const compTone = complianceChipTone(t.compliance);
                 return (
@@ -1230,7 +1230,7 @@ export function QualityEngagementPage() {
   const pageHeader = (
     <header className="page-header">
       <div className="page-title-block">
-        {/* R305 Heron (§D): the sector brow. */}
+        {/* R305 DS (§D): the sector brow. */}
         <QualityBrow />
         <h1 className="page-title">
           {/* R341 D10: [04] nav-order index register. */}
@@ -1416,7 +1416,7 @@ export function QualityCurriculumPage() {
   const pageHeader = (
     <header className="page-header">
       <div className="page-title-block">
-        {/* R305 Heron (§D): the sector brow. */}
+        {/* R305 DS (§D): the sector brow. */}
         <QualityBrow />
         <h1 className="page-title">
           {/* R341 D10: [06] nav-order index register (05 is the moderation
@@ -1485,7 +1485,7 @@ export function QualityCurriculumPage() {
       {/* Filter + legend — the pills reuse the shared .filter-pill
           segmented-control family; rows dim (not disappear) so the
           roster stays whole while filtering (4C-b keeps the matrix
-          page's dim-in-place contract on the row list). R305 Heron
+          page's dim-in-place contract on the row list). R305 DS
           (§D): .hr-toolbar joins for the one placement grammar, and a
           pressed pill reads the ember. */}
       <Card>
@@ -1550,7 +1550,7 @@ export function QualityCurriculumPage() {
                             tooltip), mono tabular percentage + level chip
                             trailing, and a thin completion rail under each
                             row. Filtered-out rows dim via .is-dim. R305
-                            Heron (§D): the row wears the §0 severity edge
+                            the reference (§D): the row wears the §0 severity edge
                             (poor→overdue danger, weak→soon warning, strong
                             rides transparent) and the level chip rides
                             the .hr-chip lexicon. */}
@@ -1653,7 +1653,7 @@ export function QualityReportsPage() {
       <div className="hr-scope">
       <header className="page-header">
         <div className="page-title-block">
-          {/* R305 Heron (§D): the sector brow. */}
+          {/* R305 DS (§D): the sector brow. */}
           <QualityBrow />
           <h1 className="page-title">
             {/* R341 D10: [07] nav-order index register. */}
@@ -1675,7 +1675,7 @@ export function QualityReportsPage() {
       {/* 4C-b: the link ledger — full-width ≥44px rows with an icon well,
           title + one-line description and a trailing chevron; hairline
           separators + a quiet hover wash (the former .alert link rows
-          retire with their card-in-card boxes). R305 Heron (§D): the
+          retire with their card-in-card boxes). R305 DS (§D): the
           icon wells ride the ember — these rows are the page's primary
           actions. */}
       <Card title="اللوحات الحيّة" icon={ListChecks} subtitle="أربع لوحات مرتبطة ببعضها">
@@ -1701,7 +1701,7 @@ export function QualityReportsPage() {
       </Card>
 
       <Card title="تصدير تقارير ثابتة (PDF/Excel)" icon={FileText}>
-        {/* R305 Heron (§D): the honest pending disclosure rides the §0
+        {/* R305 DS (§D): the honest pending disclosure rides the §0
             note box (copy unchanged). */}
         <p className="qlt-note hr-note">
           إصدار التقارير القابلة للتحميل قيد التطوير. حاليّاً يمكنك الاعتماد على اللوحات الحيّة أعلاه — كلّ
@@ -1737,7 +1737,7 @@ export function QualityAlertsPage() {
       <div className="hr-scope">
       <header className="page-header">
         <div className="page-title-block">
-          {/* R305 Heron (§D): the sector brow. */}
+          {/* R305 DS (§D): the sector brow. */}
           <QualityBrow />
           <h1 className="page-title">
             {/* R341 D10: [09] nav-order index register. */}
@@ -1748,7 +1748,7 @@ export function QualityAlertsPage() {
         </div>
         <div className="qlt-header-badges">
           {q.data && q.data.counts.critical > 0 && (
-            /* R305 Heron (§D): the critical count rides the chip lexicon. */
+            /* R305 DS (§D): the critical count rides the chip lexicon. */
             <span className="hr-chip" data-tone="danger">{countAr(q.data.counts.critical, ['تنبيه حرج', 'تنبيهان حرجان', 'تنبيهات حرجة', 'تنبيهاً حرجاً'])}</span>
           )}
           <ReadOnlyBadge />
@@ -1787,7 +1787,7 @@ export function QualityAlertsPage() {
                slices 20 rows server-side while counts.total stays the
                TRUE uncapped count (learning.routes.ts); the rosters'
                own grammar (countAr total · «تُعرض أول N»), so the
-               truncation is visible, never silent. R305 Heron (§D):
+               truncation is visible, never silent. R305 DS (§D):
                the count rides the §0 section-count chip. */
             ? (
               <span className="hr-section-count">
@@ -1797,7 +1797,7 @@ export function QualityAlertsPage() {
             : undefined}
         >
           {/* R304: the severity filter rail — counts inline so the rail
-              answers both «كم؟» and «أيّها؟» in one line. R305 Heron
+              answers both «كم؟» and «أيّها؟» in one line. R305 DS
               (§D): .hr-toolbar joins for the one placement grammar; a
               pressed pill reads the ember. */}
           <div className="qlt-alert-filter hr-toolbar" role="group" aria-label="تصفية التنبيهات بحسب الشدّة">
@@ -1831,8 +1831,8 @@ export function QualityAlertsPage() {
                   danger / warning / brand tints — r299: the info edge mirrors
                   the brand Badge's copper family, it was --success green while
                   the same row's chip rendered brand), category icon, severity
-                  chip + relative time. R305 Heron (§D): the edge joins the
-                  3px Heron hairline weight and the severity word rides the
+                  chip + relative time. R305 DS (§D): the edge joins the
+                  3px the reference hairline weight and the severity word rides the
                   .hr-chip lexicon (critical→danger, warning→warn, info→info). */}
               <div className="qlt-alert-list">
                 {visibleAlerts.map((a) => (

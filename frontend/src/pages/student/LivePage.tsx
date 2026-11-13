@@ -42,7 +42,7 @@ import { apiErrorMessage } from '../../hooks/useResources';
 import { formatDate, formatInt } from '../../utils/numbers';
 import { countAr } from '../../lib/format';
 
-/* R305 Heron: the shared student vocabulary + this family's refinements. */
+/* R305 DS: the shared student vocabulary + this family's refinements. */
 import '../../styles/student/ds-core.css';
 import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S2): the sheet system — the §B2 anatomy every converted
@@ -355,7 +355,7 @@ function StudentSessionRow({
       }
       title={s.title}
       meta={
-        /* R305 Heron: the row's metadata rides the meta-row register —
+        /* R305 DS: the row's metadata rides the meta-row register —
            hairline separators instead of bare middots. */
         <span className="r305s-meta-row">
           <bdi>{s.offering.course.code}</bdi>

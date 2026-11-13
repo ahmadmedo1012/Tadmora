@@ -356,7 +356,7 @@ export default function StudentCalendarPage() {
           </div>
         </header>
 
-        {/* Heron micro-label: the legend is a metadata block — classify
+        {/* the reference micro-label: the legend is a metadata block — classify
             it (the chips below carry the kinds; tone on the dot only). */}
         <div className="cal-legend" aria-label="مفتاح الرموز">
           <span className="r305s-eyebrow">أنواع المواعيد</span>
@@ -392,7 +392,7 @@ export default function StudentCalendarPage() {
             const eventCount = byDay.get(cell.key)?.length ?? 0;
             const isToday = cell.key === todayKey;
             const dayName = isToday ? `اليوم ${WEEKDAY_NAMES_AR[cell.dow]}` : WEEKDAY_NAMES_AR[cell.dow];
-            /* r305-c Heron chrome: the weekend (Libya: Friday + Saturday
+            /* r305-c the reference chrome: the weekend (Libya: Friday + Saturday
              * on the 0=Sunday contract) takes a quiet ink step — presentational
              * only, the cell's data/aria contract is untouched. */
             const isWeekend = cell.dow === 5 || cell.dow === 6;

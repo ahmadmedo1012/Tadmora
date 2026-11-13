@@ -24,7 +24,7 @@ import { materialHref } from '../../lib/materialHref';
 import { countAr, formatDateAr, WEEKDAY_NAMES_AR } from '../../lib/format';
 import { formatInt } from '../../utils/numbers';
 import { courseTint, ASSIGNMENT_KIND_LABEL, MATERIAL_TYPE_LABEL, type AssignmentKind, type MaterialType } from '../../lib/courseMeta';
-/* R305-A5 (Heron): the shared student vocabulary + this family's sheet. */
+/* R305-A5 (the reference): the shared student vocabulary + this family's sheet. */
 import '../../styles/student/ds-core.css';
 import '../../styles/student/ds-courses.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + this
@@ -212,7 +212,7 @@ export default function CourseDetailPage() {
 
       {/* The continue strip — one unmistakable next action (the
           Coursera/edX course-home rule). Progress rides beside it.
-          R305 (Heron): the strip is THE page's one-action rail — the
+          R305 (the reference): the strip is THE page's one-action rail — the
           foundation .r305s-next copper edge + accent wash replace the
           tinted hero band (the course tint survives in the progress
           fill and the curriculum rows below), and an .r305s-eyebrow

@@ -12,7 +12,7 @@ import { ErrorState, EmptyState, ChartSkeleton, ListSkeleton } from '../../compo
 import {
   PageFrame, PageHeader, SectionHeader, RowList, RowItem, StatLine, TodayList, FilterBar,
 } from '../../components/patterns';
-import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 hr- primitives + §A tqd- deltas (mounted via .hr-scope)
+import '../../styles/teacher/ds-core.css'; // R305 DS: §0 hr- primitives + §A tqd- deltas (mounted via .hr-scope)
 /* R332 W11 — the dashboard grammar bridge (styles/landing/inner.css §W11):
  * the [nn] section-index chips (.w11-idx) this page mounts in its
  * SectionHeader/Card titles — the r319 student sheet's SectionBar
@@ -185,7 +185,7 @@ const RISK_LABEL: Record<TeacherRiskRow['riskLevel'], string> = {
   AT_RISK: 'في خطر',
   CRITICAL: 'حرج',
 };
-/* R305 Heron: the risk chip rides the ONE status vocabulary of the
+/* R305 DS: the risk chip rides the ONE status vocabulary of the
  * round (.hr-chip[data-tone]) — green→ok, gold→info, amber→warn,
  * red→danger — so a risk level reads identically here and on the
  * students roster. */
@@ -275,7 +275,7 @@ export function TeacherDashboardPage() {
      * today's lectures beside it) → at-risk shortcuts → the trend chart →
      * the feed behind a FilterBar. No KPI wall: the numbers ride one
      * flat line, the ROWS carry the day's work. */
-    /* R305 Heron: the .hr-scope wrapper (display:contents) declares
+    /* R305 DS: the .hr-scope wrapper (display:contents) declares
      * the ember tokens + the §A tqd- deltas for this surface. */
     <div className="hr-scope">
     <PageFrame>
@@ -289,7 +289,7 @@ export function TeacherDashboardPage() {
           </>
         }
         actions={
-          /* R305 Heron: the follow-ups count rides the status-chip
+          /* R305 DS: the follow-ups count rides the status-chip
            * vocabulary — ember when work waits, green when clear. */
           <span className="hr-chip" data-tone={visible.length === 0 ? 'ok' : 'ember'}>
             {visible.length === 0
@@ -552,7 +552,7 @@ function PendingGradingQueue({ index, entries }: { index: string; entries: Teach
         title={<><span className="w11-idx" dir="ltr" aria-hidden="true">[{index}]</span>طابور التصحيح</>}
         description={total === 0 ? undefined : countAr(total, ['تسليم بانتظار درجتك', 'تسليمان بانتظار درجتك', 'تسليمات بانتظار درجتك', 'تسليماً بانتظار درجتك'])}
         actions={total > 0 ? (
-          /* R305 Heron: the ONE ember-flavored primary action of the
+          /* R305 DS: the ONE ember-flavored primary action of the
            * home — the queue is the day's first decision surface. */
           <Link to="/teacher/assignments" className="btn primary sm hr-cta">
             <Icon icon={ClipboardCheck} size={13} /> ابدأ التصحيح
@@ -561,7 +561,7 @@ function PendingGradingQueue({ index, entries }: { index: string; entries: Teach
       />
       <RowList aria-label="طابور التصحيح">
         {entries.length === 0 ? (
-          /* R305 Heron: the structured empty (§0 .hr-empty) — the win
+          /* R305 DS: the structured empty (§0 .hr-empty) — the win
            * named, its line closed by the green status chip. */
           <div className="hr-empty">
             <strong>لا انتظار — كل التسليمات مُقيَّمة</strong>
@@ -650,7 +650,7 @@ function TodayLectures({ index }: { index: string }) {
               ),
               urgency: phase === 'ongoing' ? 'now' : phase === 'upcoming' ? 'soon' : 'later',
               action:
-                /* R305 Heron: the phase chips speak the ONE status
+                /* R305 DS: the phase chips speak the ONE status
                  * vocabulary (danger = live, info = upcoming). */
                 phase === 'ongoing' ? <span className="hr-chip" data-tone="danger">جارٍ الآن</span> :
                 phase === 'done' ? <span className="hr-chip">انتهت</span> :

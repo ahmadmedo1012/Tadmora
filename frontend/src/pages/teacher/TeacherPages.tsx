@@ -50,7 +50,7 @@ import { ASSIGNMENT_KIND_LABEL, MATERIAL_TYPE_LABEL, gradeBand, GRADE_BANDS } fr
 import { validatePdfFile, pdfUploadErrorMessage } from '../../lib/pdfUpload';
 import ResearchReviewPage from './ResearchReviewPage';
 import { formatDate, formatNum, formatPct1 } from '../../utils/numbers';
-import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 hr- primitives + §A tqd- deltas (mounted via .hr-scope)
+import '../../styles/teacher/ds-core.css'; // R305 DS: §0 hr- primitives + §A tqd- deltas (mounted via .hr-scope)
 /* R341 D8 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the teacher dashboard's Card titles and the
  * student SectionBar speak, so every daily-work section head reads on
@@ -65,7 +65,7 @@ import '../../styles/landing/inner.css';
  */
 
 /* ─── Generic placeholder structure ─── */
-/* R305 Heron: the .hr-chip tone for each family Badge color — the ONE
+/* R305 DS: the .hr-chip tone for each family Badge color — the ONE
  * status vocabulary of the round (green→ok, brand/gold/purple→info,
  * amber→warn, red→danger). Badges whose class names are e2e/unit-pinned
  * (the queue ceiling + ratio chips) keep the .badge primitive. */
@@ -82,7 +82,7 @@ function PageHeader({ title, subtitle, actions, brow }: { title: string; subtitl
   return (
     <header className="page-header">
       <div className="page-title-block">
-        {/* R305 Heron: the workflow brow — a mono micro-label naming the
+        {/* R305 DS: the workflow brow — a mono micro-label naming the
             daily-workflow area (a real classification, never decoration). */}
         {brow && <span className="hr-brow">{brow}</span>}
         <h1 className="page-title">{title}</h1>
@@ -192,7 +192,7 @@ export function TeacherSchedulePage() {
   const todayDow = new Date().getDay();
 
   return (
-    /* R305 Heron: .hr-scope (display:contents) declares the ember tokens
+    /* R305 DS: .hr-scope (display:contents) declares the ember tokens
      * + the §A tqd- deltas; the .page layout root stays untouched. */
     <div className="hr-scope">
       <div className="page">
@@ -236,7 +236,7 @@ export function TeacherSchedulePage() {
                   {WEEKDAY_NAMES_AR[d.dow]}
                 </span>
                 <span className="tpg-day-aux">
-                  {/* R305 Heron: today is THE ember signal of the page —
+                  {/* R305 DS: today is THE ember signal of the page —
                       the marker chip rides the ember tone. */}
                   {d.dow === todayDow && <span className="hr-chip" data-tone="ember">اليوم</span>}
                   <span className="tpg-day-count">
@@ -363,7 +363,7 @@ function SortableHead({
       scope="col"
       aria-sort={active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}
     >
-      {/* R305 Heron: the shared .hr-sort-btn anatomy (44px floor) rides
+      {/* R305 DS: the shared .hr-sort-btn anatomy (44px floor) rides
           beside the R304 .tpg-sort; the glyph span takes the ember when
           the column is the active sort (aria-sort stays on the th). */}
       <button type="button" className="tpg-sort hr-sort-btn" onClick={() => onCycle(sortKey)}>
@@ -459,7 +459,7 @@ export function AttendancePage() {
   };
 
   return (
-    /* R305 Heron: .hr-scope declares the ember tokens + §A tqd- deltas. */
+    /* R305 DS: .hr-scope declares the ember tokens + §A tqd- deltas. */
     <div className="hr-scope">
     <div className="page">
       <PageHeader
@@ -469,7 +469,7 @@ export function AttendancePage() {
         actions={
           <button
             type="button"
-            /* R305 Heron: the ONE ember-flavored primary action of the
+            /* R305 DS: the ONE ember-flavored primary action of the
              * page — the save is the session's whole point.
              * R341 D8 — re-keyed to the accent register (.btn.accent,
              * the pattern-library primary voice the rebuilt pages
@@ -615,7 +615,7 @@ export function AttendancePage() {
               (the old "barely visible grey … looks like a rendering
               bug" VLM verdict). */}
           {!effectiveOfferingId ? (
-            /* R305 Heron: the honest hint rides the structured .hr-note
+            /* R305 DS: the honest hint rides the structured .hr-note
              * (was an inline-styled paragraph — r186 hygiene). */
             <p className="hr-note">اختر مقرّراً لعرض إحصائيّات جلساته.</p>
           ) : stuQ.isPending ? (
@@ -710,7 +710,7 @@ export function GradesPage() {
   }
 
   return (
-    /* R305 Heron: .hr-scope declares the ember tokens + §A tqd- deltas. */
+    /* R305 DS: .hr-scope declares the ember tokens + §A tqd- deltas. */
     <div className="hr-scope">
     <div className="page">
       <PageHeader
@@ -784,7 +784,7 @@ export function GradesPage() {
                           the RTL cell — same isolation as the average
                           column beside it. */}
                       <td className="tbl-num" data-label="الحضور"><bdi>{formatPct1(s.attendancePct)}%</bdi></td>
-                      {/* R305 Heron: the band chip speaks the ONE status
+                      {/* R305 DS: the band chip speaks the ONE status
                           vocabulary (.hr-chip[data-tone]). */}
                       <td data-label="التقدير"><span className="hr-chip" data-tone={HR_CHIP_TONE[band.color]}>{band.label}</span></td>
                     </tr>
@@ -974,7 +974,7 @@ function SemesterGradeEntry({
       actions={
         <button
           type="button"
-          /* R305 Heron: the card's ONE ember-flavored primary.
+          /* R305 DS: the card's ONE ember-flavored primary.
            * R341 D8 — accent register (the pattern-library primary). */
           className="btn accent hr-cta"
           onClick={() => void onSave()}
@@ -1294,7 +1294,7 @@ function MaterialFormModal({ onClose }: { onClose: () => void }) {
       closeOnOverlayClick={!pending}
       closeOnEscape={!escapeLocked}
     >
-      {/* R305 Heron: the dialog mounts its own scope — §0's crisp press
+      {/* R305 DS: the dialog mounts its own scope — §0's crisp press
           feedback + focus offset reach the modal's controls. */}
       <div className="hr-scope">
       <div className="modal-header">
@@ -1500,7 +1500,7 @@ export function MaterialsPage() {
   const [adding, setAdding] = useState(false);
 
   return (
-    /* R305 Heron: .hr-scope declares the ember tokens + §A tqd- deltas. */
+    /* R305 DS: .hr-scope declares the ember tokens + §A tqd- deltas. */
     <div className="hr-scope">
     <div className="page">
       <PageHeader
@@ -1510,7 +1510,7 @@ export function MaterialsPage() {
         actions={(
           /* r144 (T1-h F2): the channel the old dead-end card pointed
            * at without providing. By-link creation (no multipart).
-           * R305 Heron: the page's ONE ember-flavored primary —
+           * R305 DS: the page's ONE ember-flavored primary —
            * R341 D8 re-keyed to the accent register (the
            * pattern-library primary voice). */
           <button type="button" className="btn accent hr-cta" onClick={() => setAdding(true)}>
@@ -1555,7 +1555,7 @@ export function MaterialsPage() {
                     </a>
                     <div className="tpg-mat-sub">
                       <span>{m.course.name}</span>
-                      {/* R305 Heron: the file type reads as the neutral chip
+                      {/* R305 DS: the file type reads as the neutral chip
                           of the one status vocabulary. */}
                       <span className="hr-chip">{MATERIAL_TYPE_LABEL[m.type] ?? <bdi>{m.type}</bdi>}</span>
                       <span>{formatNum(m.views)} مشاهدة</span>
@@ -1632,7 +1632,7 @@ export function StudentsListPage() {
   }
 
   return (
-    /* R305 Heron: .hr-scope declares the ember tokens + §A tqd- deltas. */
+    /* R305 DS: .hr-scope declares the ember tokens + §A tqd- deltas. */
     <div className="hr-scope">
     <div className="page">
       <PageHeader
@@ -1721,7 +1721,7 @@ export function StudentsListPage() {
                       <td data-label="الرقم الجامعيّ"><bdi className="font-mono text-xs">{s.universityId}</bdi></td>
                       <td className="tbl-num" data-label="الحضور">{formatPct1(s.attendancePct)}%</td>
                       <td className="tbl-num" data-label="المتوسّط"><bdi>{formatPct1(s.avgGrade)}%</bdi></td>
-                      {/* R305 Heron: band + risk ride the ONE chip vocabulary
+                      {/* R305 DS: band + risk ride the ONE chip vocabulary
                           (the same tones the grades table and the dashboard
                           risk rows wear). */}
                       <td data-label="التقدير"><span className="hr-chip" data-tone={HR_CHIP_TONE[band.color]}>{band.label}</span></td>
@@ -1819,7 +1819,7 @@ export function PerformancePage() {
   const atRisk = students.filter((s) => s.riskLevel === 'AT_RISK' || s.riskLevel === 'CRITICAL').length;
 
   return (
-    /* R305 Heron: .hr-scope declares the ember tokens + §A tqd- deltas. */
+    /* R305 DS: .hr-scope declares the ember tokens + §A tqd- deltas. */
     <div className="hr-scope">
     <div className="page">
       <PageHeader
@@ -2037,7 +2037,7 @@ function AssignmentFormModal({ onClose }: { onClose: () => void }) {
           <Icon icon={X} size={16} />
         </button>
       </div>
-      {/* R305 Heron: the dialog mounts its own .hr-scope (§0 press
+      {/* R305 DS: the dialog mounts its own .hr-scope (§0 press
           feedback + focus offset). */}
       <div className="hr-scope">
       <form onSubmit={(e) => { e.preventDefault(); void onSubmit(); }} noValidate>
@@ -2190,7 +2190,7 @@ export function AssignmentsPage() {
     : null;
 
   return (
-    /* R305 Heron: .hr-scope declares the ember tokens + §A tqd- deltas. */
+    /* R305 DS: .hr-scope declares the ember tokens + §A tqd- deltas. */
     <div className="hr-scope">
     <div className="page">
       <PageHeader
@@ -2201,7 +2201,7 @@ export function AssignmentsPage() {
           /* r144 (T1-h F1): the teaching loop's missing authoring half —
            * the copy used to promise «ستظهر هنا فور إنشاء أيّ واجب» with
            * no creation affordance anywhere in the product.
-           * R305 Heron: the page's ONE ember-flavored primary — R341 D8
+           * R305 DS: the page's ONE ember-flavored primary — R341 D8
            * re-keyed to the accent register (the pattern-library
            * primary voice; the ember ring stays). */
           <button type="button" className="btn accent hr-cta" onClick={() => setCreating(true)}>
@@ -2259,7 +2259,7 @@ export function AssignmentsPage() {
                         ceiling, the counted submissions and the tone-chip
                         due date (overdue red, ≤3 days amber, beyond
                         green; the full date rides the title).
-                        R305 Heron: the due chip rides the ONE status
+                        R305 DS: the due chip rides the ONE status
                         vocabulary (.hr-chip[data-tone]); the ratio badge
                         keeps the pinned .badge primitive. */}
                     <div className="tpg-asg-meta">
@@ -2439,7 +2439,7 @@ function NeedsReviewCard({
                inline-start-edge grammar as the quality alerts rows). */
             const days = g.dueAt ? Math.round((new Date(g.dueAt).getTime() - Date.now()) / 86400000) : null;
             const dueEdge: 'overdue' | 'soon' | undefined = days === null ? undefined : days < 0 ? 'overdue' : days <= 3 ? 'soon' : undefined;
-            /* R305 Heron: the §0 .hr-edge carries the 3px inline-start
+            /* R305 DS: the §0 .hr-edge carries the 3px inline-start
                severity rule (data-due stays for the R304 mapping); the
                due + count chips speak the ONE status vocabulary. */
             return (
@@ -2478,7 +2478,7 @@ function NeedsReviewCard({
                         <span>{p.studentName}</span>
                         {/* 18-G's late flag — a small warning chip beside the
                             name, never a suffix inside the assignment title
-                            (maxScore matches the stripped title). R305 Heron:
+                            (maxScore matches the stripped title). R305 DS:
                             it rides the ONE status vocabulary. */}
                         {p.late && <span className="hr-chip" data-tone="warn">متأخر</span>}
                       </div>
@@ -2616,7 +2616,7 @@ function GradeSubmissionModal({
           <Icon icon={X} size={16} />
         </button>
       </div>
-      {/* R305 Heron: the dialog mounts its own .hr-scope (§0 press
+      {/* R305 DS: the dialog mounts its own .hr-scope (§0 press
           feedback + focus offset). */}
       <div className="hr-scope">
       {/* A7 P2-2: a real <form> — Enter in the score field submits the
@@ -2717,7 +2717,7 @@ function GradeSubmissionModal({
           ) : (
             <button
               type="submit"
-              /* R305 Heron: the dialog's ONE ember-flavored primary. */
+              /* R305 DS: the dialog's ONE ember-flavored primary. */
               className="btn primary hr-cta"
               disabled={grade.isPending}
             >
@@ -2820,7 +2820,7 @@ function TeacherMessageCompose({
 
 export function MessagesPage() {
   return (
-    /* R305 Heron: the inbox keeps its own component contract — the
+    /* R305 DS: the inbox keeps its own component contract — the
      * scope wrapper only declares the ember tokens around it. */
     <div className="hr-scope">
       <MessagesInbox

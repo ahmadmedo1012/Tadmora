@@ -8,7 +8,7 @@ import { LECTURE_INTERACTIVE, MASTERY_SCORE_LINE } from '../copy';
  * heuristic pairing 90.9%) was structural: our scene owned the
  * reference's STAGES but not its measured SEATS. This rebuild keeps
  * the six-state scroll story and re-seats every narrated element on
- * the frozen Heron map spec (`docs/redesign/r335/heron-spec/
+ * the frozen reference map spec (`the frozen r335 reference captures: 
  * home-map-wrap.*.json`), so each real visual counterpart carries an
  * explicit `data-spec` binding (mapping/home-map-wrap.json) instead
  * of heuristic gluing:
@@ -34,7 +34,7 @@ import { LECTURE_INTERACTIVE, MASTERY_SCORE_LINE } from '../copy';
  * THE STATE MACHINE (kept — the R322 semantics): `data-stage` 0..5,
  * `data-finding` 1..5/done, `data-wash` the bounded room highlight,
  * `data-rm` the reduced-motion static sheet. What changed:
- *   · the ENTRANCE DRIFT now rides `.jt-stack` (Heron's own seat —
+ *   · the ENTRANCE DRIFT now rides `.jt-stack` (the reference's own seat —
  *     the window's chrome stays put while the plan descends one
  *     frame height: −(100dvh − 1rem), the measured transform);
  *   · PLAQUE 1 stands VISIBLE from scroll 0 (the spec records it at
@@ -111,7 +111,7 @@ const FINDINGS_AR = [
   },
 ] as const;
 
-/* the closing column — the section's own head (Heron's home-map
+/* the closing column — the section's own head (the reference's home-map
  * content column: label chip + h2 + body + the cms ledger). The h2
  * keeps id="chapters-title" (the aria-labelledby contract) and the
  * D2 display rung. The copy is the honest ledger summary. */
@@ -131,7 +131,7 @@ const LEDGER_AR = [
   { key: 'mastery', text: 'مصفوفة الإتقان والمراجعة حسب أدائك الفعلي', icon: Grid3x3 },
 ] as const;
 
-/* the three plan annotation cards (Heron's demo cards): orange-ruled
+/* the three plan annotation cards (the reference's demo cards): orange-ruled
  * callouts on the drawing — title in the accent mono voice + one
  * honest line. Positioned at the measured seats (journey.css). */
 const ANNOTATIONS_AR = [

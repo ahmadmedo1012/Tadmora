@@ -73,7 +73,7 @@ const FILTER_LABEL: Record<Exclude<LevelFilter, 'all'>, string> = {
   'lvl-untouched': 'لم يُختبر',
 };
 
-/* r305-c (Heron): the cell's status renders as the shared chip register
+/* r305-c (the reference): the cell's status renders as the shared chip register
  * — tone on the DOT, the status word stays the body text (never hue
  * alone; the r220 contract). Pure presentation map over MasteryClass. */
 const LEVEL_CHIP_TONE: Record<MasteryClass, string> = {

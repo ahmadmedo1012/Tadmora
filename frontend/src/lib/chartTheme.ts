@@ -255,7 +255,7 @@ trackMedia('(prefers-contrast: more)', (m) => {
  * content — not styling drift. */
 const FALLBACK = {
   /* R313 (WP-D · charts): the canvas-layer fallbacks re-tint to the
-     Heron paper/signal family — warm neutrals, no blue-grey; series 1
+     the reference paper/signal family — warm neutrals, no blue-grey; series 1
      IS the #C43E16 signal (mirrors tokens.css --chart-1). */
   chartText:   '#414140',
   chartGrid:   '#E0E0DA',

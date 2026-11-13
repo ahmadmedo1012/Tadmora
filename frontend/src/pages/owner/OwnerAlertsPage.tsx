@@ -139,7 +139,7 @@ export function OwnerAlertsPage() {
   const kpiKnown = alertsQuery.isSuccess;
 
   return (
-    /* r305-A8 «Heron»: page-root marker — severity cards, tones and
+    /* r305-A8 «ds»: page-root marker — severity cards, tones and
        states all key off the scoped sheet's .r305ao selector. */
     <div className="page r305ao">
       <PatternsPageHeader

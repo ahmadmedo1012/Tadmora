@@ -7,8 +7,8 @@
  * R314 rode a raster fragment (object-fit-cover crop of a photo
  * derivative on a white rectangle) — the owner's §0-A.1 verdict killed
  * that seat. R315 re-seated the drafted ElevationDrawing (own subject,
- * own licence — never Heron's artwork) at ~67% of the window width
- * with empty paper around it. The R322 Heron extraction measures the
+ * own licence — never the reference's artwork) at ~67% of the window width
+ * with empty paper around it. The R322 the reference extraction measures the
  * reference's hero illustration at 164.81×77.6rem `contain` inside a
  * 164.87×77.63rem img-inner box — the ink FILLS the box (96%+ of the
  * band width) and the paper mat + drafting chrome live OUTSIDE the

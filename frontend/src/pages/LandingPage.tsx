@@ -18,7 +18,7 @@ import { initReveals } from '../lib/reveals';
  * LINES-only display rise · batch item rise · imgCardReveal cards;
  * Arabic line-level only, RM bails, JS-off-safe arming). */
 /* R331 (A-Web-Hero) — the hero JSX block lives in its own folder
- * (components/landing/hero/Hero.tsx): the Heron-mechanics rebuild
+ * (components/landing/hero/Hero.tsx): the reference-mechanics rebuild
  * (mask-line title reveal · wiping frame edges · staged ink-in ·
  * deco cards · work-card rise). HeroInkWindow/HeroInspect mount from
  * there; the r331/hero.css import rides the component. The sections/
@@ -31,7 +31,7 @@ import { Live } from '../components/landing/sections/Live';
 /* r325 Y2 — PlatformCanvas/PlatformPlanArt (the head-strip plan +
  * its over-art pin) retire with the Y2 rebuild: the plan's caption
  * lives under the ONE product frame now (see sections/Product.tsx). */
-/* R333 P-D — the entry sequence rebuild (heron-craft row 1): the
+/* R333 P-D — the entry sequence rebuild (the retired craft sheet row 1): the
  * preloader is the paper overlay + stroke-draw + % counter with the
  * GSAP clip-path wipe exit; the R313 SheetLoader retires from the
  * mount (the file stays for rollback) — the introGate decision (once
@@ -40,7 +40,7 @@ import { Live } from '../components/landing/sections/Live';
 import { Preloader } from '../components/landing/chrome/Preloader';
 import { SheetCursor } from '../components/landing/cursor/SheetCursor';
 import { Chapters } from '../components/landing/sections/Chapters';
-/* P-A2 R333 (INV-08 · heron-craft row 13) — the platform band's
+/* P-A2 R333 (INV-08 · the retired craft sheet row 13) — the platform band's
  * product-proof strip (three REAL captures) lives inside
  * sections/Product.tsx — the Vite-asset imports ride the section. */
 import { Product } from '../components/landing/sections/Product';
@@ -59,13 +59,13 @@ import { shouldPlayIntro, introEnvironment } from '../lib/motion/introGate';
 import { useSheetScroll } from '../lib/motion/useSheetScroll';
 import { clamp } from '../lib/motion/sheetConductor';
 // r314-chrome.css — R314 B10 — the consent banner (V11) + the right-edge
-// vertical tab (V12): the landing chrome pair, Heron geometry with
+// vertical tab (V12): the landing chrome pair, the reference geometry with
 // Ulara's own honest content. R323 (A3 · defect 3): imported BEFORE
 // landing.css so the sheet's R323 chrome block (the compact phone
 // consent bar + the --z-consent/--z-loader tokens) is the cascade's
 // last word over the chrome pair without specificity forks.
 import '../styles/landing/consent-edge.css';
-// landing.css — «لوحة أُلارا r306 → r313» — the Heron-parity drawing
+// landing.css — «لوحة أُلارا r306 → r313» — the reference-parity drawing
 // sheet, re-composed to the reference's 9-section structure (D7):
 // hero → statement → live (the pains) → chapters (the pinned map) →
 // product → why → roles → vision/cta → footer, inside the full-page
@@ -102,7 +102,7 @@ import '../styles/landing/statement-ai1.css';
 import '../styles/landing/shared.css';
 import '../styles/landing/platform.css';
 import '../styles/landing/strata.css';
-// r330-home.css — R330 (A-Web-Home) — the homepage's Heron-composition
+// r330-home.css — R330 (A-Web-Home) — the homepage's reference-composition
 // pass (hero/statement/pains: dominant ink bands, decisive display
 // scale, the ruled-table pains grid, deepened reveals). Loaded AFTER
 // landing.css so its namespaced rules win by cascade order — the ONLY
@@ -118,7 +118,7 @@ import '../styles/landing/home.css';
 import { SheetNav } from '../components/landing/chrome/SheetNav';
 
 /**
- * Landing — «لوحة أُلارا» (r306 sheet → R313 Heron structure).
+ * Landing — «لوحة أُلارا» (r306 sheet → R313 the reference structure).
  *
  * P2-0 (r335 split): this file is the COMPOSER — hooks + refs +
  * effects + the nine section components in the original DOM order.
@@ -128,7 +128,7 @@ import { SheetNav } from '../components/landing/chrome/SheetNav';
  * the sections stay presentational. ZERO DOM drift — the rendered
  * sheet is byte-identical.
  *
- * Composition (the 9 sections, reading RTL — Heron measured @1440×900,
+ * Composition (the 9 sections, reading RTL — the reference measured @1440×900,
  * total 12355px):
  *   [1] hero (~887px · 7.2%): the copy band + the drafted elevation
  *       with its inspection instruments + the capabilities ticker —
@@ -162,7 +162,7 @@ import { SheetNav } from '../components/landing/chrome/SheetNav';
 /* R338 (T-07 · scroll.mjs scrub-curve conformance) — the measured
  * reference word-ink curve: cumulative ink coverage of the statement
  * title at 11 evenly spaced seats across the scrub trigger, frozen in
- * heron-spec/scroll-curves.<bp>.json (live-extracted @ all 5 bps; the
+ * the frozen r335 reference captures (scroll-curves.<bp>.json) (live-extracted @ all 5 bps; the
  * five runs agree within ±0.01 — this is their consensus). A gentle
  * late-accelerating ease; inkEase() is its piecewise-linear
  * reproduction (scroll progress → --wr-p), so our linear per-word
@@ -243,7 +243,7 @@ export default function LandingPage() {
    * R338 (T-07 · scroll.mjs scrub-curve conformance): the reference's
    * word-ink ramp is NOT linear in scroll progress. Measured on the
    * live reference at 11 seats across the trigger (frozen in
-   * heron-spec/scroll-curves.<bp>.json — all 5 bps agree within ±0.01):
+   * the frozen r335 reference captures (scroll-curves.<bp>.json) — all 5 bps agree within ±0.01):
    * the cumulative ink coverage runs [0, .073, .185, .297, .41, .522,
    * .634, .746, .859, .97, 1] — a gentle late-accelerating ease. Our
    * words ink linearly in --wr-p, so the driver maps scroll progress
@@ -465,7 +465,7 @@ export default function LandingPage() {
           landmarks; the imperative scroll rAF keeps only the header
           hide/show latch. */}
 
-      {/* ── The masthead — R331 (A-Web-Nav): the Heron-measured bar
+      {/* ── The masthead — R331 (A-Web-Nav): the legacy-measured bar
           (transparent paper in every state, the on-scroll/on-hide
           state machine, the clip-path menu) lives in its own chrome
           component with its own stylesheet — see
@@ -475,13 +475,13 @@ export default function LandingPage() {
 
       <main id="main" tabIndex={-1}>
 
-        {/* ═══ [1] HERO — R331 (A-Web-Hero): the Heron-mechanics
+        {/* ═══ [1] HERO — R331 (A-Web-Hero): the reference-mechanics
             rebuild. ONE art band (the drafting stage: ink + wiping
             frame + ruler chrome + deco cards + the inspection
             instrument) over ONE content band (masked-line H1 ‖ 1px
             divider ‖ sub + the register CTA + the login secondary)
             closed by the work strip — the reveal grammar, motion
-            values and layer stack of docs/redesign/r331/heron-program.md
+            values and layer stack of the retired r331 program doc
             §4, on Ulara's own artwork and copy. The component owns
             the whole block (and imports styles/r331/hero.css). ═══ */}
         <Hero />

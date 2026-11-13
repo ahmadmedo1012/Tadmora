@@ -5,7 +5,7 @@
  *
  * The landing (landing.css .sheet-frame) and the guest doors (auth.css
  * .auth-frame + GuestSheetChrome) already seat the app's public faces on
- * the Heron sheet: a 1px hairline frame at the 7px viewport inset (the
+ * the ds sheet: a 1px hairline frame at the 7px viewport inset (the
  * reference's measured frame constant, identical at 1440/768/390), the
  * 10×10 mono corner plus-marks, and the measured paper-grain film
  * (the R344 C-6 inline feTurbulence data-URIs — 256px multiply film-grain tile +

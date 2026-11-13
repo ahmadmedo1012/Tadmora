@@ -30,7 +30,7 @@ import { countAr } from '../../lib/format';
 import { useEntityPageTitle } from '../../components/layout/AppShell'; // r183-B6 (A4 P3-4): entity tab title, one call only
 import '../../styles/owner.css'; // ConfirmDialog surfaces via curriculum authoring (D11 css split, 12-15)
 import '../../styles/training.css'; // shared .track-hero/.filter-pill/.back-link families (D11 css split, 12-15)
-import '../../styles/teacher/ds-core.css'; // R305 Heron: §0 primitives + §E tax- composition
+import '../../styles/teacher/ds-core.css'; // R305 DS: §0 primitives + §E tax- composition
 /* R342-09 — the [nn] section-index register (.w11-idx, inner.css §W11):
  * the same gutter grammar the teacher dashboard's Card titles and the
  * done daily-work pages speak (TeacherPages.tsx:54), so the
@@ -39,7 +39,7 @@ import '../../styles/landing/inner.css';
 import { formatPct1, formatNum } from '../../utils/numbers';
 
 /* The shared risk vocabulary (the dashboard mirrors these exact
- * strings — never reword). The chip tones are the Heron §0 status
+ * strings — never reword). The chip tones are the reference §0 status
  * vocabulary: stable=ok · watched=info · at-risk=warn · critical=danger.
  * The severity rail + score ink no longer ride inline styles: the row
  * carries data-severity and §E of r305-teacher-quality.css paints both
@@ -116,7 +116,7 @@ export default function TeacherIntelligencePage() {
         actions={(
           /* A6 P3 (22-a): the Latin run is bdi-isolated like every other
            * Latin fragment on teacher surfaces (ResearchReview grammar).
-           * R305: the suggestion affordance rides the Heron ember chip —
+           * R305: the suggestion affordance rides the reference ember chip —
            * the one warm accent on this panel. */
           <span className="hr-chip" data-tone="ember"><Icon icon={Brain} size={11} /> <bdi>AI</bdi></span>
         )}

@@ -15,7 +15,7 @@ import { useMoocs, type MoocCourse } from '../../hooks/useResources';
 import { formatInt, formatNum } from '../../utils/numbers';
 import { matchesNormalizedQuery } from '../../lib/search';
 import { countAr } from '../../lib/format';
-/* R305 Heron: the shared student vocabulary + this family's refinements. */
+/* R305 DS: the shared student vocabulary + this family's refinements. */
 import '../../styles/student/ds-core.css';
 import '../../styles/student/ds-supplemental.css';
 /* R319 (c3-S1): the sheet system — the §B2 component anatomy + the
@@ -182,7 +182,7 @@ export default function MoocPage() {
 
           {/* The counted-results line — the settled total, and the
               filtered subset while searching (live under aria). */}
-          {/* R305 Heron: the counted line is page metadata — it rides the
+          {/* R305 DS: the counted line is page metadata — it rides the
               chip register (accent dot = live fact), not bare muted text. */}
           <p className="r305s-meta-row" aria-live="polite">
             <span className="r305s-chip r305s-chip--accent">

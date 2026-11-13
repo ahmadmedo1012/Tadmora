@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
  *
  * The owner's second iPhone screenshot read «لوحة التحكم / اليوم /
  * مقرّراتك» as three giant equal-weight words in one screen. R319 seats
- * the page into the Heron drafting-sheet grammar: every section below
+ * the page into the reference drafting-sheet grammar: every section below
  * the masthead opens with a MONO-INDEXED TITLE BAR —
  *
  *      [02] اليوم ───────────────────────────── 03

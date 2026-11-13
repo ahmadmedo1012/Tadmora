@@ -634,7 +634,7 @@ export default function AuthPage() {
                 <p className="auth-demo-hint-body">
                   حساب واحد لكل دور — اضغط «دخول سريع» للدخول فورًا، أو عبّئ الحقول يدويًا.
                 </p>
-                {/* R320 §C — the hairline-cell account table (Heron sheet
+                {/* R320 §C — the hairline-cell account table (ds sheet
                     grammar: 1px hairline rows, square cells, radius 0,
                     mono credentials), grouped التعليم / الحوكمة / النظام
                     (R321 §A7 — the governance bucket is «الحوكمة», never

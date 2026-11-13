@@ -175,7 +175,7 @@ export function OwnerEducationPage() {
   ];
 
   return (
-    /* r305-A8 «Heron»: page-root marker — meters (owner-workload),
+    /* r305-A8 «ds»: page-root marker — meters (owner-workload),
        tables and chart containers all key off the scoped sheet. */
     <div className="page r305ao">
       <PatternsPageHeader
