@@ -23,8 +23,8 @@
 //    own cuid PKs (userId keeps FK + index for legacy reads).
 //  · UserPermission/AuditLog gain nullable institutionId (NULL =
 //    platform scope).
-//  · Deliberately untouched (Phase 5): UniversityFact/SyncRun (Zawia
-//    showcase source), Announcement/PlatformSetting/FeatureFlag
+//  · Deliberately untouched (Phase 5): UniversityFact/SyncRun (the
+//    primary showcase source), Announcement/PlatformSetting/FeatureFlag
 //    (platform-global), offerings/enrollments/grades (ownership via
 //    the verified parent chain).
 // ────────────────────────────────────────────────────────────────
@@ -264,7 +264,7 @@ enum ThemePreference {
 
 // المؤسسة سياق تعليمي داخل أُلارا (ليست هوية بصرية — لا شعارات ولا
 // نطاقات). Phase Ω: المنصّة مستقلة متعددة المستأجرين ولا تنتمي لأي
-// جامعة؛ مساحتا العرض الموسومتان (ulara-demo و alandalus-demo)
+// جامعة؛ مساحتا العرض الموسومتان (ulara-demo و ulara-demo-2)
 // تحملان البيانات التجريبية وتثبتان تفرد رموز المقررات وأرقام
 // التسجيل على مستوى المؤسسة لا المنصة.
 model Institution {
@@ -519,7 +519,7 @@ model TeacherProfile {
 model Faculty {
   id                 String             @id @default(cuid())
   // The same faculty name can exist in multiple cities (e.g. "كلية الاقتصاد"
-  // in Zawia AND Ajilat are distinct campuses). Since r178 the institution
+  // in two different cities are distinct campuses). Since r178 the institution
   // carries the scoping — uniqueness is on (institutionId, name, city).
   name               String
   nameEn             String?

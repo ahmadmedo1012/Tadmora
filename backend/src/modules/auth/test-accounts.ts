@@ -50,9 +50,9 @@ interface AccountProfileData {
   lastName: string;
   avatarInitials: string;
   avatarColor: string;
-  /** Which demo workspace this account belongs to ('zawia' | 'alandalus') —
+  /** Which demo workspace this account belongs to ('primary' | 'secondary') —
    * legacy internal keys (row-identity parity with the seed), Phase Ω. */
-  institution: 'zawia' | 'alandalus';
+  institution: 'primary' | 'secondary';
   /** Reg-number candidates, tried in order, ONLY when allocating a new
    * StudentProfile (an existing profile is never renumbered). */
   regNumbers?: string[];
@@ -67,35 +67,35 @@ interface AccountProfileData {
 const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
   'student@test.ly': {
     firstName: 'أحمد', lastName: 'الزروق', avatarInitials: 'أح', avatarColor: '#4F8EF7',
-    institution: 'zawia', regNumbers: ['UZ-2024-00001', 'UZ-2025-00001'],
+    institution: 'primary', regNumbers: ['UZ-2024-00001', 'UZ-2025-00001'],
     year: 3, gpa: 3.4, totalXp: 2340, level: 7,
   },
   'student2@test.ly': {
     firstName: 'ليلى', lastName: 'المهدي', avatarInitials: 'لم', avatarColor: '#F06292',
-    institution: 'alandalus', regNumbers: ['UZ-2024-00001', 'AA-2025-00001'],
+    institution: 'secondary', regNumbers: ['UZ-2024-00001', 'AA-2025-00001'],
     year: 1,
   },
   'teacher@test.ly': {
     firstName: 'سالم', lastName: 'البوسيفي', avatarInitials: 'سب', avatarColor: '#3DD68C',
-    institution: 'zawia', specialty: 'علوم الحاسوب والذكاء الاصطناعي',
+    institution: 'primary', specialty: 'علوم الحاسوب والذكاء الاصطناعي',
     rank: AcademicRank.ASSOCIATE_PROFESSOR,
   },
   'teacher2@test.ly': {
     firstName: 'خالد', lastName: 'الترابلسي', avatarInitials: 'خت', avatarColor: '#F5A623',
-    institution: 'alandalus', specialty: 'علوم الحاسوب',
+    institution: 'secondary', specialty: 'علوم الحاسوب',
     rank: AcademicRank.ASSISTANT_PROFESSOR,
   },
   'head@test.ly': {
     firstName: 'محمد', lastName: 'الشريف', avatarInitials: 'مش', avatarColor: '#0E7490',
-    institution: 'zawia', specialty: 'هندسة البرمجيات', rank: AcademicRank.PROFESSOR,
+    institution: 'primary', specialty: 'هندسة البرمجيات', rank: AcademicRank.PROFESSOR,
   },
   'dean@test.ly': {
     firstName: 'إبراهيم', lastName: 'الفيتوري', avatarInitials: 'إف', avatarColor: '#B45309',
-    institution: 'zawia', specialty: 'نظم المعلومات الإدارية', rank: AcademicRank.PROFESSOR,
+    institution: 'primary', specialty: 'نظم المعلومات الإدارية', rank: AcademicRank.PROFESSOR,
   },
   'vicedean@test.ly': {
     firstName: 'آمال', lastName: 'بن عيسى', avatarInitials: 'آب', avatarColor: '#7C3AED',
-    institution: 'zawia', specialty: 'شبكات الحاسوب', rank: AcademicRank.PROFESSOR,
+    institution: 'primary', specialty: 'شبكات الحاسوب', rank: AcademicRank.PROFESSOR,
   },
   'registrar@test.ly': {
     /* R320 §B lockstep fix: the seed corpus (prisma/seed.ts, c1-RENAME)
@@ -108,23 +108,23 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
        lockstep. (R321 §A7: the stale literal retired from comments —
        the ledger scan owns the history.) */
     firstName: 'المسجل', lastName: 'العام', avatarInitials: 'مع', avatarColor: '#9B6FE8',
-    institution: 'zawia',
+    institution: 'primary',
   },
   'faculty@test.ly': {
     firstName: 'خديجة', lastName: 'المرابط', avatarInitials: 'خم', avatarColor: '#2EC4B6',
-    institution: 'zawia',
+    institution: 'primary',
   },
   'admin2@test.ly': {
     firstName: 'المسجل', lastName: 'العام', avatarInitials: 'مع', avatarColor: '#2EC4B6',
-    institution: 'alandalus',
+    institution: 'secondary',
   },
   'quality@test.ly': {
     firstName: 'ضمان', lastName: 'الجودة', avatarInitials: 'جو', avatarColor: '#D4A537',
-    institution: 'zawia',
+    institution: 'primary',
   },
   'owner@test.ly': {
     firstName: 'مالك', lastName: 'المنصة', avatarInitials: 'مل', avatarColor: '#6B7280',
-    institution: 'zawia', // informational only — the owner NEVER gets a membership
+    institution: 'primary', // informational only — the owner NEVER gets a membership
   },
 };
 
@@ -135,50 +135,50 @@ const ACCOUNT_PROFILES: Record<string, AccountProfileData> = {
  * claim) and the first workspace's CS faculty matches the seed's
  * composite key exactly. */
 async function ensureSkeleton(prisma: PrismaClient) {
-  const zawia = await prisma.institution.upsert({
+  const primary = await prisma.institution.upsert({
     where: { slug: 'ulara-demo' },
     update: { name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', status: 'ACTIVE' },
     create: {
-      id: 'inst-zawia-showcase',
+      id: 'inst-ulara-showcase',
       name: 'مساحة عمل أُلارا التجريبية',
       nameEn: 'Ulara Experimental Workspace',
       slug: 'ulara-demo',
       status: 'ACTIVE',
     },
   });
-  const alandalus = await prisma.institution.upsert({
-    where: { slug: 'alandalus-demo' },
+  const secondary = await prisma.institution.upsert({
+    where: { slug: 'ulara-demo-2' },
     update: { name: 'مساحة عمل تجريبية ثانية', nameEn: 'A Second Experimental Workspace', status: 'ACTIVE' },
     create: {
       name: 'مساحة عمل تجريبية ثانية',
       nameEn: 'A Second Experimental Workspace',
-      slug: 'alandalus-demo',
+      slug: 'ulara-demo-2',
       status: 'ACTIVE',
     },
   });
-  const zawiaItFaculty = await prisma.faculty.upsert({
+  const primaryItFaculty = await prisma.faculty.upsert({
     where: {
-      institutionId_name_city: { institutionId: zawia.id, name: 'كلية علوم الحاسوب', city: 'افتراضي' },
+      institutionId_name_city: { institutionId: primary.id, name: 'كلية علوم الحاسوب', city: 'افتراضي' },
     },
     create: {
       name: 'كلية علوم الحاسوب', nameEn: 'Computer Science', iconEmoji: '💻',
-      city: 'افتراضي', institutionId: zawia.id,
+      city: 'افتراضي', institutionId: primary.id,
     },
     update: {},
   });
   const aaFaculty = await prisma.faculty.upsert({
     where: {
-      institutionId_name_city: { institutionId: alandalus.id, name: 'كلية تقنية المعلومات', city: 'افتراضي' },
+      institutionId_name_city: { institutionId: secondary.id, name: 'كلية تقنية المعلومات', city: 'افتراضي' },
     },
     create: {
       name: 'كلية تقنية المعلومات', nameEn: 'Information Technology', iconEmoji: '💻',
-      city: 'افتراضي', institutionId: alandalus.id,
+      city: 'افتراضي', institutionId: secondary.id,
     },
     update: {},
   });
-  const zawiaCsDept = await prisma.department.upsert({
-    where: { facultyId_name: { facultyId: zawiaItFaculty.id, name: 'علوم الحاسوب' } },
-    create: { name: 'علوم الحاسوب', nameEn: 'Computer Science', facultyId: zawiaItFaculty.id },
+  const primaryCsDept = await prisma.department.upsert({
+    where: { facultyId_name: { facultyId: primaryItFaculty.id, name: 'علوم الحاسوب' } },
+    create: { name: 'علوم الحاسوب', nameEn: 'Computer Science', facultyId: primaryItFaculty.id },
     update: {},
   });
   const aaCsDept = await prisma.department.upsert({
@@ -187,9 +187,9 @@ async function ensureSkeleton(prisma: PrismaClient) {
     update: {},
   });
   return {
-    zawia, alandalus,
-    zawiaItFaculty, aaFaculty,
-    zawiaCsDept, aaCsDept,
+    primary, secondary,
+    primaryItFaculty, aaFaculty,
+    primaryCsDept, aaCsDept,
   };
 }
 
@@ -256,9 +256,9 @@ export async function ensureTestAccounts(prisma: PrismaClient): Promise<number> 
     if (!profile) continue; // unknown account — the table and profiles must stay in lockstep
 
     const institution =
-      profile.institution === 'alandalus' ? skeleton.alandalus : skeleton.zawia;
-    const faculty = profile.institution === 'alandalus' ? skeleton.aaFaculty : skeleton.zawiaItFaculty;
-    const department = profile.institution === 'alandalus' ? skeleton.aaCsDept : skeleton.zawiaCsDept;
+      profile.institution === 'secondary' ? skeleton.secondary : skeleton.primary;
+    const faculty = profile.institution === 'secondary' ? skeleton.aaFaculty : skeleton.primaryItFaculty;
+    const department = profile.institution === 'secondary' ? skeleton.aaCsDept : skeleton.primaryCsDept;
 
     // ── user: create-or-heal by the fixed test email ──────────────
     // The heal (update) branch converges the row on the canonical
@@ -280,7 +280,7 @@ export async function ensureTestAccounts(prisma: PrismaClient): Promise<number> 
         avatarColor: profile.avatarColor,
         // Governance scope is part of the account's documented contract:
         // faculty-scoped for `scoped`, university-wide (NULL) otherwise.
-        scopeFacultyId: account.scoped ? skeleton.zawiaItFaculty.id : null,
+        scopeFacultyId: account.scoped ? skeleton.primaryItFaculty.id : null,
       },
       create: {
         email: account.email,
@@ -291,7 +291,7 @@ export async function ensureTestAccounts(prisma: PrismaClient): Promise<number> 
         avatarInitials: profile.avatarInitials,
         avatarColor: profile.avatarColor,
         emailVerifiedAt: new Date(),
-        scopeFacultyId: account.scoped ? skeleton.zawiaItFaculty.id : null,
+        scopeFacultyId: account.scoped ? skeleton.primaryItFaculty.id : null,
       },
     });
     const user = await prisma.user.findUniqueOrThrow({

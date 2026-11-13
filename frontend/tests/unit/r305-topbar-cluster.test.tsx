@@ -1,5 +1,5 @@
 /**
- * r305-topbar-cluster — the Heron shell pass pins (Task 2-b).
+ * r305-topbar-cluster — the ds shell pass pins (Task 2-b).
  *
  * The R305-A4 grammar applied to the topbar cluster, pinned where the
  * owned suites above don't already hold the line:
@@ -111,8 +111,8 @@ const membership = (over: Partial<MembershipInfo>): MembershipInfo => ({
   ...over,
 });
 
-const INST_A = membership({ institutionId: 'inst-a', name: 'جامعة الزاوية', nameEn: 'University of Zawia', slug: 'zawia' });
-const INST_B = membership({ institutionId: 'inst-b', name: 'مساحة عمل تجريبية ثانية', nameEn: 'Second Experimental Workspace', slug: 'andalus', role: 'ADMIN' });
+const INST_A = membership({ institutionId: 'inst-a', name: 'مساحة عمل أُلارا التجريبية', nameEn: 'Ulara Experimental Workspace', slug: 'primary' });
+const INST_B = membership({ institutionId: 'inst-b', name: 'مساحة عمل تجريبية ثانية', nameEn: 'Second Experimental Workspace', slug: 'secondary', role: 'ADMIN' });
 
 const contextFor = (inst: MembershipInfo) => ({
   id: inst.institutionId,
@@ -164,7 +164,7 @@ describe('InstitutionChip — passive pill vs switcher', () => {
     });
     renderShell(<Topbar title="لوحة التحكم" />);
 
-    const pill = screen.getByText('جامعة الزاوية');
+    const pill = screen.getByText('مساحة عمل أُلارا التجريبية');
     expect(pill).toHaveClass('topbar-scope');
     expect(screen.queryByRole('button', { name: 'المؤسسة الحالية' })).toBeNull();
     expect(screen.queryByRole('button', { name: 'اختيار المؤسسة' })).toBeNull();
@@ -189,7 +189,7 @@ describe('InstitutionChip — passive pill vs switcher', () => {
     expect(items).toHaveLength(2);
     // The current institution's row is disabled — honest selected state.
     expect(items[0]).toHaveAttribute('aria-disabled', 'true');
-    expect(items[0]!.textContent).toContain('جامعة الزاوية');
+    expect(items[0]!.textContent).toContain('مساحة عمل أُلارا التجريبية');
     // The role label rides the trailing edge (topbar-inst-role).
     expect(items[1]!.textContent).toContain('المسجل العام'); // R320 override: «إداري» → «المسجل العام» (§B rename)
   });

@@ -19,7 +19,7 @@ vi.mock('../../src/lib/zu-sync/index.js', () => ({
   // r179d: the real per-institution registry — the showcase institution
   // is the only configured source (matches the production registry).
   INSTITUTION_SYNC_CONFIGS: [
-    { institutionId: 'inst-zawia-showcase', institutionSlug: 'zawia-showcase', source: 'static-markdown' },
+    { institutionId: 'inst-ulara-showcase', institutionSlug: 'ulara-showcase', source: 'static-markdown' },
   ],
 }));
 vi.mock('../../src/db.js', () => ({
@@ -311,7 +311,7 @@ describe('scheduler timer lifecycle', () => {
     findManyMock.mockResolvedValue([]);
     const institutionDirectoryMock = vi.mocked(prisma.institution.findMany);
     institutionDirectoryMock.mockResolvedValue([
-      { id: 'inst-zawia-showcase', slug: 'zawia-showcase' },
+      { id: 'inst-ulara-showcase', slug: 'ulara-showcase' },
     ] as never);
 
     startScheduler();
@@ -323,7 +323,7 @@ describe('scheduler timer lifecycle', () => {
     expect(runSyncMock).toHaveBeenCalledTimes(1);
     // r179d: the scheduled sync targets the CONFIGURED institution.
     expect(runSyncMock).toHaveBeenCalledWith({
-      institutionId: 'inst-zawia-showcase',
+      institutionId: 'inst-ulara-showcase',
       source: 'static-markdown',
     });
     expect(findManyMock).toHaveBeenCalledTimes(1);
@@ -333,7 +333,7 @@ describe('scheduler timer lifecycle', () => {
     runSyncMock.mockResolvedValue(successResult());
     findManyMock.mockResolvedValue([]);
     vi.mocked(prisma.institution.findMany).mockResolvedValue([
-      { id: 'inst-zawia-showcase', slug: 'zawia-showcase' },
+      { id: 'inst-ulara-showcase', slug: 'ulara-showcase' },
     ] as never);
 
     startScheduler();
@@ -348,7 +348,7 @@ describe('scheduler timer lifecycle', () => {
     runSyncMock.mockRejectedValue(new Error('sync down'));
     findManyMock.mockResolvedValue([]);
     vi.mocked(prisma.institution.findMany).mockResolvedValue([
-      { id: 'inst-zawia-showcase', slug: 'zawia-showcase' },
+      { id: 'inst-ulara-showcase', slug: 'ulara-showcase' },
     ] as never);
 
     startScheduler();

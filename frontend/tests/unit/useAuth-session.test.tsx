@@ -112,7 +112,7 @@ describe('useRegister — session boundary', () => {
         firstName: USER_B.firstName,
         lastName: USER_B.lastName,
         role: 'TEACHER',
-        institutionId: 'inst-zawia-showcase', // r178: required for both public roles
+        institutionId: 'inst-ulara-showcase', // r178: required for both public roles
       });
     });
 
@@ -147,19 +147,19 @@ describe('useMe — institution context sync (r178)', () => {
       ...USER_A,
       memberships: [
         {
-          institutionId: 'inst-alandalus-demo',
+          institutionId: 'inst-ulara-demo-2',
           name: 'مساحة عمل تجريبية ثانية',
-          nameEn: 'Al-Andalus Education Institute',
-          slug: 'alandalus-demo',
+          nameEn: 'A Second Experimental Workspace',
+          slug: 'ulara-demo-2',
           role: 'ADMIN',
           isActive: true,
         },
       ],
       currentInstitution: {
-        id: 'inst-alandalus-demo',
+        id: 'inst-ulara-demo-2',
         name: 'مساحة عمل تجريبية ثانية',
-        nameEn: 'Al-Andalus Education Institute',
-        slug: 'alandalus-demo',
+        nameEn: 'A Second Experimental Workspace',
+        slug: 'ulara-demo-2',
       },
       membershipRole: 'ADMIN',
     });
@@ -171,7 +171,7 @@ describe('useMe — institution context sync (r178)', () => {
     // The context lands in the store (the shell’s chip source)…
     const state = useAuthStore.getState();
     expect(state.memberships).toHaveLength(1);
-    expect(state.currentInstitution?.slug).toBe('alandalus-demo');
+    expect(state.currentInstitution?.slug).toBe('ulara-demo-2');
     expect(state.membershipRole).toBe('ADMIN');
     // …while the me read carries no token — the session pair stays as-is.
     expect(state.user?.id).toBe('user-a');
@@ -183,19 +183,19 @@ describe('useMe — institution context sync (r178)', () => {
     useAuthStore.getState().setSession(USER_A, 'tok-me', {
       memberships: [
         {
-          institutionId: 'inst-zawia-showcase',
-          name: 'جامعة الزاوية',
-          nameEn: 'University of Zawia',
-          slug: 'zawia-showcase',
+          institutionId: 'inst-ulara-showcase',
+          name: 'مساحة عمل أُلارا التجريبية',
+          nameEn: 'Ulara Experimental Workspace',
+          slug: 'ulara-showcase',
           role: 'STUDENT',
           isActive: true,
         },
       ],
       currentInstitution: {
-        id: 'inst-zawia-showcase',
-        name: 'جامعة الزاوية',
-        nameEn: 'University of Zawia',
-        slug: 'zawia-showcase',
+        id: 'inst-ulara-showcase',
+        name: 'مساحة عمل أُلارا التجريبية',
+        nameEn: 'Ulara Experimental Workspace',
+        slug: 'ulara-showcase',
       },
       membershipRole: 'STUDENT',
     });

@@ -59,9 +59,9 @@ const SESSION_USER = {
   role: 'STUDENT' as const,
   memberships: [],
   currentInstitution: {
-    id: 'inst-zawia-showcase',
-    name: 'جامعة الزاوية',
-    slug: 'zawia-showcase',
+    id: 'inst-ulara-showcase',
+    name: 'مساحة عمل أُلارا التجريبية',
+    slug: 'ulara-showcase',
   },
   membershipRole: 'STUDENT' as const,
 };
@@ -114,7 +114,7 @@ describe('useChangePassword — the re-issued session (r180-F4)', () => {
     expect(state.user?.id).toBe('user-1');
     // The institution context rides the payload (the route re-resolves
     // it the same way refresh does).
-    expect(state.currentInstitution?.slug).toBe('zawia-showcase');
+    expect(state.currentInstitution?.slug).toBe('ulara-showcase');
     expect(state.membershipRole).toBe('STUDENT');
     // renderHook's proxy needs a settled re-render to observe the
     // terminal flag (the store assertions above are the contract;

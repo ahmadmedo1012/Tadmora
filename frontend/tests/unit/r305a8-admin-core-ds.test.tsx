@@ -65,7 +65,7 @@ const STATS = { totalStudents: 120, totalTeachers: 12, totalCourses: 6, totalEnr
 
 const FACULTIES = [
   {
-    id: 'f1', name: 'كلية الهندسة', nameEn: null, iconEmoji: null, city: 'الزاوية',
+    id: 'f1', name: 'كلية الهندسة', nameEn: null, iconEmoji: null, city: 'افتراضي',
     departmentCount: 1, studentCount: 30, teacherCount: 5, courseCount: 4,
     departments: [{ id: 'd1', name: 'قسم الحاسوب', students: 30, teachers: 5, courses: 4 }],
   },

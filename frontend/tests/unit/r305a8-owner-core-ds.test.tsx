@@ -1,5 +1,5 @@
 /**
- * R305-A8 (task 2-c) — the owner console CORE's Heron scoping pins.
+ * R305-A8 (task 2-c) — the owner console CORE's ds scoping pins.
  *
  * The Task 1 stylesheet contract (r305-admin-owner.css) styles EVERY
  * rule under the `.r305ao` page-root marker, so a page that forgets
@@ -25,7 +25,7 @@
  *   3. IMPORT WIRING — the barrel loads r305-admin-owner.css directly
  *      after owner.css, and the two direct-importing modules load it
  *      directly after admin.css (source order inside @layer pages is
- *      what lets the Heron sheet win the equal-specificity ties).
+ *      what lets the ds sheet win the equal-specificity ties).
  *
  * Harness: the same mock boundaries the neighboring owner tests
  * established — lib/api fixtures + a react-chartjs-2 stub for the
@@ -87,11 +87,11 @@ const NO_IDLE_EDUCATION = {
 
 /* ── Institutions boundary: the hook mocks (r178/r181 precedent) ──── */
 
-const ZAWIA = {
-  id: 'inst-zawia-showcase',
-  name: 'جامعة الزاوية',
-  nameEn: 'University of Zawia',
-  slug: 'zawia-showcase',
+const PRIMARY = {
+  id: 'inst-ulara-showcase',
+  name: 'مساحة عمل أُلارا التجريبية',
+  nameEn: 'Ulara Experimental Workspace',
+  slug: 'ulara-showcase',
   status: 'ACTIVE',
   createdAt: '2026-10-01T00:00:00.000Z',
   updatedAt: '2026-10-01T00:00:00.000Z',
@@ -103,17 +103,17 @@ const ZAWIA = {
       email: 'admin@zu.edu.ly',
       firstName: 'إداري',
       lastName: 'تجريبي',
-      membershipId: 'mem-admin-zawia',
+      membershipId: 'mem-admin-primary',
       isActive: true,
     },
   ],
 };
 
-const ALANDALUS = {
-  id: 'inst-alandalus-demo',
+const SECONDARY = {
+  id: 'inst-ulara-demo-2',
   name: 'مساحة عمل تجريبية ثانية',
-  nameEn: 'Al-Andalus Education Institute',
-  slug: 'alandalus-demo',
+  nameEn: 'A Second Experimental Workspace',
+  slug: 'ulara-demo-2',
   status: 'SUSPENDED',
   createdAt: '2026-10-02T00:00:00.000Z',
   updatedAt: '2026-10-02T00:00:00.000Z',
@@ -125,7 +125,7 @@ const ALANDALUS = {
       email: 'admin2@test.ly',
       firstName: 'المسجل',
       lastName: 'العام',
-      membershipId: 'mem-admin-alandalus',
+      membershipId: 'mem-admin-secondary',
       isActive: false,
     },
   ],
@@ -287,7 +287,7 @@ describe('OwnerDashboardPage — the .r305ao marker (R305-A8)', () => {
 
 describe('OwnerInstitutionsPage — the .r305ao marker (R305-A8)', () => {
   it('the resolved roster carries the marker on its .page root', () => {
-    instMocks.listing.data = [ZAWIA, ALANDALUS];
+    instMocks.listing.data = [PRIMARY, SECONDARY];
     renderInstitutions();
 
     const root = expectOneMarkerRoot();
@@ -322,7 +322,7 @@ describe('OwnerInstitutionDetailPage — the .r305ao marker (R305-A8)', () => {
 
   it('the pending branch carries the marker', () => {
     instMocks.listing.isPending = true;
-    renderDetailAt('zawia-showcase');
+    renderDetailAt('ulara-showcase');
 
     const root = expectOneMarkerRoot();
     expect(root.getAttribute('aria-busy')).toBe('true');
@@ -334,7 +334,7 @@ describe('OwnerInstitutionDetailPage — the .r305ao marker (R305-A8)', () => {
   it('the listing error branch carries the marker', () => {
     instMocks.listing.isError = true;
     instMocks.listing.error = new Error('forced failure');
-    renderDetailAt('zawia-showcase');
+    renderDetailAt('ulara-showcase');
 
     const root = expectOneMarkerRoot();
     expect(
@@ -344,7 +344,7 @@ describe('OwnerInstitutionDetailPage — the .r305ao marker (R305-A8)', () => {
   });
 
   it('the honest not-found branch carries the marker', () => {
-    instMocks.listing.data = [ZAWIA];
+    instMocks.listing.data = [PRIMARY];
     renderDetailAt('no-such-institution');
 
     const root = expectOneMarkerRoot();
@@ -354,15 +354,15 @@ describe('OwnerInstitutionDetailPage — the .r305ao marker (R305-A8)', () => {
   });
 
   it('the resolved setup page carries the marker and mounts NO destructive group (none exists)', () => {
-    instMocks.listing.data = [ZAWIA];
+    instMocks.listing.data = [PRIMARY];
     detailMocks.faculties.data = [];
     detailMocks.courses.data = EMPTY_COURSES;
-    renderDetailAt('zawia-showcase');
+    renderDetailAt('ulara-showcase');
 
     const root = expectOneMarkerRoot();
     expect(root.className).toBe('page r305ao');
     expect(
-      within(root as HTMLElement).getByRole('heading', { level: 1, name: 'جامعة الزاوية' }),
+      within(root as HTMLElement).getByRole('heading', { level: 1, name: 'مساحة عمل أُلارا التجريبية' }),
     ).toBeInTheDocument();
 
     /* R305-A8 deviation tripwire — this page's writes are ALL
@@ -383,7 +383,7 @@ describe('OwnerInstitutionDetailPage — the .r305ao marker (R305-A8)', () => {
 
 describe('OwnerInstitutionsPage — the destructive verbs ride .r305ao-btn-danger (R305-A8)', () => {
   it('suspend + live-membership revoke get the danger fill; routine and restoring verbs stay ghost', () => {
-    instMocks.listing.data = [ZAWIA, ALANDALUS];
+    instMocks.listing.data = [PRIMARY, SECONDARY];
     renderInstitutions();
 
     // Destructive: suspending an ACTIVE institution…
@@ -406,12 +406,12 @@ describe('OwnerInstitutionsPage — the destructive verbs ride .r305ao-btn-dange
   });
 
   it('the danger classes never change the guarded flow (the confirm dialog still names the institution)', () => {
-    instMocks.listing.data = [ZAWIA];
+    instMocks.listing.data = [PRIMARY];
     renderInstitutions();
 
     fireEvent.click(screen.getByRole('button', { name: 'تعليق' }));
     const dialog = screen.getByRole('dialog');
-    expect(within(dialog).getByText(/هل تريد تعليق «جامعة الزاوية»/)).toBeInTheDocument();
+    expect(within(dialog).getByText(/هل تريد تعليق «مساحة عمل أُلارا التجريبية»/)).toBeInTheDocument();
   });
 });
 
@@ -419,25 +419,25 @@ describe('OwnerInstitutionsPage — the destructive verbs ride .r305ao-btn-dange
    3. Import wiring — the scoped sheet loads AFTER its family sheet
    ══════════════════════════════════════════════════════════════════ */
 
-describe('R305-A8 — heron-admin-owner.css import wiring (source order = cascade order)', () => {
+describe('R305-A8 — ds-admin-owner.css import wiring (source order = cascade order)', () => {
   const read = (name: string) =>
     readFileSync(resolvePath(__dirname, '../../src/pages/owner', name), 'utf8');
 
   it('the owner barrel loads it directly after owner.css (the whole /owner lazy chunk)', () => {
     expect(read('OwnerPages.tsx')).toMatch(
-      /import '\.\.\/\.\.\/styles\/owner\.css';\nimport '\.\.\/\.\.\/styles\/shared\/heron-admin-owner\.css';/,
+      /import '\.\.\/\.\.\/styles\/owner\.css';\nimport '\.\.\/\.\.\/styles\/shared\/ds-admin-owner\.css';/,
     );
   });
 
   it('OwnerInstitutionsPage loads it directly after admin.css', () => {
     expect(read('OwnerInstitutionsPage.tsx')).toMatch(
-      /import '\.\.\/\.\.\/styles\/admin\.css';[^\n]*\nimport '\.\.\/\.\.\/styles\/shared\/heron-admin-owner\.css';/,
+      /import '\.\.\/\.\.\/styles\/admin\.css';[^\n]*\nimport '\.\.\/\.\.\/styles\/shared\/ds-admin-owner\.css';/,
     );
   });
 
   it('OwnerInstitutionDetailPage loads it directly after admin.css', () => {
     expect(read('OwnerInstitutionDetailPage.tsx')).toMatch(
-      /import '\.\.\/\.\.\/styles\/admin\.css';\nimport '\.\.\/\.\.\/styles\/shared\/heron-admin-owner\.css';/,
+      /import '\.\.\/\.\.\/styles\/admin\.css';\nimport '\.\.\/\.\.\/styles\/shared\/ds-admin-owner\.css';/,
     );
   });
 });

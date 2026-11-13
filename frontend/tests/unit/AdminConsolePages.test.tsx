@@ -78,7 +78,7 @@ const facultyRow = (id: string, name: string, over: Partial<{
   name,
   nameEn: null,
   iconEmoji: null,
-  city: 'الزاوية',
+  city: 'افتراضي',
   departmentCount: (over.departments ?? []).length,
   studentCount: 0,
   teacherCount: 0,
@@ -92,7 +92,7 @@ const facultyRow = (id: string, name: string, over: Partial<{
 // carrying students the chart degrades to the honest single-faculty form.
 const FACULTIES = [
   facultyRow('f1', 'كلية الهندسة', {
-    studentCount: 30, courseCount: 4, teacherCount: 5, city: 'الزاوية',
+    studentCount: 30, courseCount: 4, teacherCount: 5, city: 'افتراضي',
     departments: [{ id: 'd1', name: 'قسم الحاسوب', students: 30, teachers: 5, courses: 4 }],
   }),
   facultyRow('f2', 'كلية الطب', { city: 'طرابلس', departments: [{ id: 'd2', name: 'الجراحة', students: 0, teachers: 0, courses: 0 }] }),

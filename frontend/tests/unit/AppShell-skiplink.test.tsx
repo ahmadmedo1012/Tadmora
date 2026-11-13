@@ -126,8 +126,8 @@ describe('AppShell — document.title per route (15-g P2-3)', () => {
 
   it('falls back to the full platform title for unlisted routes (4-A14 P2-1)', () => {
     renderShell(); // MemoryRouter default entry '/' — no PAGE_TITLES match
-    // The fallback used to read «منصة الزاوية · أُلارا» — the wrong
-    // brand (the university platform, not the product) with a doubled
+    // The fallback used to read a doubled brand suffix (the retired
+    // university platform, not the product) with a doubled
     // suffix. The product name alone resolves to the base title.
     expect(document.title).toBe('أُلارا · نظام تشغيل الجامعة');
   });

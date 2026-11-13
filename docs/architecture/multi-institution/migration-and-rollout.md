@@ -42,7 +42,7 @@
 2. جدول `Membership` (`@@unique([userId, institutionId])`،
    roleInstitution, status, scopeFacultyId? — نقل الحاكمية لاحقًا).
 3. **مؤسّسة النقل (migration institution):** صف `Institution` واحد
-   يمثّل مؤسّسة العرض الحالية (جامعة الزاوية) — بيانات التشغيل الحالية
+   يمثّل مؤسّسة العرض الحالية (الجامعة المتقاعدة) — بيانات التشغيل الحالية
    تنتمي إليه.
 4. أعمدة `institutionId` **اختيارية (nullable) مع FK** على جداول
    INSTITUTION_SCOPED الـ22 — بلا قيود فريدة جديدة بعد.

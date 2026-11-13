@@ -53,7 +53,7 @@ const OWNER_ID = 'owner-o1';
 const STUDENT_ID = 'student-s1';
 const INST_A = 'inst-a';
 const INST_B = 'inst-b';
-const SLUG_A = 'zawia-showcase';
+const SLUG_A = 'ulara-showcase';
 // cuid-shaped (the zod schema rejects anything else before the handler
 // runs — the IDs must pass z.string().cuid()).
 const FACULTY_A = 'cfaculty0000000000000001';
@@ -228,13 +228,13 @@ describe('POST /api/v1/admin/faculties — institution-scoped create (r180)', ()
     vi.mocked(prisma.auditLog.create).mockResolvedValue({} as never);
 
     const res = await post(
-      '/api/v1/admin/faculties?institutionSlug=alandalus-demo',
+      '/api/v1/admin/faculties?institutionSlug=ulara-demo-2',
       bearerFor(OWNER_ID, Role.OWNER, null),
       { name: 'كلية الهندسة', city: 'مدينة تجريبية' },
     );
     expect(res.status).toBe(201);
     expect(prisma.institution.findUnique).toHaveBeenCalledWith({
-      where: { slug: 'alandalus-demo' },
+      where: { slug: 'ulara-demo-2' },
       select: { id: true, status: true },
     });
     expect(prisma.faculty.create).toHaveBeenCalledWith(
@@ -373,7 +373,7 @@ describe('POST /api/v1/admin/departments — faculty-chain-guarded create (r180)
     vi.mocked(prisma.faculty.findUnique).mockResolvedValue(FACULTY_A_ROW as never);
 
     const res = await post(
-      '/api/v1/admin/departments?institutionSlug=alandalus-demo',
+      '/api/v1/admin/departments?institutionSlug=ulara-demo-2',
       bearerFor(OWNER_ID, Role.OWNER, null),
       { name: 'قسم الهندسة المدنية', facultyId: FACULTY_A },
     );

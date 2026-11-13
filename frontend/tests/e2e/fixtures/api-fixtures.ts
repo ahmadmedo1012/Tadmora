@@ -556,7 +556,7 @@ export const FACULTIES = [
     id: 'fac_e2e_eng',
     name: 'كلية الهندسة',
     iconEmoji: '⚙️',
-    city: 'الزاوية',
+    city: 'افتراضي',
     departments: [
       { id: 'dep_e2e_cs', name: 'قسم علوم الحاسوب' },
       { id: 'dep_e2e_civil', name: 'قسم الهندسة المدنية' },
@@ -566,7 +566,7 @@ export const FACULTIES = [
     id: 'fac_e2e_med',
     name: 'كلية الطب البشري',
     iconEmoji: '🩺',
-    city: 'الزاوية',
+    city: 'افتراضي',
     departments: [{ id: 'dep_e2e_gen', name: 'قسم العلوم الأساسية' }],
   },
 ];

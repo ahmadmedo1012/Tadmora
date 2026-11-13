@@ -9,8 +9,8 @@
  *    passing on stale hexes).
  *  · P2 /student/university institution identity: the page derives its
  *    identity from the session's institution context — rendered pins
- *    for both branches (zawia-showcase keeps the labeled showcase
- *    facts; alandalus-demo gets its own name and drops the ZU facts),
+ *    for both branches (ulara-showcase keeps the labeled showcase
+ *    facts; ulara-demo-2 gets its own name and drops the ZU facts),
  *    plus the «فروع خارجيّة … في 0 مدينة» contradiction pin.
  *  · P3 Arabic hashtags never ride font-mono (post chips + .trend-tag).
  *  · P3 the 0% progress note is the directive one.
@@ -124,7 +124,7 @@ describe('r183-B3 — active chapter concept ink (A6/A3 P1-2, WCAG 1.4.3)', () =
     const fixed = ratio(dark, '--text-secondary', '--accent-soft');
     expect(fixed).toBeGreaterThanOrEqual(4.5); // r305 re-key computed: secondary #C9C9C5 on the ember tint #432015
     // r183 documented the OLD failure (faint #8C8674 on the copper tint =
-    // 4.12:1, under AA). The r305 Heron re-key changed BOTH values (faint
+    // 4.12:1, under AA). The r305 ds re-key changed BOTH values (faint
     // #A2A29D, accent-soft #432015), so the historical numeric tripwire no
     // longer holds — the pair now measures ≈5.63:1. The CONTRACT survives
     // as a usage rule (the row consumes --text-secondary, never faint —
@@ -201,17 +201,17 @@ const STUDENT = {
 
 const WORKSPACE: InstitutionSummary = {
   // Phase Ω: the demonstration workspace — labeled, synthetic, legacy id kept.
-  id: 'inst-zawia-showcase',
+  id: 'inst-ulara-showcase',
   name: 'مساحة عمل أُلارا التجريبية',
   nameEn: 'Ulara Experimental Workspace',
   slug: 'ulara-demo',
 };
 
 const WORKSPACE2: InstitutionSummary = {
-  id: 'inst-alandalus-demo',
+  id: 'inst-ulara-demo-2',
   name: 'مساحة عمل تجريبية ثانية',
   nameEn: null,
-  slug: 'alandalus-demo',
+  slug: 'ulara-demo-2',
 };
 
 const WORKSPACE_FACULTIES = [
@@ -269,7 +269,7 @@ describe('r183-B3 → Ω — /student/university derives its identity from the s
     expect(container.querySelectorAll('.faculty-chip-row').length).toBe(3);
   });
 
-  it("alandalus-demo session: the page carries the institution's OWN name — no showcase facts anywhere", () => {
+  it("ulara-demo-2 session: the page carries the institution's OWN name — no showcase facts anywhere", () => {
     renderUniversity(WORKSPACE2, WORKSPACE2_FACULTIES);
 
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('مساحة عمل تجريبية ثانية');
@@ -288,7 +288,7 @@ describe('r183-B3 → Ω — /student/university derives its identity from the s
 
     // Its own facts: the platform identifier + the scoped faculties.
     expect(screen.getByText('المعرّف على المنصّة')).toBeInTheDocument();
-    expect(screen.getByText('alandalus-demo')).toBeInTheDocument();
+    expect(screen.getByText('ulara-demo-2')).toBeInTheDocument();
     expect(screen.getByText('كلية العلوم التطبيقية')).toBeInTheDocument();
   });
 

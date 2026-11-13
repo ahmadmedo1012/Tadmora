@@ -243,7 +243,7 @@ describe('AdminSyncPage — freshness semantics', () => {
         category: 'identity',
         count: 1,
         items: [
-          { key: 'name.ar', value: 'جامعة الزاوية', source: 'zu.edu.ly:about', isStale: false, syncedAt: SYNCED_AT },
+          { key: 'name.ar', value: 'مساحة عمل أُلارا التجريبية', source: 'zu.edu.ly:about', isStale: false, syncedAt: SYNCED_AT },
         ],
       },
     ],
@@ -260,7 +260,7 @@ describe('AdminSyncPage — freshness semantics', () => {
     renderPage(<AdminSyncPage />);
     // Open the only category — facts render on disclosure.
     fireEvent.click(await screen.findByRole('button', { name: /هوية الجامعة/ }));
-    const value = await screen.findByText('جامعة الزاوية');
+    const value = await screen.findByText('مساحة عمل أُلارا التجريبية');
     const row = value.closest('.fact-row') as HTMLElement;
     expect(within(row).getByText(/آخر تحديث/)).toBeInTheDocument();
     // 5h ago → the counted-plural hour form (ساعات), not a fabricated instant.

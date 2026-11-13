@@ -60,25 +60,25 @@ afterAll(async () => {
 
 // ── Fixtures ────────────────────────────────────────────────────────
 
-const ZAWIA = { id: 'inst-zawia-showcase', slug: 'ulara-demo', name: 'مساحة عمل أُلارا التجريبية' };
+const PRIMARY = { id: 'inst-ulara-showcase', slug: 'ulara-demo', name: 'مساحة عمل أُلارا التجريبية' };
 const OTHER = { id: 'inst-other', slug: 'other-demo', name: 'مؤسسة أخرى' };
 
 const FACT_ROWS = [
   {
-    institutionId: ZAWIA.id, key: 'name.ar', value: 'مساحة عمل أُلارا التجريبية',
+    institutionId: PRIMARY.id, key: 'name.ar', value: 'مساحة عمل أُلارا التجريبية',
     category: 'identity', source: 'zu.edu.ly:about', isStale: false, syncedAt: new Date(),
   },
   {
-    institutionId: OTHER.id, key: 'name.ar', value: 'قيمة الأندلس',
+    institutionId: OTHER.id, key: 'name.ar', value: 'قيمة المؤسسة الثانية',
     category: 'identity', source: 'manual', isStale: true, syncedAt: new Date(),
   },
 ];
 
 const RUN_ROWS = [
   {
-    id: 'run-zawia-1', institutionId: ZAWIA.id, startedAt: new Date(), completedAt: new Date(),
+    id: 'run-primary-1', institutionId: PRIMARY.id, startedAt: new Date(), completedAt: new Date(),
     status: 'SUCCESS', source: 'static-markdown', factsAdded: 38, factsUpdated: 0,
-    durationMs: 12, errorMsg: null, notes: null, institution: ZAWIA,
+    durationMs: 12, errorMsg: null, notes: null, institution: PRIMARY,
   },
 ];
 
@@ -112,7 +112,7 @@ beforeEach(() => {
   membershipFindFirst.mockImplementation((async ({ where }: {
     where: { userId: string; institutionId: string };
   }) =>
-    where.institutionId === ZAWIA.id || where.institutionId === OTHER.id
+    where.institutionId === PRIMARY.id || where.institutionId === OTHER.id
       ? { institutionId: where.institutionId }
       : null
   ) as unknown as NonNullable<Parameters<typeof membershipFindFirst.mockImplementation>[0]>);
@@ -120,13 +120,13 @@ beforeEach(() => {
   institutionFindUnique.mockImplementation((async ({ where }: {
     where: { id?: string; slug?: string };
   }) => {
-    if (where.slug === ZAWIA.slug || where.id === ZAWIA.id) return ZAWIA;
+    if (where.slug === PRIMARY.slug || where.id === PRIMARY.id) return PRIMARY;
     if (where.slug === OTHER.slug || where.id === OTHER.id) return OTHER;
     return null;
   }) as unknown as NonNullable<Parameters<typeof institutionFindUnique.mockImplementation>[0]>);
 
   // Platform-wide OWNER directory.
-  institutionFindMany.mockResolvedValue([ZAWIA, OTHER] as never);
+  institutionFindMany.mockResolvedValue([PRIMARY, OTHER] as never);
 
   factFindMany.mockImplementation((async ({ where }: { where?: { institutionId?: string } }) =>
     where?.institutionId
@@ -185,7 +185,7 @@ describe('GET /api/v1/university/facts — public per-institution facts', () => 
       data: { institution: { slug: string }; categories: Record<string, Record<string, string>> };
     };
     expect(body.data.institution.slug).toBe('other-demo');
-    expect(body.data.categories.identity!['name.ar']).toBe('قيمة الأندلس');
+    expect(body.data.categories.identity!['name.ar']).toBe('قيمة المؤسسة الثانية');
     // The fact query is filtered to that institution — never a blend.
     expect(factFindMany).toHaveBeenCalledWith(
       expect.objectContaining({ where: { institutionId: OTHER.id } }),
@@ -203,7 +203,7 @@ describe('GET /api/v1/university/facts — public per-institution facts', () => 
 
 describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () => {
   it('shows the caller\'s institution facts + runs (context re-verified)', async () => {
-    const token = signAccessToken('admin-1', 'ADMIN', ZAWIA.id);
+    const token = signAccessToken('admin-1', 'ADMIN', PRIMARY.id);
     const res = await get('/api/v1/admin/sync', token);
     expect(res.status).toBe(200);
     const body = (await res.json()) as {
@@ -222,10 +222,10 @@ describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () 
     expect(body.data.staleCount).toBe(0);
     // Runs + facts are filtered to the caller's institution only.
     expect(syncRunFindFirst).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { institutionId: ZAWIA.id } }),
+      expect.objectContaining({ where: { institutionId: PRIMARY.id } }),
     );
     expect(factFindMany).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { institutionId: ZAWIA.id } }),
+      expect.objectContaining({ where: { institutionId: PRIMARY.id } }),
     );
     expect(body.data.categories[0]!.items[0]!.value).toBe('مساحة عمل أُلارا التجريبية');
   });
@@ -252,7 +252,7 @@ describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () 
   });
 
   it('a non-OWNER passing ?institution is rejected (no institution pivoting)', async () => {
-    const token = signAccessToken('admin-1', 'ADMIN', ZAWIA.id);
+    const token = signAccessToken('admin-1', 'ADMIN', PRIMARY.id);
     const res = await get('/api/v1/admin/sync?institution=other-demo', token);
     expect(res.status).toBe(403);
     expect(((await res.json()) as { error: { code: string } }).error.code).toBe('FORBIDDEN');
@@ -260,16 +260,16 @@ describe('GET /api/v1/admin/sync — ADMIN/QUALITY institution-scoped view', () 
   });
 
   it('QUALITY (QUALITY_VIEW) reads their institution\'s view', async () => {
-    const token = signAccessToken('quality-1', 'QUALITY', ZAWIA.id);
+    const token = signAccessToken('quality-1', 'QUALITY', PRIMARY.id);
     const res = await get('/api/v1/admin/sync', token);
     expect(res.status).toBe(200);
     expect(factFindMany).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { institutionId: ZAWIA.id } }),
+      expect.objectContaining({ where: { institutionId: PRIMARY.id } }),
     );
   });
 
   it('STUDENT is rejected by the capability gate', async () => {
-    const token = signAccessToken('student-1', 'STUDENT', ZAWIA.id);
+    const token = signAccessToken('student-1', 'STUDENT', PRIMARY.id);
     const res = await get('/api/v1/admin/sync', token);
     expect(res.status).toBe(403);
   });
@@ -300,7 +300,7 @@ describe('GET /api/v1/admin/sync — OWNER views', () => {
     // The per-institution switchboard: both institutions, with the
     // showcase flagged as the only one with a configured source.
     expect(body.data.institutions).toEqual([
-      { id: ZAWIA.id, name: ZAWIA.name, slug: ZAWIA.slug, factCount: 1, staleCount: 0, hasSyncSource: true },
+      { id: PRIMARY.id, name: PRIMARY.name, slug: PRIMARY.slug, factCount: 1, staleCount: 0, hasSyncSource: true },
       { id: OTHER.id, name: OTHER.name, slug: OTHER.slug, factCount: 1, staleCount: 1, hasSyncSource: false },
     ]);
     // Platform-wide fact items carry their institution slug.
@@ -331,12 +331,12 @@ describe('GET /api/v1/admin/sync — OWNER views', () => {
 
 describe('POST /api/v1/admin/sync/trigger', () => {
   it('an ADMIN with a configured institution triggers THEIR sync with its source', async () => {
-    const token = signAccessToken('admin-1', 'ADMIN', ZAWIA.id);
+    const token = signAccessToken('admin-1', 'ADMIN', PRIMARY.id);
     const res = await post('/api/v1/admin/sync/trigger', token);
     expect(res.status).toBe(200);
     expect(runSyncGuardedMock).toHaveBeenCalledTimes(1);
     expect(runSyncGuardedMock).toHaveBeenCalledWith('admin-trigger', {
-      institutionId: ZAWIA.id,
+      institutionId: PRIMARY.id,
       source: 'static-markdown',
     });
     const body = (await res.json()) as { data: { runId: string; status: string } };
@@ -350,7 +350,7 @@ describe('POST /api/v1/admin/sync/trigger', () => {
     const body = (await res.json()) as { error: { code: string; message: string } };
     expect(body.error.code).toBe('BAD_REQUEST');
     // D17-3: honest Arabic message — no source configured for this
-    // institution (the Zawia source is not a global default).
+    // institution (the primary source is not a global default).
     expect(body.error.message).toContain('لا يوجد مصدر مزامنة');
     expect(runSyncGuardedMock).not.toHaveBeenCalled();
   });
@@ -382,7 +382,7 @@ describe('POST /api/v1/admin/sync/trigger', () => {
       expect.objectContaining({ where: { slug: 'ulara-demo' } }),
     );
     expect(runSyncGuardedMock).toHaveBeenCalledWith('admin-trigger', {
-      institutionId: ZAWIA.id,
+      institutionId: PRIMARY.id,
       source: 'static-markdown',
     });
   });
@@ -403,14 +403,14 @@ describe('POST /api/v1/admin/sync/trigger', () => {
 
   it('an in-flight sync for the same institution answers 409 (overlap guard)', async () => {
     runSyncGuardedMock.mockResolvedValueOnce({ ran: false, reason: 'overlap' });
-    const token = signAccessToken('admin-1', 'ADMIN', ZAWIA.id);
+    const token = signAccessToken('admin-1', 'ADMIN', PRIMARY.id);
     const res = await post('/api/v1/admin/sync/trigger', token);
     expect(res.status).toBe(409);
     expect(((await res.json()) as { error: { code: string } }).error.code).toBe('CONFLICT');
   });
 
   it('STUDENT is rejected by the capability gate', async () => {
-    const token = signAccessToken('student-1', 'STUDENT', ZAWIA.id);
+    const token = signAccessToken('student-1', 'STUDENT', PRIMARY.id);
     const res = await post('/api/v1/admin/sync/trigger', token);
     expect(res.status).toBe(403);
     expect(runSyncGuardedMock).not.toHaveBeenCalled();

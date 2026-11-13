@@ -28,31 +28,31 @@ const USER_A: AuthUser = {
 };
 
 /** The seeded multi-institution demo state (Agent A's seed): a student
- *  member of BOTH zawia-showcase and alandalus-demo. */
+ *  member of BOTH ulara-showcase and ulara-demo-2. */
 const MEMBERSHIPS: MembershipInfo[] = [
   {
-    institutionId: 'inst-zawia-showcase',
-    name: 'جامعة الزاوية',
-    nameEn: 'University of Zawia',
-    slug: 'zawia-showcase',
+    institutionId: 'inst-ulara-showcase',
+    name: 'مساحة عمل أُلارا التجريبية',
+    nameEn: 'Ulara Experimental Workspace',
+    slug: 'ulara-showcase',
     role: 'STUDENT',
     isActive: true,
   },
   {
-    institutionId: 'inst-alandalus-demo',
+    institutionId: 'inst-ulara-demo-2',
     name: 'مساحة عمل تجريبية ثانية',
-    nameEn: 'Al-Andalus Education Institute',
-    slug: 'alandalus-demo',
+    nameEn: 'A Second Experimental Workspace',
+    slug: 'ulara-demo-2',
     role: 'ADMIN',
     isActive: true,
   },
 ];
 
-const ZAWIA = {
-  id: 'inst-zawia-showcase',
-  name: 'جامعة الزاوية',
-  nameEn: 'University of Zawia',
-  slug: 'zawia-showcase',
+const PRIMARY = {
+  id: 'inst-ulara-showcase',
+  name: 'مساحة عمل أُلارا التجريبية',
+  nameEn: 'Ulara Experimental Workspace',
+  slug: 'ulara-showcase',
 } as const;
 
 async function importAuthStore() {
@@ -78,7 +78,7 @@ describe('setSession institution context (r178)', () => {
 
     useAuthStore.getState().setSession(USER_A, 'tok-ctx', {
       memberships: MEMBERSHIPS,
-      currentInstitution: ZAWIA,
+      currentInstitution: PRIMARY,
       membershipRole: 'STUDENT',
     });
 
@@ -86,8 +86,8 @@ describe('setSession institution context (r178)', () => {
     expect(state.user?.id).toBe('u1');
     expect(state.accessToken).toBe('tok-ctx');
     expect(state.memberships).toHaveLength(2);
-    expect(state.memberships[0]?.slug).toBe('zawia-showcase');
-    expect(state.currentInstitution?.id).toBe('inst-zawia-showcase');
+    expect(state.memberships[0]?.slug).toBe('ulara-showcase');
+    expect(state.currentInstitution?.id).toBe('inst-ulara-showcase');
     expect(state.membershipRole).toBe('STUDENT');
   });
 
@@ -99,7 +99,7 @@ describe('setSession institution context (r178)', () => {
     // selected an institution)…
     useAuthStore.getState().setSession(USER_A, 'tok-ctx', {
       memberships: MEMBERSHIPS,
-      currentInstitution: ZAWIA,
+      currentInstitution: PRIMARY,
       membershipRole: 'STUDENT',
     });
     // …then a bare {user, token} re-set (a context-less payload).
@@ -117,7 +117,7 @@ describe('setSession institution context (r178)', () => {
 
     useAuthStore.getState().setSession(USER_A, 'tok-ctx', {
       memberships: MEMBERSHIPS,
-      currentInstitution: ZAWIA,
+      currentInstitution: PRIMARY,
       membershipRole: 'STUDENT',
     });
     useAuthStore.getState().clear();
@@ -135,7 +135,7 @@ describe('setSession institution context (r178)', () => {
     await flush();
     first.useAuthStore.getState().setSession(USER_A, 'tok-ctx', {
       memberships: MEMBERSHIPS,
-      currentInstitution: ZAWIA,
+      currentInstitution: PRIMARY,
       membershipRole: 'STUDENT',
     });
 
@@ -148,7 +148,7 @@ describe('setSession institution context (r178)', () => {
     expect(state.user?.id).toBe('u1');
     expect(state.accessToken).toBe('tok-ctx');
     expect(state.memberships).toHaveLength(2);
-    expect(state.currentInstitution?.slug).toBe('zawia-showcase');
+    expect(state.currentInstitution?.slug).toBe('ulara-showcase');
     expect(state.membershipRole).toBe('STUDENT');
   });
 });
@@ -183,7 +183,7 @@ describe('persist migrate v0 → v1 (r178)', () => {
           user: USER_A,
           accessToken: 'tok-1',
           memberships: MEMBERSHIPS,
-          currentInstitution: ZAWIA,
+          currentInstitution: PRIMARY,
           membershipRole: 'STUDENT',
         },
         version: 1,
@@ -195,7 +195,7 @@ describe('persist migrate v0 → v1 (r178)', () => {
     const state = useAuthStore.getState();
     expect(state.isHydrated).toBe(true);
     expect(state.memberships).toHaveLength(2);
-    expect(state.currentInstitution?.slug).toBe('zawia-showcase');
+    expect(state.currentInstitution?.slug).toBe('ulara-showcase');
     expect(state.membershipRole).toBe('STUDENT');
   });
 });

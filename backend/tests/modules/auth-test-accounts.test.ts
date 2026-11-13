@@ -148,11 +148,11 @@ function makePrisma(): PrismaClient & {
     teacherProfileUpdate: ReturnType<typeof vi.fn>;
   };
 } {
-  const zawia = { id: 'inst-zawia-showcase' };
-  const alandalus = { id: 'inst-alandalus-demo' };
-  const zawiaIt = { id: 'fac-zawia-it' };
+  const primary = { id: 'inst-ulara-showcase' };
+  const secondary = { id: 'inst-ulara-demo-2' };
+  const primaryIt = { id: 'fac-primary-it' };
   const aaIt = { id: 'fac-aa-it' };
-  const zawiaCs = { id: 'dep-zawia-cs' };
+  const primaryCs = { id: 'dep-primary-cs' };
   const aaCs = { id: 'dep-aa-cs' };
 
   const userUpsert = vi.fn(async (args: { where: { email: string } }) => ({
@@ -169,17 +169,17 @@ function makePrisma(): PrismaClient & {
   const prisma = {
     institution: {
       upsert: vi.fn()
-        .mockResolvedValueOnce(zawia)
-        .mockResolvedValueOnce(alandalus),
+        .mockResolvedValueOnce(primary)
+        .mockResolvedValueOnce(secondary),
     },
     faculty: {
       upsert: vi.fn()
-        .mockResolvedValueOnce(zawiaIt)
+        .mockResolvedValueOnce(primaryIt)
         .mockResolvedValueOnce(aaIt),
     },
     department: {
       upsert: vi.fn()
-        .mockResolvedValueOnce(zawiaCs)
+        .mockResolvedValueOnce(primaryCs)
         .mockResolvedValueOnce(aaCs),
     },
     user: {
@@ -243,7 +243,7 @@ describe('R320 §C — ensureTestAccounts (idempotent upsert)', () => {
         [{ where: { email: string }; update: { scopeFacultyId: string | null } }]
       >).find(([args]) => args.where.email === email)!;
 
-    expect(byEmail('faculty@test.ly')[0].update.scopeFacultyId).toBe('fac-zawia-it');
+    expect(byEmail('faculty@test.ly')[0].update.scopeFacultyId).toBe('fac-primary-it');
     expect(byEmail('registrar@test.ly')[0].update.scopeFacultyId).toBeNull();
     expect(byEmail('student@test.ly')[0].update.scopeFacultyId).toBeNull();
   });
@@ -362,13 +362,13 @@ describe('R320 §C — ensureTestAccounts (idempotent upsert)', () => {
 
     // First candidate free → allocated.
     expect(created).toContainEqual(
-      expect.objectContaining({ universityId: 'UZ-2024-00001', institutionId: 'inst-zawia-showcase' }),
+      expect.objectContaining({ universityId: 'UZ-2024-00001', institutionId: 'inst-ulara-showcase' }),
     );
     // student2's first candidate (UZ-2024-00001) is taken in the OTHER
     // institution — institution-scoped uniqueness means it is free for
     // مساحة العمل الثانية (the corpus seed relies on exactly this).
     expect(created).toContainEqual(
-      expect.objectContaining({ universityId: 'UZ-2024-00001', institutionId: 'inst-alandalus-demo' }),
+      expect.objectContaining({ universityId: 'UZ-2024-00001', institutionId: 'inst-ulara-demo-2' }),
     );
 
     // Both candidates taken → NO profile is created (never renumbers).
