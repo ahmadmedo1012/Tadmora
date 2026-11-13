@@ -54,6 +54,12 @@ appId: ly.ulara.app
 - launchApp:
     appId: ly.ulara.app
     clearState: true
+# System hardening (run 43354154702): the emulator's LAUNCHER can ANR
+# during the cold-start transition and its dialog covers the app.
+# OPTIONAL — absent on a healthy boot.
+- tapOn:
+    text: "Wait"
+    optional: true
 - scrollUntilVisible:
     element:
       text: "ابدأ الآن"            # app/auth/index.tsx — the Welcome CTA

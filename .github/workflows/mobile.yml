@@ -510,13 +510,20 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_6
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save -memory 4096 -cores 4
           emulator-boot-timeout: 720
           script: |
             # Maestro's own recommendation + the owner's: zero animations.
             adb shell settings put global window_animation_scale 0
             adb shell settings put global transition_animation_scale 0
             adb shell settings put global animator_duration_scale 0
+            # Run 43354154702 forensics: the system LAUNCHER ANR'd during
+            # the first cold-start transition (software rendering at
+            # 1080×2400) and its dialog covered the app. Give the system
+            # a settle window before the first launch + revive it if the
+            # dialog still appears (the flow's optional «Wait» tap).
+            sleep 20
+            adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1 || true
             adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk || touch fail.flag
             "$HOME/.maestro/bin/maestro" --version || touch fail.flag
             for entry in student@test.ly:STUDENT teacher@test.ly:TEACHER registrar@test.ly:ADMIN quality@test.ly:QUALITY owner@test.ly:OWNER; do EMAIL="${entry%%:*}"; ROLE="${entry##*:}"; echo "── android-smoke: $EMAIL ($ROLE)"; "$HOME/.maestro/bin/maestro" test apps/mobile/.maestro/smoke-role.yaml -e EMAIL="$EMAIL" -e PASSWORD=12345678 -e ROLE="$ROLE" || { echo "::error::maestro journey failed for $EMAIL ($ROLE) — see logcat in the artifacts"; touch fail.flag; }; done
