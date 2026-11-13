@@ -54,17 +54,25 @@ appId: ly.ulara.app
 - launchApp:
     appId: ly.ulara.app
     clearState: true
-# System hardening (run 43354154702): the emulator's LAUNCHER can ANR
-# during the cold-start transition and its dialog covers the app.
-# OPTIONAL — absent on a healthy boot.
-- tapOn:
-    text: "Wait"
-    optional: true
+# System hardening (runs 43354154702 + 43361391615's forensics): the
+# emulator's LAUNCHER can ANR during the cold-start transition and its
+# dialog covers the app — AFTER a fixed optional tap evaluated. The
+# two-pass structure handles both orders: pass 1 gives the dialog its
+# window (and succeeds outright on a healthy boot), the optional
+# «Wait» dismisses the dialog if it appeared, pass 2 completes the wait.
 - scrollUntilVisible:
     element:
       text: "ابدأ الآن"            # app/auth/index.tsx — the Welcome CTA
     direction: DOWN
-    timeout: 30000
+    timeout: 10000
+- tapOn:
+    text: "Wait"
+    optional: true                 # the launcher-ANR dialog's revive button
+- scrollUntilVisible:
+    element:
+      text: "ابدأ الآن"
+    direction: DOWN
+    timeout: 25000
 - tapOn:
     text: "ابدأ الآن"              # → /auth/login
 - extendedWaitUntil:

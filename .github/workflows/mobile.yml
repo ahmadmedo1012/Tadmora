@@ -510,7 +510,7 @@ jobs:
           arch: x86_64
           target: google_apis
           profile: pixel_6
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save -memory 4096 -cores 4
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save -memory 4096 -cores 2
           emulator-boot-timeout: 720
           script: |
             # Maestro's own recommendation + the owner's: zero animations.
