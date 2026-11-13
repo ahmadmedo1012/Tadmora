@@ -496,15 +496,27 @@ jobs:
       # same sh -c constraint), ALWAYS — a green run's output is exactly
       # as diagnostic as a red one's, and run #10's post-mortem had no
       # UI evidence at all.
+      # ── The owner's emulator prescription (2026-11-12) ────────────
+      # Run #43321515440 forensics: the DEFAULT 320×640 AOSP AVD rendered
+      # an EMPTY app surface (screen hierarchy = the status-bar clock
+      # alone, 5/5 journeys, logcat clean) — the software-GPU surface
+      # never presented the React tree. The prescription: a pixel_6
+      # profile (1080×2400) on the google_apis API-34 image with
+      # swiftshader_indirect, -no-snapshot-save, and animations OFF.
       - name: Emulator + Maestro five-role journey
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
           arch: x86_64
-          target: default
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot
+          target: google_apis
+          profile: pixel_6
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -no-snapshot-save
           emulator-boot-timeout: 720
           script: |
+            # Maestro's own recommendation + the owner's: zero animations.
+            adb shell settings put global window_animation_scale 0
+            adb shell settings put global transition_animation_scale 0
+            adb shell settings put global animator_duration_scale 0
             adb install -r apps/mobile/android/app/build/outputs/apk/release/app-release.apk || touch fail.flag
             "$HOME/.maestro/bin/maestro" --version || touch fail.flag
             for entry in student@test.ly:STUDENT teacher@test.ly:TEACHER registrar@test.ly:ADMIN quality@test.ly:QUALITY owner@test.ly:OWNER; do EMAIL="${entry%%:*}"; ROLE="${entry##*:}"; echo "── android-smoke: $EMAIL ($ROLE)"; "$HOME/.maestro/bin/maestro" test apps/mobile/.maestro/smoke-role.yaml -e EMAIL="$EMAIL" -e PASSWORD=12345678 -e ROLE="$ROLE" || { echo "::error::maestro journey failed for $EMAIL ($ROLE) — see logcat in the artifacts"; touch fail.flag; }; done
