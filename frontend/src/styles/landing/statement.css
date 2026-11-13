@@ -36,7 +36,7 @@
 .st-section {
   /* R338 T-03g — the soft 72%-ink as a section-scoped var so the dark arm
      can carry a compliant ink (the light value stays byte-identical to the
-     frozen the reference measure; under [data-theme=dark] the rgba(40,40,40,.72)
+     frozen reference measure; under [data-theme=dark] the rgba(40,40,40,.72)
      ink composites to ~1.0:1 on the dark surface — invisible, WCAG fail) */
   --st-soft-ink: rgba(40, 40, 40, 0.72); /* color-gate: allow — the frozen reference soft-ink measure (rgba(40,40,40,.72) = --text 72%); color-mix() renders as color() and the conformance twin requires the literal */
   position: relative;
