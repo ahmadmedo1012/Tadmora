@@ -9,7 +9,7 @@
  * SECOND window instance (`.jt-cam`) cropped per stage.
  *
  * **R322 (3-b) override — the map transplant retires the twin.** The
- * camera survives, its seat does not: Heron's own mobile architecture
+ * camera survives, its seat does not: the reference's own mobile architecture
  * (map.md §mechanics) moves the sticky ONE level deeper — the plan
  * column (`.jt-map-col`) IS the scroll track and `.jt-map-in` is the
  * sticky window — so the ONE plan SVG instance pans its viewBox along
@@ -25,7 +25,7 @@
  *   · the ONE-window DOM (the sticky frame + the plan column + the
  *     reserved closing column; zero retired families);
  *   · the camera key table (the narrated rooms, inside the sheet);
- *   · the 6-state machine on the measured pin windows (Heron's
+ *   · the 6-state machine on the measured pin windows (the reference's
  *     entrance −0.167 · sequence −0.082→0.952 = the 1908→7495 scrub)
  *     + the ≤991 column clock;
  *   · landing.css: the sticky-in-column architecture @≤991, the
@@ -260,7 +260,7 @@ describe('R312 mobile camera — the source contracts (R322 map override)', () =
   });
 
   it('the state machine: the measured pin windows + the 6-state flip + the ≤991 column clock', () => {
-    /* Heron's measured scrub windows @1440 (map.md's trigger table):
+    /* the legacy measured scrub windows @1440 (map.md's trigger table):
      * entrance 1465→2352 ⇒ −0.167→0 · sequence 1908→7495 ⇒
      * −0.082→0.952 — the 5.52s movie. */
     expect(JOURNEY_SRC).toMatch(/const ENTRANCE_START_PIN = -0\.167;/);
@@ -316,7 +316,7 @@ describe('R312 mobile camera — the source contracts (R322 map override)', () =
     expect(LANDING_CSS).toMatch(/\.jt-map-col \{[^}]*contain: layout paint;/);
     expect(LANDING_CSS).toMatch(/\.jt-close \{[^}]*contain: layout paint;/);
     /* the closing column's final geometry is RESERVED from stage 0
-     * (Heron's exact 464px @1440 — the width flip is NOT transplanted) */
+     * (the reference's exact 464px @1440 — the width flip is NOT transplanted) */
     expect(LANDING_CSS).toMatch(/\.jt-close \{[^}]*inline-size: clamp\(280px, 32\.3vw, 464px\);/);
     /* the entrance drift rides a transform, never layout */
     expect(LANDING_CSS).toMatch(/\.jt-window \{[^}]*will-change: transform;/);
@@ -324,7 +324,7 @@ describe('R312 mobile camera — the source contracts (R322 map override)', () =
 
   it('landing.css: the sticky-in-column architecture + the track ladder @≤991', () => {
     const media = LANDING_CSS.slice(LANDING_CSS.indexOf('@media (max-width: 991px)'));
-    /* the sticky moves INSIDE the plan column (Heron's own mobile
+    /* the sticky moves INSIDE the plan column (the reference's own mobile
      * architecture): the frame yields, the column IS the track */
     expect(media).toMatch(/\.jt-pin \{[^}]*position: static;/);
     expect(media).toMatch(/\.jt-map-col \{[^}]*block-size: 466dvh;/);
@@ -338,10 +338,10 @@ describe('R312 mobile camera — the source contracts (R322 map override)', () =
      * tolerant). R323 note: this same pin was independently re-pinned
      * in the R323 wave with an R323 override note; upstream's tolerant
      * form is the canonical survivor after the rebase.
-     * R324 X14 override: 415→473dvh — the Heron-ledger anchor is the
+     * R324 X14 override: 415→473dvh — the reference-ledger anchor is the
      * REAL 390×844 pair (the pre-X14 probe read the stale
      * contain-intrinsic-size guess); 473dvh lands the section at
-     * 4821 vs Heron 4819 (+0.04 %) — the ±2 % docH contract. */
+     * 4821 vs the reference 4819 (+0.04 %) — the ±2 % docH contract. */
     expect(LANDING_CSS).toMatch(/@media \(max-width: 399px\) \{[\s\S]*?\.jt-map-col \{[\s\S]*?block-size: 473dvh;/);
     /* the INTRODUCTION card sits IN FLOW below the plan (the V10
      * «شاهد»-clip class dies by construction: the card never overlaps

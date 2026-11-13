@@ -1,5 +1,5 @@
 /**
- * r305-overlay-conduct — the Heron Shell Contract's ONE overlay
+ * r305-overlay-conduct — the reference Shell Contract's ONE overlay
  * interaction grammar, pinned end-to-end across the shared primitives
  * (Task 2-c). The per-primitive suites (Dropdown / Modal / Sheet /
  * Popover / Lightbox / CommandPalette-NotificationPanel) stay the

@@ -1,5 +1,5 @@
 /**
- * R305-A7 — teacher research review «Heron» regression pins (a7-teach).
+ * R305-A7 — teacher research review «the reference» regression pins (a7-teach).
  *
  * The r305-research-pdf-ai.css §B rebuild of ResearchReviewPage is a
  * marker + hierarchy + decision-surface change, and every pin here
@@ -126,9 +126,9 @@ afterEach(() => {
   mocks.annotations = { data: [], isPending: false, isError: false, error: null, refetch: () => undefined };
 });
 
-/* ── 1. The scoped Heron sheet wiring (source pins) ─────────────── */
+/* ── 1. The scoped the reference sheet wiring (source pins) ─────────────── */
 
-describe('R305-A7 — the scoped Heron sheet wiring', () => {
+describe('R305-A7 — the scoped the reference sheet wiring', () => {
   const pageSrc = () =>
     readFileSync(resolvePath(__dirname, '../../src/pages/teacher/ResearchReviewPage.tsx'), 'utf8');
   const sheetSrc = () =>
@@ -137,9 +137,9 @@ describe('R305-A7 — the scoped Heron sheet wiring', () => {
   it('ds-research.css is imported directly after research.css (later import wins the layer tie)', () => {
     const source = pageSrc();
     const familyAt = source.indexOf("import '../../styles/research.css'");
-    const heronAt = source.indexOf("import '../../styles/shared/ds-research.css'");
+    const dsAt = source.indexOf("import '../../styles/shared/ds-research.css'");
     expect(familyAt).toBeGreaterThan(-1);
-    expect(heronAt).toBeGreaterThan(familyAt);
+    expect(dsAt).toBeGreaterThan(familyAt);
   });
 
   it('the page root carries the .r305rp marker wrapping the whole frame', () => {

@@ -1,9 +1,9 @@
 /**
- * R305-A5 (task 2-b) — the Heron pass over the student courses family:
+ * R305-A5 (task 2-b) — the reference pass over the student courses family:
  *   /student/courses · /student/catalog · /student/courses/:offeringId
  *   /student/lectures/:lectureId
  *
- * What is pinned here (visual/structural only — the Heron contract, on
+ * What is pinned here (visual/structural only — the reference contract, on
  * top of the logic contracts the older suites already own):
  *
  *   1. CoursesPage rows — the quiet metadata line rides the foundation
@@ -159,7 +159,7 @@ beforeEach(() => {
   mocks.offering = null;
 });
 
-/* ── 1 · CoursesPage — Heron row anatomy ─────────────────────────── */
+/* ── 1 · CoursesPage — the reference row anatomy ─────────────────────────── */
 
 describe('R305 courses — the course row rides the foundation meta-row', () => {
   it('code · teacher · lecture count render as .r305s-meta-row with technical separators', () => {
@@ -229,7 +229,7 @@ function renderCourse() {
   );
 }
 
-describe('R305 course detail — the continue strip is the Heron next-rail', () => {
+describe('R305 course detail — the continue strip is the reference next-rail', () => {
   it('the strip carries the foundation rail + an eyebrow micro-label and exactly ONE CTA', () => {
     mocks.offering = baseOffering();
     (mocks.offering as { lectures: unknown[] }).lectures = [
@@ -306,7 +306,7 @@ describe('R305 player — the now-playing block is the page’s ONE deep band', 
   it('the band classes + band-secondary runs are pinned at source; the r168a heading outline survives', () => {
     const page = stripJsx(read('src/pages/student/LecturePlayerPage.tsx'));
     // The deep band wraps the meta block (and ONLY it — one --deep band
-    // per view, the Heron restraint).
+    // per view, the reference restraint).
     expect(page).toContain('className="lecture-meta r305s-band r305s-band--deep r305c-now"');
     expect(page.match(/r305s-band--deep/g)?.length).toBe(1);
     // The secondary runs re-derive from the band ink.

@@ -9,7 +9,7 @@
  *     world is clean flat ink, no texture.
  *
  * r198 (stage 2, the OPTIKKA-direction poster — since RETIRED by the
- * r306 Heron-only drawing-sheet rebuild) also retired the r191 pinned
+ * r306 reference-only drawing-sheet rebuild) also retired the r191 pinned
  * mega-stage vocabulary (the mg-, pd-, pf- card families, the
  * telemetry strip, data-pinned stages). r306 keeps this chrome
  * contract verbatim on the new sheet: the imperative scroll-progress

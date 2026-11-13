@@ -1,10 +1,10 @@
 /**
- * r305-A8 — owner operations pages ride the «Heron» scoped sheet
+ * r305-A8 — owner operations pages ride the «the reference» scoped sheet
  * (frontend/src/styles/r305-admin-owner.css).
  *
  * The sheet's SCOPING CONTRACT: every rule lives under the `.r305ao`
  * page-root marker (portals under `body:has(.r305ao)`), so a page the
- * marker never reaches renders with NO Heron grammar at all. These
+ * marker never reaches renders with NO the reference grammar at all. These
  * pins guard the wiring for the owner-ops family (agent 2-d's nine
  * pages — this file covers the five the mission names + the free
  * Content surface):

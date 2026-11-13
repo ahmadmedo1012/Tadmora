@@ -1,9 +1,9 @@
 /**
- * R305-A5 — the dashboard's Heron visual pass (Agent 2-a family pins).
+ * R305-A5 — the dashboard's the reference visual pass (Agent 2-a family pins).
  *
  * The r220–r285 composition (TodayList-first, momentum StatLine,
  * continue-learning hero, gaps rail, week ledger) is data-frozen; the
- * R305 pass re-skins it in the Heron register. These pins hold the
+ * R305 pass re-skins it in the reference register. These pins hold the
  * VISUAL CONTRACT at the DOM level so a later "simplify" cannot
  * quietly drop it:
  *
@@ -20,7 +20,7 @@
  *     anatomy (tone only on the dot; gold never touches deliverables).
  *  4. THE PENDING MIRROR — the loading skeleton carries the SAME deep
  *     band classes and the SAME labeled-rule anatomy as the resolved
- *     page (r172b loading-closure, re-mirrored for the Heron pass).
+ *     page (r172b loading-closure, re-mirrored for the reference pass).
  *  5. SOURCE HYGIENE — the page imports both sheets, and every :hover
  *     rule the family sheet authors sits inside the
  *     (hover:hover) and (pointer:fine) guard.
@@ -214,7 +214,7 @@ describe('R305 — the hero band (the ONE next action)', () => {
     const band = await screen.findByText('أكمل من حيث توقفت');
     // The micro-label lifts into the shared eyebrow register…
     expect(band.className).toContain('r305s-eyebrow');
-    // …inside the Heron deep band (theme-reactive ink/paper inversion).
+    // …inside the reference deep band (theme-reactive ink/paper inversion).
     const hero = band.closest('.dash-resume-card') as HTMLElement;
     expect(hero).not.toBeNull();
     expect(hero.className).toContain('r305s-band--deep');
@@ -341,7 +341,7 @@ describe('R305 — the chip register on statuses', () => {
   });
 });
 
-/* ── 4 · The pending mirror keeps the Heron anatomy ───────────────── */
+/* ── 4 · The pending mirror keeps the reference anatomy ───────────────── */
 
 describe('R305 — the pending mirror', () => {
   it('the hero skeleton slot carries the SAME deep-band classes; the momentum mirror keeps the labeled rule', async () => {

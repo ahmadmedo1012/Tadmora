@@ -185,7 +185,7 @@ export const KNOWN_ELEV_MARKERS: ReadonlyArray<string> = [
  * this set in a captured motion treatment counts as ad-hoc.
  */
 export const KNOWN_DURATIONS_MS: ReadonlyArray<number> = [
-  // 001-* canonical durations (r305 Heron ladder re-key: the retired
+  // 001-* canonical durations (r305 ds ladder re-key: the retired
   // 160/240/320/360/380 rungs were removed with this list's update —
   // the same change that re-promoted the surface baseline, per the
   // one-cycle convention above; the new --t-* rungs joined instead:
@@ -211,7 +211,7 @@ export const KNOWN_DURATIONS_MS: ReadonlyArray<number> = [
   // value).
   1_600, 2_400, 3_600, 6_000, 22_000, 2_200,
   // r331 integration: the authored cinematic sheet values (r331/hero.css
-  // — the Heron port's reveal grammar; the design-gate motion check
+  // — the reference port's reveal grammar; the design-gate motion check
   // already whitelists these sheets as the authored cinematic contract,
   // this list is its runtime counterpart): --hro-line-dur 0.8s (the
   // mask-line reveal) and --hro-fade-dur / --hro-rise-dur 1s (img/frame

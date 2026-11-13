@@ -138,10 +138,10 @@ describe('r168a — lecture player owns a heading outline', () => {
 describe('r168a — destructive row actions are danger-tinted ghosts', () => {
   it('the .btn.ghost.danger variant rides the semantic rose tokens', () => {
     const comps = stripComments(read('src/styles/components.css'));
-    /* R313 override (WP-D · D4): --_btn-bg-hover retired with the Heron
+    /* R313 override (WP-D · D4): --_btn-bg-hover retired with the reference
      * fill-wipe recipe — the destructive ghost's rose identity now rides
      * the wipe pair: --_btn-wipe: var(--danger-soft) + ink label swap.
-     * (owner decision — full Heron button grammar) */
+     * (owner decision — full the reference button grammar) */
     expect(comps).toMatch(
       /\.btn\.ghost\.danger\s*{[^}]*--_btn-fg:\s*var\(--danger-ink\)[^}]*--_btn-wipe:\s*var\(--danger-soft\)/,
     );
@@ -149,7 +149,7 @@ describe('r168a — destructive row actions are danger-tinted ghosts', () => {
 
   it('the admin courses delete action uses it (not text-subtle)', () => {
     const page = stripJsx(read('src/pages/admin/AdminPages.tsx'));
-    /* R305-A8 amendment: the Heron pass adds the scoped
+    /* R305-A8 amendment: the reference pass adds the scoped
      * .r305ao-btn-danger class to the same button (the destructive
      * verb's standalone danger fill inside .r305ao pages). The r168a
      * semantic pin is unchanged — the ghost danger variant is still

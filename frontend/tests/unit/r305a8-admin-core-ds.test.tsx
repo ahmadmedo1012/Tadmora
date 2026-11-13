@@ -1,5 +1,5 @@
 /**
- * R305-A8 — admin core Heron transformation regression pins.
+ * R305-A8 — admin core the reference transformation regression pins.
  *
  * The visual pass on AdminPages.tsx (dashboard, faculties roster,
  * reports/analysis + papers register, courses) is a marker + hierarchy
@@ -12,13 +12,13 @@
  *     render AND each early return (pending mirror, error wall) —
  *     carries the `.r305ao` marker the sheet scopes under.
  *  2. The destructive verb stands apart: the courses row delete
- *     renders with the standalone `.r305ao-btn-danger` Heron danger
+ *     renders with the standalone `.r305ao-btn-danger` the reference danger
  *     fill, and the accessible ConfirmDialog flow behind it is
  *     untouched (the r153i contract — never a silent success).
  *  3. The real pages still render real data: the dashboard's action
  *     strip, the faculties roster, the papers register and the courses
  *     table all resolve through the same lib/api boundary the
- *     AdminConsolePages suite pins — the Heron pass changed no data
+ *     AdminConsolePages suite pins — the reference pass changed no data
  *     flow, so the resolved states mount.
  *
  * lib/api is mocked at the module boundary (the 16-E5 pattern);
@@ -195,16 +195,16 @@ beforeEach(() => {
 
 /* ── 1. The scoped sheet rides the module ──────────────────────── */
 
-describe('R305-A8 — the scoped Heron sheet wiring (source pins)', () => {
+describe('R305-A8 — the scoped the reference sheet wiring (source pins)', () => {
   const src = () =>
     readFileSync(resolvePath(__dirname, '../../src/pages/admin/AdminPages.tsx'), 'utf8');
 
   it('ds-admin-owner.css is imported directly after admin.css (later import wins the layer tie)', () => {
     const source = src();
     const adminAt = source.indexOf("import '../../styles/admin.css'");
-    const heronAt = source.indexOf("import '../../styles/shared/ds-admin-owner.css'");
+    const dsAt = source.indexOf("import '../../styles/shared/ds-admin-owner.css'");
     expect(adminAt).toBeGreaterThan(-1);
-    expect(heronAt).toBeGreaterThan(adminAt);
+    expect(dsAt).toBeGreaterThan(adminAt);
   });
 
   it('every page-root branch carries the marker — no bare .page root survives', () => {
@@ -292,14 +292,14 @@ describe('R305-A8 — the r305ao marker on every admin core page root', () => {
 
 /* ── 3. The destructive verb stands apart (logic untouched) ────── */
 
-describe('R305-A8 — the courses delete action rides the Heron danger class', () => {
+describe('R305-A8 — the courses delete action rides the reference danger class', () => {
   it('the row delete button carries .r305ao-btn-danger and the ConfirmDialog flow behind it is intact', async () => {
     installApi();
     renderPage(<AdminCoursesPage />);
     await screen.findByText('CS101');
 
     const del = screen.getByRole('button', { name: 'حذف مقدمة في الحاسوب' });
-    // The Heron standalone danger fill (scoped sheet §9)…
+    // The reference standalone danger fill (scoped sheet §9)…
     expect(del).toHaveClass('r305ao-btn-danger');
     // …on the SAME ghost danger variant the r168a pin owns…
     expect(del).toHaveClass('btn');
@@ -318,7 +318,7 @@ describe('R305-A8 — the courses delete action rides the Heron danger class', (
 
 /* ── 4. The resolved pages still speak to the real data flow ───── */
 
-describe('R305-A8 — the Heron pass changed no data flow', () => {
+describe('R305-A8 — the reference pass changed no data flow', () => {
   it('the dashboard action strip still builds from real counts and drills by URL', async () => {
     installApi();
     renderPage(<AdminDashboardPage />);

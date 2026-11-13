@@ -1,5 +1,5 @@
 /**
- * R305-A7 (task 3-a) — student ResearchPage «Heron» scoping + honesty pins.
+ * R305-A7 (task 3-a) — student ResearchPage «the reference» scoping + honesty pins.
  *
  *   1. MARKER PRESENCE — the pending mirror, the error branch and the
  *      resolved page all mount exactly ONE `.r305rp` root (a page that
@@ -21,7 +21,7 @@
       reviewer's name exactly as the API provides it (the old markup
  *      never rendered paper.reviewer at all); a reviewer-less paper
  *      invents nothing.
- *   7. IMPORT WIRING — the Heron sheet loads directly after the family
+ *   7. IMPORT WIRING — the reference sheet loads directly after the family
  *      sheet.
  *
  * Harness: the same partial useResources mock the neighboring
@@ -301,12 +301,12 @@ describe('StudentResearchPage — reviewer identity (R305-A7 regression)', () =>
    7. Import wiring
    ══════════════════════════════════════════════════════════════════ */
 
-describe('StudentResearchPage — Heron sheet import wiring (R305-A7)', () => {
+describe('StudentResearchPage — the reference sheet import wiring (R305-A7)', () => {
   it('ds-research.css is imported DIRECTLY after research.css', () => {
     const src = readFileSync(PAGE_SRC, 'utf8');
     const researchIdx = src.indexOf("import '../../styles/research.css';");
-    const heronIdx = src.indexOf("import '../../styles/shared/ds-research.css';");
+    const dsIdx = src.indexOf("import '../../styles/shared/ds-research.css';");
     expect(researchIdx).toBeGreaterThan(-1);
-    expect(heronIdx).toBeGreaterThan(researchIdx);
+    expect(dsIdx).toBeGreaterThan(researchIdx);
   });
 });

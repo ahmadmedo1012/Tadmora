@@ -267,7 +267,7 @@ for (const theme of THEMES) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   2. B1b — the drawer IS the sheet (Heron menu grammar)
+   2. B1b — the drawer IS the sheet (the reference menu grammar)
    ═══════════════════════════════════════════════════════════════ */
 for (const theme of THEMES) {
   base.describe(`B1b drawer grammar @390 ${theme}`, () => {

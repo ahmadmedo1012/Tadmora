@@ -128,7 +128,7 @@ describe('chartColors / chartPalette', () => {
   it('falls back to documented defaults when the token is missing', () => {
     const c = chartColors();
     // R313 override (WP-D · charts): the fallback family re-tinted to
-    // the Heron paper/signal palette — surfaceMuted is the warm paper
+    // the reference paper/signal palette — surfaceMuted is the warm paper
     // step #EFEFE4 (was cool #EDEDF0), accent is the #C43E16 signal
     // (was the pre-R313 night default #a3c9ff).
     expect(c.surfaceMuted).toBe('#EFEFE4');

@@ -3,7 +3,7 @@
  * (the jsdom side lives in tests/unit/r312-mobile-camera.test.tsx).
  *
  * **R322 (3-b) override — the map transplant retires the twin.** The
- * camera survives on Heron's own mobile architecture (map.md
+ * camera survives on the reference's own mobile architecture (map.md
  * §mechanics): the sticky moves one level deeper — the plan column
  * (`.jt-map-col`) IS the scroll track and `.jt-map-in` is the sticky
  * window — so the ONE plan SVG instance pans its viewBox along the
@@ -391,7 +391,7 @@ test.describe('R312 — the desktop map contract (the R322 transplant)', () => {
     expect(s0.pin?.position).toBe('sticky');
     expect(s0.pin?.height).toBe(887);
     /* R342-04 re-seat (the frozen spec's own measured column): the
-     * closing column rides Heron's exact clamp(280px, 32.3vw, 464px)
+     * closing column rides the reference's exact clamp(280px, 32.3vw, 464px)
      * — 464px @1440, always visible from frame one (every column
      * element records opacity 1 at rest in the spec; the R333 slimmed
      * 281px column and the R341 reserved-empty column are both

@@ -6,7 +6,7 @@
  *
  * Covers the parity-matrix §Verification browser rows that the unit
  * belt cannot: the entrance (asset-gated, exits by itself, REPLAYS on
- * reload per the R313 Heron-parity gate), the hero inspection
+ * reload per the R313 reference-parity gate), the hero inspection
  * stations as the universal control path, the walkthrough's readable
  * ladder on a narrow viewport, and the continuous instruments
  * collapsing under reduced motion.
@@ -103,7 +103,7 @@ test.describe('R308 — رحلة التعلّم (the walkthrough ladder)', () =>
     await page.goto('/');
     /* R322 override (3-b · the map transplant): the station cards +
      * the side checklist are RETIRED with the R310/R315 flow
-     * architecture — Heron's own mobile map replaces them: the sticky
+     * architecture — the reference's own mobile map replaces them: the sticky
      * moves INSIDE the plan column (.jt-map-in holds the plan + the
      * INTRODUCTION card in flow below it — the card never overlaps
      * the drawing), and the closing column stacks full-width below

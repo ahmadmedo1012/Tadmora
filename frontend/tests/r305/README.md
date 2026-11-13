@@ -1,6 +1,6 @@
 # R305 — auth/public/shared-surfaces + independent QA test area
 
-Isolated Playwright area for `redesign/r305-heron-auth-public-qa` (R305-A9).
+Isolated Playwright area for `redesign/r305-reference-auth-public-qa` (R305-A9).
 
 - Project: `r305` in `frontend/playwright.config.ts` (testDir `./tests/r305`).
 - Run: `npm run test:r305` (from `frontend/`) — boots the Vite dev server

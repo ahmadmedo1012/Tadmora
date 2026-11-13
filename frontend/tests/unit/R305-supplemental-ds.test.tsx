@@ -1,12 +1,12 @@
 /**
- * R305-A5 (task 2-d) — the Heron pass over the student supplemental
+ * R305-A5 (task 2-d) — the reference pass over the student supplemental
  * family: /student/profile · /student/messages · /student/mooc ·
  * /student/jobs · /student/labs · /student/live · /student/payment ·
  * /student/map · /student/webinars · /student/gamification ·
  * /student/skills · /student/alerts · /student/ar · /student/social ·
  * /student/downloads · /student/university · /training + /achievements
  *
- * What is pinned here (visual/structural only — the Heron contract, on
+ * What is pinned here (visual/structural only — the reference contract, on
  * top of the behaviour contracts the older suites already own):
  *
  *   1. ProfilePage — the page's ONE deep band is the identity hero
@@ -39,7 +39,7 @@
  *
  * Mock/setup patterns are the existing suites' (AlertsPage-mark-read for
  * the hoisted feed/mutation shapes + QueryClient wrapper,
- * StudentMessagesPage for the auth-store seeding, R305-courses-heron for
+ * StudentMessagesPage for the auth-store seeding, R305-courses-the reference for
  * the source-level sheet pins).
  */
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
@@ -207,7 +207,7 @@ describe('R305 profile — the identity hero is the page’s ONE deep band', () 
 
     const band = container.querySelector('.r305s-band--deep.r305p-hero');
     expect(band).not.toBeNull();
-    // ONE deep band per page — the Heron restraint.
+    // ONE deep band per page — the reference restraint.
     expect(container.querySelectorAll('.r305s-band--deep')).toHaveLength(1);
     // The eyebrow classifies the band as the account block.
     expect(band!.querySelector('.r305s-eyebrow')!.textContent).toBe('الملف الشخصي');

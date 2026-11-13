@@ -1,5 +1,5 @@
 /**
- * R305-A7 (task 3-a) — LibraryPage «Heron» scoping + honesty pins.
+ * R305-A7 (task 3-a) — LibraryPage «the reference» scoping + honesty pins.
  *
  * The scoped sheet (r305-research-pdf-ai.css) styles every rule under
  * the `.r305rp` page-root marker, so a page that forgets the marker
@@ -25,7 +25,7 @@
  *   6. ROW DISCIPLINE — long Arabic titles with mixed Latin/numerals
  *      render whole inside the clamped title element; the sheet pins
  *      min-inline-size/line-clamp (source-level).
- *   7. IMPORT WIRING — the page loads the Heron sheet directly after
+ *   7. IMPORT WIRING — the page loads the reference sheet directly after
  *      its family sheet (source order inside @layer pages is what lets
  *      it win the equal-specificity ties).
  *
@@ -340,15 +340,15 @@ describe('LibraryPage — long-title row discipline (R305-A7)', () => {
 });
 
 /* ══════════════════════════════════════════════════════════════════
-   7. Import wiring — the Heron sheet loads after the family sheet
+   7. Import wiring — the reference sheet loads after the family sheet
    ══════════════════════════════════════════════════════════════════ */
 
-describe('LibraryPage — Heron sheet import wiring (R305-A7)', () => {
+describe('LibraryPage — the reference sheet import wiring (R305-A7)', () => {
   it('ds-research.css is imported DIRECTLY after research.css', () => {
     const src = readFileSync(PAGE_SRC, 'utf8');
     const researchIdx = src.indexOf("import '../../styles/research.css';");
-    const heronIdx = src.indexOf("import '../../styles/shared/ds-research.css';");
+    const dsIdx = src.indexOf("import '../../styles/shared/ds-research.css';");
     expect(researchIdx).toBeGreaterThan(-1);
-    expect(heronIdx).toBeGreaterThan(researchIdx);
+    expect(dsIdx).toBeGreaterThan(researchIdx);
   });
 });

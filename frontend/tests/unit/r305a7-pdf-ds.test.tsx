@@ -1,7 +1,7 @@
 /**
  * R305-A7 (task 3-c) — the PDF reader as a first-class workspace.
  *
- * Regression pins for every defect the Heron audit confirmed, plus the
+ * Regression pins for every defect the reference audit confirmed, plus the
  * new scoping/wiring contract of the reader sheet:
  *
  *   1. SEARCH FOLDING — the reader's in-document search ignored the
@@ -25,7 +25,7 @@
  *      emphasized verb that seeds the annotation composer with the
  *      quote (reviewer-gated); the persisted payload shape
  *      ({page, comment, color}) is untouched.
- *   7. HERON SCOPING — the page root carries `.r305rp` on EVERY
+ *   7. DS SCOPING — the page root carries `.r305rp` on EVERY
  *      rendered branch and imports r305-research-pdf-ai.css directly
  *      after pdf.css (source order inside @layer pages is the win).
  *
@@ -448,7 +448,7 @@ describe('AnnotationsPanel — selection quote seeds the composer', () => {
   });
 });
 
-/* ═══ 4 · DocumentViewerPage — Heron scoping + the wiring chain ════ */
+/* ═══ 4 · DocumentViewerPage — the reference scoping + the wiring chain ════ */
 
 describe('DocumentViewerPage — the r305rp marker rides every rendered root', () => {
   it('the refusal branch carries the marker (unstyled flash is a contract break)', () => {
@@ -474,7 +474,7 @@ describe('DocumentViewerPage — the r305rp marker rides every rendered root', (
     await screen.findByText('من 1');
     expect(document.querySelector('.document-viewer-page.r305rp')).not.toBeNull();
 
-    // Import wiring: the Heron sheet loads directly after pdf.css —
+    // Import wiring: the reference sheet loads directly after pdf.css —
     // source order inside @layer pages is what wins the ties.
     const source = readFileSync(
       resolvePath(__dirname, '../../src/pages/DocumentViewerPage.tsx'),

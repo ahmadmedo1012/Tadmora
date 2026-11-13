@@ -213,13 +213,13 @@ describe('OnboardingFlow role frame', () => {
  * card t=121 → the generic 40 % ink veil let the display-size H1 poke
  * through as an 8 px sliver of giant glyphs above the card, which two
  * independent VLM reviews read as "heavily clipped stubs". The tour is
- * a full-bleed takeover moment: its overlay carries the Heron
+ * a full-bleed takeover moment: its overlay carries the reference
  * menu-scrim language (R319 §B1) — paper/ink at 92 % via
  * --glass-bg-strong — so the page behind recedes to an 8 % ghost.
  * Belt: the scoped rule exists in r305-shell.css §7 AND the token
  * stays the 0.92 menu scrim in BOTH themes (a drift to a lighter veil
  * re-opens the defect). */
-describe('R320 cycle-3 — the onboarding tour veil (Heron menu scrim)', () => {
+describe('R320 cycle-3 — the onboarding tour veil (the reference menu scrim)', () => {
   const SHELL_CSS = readFileSync(
     path.resolve(__dirname, '../../src/styles/shell/shell.css'),
     'utf-8',

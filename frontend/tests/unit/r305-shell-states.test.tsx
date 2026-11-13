@@ -1,7 +1,7 @@
 /**
  * r305-A4 (task 2-e) — the shell's temporal + focus layer state pins.
  *
- * One grammar for the states AppShell itself owns (r305 Heron shell
+ * One grammar for the states AppShell itself owns (r305 the reference shell
  * round); the visual layer lives in r305-shell.css (2-d) — this file
  * pins the BEHAVIOR:
  *

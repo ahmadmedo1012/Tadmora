@@ -1,5 +1,5 @@
 /**
- * R305-A5 agent 2-c — the Heron pass over the schedule/deadline family.
+ * R305-A5 agent 2-c — the reference pass over the schedule/deadline family.
  *
  * Focused pins for what the r305-c redesign changed, so the visual
  * contract cannot silently drift (every behavioural contract the page
@@ -9,7 +9,7 @@
  *  1. /student/calendar — today stays the ONE emphasized cell
  *     (data-today + the sheet's accent-wash rule), the weekend takes
  *     its quiet ink step (data-weekend, presentational only), and the
- *     legend opens with the Heron micro-label.
+ *     legend opens with the reference micro-label.
  *  2. /student/matrix — every cell's status rides the shared
  *     .r305s-chip register (tone on the DOT per level, status WORD in
  *     the body, tabular % beside it) while the r164d gap links and the
@@ -132,7 +132,7 @@ describe('R305 calendar — today is the ONE emphasized cell, weekend goes quiet
     expect(weekendCells.length).toBeGreaterThanOrEqual(8); // ≥ 2 per week × 6 rows
   });
 
-  it('the legend opens with the Heron micro-label and keeps the four kind chips', () => {
+  it('the legend opens with the reference micro-label and keeps the four kind chips', () => {
     render(
       <MemoryRouter>
         <StudentCalendarPage />

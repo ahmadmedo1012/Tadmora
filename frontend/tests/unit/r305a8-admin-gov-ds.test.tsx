@@ -1,5 +1,5 @@
 /**
- * R305-A8 (task 2-b) — «Heron» transformation pins for the three admin
+ * R305-A8 (task 2-b) — «the reference» transformation pins for the three admin
  * governance/extras/sync page modules (AdminGovernancePages,
  * AdminExtraPages, AdminSyncPage).
  *
@@ -411,7 +411,7 @@ describe('R305-A8 danger hierarchy — destructive verbs ride the new vocabulary
 
 /* ═══ 3. Import wiring — the scoped sheet rides last ═════════════ */
 
-describe('R305-A8 import wiring — the scoped Heron sheet in all three modules', () => {
+describe('R305-A8 import wiring — the scoped the reference sheet in all three modules', () => {
   const MODULES = [
     'AdminGovernancePages.tsx',
     'AdminExtraPages.tsx',

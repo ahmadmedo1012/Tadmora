@@ -1,5 +1,5 @@
 /**
- * R305-A7 (task 3-d) — the AI assistant's Heron transformation pins.
+ * R305-A7 (task 3-d) — the AI assistant's the reference transformation pins.
  *
  * The pass on AiAssistantPage.tsx is a marker + register change (the
  * technical ledger), and every pin here binds to THAT contract — never
@@ -108,9 +108,9 @@ describe('R305-A7 — the sheet rides the module (§0 scoping contract)', () => 
   it('ds-research.css is imported directly AFTER ai.css', () => {
     const page = read('src/pages/student/AiAssistantPage.tsx');
     const aiLine = page.indexOf("import '../../styles/ai.css'");
-    const heronLine = page.indexOf("import '../../styles/shared/ds-research.css'");
+    const dsLine = page.indexOf("import '../../styles/shared/ds-research.css'");
     expect(aiLine).toBeGreaterThan(-1);
-    expect(heronLine).toBeGreaterThan(aiLine);
+    expect(dsLine).toBeGreaterThan(aiLine);
   });
 
   it('the rendered page root carries the .r305rp marker', () => {

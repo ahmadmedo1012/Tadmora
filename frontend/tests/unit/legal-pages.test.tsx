@@ -93,7 +93,7 @@ function renderPage(Component: () => JSX.Element) {
 
 /* ═══ A · the 9-page grammar ════════════════════════════════════════ */
 
-describe('R320 §D — the 9-page grammar (the Heron public sheet)', () => {
+describe('R320 §D — the 9-page grammar (the reference public sheet)', () => {
   it.each(PAGES)('$path renders ONE h1 with its title', ({ Component, title }) => {
     renderPage(Component);
     const h1s = screen.getAllByRole('heading', { level: 1 });

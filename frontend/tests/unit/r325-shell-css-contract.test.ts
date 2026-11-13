@@ -2,7 +2,7 @@
  * R325 — shell CSS contract (P2.3 · DESIGN.md §R325).
  *
  * Sibling of r325-app-css-contract.test.ts (P2.1's token pins) and
- * r305-shell-css-contract.test.ts (the R305 Heron shell pins): reads
+ * r305-shell-css-contract.test.ts (the R305 the reference shell pins): reads
  * `src/styles/shell/chrome.css` (the P2.3 shell layer) plus the
  * tokens.css layout block as TEXT and pins
  *

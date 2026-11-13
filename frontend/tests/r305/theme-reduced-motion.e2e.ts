@@ -120,7 +120,7 @@ test.describe('الحركة الكاملة — الخط الأساسي (بدون
       };
     });
 
-    // The r305 Heron ladder (foundation): --t-base = 400ms. r315 C4-E re-pin
+    // The r305 the reference ladder (foundation): --t-base = 400ms. r315 C4-E re-pin
     // (same value): the computed read may serialize 400ms as .4s/0.4s after the
     // CSS pipeline's token re-serialization — the pin keeps asserting the SAME
     // duration (400ms), never zero (the reduced-motion belt owns that side).
